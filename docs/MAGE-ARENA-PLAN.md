@@ -78,7 +78,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 |---|---|---|---|---|---|---|
 | Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | not started | | |
 | Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | not started | | |
-| Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
+| Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | implemented; automated gates green; owner feel pending | `:/^W2:` | 2026-10-02 |
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
 | Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | not started | | |
@@ -153,3 +153,13 @@ Worktrees: `C:\Users\kazda\kiro\mage-arena` (main), `...\mage-arena-core`, `...\
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
+
+### W2 — 2026-10-02 — arena stream
+
+- Read this plan a–l, baseline report/data/cards and Fable verdict before implementation. Wrote `docs/waves/W2-arena-kernel.md` first. D4 mouse/keyboard and D5 TypeScript override old gamepad/JVM prose; Rain Needle keeps the CSV's zero cast time.
+- Created isolated `packages/core/package.json`, core lockfile, `tsconfig.arena.json`, `src/arena/` and arena scripts; created `packages/game/package.json`, game lockfile, strict config, PixiJS/Vite UI and Playwright harness. **No root workspace config, director, tools package or art files created.** The core stream must reconcile package manifests at integration; the arena subpath export and data prebuild are documented in `packages/game/README.md`.
+- Baseline combat/CSV/stat data compile into one ignored generated module; authored missing geometry/training/presentation numbers live in `src/arena/data/runtime.json`. Duplicate Nerve/clock values are checked. Fixed 60 Hz kernel, seeded/logged randomness, swept projectiles, down/missio, movement/roll/stamina/staff, ward state machine, collar clock, five training scenarios and a projectile stress scene. Short input taps are queued to the next simulation tick.
+- Commands: `npm --prefix packages/core run build` **green**; `npm --prefix packages/core test` **15 passed**; `npm --prefix packages/core run report:w2` **green**; `npm --prefix packages/game run build` **green**; `npm --prefix packages/game run smoke` **green**, real mouse/keyboard checks and four screenshots in `docs/waves/W2-evidence/`. Production-build smoke exposed and fixed an async renderer/entry-module deadlock that development mode hid.
+- **Simulated:** 120 s bot runs, perfect 40/40, late/holder/never 0/40; perfect clock unlocks 0/9/18/27 s versus 0/15/30/45 s. Gross raise/drain/capped return and the window sweep are in `bots.json`; same-seed full-state replay matches. Observation resets HP after Down to continue samples, never mana (explicit in report).
+- **Measured:** on Ryzen 7 7800X3D / RTX 4090, headless Chromium D3D11, 100 projectiles: approximately 60 fps, CPU p95 1.4 ms, frame interval p95 16.8 ms (360 samples; exact latest values in `browser.json`). Initial default-backend run was ~46 fps; explicit D3D11 and static backdrop caching resolve the budget. Harness enforces CPU <8 ms and target fps within an authored 2% scheduling tolerance.
+- **Not measured / not felt:** physical input-to-photon latency, human absorb/aim feel and audio comfort. Pending owner checklist in `docs/OWNER-CHECKS.md`; no physical controller measurement claimed. Next: write full W3 card, then Water lines/Flow/composition/curve linter. Commit column uses a Git subject revision selector so the commit can identify itself without a stale self-hash.

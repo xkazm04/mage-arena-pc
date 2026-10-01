@@ -1,0 +1,21 @@
+{
+  "name": "@mage-arena/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./arena": "./src/arena/index.ts"
+  },
+  "scripts": {
+    "data": "node scripts/compile-arena-data.mjs",
+    "build": "npm run data && tsc -p tsconfig.arena.json",
+    "test": "npm run data && vitest run",
+    "report:w2": "npm run data && tsx scripts/report-w2.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.11"
+  }
+}
