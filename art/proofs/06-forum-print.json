@@ -1,0 +1,25 @@
+{
+  "job": "06-forum-print-arena-a02",
+  "style_id": "06-forum-print",
+  "source": "art/raw/06-forum-print-arena-a02/source.jpg",
+  "sha256": "933bd84c584a43e4b471c78fb82b4dda6196699e21bda76b097c1d7db32e3a79",
+  "style_hash": "4869c21e08617b63bb3893ca228c2e88ced83c58638da3b15cd73ad1e8b1d525",
+  "pair_input_hash": "c0f6c3f210b48a378272ae6b46a721facf23d68f8b036aa6a96de5676b156225",
+  "verdict": "exploration-sibling-ready",
+  "reviewer": "executing-agent",
+  "note": "Actual pixels: cream/navy/vermilion/cyan flat print, coarse halftone shadows, compact block silhouettes; forward turquoise arc, separate needle and orange projectile. Camera is elevated oblique, not orthographic; the impact star and travelling fireball are separated, so exact collision timing is not demonstrated. Distinct style proof only.",
+  "owner_accepted": false,
+  "label": "authored direct pixel observation; not felt",
+  "gate": {
+    "verdict": "technical-pass",
+    "codes": [],
+    "metrics": {
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG",
+      "aspect": 1.7777777777777777,
+      "luminance_stddev": 66.99099672294655
+    },
+    "scope": "file, dimensions, aspect, alpha, contrast and hash only; semantics and taste not measured here"
+  }
+}

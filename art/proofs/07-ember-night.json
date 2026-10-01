@@ -1,0 +1,25 @@
+{
+  "job": "07-ember-night-arena-a02",
+  "style_id": "07-ember-night",
+  "source": "art/raw/07-ember-night-arena-a02/source.jpg",
+  "sha256": "ed504daa3ecce530f281773fcee18d67b64b4f388ef28b5f4ed078e9e04dfcc2",
+  "style_hash": "02c0db9956c8d878a1e27d7222dacd6996e81e90a3b821f88a57e4547e1e2723",
+  "pair_input_hash": "af73b3c45b720d8a5cb1d4d0daf9b698a8a23475854f06d00ddbc4939e270c5f",
+  "verdict": "exploration-sibling-ready",
+  "reviewer": "executing-agent",
+  "note": "Actual pixels: black-violet ink, thin cyan luminous arc, warm subdued floor, rim-lit dark figures; clear front arc and separate cyan needle, orange burst on its top. Readable raised view; repeated sling shapes on two foes and gold-dominant ground are noted style/content deviations. No full-screen bloom.",
+  "owner_accepted": false,
+  "label": "authored direct pixel observation; not felt",
+  "gate": {
+    "verdict": "technical-pass",
+    "codes": [],
+    "metrics": {
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG",
+      "aspect": 1.7777777777777777,
+      "luminance_stddev": 54.16714443815008
+    },
+    "scope": "file, dimensions, aspect, alpha, contrast and hash only; semantics and taste not measured here"
+  }
+}

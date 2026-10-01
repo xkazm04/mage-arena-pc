@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-01T22:31:22.822460+00:00",
+  "label": "measured local art gate; quota incidents inside unit tests are simulated",
+  "status": "pass",
+  "browser": "included",
+  "game_build": "not applicable: no package manifest or code packages on the art baseline; none modified",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/art",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.547,
+      "stdout": "{\"resume\": \"old\", \"status\": \"quota-stopped\", \"new_calls\": 0}\n{\"id\": \"01-tessera-arena-a01\", \"status\": \"quota-stopped\", \"seconds\": 0.0, \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 1, \"weekly_reserved\": 1, \"target_remaining\": 39, \"hard_remaining\": 119, \"generated\": 0, \"observed_image_tool_calls\": 0, \"videos\": 0, \"stop\": {\"at\": \"2026-10-01T22:31:03.691518+00:00\", \"reason\": \"01-tessera-arena-a01: structured HTTP 429\"}, \"shared_account_remaining\": \"not measured\"}}\n{\"resume\": \"old\", \"status\": \"generated\", \"new_calls\": 0}\n",
+      "stderr": ".........................\n----------------------------------------------------------------------\nRan 25 tests in 0.372s\n\nOK\n"
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "compileall",
+        "-q",
+        "tools/art"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.062,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/pipeline.py",
+        "compile"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.125,
+      "stdout": "Compiled 16 immutable comparison briefs; zero calls\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/pipeline.py",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 13.703,
+      "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 30, \"weekly_reserved\": 30, \"target_remaining\": 10, \"hard_remaining\": 90, \"generated\": 30, \"observed_image_tool_calls\": 30, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/pipeline.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.782,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"direction_pairs\": 8,\n  \"generated_attempts\": 30,\n  \"graded_attempts\": 30,\n  \"current_rejects\": 0,\n  \"scope\": \"delivery integrity; does not turn semantic rejects into acceptance\",\n  \"owner_accepted\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/browser_check.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.39,
+      "stdout": "[\n  {\n    \"viewport\": \"desktop\",\n    \"size\": {\n      \"width\": 1600,\n      \"height\": 1000\n    },\n    \"current_images_loaded\": 16,\n    \"archive_images_loaded\": 30,\n    \"page_errors\": [],\n    \"horizontal_overflow\": false,\n    \"filters_and_zoom\": \"pass\"\n  },\n  {\n    \"viewport\": \"mobile\",\n    \"size\": {\n      \"width\": 390,\n      \"height\": 844\n    },\n    \"current_images_loaded\": 16,\n    \"archive_images_loaded\": 30,\n    \"page_errors\": [],\n    \"horizontal_overflow\": false,\n    \"filters_and_zoom\": \"pass\"\n  }\n]\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -92,7 +92,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Core | W13 | Art integration | A2-A5 | not planned | | |
 | Core | W14 | Cache pre-warm, hosted-API provider, cost guard | W11 | not planned | | |
 | Core | W15 | Release candidate, balance report, **Gate G2** | all | not planned | | |
-| Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | not started | | |
+| Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | delivered for owner review; style choice pending | A1 (this commit) | 2026-10-02 |
 | Art | A2 | 16 portraits and expressions in the chosen style | A1 owner choice | not planned | | |
 | Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
@@ -153,3 +153,29 @@ Worktrees: `C:\Users\kazda\kiro\mage-arena` (main), `...\mage-arena-core`, `...\
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
+
+### A1 — 2026-10-02 — ART / `art`
+
+Delivered eight distinct paired style directions, the combined HTML owner board,
+arena/camp/paired PNG contact sheets, complete attempt archive and advisory local
+vision shortlist. Built the standalone generation pipeline with versioned briefs,
+hash-bound proof reviews, atomic reservations, a local weekly budget, first-quota
+stop latch, resume history, deterministic gates and owner-only acceptance. Design
+note: `docs/waves/A1-style-exploration.md`; evidence: `art/ACCEPTANCE.md`.
+
+Measured ledger snapshot: 30 generated images / 30 observed image calls, zero videos,
+no quota errors; remaining 10 to target and 90 to the local hard cap. Shared-account
+remaining allowance is not measured. Budget authority remains `art/budget.json`.
+
+Commands: `python tools/art/check.py` — PASS (25 tests, Python/prompt compile, board
+build, delivery validation, Chrome desktop/mobile checks); `python
+tools/art/portable_check.py` — PASS (no ignored raw files; all 16 screen hashes
+reproduced). Reports retain exact command output. No game packages/build existed on
+the art baseline; none were touched. Model opinions are local diagnostics; quota
+tests are simulated. Owner preference, felt quality, motion readability, production
+identity and engine performance are not measured.
+
+One A1 commit contains this row, log, design note and artifacts; resolve its hash with
+`git log -1 --format=%h -- docs/waves/A1-style-exploration.md`. No push. Remaining:
+owner review in `docs/OWNER-CHECKS.md`, actual choice in `art/OWNER-CHOICE.md` (pending).
+Stop after A1 delivery; A2–A5 require that choice and are not started.

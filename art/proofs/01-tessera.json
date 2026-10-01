@@ -1,0 +1,25 @@
+{
+  "job": "01-tessera-arena-a04",
+  "style_id": "01-tessera",
+  "source": "art/raw/01-tessera-arena-a04/source.jpg",
+  "sha256": "b249b6d0663e87c62dfa6089632de8e2e0906ad196936f50ea3c78b0bd331492",
+  "style_hash": "fd8a31fef7d4d698604ac0dc8c350b54522d7a5eaec1b98c467d22e771d80e5a",
+  "pair_input_hash": "4f73aceaf2d1e4e364bce90445de94e76ddd86b0e31ea169348be0b0ed057953",
+  "verdict": "exploration-sibling-ready",
+  "reviewer": "executing-agent",
+  "note": "Actual pixels: full mage and feet visible, elevated arena composition, warm rubbed plaster and block tessera fills; forward tiled cyan arc catches a white/orange spark, while a separate thin cyan trail leads toward upper left. Arc is visually solid and oversized; the spell origins are schematic, not a measured combat state. All essential comparison elements are visible.",
+  "owner_accepted": false,
+  "label": "authored direct pixel observation; not felt",
+  "gate": {
+    "verdict": "technical-pass",
+    "codes": [],
+    "metrics": {
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG",
+      "aspect": 1.7777777777777777,
+      "luminance_stddev": 38.71966300696749
+    },
+    "scope": "file, dimensions, aspect, alpha, contrast and hash only; semantics and taste not measured here"
+  }
+}

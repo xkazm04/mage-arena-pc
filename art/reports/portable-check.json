@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-01T22:28:19.445845+00:00",
+  "label": "measured disposable copy; ignored raw evidence absent",
+  "status": "pass",
+  "commands": [
+    {
+      "command": [
+        "tools/art/pipeline.py",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 14.297,
+      "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 30, \"weekly_reserved\": 30, \"target_remaining\": 10, \"hard_remaining\": 90, \"generated\": 30, \"observed_image_tool_calls\": 30, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/art/pipeline.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.75,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"direction_pairs\": 8,\n  \"generated_attempts\": 30,\n  \"graded_attempts\": 30,\n  \"current_rejects\": 0,\n  \"scope\": \"delivery integrity; does not turn semantic rejects into acceptance\",\n  \"owner_accepted\": false\n}\n",
+      "stderr": ""
+    }
+  ],
+  "screen_hashes_identical": true,
+  "screens": 16,
+  "validation": {
+    "status": "pass",
+    "errors": [],
+    "current_images": 16,
+    "direction_pairs": 8,
+    "generated_attempts": 30,
+    "graded_attempts": 30,
+    "current_rejects": 0,
+    "scope": "delivery integrity; does not turn semantic rejects into acceptance",
+    "owner_accepted": false
+  },
+  "image_generation_calls": 0
+}

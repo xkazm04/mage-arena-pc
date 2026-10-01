@@ -1,0 +1,65 @@
+# A1 delivery evidence
+
+Delivery is ready for owner review; no production style is accepted.
+Open [the combined board](review/index.html), [paired contact sheet](review/contact-sheets/combined.png),
+[arena sheet](review/contact-sheets/arena.png), or [camp sheet](review/contact-sheets/camp.png).
+The board includes exact current images, direct observations, local diagnostics and
+the full [attempt history](review/attempts.html).
+
+## Measured locally
+
+The persisted [budget snapshot](reports/budget.json), derived from `usage.json`,
+records 30 reserved and generated images, 30 observed image-tool calls, no videos
+and no stop incident. Remaining: 10 to the working target and 90 to the local hard
+ceiling. The shared subscription's remaining allowance is **not measured**.
+`budget.json` remains the cap authority; this paragraph reports the delivery snapshot.
+
+The [delivery validation](reports/validation.json) records eight direction pairs,
+exactly sixteen current images, thirty graded attempts and zero current rejects.
+Fourteen rejected/superseded attempts remain visible with source bytes and reasons.
+No source has been promoted to owner acceptance by a model or deterministic gate.
+
+Reproduce without generating images:
+
+```powershell
+python tools/art/check.py
+python tools/art/portable_check.py
+```
+
+The [offline gate](reports/checks.json) passes twenty-five unit tests, Python compile,
+prompt compile, board build, delivery validation and actual Chrome browser checks.
+Quota incidents printed by unit tests are **simulated**, not subscription incidents.
+The [browser report](reports/browser-check.json) covers desktop and mobile image
+loading, both scene filters, zoom, page errors and horizontal overflow, including
+all thirty archived sources. The [portable check](reports/portable-check.json)
+rebuilds without ignored raw files and reproduces all sixteen exported screen hashes.
+
+There is no game package or game build on this branch baseline. No code package
+was changed. These are standalone art build and test results, not engine evidence.
+
+## Authored observations and local model diagnostics
+
+Direction axes, prompt skeletons, UI composition and map coordinates are authored.
+Sources are generated look studies, not manually painted works or game screenshots.
+Exact baseline place names and time slots are drawn in code from the data files.
+All final source images were directly inspected; those observations are hash-bound
+in `direct-reviews.json` and exposed in the board.
+
+The [comparative local grade](reports/comparative-ranking.json) is an actual vision
+call on the paired sheet, with its input hash, model digest, schema and raw answer.
+Its [shortlist](reports/ranking.json) is Forum in Four Inks, Tessera & Lime, then
+Hearth Under Guard. This is diagnostic input, not a measured human preference.
+Individual grades falsely described several rejected compositions as correct;
+direct review overrode those grades. Human calibration has not been measured.
+
+Remaining concept limitations include occasionally detached/dart-like spell paths,
+extra lines or clash effects, the flat-print cistern's shallow appearance, and varying
+confinement/contrast in the lighter camps. Static pictures cannot establish absorb
+timing, the gameplay arc's exact angle, motion readability or performance.
+
+## Owner boundary
+
+Felt quality and style preference are **not measured**. Owner review remains pending
+in [OWNER-CHOICE.md](OWNER-CHOICE.md) and [the owner checklist](../docs/OWNER-CHECKS.md).
+No A2–A5 work begins until the owner supplies a choice. A1 generation is finished;
+unused working allowance is not an instruction to spend it.
