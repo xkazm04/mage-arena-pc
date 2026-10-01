@@ -92,7 +92,11 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Core | W13 | Art integration | A2-A5 | not planned | | |
 | Core | W14 | Cache pre-warm, hosted-API provider, cost guard | W11 | not planned | | |
 | Core | W15 | Release candidate, balance report, **Gate G2** | all | not planned | | |
+<<<<<<< HEAD
 | Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | delivered for owner review; style choice pending | A1 (this commit) | 2026-10-02 |
+=======
+| Art [`art`] | A1 | (done 2026-10-02, owner chose Tessera & Lime) Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | not started | | |
+>>>>>>> main
 | Art | A2 | 16 portraits and expressions in the chosen style | A1 owner choice | not planned | | |
 | Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
@@ -149,6 +153,23 @@ Worktrees: `C:\Users\kazda\kiro\mage-arena` (main), `...\mage-arena-core`, `...\
 | Q3 | Starting character: pick one of four at the start, the other three become allies/rivals who share the bond arc? | Yes |
 | Q4 | Desktop shell: browser window first, Electron or Tauri at packaging? | Browser first; decide at W14 |
 | Q5 | Typed role-play (Parley) scope? | Only at Knowing moments, via the Director, with offline cards |
+
+## m. Art and camera direction after A1 (owner, 2026-10-02)
+
+> "Looking at the styles, in terms of feasibility of arena battles many can be a problem to achieve. The arena camera angle is too close and characters too large then to be playable or fit to decide. Lets go with Tessera & Lime as the baseline. For arena and camera imagine Diablo or Path of Exile to set up camera, distance, larger spacing. Attempts like 02-salt-ink-arena-a01, 08-rain-wash-arena-a01 are one step towards the idea."
+
+Decisions: **D10** the visual baseline is **Tessera & Lime** (style id `01-tessera` in `art/styles/a1-v1.json`); **D11** the arena camera follows the **Diablo / Path of Exile framing**: a high, distant, near-top-down camera (roughly 45-60 degrees of tilt), the whole fight readable at a glance,
+a character about 4-6% of the screen height (a mage about 60-90 px tall at 1080p), enemies and projectiles clearly separated, wide spacing between combatants, an arena that is several screens of fight space wide, spell effects and the 140-degree absorb arc readable at that scale, telegraphs bigger than the figures. The A1 arena images were too close and too large; attempts 02 and 08 are the nearest framing.
+The arena kernel (W2-W4) and every arena sprite must be authored for this camera and scale: a **scale contract** (metres per pixel, mage height in px, arena size, camera zoom range, minimum readable telegraph size) is the first deliverable of W4b and of A1b.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Art | A1b | Tessera & Lime baseline: scale contract and **arena camera proofs** (Diablo/PoE framing, three camera distances, several arena layouts), camp map re-check | A1 owner choice (done) | not started |
+| Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | not started |
+| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | not started |
+| Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
+| Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | **owner confirms the arena camera** (`art/CAMERA-OK.md`) | blocked |
+| Arena | W4b | Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
 
 ## l. Session log
 

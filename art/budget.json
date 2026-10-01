@@ -2,13 +2,16 @@
   "schema": 1,
   "wave": "A1",
   "target_images": 40,
-  "wave_hard_cap": 120,
-  "weekly_image_cap": 120,
+  "wave_hard_cap": 180,
+  "weekly_image_cap": 180,
   "max_attempts_per_scene": 3,
-  "scene_attempt_caps": {"01-tessera:arena": 4},
+  "scene_attempt_caps": {
+    "01-tessera:arena": 4
+  },
   "scene_cap_reason": "The first direction also carried the global camera/prompt pilot. One additional bounded framing correction is reserved after its third image cropped the player. The target and hard caps are unchanged.",
   "max_parallel_images": 1,
   "videos_allowed": false,
   "reset_stop_automatically": false,
-  "scope": "Local project reservations, UTC ISO weeks. Shared account remainder is unknown; never inferred from this ledger. Failed and uncertain calls stay charged."
+  "scope": "Local project reservations, UTC ISO weeks. Shared account remainder is unknown; never inferred from this ledger. Failed and uncertain calls stay charged.",
+  "owner_raise": "host raised 120 to 180 on 2026-10-02 for A1b, A2, A4, A5 after the owner chose the style; first quota error still latches stop"
 }
