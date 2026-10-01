@@ -92,11 +92,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Core | W13 | Art integration | A2-A5 | not planned | | |
 | Core | W14 | Cache pre-warm, hosted-API provider, cost guard | W11 | not planned | | |
 | Core | W15 | Release candidate, balance report, **Gate G2** | all | not planned | | |
-<<<<<<< HEAD
 | Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | delivered for owner review; style choice pending | A1 (this commit) | 2026-10-02 |
-=======
-| Art [`art`] | A1 | (done 2026-10-02, owner chose Tessera & Lime) Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | not started | | |
->>>>>>> main
 | Art | A2 | 16 portraits and expressions in the chosen style | A1 owner choice | not planned | | |
 | Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
