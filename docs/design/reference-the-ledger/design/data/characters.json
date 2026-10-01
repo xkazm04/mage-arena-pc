@@ -1,0 +1,195 @@
+{
+  "_about": "Variant 1 (The Ledger). Camp cast: 21 characters. Every number is authored, not measured. Traits are 0..10. Stats are ranks 1..5. Values are the closed vocabulary the deterministic planner weighs and the Crier must cite. The player takes one of the four mains; the other three run on the same planner as everyone else.",
+  "valueVocabulary": ["strength", "rank", "kin", "freedom", "knowledge", "honour", "survival", "order", "spite", "faith", "gold", "belonging"],
+  "characters": [
+    {
+      "id": "brennic", "name": "Brennic the Red", "tent": "ember", "school": "fire", "role": "main", "rank": 1,
+      "traits": { "aggression": 9, "ambition": 9, "caution": 2, "loyalty": 4, "cunning": 3, "warmth": 3 },
+      "values": ["strength", "rank", "honour"],
+      "goal": { "id": "rise_in_tent", "target": "ember" },
+      "stats": { "vigor": 2, "focus": 1, "nerve": 2, "guile": 1 },
+      "voice": { "register": "short, loud, second person", "tics": ["calls everyone by their school", "counts kills aloud"], "never": ["begs", "apologises first"] },
+      "bio": "A Gaulish auxiliary who burned a barbarian ford for Rome and was collared for it. He wants the top of whatever hierarchy he is standing in, and he will climb this one too."
+    },
+    {
+      "id": "cassia", "name": "Cassia of the Lighthouse", "tent": "tide", "school": "water", "role": "main", "rank": 1,
+      "traits": { "aggression": 3, "ambition": 8, "caution": 8, "loyalty": 5, "cunning": 10, "warmth": 4 },
+      "values": ["knowledge", "rank", "survival"],
+      "goal": { "id": "learn_secrets", "target": null },
+      "stats": { "vigor": 1, "focus": 3, "nerve": 1, "guile": 2 },
+      "voice": { "register": "precise, courteous, conditional sentences", "tics": ["answers a question with a better question", "names the price of things"], "never": ["raises her voice", "swears an oath she cannot keep"] },
+      "bio": "An Alexandrian lamp-keeper's daughter who read every scroll about the tides of power. She wins fights before they start and keeps a ledger of her own."
+    },
+    {
+      "id": "garran", "name": "Garran Stonehand", "tent": "stone", "school": "earth", "role": "main", "rank": 1,
+      "traits": { "aggression": 2, "ambition": 3, "caution": 7, "loyalty": 9, "cunning": 3, "warmth": 9 },
+      "values": ["kin", "honour", "survival"],
+      "goal": { "id": "escape_research", "target": null },
+      "stats": { "vigor": 3, "focus": 1, "nerve": 2, "guile": 1 },
+      "voice": { "register": "slow, plain, few words", "tics": ["mentions his daughters by name", "says 'we' for strangers"], "never": ["mocks the weak", "breaks a promise"] },
+      "bio": "A Danube farmer who raised walls for the legion so his village would be spared. He has a wife and two daughters on the other side of the Door and means to walk back to them."
+    },
+    {
+      "id": "iskar", "name": "Iskar Windborn", "tent": "gale", "school": "air", "role": "main", "rank": 1,
+      "traits": { "aggression": 7, "ambition": 7, "caution": 3, "loyalty": 2, "cunning": 6, "warmth": 5 },
+      "values": ["freedom", "spite", "belonging"],
+      "goal": { "id": "build_fifth_tent", "target": null },
+      "stats": { "vigor": 2, "focus": 2, "nerve": 1, "guile": 2 },
+      "voice": { "register": "fast, mocking, rhetorical", "tics": ["calls tent elders 'little prefects'", "speaks of 'after the Door falls'"], "never": ["bows", "praises Rome"] },
+      "bio": "A steppe rider who believed Rome's promise of citizenship. He hates the collar, the tents that obey it, and everyone who plays by its rules; he wants a fifth tent that answers to no one."
+    },
+    {
+      "id": "sadruba", "name": "Elder Sadruba", "tent": "ember", "school": "fire", "role": "elder", "rank": 4,
+      "traits": { "aggression": 7, "ambition": 6, "caution": 5, "loyalty": 8, "cunning": 6, "warmth": 2 },
+      "values": ["rank", "strength", "order"],
+      "goal": { "id": "win_games", "target": "ember" },
+      "stats": { "vigor": 3, "focus": 4, "nerve": 5, "guile": 3 },
+      "voice": { "register": "commands, never questions", "tics": ["judges by scars"], "never": ["praises effort without result"] },
+      "bio": "Twenty years in the camp, still burning. She picks the Ember Tent's entrant by blood and Pit results and nothing else."
+    },
+    {
+      "id": "corvo", "name": "Corvo", "tent": "ember", "school": "fire", "role": "rival", "rank": 1,
+      "traits": { "aggression": 8, "ambition": 8, "caution": 3, "loyalty": 6, "cunning": 5, "warmth": 2 },
+      "values": ["rank", "spite", "strength"],
+      "goal": { "id": "rise_in_tent", "target": "ember" },
+      "stats": { "vigor": 2, "focus": 2, "nerve": 1, "guile": 2 },
+      "voice": { "register": "boastful, sneering", "tics": ["retells his one arena win"], "never": ["admits fear"] },
+      "bio": "Was the Ember Tent's next entrant until the new Fire mage arrived. Same rank as the player; the slot cannot hold both."
+    },
+    {
+      "id": "tilla", "name": "Tilla", "tent": "ember", "school": "fire", "role": "junior", "rank": 1,
+      "traits": { "aggression": 6, "ambition": 5, "caution": 3, "loyalty": 7, "cunning": 2, "warmth": 6 },
+      "values": ["strength", "belonging"],
+      "goal": { "id": "win_favour", "target": null },
+      "stats": { "vigor": 2, "focus": 1, "nerve": 1, "guile": 1 },
+      "voice": { "register": "eager, breathless", "tics": ["copies whoever won last"], "never": ["sits still"] },
+      "bio": "Fourteen, collared young, worships whoever is strongest this week."
+    },
+    {
+      "id": "ophel", "name": "Elder Ophel", "tent": "tide", "school": "water", "role": "elder", "rank": 4,
+      "traits": { "aggression": 2, "ambition": 7, "caution": 9, "loyalty": 6, "cunning": 9, "warmth": 3 },
+      "values": ["knowledge", "order", "rank"],
+      "goal": { "id": "win_games", "target": "tide" },
+      "stats": { "vigor": 1, "focus": 5, "nerve": 3, "guile": 5 },
+      "voice": { "register": "dry, scholarly, footnotes", "tics": ["quotes his own treatise"], "never": ["acts on a rumour he did not start"] },
+      "bio": "Keeps the Tide Tent's ledger of debts and the camp's best information. Commissions most of the schemes that are never traced back."
+    },
+    {
+      "id": "nysa", "name": "Nysa", "tent": "tide", "school": "water", "role": "rival", "rank": 1,
+      "traits": { "aggression": 4, "ambition": 8, "caution": 5, "loyalty": 5, "cunning": 8, "warmth": 5 },
+      "values": ["rank", "gold", "survival"],
+      "goal": { "id": "rise_in_tent", "target": "tide" },
+      "stats": { "vigor": 1, "focus": 2, "nerve": 1, "guile": 3 },
+      "voice": { "register": "warm on the surface, bargaining underneath", "tics": ["offers a favour before asking one"], "never": ["tells the whole truth"] },
+      "bio": "Charming, quick, and the best liar in the camp. Cassia's same-rank rival for the Tide Tent's slot."
+    },
+    {
+      "id": "doros", "name": "Doros", "tent": "tide", "school": "water", "role": "junior", "rank": 1,
+      "traits": { "aggression": 1, "ambition": 3, "caution": 9, "loyalty": 4, "cunning": 6, "warmth": 6 },
+      "values": ["survival", "belonging", "knowledge"],
+      "goal": { "id": "survive", "target": null },
+      "stats": { "vigor": 1, "focus": 2, "nerve": 1, "guile": 2 },
+      "voice": { "register": "nervous, exact numbers", "tics": ["counts bread rations"], "never": ["volunteers"] },
+      "bio": "A clerk's son who is frightened of everyone in the Tide Tent and good at sums. Low loyalty, high need for protection."
+    },
+    {
+      "id": "ruadh", "name": "Elder Ruadh", "tent": "stone", "school": "earth", "role": "elder", "rank": 4,
+      "traits": { "aggression": 3, "ambition": 3, "caution": 8, "loyalty": 9, "cunning": 4, "warmth": 7 },
+      "values": ["order", "kin", "faith"],
+      "goal": { "id": "keep_peace", "target": "stone" },
+      "stats": { "vigor": 4, "focus": 3, "nerve": 4, "guile": 2 },
+      "voice": { "register": "proverbs, patient", "tics": ["talks about the seasons that do not change here"], "never": ["starts a fight"] },
+      "bio": "Holds the Stone Tent together with bread and patience. Believes endurance outlasts the Romans."
+    },
+    {
+      "id": "senna", "name": "Senna", "tent": "stone", "school": "earth", "role": "rival", "rank": 1,
+      "traits": { "aggression": 4, "ambition": 7, "caution": 7, "loyalty": 7, "cunning": 4, "warmth": 4 },
+      "values": ["honour", "rank", "order"],
+      "goal": { "id": "rise_in_tent", "target": "stone" },
+      "stats": { "vigor": 2, "focus": 1, "nerve": 2, "guile": 1 },
+      "voice": { "register": "formal, proud", "tics": ["keeps score of slights"], "never": ["cheats in the Pit"] },
+      "bio": "Proud and careful, the Stone Tent's best young fighter until Garran came. Respects strength from any tent."
+    },
+    {
+      "id": "pell", "name": "Pell", "tent": "stone", "school": "earth", "role": "junior", "rank": 1,
+      "traits": { "aggression": 1, "ambition": 2, "caution": 5, "loyalty": 8, "cunning": 1, "warmth": 10 },
+      "values": ["belonging", "kin"],
+      "goal": { "id": "protect", "target": "fenna" },
+      "stats": { "vigor": 3, "focus": 1, "nerve": 1, "guile": 1 },
+      "voice": { "register": "gentle, simple", "tics": ["shares food without asking"], "never": ["lies"] },
+      "bio": "A gentle giant who gives his bread away. Pell remembers every kindness and repays it."
+    },
+    {
+      "id": "kesh", "name": "Elder Kesh", "tent": "gale", "school": "air", "role": "elder", "rank": 4,
+      "traits": { "aggression": 4, "ambition": 6, "caution": 6, "loyalty": 4, "cunning": 8, "warmth": 4 },
+      "values": ["survival", "gold", "freedom"],
+      "goal": { "id": "profit", "target": null },
+      "stats": { "vigor": 2, "focus": 4, "nerve": 3, "guile": 5 },
+      "voice": { "register": "amused, sideways", "tics": ["sells the same secret twice"], "never": ["picks a side before it wins"] },
+      "bio": "An old nomad who trades with the Lanista and with everyone else. Tolerates Iskar because he brings in hands."
+    },
+    {
+      "id": "lio", "name": "Lio", "tent": "gale", "school": "air", "role": "rival", "rank": 1,
+      "traits": { "aggression": 6, "ambition": 6, "caution": 1, "loyalty": 5, "cunning": 4, "warmth": 6 },
+      "values": ["freedom", "strength"],
+      "goal": { "id": "win_games", "target": "gale" },
+      "stats": { "vigor": 2, "focus": 1, "nerve": 2, "guile": 1 },
+      "voice": { "register": "laughing, reckless", "tics": ["bets on everything"], "never": ["walks when he can run"] },
+      "bio": "Reckless, likeable, owes money to half the camp. Iskar's same-rank rival in the Gale Tent."
+    },
+    {
+      "id": "mirren", "name": "Mirren", "tent": "gale", "school": "air", "role": "junior", "rank": 1,
+      "traits": { "aggression": 4, "ambition": 3, "caution": 4, "loyalty": 3, "cunning": 3, "warmth": 7 },
+      "values": ["freedom", "belonging"],
+      "goal": { "id": "win_favour", "target": "iskar" },
+      "stats": { "vigor": 1, "focus": 2, "nerve": 1, "guile": 2 },
+      "voice": { "register": "earnest", "tics": ["repeats Iskar's phrases"], "never": ["informs on a friend"] },
+      "bio": "Follows Iskar like a banner; the first recruit of any fifth tent."
+    },
+    {
+      "id": "fenna", "name": "Fenna", "tent": "strays", "school": "air", "role": "stray", "rank": 1,
+      "traits": { "aggression": 3, "ambition": 4, "caution": 6, "loyalty": 6, "cunning": 7, "warmth": 5 },
+      "values": ["survival", "belonging"],
+      "goal": { "id": "find_tent", "target": null },
+      "stats": { "vigor": 1, "focus": 1, "nerve": 1, "guile": 3 },
+      "voice": { "register": "quick, wary, bargaining", "tics": ["never says her old tent's name"], "never": ["steals from someone who fed her"] },
+      "bio": "Thrown out of the Gale Tent for a theft she did not commit. Hungry, clever, and remembering who walked past."
+    },
+    {
+      "id": "quill", "name": "Old Quill", "tent": "strays", "school": "earth", "role": "stray", "rank": 3,
+      "traits": { "aggression": 1, "ambition": 1, "caution": 8, "loyalty": 3, "cunning": 7, "warmth": 4 },
+      "values": ["knowledge", "survival"],
+      "goal": { "id": "survive", "target": null },
+      "stats": { "vigor": 1, "focus": 4, "nerve": 2, "guile": 4 },
+      "voice": { "register": "riddling, half-mad", "tics": ["talks to the Wardstones"], "never": ["says what he knows for free"] },
+      "bio": "A deserter from the Roman arcane college that built the Door. Knows what the Wardstones drink. Nobody listens to him."
+    },
+    {
+      "id": "dace", "name": "Dace", "tent": "strays", "school": "fire", "role": "stray", "rank": 1,
+      "traits": { "aggression": 8, "ambition": 4, "caution": 2, "loyalty": 2, "cunning": 3, "warmth": 2 },
+      "values": ["spite", "survival"],
+      "goal": { "id": "survive", "target": null },
+      "stats": { "vigor": 2, "focus": 1, "nerve": 2, "guile": 1 },
+      "voice": { "register": "snarling", "tics": ["blames the tents for everything"], "never": ["thanks anyone"] },
+      "bio": "Expelled from the Ember Tent for starting a brawl. Angry at everyone, which makes him easy to recruit."
+    },
+    {
+      "id": "septima", "name": "Warden Septima", "tent": "vigil", "school": "salt", "role": "warden", "rank": 5,
+      "traits": { "aggression": 3, "ambition": 4, "caution": 9, "loyalty": 9, "cunning": 6, "warmth": 2 },
+      "values": ["order", "faith"],
+      "goal": { "id": "keep_peace", "target": null },
+      "stats": { "vigor": 3, "focus": 5, "nerve": 5, "guile": 4 },
+      "voice": { "register": "ritual, third person", "tics": ["speaks of herself as 'the Vigil'"], "never": ["takes a bribe in public"] },
+      "bio": "The arcane warden whose salt-wards keep the camp's collars locked. Stops violence; punishes the caught, not the guilty."
+    },
+    {
+      "id": "venno", "name": "Lanista Aulus Venno", "tent": "roman", "school": "none", "role": "lanista", "rank": 0,
+      "traits": { "aggression": 2, "ambition": 9, "caution": 6, "loyalty": 1, "cunning": 8, "warmth": 3 },
+      "values": ["gold", "rank"],
+      "goal": { "id": "profit", "target": null },
+      "stats": { "vigor": 1, "focus": 1, "nerve": 2, "guile": 5 },
+      "voice": { "register": "genial showman", "tics": ["quotes odds"], "never": ["walks through the Door into the camp"] },
+      "bio": "Runs the Games for the senators who bet on them. Sells scouting reports and buys favours. Never enters the camp; he speaks through the grille of the Door."
+    }
+  ]
+}

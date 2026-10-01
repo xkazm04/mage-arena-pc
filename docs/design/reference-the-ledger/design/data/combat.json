@@ -1,0 +1,44 @@
+{
+  "_about": "Variant 1 arena constants. Single source of truth for the arena kernel (mage-core). Every number is authored and must be confirmed by the headless simulations named in the wave cards; feel is owner-only.",
+  "simStepHz": 60,
+  "arena": { "widthM": 32, "heightM": 20, "pixelsPerMetreAt1080p": 48 },
+  "movement": { "walkMps": 4.5, "sprintMps": 6.5, "sprintStaminaPerSecond": 15, "sprintAtStickDeflection": 0.85 },
+  "roll": { "distanceM": 4.0, "durationS": 0.35, "iFramesS": 0.25, "staminaCost": 25, "recoveryS": 0.15 },
+  "staffStrike": { "rangeM": 1.6, "windupS": 0.25, "recoveryS": 0.30, "staminaCost": 12, "damage": 6, "knockbackM": 1.5, "interruptsCasts": true },
+  "stamina": { "regenPerSecond": 20, "regenDelayS": 0.8 },
+  "tierClock": {
+    "unlockAtSeconds": { "1": 0, "2": 15, "3": 30, "4": 45 },
+    "perfectAbsorbAdvanceS": 2.0,
+    "minimumSecondsBetweenUnlocks": 6.0,
+    "resetsEachWave": true,
+    "fiction": "The collar's runes loosen one by one; a perfect absorb feeds the collar and cracks the next rune early."
+  },
+  "absorb": {
+    "raiseCostMana": 5,
+    "drainPerSecond": "30 - 3 * nerveRank",
+    "minReleaseBeforeReRaiseS": 0.12,
+    "shape": "360-degree ward around the caster",
+    "reduction": { "magic": 0.85, "physical": 0.30, "unblockable": 0.0 },
+    "moveSpeedWhileHeldMult": 0.5,
+    "perfect": {
+      "rule": "the ward was raised (fresh press) no more than windowS before the hit resolves",
+      "windowS": 0.18,
+      "inputTimestampCompensation": "the TV judges by the phone input's clock-corrected timestamp, up to graceS late",
+      "graceS": 0.10,
+      "reduction": 1.0,
+      "manaReturned": "10 * incomingTier * (1 + 0.1 * nerveRank); tier 0 returns 4",
+      "tierClockAdvanceS": 2.0,
+      "notAgainst": ["unblockable", "physical"],
+      "feedback": ["white ring flash on the TV", "double haptic pulse on the phone", "a bell note"]
+    },
+    "twoAxis": "Timing (the window) is the same for everyone and never scales with stats; Nerve scales the magnitude (drain and return). A stat never widens the window."
+  },
+  "threatLanguage": {
+    "magic": "element colour, soft glow, shrinking impact ring: ABSORB it",
+    "physical": "white/steel, hard edge, no glow: ROLL it",
+    "unblockable": "black core with a jagged red rim and a crackle sound: LEAVE the area or BREAK the cast with a staff strike"
+  },
+  "reactionBands": { "minimumTelegraphPositionalS": 0.40, "minimumTelegraphUnblockableS": 0.80, "recoveryBandS": [0.1, 0.5], "playerDeathNotBeforeS": 5.0 },
+  "betweenWaves": { "healFractionOfMissingHp": 0.30, "manaRefill": 1.0, "staminaRefill": 1.0, "tierClockReset": true },
+  "pacingTargets": { "soldierWaveS": [25, 40], "creatureWaveS": [30, 45], "duelS": [45, 80], "deadAirBucketS": 2.0, "maxDeadAirBucketsPerMinute": 3 }
+}

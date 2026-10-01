@@ -1,0 +1,44 @@
+{
+  "_about": "Variant 1 arena tiers. A season is 6 weeks; the Games are every day 7. Each tent sends one entrant per tier, chosen by the Tent Trial on day 6. Waves within one Games day are bouts: the collar's tier clock resets each wave. Payouts are gold; renown is 0..100.",
+  "tiers": [
+    {
+      "id": "tiro", "name": "Tiro Games", "weeks": [1, 2], "requiresRank": 1,
+      "waves": [
+        { "n": 1, "kind": "soldiers", "spawns": [ { "enemy": "conscript", "count": 4 }, { "enemy": "slinger", "count": 2 } ], "targetDurationS": [25, 40] },
+        { "n": 2, "kind": "creatures", "spawns": [ { "enemy": "cinder_hound", "count": 3 }, { "enemy": "mire_maw", "count": 1 } ], "targetDurationS": [30, 45] },
+        { "n": 3, "kind": "semifinal", "spawns": [ { "mage": "entrant_of_another_tent", "competence": 1 } ], "targetDurationS": [45, 70] },
+        { "n": 4, "kind": "final", "spawns": [ { "mage": "winner_of_other_semifinal", "competence": 1.5 } ], "targetDurationS": [45, 80] }
+      ],
+      "payoutGold": [20, 40, 60, 100], "renown": [5, 10, 15, 25], "rankUpOn": "win the final once, or reach the final twice"
+    },
+    {
+      "id": "veteranus", "name": "Veteranus Games", "weeks": [3, 4], "requiresRank": 2,
+      "waves": [
+        { "n": 1, "kind": "soldiers", "spawns": [ { "enemy": "shieldman", "count": 2 }, { "enemy": "conscript", "count": 3 }, { "enemy": "netter", "count": 1 } ] },
+        { "n": 2, "kind": "creatures", "spawns": [ { "enemy": "thornback", "count": 1 }, { "enemy": "hush_moth", "count": 6 } ] },
+        { "n": 3, "kind": "semifinal", "spawns": [ { "mage": "entrant_of_another_tent", "competence": 2 } ] },
+        { "n": 4, "kind": "final", "spawns": [ { "mage": "winner_of_other_semifinal", "competence": 2.5 } ] }
+      ],
+      "payoutGold": [30, 60, 90, 150], "renown": [6, 12, 18, 30], "rankUpOn": "win the final once, or reach the final twice"
+    },
+    {
+      "id": "primus", "name": "Primus Games", "weeks": [5], "requiresRank": 3,
+      "waves": [
+        { "n": 1, "kind": "mixed", "spawns": [ { "enemy": "shieldman", "count": 2 }, { "enemy": "slinger", "count": 2 }, { "enemy": "cinder_hound", "count": 3 } ] },
+        { "n": 2, "kind": "creatures", "spawns": [ { "enemy": "thornback", "count": 2 }, { "enemy": "mire_maw", "count": 1 } ] },
+        { "n": 3, "kind": "semifinal", "spawns": [ { "mage": "entrant_of_another_tent", "competence": 3 } ] },
+        { "n": 4, "kind": "final", "spawns": [ { "mage": "champion_of_another_tent", "competence": 3.5 } ] }
+      ],
+      "payoutGold": [40, 80, 120, 200], "renown": [8, 15, 22, 35], "rankUpOn": "reach the final"
+    },
+    {
+      "id": "summa", "name": "the Summa (Grand Games)", "weeks": [6], "requiresRank": 4,
+      "waves": [
+        { "n": 1, "kind": "semifinal", "spawns": [ { "mage": "best_entrant_by_standing", "competence": 4 } ] },
+        { "n": 2, "kind": "final_or_breaking", "spawns": [ { "mage": "other_finalist", "competence": 4 } ], "ending": "if trust(player, finalist) >= 60 and both hold the Wardstone secret, the final can become the Breaking (cooperative ending); otherwise it is a duel" }
+      ],
+      "payoutGold": [0, 0], "renown": [20, 50]
+    }
+  ],
+  "tentTrial": { "day": 6, "where": "pit", "form": "unarmed stamina bout vs the same-rank tent rival, best of 3 exchanges", "score": "bout result 50% + elder favour 30% (trust of elder) + renown 20%", "loserWatches": "the loser's tent entrant fights simulated; the player still plays camp days" }
+}

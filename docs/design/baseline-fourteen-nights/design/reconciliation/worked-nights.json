@@ -1,0 +1,168 @@
+{
+  "_about": "Variant 2: three worked nights (plus the cache night between them). Player = Cassia (Water). The night pipeline: (1) resolve the day's intents in a fixed order (BEFRIEND/PROTECT/WORK, then WATCH, then SCHEME, then RECRUIT/DEFECT/REPORT), (2) apply deltas, (3) arcs, (4) facts, (5) the Director (or cache, or planner) chooses tomorrow's main act per NPC, (6) validate and cap, (7) store; the Hollow Board shows the facts and the public lines at dawn. Day 1 of every loop uses authored intents (the arrival day is fixed by the ring). Memories (loopChronicle) enter Director inputs from night 2 of a loop. Dice are seeded by (saveSeed, day, actor, action) with no loop index, so a repeated act rolls the same. All numbers follow design/data; authored, not measured.",
+  "rulesUsedHere": [
+    "BEFRIEND: +6 both ways; +9 when cross-tent and equal rank",
+    "PROTECT: target trust toward protector +10; debt(target, protector) +1; target fed (hunger -30) and warned (+2 dc) for one night",
+    "WATCH: actor guile*4 + d20 vs 10 + target guile*4; fail: the target notices, trust(target, actor) -6",
+    "rumour: dc 12 + target renown/10; heard by the starter's tent, the target's tent and the four mains; a listener with trust >= 20 toward the target disbelieves; cowardice offends strength or honour (-6)",
+    "poison: dc 10 + target guile*4 + patrol(tent 0) (+2 if warned); success: maxStamina -20 and HP -10 in the next Games",
+    "Tent Trial score = bout 0.5 + elder trust/100 * 0.3 + renown/100 * 0.2",
+    "Strays: hunger +15 a night; taken in when trust(stray, m) >= 20 for m in a tent whose elder has warmth >= 6",
+    "bond_of_four first_watch: 3 of the 6 mains' pairs at pairTrust >= 20 and day >= 2; the mains' trust persists across resets"
+  ],
+  "startOfLoop0": {
+    "cassia": { "guileRank": 2, "guilePoints": 6, "vigorRank": 1, "renown": 5, "gold": 10 },
+    "trust": { "cassia<->garran": [25, 25], "cassia<->brennic": [15, 15], "cassia<->iskar": [10, 10], "brennic<->garran": [20, 20], "garran->iskar": 15, "iskar->garran": 20, "ophel->cassia": 20, "ophel->nysa": 25, "nysa->cassia": -10, "fenna->garran": 10, "fenna->cassia": 0 },
+    "renown": { "nysa": 8 },
+    "fenna": { "hunger": 60, "loyaltyToStrays": 10 },
+    "arcs": { "strays": "scattered", "bond_of_four": "scattered_four" }
+  },
+  "nights": [
+    {
+      "id": "A", "loop": 0, "night": 1,
+      "headline": "Live Director, every item valid: someone you walked past joined a rival tent, a rumour is about you, and Nysa decides to poison you",
+      "dayActions": {
+        "cassia (player)": ["day: the Exchange (guile +2; overhears F-A-01)", "dusk: the Commons, BEFRIEND garran; walks past Fenna begging", "night act: listens at the Tide flap (WATCH ophel)"],
+        "authored day-1 intents": { "garran": "PROTECT fenna", "nysa": "SCHEME rumour cassia (cowardice, false)", "iskar": "RECRUIT fenna", "venno": "OFFER nysa (gold if the Tide favourite falls before the final)", "others": "TRAIN (routine)" }
+      },
+      "contests": [
+        { "who": "cassia", "kind": "WATCH ophel", "roll": "guile 2*4 = 8 + d20 14 = 22", "dc": "10 + guile(ophel) 5*4 = 30", "result": "failed: Ophel notices" },
+        { "who": "nysa", "kind": "rumour vs cassia", "roll": "guile 3*4 = 12 + d20 11 = 23", "dc": "12 + renown 5/10 -> 12", "result": "succeeded" },
+        { "who": "iskar", "kind": "RECRUIT fenna", "roll": "8 + renown 5/10 -> 0 + d20 9 = 17", "dc": "10 + loyalty 10 = 20", "result": "failed" }
+      ],
+      "deltas": [
+        { "quantity": "cassia.guilePoints", "before": 6, "after": 8, "cause": "the Exchange" },
+        { "quantity": "trust cassia<->garran", "before": 25, "after": 34, "cause": "BEFRIEND, cross-tent equal rank (both ways)" },
+        { "quantity": "trust fenna->cassia", "before": 0, "after": -5, "cause": "walked past" },
+        { "quantity": "trust ophel->cassia", "before": 20, "after": 14, "cause": "noticed the WATCH" },
+        { "quantity": "trust fenna->garran", "before": 10, "after": 20, "cause": "PROTECT" },
+        { "quantity": "debt fenna->garran", "before": 0, "after": 1, "cause": "PROTECT" },
+        { "quantity": "hunger fenna", "before": 60, "after": 45, "cause": "-30 fed by Garran, +15 the night" },
+        { "quantity": "renown cassia", "before": 5, "after": 2, "cause": "rumour -3" },
+        { "quantity": "trust brennic->cassia", "before": 15, "after": 9, "cause": "rumour (cowardice vs strength, honour); Garran at 34 disbelieves" }
+      ],
+      "arcTransitions": [
+        { "arc": "strays", "from": "scattered", "to": "huddled", "because": "a fed character protected a Stray" },
+        { "arc": "strays/fenna", "from": "stray", "to": "taken_in:stone", "because": "trust(fenna, garran) 20 >= 20; Ruadh warmth 7 >= 6" }
+      ],
+      "facts": {
+        "F-A-01": "nysa asked who sleeps nearest the Tide entrant (witnessed; the player overheard it)",
+        "F-A-02": "nysa started the cowardice rumour (secret)",
+        "F-A-03": "ophel caught cassia listening at the flap (witnessed)",
+        "F-A-04": "venno offered nysa gold if the Tide favourite falls (secret)",
+        "F-A-05": "fenna sleeps in the Stone Tent (public)",
+        "F-A-06": "rumour: cassia hid behind the legion's shields at the ford (public, false)"
+      },
+      "director": {
+        "source": { "ember": "model", "tide": "model", "stone": "model", "gale": "model", "margins": "model" },
+        "decisionsForDay2": [
+          { "character": "nysa", "intent": "SCHEME", "args": { "kind": "poison", "target": "cassia" }, "reasonValue": "gold", "citedFacts": ["F-A-04", "F-A-01"], "line": "A lamp burns brightest just before it goes out, sister.", "validator": "pass" },
+          { "character": "ophel", "intent": "WATCH", "args": { "target": "cassia" }, "reasonValue": "knowledge", "citedFacts": ["F-A-03"], "line": "A student who listens at flaps has questions. I should like to know which.", "validator": "pass" },
+          { "character": "iskar", "intent": "BEFRIEND", "args": { "target": "garran" }, "reasonValue": "belonging", "citedFacts": [], "line": "The farmer at least hates the collar honestly.", "validator": "pass" },
+          { "character": "garran", "intent": "TRAIN", "args": { "stat": "vigor" }, "reasonValue": "kin", "citedFacts": [], "line": "Walls first. Then the door.", "validator": "pass" },
+          { "character": "fenna", "intent": "WORK", "args": {}, "reasonValue": "belonging", "citedFacts": ["F-A-05"], "line": "Bread for the tent that took me. Not for the ones who walked by.", "validator": "pass" },
+          { "character": "septima", "intent": "WATCH", "args": { "target": "fenna" }, "reasonValue": "order", "citedFacts": ["F-A-05"], "line": "The Vigil notes a Stray under a new roof.", "validator": "pass" }
+        ],
+        "caps": "1 SCHEME of 2 allowed; no drops",
+        "calls": 5, "cacheHits": 0
+      },
+      "hollowBoard": [
+        "Fenna sleeps in the Stone Tent now. Garran fed her at the Commons. She looked away when you passed.",
+        "Word is you hid behind the legion's shields at the ford. Brennic repeated it at the Pit.",
+        "Iskar, to anyone listening: \"The farmer at least hates the collar honestly.\"",
+        "Journal: Ophel saw you at the flap. He said nothing. That is worse."
+      ]
+    },
+    {
+      "id": "B", "loop": 0, "night": 2, "isEveNight": true,
+      "headline": "Live Director with one item rejected and one scheme dropped by the cap; Nysa's poison lands; the four's bond wakes",
+      "dayActions": {
+        "cassia (player)": ["day: the Cistern (focus +3)", "dusk: the Tent Trial at the Pit vs Nysa (played; won)", "night act: rest in the tent"],
+        "npcs (chosen in night A)": "nysa SCHEME poison cassia; ophel WATCH cassia; iskar BEFRIEND garran; others as listed in night A"
+      },
+      "trial": { "cassia": "0.5*1 + 0.3*(14/100) + 0.2*(2/100) = 0.546", "nysa": "0.5*0 + 0.3*(25/100) + 0.2*(8/100) = 0.091", "winner": "cassia" },
+      "contests": [
+        { "who": "ophel", "kind": "WATCH cassia", "roll": "guile 5*4 = 20 + d20 6 = 26", "dc": "10 + guile(cassia) 2*4 = 18", "result": "succeeded: Ophel learns F-A-01 from what Cassia knows" },
+        { "who": "nysa", "kind": "poison vs cassia", "roll": "guile 3*4 = 12 + d20 9 = 21", "dc": "10 + guile(cassia) 2*4 + patrol 0 = 18 (not warned)", "result": "succeeded (secret)" }
+      ],
+      "deltas": [
+        { "quantity": "renown cassia", "before": 2, "after": 5, "cause": "won a Pit bout +3" },
+        { "quantity": "renown nysa", "before": 8, "after": 6, "cause": "lost a Pit bout -2" },
+        { "quantity": "cassia.sick", "before": 0, "after": 1, "cause": "poison: maxStamina 70 -> 50, HP 95 -> 85 for the Games" },
+        { "quantity": "trust garran->iskar", "before": 15, "after": 24, "cause": "BEFRIEND, cross-tent equal rank" },
+        { "quantity": "trust iskar->garran", "before": 20, "after": 29, "cause": "BEFRIEND, cross-tent equal rank" }
+      ],
+      "arcTransitions": [
+        { "arc": "duality/tide(cassia,nysa)", "from": "trial_set", "to": "respect", "because": "loser warmth 5 >= 5" },
+        { "arc": "bond_of_four", "from": "scattered_four", "to": "first_watch", "because": "pairs >= 20: cassia-garran 34, brennic-garran 20, garran-iskar 24; day 2" }
+      ],
+      "director": {
+        "source": { "ember": "model", "tide": "model + planner (1 item)", "stone": "model + planner (1 item)", "gale": "model + planner (1 item, cap)", "margins": "model" },
+        "proposed": [
+          { "character": "garran", "intent": "SCHEME", "args": { "kind": "poison", "target": "nysa" }, "reasonValue": "kin", "validator": "REJECTED: SCHEME:poison is in garran.forbiddenIntents", "replacedBy": { "intent": "PROTECT", "args": { "target": "cassia" }, "source": "planner" } },
+          { "character": "nysa", "intent": "SCHEME", "args": { "kind": "rumour", "target": "cassia" }, "validator": "REJECTED: same target two nights running", "replacedBy": { "intent": "TRAIN", "args": { "stat": "focus" }, "source": "planner" } },
+          { "character": "corvo", "intent": "SCHEME", "args": { "kind": "steal", "target": "brennic" }, "cunning": 5, "validator": "pass" },
+          { "character": "sadruba", "intent": "SCHEME", "args": { "kind": "steal", "target": "ophel" }, "cunning": 6, "validator": "pass" },
+          { "character": "kesh", "intent": "SCHEME", "args": { "kind": "rumour", "target": "sadruba" }, "cunning": 8, "validator": "pass" },
+          { "character": "lio", "intent": "SCHEME", "args": { "kind": "rumour", "target": "corvo" }, "cunning": 4, "validator": "pass, then DROPPED by the eve cap (4 valid schemes > 3; lowest cunning first)", "replacedBy": { "intent": "TRAIN", "args": { "stat": "nerve" }, "source": "planner" } }
+        ],
+        "calls": 5, "cacheHits": 0
+      },
+      "hollowBoard": [
+        "You are the Tide entrant. Nysa bowed at the Pit and smiled too long.",
+        "Iskar and Garran shared bread at the Commons.",
+        "Garran says he will walk you to the Door in the morning. Nobody asked him to.",
+        "Journal: a pebble on your blanket, the old sign from the march. The four meet at the Edge after the Games."
+      ],
+      "gamesDay": "Cassia wakes with a burning throat (sick). She wins the soldier and creature waves and loses the semifinal to Senna: payout 40 gold, renown +10. After the Games the Vigil finds a nightshade wrapper in Nysa's bedroll (d20 15 >= 12): Nysa is exposed. The player gains Knowing K-nysa-poison. Mastery stays 1. The Wardstones flare: the ring turns."
+    },
+    {
+      "id": "C1", "loop": 1, "night": 1,
+      "headline": "The cache night: the player repeated day 1, so three of five groups replay for free",
+      "note": "The player made the same day-1 choices. Rolls repeat (no loop index in the seed). Non-mains' trust reset to the authored start, so the Tide, Gale and Margins inputs are byte-identical to night A: cache hits. Ember and Stone contain a remembering main whose trust persisted (brennic->cassia 9 -> 3 after the rumour again; garran->cassia 34 -> 43 after BEFRIEND again; garran->iskar 24), so their inputs differ: two live calls.",
+      "director": { "source": { "ember": "model", "tide": "cache", "stone": "model", "gale": "cache", "margins": "cache" }, "calls": 2, "cacheHits": 3,
+        "changedDecision": { "character": "garran", "intent": "PROTECT", "args": { "target": "cassia" }, "reasonValue": "honour", "line": "The Tide girl walks alone too much." } },
+      "consequence": "Nysa's cached decision for day 2 is again SCHEME poison cassia. Garran's protection warns Cassia (+2 dc): dc 20 against the same roll 21: the poison would still land. The player has to act."
+    },
+    {
+      "id": "C", "loop": 1, "night": 2,
+      "headline": "A Parley with a Knowing changes the night; the machine is offline, so the planner plays every group; the four discover they all remember",
+      "dayActions": {
+        "cassia (player)": ["day: the Commons, a Knowing moment: Parley with Nysa citing K-nysa-poison (accepted; flip_next_intent)", "dusk: the Tent Trial vs Nysa (won)", "night act: the Edge, the Fourth Watch"],
+        "npcs": "nysa: pending SCHEME poison replaced by CONFIDE cassia F-A-04; garran PROTECT cassia; iskar BEFRIEND garran (cached from night A)"
+      },
+      "parley": { "roll": "guile 2*4 = 8 + d20 12 = 20 > 15", "effect": "flip_next_intent", "npcReply": "You cannot know that. Unless you have been here before. Keep your voice down." },
+      "deltas": [
+        { "quantity": "player knowings", "before": "K-nysa-poison", "after": "K-nysa-poison, K-venno-fixes", "cause": "Nysa CONFIDEs F-A-04: the Lanista paid for the Tide favourite to fall" },
+        { "quantity": "trust nysa->cassia", "before": -10, "after": -6, "cause": "CONFIDE +4 (reset to the authored -10 at the ring's turn)" },
+        { "quantity": "trust cassia->garran", "before": 43, "after": 53, "cause": "PROTECT" },
+        { "quantity": "debt cassia->garran", "before": 0, "after": 1, "cause": "PROTECT" },
+        { "quantity": "trust garran->iskar", "before": 24, "after": 33, "cause": "BEFRIEND again (persisted trust grows)" },
+        { "quantity": "trust iskar->garran", "before": 29, "after": 38, "cause": "BEFRIEND again" },
+        { "quantity": "cassia.sick", "before": 0, "after": 0, "cause": "no poison tonight" }
+      ],
+      "arcTransitions": [
+        { "arc": "bond_of_four", "from": "first_watch", "to": "plotting", "because": "the player attended the Fourth Watch; plan vote: Cassia knowledge, Garran escape, Brennic positions, Iskar abstains; a tie goes to the player's plan: knowledge" }
+      ],
+      "director": {
+        "source": { "ember": "planner", "tide": "planner", "stone": "planner", "gale": "planner", "margins": "planner" },
+        "why": "offline (no network on this night); the game does not tell the player",
+        "calls": 0, "cacheHits": 0,
+        "decisionsForDay3": [
+          { "character": "garran", "intent": "PROTECT", "args": { "target": "cassia" }, "line": "template: \"I will stand by the Door when you go through.\"" },
+          { "character": "ophel", "intent": "WATCH", "args": { "target": "nysa" }, "line": "template: \"Something has changed in my tent. I shall find out what.\"" },
+          { "character": "nysa", "intent": "TRAIN", "args": { "stat": "focus" }, "line": "template: \"Win, then. Someone should.\"" },
+          { "character": "iskar", "intent": "RECRUIT", "args": { "target": "lio" }, "line": "template: \"Every Games feeds them. Who will starve them with me?\"" },
+          { "character": "venno", "intent": "OFFER", "args": { "target": "senna", "terms": "gold if the Tide entrant falls" }, "line": "template: \"Odds change. So do friends.\"" }
+        ]
+      },
+      "hollowBoard": [
+        "You wake clear-headed. The Tide Tent is very quiet.",
+        "Garran slept across your tent's doorway.",
+        "Journal: Nysa, in a whisper: the Lanista paid for you to fall. Rome bets on its own Games.",
+        "Journal: at the Edge, all four of you said the same words at once: 'We have been here before.'"
+      ],
+      "counterfactual": "Without the Parley, Loop 1 night 2 would have replayed Loop 0 night B's poison (warned or not, 21 > 20). Without the Knowing, the Parley could only shift trust by 8. The night is different because the player learned something in a previous loop and used it."
+    }
+  ]
+}

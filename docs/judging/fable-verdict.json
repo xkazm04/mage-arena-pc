@@ -1,0 +1,77 @@
+{
+  "judge": "claude-claude-fable-5-1_medium",
+  "entries": {
+    "A": {
+      "variants": [
+        {
+          "n": 1,
+          "concept": "The Cinder Ledger",
+          "scores": { "wow": 5, "clarity": 7, "wayfinding": 6, "interaction": 7, "craft": 8, "concept": 5, "utility": 8 },
+          "strengths": "The reconciliation contract (design/reconciliation.md) is the most defensively engineered of the four: the model only picks a candidate ID from <=3 compiled bundles per NPC, whole-batch accept-or-fallback, exact cache key, 1500 ms deadline, cost reservation including failed calls, and atomic day commits. The three worked days (design/day-01..03.json) chain by snapshot hash and replay exactly under design/verify.py, which is a real effect replay with 27 hostile-mutation cases, not a census; trust +/-5 and loyalty +/-6 bounds hold in every trace. combat-rules.md is tick-exact (perfect window ticks 0-8, 24 s floor for tier III, worked mana example 32.8/48.8/21.2 recomputes) and the 15-wave plan (design/waves.json, wave-01.md, wave-02.md) has a command, tests, a gate and a kill rule per wave.",
+          "weaknesses": "The living world is thin: day-01.json's headline events are 'Mera takes a bed, Oren repays three coins, Rusk advances his nomination', and the report's own risk table says the model may add nothing over the offline scorer, so the owner's LLM bet is effectively engineered out rather than answered. Contradictions found: the equal two-action budget is never represented or checked in the fixtures or verify.py; models.json quest steal effect 'ticket_plus2_trust_minus4' versus day-02.json rusk.take_chalk applying only +2 ticket; day-03.json gives Taren +8 ticket in one day when award sources are 2/3/1; models.json commitment_example borrows a support slot that combat-rules.md says this variant does not have; the index.html text is about 74% identical to variant 2, so the two read as one design with switched parameters. The named biggest risk (a bounded camp is dull) is not examined until W04/W07 and only by owner reading.",
+          "broken": false
+        },
+        {
+          "n": 2,
+          "concept": "The Unbroken Tent",
+          "scores": { "wow": 6, "clarity": 6, "wayfinding": 6, "interaction": 7, "craft": 7, "concept": 5, "utility": 7 },
+          "strengths": "The one genuinely new idea in entry A lives here: a borrowed support spell attached to a named person, a ration cost and a two-day expiry (models.json commitment_example, combat-rules.md support-slot semantics), which makes coalition-building a combat preparation. Worked days chain and replay under verify.py; pledge terms (guard until day 3, escape until day 5) are consistent with the two-day rule; the touch layout in index.html section 04 is specific (48 dp pads, persistent pointer IDs, cancel region, no auto-cast) and wave-02.md tests pointer swaps, third touches and OS backgrounding. Power resetting per wave is an honest alternative axis to variant 1.",
+          "weaknesses": "Rule violations in its own fixtures: day-01.json oren.guard debits the player's rations inside an NPC effect although reconciliation.md and commitment_example.consent_fact require a player-signed offer; day-03.json rusk.ticket awards +3 ticket from a dusk choice although nomination_rules say tickets are witnessed receipts only; day-03 oren.escape overwrites a still-active guard pledge with no replacement marker; reconciliation-output.schema.json's actor enum omits taren although story-and-scope.md says any main can be an NPC. Sibling leaks (combat-rules.md 'the four-slot campaign has no borrowed support slot', models.json locations promising theory XP while tuning.json sets training_xp_per_visit 0) show the package was derived from variant 1. The Android W02 gate accepts no physical device, so the hardest risk (two thumbs sharing aim, cast and absorb) cannot be closed unattended.",
+          "broken": false
+        }
+      ],
+      "entry_note": "Entry A brought two variants (not three) that are one design with a parameter table: same characters, same spell sheet, same wave list, same risk table, differing on platform, day count, slot count and whether the model picks bundles or offers; the brief's 'two skins of one design' warning applies, and only the pledge-loan mechanic of variant 2 is a distinct idea."
+    },
+    "B": {
+      "variants": [
+        {
+          "n": 1,
+          "concept": "The Ledger",
+          "scores": { "wow": 8, "clarity": 5, "wayfinding": 8, "interaction": 8, "craft": 6, "concept": 8, "utility": 8 },
+          "strengths": "The best game on paper: the collar's runes loosening every 15 s turn the tier clock into fiction and the Wardstones drinking spilled magic make the Games a harvest, so the ending (the Breaking, a 40 s duet of perfect absorbs) is the parry mechanic played as trust (index.html, Story spine). School identity is a combat resource with a camp bias in one record (data/schools.json: Heat, Flow, Footing, Momentum; feud = 30 starting Heat). The worked night 1 board ('Fenna sleeps in the Stone Tent now. She did not look at you when she passed.') with its counterfactual delivers the brief's camp wow. 'Code decides, the model only speaks' answers the never-break requirement by construction, with a build-time phrase bank as the default and zero required calls. Wave cards W1 and W2 (design/waves/) are in the sister project's executable style with gradle commands, invariants over 1,000 seasons, a divergence test, and STOP rules; the TV-latency risk is measured in W1 and judged in W3 with a data-derived fallback.",
+          "weaknesses": "The worked nights do not follow the data files, which is exactly what W2's golden test will hit: design/reconciliation/worked-days.json applies hunger +15 to Fenna the night she was fed while data/situations.json says '+15 unless helped'; Brennic-Cassia +9 ignores activities.csv's 'halved when aggression gap >= 6' (9 vs 3), and that broken delta is what triggers the bond's first_watch; Night 3 Senna +6 contradicts situations.json's torn-to-peers +10; same-tent decay is applied to one pair only; Doros's starvation and Sadruba's -20 exist in no data file; the nights lack the schema's required seed and tomorrowPlans. activities.csv has 13 rows while README, report and W2 say 14; locations.csv and activities.csv give two authorities for trust gain despite the one-authority rule. The crier validator in crier-prompt.md has no banned-consequence or number-word check, so neither rejection shown in Night 3 ('nearly killed you', 'three hungry nights') would be caught as described. The model's remaining role departs from the owner's note; the departure is flagged, but the camp's variety rests entirely on a utility planner the report itself rates a high risk.",
+          "broken": false
+        },
+        {
+          "n": 2,
+          "concept": "Fourteen Nights",
+          "scores": { "wow": 8, "clarity": 4, "wayfinding": 7, "interaction": 8, "craft": 6, "concept": 9, "utility": 7 },
+          "strengths": "The most original central bet: the Persona time loop taken literally as the bound on a model-driven world (loops of 3, 7, 14 days; only Mastery, Knowings and the four mains' trust persist, data/loops.json), with determinism-by-cache-key as fiction and Knowings as the only lever that makes typed Parley powerful (data/parley.json). The Director contract (reconciliation/director-prompt.md) is the right shape: closed 13-verb vocabulary, group calls that see only their own knowledge slice, no numbers from the model, per-item planner fallback, camp caps, a 12 s grace hidden behind a playable night act. W1 (waves/W1-director-harness.md) proves the hardest part first with no graphics: 300 live nights, 500-case fuzz, an in-character judge, a blind owner read, and a 15% rejection kill rule that falls back to variant 1 behind the same schema. The directional 140 degree ward and lines that climb tiers in place are a real alternative to variant 1's slot curve.",
+          "weaknesses": "The cache story contradicts itself: director-prompt.md says the loop index is not in the key, but its own example input carries calendar.loop and gamesDay, so no group could ever hit across loops, and worked-nights.json Night C1 claims a Gale cache hit although Gale contains Iskar, a remembering main whose trust changed. Loop 1 arithmetic ignores the Echo rule in loops.json (Cassia's guile should drop to 1, changing the dc and the Parley roll); Night A passes Nysa's second consecutive scheme against Cassia that Night B's validator rejects; Night A's decisions omit the goal and mood that director-schema.json requires, so the golden fixtures do not validate; Night C holds a Tent Trial on day 2 of a 7-day loop; the Fourth Watch meets at a Well that locations.csv does not contain. Runtime cost (about 1 USD per playthrough) and provider dependence are real, offline play is planner-only, and waves W8-W12 are a single 'Depth' row, so the second half of the build is less executable than the first.",
+          "broken": false
+        }
+      ],
+      "entry_note": "Entry B brought two honest alternatives (not three): the same original setting and cast answered two opposite ways on who decides the night, season versus loop, TV versus PC and 360 versus directional absorb, with each variant naming the other as its fallback."
+    }
+  },
+  "ranking": ["B/1", "B/2", "A/1", "A/2"],
+  "patterns": [
+    {
+      "statement": "Make the fiction and the mechanic the same object: when the camp's magic ban, the arena's tier clock and the ending all come from one piece of lore (a collar that loosens, stones that drink), every rule the player learns is also a story beat, and no mechanic needs a separate justification.",
+      "variants": ["B/1", "B/2"]
+    },
+    {
+      "statement": "Give the language model a job that can fail without breaking the world: let it choose words or verbs from a closed list, let code own every number, roll and effect, and ship a deterministic planner that writes the same schema so the rest of the system cannot tell which one ran.",
+      "variants": ["B/1", "B/2", "A/1"]
+    },
+    {
+      "statement": "Prove the bet before the art: the first wave should be a headless harness for the one claim the design cannot survive losing, with a numeric kill rule and a named fallback design, so a wrong bet costs a week, not a project.",
+      "variants": ["B/2", "B/1"]
+    },
+    {
+      "statement": "Define every camp quantity by its single arena consequence and every arena result by what it writes back, so the two halves are one economy and the worked examples can show a camp choice changing a fight and a fight changing a relationship.",
+      "variants": ["B/1", "A/2"]
+    },
+    {
+      "statement": "Ship worked examples with a replayer: fixtures that a script actually re-executes against the stated rules catch contradictions before a coding agent inherits them as a failing golden test.",
+      "variants": ["A/1", "A/2"]
+    }
+  ],
+  "anti_patterns": [
+    "Writing worked days from the narrative you want and back-filling 'rules used here' that exist in no data file; every delta in a golden fixture must be derivable from the authoritative tables, or the fixture becomes the first thing the implementing agent cannot reproduce.",
+    "Deriving a second variant by changing parameters (platform, day count, slot count) in a shared document instead of changing the design question; sibling leaks and near-identical text show the reader there is one idea, and the brief scores that as one.",
+    "Engineering the risky feature out so thoroughly that it no longer matters: a reconciliation where the model picks one of three pre-compiled safe bundles is safe, but it also cannot produce the 'world moved without you' moment the owner asked for, and the report then has to list 'the model adds no value' as a risk.",
+    "Stating a determinism or caching property in prose while the example payload beside it violates it; the executing agent reads the payload, and a central bet that fails on its own illustration undermines trust in every other number.",
+    "Leaving the 'thing that must never break' to an owner read-through late in the plan; if sensibility is judged only by human taste at wave 7, the unattended agent has no gate that can stop it earlier."
+  ]
+}

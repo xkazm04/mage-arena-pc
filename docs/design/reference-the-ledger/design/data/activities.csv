@@ -1,0 +1,14 @@
+activity,args,slots,locations,effect_on_actor,effect_on_target,contest,visibility,notes
+train,stat,any,yard|well|pit,stat points +3 (hungry +2),,none,public,The everyday action.
+work,,morning|afternoon,granary,gold +4; tent stores +2; fatigue +1,,none,public,Strays earn +2.
+trade,item,morning|afternoon,market,buy or sell gear,,none,public,
+socialize,target,any,commons|tent|ditch,trust +6 (cross-tent equal rank +9),trust +6 toward actor,none,public,Halved when the aggression gap between the two is >= 6.
+help,target,any,any shared,gold or bread -2,trust +10 toward actor; debt(target->actor) +1,none,public,The someone-owes-you engine. A debt is a count of favours.
+study,lesson,morning|evening,well|tent,lesson progress +1,,none,private,Lessons come from elders and bonds; 3 progress = spell learned.
+scheme,kind(steal|poison|persuade|rumour) and target,evening,market|commons|ditch|tent,see situation games_eve_schemes,see situation games_eve_schemes,actor guile*4 + d20 vs vigilance,secret (witnessed if caught),At most 2 schemes camp-wide per night and 3 on the eve of the Games.
+recruit,target and toTent,afternoon|evening,commons|ditch,,loyalty(target) -8; trust(target->actor) +4,actor guile*4 + renown/10 + d20 vs 10 + target loyalty,witnessed,A target with loyalty < 20 and trust(actor) >= 20 defects at dawn.
+report,target,morning|evening,door,trust(target->actor) -25 if exposed,the Vigil investigates the next day,vigil investigation roll,secret,An informer can be exposed by a Guile check at the Commons.
+scout,,morning|evening,door,reveal arena info by guile rank; gold -3,,none,private,Paid to the Lanista.
+rest,,any,tent,fatigue -2,,none,private,Fatigue >= 6 halves training.
+plot,,evening,well,bond-of-four progress +1,,none,secret,Only once situation bond_of_four has reached first_watch.
+pit_challenge,target,afternoon|evening,pit,winner renown +3,loser renown -2; feud if loser aggression >= 7,player bouts are played; NPC bouts are simulated,public,Fire bias.

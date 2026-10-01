@@ -1,0 +1,356 @@
+{
+  "_about": "Variant 2. The owner's four archetype situations as arcs: the same state machines as variant 1, evaluated by code each night. The Director cannot move an arc directly; it chooses intents, and an intent may only push an edge whose precondition code verifies. An intent that names an arc edge that is not available is rejected and the planner's choice stands. Every arc resets at the ring's turn except bond_of_four, whose trust persists.",
+  "predicates": [
+    "trust(a,b) >= n",
+    "pairTrust(a,b) >= n (min of both directions)",
+    "debt(a,b) >= n",
+    "hunger(x) >= n",
+    "loyalty(x) < n",
+    "trait(x,name) >= n",
+    "hasValue(x,v)",
+    "tentStores(t) >= n",
+    "dayOfWeek >= n",
+    "isEve",
+    "isGamesDay",
+    "helpedToday(a,b)",
+    "walkedPast(a,b)",
+    "caught(x)",
+    "humiliatedBy(a,b)",
+    "knows(x,fact)",
+    "members(t) >= n",
+    "situationState(id) == s",
+    "rng(p)",
+    "knowsPlayer(x, knowingId)"
+  ],
+  "nightOrder": [
+    "strays",
+    "games_eve_schemes",
+    "duality",
+    "bond_of_four"
+  ],
+  "situations": [
+    {
+      "id": "strays",
+      "archetype": "a",
+      "title": "The Strays: tentless, unfed, blamed",
+      "groupStates": [
+        "scattered",
+        "huddled",
+        "desperate"
+      ],
+      "start": "scattered",
+      "groupEdges": [
+        {
+          "from": "scattered",
+          "to": "huddled",
+          "when": "two or more Strays socialised with each other today OR a fed character helped a Stray today"
+        },
+        {
+          "from": "huddled",
+          "to": "desperate",
+          "when": "average hunger of remaining Strays >= 70"
+        },
+        {
+          "from": "desperate",
+          "to": "huddled",
+          "when": "any Stray was helped twice in one day"
+        }
+      ],
+      "perStrayOutcomes": [
+        {
+          "id": "taken_in",
+          "when": "trust(stray, m) >= 20 AND m is in tent t AND (trait(elder(t), warmth) >= 6 OR tentStores(t) >= 6)",
+          "effect": "stray joins tent t at dawn; loyalty(stray) = 40; debt(stray, m) unchanged",
+          "boardSalience": 3
+        },
+        {
+          "id": "pledged",
+          "when": "a character with goal build_fifth_tent won a recruit contest against the stray",
+          "effect": "stray pledges to the fifth circle; counts toward members(fifth)",
+          "boardSalience": 3
+        },
+        {
+          "id": "fodder",
+          "when": "group is desperate for 3 nights AND the Vigil pinned a theft on this stray (caught or framed)",
+          "effect": "the Vigil hands the stray to the Lanista; the stray appears in the next Games wave 1 in conscript gear. The player can spare them with a staff strike at low HP (no kill) for +10 trust from every Stray and -5 renown with the crowd.",
+          "boardSalience": 5
+        }
+      ],
+      "rules": [
+        "Strays receive no ration; hunger +15 per day unless helped or working (+8 when working).",
+        "Walking past a begging Stray: trust(stray, walker) -5 and the memory walkedPast.",
+        "The Vigil investigates Strays first: any unexplained theft gives rng(0.5) to pin it on a Stray."
+      ],
+      "playerHooks": [
+        "Give bread (2 gold): help.",
+        "Bring a Stray to your elder: taken_in if your elder qualifies.",
+        "As Air: found the fifth circle with them."
+      ],
+      "pushedBy": {
+        "PROTECT(stray)": "scattered->huddled; enables taken_in",
+        "WORK(stray)": "slows hunger (+8 instead of +15)",
+        "RECRUIT(stray) by a fifth-circle builder": "pledged",
+        "REPORT(stray)": "pins a theft: toward fodder",
+        "BEFRIEND(stray)": "trust toward taken_in"
+      },
+      "resetsAtRingTurn": true
+    },
+    {
+      "id": "games_eve_schemes",
+      "archetype": "b",
+      "title": "Schemes before the Games",
+      "states": [
+        "quiet",
+        "open",
+        "resolved"
+      ],
+      "start": "quiet",
+      "edges": [
+        {
+          "from": "quiet",
+          "to": "open",
+          "when": "dayOfWeek >= 4 (in the 3-day slice: the evening of day 1)"
+        },
+        {
+          "from": "open",
+          "to": "resolved",
+          "when": "isGamesDay"
+        },
+        {
+          "from": "resolved",
+          "to": "quiet",
+          "when": "the day after the Games"
+        }
+      ],
+      "caps": {
+        "schemesPerNight": 2,
+        "schemesOnEve": 3,
+        "sameTargetTwoNightsRunning": false,
+        "poisonOnAlreadySick": false
+      },
+      "kinds": {
+        "steal": {
+          "targetGets": "loses one gear item until recovered, or tent stores -4",
+          "dc": "10 + guile(target)*4 + patrol(location)"
+        },
+        "poison": {
+          "targetGets": "sick: maxStamina -20 and HP -10 in the next Games; cannot kill",
+          "dc": "10 + guile(target)*4 + patrol(location)"
+        },
+        "persuade": {
+          "targetGets": "loyalty -15; if loyalty < 20 the defection rule may fire at dawn",
+          "dc": "10 + loyalty(target)/4"
+        },
+        "rumour": {
+          "targetGets": "renown -3 (floor 0); characters whose values react to the rumour's topic change trust by the reaction table",
+          "dc": "12 + renown(target)/10",
+          "mayBeFalse": true
+        }
+      },
+      "contest": "schemer guile*4 + d20 must EXCEED the dc; +2 to the dc when the target knows a scheme is coming (a Knowing from a confidant)",
+      "onFail": "foiled; then the Vigil rolls d20 + 8 vs schemer guile*4 + 10: success means caught",
+      "caught": {
+        "schemer": "stocks next day (loses all slots), renown -5",
+        "target": "trust(target, schemer) -30",
+        "commissioner": "exposed if schemer trust(commissioner) < 30 (they talk)"
+      },
+      "rumourHearing": "heard by the starter's tent and the target's tent; when the target is one of the four mains, also by the other three mains. A listener whose trust toward the target is >= 20 disbelieves the rumour and does not react.",
+      "rumourReactionTable": [
+        {
+          "topic": "serves_rome",
+          "values": [
+            "freedom",
+            "spite"
+          ],
+          "trustDelta": -10
+        },
+        {
+          "topic": "cowardice",
+          "values": [
+            "strength",
+            "honour"
+          ],
+          "trustDelta": -6
+        },
+        {
+          "topic": "theft",
+          "values": [
+            "order"
+          ],
+          "trustDelta": -6
+        },
+        {
+          "topic": "kindness_to_strays",
+          "values": [
+            "kin",
+            "belonging"
+          ],
+          "trustDelta": 4
+        }
+      ],
+      "pushedBy": {
+        "SCHEME(kind,target)": "attempted",
+        "WATCH(schemer)": "learns the plan (a Knowing for the player if the player watched)",
+        "CONFIDE(target, plan fact)": "target warned: dc +2",
+        "REPORT(schemer)": "Vigil investigates before the attempt: caught on d20 + 8 > guile*4 + 10"
+      },
+      "resetsAtRingTurn": true
+    },
+    {
+      "id": "duality",
+      "archetype": "c",
+      "title": "Rivals at home, friends abroad",
+      "rules": [
+        "Same tent, same rank pairs lose 1 pairTrust a day (they compete for one slot).",
+        "Cross-tent, equal rank pairs gain +50% from socialising at the Commons (+9 instead of +6).",
+        "The Tent Trial on the day before the Games decides one entrant per tent: bout 50%, elder trust 30%, renown 20%."
+      ],
+      "pairStates": {
+        "sameTent": {
+          "states": [
+            "cold",
+            "trial_set",
+            "bitter",
+            "respect"
+          ],
+          "edges": [
+            {
+              "from": "cold",
+              "to": "trial_set",
+              "when": "the Trial is scheduled"
+            },
+            {
+              "from": "trial_set",
+              "to": "respect",
+              "when": "loser has warmth >= 5 OR winner helped loser this week"
+            },
+            {
+              "from": "trial_set",
+              "to": "bitter",
+              "when": "otherwise; loser gets goal revenge(winner) if aggression >= 6"
+            }
+          ]
+        },
+        "crossTent": {
+          "states": [
+            "strangers",
+            "peers",
+            "sworn",
+            "torn"
+          ],
+          "edges": [
+            {
+              "from": "strangers",
+              "to": "peers",
+              "when": "pairTrust >= 20"
+            },
+            {
+              "from": "peers",
+              "to": "sworn",
+              "when": "pairTrust >= 50"
+            },
+            {
+              "from": "peers|sworn",
+              "to": "torn",
+              "when": "the pair is drawn against each other in the Games"
+            },
+            {
+              "from": "torn",
+              "to": "peers",
+              "when": "after the bout the winner has honour or warmth >= 6: pairTrust +10"
+            },
+            {
+              "from": "torn",
+              "to": "strangers",
+              "when": "otherwise: pairTrust -20"
+            }
+          ]
+        }
+      },
+      "pushedBy": {
+        "BEFRIEND(cross-tent equal rank)": "strangers->peers->sworn",
+        "TRAIN": "Trial bout odds",
+        "DEFECT": "only when loyalty < 20; resolves rivalry by leaving"
+      },
+      "resetsAtRingTurn": true
+    },
+    {
+      "id": "bond_of_four",
+      "archetype": "d",
+      "title": "The four who came through the Door together",
+      "states": [
+        "scattered_four",
+        "first_watch",
+        "plotting",
+        "sworn",
+        "fractured"
+      ],
+      "start": "scattered_four",
+      "edges": [
+        {
+          "from": "scattered_four",
+          "to": "first_watch",
+          "when": "at least 3 of the 6 pairs among the four mains have pairTrust >= 20 (mains' trust persists across loops, so this often fires early in Loop 1)"
+        },
+        {
+          "from": "first_watch",
+          "to": "plotting",
+          "when": "the player attends the Fourth Watch at the Well and the four choose a plan"
+        },
+        {
+          "from": "plotting",
+          "to": "sworn",
+          "when": "all 6 pairs >= 40 AND one plan step is complete"
+        },
+        {
+          "from": "first_watch|plotting|sworn",
+          "to": "fractured",
+          "when": "any pair < -20 OR one of the four reported another to the Vigil"
+        },
+        {
+          "from": "fractured",
+          "to": "first_watch",
+          "when": "the player completes the reconciliation quest 'Salt and Bread'"
+        }
+      ],
+      "plans": [
+        {
+          "id": "positions",
+          "goal": "each of the four wins their Tent Trial",
+          "steps": [
+            "help each other train",
+            "share Pit habits of rivals",
+            "lean on elders"
+          ]
+        },
+        {
+          "id": "knowledge",
+          "goal": "learn what the Wardstones drink",
+          "steps": [
+            "win Old Quill's trust (40) or Guile 3",
+            "read the Well stones at night",
+            "confront Warden Septima"
+          ]
+        },
+        {
+          "id": "escape",
+          "goal": "the Breaking",
+          "requires": "knowledge complete",
+          "steps": [
+            "map the Edge",
+            "reach the Summa",
+            "agree the Breaking with the other finalist"
+          ]
+        }
+      ],
+      "voting": "each main votes for the plan that best serves their goal; ties go to the plan the player proposed. Brennic prefers positions, Cassia knowledge, Garran escape, Iskar escape (but only after the fifth tent exists).",
+      "pushedBy": {
+        "PLOT": "plan progress",
+        "CONFIDE(main)": "pair trust +4",
+        "PROTECT(main)": "pair trust +10",
+        "REPORT(main)": "fractured"
+      },
+      "resetsAtRingTurn": false
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "_about": "Variant 1. Quests are authored decision graphs (D&D-style choices with visible odds). Two samples. A linter checks: every node reachable from start; every non-terminal has >= 2 choices; every terminal is an authored ending with effects; every effect names a real quantity; every check names a stat and a dc. Language models help write quest text at build time only; the shipped graph is fixed data.",
+  "quests": [
+    {
+      "id": "q_salt_tally", "title": "The Salt Tally", "giver": "sadruba", "for": "ember", "kind": "sabotage", "window": "eve of the Games",
+      "start": "n1",
+      "nodes": [
+        { "id": "n1", "text": "Sadruba: 'Ophel keeps a wax tablet of every Pit habit in the camp. Ours too. Bring it, or break it.'", "choices": [
+          { "label": "Slip into the Tide Tent at the evening bell", "to": "n2" },
+          { "label": "Buy a look at it from Nysa", "cost": { "gold": 10 }, "to": "n3" },
+          { "label": "Refuse: 'I win in the arena, not in their tent.'", "to": "t_refuse" } ] },
+        { "id": "n2", "text": "Doros sits by the tablet chest, counting bread.", "choices": [
+          { "label": "Bribe him with two loaves", "cost": { "gold": 4 }, "check": { "stat": "guile", "dc": 12 }, "pass": "t_stolen", "fail": "n4" },
+          { "label": "Wait for the change of watch", "check": { "stat": "guile", "dc": 16 }, "pass": "t_stolen", "fail": "n4" } ] },
+        { "id": "n3", "text": "Nysa smiles. 'A look costs ten. Keeping quiet about who looked costs more.'", "choices": [
+          { "label": "Pay and memorise", "check": { "stat": "focus", "dc": 12 }, "pass": "t_memorised", "fail": "t_half" },
+          { "label": "Walk away", "to": "t_refuse" } ] },
+        { "id": "n4", "text": "Salt crackles at the tent flap. The Vigil is near.", "choices": [
+          { "label": "Run", "check": { "stat": "vigor", "dc": 12 }, "pass": "t_empty", "fail": "t_caught" },
+          { "label": "Bluff: you came to see Doros", "check": { "stat": "nerve", "dc": 14 }, "pass": "t_empty", "fail": "t_caught" } ] }
+      ],
+      "terminals": [
+        { "id": "t_stolen", "text": "The tablet is yours.", "effects": { "knowing": "tide_pit_habits", "trust": { "sadruba": 10, "ophel": -20 }, "scoutBonus": 1 } },
+        { "id": "t_memorised", "text": "You read half the tablet before she takes it back.", "effects": { "knowing": "tide_pit_habits", "trust": { "nysa": 4 }, "debt": { "player->nysa": 1 } } },
+        { "id": "t_half", "text": "The lines blur. You remember little but the price.", "effects": { "trust": { "nysa": 2 } } },
+        { "id": "t_empty", "text": "You leave with nothing and no one saw your face.", "effects": {} },
+        { "id": "t_caught", "text": "Warden Septima's salt burns your wrists.", "effects": { "stocks": 1, "renown": -5, "trust": { "ophel": -30, "sadruba": -5 } } },
+        { "id": "t_refuse", "text": "Sadruba spits into the fire.", "effects": { "trust": { "sadruba": -5 }, "renown": 1 } }
+      ]
+    },
+    {
+      "id": "q_bread_for_the_ditch", "title": "Bread for the Ditch", "giver": "fenna", "for": "any", "kind": "stray", "window": "while the strays situation is huddled or desperate",
+      "start": "m1",
+      "nodes": [
+        { "id": "m1", "text": "Fenna: 'The Granary sweeps the floor at dusk. The sweepings go to the pigs the Romans do not let us see. Help me get them first.'", "choices": [
+          { "label": "Work a shift and pay for bread honestly", "cost": { "slot": 1 }, "to": "t_honest" },
+          { "label": "Distract the granary keeper", "check": { "stat": "guile", "dc": 13 }, "pass": "t_sweepings", "fail": "m2" },
+          { "label": "Tell her to ask her own tent", "to": "t_cold" } ] },
+        { "id": "m2", "text": "The keeper turns. Fenna is still inside.", "choices": [
+          { "label": "Take the blame", "to": "t_blame" },
+          { "label": "Walk out", "to": "t_abandon" } ] }
+      ],
+      "terminals": [
+        { "id": "t_honest", "text": "The Ditch eats tonight.", "effects": { "gold": -4, "trust": { "fenna": 10, "quill": 6, "dace": 4 }, "debt": { "fenna->player": 1 }, "strays": "help" } },
+        { "id": "t_sweepings", "text": "Two sacks of sweepings and a grin.", "effects": { "trust": { "fenna": 12 }, "debt": { "fenna->player": 1 }, "strays": "help" } },
+        { "id": "t_blame", "text": "The Vigil fines you; Fenna remembers.", "effects": { "gold": -6, "trust": { "fenna": 20 }, "debt": { "fenna->player": 2 } } },
+        { "id": "t_abandon", "text": "Fenna is pinned for the theft.", "effects": { "trust": { "fenna": -25 }, "strays": "pinned:fenna" } },
+        { "id": "t_cold", "text": "She does not ask again.", "effects": { "trust": { "fenna": -5 }, "memory": "walkedPast" } }
+      ]
+    }
+  ]
+}

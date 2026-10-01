@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mage-arena/v2/director-group-output",
+  "title": "Variant 2: the output of one Director group call",
+  "description": "One call decides tomorrow's main act for each member of one group. The model writes verbs and words, never numbers. Each item is validated on its own; an invalid item is replaced by the planner's choice for that character.",
+  "type": "object",
+  "required": ["group", "decisions"],
+  "additionalProperties": false,
+  "properties": {
+    "group": { "enum": ["ember", "tide", "stone", "gale", "margins"] },
+    "decisions": {
+      "type": "array", "minItems": 1, "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["character", "intent", "args", "goal", "mood", "reasonValue", "citedFacts", "line"],
+        "properties": {
+          "character": { "type": "string" },
+          "intent": { "enum": ["TRAIN", "WORK", "BEFRIEND", "CONFIDE", "PROTECT", "WATCH", "SCHEME", "RECRUIT", "DEFECT", "REPORT", "PLOT", "REST", "OFFER"] },
+          "args": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "target": { "type": "string" },
+              "stat": { "enum": ["vigor", "focus", "nerve", "guile"] },
+              "kind": { "enum": ["steal", "poison", "persuade", "rumour"] },
+              "topic": { "enum": ["serves_rome", "cowardice", "theft", "kindness_to_strays"] },
+              "factId": { "type": "string" },
+              "toTent": { "enum": ["ember", "tide", "stone", "gale"] },
+              "terms": { "type": "string", "maxLength": 80, "pattern": "^[^0-9]*$" }
+            }
+          },
+          "goal": { "enum": ["rise_in_tent", "win_games", "protect", "revenge", "escape_research", "build_fifth_tent", "undermine", "win_favour", "repay_debt", "find_tent", "survive", "keep_peace", "profit", "learn_secrets", "hold_fifth_tent"] },
+          "mood": { "enum": ["calm", "proud", "afraid", "angry", "scheming", "grieving"] },
+          "reasonValue": { "enum": ["strength", "rank", "kin", "freedom", "knowledge", "honour", "survival", "order", "spite", "faith", "gold", "belonging"] },
+          "citedFacts": { "type": "array", "items": { "type": "string" }, "maxItems": 3 },
+          "line": { "type": "string", "maxLength": 140, "pattern": "^[^0-9]*$" }
+        }
+      }
+    }
+  }
+}

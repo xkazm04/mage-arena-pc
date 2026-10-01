@@ -1,0 +1,62 @@
+{
+  "_about": "Variant 1. Four schools, one tent each, plus the tentless Strays and the Vigil. Each school has one combat identity resource and one camp bias; the two are the same temperament seen in two places. Numbers are authored, not measured.",
+  "schools": [
+    {
+      "id": "fire", "tent": "ember", "tentName": "the Ember Tent", "colour": "#d4582a",
+      "temperament": "hard-headed, aggressive, stronger under tension",
+      "combatIdentity": {
+        "resource": "heat", "range": [0, 100],
+        "gain": { "perBoltHit": 2, "perFlickTarget": 6, "perHitTakenUnabsorbed": 12, "perSecondEnemyWithin3m": 3 },
+        "decay": { "perSecond": 6, "afterNoGainSeconds": 2.0 },
+        "thresholds": [
+          { "at": 50, "name": "Kindled", "spellDamageMult": 1.15 },
+          { "at": 80, "name": "Blazing", "spellDamageMult": 1.30, "absorbDrainMult": 1.5, "staminaRegenMult": 0.7 }
+        ],
+        "perfectAbsorbExtra": "none beyond the shared reward; Fire is paid for staying close and hitting"
+      },
+      "campBias": { "activityWeights": { "train:pit": 1.4, "scheme:rumour": 0.6, "socialize": 0.8, "pit_challenge": 1.5 }, "onInsult": "feud", "arenaLink": "start a bout at 30 Heat against a feud target" }
+    },
+    {
+      "id": "water", "tent": "tide", "tentName": "the Tide Tent", "colour": "#2f7fb5",
+      "temperament": "patient, intelligent, wins before the fight",
+      "combatIdentity": {
+        "resource": "flow", "range": [0, 5],
+        "gain": { "castDifferentSpellWithinSeconds": 2.0, "stacksPerCast": 1 },
+        "decay": { "resetIfNoCastSeconds": 3.0, "resetOnSameSpellTwice": true },
+        "thresholds": [ { "at": 1, "perStackSpellDamageMult": 0.06 }, { "at": 5, "name": "Crest", "nextSpellManaCost": 0, "nextSpellDamageMult": 1.5 } ],
+        "perfectAbsorbExtra": "+1 Flow"
+      },
+      "campBias": { "activityWeights": { "scheme:persuade": 1.4, "scheme:rumour": 1.3, "trade": 1.2, "train:well": 1.3 }, "onInsult": "ledger_entry", "arenaLink": "Guile scouting reveals one extra level of the opponent's loadout" }
+    },
+    {
+      "id": "earth", "tent": "stone", "tentName": "the Stone Tent", "colour": "#7a6a3a",
+      "temperament": "calm, protective, slow to move and hard to move",
+      "combatIdentity": {
+        "resource": "footing", "range": [0, 6],
+        "gain": { "stackPerHalfSecondBelowMps": 1.0 },
+        "decay": { "clearOnRollOrSprint": true },
+        "thresholds": [ { "at": 1, "perStackDamageTakenMult": -0.04, "perStackSpellPowerMult": 0.04 }, { "at": 3, "absorbDrainMult": 0.8 } ],
+        "perfectAbsorbExtra": "+2 Footing"
+      },
+      "campBias": { "activityWeights": { "help": 1.5, "work": 1.3, "train:yard": 1.2, "scheme:poison": 0.2 }, "onInsult": "remember", "arenaLink": "an ally with Trust >= 40 watching the Games grants +10 starting HP (the held line)" }
+    },
+    {
+      "id": "air", "tent": "gale", "tentName": "the Gale Tent", "colour": "#5f9e98",
+      "temperament": "restless, free, contemptuous of rules",
+      "combatIdentity": {
+        "resource": "momentum", "range": [0, 100],
+        "gain": { "perSecondMovingAbove4Mps": 20 },
+        "decay": { "perSecondStill": 25 },
+        "thresholds": [ { "at": 40, "spellsPierce": 1, "rollStaminaMult": 0.6 }, { "at": 80, "spellRangeMult": 1.3 } ],
+        "absorbDrainMult": 1.2,
+        "perfectAbsorbExtra": "deflect: an absorbed projectile of tier <= own unlocked tier is redirected along the aim direction"
+      },
+      "campBias": { "activityWeights": { "recruit": 1.6, "scheme:rumour": 1.4, "socialize": 1.2, "report": 0.3 }, "onInsult": "mock_publicly", "arenaLink": "Renown from Games won spreads one day faster" }
+    }
+  ],
+  "nonSchools": [
+    { "id": "strays", "name": "the Strays", "fed": false, "baseTrustFromTents": -30, "note": "No tent, no ration, blamed for every theft. Archetype situation (a)." },
+    { "id": "vigil", "name": "the Vigil", "fed": true, "note": "Arcane wardens whose salt-wards stop the four elements working inside the camp. They stop violence and punish whoever is caught." },
+    { "id": "roman", "name": "the Lanista's household", "fed": true, "note": "Outside the Door. Speaks through the grille." }
+  ]
+}

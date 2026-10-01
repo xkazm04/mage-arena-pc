@@ -1,0 +1,204 @@
+{
+  "_about": "Variant 1: three worked camp nights of the vertical slice. Player = Brennic (Fire). The slice is the last three days of a camp week: day 1 = weekday 5, day 2 = weekday 6 (Tent Trial), day 3 = weekday 7 (Tiro Games). Every number below follows design/data/*.csv|json; dice are seeded d20 draws shown as their result. Code decides every outcome; the Crier only writes the board text. Night 3 shows a rejected live board falling back to the bank.",
+  "rulesUsedHere": [
+    "socialize: +6 both ways; +9 when cross-tent and equal rank (activities.csv)",
+    "help: target trust toward helper +10; debt(target, helper) +1; target hunger -30 (one ration)",
+    "walking past a begging Stray: trust(stray, walker) -5 (situations.json strays.rules)",
+    "same tent, same rank pairs: -1 trust each way per night (duality)",
+    "hunger +15 per night for the unfed (Strays always; tent members when tent stores < members); hunger >= 50 at night: tent loyalty -5",
+    "defection: loyalty < 20 AND trust(x, m) >= 20 for m in another tent whose elder accepts (warmth >= 6 or stores >= 6); at most 1 defection per night",
+    "rumour: heard by the starter's tent, the target's tent, and (when the target is one of the four mains) the other three mains; reactions by rumourReactionTable; a listener whose trust toward the target is >= 20 disbelieves it (no reaction)",
+    "Tent Trial score = bout 0.5 + elder trust/100 * 0.3 + renown/100 * 0.2",
+    "Games payout = the stage reached: [20, 40, 60, 100] gold; renown [5, 10, 15, 25] (arena-tiers.json); nobody dies below the Summa (missio at 0 HP)",
+    "after a Games bout, a winner with honour in values offers a hand: pairTrust +6"
+  ],
+  "startOfSlice": {
+    "brennic": { "vigorPoints": 6, "renown": 5, "gold": 10, "lesson_brand_lance": 0 },
+    "trust": { "brennic->senna": 0, "senna->brennic": 0, "brennic->cassia": 15, "cassia->brennic": 15, "cassia->garran": 25, "garran->cassia": 25, "brennic->garran": 20, "garran->brennic": 20, "iskar->brennic": 0, "fenna->pell": 20, "fenna->brennic": 0, "sadruba->brennic": 10, "sadruba->corvo": 15, "tilla->brennic": 0, "corvo->brennic": -20, "brennic->corvo": -15, "doros->garran": 10, "garran->quill": 0, "quill->garran": 0 },
+    "debt": { "fenna->pell": 1 },
+    "hunger": { "fenna": 60, "doros": 40 },
+    "loyalty": { "doros": 28 },
+    "renown": { "corvo": 8, "senna": 5, "iskar": 5 },
+    "tentStores": { "stone": 8, "tide": 3 },
+    "situations": { "strays": "scattered", "games_eve_schemes": "open", "bond_of_four": "scattered_four" }
+  },
+  "nights": [
+    {
+      "night": 1,
+      "headline": "Someone you ignored joined a rival tent; a rumour is about you",
+      "dayActions": {
+        "brennic (player)": ["train vigor at yard", "socialize senna at commons; walked past Fenna begging", "study brand_lance with sadruba at tent"],
+        "pell": ["work at granary", "socialize at commons", "help fenna at ditch"],
+        "corvo": ["train vigor at yard", "train nerve at pit", "scheme rumour vs brennic (topic: cowardice, false)"],
+        "garran": ["work at granary", "train vigor at yard", "study at well with quill present"],
+        "cassia": ["trade at market (hears: Ophel asked Nysa about the Fire entrant)", "socialize garran at commons", "study at tent"],
+        "iskar": ["trade at market", "socialize lio at commons", "recruit dace at ditch"]
+      },
+      "contests": [
+        { "id": "C1-1", "who": "corvo", "kind": "rumour vs brennic", "roll": "guile 2*4 = 8 + d20 13 = 21", "dc": "12 + renown(brennic) 5/10 -> 12", "result": "succeeded" },
+        { "id": "C1-2", "who": "iskar", "kind": "recruit dace", "roll": "guile 2*4 = 8 + renown 5/10 -> 0 + d20 9 = 17", "dc": "10 + loyalty(dace to strays) 10 = 20", "result": "failed (no effect, low salience, not on the board)" }
+      ],
+      "deltas": [
+        { "quantity": "brennic.vigorPoints", "before": 6, "after": 9, "cause": "train" },
+        { "quantity": "trust brennic->senna", "before": 0, "after": 9, "cause": "socialize, cross-tent equal rank" },
+        { "quantity": "trust senna->brennic", "before": 0, "after": 9, "cause": "socialize, cross-tent equal rank" },
+        { "quantity": "trust fenna->brennic", "before": 0, "after": -5, "cause": "walked past" },
+        { "quantity": "brennic.lesson_brand_lance", "before": 0, "after": 1, "cause": "study" },
+        { "quantity": "trust fenna->pell", "before": 20, "after": 30, "cause": "help" },
+        { "quantity": "debt fenna->pell", "before": 1, "after": 2, "cause": "help" },
+        { "quantity": "hunger fenna", "before": 60, "after": 45, "cause": "+15 unfed night, -30 Pell's bread" },
+        { "quantity": "renown brennic", "before": 5, "after": 2, "cause": "C1-1 rumour" },
+        { "quantity": "trust sadruba->brennic", "before": 10, "after": 4, "cause": "rumour reaction: cowardice vs value strength (Garran also hears it but trusts Brennic at 20: disbelieves)" },
+        { "quantity": "trust tilla->brennic", "before": 0, "after": -6, "cause": "rumour reaction: cowardice vs value strength" },
+        { "quantity": "trust cassia<->garran", "before": 25, "after": 34, "cause": "socialize, cross-tent equal rank (both ways)" },
+        { "quantity": "trust garran<->quill", "before": 0, "after": 6, "cause": "met at the well (both ways)" },
+        { "quantity": "trust brennic->corvo", "before": -15, "after": -16, "cause": "same-tent same-rank decay" },
+        { "quantity": "trust corvo->brennic", "before": -20, "after": -21, "cause": "same-tent same-rank decay" },
+        { "quantity": "hunger doros", "before": 40, "after": 55, "cause": "Tide stores 3 < 4 members: the junior goes without" },
+        { "quantity": "loyalty doros", "before": 28, "after": 23, "cause": "hunger >= 50 at night" }
+      ],
+      "situationTransitions": [
+        { "situation": "strays", "from": "scattered", "to": "huddled", "because": "a fed character (pell) helped a Stray today" },
+        { "situation": "strays/fenna", "from": "stray", "to": "taken_in:stone", "because": "trust(fenna, pell) 30 >= 20; Ruadh warmth 7 >= 6" },
+        { "situation": "bond_of_four", "from": "scattered_four", "to": "scattered_four", "because": "pairs >= 20: brennic-garran 20, cassia-garran 34 (2 of 3 needed)" }
+      ],
+      "goalRetargets": [
+        { "character": "ophel", "from": "win_games(tide)", "to": "undermine(ember)", "trigger": "dayOfWeek >= 4 AND elder AND Ember leads the standing" },
+        { "character": "fenna", "from": "find_tent", "to": "win_favour(ruadh)", "trigger": "joined a tent; a new member courts the new elder" }
+      ],
+      "facts": [
+        { "id": "F1-01", "type": "joined_tent", "actors": ["fenna"], "targets": ["stone"], "place": "ditch", "true": true, "visibility": "public", "salience": 8, "aboutPlayer": false },
+        { "id": "F1-02", "type": "rumour", "actors": ["corvo"], "targets": ["brennic"], "topic": "cowardice", "true": false, "visibility": "witnessed", "salience": 9, "aboutPlayer": true },
+        { "id": "F1-03", "type": "helped", "actors": ["pell"], "targets": ["fenna"], "place": "ditch", "true": true, "visibility": "public", "salience": 4 },
+        { "id": "F1-04", "type": "bond_event", "actors": ["garran", "quill"], "place": "well", "true": true, "visibility": "witnessed", "salience": 5 },
+        { "id": "F1-05", "type": "recruit_attempt", "actors": ["iskar"], "targets": ["dace"], "true": true, "visibility": "witnessed", "salience": 2 }
+      ],
+      "board": {
+        "source": "bank",
+        "items": [
+          { "factIds": ["F1-02"], "headline": "A rumour about you: you ran at the ford", "line": "Tilla, breathless: 'They say the new Fire ran from the barbarians! Someone at the Pit says so.'", "speaker": "tilla", "tone": "gossip" },
+          { "factIds": ["F1-01", "F1-03"], "headline": "Fenna sleeps in the Stone Tent now", "line": "Pell gave her his bread at the Ditch and Elder Ruadh took her in. She did not look at you when she passed.", "speaker": "pell", "tone": "plain" },
+          { "factIds": ["F1-04"], "headline": "Garran sat with Old Quill at the Well", "line": "Someone saw them by the dry stones until the fires died. Quill was talking to the stones again.", "tone": "gossip" }
+        ]
+      },
+      "counterfactual": "Had Brennic given Fenna bread (help): trust(fenna, brennic) +10 and debt(fenna, brennic) 1. She would still be taken in by Stone (Pell's trust 30), because Sadruba's warmth 2 cannot take her into the Ember Tent, but the board would read 'Fenna owes you a loaf' and she becomes a Stone-tent informant for Brennic later."
+    },
+    {
+      "night": 2,
+      "headline": "A scheme against you is foiled because a friend warned you; a second rumour turns Iskar cold",
+      "dayActions": {
+        "brennic (player)": ["train vigor at yard", "Tent Trial at the pit vs corvo (played bout: won)", "socialize cassia at commons (Cassia confides: Ophel is planning against the Ember entrant)"],
+        "corvo": ["rest", "Tent Trial (lost)", "scheme poison vs brennic at the Ember tent"],
+        "nysa": ["train focus at well", "Tide Trial vs cassia (simulated: Nysa won)", "scheme rumour vs brennic (commissioned by ophel; topic: serves_rome, false)"],
+        "garran": ["work at granary", "Stone Trial vs senna (simulated: Senna won)", "help doros at commons"],
+        "iskar": ["socialize mirren at tent", "Gale Trial vs lio (simulated: Lio won)", "socialize at commons"]
+      },
+      "trial": { "brennic": "0.5*1 + 0.3*(4/100) + 0.2*(2/100) = 0.516", "corvo": "0.5*0 + 0.3*(15/100) + 0.2*(8/100) = 0.061", "winner": "brennic" },
+      "contests": [
+        { "id": "C2-1", "who": "corvo", "kind": "poison vs brennic", "roll": "guile 2*4 = 8 + d20 7 = 15", "dc": "10 + guile(brennic) 1*4 + patrol(tent) 0 + wary 2 = 16", "result": "foiled (15 does not exceed 16)" },
+        { "id": "C2-1v", "who": "the Vigil", "kind": "catch corvo", "roll": "d20 15 + 8 = 23", "dc": "guile(corvo) 2*4 + 10 = 18", "result": "caught" },
+        { "id": "C2-2", "who": "nysa", "kind": "rumour vs brennic", "roll": "guile 3*4 = 12 + d20 11 = 23", "dc": "12 + renown(brennic) 5/10 -> 12", "result": "succeeded" }
+      ],
+      "deltas": [
+        { "quantity": "brennic.vigorPoints", "before": 9, "after": 12, "cause": "train" },
+        { "quantity": "renown brennic", "before": 2, "after": 5, "cause": "won a Pit bout +3" },
+        { "quantity": "renown corvo", "before": 8, "after": 6, "cause": "lost a Pit bout -2" },
+        { "quantity": "trust brennic<->cassia", "before": 15, "after": 24, "cause": "socialize, cross-tent equal rank (both ways)" },
+        { "quantity": "renown corvo", "before": 6, "after": 1, "cause": "caught: -5" },
+        { "quantity": "trust brennic->corvo", "before": -16, "after": -47, "cause": "caught scheming against him -30; same-tent decay -1" },
+        { "quantity": "trust sadruba->corvo", "before": 15, "after": -5, "cause": "caught scheming against a tent-mate -20" },
+        { "quantity": "renown brennic", "before": 5, "after": 2, "cause": "C2-2 rumour -3" },
+        { "quantity": "trust iskar->brennic", "before": 0, "after": -10, "cause": "rumour reaction: serves_rome vs values freedom, spite" },
+        { "quantity": "trust corvo->brennic", "before": -21, "after": -32, "cause": "rumour reaction (spite) -10; same-tent decay -1" },
+        { "quantity": "trust doros->garran", "before": 10, "after": 20, "cause": "help" },
+        { "quantity": "debt doros->garran", "before": 0, "after": 1, "cause": "help" },
+        { "quantity": "hunger doros", "before": 55, "after": 40, "cause": "+15 unfed night, -30 Garran's bread" }
+      ],
+      "situationTransitions": [
+        { "situation": "duality/ember(brennic,corvo)", "from": "trial_set", "to": "bitter", "because": "loser warmth 2 < 5 and the winner did not help him" },
+        { "situation": "bond_of_four", "from": "scattered_four", "to": "first_watch", "because": "pairs >= 20: brennic-garran 20, cassia-garran 34, brennic-cassia 24; day 2" },
+        { "situation": "games_eve_schemes", "from": "open", "to": "open", "because": "2 of 3 eve schemes used" }
+      ],
+      "goalRetargets": [
+        { "character": "corvo", "from": "rise_in_tent(ember)", "to": "revenge(brennic)", "trigger": "humiliatedBy(corvo, brennic) in the Trial AND aggression 8 >= 6 (set during the day, acted on in the evening)" },
+        { "character": "brennic", "from": "rise_in_tent(ember)", "to": "win_games(ember)", "trigger": "the player is this week's entrant (shown in the journal; the player's goal is advisory)" }
+      ],
+      "facts": [
+        { "id": "F2-01", "type": "scheme_caught", "actors": ["corvo"], "targets": ["brennic"], "place": "tent", "topic": "poison", "true": true, "visibility": "public", "salience": 9, "aboutPlayer": true },
+        { "id": "F2-02", "type": "rumour", "actors": ["nysa"], "targets": ["brennic"], "topic": "serves_rome", "true": false, "visibility": "secret", "salience": 9, "aboutPlayer": true, "note": "the starter is secret; the rumour itself is public as F2-02p" },
+        { "id": "F2-02p", "type": "rumour", "actors": ["brennic"], "topic": "serves_rome", "true": false, "visibility": "public", "salience": 9, "aboutPlayer": true, "playerSuspects": "tide (from Cassia's confidence)" },
+        { "id": "F2-03", "type": "trial_result", "actors": ["brennic"], "targets": ["corvo"], "place": "pit", "true": true, "visibility": "public", "salience": 7, "aboutPlayer": true },
+        { "id": "F2-04", "type": "feud", "actors": ["iskar"], "targets": ["brennic"], "true": true, "visibility": "witnessed", "salience": 6, "aboutPlayer": true },
+        { "id": "F2-05", "type": "helped", "actors": ["garran"], "targets": ["doros"], "place": "commons", "true": true, "visibility": "public", "salience": 4 }
+      ],
+      "board": {
+        "source": "live",
+        "validator": "passed: 4 items, all cited facts public or witnessed, no unknown names or numbers, rumour hedged",
+        "items": [
+          { "factIds": ["F2-01"], "headline": "Corvo in the stocks: nightshade at your tent", "line": "Warden Septima caught him by your bedroll with a twist of nightshade. The Vigil says he will stand in salt until the Games are done.", "speaker": "septima", "tone": "warning" },
+          { "factIds": ["F2-02p"], "headline": "Word is you sold the ford to Rome", "line": "Word is the new Fire mage sold the barbarians' ford to the legion. You remember who warned you the Tide Tent was busy last night.", "tone": "gossip" },
+          { "factIds": ["F2-03"], "headline": "You are the Ember Tent's entrant", "line": "Sadruba named you at the Pit. Corvo did not get up for a long time.", "speaker": "sadruba", "tone": "boast" },
+          { "factIds": ["F2-04"], "headline": "Iskar spat when your name was said", "line": "Someone saw Iskar spit into the Commons fire at the word 'Rome' and your name together.", "tone": "gossip" }
+        ]
+      },
+      "counterfactual": "Without Cassia's confidence the dc is 14 and Corvo's 15 exceeds it: Brennic enters the Games sick (maxStamina -20, HP -10), and the board leads with 'You wake with a burning throat'. The confidence exists because the player chose the Commons over the Pit in the evening and because trust(cassia, brennic) had reached 24."
+    },
+    {
+      "night": 3,
+      "headline": "The arena ripples into the camp: a rival's respect, a defection, a fifth circle, an offer",
+      "dayActions": {
+        "brennic (player)": ["Tiro Games: wave 1 won, wave 2 won, semifinal vs nysa won, final vs senna lost (missio at 0 HP)", "evening: the Fourth Watch at the Well (bond_of_four first_watch); plan chosen: knowledge"],
+        "senna": ["Tiro Games: semifinal vs lio won (simulated), final vs brennic won"],
+        "garran": ["work at granary", "watch the Games from the Door", "train vigor at yard"],
+        "iskar": ["watch the Games", "recruit dace at ditch"],
+        "venno": ["offer: leaves a sealed tablet at the grille for brennic"]
+      },
+      "contests": [
+        { "id": "C3-1", "who": "iskar", "kind": "recruit dace", "roll": "guile 2*4 = 8 + renown 5/10 -> 0 + d20 18 = 26", "dc": "10 + loyalty(dace to strays) 10 = 20", "result": "succeeded" }
+      ],
+      "fourthWatchVote": { "brennic (player)": "knowledge", "cassia": "knowledge", "garran": "escape", "iskar": "abstains (escape only after the fifth tent exists)", "result": "knowledge" },
+      "deltas": [
+        { "quantity": "gold brennic", "before": 10, "after": 70, "cause": "Games payout: reached the final (stage 3) = 60" },
+        { "quantity": "renown brennic", "before": 2, "after": 17, "cause": "Games renown: reached the final +15" },
+        { "quantity": "renown senna", "before": 5, "after": 30, "cause": "won the Tiro final +25" },
+        { "quantity": "trust brennic<->senna", "before": 9, "after": 15, "cause": "winner with honour offers a hand +6 (both ways)" },
+        { "quantity": "hunger doros", "before": 40, "after": 55, "cause": "unfed night +15 (no one fed him on Games day)" },
+        { "quantity": "loyalty doros", "before": 23, "after": 18, "cause": "hunger >= 50 at night" }
+      ],
+      "situationTransitions": [
+        { "situation": "defection/doros", "from": "tide", "to": "stone", "because": "loyalty 18 < 20; trust(doros, garran) 20 >= 20; Ruadh warmth 7 >= 6; first defection tonight" },
+        { "situation": "strays/dace", "from": "stray", "to": "pledged:fifth", "because": "C3-1: a builder of the fifth tent won a recruit contest" },
+        { "situation": "bond_of_four", "from": "first_watch", "to": "plotting", "because": "the player attended the Fourth Watch and the four chose plan knowledge" }
+      ],
+      "goalRetargets": [
+        { "character": "brennic", "from": "win_games(ember)", "to": "rise_in_tent(ember)", "trigger": "after the Games day" },
+        { "character": "ophel", "from": "undermine(ember)", "to": "win_games(tide)", "trigger": "after the Games day" },
+        { "character": "doros", "from": "survive", "to": "win_favour(ruadh)", "trigger": "joined a tent; a new member courts the new elder (repay_debt needs debt >= 2 and honour or kin: not met)" }
+      ],
+      "facts": [
+        { "id": "F3-01", "type": "games_result", "actors": ["senna"], "targets": ["brennic"], "place": "arena", "true": true, "visibility": "public", "salience": 9, "aboutPlayer": true, "context": { "senna_offered_hand": true, "brennic_stage": "final" } },
+        { "id": "F3-02", "type": "defected", "actors": ["doros"], "targets": ["stone"], "true": true, "visibility": "public", "salience": 8 },
+        { "id": "F3-03", "type": "pledged", "actors": ["dace"], "targets": ["iskar"], "place": "ditch", "true": true, "visibility": "witnessed", "salience": 7 },
+        { "id": "F3-04", "type": "offer", "actors": ["venno"], "targets": ["brennic"], "topic": "throw the next semifinal for 30 gold", "true": true, "visibility": "secret", "salience": 8, "aboutPlayer": true, "channel": "private journal, not the board" },
+        { "id": "F3-05", "type": "bond_event", "actors": ["brennic", "cassia", "garran", "iskar"], "place": "well", "true": true, "visibility": "secret", "salience": 9, "aboutPlayer": true, "channel": "private journal" }
+      ],
+      "board": {
+        "source": "live_rejected_fell_back_to_bank",
+        "liveAttempt": [
+          { "factIds": ["F3-01"], "headline": "Senna nearly killed you in the final", "rejectedBecause": "invents a consequence (no one is near death below the Summa; 'killed' is on the camp banned-word list)" },
+          { "factIds": ["F3-02"], "headline": "Doros ran to the Stone Tent after three hungry nights", "rejectedBecause": "unknown number 'three' not in any cited fact" }
+        ],
+        "items": [
+          { "factIds": ["F3-01"], "headline": "Senna of the Stone Tent took the Tiro crown", "line": "She beat you in the final, then held out her hand. The Stone Tent sang until the Vigil hushed them.", "speaker": "pell", "tone": "plain" },
+          { "factIds": ["F3-02"], "headline": "Doros sleeps in the Stone Tent now", "line": "The Tide boy carried his blanket across the Commons. Garran walked beside him. Ophel did not look up.", "tone": "gossip" },
+          { "factIds": ["F3-03"], "headline": "A fifth circle drawn in the ash", "line": "They say Iskar and Dace drew a fifth circle by the Ditch last night. The elders call it a children's game.", "tone": "gossip" }
+        ],
+        "privateJournal": [
+          { "factIds": ["F3-05"], "line": "The four of you at the Well. Cassia wants to know what the Wardstones drink. So do you, now." },
+          { "factIds": ["F3-04"], "line": "A sealed tablet at the grille: thirty gold if you fall in the next semifinal. The Lanista's seal." }
+        ]
+      },
+      "counterfactual": "Had Brennic won the final: payout 100 and renown +25 (rank-up progress toward Veteranus), Senna's honour hand-shake still fires (the rule is the winner's honour, so it would be Brennic offering it only if the player chooses the 'offer your hand' prompt). Doros's defection and Dace's pledge do not depend on the player at all: the world moves without you."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+stat,trained_at,points_for_rank_1_2_3_4_5,arena_effect,camp_effect,unit_basis
+vigor,yard; granary (+1),0;6;14;24;36,maxHp = 80 + 15*rank; maxStamina = 60 + 10*rank,work pays +1 gold at rank >= 3,HP and stamina points; rank is an integer 1..5
+focus,well; tent study,0;6;14;24;36,maxMana = 80 + 15*rank; manaRegen = 6 + 1.5*rank per second,study gives +1 extra lesson progress at rank >= 3,mana points; mana per second
+nerve,pit,0;6;14;24;36,absorbDrain = 30 - 3*rank mana per second held; perfectReturnMult = 1 + 0.1*rank,+1 per rank to the Pit stance roll; resists intimidation in a Plea,mana per second; a multiplier on mana returned
+guile,market; commons,0;6;14;24;36,scouting reveal level = rank - 1 (0 none; 1 wave list; 2 rival loadout; 3 rival opening spell; 4 rival absorb habit),scheme = guile*4 + d20 vs vigilance; notice a scheme against you = guile*4 + d20 vs schemer guile*4,d20 contest points; reveal levels are discrete
+renown,arena; rumours,earned 0..100,at renown >= 40 the crowd throws one mana flask (+25 mana) in a final,elder favour weight in the Tent Trial; recruit +renown/10,unitless 0..100; one authority: CampState.renown
+gold,granary; arena; quests; theft,earned,buys gear (talisman and garment slots),ration 2 gold a day when tent stores are empty; bribes; gifts,whole coins

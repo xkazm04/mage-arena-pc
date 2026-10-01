@@ -1,0 +1,26 @@
+{
+  "_about": "Variant 2. The ring of days. Each loop ends on its Games day; after the Games the Wardstones flare and the camp wakes on day 1. Authored numbers.",
+  "loops": [
+    { "index": 0, "days": 3, "name": "the Proving", "games": "tiro", "note": "the vertical slice; day 2 is the Trial, day 3 the Games" },
+    { "index": 1, "days": 7, "name": "the Second Waking", "games": "by mastery", "note": "the four discover that they all remember (bond arc may start at first_watch if the mains' trust allows)" },
+    { "index": "2+", "days": 14, "name": "the Wide Ring", "games": "by mastery", "note": "Echo semifinals possible; arcs reach late states" }
+  ],
+  "daySlots": ["day", "dusk", "night"],
+  "persists": {
+    "mastery": "1..4, lines and branches learned, arena tier eligibility",
+    "knowings": "ids of facts the player learned; a Knowing records the loop it was learned in",
+    "mainsTrust": "directed trust among the four mains",
+    "echoStats": "each stat restarts at max(1, best rank - 1)",
+    "relics": "at most 2 items; a Relic is granted by specific arc endings (e.g. Quill's salt-key)",
+    "loopChronicle": "for each main: <= 12 remembered fact ids, chosen by code by salience at each reset"
+  },
+  "resets": ["gold (to 10)", "renown (to 5)", "trust of every non-main toward the player and toward each other (authored start)", "arc states", "tent membership", "NPC stats", "hunger", "schemes in motion", "debts"],
+  "repeatedDayFastForward": "a day whose inputs hash to a cached night may be lived again at speed: the player watches the cached day's cards in seconds and takes control at the first slot where they choose differently",
+  "mastery": { "start": 1, "plusOneWhen": "win a Games final, or reach a Games final for the second time" },
+  "endings": [
+    { "id": "breaking", "when": "Summa final; trust(player, finalist) >= 60 AND trust(finalist, player) >= 60; both hold K-wardstones-drink", "result": "the final becomes a 40-second duet of perfect absorbs; the Wardstones overflow; the ring breaks; the Door opens" },
+    { "id": "champion", "when": "win the Summa final as a duel", "result": "the ring keeps turning; the player is Rome's eternal champion and remembers every loop" },
+    { "id": "betrayed", "when": "the Breaking is attempted with trust < 60 either way", "result": "the partner turns mid-duet" },
+    { "id": "revolt", "when": "Iskar's fifth circle reaches 6 members before the player reaches the Summa", "result": "the Vigil burns the camp; a violent reset; the player loses one Relic" }
+  ]
+}

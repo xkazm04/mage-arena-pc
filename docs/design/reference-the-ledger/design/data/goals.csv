@@ -1,0 +1,16 @@
+goal_id,args,serves_values,preferred_activities,retarget_into_when,leaves_when
+rise_in_tent,tent,rank;strength,train; pit_challenge; socialize(elder),default for rivals and ambitious mains,wins the Tent Trial twice OR loyalty < 25
+win_games,tent,rank;gold,train; scout; scheme(steal|poison) vs the leading tent,role is elder OR character is this week's entrant,after the Games day
+protect,target,kin;honour;belonging,help(target); report(schemer vs target),warmth >= 7 AND (target hungry OR target was schemed against),target fed 3 days running OR target joined a tent
+revenge,target,spite;honour,scheme vs target; pit_challenge(target),humiliated_by(target) AND aggression >= 6 (Fire weight x1.5),a scheme vs target succeeded OR 7 days passed
+escape_research,,kin;freedom;knowledge,study at well; socialize(quill); plot,Earth main start; anyone with caution <= 6 who hears Quill's Wardstone secret,never: it is the spine of the story
+build_fifth_tent,,freedom;spite;belonging,recruit; help(strays); scheme(rumour) vs elders,Air main start; loyalty < 20 AND spite in values,fifth tent exists with >= 4 members (goal becomes hold_fifth_tent)
+undermine,tent,rank;spite,scheme vs tent; recruit from tent,day of week >= 4 AND role elder AND that tent leads the standing,after the Games day
+win_favour,target,belonging,help(target); socialize(target),a junior with no goal (target: the highest-renown member of own tent) OR a character who just joined a tent (target: the new elder),trust(target->self) >= 40
+repay_debt,target,honour;kin,help(target),debt(self->target) >= 2 AND (honour OR kin in values),debt is 0
+find_tent,,survival;belonging,work; socialize(elders); help(anyone fed),Stray start,joined a tent
+survive,,survival,work; scheme(steal) for bread; rest,hunger >= 70,hunger < 30
+keep_peace,,order,report; socialize,Vigil and Earth elder start,never
+profit,,gold,trade; scout sales,Lanista and Kesh start,never
+learn_secrets,,knowledge,trade; socialize; scheme(persuade),Water main start; cunning >= 8,never
+hold_fifth_tent,,freedom;belonging,recruit; help(members); work,build_fifth_tent completed,fifth tent has fewer than 3 members

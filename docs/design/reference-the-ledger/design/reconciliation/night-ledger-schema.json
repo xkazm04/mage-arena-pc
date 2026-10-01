@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mage-arena/v1/night-ledger",
+  "title": "Variant 1: the Night Ledger (code output) and the Dawn Board (Crier output)",
+  "description": "The Night Ledger is written by deterministic code only. The Crier (template bank, or an optional live model) reads selected ledger facts and writes the Dawn Board. The Crier never writes state.",
+  "type": "object",
+  "required": ["day", "seed", "facts", "deltas", "situationTransitions", "goalRetargets", "tomorrowPlans", "board"],
+  "properties": {
+    "day": { "type": "integer", "minimum": 1 },
+    "seed": { "type": "string", "description": "hash(saveSeed, day); every d20 is drawn from rng(seed, actorId, actionId)" },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "actors", "visibility", "salience"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^F[0-9]+-[0-9]+$" },
+          "type": { "enum": ["joined_tent", "pledged", "defected", "rumour", "scheme_caught", "scheme_foiled", "scheme_succeeded", "helped", "walked_past", "trial_result", "games_result", "feud", "bond_event", "debt_called", "offer", "recruit_attempt", "taught", "fed", "hungry"] },
+          "actors": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "targets": { "type": "array", "items": { "type": "string" } },
+          "place": { "type": "string" },
+          "topic": { "type": "string" },
+          "true": { "type": "boolean", "description": "false only for rumours that are lies" },
+          "visibility": { "enum": ["public", "witnessed", "secret"] },
+          "salience": { "type": "integer", "minimum": 0, "maximum": 10 },
+          "aboutPlayer": { "type": "boolean" }
+        }
+      }
+    },
+    "deltas": { "type": "array", "items": { "type": "object", "required": ["quantity", "before", "after", "cause"], "properties": { "quantity": { "type": "string" }, "before": { "type": "number" }, "after": { "type": "number" }, "cause": { "type": "string" } } } },
+    "situationTransitions": { "type": "array", "items": { "type": "object", "required": ["situation", "from", "to", "because"] } },
+    "goalRetargets": { "type": "array", "items": { "type": "object", "required": ["character", "from", "to", "trigger"] } },
+    "tomorrowPlans": { "type": "object", "description": "characterId -> [morning, afternoon, evening] activity strings chosen by the utility planner" },
+    "board": {
+      "type": "object",
+      "required": ["source", "items"],
+      "properties": {
+        "source": { "enum": ["bank", "live", "live_rejected_fell_back_to_bank"] },
+        "items": {
+          "type": "array", "minItems": 3, "maxItems": 5,
+          "items": {
+            "type": "object",
+            "required": ["factIds", "headline", "line"],
+            "properties": {
+              "factIds": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+              "headline": { "type": "string", "maxLength": 70 },
+              "line": { "type": "string", "maxLength": 160 },
+              "speaker": { "type": "string" },
+              "tone": { "enum": ["plain", "gossip", "warning", "boast", "grief"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

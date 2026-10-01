@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mage Arena: The Ledger (design report, variant 1)</title>
+<style>
+:root{
+  --bg:#f3eee3; --paper:#fbf8f1; --ink:#221d16; --muted:#5f5647; --rule:#dacfbb; --soft:#efe7d7;
+  --accent:#a8401c; --blue:#2f5d8a; --purple:#7b3fa0; --green:#2e7d4f; --red:#b3261e; --gold:#8a6d1f;
+  --fire:#c8501f; --water:#2f7fb5; --earth:#7a6a3a; --air:#4f9089;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Cascadia Code","Cascadia Mono",Consolas,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:18px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 var(--sans)}
+nav{position:fixed;top:0;left:0;bottom:0;width:262px;overflow-y:auto;background:#2a241c;color:#e9e1d1;padding:22px 18px 40px}
+nav .brand{font:600 20px/1.2 var(--serif);color:#fff;margin:0 0 4px}
+nav .sub{font-size:12.5px;color:#c9bca3;margin:0 0 18px}
+nav h4{font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#d9a578;margin:18px 0 6px}
+nav a{display:block;color:#e9e1d1;text-decoration:none;font-size:14px;padding:3px 8px;border-radius:5px;border-left:2px solid transparent}
+nav a:hover{background:#3a3226}
+nav a.on{border-left-color:#e07a46;background:#3a3226;color:#fff}
+main{margin-left:262px;padding:34px 48px 120px}
+.wrap{max-width:960px;margin:0 auto}
+section{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:30px 36px 28px;margin:0 0 26px}
+h1{font:600 40px/1.15 var(--serif);margin:0 0 10px;letter-spacing:-.01em}
+h2{font:600 28px/1.2 var(--serif);margin:0 0 6px}
+h3{font:600 19px/1.3 var(--serif);margin:24px 0 8px}
+.kicker{font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.lede{font-size:19px;color:#3a3329;margin:6px 0 18px}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+small,.small{font-size:14px}
+code{font:14px var(--mono);background:var(--soft);padding:1px 5px;border-radius:4px}
+pre{font:13.5px/1.55 var(--mono);background:#1f1b15;color:#efe6d4;padding:16px 18px;border-radius:10px;overflow-x:auto;margin:10px 0 16px}
+pre .c{color:#a99c82} pre .k{color:#f0a76a} pre .s{color:#a9d39a} pre .n{color:#8cc4ef}
+table{border-collapse:collapse;width:100%;margin:10px 0 18px;font-size:15px}
+th{font:600 12.5px/1.3 var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;border-bottom:2px solid var(--rule);padding:8px 10px}
+td{border-bottom:1px solid #e8dfcd;padding:8px 10px;vertical-align:top}
+tr:hover td{background:#f8f2e6}
+td.v1{background:#fbeee4} td.v2{background:#eef1f6}
+.claim{border-left:5px solid var(--accent);background:#fdf0e3;padding:14px 18px;margin:16px 0;border-radius:0 10px 10px 0;font:600 19px/1.4 var(--serif);color:#3b1d0e}
+.claim span{display:block;font:400 14.5px/1.5 var(--sans);color:#5b4a3b;margin-top:6px}
+.claim.blue{border-color:var(--blue);background:#eaf1f8;color:#16304d}
+.claim.purple{border-color:var(--purple);background:#f3eaf8;color:#3b1b4f}
+.claim.green{border-color:var(--green);background:#e8f4ec;color:#143d25}
+.impact{background:linear-gradient(135deg,#2a1e14,#5a2a14 60%,#a8401c);color:#fff4e6;border:none}
+.impact h1{color:#fff}
+.impact .kicker{color:#ffc79c}
+.impact .lede{color:#ffe6cf;font-size:21px;font-family:var(--serif)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:16px}
+.stat b{display:block;font:600 34px/1.1 var(--serif);color:#fff}
+.stat span{font-size:14.5px;color:#ffe2c8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{border:1px solid var(--rule);border-radius:10px;padding:14px 16px;background:#fffdf8}
+.card h4{margin:0 0 6px;font:600 16px/1.3 var(--serif)}
+.tag{display:inline-block;font:600 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:5px;margin-right:4px;vertical-align:2px}
+.t-code{background:#e7eef7;color:var(--blue)} .t-llm{background:#f2e9f8;color:var(--purple)} .t-owner{background:#e4f2e9;color:var(--green)} .t-risk{background:#fbe7e5;color:var(--red)}
+.fig{margin:14px 0 6px;border:1px solid var(--rule);border-radius:10px;background:#fffdf8;padding:8px}
+.fig svg{display:block;width:100%;height:auto}
+.cap{font-size:14px;color:var(--muted);margin:6px 2px 14px}
+svg .dt{font:600 13px var(--sans)} svg .ds{font:11.5px var(--sans)} svg .de{font:600 11px var(--sans)}
+svg .dl{font:700 11.5px var(--sans);letter-spacing:.08em;text-transform:uppercase} svg .dn{font:italic 11.5px var(--sans);fill:#6b604e}
+.school{border-top:5px solid}
+.sc-fire{border-color:var(--fire)} .sc-water{border-color:var(--water)} .sc-earth{border-color:var(--earth)} .sc-air{border-color:var(--air)}
+.pill{display:inline-block;font-size:12.5px;padding:2px 8px;border-radius:20px;background:var(--soft);margin:2px 2px 0 0}
+.night{border:1px solid var(--rule);border-radius:12px;padding:16px 18px;margin:12px 0;background:#fffdf8}
+.night h4{margin:0 0 8px;font:600 17px/1.3 var(--serif)}
+.board{background:#2a241c;color:#efe6d4;border-radius:10px;padding:12px 16px;margin:8px 0}
+.board div{padding:5px 0;border-bottom:1px dashed #5a4f3e}
+.board div:last-child{border:0}
+.board b{color:#ffc79c}
+.sev{font-weight:700} .sev.h{color:var(--red)} .sev.m{color:#b26b00} .sev.l{color:var(--green)}
+.footnote{font-size:13.5px;color:var(--muted)}
+@media (max-width:1000px){nav{display:none}main{margin-left:0;padding:16px}.stats,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <p class="brand">Mage Arena</p>
+  <p class="sub">Variant 1 · <b>The Ledger</b><br>Code decides the camp. The model only speaks.</p>
+  <h4>Overview</h4>
+  <a href="#impact">What the owner gets</a>
+  <a href="#bet">The bet and its axes</a>
+  <a href="#first10">The first ten minutes</a>
+  <h4>The four loops</h4>
+  <a href="#loop-camp">Camp day loop</a>
+  <a href="#loop-arena">Arena fight loop</a>
+  <a href="#loop-progress">Progression loop</a>
+  <a href="#loop-recon">Reconciliation loop</a>
+  <h4>Systems as data</h4>
+  <a href="#sys-cast">Characters and schools</a>
+  <a href="#sys-stats">Stats and places</a>
+  <a href="#sys-spells">Spells and the absorb</a>
+  <a href="#sys-enemies">Enemies, waves, tiers</a>
+  <a href="#sys-bonds">Relationships and loyalty</a>
+  <a href="#sys-situations">The four archetype situations</a>
+  <a href="#sys-quests">Quests</a>
+  <a href="#sys-recon">Reconciliation in and out</a>
+  <a href="#worked">Three worked nights</a>
+  <h4>World</h4>
+  <a href="#story">Story spine and endings</a>
+  <a href="#art">Art direction and budget</a>
+  <h4>Build</h4>
+  <a href="#platform">Platform and controls</a>
+  <a href="#scope">Scope and slicing</a>
+  <a href="#plan">Execution plan (waves)</a>
+  <a href="#verify">What is tested headless, what only hands judge</a>
+  <a href="#risks">Risks</a>
+  <h4>Owner</h4>
+  <a href="#questions">Open questions, with defaults</a>
+  <a href="#files">Design files and limits</a>
+</nav>
+<main><div class="wrap">
+
+<!-- ============ IMPACT ============ -->
+<section id="impact" class="impact">
+  <p class="kicker">Mage Arena · design variant 1 · The Ledger</p>
+  <h1>A camp that moves every night by rules you can test, and an arena where a mage reads the enemy and drinks its spells.</h1>
+  <p class="lede">If this ships, the owner gets a complete, offline, living-room game on the Fire TV stack that already works: a real-time arena that feels like spellcraft within three minutes, and a camp of 21 characters whose lives change overnight without a single required call to a language model, so the world can never be broken by one.</p>
+  <div class="stats">
+    <div class="stat"><b>0</b><span>language-model calls needed to play. The optional live voice costs about 0.002 USD a night (placeholder prices), about 0.08 USD a 42-day season.</span></div>
+    <div class="stat"><b>1,000</b><span>headless 42-day seasons run per build: determinism, coverage of every situation state, and proof that the player's choices change the world.</span></div>
+    <div class="stat"><b>Wave 1</b><span>is a mage moving and shooting on the real Stick with a phone. The sister project's stack (pure-JVM core, libGDX, phone controller) is reused, not reinvented.</span></div>
+  </div>
+</section>
+
+<!-- ============ BET ============ -->
+<section id="bet">
+  <p class="kicker">The bet</p>
+  <h2>Code decides what happened. The language model only says it.</h2>
+  <p class="lede">The owner asked for an LLM-driven daily reconciliation. This variant keeps the owner's goal (a living, sensible social world) and moves the authority: a deterministic social simulation decides every character's day, and the model's job is the voice of the camp, written mostly at build time.</p>
+  <div class="claim">The model never decides who betrays whom. It only decides how the camp tells it.<span>A model that decides outcomes must be right every night for 42 nights, offline, cheaply and in character. A model that phrases outcomes already decided only has to be readable, and when it fails a template takes its place without the player noticing.</span></div>
+  <h3>The axes on which the two variants differ</h3>
+  <p>Variant 2 (Fourteen Nights) is the honest alternative: the model directs the camp every night and the camp is a time loop. Same owner concept, same four mains, different answers.</p>
+  <table>
+    <tr><th>Axis</th><th>Variant 1 · The Ledger</th><th>Variant 2 · Fourteen Nights</th></tr>
+    <tr><td><b>Who decides the day</b></td><td class="v1">Deterministic simulation: utility planner + four situation machines</td><td class="v2">The language model picks each character's verb from a closed list; code owns every number</td></tr>
+    <tr><td><b>When the model runs</b></td><td class="v1">At build time (the phrase bank); an optional live voice at night</td><td class="v2">Every night, 5 calls, cached by state hash; an offline planner as fallback</td></tr>
+    <tr><td><b>Story structure</b></td><td class="v1">One six-week season, six Games, a linear tier ladder</td><td class="v2">A time loop: 3-day, 7-day, then 14-day loops; knowledge persists</td></tr>
+    <tr><td><b>Platform</b></td><td class="v1">Fire TV + phone controller (the sister stack); Bluetooth gamepad option</td><td class="v2">Windows PC, gamepad first, keyboard for typing; TV port later</td></tr>
+    <tr><td><b>Spell composition</b></td><td class="v1">4 slots of fixed spells, each with a tier: you build a curve</td><td class="v2">3 lines that climb tiers in place, with branches</td></tr>
+    <tr><td><b>Absorb</b></td><td class="v1">360-degree ward; 0.18 s perfect window with latency compensation</td><td class="v2">Directional 140-degree ward; 0.15 s window</td></tr>
+    <tr><td><b>Typed role-play</b></td><td class="v1">Plea: typed text is classified into authored intents; a deferred experiment</td><td class="v2">Parley: the model weighs arguments that cite Knowings; in the slice</td></tr>
+    <tr><td><b>Slice school, first wave</b></td><td class="v1">Fire (Brennic); the arena kernel on the Stick</td><td class="v2">Water (Cassia); the headless Director harness</td></tr>
+  </table>
+  <h3>Choices this variant makes against the owner's notes (and why)</h3>
+  <table>
+    <tr><th>Owner's note</th><th>This design</th><th>Why</th></tr>
+    <tr><td>LLM-based daily reconciliation retargets goals and activities</td><td>Code retargets goals by a trigger table; the model writes the Dawn Board</td><td>"The world stays consistent and works when the model is absent" is guaranteed by construction, not by validation.</td></tr>
+    <tr><td>Quests can be part of the reconciliation</td><td>Quests are authored graphs (model-assisted at build time) that the simulation <i>instantiates</i> with its own actors</td><td>A generated quest graph can softlock; an authored one is linted for reachability before it ships.</td></tr>
+    <tr><td>Typed role-play at certain moments</td><td>Plea: deferred to an experiment wave after the slice; typed text only picks one of a few authored intents</td><td>Typing on a TV is a phone-keyboard task; it is valuable only if the rest is fun first.</td></tr>
+    <tr><td>Tier every 15 s</td><td>Kept, and made diegetic: the collar's runes loosen one by one in the arena</td><td>The camp's magic ban and the arena's tier clock become one object the player can see at the mage's feet.</td></tr>
+    <tr><td>Arena final where two finalists can destroy the arena</td><td>Kept as the ending, built from the absorb mechanic: a cooperative duet of perfect absorbs</td><td>The ending is played with the same hands that learned the game.</td></tr>
+  </table>
+</section>
+
+<!-- ============ FIRST TEN ============ -->
+<section id="first10">
+  <p class="kicker">The wow, minute by minute</p>
+  <h2>The first ten minutes: both halves, twice</h2>
+  <p>The player fights before they talk, talks before they sleep, and wakes to a camp that moved. Two arena moments and one full camp day fit inside ten minutes.</p>
+  <div class="fig" id="d-first10"></div>
+  <p class="cap">Timeline of the opening (authored durations, measured in W7 with a stopwatch on the Stick; the owner certifies whether it lands).</p>
+  <div class="grid2">
+    <div class="card"><h4>What the arena half must deliver by minute 4</h4>A raider's shaman throws a slow green curse. The game says nothing; the curse glows, a ring shrinks under the mage. The player holds the absorb button, the curse splashes. The second one they time: a white ring flashes, a bell, mana flows back, and a rune on the collar cracks open early. That is the moment the player understands they are a mage, not a gunner.</div>
+    <div class="card"><h4>What the camp half must deliver by minute 8</h4>On day 1 a starving girl at the Commons asks for bread. Most players walk past. At dawn the board says: <i>"Fenna sleeps in the Stone Tent now. She did not look at you when she passed."</i> and <i>"A rumour about you: you ran at the ford."</i> Nobody scripted those for this player; the night computed them.</div>
+  </div>
+</section>
+
+<!-- ============ CAMP LOOP ============ -->
+<section id="loop-camp">
+  <p class="kicker">Loop 1 of 4</p>
+  <h2>The camp day loop</h2>
+  <p>Three slots a day (morning, afternoon, evening), nine places, one shared menu of 14 activities that every character chooses from. Magic does not work inside the camp, so every rivalry is social: bread, rumours, theft, persuasion, unarmed bouts in the Pit.</p>
+  <div class="fig" id="d-camp"></div>
+  <p class="cap">One day. Blue boxes are code; the purple box is the only place a language model may appear, and it writes words, not state.</p>
+  <div class="fig" id="d-week"></div>
+  <p class="cap">One week of a six-week season. The vertical slice is the last three days of a week: day 5, Trial day, Games day.</p>
+  <div class="claim green">Every slot is a trade: a stat, a person, or a scheme.<span>Training raises a stat that changes an arena number. Socialising moves trust, which unlocks spell lessons, warnings and the Breaking. A scheme spends the evening on someone else's Games. The three never fit in one day.</span></div>
+</section>
+
+<!-- ============ ARENA LOOP ============ -->
+<section id="loop-arena">
+  <p class="kicker">Loop 2 of 4</p>
+  <h2>The arena fight loop</h2>
+  <p>A high top-down view (the "diablo view"), one thumb moving, one thumb casting. Three threat families, three answers, one shared resource tension (mana pays for both spells and the ward).</p>
+  <div class="claim">Absorb eats magic. Roll beats steel. Nothing stops the black-and-red.<span>Magic glows in its element's colour and is absorbed with mana. Physical attacks are white and hard-edged and are rolled with stamina. Unblockable spells have a black core and a jagged red rim: leave the area, or break the caster with a staff strike.</span></div>
+  <div class="fig" id="d-arena"></div>
+  <p class="cap">The second-to-second loop of a bout. Orange is the player's hands; the collar clock is the clock every combatant carries.</p>
+  <h3>The collar clock: tiers over time, faster with perfect absorbs</h3>
+  <div class="fig">
+  <svg viewBox="0 0 880 210" role="img" aria-label="collar tier clock timeline">
+    <rect x="0" y="0" width="880" height="210" fill="#fffdf8"/>
+    <text x="20" y="24" class="dl" fill="#6b604e">base clock (no perfect absorbs)</text>
+    <g font-family="Segoe UI" font-size="12">
+      <rect x="60" y="34" width="180" height="30" fill="#f3ede1" stroke="#6b604e"/><text x="150" y="54" text-anchor="middle" class="dt" fill="#6b604e">Tier I · 0-15 s</text>
+      <rect x="240" y="34" width="180" height="30" fill="#fbeadf" stroke="#b5481b"/><text x="330" y="54" text-anchor="middle" class="dt" fill="#b5481b">Tier II · 15 s</text>
+      <rect x="420" y="34" width="180" height="30" fill="#f7dcc9" stroke="#b5481b"/><text x="510" y="54" text-anchor="middle" class="dt" fill="#b5481b">Tier III · 30 s</text>
+      <rect x="600" y="34" width="220" height="30" fill="#f1c4a6" stroke="#8f3412"/><text x="710" y="54" text-anchor="middle" class="dt" fill="#8f3412">Tier IV · 45 s</text>
+    </g>
+    <text x="20" y="102" class="dl" fill="#6b604e">with three perfect absorbs (each -2 s, at least 6 s between unlocks)</text>
+    <rect x="60" y="112" width="180" height="30" fill="#f3ede1" stroke="#6b604e"/><text x="150" y="132" text-anchor="middle" class="dt" fill="#6b604e">Tier I</text>
+    <rect x="240" y="112" width="156" height="30" fill="#fbeadf" stroke="#b5481b"/><text x="318" y="132" text-anchor="middle" class="dt" fill="#b5481b">II · 15 s</text>
+    <rect x="396" y="112" width="132" height="30" fill="#f7dcc9" stroke="#b5481b"/><text x="462" y="132" text-anchor="middle" class="dt" fill="#b5481b">III · 28 s</text>
+    <rect x="528" y="112" width="292" height="30" fill="#f1c4a6" stroke="#8f3412"/><text x="674" y="132" text-anchor="middle" class="dt" fill="#8f3412">IV · 39 s (6 s early)</text>
+    <g fill="#ffffff" stroke="#2f5d8a" stroke-width="2"><circle cx="330" cy="160" r="7"/><circle cx="420" cy="160" r="7"/><circle cx="480" cy="160" r="7"/></g>
+    <text x="330" y="186" text-anchor="middle" class="dn">perfect at 22 s</text><text x="420" y="186" text-anchor="middle" class="dn">perfect at 29 s</text><text x="500" y="200" text-anchor="middle" class="dn">perfect at 34 s</text>
+    <line x1="60" y1="78" x2="820" y2="78" stroke="#dacfbb"/><text x="60" y="92" class="dn">0 s</text><text x="820" y="92" class="dn" text-anchor="end">60 s</text>
+  </svg></div>
+  <p class="cap">Every combatant carries its own clock; the clock resets each wave. Scale: 12 px per second. Numbers authored (<code>combat.json → tierClock</code>).</p>
+  <div class="claim blue">Tier IV is a reward for reading the enemy, not for waiting.<span>The registry's pacing bands call a fight past 45 s spongy. A duel is authored at 45-80 s, so the base clock barely reaches tier IV. Players who land perfect absorbs get there inside the fight; players who don't, mostly won't. The clock and the parry are one mechanic.</span></div>
+  <h3>The absorb, as a timeline</h3>
+  <div class="fig">
+  <svg viewBox="0 0 880 200" role="img" aria-label="absorb window">
+    <rect x="0" y="0" width="880" height="200" fill="#fffdf8"/>
+    <line x1="40" y1="110" x2="840" y2="110" stroke="#6b604e" stroke-width="1.5"/>
+    <rect x="160" y="60" width="440" height="34" rx="6" fill="#fbeadf" stroke="#b5481b"/><text x="380" y="82" text-anchor="middle" class="dt" fill="#b5481b">telegraph: the impact ring shrinks (a 1.0 s bog glob shown)</text>
+    <rect x="510" y="122" width="90" height="34" rx="6" fill="#e4f2e9" stroke="#2e7d4f" stroke-width="2"/><text x="555" y="143" text-anchor="middle" class="dt" fill="#2e7d4f">PERFECT</text>
+    <rect x="160" y="122" width="350" height="34" rx="6" fill="#e7eef7" stroke="#2f5d8a"/><text x="335" y="143" text-anchor="middle" class="dt" fill="#2f5d8a">held earlier: normal absorb (85% magic)</text>
+    <line x1="600" y1="40" x2="600" y2="170" stroke="#b3261e" stroke-width="2.5"/><text x="606" y="50" class="dt" fill="#b3261e">impact</text>
+    <line x1="600" y1="170" x2="660" y2="170" stroke="#7b3fa0" stroke-width="2" stroke-dasharray="4 3"/><text x="664" y="174" class="ds" fill="#7b3fa0">+0.10 s grace: a late phone input, judged by its own timestamp</text>
+    <text x="555" y="182" text-anchor="middle" class="dn">fresh press ≤ 0.18 s before</text>
+    <text x="40" y="30" class="ds" fill="#3b352c">Perfect: full block · mana back = 10 × tier × (1 + 0.1 × Nerve) · collar −2 s · white ring, bell, double haptic pulse</text>
+  </svg></div>
+  <p class="cap">Two axes, kept separate (registry: active defence has two axes). The window is the same for everyone and never grows with a stat; Nerve changes the magnitude (drain per second, mana returned). Holding the ward through a stream gives only normal absorbs, so perfects cannot be farmed.</p>
+  <h3>School identity in the fight</h3>
+  <table>
+    <tr><th>School</th><th>Resource</th><th>What it pays for</th><th>What it costs</th><th>Perfect absorb extra</th></tr>
+    <tr><td><b style="color:var(--fire)">Fire</b></td><td>Heat 0-100 (hits, taking hits, enemies near)</td><td>Kindled ×1.15 at 50, Blazing ×1.30 at 80</td><td>Blazing: absorb drains 1.5×, stamina regen 0.7×</td><td>none: Fire is paid for contact</td></tr>
+    <tr><td><b style="color:var(--water)">Water</b></td><td>Flow 0-5 (alternate spells within 2 s)</td><td>+6% per stack; Crest at 5: next spell free ×1.5</td><td>Same spell twice resets</td><td>+1 Flow</td></tr>
+    <tr><td><b style="color:var(--earth)">Earth</b></td><td>Footing 0-6 (stand still)</td><td>−4% damage taken, +4% power per stack; drain ×0.8 at 3</td><td>Any roll or sprint clears it</td><td>+2 Footing</td></tr>
+    <tr><td><b style="color:var(--air)">Air</b></td><td>Momentum 0-100 (move fast)</td><td>Pierce at 40, range ×1.3 at 80, cheaper rolls</td><td>Absorb drains 1.2×</td><td>Deflect the projectile along the aim</td></tr>
+  </table>
+</section>
+
+<!-- ============ PROGRESSION ============ -->
+<section id="loop-progress">
+  <p class="kicker">Loop 3 of 4</p>
+  <h2>The progression loop: stats, spells, reputation, tiers</h2>
+  <p>Every camp quantity has exactly one arena consequence, and every arena result writes back into the camp. Nothing in the arena is bought; it is trained, learned from someone, or earned in front of the crowd.</p>
+  <div class="fig" id="d-progress"></div>
+  <p class="cap">Green arrows run camp → arena, orange arrows arena → camp. The rank ladder (Tiro → Veteranus → Primus → Summa) is the spine.</p>
+  <table>
+    <tr><th>Camp thing</th><th>Arena consequence</th><th>Formula (authored)</th></tr>
+    <tr><td>Vigor rank</td><td>HP, stamina</td><td><code>maxHp = 80 + 15·rank</code>, <code>maxStamina = 60 + 10·rank</code></td></tr>
+    <tr><td>Focus rank</td><td>Mana pool and regen</td><td><code>maxMana = 80 + 15·rank</code>, <code>regen = 6 + 1.5·rank /s</code></td></tr>
+    <tr><td>Nerve rank</td><td>Absorb economy (never the window)</td><td><code>drain = 30 − 3·rank /s</code>, <code>return × (1 + 0.1·rank)</code></td></tr>
+    <tr><td>Guile rank</td><td>Scouting before the Games</td><td>reveal level = rank − 1: wave list, rival loadout, opening spell, absorb habit</td></tr>
+    <tr><td>Trust with a teacher</td><td>New spells</td><td>3 lessons (study slots) with a teacher at trust ≥ 20 = one spell</td></tr>
+    <tr><td>Feud</td><td>Fire starts at 30 Heat against a feud target</td><td><code>schools.json → arenaLink</code></td></tr>
+    <tr><td>Renown</td><td>Tent Trial weight, crowd's mana flask at 40</td><td>Trial score = bout 0.5 + elder trust 0.3 + renown 0.2</td></tr>
+  </table>
+</section>
+
+<!-- ============ RECON LOOP ============ -->
+<section id="loop-recon">
+  <p class="kicker">Loop 4 of 4 · the part that must never break</p>
+  <h2>The reconciliation loop: the Night Ledger and the Crier</h2>
+  <p>At night the camp is reconciled in nine fixed steps. Steps 1-7 and 9 are deterministic code with seeded dice. Step 8 is the only step a language model may touch, and it touches words.</p>
+  <div class="fig" id="d-recon"></div>
+  <p class="cap">Swimlanes: what the player did, what code decides, what a model may write, what is stored. The purple lane has a fallback at every arrow.</p>
+  <table>
+    <tr><th>Property</th><th>How it is guaranteed</th></tr>
+    <tr><td><b>Bounded</b></td><td>14 activities, 15 goals, 4 situation machines with a closed predicate vocabulary. Caps: 2 schemes a night (3 on the eve), 1 defection a night, trust swing ≤ 40 a night, no deaths, no magic in camp.</td></tr>
+    <tr><td><b>In character</b></td><td>Each character's utility is weighted by its own traits and values; school biases multiply activity weights; goals change only through the trigger table. The Crier must write within a voice card and its "never" list.</td></tr>
+    <tr><td><b>Consistent</b></td><td>One authority per quantity in <code>CampState</code>. Every fact names actors who exist and were there. A friend (trust ≥ 20) disbelieves a rumour about you.</td></tr>
+    <tr><td><b>Choices matter</b></td><td>Tested: 200 seed pairs that differ only in the player's day-1 choice must diverge by ≥ 3 board facts by day 7 in 80% of pairs.</td></tr>
+    <tr><td><b>Cached</b></td><td>The phrase bank is the cache: ~3,000 validated lines generated at build time by the local 27B model, keyed by fact type × voice × tone.</td></tr>
+    <tr><td><b>Validated</b></td><td>Schema, cited facts exist and are not secret, no unknown names or numbers, rumours hedged, voice "never" lists, length. A failed item is replaced from the bank.</td></tr>
+    <tr><td><b>Fallback</b></td><td>The bank <i>is</i> the default. Live voice is an optional upgrade with a 4 s cut-off after the night scene.</td></tr>
+    <tr><td><b>Cost</b></td><td>Default: 0. Live voice: 1 call a night, ~2,200 in / 450 out tokens ≈ 0.002 USD a night at placeholder prices (0.50 / 2.00 USD per million).</td></tr>
+  </table>
+  <div class="claim purple">A friend does not believe a rumour about you.<span>One small rule (trust ≥ 20 means no reaction) does more for "the world stays sensible" than any validator: rumours hurt you where you are weak and bounce where you are loved, which is how the player learns the camp has memory.</span></div>
+</section>
+
+<!-- ============ CAST ============ -->
+<section id="sys-cast">
+  <p class="kicker">Systems as data</p>
+  <h2>Characters and schools</h2>
+  <p>21 characters: four tents of four (elder, one of the four mains, a same-rank rival, a junior), three Strays, the Vigil's warden and the Lanista outside the Door. The player is one of the mains; the other three are run by the same planner as everyone else. Full data: <code>design/data/characters.json</code>, <code>schools.json</code>.</p>
+  <div class="grid2">
+    <div class="card school sc-fire"><h4>Brennic the Red · Fire · the Ember Tent</h4>A Gaulish auxiliary who burned a ford for Rome and was collared for it. Wants the top of any hierarchy, this one included. <br><span class="pill">strength</span><span class="pill">rank</span><span class="pill">honour</span> <span class="pill">rival: Corvo</span><br><small class="muted">In camp: picks Pit fights, makes feuds, ignores the hungry. In the arena: Heat; close, loud, rooted for Sunfall.</small></div>
+    <div class="card school sc-water"><h4>Cassia of the Lighthouse · Water · the Tide Tent</h4>An Alexandrian lamp-keeper's daughter who read every scroll about power. Wins before the fight: secrets, prices, warnings. <br><span class="pill">knowledge</span><span class="pill">rank</span><span class="pill">survival</span> <span class="pill">rival: Nysa</span><br><small class="muted">In camp: trades and listens; her confidences are what foil schemes. In the arena: Flow; combos, reflects.</small></div>
+    <div class="card school sc-earth"><h4>Garran Stonehand · Earth · the Stone Tent</h4>A Danube farmer who raised walls for the legion so his village would be spared. A wife and two daughters wait on the other side of the Door. <br><span class="pill">kin</span><span class="pill">honour</span><span class="pill">survival</span> <span class="pill">rival: Senna</span><br><small class="muted">In camp: feeds the hungry, sits with Old Quill; drives the escape plan. In the arena: Footing; stand and endure.</small></div>
+    <div class="card school sc-air"><h4>Iskar Windborn · Air · the Gale Tent</h4>A steppe rider who believed Rome's promise of citizenship. Hates the collar, the tents that obey it, and anyone who plays by Rome's rules. <br><span class="pill">freedom</span><span class="pill">spite</span><span class="pill">belonging</span> <span class="pill">rival: Lio</span><br><small class="muted">In camp: recruits Strays into a fifth circle; poisoned by any rumour of Rome. In the arena: Momentum; never still.</small></div>
+  </div>
+  <pre><span class="c">// characters.json (one of 21)</span>
+{ <span class="k">"id"</span>: <span class="s">"garran"</span>, <span class="k">"tent"</span>: <span class="s">"stone"</span>, <span class="k">"school"</span>: <span class="s">"earth"</span>, <span class="k">"role"</span>: <span class="s">"main"</span>, <span class="k">"rank"</span>: <span class="n">1</span>,
+  <span class="k">"traits"</span>: { <span class="k">"aggression"</span>: <span class="n">2</span>, <span class="k">"ambition"</span>: <span class="n">3</span>, <span class="k">"caution"</span>: <span class="n">7</span>, <span class="k">"loyalty"</span>: <span class="n">9</span>, <span class="k">"cunning"</span>: <span class="n">3</span>, <span class="k">"warmth"</span>: <span class="n">9</span> },
+  <span class="k">"values"</span>: [<span class="s">"kin"</span>, <span class="s">"honour"</span>, <span class="s">"survival"</span>],           <span class="c">// closed vocabulary of 12</span>
+  <span class="k">"goal"</span>: { <span class="k">"id"</span>: <span class="s">"escape_research"</span> },                   <span class="c">// from goals.csv</span>
+  <span class="k">"stats"</span>: { <span class="k">"vigor"</span>: <span class="n">3</span>, <span class="k">"focus"</span>: <span class="n">1</span>, <span class="k">"nerve"</span>: <span class="n">2</span>, <span class="k">"guile"</span>: <span class="n">1</span> },
+  <span class="k">"voice"</span>: { <span class="k">"register"</span>: <span class="s">"slow, plain, few words"</span>,
+             <span class="k">"tics"</span>: [<span class="s">"mentions his daughters by name"</span>], <span class="k">"never"</span>: [<span class="s">"mocks the weak"</span>, <span class="s">"breaks a promise"</span>] } }
+
+<span class="c">// schools.json: one temperament, seen in two places</span>
+{ <span class="k">"id"</span>: <span class="s">"fire"</span>, <span class="k">"tent"</span>: <span class="s">"ember"</span>,
+  <span class="k">"combatIdentity"</span>: { <span class="k">"resource"</span>: <span class="s">"heat"</span>, <span class="k">"thresholds"</span>: [ { <span class="k">"at"</span>: <span class="n">50</span>, <span class="k">"spellDamageMult"</span>: <span class="n">1.15</span> },
+                                           { <span class="k">"at"</span>: <span class="n">80</span>, <span class="k">"spellDamageMult"</span>: <span class="n">1.30</span>, <span class="k">"absorbDrainMult"</span>: <span class="n">1.5</span> } ] },
+  <span class="k">"campBias"</span>: { <span class="k">"activityWeights"</span>: { <span class="k">"train:pit"</span>: <span class="n">1.4</span>, <span class="k">"pit_challenge"</span>: <span class="n">1.5</span>, <span class="k">"socialize"</span>: <span class="n">0.8</span> },
+                <span class="k">"onInsult"</span>: <span class="s">"feud"</span>, <span class="k">"arenaLink"</span>: <span class="s">"start a bout at 30 Heat against a feud target"</span> } }</pre>
+  <h3>Everyone else (short)</h3>
+  <table>
+    <tr><th>Tent</th><th>Elder</th><th>Same-rank rival</th><th>Junior</th></tr>
+    <tr><td>Ember (Fire)</td><td>Sadruba: picks by scars and Pit results</td><td>Corvo: was next in line until you came</td><td>Tilla: worships whoever won last</td></tr>
+    <tr><td>Tide (Water)</td><td>Ophel: keeps the camp's ledger of debts</td><td>Nysa: the best liar in the camp</td><td>Doros: frightened, good at sums, low loyalty</td></tr>
+    <tr><td>Stone (Earth)</td><td>Ruadh: bread and patience</td><td>Senna: proud, never cheats</td><td>Pell: gives his bread away</td></tr>
+    <tr><td>Gale (Air)</td><td>Kesh: sells the same secret twice</td><td>Lio: reckless, owes everyone</td><td>Mirren: Iskar's first follower</td></tr>
+    <tr><td>Strays</td><td colspan="3">Fenna (thrown out for a theft she did not commit), Old Quill (a deserter from the college that built the Door; knows what the Wardstones drink), Dace (expelled for a brawl)</td></tr>
+    <tr><td>Outside</td><td colspan="3">Warden Septima of the Vigil (salt-wards; punishes the caught, not the guilty) · Lanista Aulus Venno (runs the Games, sells scouting, speaks through the grille)</td></tr>
+  </table>
+</section>
+
+<!-- ============ STATS & PLACES ============ -->
+<section id="sys-stats">
+  <p class="kicker">Systems as data</p>
+  <h2>Stats, places and the shared menu</h2>
+  <pre><span class="c"># stats.csv (ranks 1..5; points for rank 1..5 = 0;6;14;24;36)</span>
+stat,  trained_at,       arena_effect
+vigor, yard; granary,    maxHp = 80 + 15*rank ; maxStamina = 60 + 10*rank
+focus, well; tent study, maxMana = 80 + 15*rank ; manaRegen = 6 + 1.5*rank per s
+nerve, pit,              absorbDrain = 30 - 3*rank per s ; perfectReturnMult = 1 + 0.1*rank
+guile, market; commons,  scouting reveal level = rank - 1 ; scheme = guile*4 + d20 vs dc
+renown (0..100), gold (coins): earned, not trained</pre>
+  <table>
+    <tr><th>Place</th><th>Open</th><th>Gives</th><th>Who gathers</th></tr>
+    <tr><td>Drill Yard</td><td>morning, afternoon</td><td>Vigor +3</td><td>Fire, Earth</td></tr>
+    <tr><td>Well of Quiet</td><td>morning, evening</td><td>Focus +3; lessons; the four meet here at night</td><td>Water, Earth elders, Old Quill</td></tr>
+    <tr><td>The Pit</td><td>afternoon, evening</td><td>Nerve +3; unarmed bouts; the Tent Trial</td><td>Fire, anyone wanting a fight</td></tr>
+    <tr><td>Scrap Market</td><td>morning, afternoon</td><td>Guile +2; trade; one secret per visit at Guile 2</td><td>Water, Air</td></tr>
+    <tr><td>Commons Fire</td><td>afternoon, evening</td><td>Trust +6 (+9 cross-tent, equal rank)</td><td>everyone; Strays at the edge</td></tr>
+    <tr><td>Granary</td><td>morning, afternoon</td><td>Gold +4, tent stores +2</td><td>Earth, Strays (paid half)</td></tr>
+    <tr><td>The Ditch</td><td>evening</td><td>Trust +8 with a Stray; rumours the tents never hear</td><td>Strays</td></tr>
+    <tr><td>The Door</td><td>morning, evening</td><td>Scout (3 gold); sign the board; the Lanista's offers</td><td>entrants, schemers</td></tr>
+    <tr><td>Your Tent</td><td>all</td><td>Trust with tent-mates; elder's lessons; rest</td><td>your tent</td></tr>
+  </table>
+  <pre><span class="c"># activities.csv: the option scale every character chooses from (excerpt)</span>
+activity,      args,                            slots,     contest
+train,         stat,                            any,       none
+help,          target,                          any,       none   <span class="c"># target trust +10, debt(target->you) +1: "someone owes you"</span>
+scheme,        steal|poison|persuade|rumour,    evening,   guile*4 + d20 must exceed dc
+recruit,       target, toTent,                  aft|eve,   guile*4 + renown/10 + d20 vs 10 + loyalty
+report,        target,                          mor|eve,   the Vigil investigates next day
+pit_challenge, target,                          aft|eve,   played by the player, simulated for NPCs
+plot,          -,                               evening,   only once the four have met (situation d)</pre>
+</section>
+
+<!-- ============ SPELLS ============ -->
+<section id="sys-spells">
+  <p class="kicker">Systems as data</p>
+  <h2>Spells, slots and the absorb</h2>
+  <p>Four slots and the Bolt. A slot holding a tier-N spell stays dark until the collar unlocks tier N, so composing a loadout is building a curve: how much you can do early versus how hard you hit late. Full Fire sheet: <code>design/spell-sheet-fire.md</code> and <code>data/spells-fire.csv</code>.</p>
+  <table>
+    <tr><th>Tier</th><th>Fire spell</th><th>Shape</th><th>Cast / cd (s)</th><th>Mana</th><th>Dmg</th><th>Block</th></tr>
+    <tr><td>0</td><td>Ember Dart (Bolt)</td><td>projectile 18 m/s</td><td>0 / 0.30</td><td>4</td><td>8</td><td>absorbable</td></tr>
+    <tr><td>I</td><td>Flick Flame</td><td>cone 60° × 4 m</td><td>0.15 / 3</td><td>12</td><td>20</td><td>absorbable</td></tr>
+    <tr><td>I</td><td>Cinder Step</td><td>dash 5 m + trail</td><td>0 / 6</td><td>15</td><td>6/tick</td><td>absorbable</td></tr>
+    <tr><td>I</td><td>Kindle</td><td>self, +25 Heat</td><td>0.40 / 10</td><td>8</td><td>–</td><td>–</td></tr>
+    <tr><td>II</td><td>Brand Lance</td><td>line 14 m, pierces shields</td><td>0.60 / 7</td><td>25</td><td>32</td><td>absorbable</td></tr>
+    <tr><td>II</td><td>Ring of Cinders</td><td>ring r 3 m, knockback</td><td>0.30 / 9</td><td>22</td><td>18</td><td>absorbable</td></tr>
+    <tr><td>III</td><td>Pyre Circle</td><td>circle r 3 m, 0.8 s telegraph</td><td>0.50 / 12</td><td>40</td><td>48</td><td>absorbable</td></tr>
+    <tr><td>III</td><td>Furnace Heart</td><td>Heat locked 100 for 6 s</td><td>0.50 / 16</td><td>30</td><td>–</td><td>–</td></tr>
+    <tr><td>IV</td><td><b>Sunfall</b></td><td>meteor r 3.5 m, 1.2 s shadow; caster rooted</td><td>0.80 / 25</td><td>70</td><td>95</td><td><b style="color:var(--red)">UNBLOCKABLE</b></td></tr>
+    <tr><td>IV</td><td>Brand Wrath</td><td>beam 10 m, 2 s channel</td><td>0.20 / 20</td><td>60</td><td>14/tick</td><td>absorbable (first tick only perfect)</td></tr>
+  </table>
+  <pre><span class="c">// combat.json → absorb (the single source; excerpt)</span>
+<span class="k">"absorb"</span>: {
+  <span class="k">"raiseCostMana"</span>: <span class="n">5</span>, <span class="k">"drainPerSecond"</span>: <span class="s">"30 - 3 * nerveRank"</span>, <span class="k">"minReleaseBeforeReRaiseS"</span>: <span class="n">0.12</span>,
+  <span class="k">"shape"</span>: <span class="s">"360-degree ward"</span>, <span class="k">"moveSpeedWhileHeldMult"</span>: <span class="n">0.5</span>,
+  <span class="k">"reduction"</span>: { <span class="k">"magic"</span>: <span class="n">0.85</span>, <span class="k">"physical"</span>: <span class="n">0.30</span>, <span class="k">"unblockable"</span>: <span class="n">0.0</span> },
+  <span class="k">"perfect"</span>: { <span class="k">"windowS"</span>: <span class="n">0.18</span>, <span class="k">"graceS"</span>: <span class="n">0.10</span>,          <span class="c">// grace: judged by the phone input's corrected timestamp</span>
+               <span class="k">"manaReturned"</span>: <span class="s">"10 * incomingTier * (1 + 0.1 * nerveRank)"</span>,
+               <span class="k">"tierClockAdvanceS"</span>: <span class="n">2.0</span>, <span class="k">"notAgainst"</span>: [<span class="s">"unblockable"</span>, <span class="s">"physical"</span>] } },
+<span class="k">"tierClock"</span>: { <span class="k">"unlockAtSeconds"</span>: { <span class="k">"1"</span>: <span class="n">0</span>, <span class="k">"2"</span>: <span class="n">15</span>, <span class="k">"3"</span>: <span class="n">30</span>, <span class="k">"4"</span>: <span class="n">45</span> }, <span class="k">"minimumSecondsBetweenUnlocks"</span>: <span class="n">6.0</span>, <span class="k">"resetsEachWave"</span>: <span class="k">true</span> },
+<span class="k">"roll"</span>: { <span class="k">"distanceM"</span>: <span class="n">4.0</span>, <span class="k">"durationS"</span>: <span class="n">0.35</span>, <span class="k">"iFramesS"</span>: <span class="n">0.25</span>, <span class="k">"staminaCost"</span>: <span class="n">25</span> },
+<span class="k">"staffStrike"</span>: { <span class="k">"rangeM"</span>: <span class="n">1.6</span>, <span class="k">"windupS"</span>: <span class="n">0.25</span>, <span class="k">"staminaCost"</span>: <span class="n">12</span>, <span class="k">"interruptsCasts"</span>: <span class="k">true</span> }</pre>
+  <table>
+    <tr><th>Loadout (Fire)</th><th>Slots</th><th>The bet</th></tr>
+    <tr><td>Pit-dog</td><td>Flick, Cinder Step, Kindle, Ring</td><td>All live by 15 s; win the soldier and creature waves Blazing</td></tr>
+    <tr><td>Brand</td><td>Flick, Cinder Step, Lance, Pyre</td><td>The all-rounder; weak to moths until 30 s</td></tr>
+    <tr><td>Sunfall gambit</td><td>Flick, Lance, Furnace Heart, Sunfall</td><td>Two dark slots for 30 s; three perfects bring Sunfall at 39 s</td></tr>
+  </table>
+</section>
+
+<!-- ============ ENEMIES ============ -->
+<section id="sys-enemies">
+  <p class="kicker">Systems as data</p>
+  <h2>Enemies, waves and arena tiers</h2>
+  <p>A Games day is four bouts: soldiers, creatures, a semifinal mage, a final mage. HP partly carries over (30% of missing HP is restored between waves), mana and stamina refill, the collar resets. Nobody dies below the Summa: at 0 HP the Lanista calls <i>missio</i>, because dead mages do not earn him money.</p>
+  <table>
+    <tr><th>Family</th><th>Enemy</th><th>What it teaches</th><th>Key numbers</th></tr>
+    <tr><td rowspan="4">Soldiers<br><small>(white: roll)</small></td><td>Hastatus conscript</td><td>roll timing</td><td>40 HP, lunge 10 dmg, 0.6 s wind-up</td></tr>
+    <tr><td>Scutum bearer</td><td>flank, pierce, or area</td><td>70 HP, blocks frontal 120°</td></tr>
+    <tr><td>Funditor</td><td>close the distance</td><td>30 HP, sling 7 dmg, keeps 8-10 m</td></tr>
+    <tr><td>Net-thrower</td><td>leave a telegraph</td><td>45 HP, root 1.0 s, 0.8 s ring</td></tr>
+    <tr><td rowspan="4">Creatures<br><small>(mixed)</small></td><td>Cinder hound (pack of 3)</td><td>perfect-absorb the death burst</td><td>25 HP, 6 m/s, 2 engagement slots, ember burst 0.6 s after death</td></tr>
+    <tr><td>Mire maw</td><td>absorb a slow glob, leave a line</td><td>120 HP, glob 14 (magic), tongue pull (physical)</td></tr>
+    <tr><td>Thornback</td><td>unblockable charge, punish the stun</td><td>140 HP, charge 22, 1.0 s lane telegraph, self-stun on walls</td></tr>
+    <tr><td>Hush moths (6)</td><td>the ward is not always the answer</td><td>8 HP, drain 6 mana/s on contact, drawn to whoever holds absorb</td></tr>
+    <tr><td>Mages</td><td>Entrants of other tents</td><td>everything; they use the same kernel</td><td>competence 1-4: reaction 0.55 → 0.30 s, perfect chance 0.05 → 0.40 (cap 0.45)</td></tr>
+  </table>
+  <pre><span class="c">// arena-tiers.json (one tier)</span>
+{ <span class="k">"id"</span>: <span class="s">"tiro"</span>, <span class="k">"weeks"</span>: [<span class="n">1</span>, <span class="n">2</span>], <span class="k">"requiresRank"</span>: <span class="n">1</span>,
+  <span class="k">"waves"</span>: [
+    { <span class="k">"n"</span>: <span class="n">1</span>, <span class="k">"kind"</span>: <span class="s">"soldiers"</span>,  <span class="k">"spawns"</span>: [{ <span class="k">"enemy"</span>: <span class="s">"conscript"</span>, <span class="k">"count"</span>: <span class="n">4</span> }, { <span class="k">"enemy"</span>: <span class="s">"slinger"</span>, <span class="k">"count"</span>: <span class="n">2</span> }], <span class="k">"targetDurationS"</span>: [<span class="n">25</span>, <span class="n">40</span>] },
+    { <span class="k">"n"</span>: <span class="n">2</span>, <span class="k">"kind"</span>: <span class="s">"creatures"</span>, <span class="k">"spawns"</span>: [{ <span class="k">"enemy"</span>: <span class="s">"cinder_hound"</span>, <span class="k">"count"</span>: <span class="n">3</span> }, { <span class="k">"enemy"</span>: <span class="s">"mire_maw"</span>, <span class="k">"count"</span>: <span class="n">1</span> }] },
+    { <span class="k">"n"</span>: <span class="n">3</span>, <span class="k">"kind"</span>: <span class="s">"semifinal"</span>, <span class="k">"spawns"</span>: [{ <span class="k">"mage"</span>: <span class="s">"entrant_of_another_tent"</span>, <span class="k">"competence"</span>: <span class="n">1</span> }] },
+    { <span class="k">"n"</span>: <span class="n">4</span>, <span class="k">"kind"</span>: <span class="s">"final"</span>,     <span class="k">"spawns"</span>: [{ <span class="k">"mage"</span>: <span class="s">"winner_of_other_semifinal"</span>, <span class="k">"competence"</span>: <span class="n">1.5</span> }] } ],
+  <span class="k">"payoutGold"</span>: [<span class="n">20</span>, <span class="n">40</span>, <span class="n">60</span>, <span class="n">100</span>], <span class="k">"renown"</span>: [<span class="n">5</span>, <span class="n">10</span>, <span class="n">15</span>, <span class="n">25</span>], <span class="k">"rankUpOn"</span>: <span class="s">"win the final once, or reach it twice"</span> }</pre>
+  <table>
+    <tr><th>Tier</th><th>Weeks</th><th>New pressure</th><th>Mage competence</th></tr>
+    <tr><td>Tiro</td><td>1-2</td><td>conscripts, slingers, hounds, a maw</td><td>1 / 1.5</td></tr>
+    <tr><td>Veteranus</td><td>3-4</td><td>shield walls, nets, thornback, moths</td><td>2 / 2.5</td></tr>
+    <tr><td>Primus</td><td>5</td><td>mixed elites, two thornbacks</td><td>3 / 3.5</td></tr>
+    <tr><td>Summa</td><td>6</td><td>straight to the duels; the final may become the Breaking</td><td>4</td></tr>
+  </table>
+  <p>The entrant you meet is whoever won <i>their</i> Tent Trial in the simulation, so the Games are populated by the camp: the rival you humiliated, the friend you made at the Commons, the Stray the Vigil handed over as fodder.</p>
+</section>
+
+<!-- ============ BONDS ============ -->
+<section id="sys-bonds">
+  <p class="kicker">Systems as data</p>
+  <h2>Relationships and loyalty</h2>
+  <p>Four numbers carry the social world, each with one owner in <code>CampState</code>: directed <b>trust</b> (−100..100), directed <b>debt</b> (a count of favours owed), <b>loyalty</b> of a character to their tent (0..100), and <b>hunger</b> (0..100). Tents hold <b>stores</b> (bread) and a <b>standing</b> from the Games.</p>
+  <pre><span class="c">// CampState (Kotlin, in core; one authority per quantity)</span>
+<span class="k">class</span> CampState(
+  <span class="k">val</span> trust:   DirectedMatrix<Int>,   <span class="c">// -100..100, clamped; swing per night <= 40</span>
+  <span class="k">val</span> debt:    DirectedMatrix<Int>,   <span class="c">// favours owed; help() adds 1; repay_debt goal spends it</span>
+  <span class="k">val</span> loyalty: Map<CharId, Int>,     <span class="c">// to own tent; hunger >= 50 at night: -5</span>
+  <span class="k">val</span> hunger:  Map<CharId, Int>,     <span class="c">// +15 a night if unfed; Strays are never fed</span>
+  <span class="k">val</span> renown:  Map<CharId, Int>,     <span class="c">// 0..100, from Games and rumours</span>
+  <span class="k">val</span> tents:   Map<TentId, Tent>,    <span class="c">// members, elder, stores, standing</span>
+  <span class="k">val</span> situations: Map<SituationId, SituationState>,
+  <span class="k">val</span> knowings: Map<CharId, Set<FactId>> )  <span class="c">// who knows what: a warning raises a scheme's dc by 2</span>
+
+<span class="c">// the defection rule (one per night, at dawn)</span>
+defects(x, toTent) = loyalty(x) < 20
+                  && trust(x, m) >= 20 for some m in toTent
+                  && (warmth(elder(toTent)) >= 6 || stores(toTent) >= 6)</pre>
+  <div class="claim">Same rank, same tent: rivals. Same rank, other tent: friends.<span>The owner's "duality of tribalism" is two rules: same-tent, same-rank pairs lose 1 trust a night because they compete for one Trial slot; cross-tent, equal-rank pairs gain 50% more at the Commons. The system pushes friendships outward and rivalries inward, then the Games draw friends against each other.</span></div>
+</section>
+
+<!-- ============ SITUATIONS ============ -->
+<section id="sys-situations">
+  <p class="kicker">Systems as data · the owner's four archetypes, designed</p>
+  <h2>The four archetype situations as state machines</h2>
+  <p>Each archetype is a small state machine in <code>situations.json</code>, evaluated every night in a fixed order (a, b, c, d). Edges use a closed predicate vocabulary; an unknown predicate fails the build. The player can push every machine, and every machine moves without the player.</p>
+  <div class="grid2">
+    <div class="fig" id="d-sa"></div>
+    <div class="fig" id="d-sb"></div>
+  </div>
+  <div class="grid2">
+    <div class="fig" id="d-sc"></div>
+    <div class="fig" id="d-sd"></div>
+  </div>
+  <table>
+    <tr><th>Archetype</th><th>What drives it</th><th>Player hooks</th><th>Arena link</th></tr>
+    <tr><td><b>(a) The Strays</b></td><td>Unfed: hunger +15 a night; the Vigil pins thefts on them first; a tent takes one in when a member trusts them (≥ 20) and the elder is warm or the stores are full</td><td>Give bread; bring one to your elder; (as Air) found the fifth circle</td><td>A Stray handed to the Lanista appears in wave 1 in conscript gear; you can spare them</td></tr>
+    <tr><td><b>(b) Schemes before the Games</b></td><td>Steal, poison, persuade, rumour; schemer guile×4 + d20 must exceed the dc; caught by the Vigil on a second roll; caps 2/night, 3 on the eve</td><td>Commission, perform, foil (a friend's warning: dc +2), report</td><td>Poison: −20 max stamina, −10 HP; stolen talisman; renown loss</td></tr>
+    <tr><td><b>(c) Duality of tribalism</b></td><td>Trial on the eve picks one entrant per tent; cross-tent peers become sworn; the draw can make them torn</td><td>Choose who to court; offer your hand after a win</td><td>Sworn friends can be your semifinal; a feud gives Fire 30 Heat</td></tr>
+    <tr><td><b>(d) The bond of four</b></td><td>The mains share the betrayal; three pairs ≥ 20 call the Fourth Watch at the Well; plans: positions, knowledge, escape</td><td>Attend, vote, keep all six pairs above −20</td><td>The escape plan unlocks the Breaking in the Summa</td></tr>
+  </table>
+</section>
+
+<!-- ============ QUESTS ============ -->
+<section id="sys-quests">
+  <p class="kicker">Systems as data</p>
+  <h2>Quests: decision text with visible odds</h2>
+  <p>Quests are short D&amp;D-style graphs: a few nodes, choices gated by a stat check with the odds shown, authored endings with effects on real quantities. They are written at build time (a model helps draft text; a person or a linter approves), and the simulation instantiates them: a sabotage quest's target is whichever tent leads the standing that week.</p>
+  <pre><span class="c">// quests.json (excerpt): "The Salt Tally", given by Elder Sadruba on the eve of the Games</span>
+{ <span class="k">"id"</span>: <span class="s">"n2"</span>, <span class="k">"text"</span>: <span class="s">"Doros sits by the tablet chest, counting bread."</span>,
+  <span class="k">"choices"</span>: [
+    { <span class="k">"label"</span>: <span class="s">"Bribe him with two loaves"</span>, <span class="k">"cost"</span>: { <span class="k">"gold"</span>: <span class="n">4</span> },
+      <span class="k">"check"</span>: { <span class="k">"stat"</span>: <span class="s">"guile"</span>, <span class="k">"dc"</span>: <span class="n">12</span> }, <span class="k">"pass"</span>: <span class="s">"t_stolen"</span>, <span class="k">"fail"</span>: <span class="s">"n4"</span> },
+    { <span class="k">"label"</span>: <span class="s">"Wait for the change of watch"</span>,
+      <span class="k">"check"</span>: { <span class="k">"stat"</span>: <span class="s">"guile"</span>, <span class="k">"dc"</span>: <span class="n">16</span> }, <span class="k">"pass"</span>: <span class="s">"t_stolen"</span>, <span class="k">"fail"</span>: <span class="s">"n4"</span> } ] }
+{ <span class="k">"id"</span>: <span class="s">"t_caught"</span>, <span class="k">"text"</span>: <span class="s">"Warden Septima's salt burns your wrists."</span>,
+  <span class="k">"effects"</span>: { <span class="k">"stocks"</span>: <span class="n">1</span>, <span class="k">"renown"</span>: <span class="n">-5</span>, <span class="k">"trust"</span>: { <span class="k">"ophel"</span>: <span class="n">-30</span>, <span class="k">"sadruba"</span>: <span class="n">-5</span> } } }
+
+<span class="c">// quest linter (W10): every node reachable; every non-terminal has >= 2 choices;
+// every terminal is an authored ending; every effect names a real quantity; every check names a stat and a dc</span></pre>
+  <p>Planned content: 12 quests for the full game, three per archetype; two are written in <code>design/data/quests.json</code>.</p>
+</section>
+
+<!-- ============ RECON I/O ============ -->
+<section id="sys-recon">
+  <p class="kicker">Systems as data</p>
+  <h2>Reconciliation inputs and outputs</h2>
+  <div class="grid2">
+  <div>
+  <h3>In: the night's inputs (code)</h3>
+  <pre><span class="c">// Night.run(state, dayActions)</span>
+dayActions: [ { actor, slot, activity, args,
+                place, contestRoll? } ]
+arenaResults: [ { tier, wave, winner, loser,
+                  stageReached } ]
+state: CampState  <span class="c">// trust, debt, loyalty,</span>
+                  <span class="c">// hunger, renown, tents,</span>
+                  <span class="c">// situations, knowings</span>
+seed: hash(saveSeed, day)</pre>
+  </div>
+  <div>
+  <h3>Out: the Night Ledger (code)</h3>
+  <pre>facts[]:  { id, type, actors, targets,
+            place, topic, true,
+            visibility, salience }
+deltas[]: { quantity, before, after, cause }
+situationTransitions[], goalRetargets[]
+tomorrowPlans: { char: [m, a, e] }
+board: 3..5 facts chosen by salience
+  <span class="c">// +3 if about the player, +2 if new</span></pre>
+  </div>
+  </div>
+  <h3>Then: the Crier (words only)</h3>
+  <pre><span class="c">// crier output, validated (crier-prompt.md has the full prompt, an example and the validator)</span>
+{ <span class="k">"items"</span>: [ { <span class="k">"factIds"</span>: [<span class="s">"F1-01"</span>, <span class="s">"F1-03"</span>], <span class="k">"headline"</span>: <span class="s">"Fenna sleeps in the Stone Tent now"</span>,
+               <span class="k">"line"</span>: <span class="s">"Pell gave her his bread at the Ditch, and Elder Ruadh took her in. She did not look at you when she passed."</span>,
+               <span class="k">"speaker"</span>: <span class="s">"pell"</span>, <span class="k">"tone"</span>: <span class="s">"plain"</span> } ] }</pre>
+  <p class="small muted">Schemas: <code>design/reconciliation/night-ledger-schema.json</code>. The Plea experiment (typed text, later) uses the same idea: a small model classifies the player's sentence into one of four authored intents (appeal, bargain, threaten, confess) with a confidence; below 0.6 the game shows the four as cards. Code resolves the intent.</p>
+</section>
+
+<!-- ============ WORKED ============ -->
+<section id="worked">
+  <p class="kicker">Proof on paper · design/reconciliation/worked-days.json</p>
+  <h2>Three worked nights of the slice</h2>
+  <p>The player is Brennic. The slice is the last three days of a week. Every number follows the data files; these three nights are the golden test of wave W2, so the code must reproduce them exactly.</p>
+  <div class="night">
+    <h4>Night 1 · someone you ignored joined a rival tent; a rumour is about you</h4>
+    <p>Day: Brennic trains at the Yard, meets Senna of the Stone Tent at the Commons (+9 trust both ways, cross-tent equal rank) and <b>walks past Fenna</b> (her trust −5). Pell feeds Fenna at the Ditch (her trust in him 20 → 30, she owes him 2). Corvo starts a rumour: guile 8 + d20 13 = 21 &gt; dc 12.</p>
+    <p>Night: Strays scattered → huddled; <b>Fenna taken in by the Stone Tent</b> (Pell 30 ≥ 20, Ruadh's warmth 7). Brennic's renown 5 → 2; Sadruba 10 → 4 and Tilla 0 → −6 (cowardice offends <i>strength</i>); Garran also hears it and <b>disbelieves</b> (trust 20). Ophel's goal retargets to undermine the Ember Tent.</p>
+    <div class="board"><div><b>A rumour about you: you ran at the ford.</b> Tilla, breathless: "They say the new Fire ran from the barbarians! Someone at the Pit says so."</div><div><b>Fenna sleeps in the Stone Tent now.</b> Pell gave her his bread at the Ditch and Elder Ruadh took her in. She did not look at you when she passed.</div><div><b>Garran sat with Old Quill at the Well.</b> Someone saw them by the dry stones until the fires died.</div></div>
+    <p class="small muted">Board source: the phrase bank. Counterfactual: had Brennic fed her, Fenna would still go to Stone (Sadruba's warmth 2 cannot take her in) but would owe Brennic a loaf, and the board would say so.</p>
+  </div>
+  <div class="night">
+    <h4>Night 2 · a scheme against you is foiled because a friend warned you; a second rumour turns Iskar cold</h4>
+    <p>Day: Brennic wins the Tent Trial (0.516 vs 0.061: the bout outweighs Sadruba's cooling). At the Commons, <b>Cassia confides</b> that the Tide Tent is planning against the Ember entrant (trust 15 → 24). Corvo, humiliated, retargets to revenge and tries to poison Brennic: 8 + d20 7 = 15 vs dc 10 + 4 + 0 + <b>2 (warned)</b> = 16: <b>foiled</b>. The Vigil rolls 23 vs 18: <b>caught</b>. Nysa, commissioned by Ophel, spreads "the Fire mage sold the ford to Rome": 23 &gt; 12.</p>
+    <p>Night: Corvo to the stocks, renown 6 → 1, Sadruba's trust in him 15 → −5. Iskar's trust in Brennic 0 → −10 (the rumour touches <i>freedom</i> and <i>spite</i>). Three pairs of the four now trust each other ≥ 20: <b>the bond of four reaches first watch</b>.</p>
+    <div class="board"><div><b>Corvo in the stocks: nightshade at your tent.</b> Warden Septima caught him by your bedroll. The Vigil says he will stand in salt until the Games are done.</div><div><b>Word is you sold the ford to Rome.</b> You remember who warned you the Tide Tent was busy last night.</div><div><b>You are the Ember Tent's entrant.</b> Sadruba named you at the Pit. Corvo did not get up for a long time.</div><div><b>Iskar spat when your name was said.</b></div></div>
+    <p class="small muted">Board source: live voice, validated. Counterfactual: without Cassia's warning the dc is 14, Corvo's 15 exceeds it, and Brennic enters the Games poisoned.</p>
+  </div>
+  <div class="night">
+    <h4>Night 3 · the arena ripples into the camp</h4>
+    <p>Games: Brennic beats the soldiers, the creatures and Nysa, then <b>loses the final to Senna</b> (missio at 0 HP). Payout 60 gold, renown 2 → 17. Senna (honour) offers her hand: trust 9 → 15 both ways. That evening the four meet at the Well and choose the plan <b>knowledge</b> (2 votes, Garran for escape, Iskar abstains).</p>
+    <p>Night: Doros, unfed on Games day (hunger 55), loyalty 23 → 18, trusts Garran at 20: <b>he defects to the Stone Tent</b>. Iskar recruits Dace: 26 &gt; 20: <b>a fifth circle is drawn in the ash</b>. The Lanista leaves a sealed tablet at the grille: 30 gold to fall in the next semifinal.</p>
+    <div class="board"><div><b>Senna of the Stone Tent took the Tiro crown.</b> She beat you in the final, then held out her hand.</div><div><b>Doros sleeps in the Stone Tent now.</b> The Tide boy carried his blanket across the Commons. Ophel did not look up.</div><div><b>A fifth circle drawn in the ash.</b> They say Iskar and Dace drew it by the Ditch. The elders call it a children's game.</div></div>
+    <p class="small muted">Board source: the live voice wrote "Senna nearly killed you" (invented consequence) and "after three hungry nights" (unknown number); both were rejected and the bank filled the board. The offer and the Watch go to the private journal, not the board.</p>
+  </div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section id="story">
+  <p class="kicker">World</p>
+  <h2>Story spine and endings</h2>
+  <p><b>The setting.</b> A frontier legion uses collared mage auxiliaries. After the Ford is won, the wardens lock the collars and push the four through the <b>Janus Door</b> into <b>Castra Clausa</b>, a valley-world where the sun never moves. Magic dies at the collar inside the camp; it loosens only in the arena, rune by rune. Old Quill knows why: the arena's <b>Wardstones drink the magic spilled in the Games</b>, and that drink is what keeps the Door shut. Rome needs the fights to escalate. The collar clock is a harvest.</p>
+  <div class="fig" id="d-story"></div>
+  <p class="cap">Six weeks, four acts, four endings. Every ending is computed from state; none is chosen from a menu.</p>
+  <table>
+    <tr><th>Ending</th><th>Condition (code)</th><th>What it says</th></tr>
+    <tr><td><b>The Breaking</b></td><td>Reach the Summa final; trust with the other finalist ≥ 60; both hold the Wardstone secret (bond plan "knowledge" completed)</td><td>Two finalists turn and feed each other's spells into perfect absorbs until the Wardstones overflow. The Door opens for everyone who walks.</td></tr>
+    <tr><td>The Champion</td><td>Win the Summa final as a duel</td><td>Rome's favourite. The collar is gilded, not removed.</td></tr>
+    <tr><td>The Betrayed</td><td>Attempt the Breaking with trust &lt; 60</td><td>Your partner keeps absorbing and strikes at the end.</td></tr>
+    <tr><td>The Unremembered</td><td>Never reach the Summa</td><td>The season ends; a new collar arrives through the Door. The camp's board mentions you once.</td></tr>
+  </table>
+  <div class="claim">The ending is played with the hands that learned the game.<span>The Breaking is a 40-second duet: the partner casts at you on a readable rhythm, you perfect-absorb, then you cast at them and they absorb. Each perfect fills the Wardstones. It is the parry mechanic turned from defence into trust.</span></div>
+</section>
+
+<!-- ============ ART ============ -->
+<section id="art">
+  <p class="kicker">World</p>
+  <h2>Art direction and the image budget</h2>
+  <p><b>Look:</b> digital hand-drawn, ink outline, painted flat-to-soft fills, the owner's liked direction on Death Ride. <b>Mood:</b> sun-bleached Roman provincial (terracotta, limewash, bronze, salt-white) inside the camp; the arena under a bruised, unmoving sky; each school's element is the only saturated colour on screen. <b>Rule from the sister project:</b> no tiled ground. Every place and every arena is <i>one painted image</i>; decals and grading carry the variation.</p>
+  <div class="claim green">Portraits carry the character; the arena carries the silhouette.<span>In the camp, faces do the work: 21 portraits with 3 expressions each. In the arena the camera is high and top-down; mages are drawn from above as readable silhouettes (hood, shoulders, staff, element glow) that rotate in the engine, with 6 poses each, so no eight-direction animation is ever generated. Spell effects do the spectacle.</span></div>
+  <table>
+    <tr><th>Asset class</th><th>Count</th><th>Attempts × (authored)</th><th>Images</th><th>Slice?</th></tr>
+    <tr><td>Style direction proof sets (4 directions × 7 subjects)</td><td>28</td><td>2.0</td><td>56</td><td>yes</td></tr>
+    <tr><td>Portraits, base</td><td>21</td><td>1.6</td><td>34</td><td>9</td></tr>
+    <tr><td>Portrait expressions by edit (angry, afraid)</td><td>42</td><td>1.4</td><td>59</td><td>18</td></tr>
+    <tr><td>Story cards (prologue 6, acts 8, endings 4)</td><td>18</td><td>1.5</td><td>27</td><td>6</td></tr>
+    <tr><td>Camp backdrops (night by grading)</td><td>9</td><td>1.5</td><td>14</td><td>4</td></tr>
+    <tr><td>Arena backdrops (one painted image each)</td><td>3</td><td>2.0</td><td>6</td><td>1</td></tr>
+    <tr><td>Top-down figures, base (4 mains, 4 school bodies, 4 soldiers, 4 creatures)</td><td>16</td><td>1.6</td><td>26</td><td>8</td></tr>
+    <tr><td>Figure poses by edit (cast, absorb, roll, hit, down)</td><td>80</td><td>1.4</td><td>112</td><td>40</td></tr>
+    <tr><td>Spell effect key sheets</td><td>40</td><td>1.3</td><td>52</td><td>10</td></tr>
+    <tr><td>Icons (40 spells, 12 interface)</td><td>52</td><td>1.2</td><td>62</td><td>14</td></tr>
+    <tr><td><b>Total</b></td><td></td><td></td><td><b>≈ 448</b></td><td><b>≈ 187</b></td></tr>
+  </table>
+  <p>The pipeline is Death Ride's: versioned briefs as CSV, a style block restated verbatim in every prompt, a one-image proof before every batch, a weekly budget guard that stops on the first quota error, deterministic gates (alpha, frame margin, orientation, palette), local vision-model grading for fixed questions, the owner's contact sheet for taste. At the sister project's guard of 350 images a week the slice fits in one week and the full set in about two. <b>When the quota runs out, the game still ships:</b> the rules never see a sprite and every asset has a procedural placeholder.</p>
+</section>
+
+<!-- ============ PLATFORM ============ -->
+<section id="platform">
+  <p class="kicker">Build</p>
+  <h2>Platform and controls</h2>
+  <p><b>Fire TV Stick 4K + an Android phone as the controller</b>, over the LAN WebSocket the TV serves (the Death Ride stack, measured smooth on the reference Stick). A Bluetooth gamepad paired to the Stick is a first-class alternative. Kotlin + libGDX; a pure-JVM <code>core</code> holds both the arena kernel and the camp simulation, so both are tested headless on the desktop and run identically on the Stick.</p>
+  <div class="fig" id="d-phone"></div>
+  <p class="cap">The phone in landscape. The left thumb never leaves the stick; the right thumb lives between Bolt, Absorb and Roll, and reaches up for the four slots. Eyes stay on the TV.</p>
+  <table>
+    <tr><th>Action</th><th>Phone</th><th>Gamepad (Stick)</th><th>Rule</th></tr>
+    <tr><td>Move / sprint</td><td>floating stick; push past 85% to sprint</td><td>left stick; click to sprint</td><td>stamina 15/s while sprinting</td></tr>
+    <tr><td>Bolt / staff strike</td><td>big button; hold = auto-fire at soft-lock</td><td>A</td><td>inside 1.6 m the Bolt becomes a staff strike</td></tr>
+    <tr><td>Slots 1-4</td><td>arc of four; tap = cast at soft-lock; press-drag-release = aim</td><td>X, Y, B, RB; right stick aims</td><td>a dark slot shows its rune's countdown ring</td></tr>
+    <tr><td>Absorb</td><td>large button at the bottom-right edge; hold</td><td>RT (hold)</td><td>fresh press ≤ 0.18 s before impact = perfect</td></tr>
+    <tr><td>Roll</td><td>button between Bolt and Absorb; direction = stick</td><td>LT</td><td>25 stamina; 0.25 s of invulnerability</td></tr>
+  </table>
+  <p><b>Latency is designed for, not hoped away.</b> Death Ride measured the TV + phone path; this game puts its finest timing (the perfect absorb) on it. So: every input carries a clock-corrected timestamp, the TV judges the perfect window by that timestamp up to 0.10 s late, and a hit's damage is resolved 0.10 s after its visual impact. W1 measures input age on the Stick; if p95 is above 150 ms, the gamepad becomes the default and the window is re-derived.</p>
+  <p><b>What the TV shows:</b> the arena, big telegraphs in the three-family language, the collar's four runes as a ring at the mage's feet (readable from the sofa), HP and mana as two arcs. <b>What the phone shows:</b> buttons, cooldown rings, the slot runes, a haptic double pulse on a perfect absorb, and in the camp the slot choices and dialogue cards, so the TV stays a picture.</p>
+</section>
+
+<!-- ============ SCOPE ============ -->
+<section id="scope">
+  <p class="kicker">Build</p>
+  <h2>Scope and slicing</h2>
+  <div class="claim blue">The slice proves the two halves together: one school, three days, one tier, and a camp that moved.<span>Brennic (Fire) is playable; the other 20 characters live in the simulation. The slice is the Ford prologue, the Pricing bout, the last three days of a week (day 5, Trial day, Games day) and the Tiro Games, ending on Night 3's board.</span></div>
+  <table>
+    <tr><th></th><th>MVP vertical slice (Gate G1)</th><th>Full game (Gate G2)</th><th>Cut or deferred, and why</th></tr>
+    <tr><td>Schools</td><td>Fire playable; 4 tents simulated</td><td>All four playable</td><td>A fifth playable school (Iskar's circle is a camp faction, not a school)</td></tr>
+    <tr><td>Camp</td><td>3 days, 9 places, 21 characters, 4 situations</td><td>6-week season, 12 quests, gear, economy</td><td>Crafting (no sink worth it); romance (outside the brief's tone)</td></tr>
+    <tr><td>Arena</td><td>Tiro tier, 8 enemy types, AI mage</td><td>4 tiers, competence 1-4, the Breaking</td><td>Co-op and versus play (deferred: the phone stack allows it later)</td></tr>
+    <tr><td>Words</td><td>Phrase bank for the slice's fact types</td><td>~3,000 lines; optional live voice</td><td>Generated quests at run time (cut: softlock risk)</td></tr>
+    <tr><td>Typed role-play</td><td>none</td><td>Plea experiment (W14), behind a flag</td><td>Open-ended chat (cut: unbounded)</td></tr>
+    <tr><td>Art</td><td>≈ 187 images or placeholders</td><td>≈ 448 images</td><td>3D, voice acting, animated cutscenes (cut)</td></tr>
+  </table>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section id="plan">
+  <p class="kicker">Build · for an unattended agent, wave by wave</p>
+  <h2>The execution plan</h2>
+  <p>Same rhythm as the sister project: a design note first, data-first implementation, tests in <code>core</code>, a green build, an on-device check on the Stick, a status row, a session-log entry, an <code>OWNER-CHECKS.md</code> entry, one commit per wave. A gate with no command is <i>unverifiable</i>, a number not taken is <i>not measured</i>. Full cards for W1 and W2: <code>design/waves/</code>.</p>
+  <div class="fig" id="d-plan"></div>
+  <p class="cap">Order and dependencies. W1 and W2 can run in parallel worktrees; the art stream starts once the owner picks a style direction.</p>
+  <table>
+    <tr><th>#</th><th>Wave</th><th>Deliverable</th><th>Tests</th><th>Gate</th><th>Kill / STOP</th></tr>
+    <tr><td>W1</td><td>Arena kernel</td><td>Mage moves and shoots on the Stick with a phone; HP authority; dummies</td><td>determinism, 30/60 Hz, dedup, Down tag</td><td><code>:core:test :app:assembleDebug</code> + Stick run</td><td>input age p95 &gt; 150 ms → flag W3</td></tr>
+    <tr><td>W2</td><td>Ledger kernel</td><td>Camp simulation, 21 characters, situations, Night Ledger, season runner</td><td>golden nights, invariants × 1,000 seasons, coverage, divergence</td><td>season report</td><td>divergence &lt; 50% or owner finds lists dull → STOP</td></tr>
+    <tr><td>W3</td><td>Absorb and the collar</td><td>Mana, ward, perfect window with timestamp grace, tier clock, unblockable, threat language</td><td>window boundaries, return maths, clock advance, perfect-bot vs never-bot</td><td>tests + owner absorb check on the Stick</td><td>owner cannot land perfects at 0.18 s → window from data, re-test; gamepad default</td></tr>
+    <tr><td>W4</td><td>Fire kit and loadout</td><td>10 spells, Heat, 4 slots, roll, staff strike, loadout screen</td><td>spell linter, curve DPS per 15 s window</td><td>tests + Stick</td><td>a loadout dominates every wave → rework data</td></tr>
+    <tr><td>W5</td><td>Enemies and Tiro Games</td><td>8 enemies, AI mage on the same kernel, wave director</td><td>2,000 seeded fights per wave: duration bands, dead-air buckets, death &lt; 5 s rate</td><td>balance report</td><td>wave outside its band after tuning → cut the enemy</td></tr>
+    <tr><td>W6</td><td>Camp screens and the Crier</td><td>Day screen, places, dialogue cards, Dawn Board, phrase bank pipeline, Pit bout</td><td>bank coverage linter, validator fuzz, board snapshot tests</td><td>tests + Stick screenshots</td><td>bank coverage &lt; 4 per pair → narrower tones</td></tr>
+    <tr><td>W7</td><td>Slice integration · <b>G1</b></td><td>Ford → Pricing → 3 days → Tiro Games → board; save; soak</td><td>save round-trip, 15-min soak frame times</td><td><b>owner plays the first ten minutes</b></td><td>owner: "not a game yet" → stop, write why</td></tr>
+    <tr><td>W8</td><td>Water, Earth, Air</td><td>three kits and identities (W8a-c)</td><td>per-school linters, cross-school duel matrix</td><td>no school &gt; 55% duel win</td><td>a school cannot be balanced → ship it as NPC-only</td></tr>
+    <tr><td>W9</td><td>Tiers II-IV</td><td>new waves, competence 2-4</td><td>per-tier simulations</td><td>bands</td><td>—</td></tr>
+    <tr><td>W10</td><td>Quests</td><td>engine + 12 quests + linter</td><td>reachability, dead ends, effect census</td><td>linter green</td><td>—</td></tr>
+    <tr><td>W11</td><td>Season and economy</td><td>6-week calendar, gold, bread, gear, ranks</td><td>faucet/sink simulation before numbers; no dead-end season</td><td>economy report</td><td>runaway loop → bound it</td></tr>
+    <tr><td>W12</td><td>Story and endings</td><td>the Breaking duet, four endings, act beats</td><td>every ending reachable by a scripted policy</td><td>owner plays the Breaking</td><td>duet unreadable → set piece with fixed rhythm</td></tr>
+    <tr><td>W13</td><td>Art integration</td><td>art stream assets into the game</td><td>atlas residency on the Stick</td><td>Stick memory and frame time</td><td>over budget → downscale</td></tr>
+    <tr><td>W14</td><td>Plea experiment</td><td>typed intent classification, flag</td><td>classifier eval on 300 authored sentences</td><td>accuracy ≥ 85% or cut</td><td>owner says no → remove</td></tr>
+    <tr><td>W15</td><td>Live voice</td><td>optional runtime Crier, cost guard</td><td>validator on 500 live boards</td><td>reject rate ≤ 10%</td><td>above → keep bank only</td></tr>
+    <tr><td>W16</td><td>Release candidate · <b>G2</b></td><td>balance report, soak, checklist</td><td>all of the above</td><td>owner verdict</td><td>—</td></tr>
+  </table>
+  <p><b>Art stream (parallel, its own worktree):</b> A1 style directions (four proof sets, owner chooses) → A2 portraits → A3 top-down figures and poses → A4 backdrops and story cards → A5 icons and spell effects. Every batch: proof image first, gates, owner contact sheet. Spend is reported per wave as spent versus remaining.</p>
+</section>
+
+<!-- ============ VERIFY ============ -->
+<section id="verify">
+  <p class="kicker">Build</p>
+  <h2>What is tested headless, and what only the owner's hands can judge</h2>
+  <table>
+    <tr><th>Mechanic</th><th><span class="tag t-code">headless</span> how it is verified without a human</th><th><span class="tag t-owner">owner</span> what only hands certify</th></tr>
+    <tr><td>Movement, Bolt, HP</td><td>Deterministic replay hashes; 30/60 Hz parity; dedup per activation; Down tag gates</td><td>Does the mage go where the thumb says?</td></tr>
+    <tr><td>Absorb and perfect</td><td>Window boundary tests at exactly 0.18 s and 0.18 s + one step; mana return maths; a perfect-bot unlocks tier IV at 39.0 s with 3 perfects; grace tested with synthetic late timestamps</td><td>Does a perfect feel earned on the TV with a phone? Is the white ring readable?</td></tr>
+    <tr><td>Tier clock and curve</td><td>Per-loadout DPS per 15 s window; the gambit's curve claim is asserted</td><td>Is waiting for tier IV exciting or dull?</td></tr>
+    <tr><td>Enemies and waves</td><td>2,000 seeded fights per wave: duration in band, 2 s dead-air buckets, death inside 5 s rate, telegraph ≥ 0.4 s (positional) and ≥ 0.8 s (unblockable) linted</td><td>Is it fair? Can the three threat colours be read from the sofa?</td></tr>
+    <tr><td>Camp simulation</td><td>Golden nights; invariants over 1,000 seasons; coverage of every state; divergence; hermit-week salience; byte-identical replays</td><td>Is the board something you want to read in the morning?</td></tr>
+    <tr><td>Crier text</td><td>Validator on every bank line; fuzz with 500 broken outputs; length and name census</td><td>Do the voices sound like people?</td></tr>
+    <tr><td>Quests</td><td>Reachability, dead ends, effect census</td><td>Are the choices interesting?</td></tr>
+    <tr><td>Economy</td><td>Faucet/sink walk, dead-end season detector, tornado sweep of the top lever</td><td>Does gold feel scarce enough?</td></tr>
+    <tr><td>Ending</td><td>Scripted policies reach all four endings</td><td>Does the Breaking land emotionally?</td></tr>
+  </table>
+  <p class="small">Claims are reported at their tier of truth (exists, valid, wired, behaves, perceived). Only the owner can move a claim to <i>perceived</i>.</p>
+</section>
+
+<!-- ============ RISKS ============ -->
+<section id="risks">
+  <p class="kicker">Build · honest</p>
+  <h2>Risks</h2>
+  <table>
+    <tr><th>Risk</th><th>Why it is real</th><th>Measured early by</th><th>The cut</th></tr>
+    <tr><td><span class="sev h">High</span> · The perfect absorb is eaten by TV + phone latency</td><td>A 0.18 s window on a path where the sister project saw input age vary; phone glass has no tactile edge</td><td>W1 input age p95 on the Stick; W3 perfect-bot vs owner's hit rate</td><td>Gamepad as default; window 0.25 s from data; or a PC build of the same core</td></tr>
+    <tr><td><span class="sev h">High</span> · A deterministic camp feels mechanical</td><td>Players learn rule tables; a utility planner can be samey</td><td>W2 season report: board diversity, divergence, the owner's read of 21 boards</td><td>More situation variants and voice; the optional Director from variant 2 behind the same schema</td></tr>
+    <tr><td><span class="sev m">Medium</span> · Thumbs on glass, eyes on TV</td><td>Six buttons on a phone with no look-down</td><td>W1/W4 owner checks; mis-press telemetry</td><td>Three slots on the phone; gamepad first</td></tr>
+    <tr><td><span class="sev m">Medium</span> · Phrase bank combinatorics</td><td>fact types × voices × tones multiplies</td><td>W6 coverage linter (lines needed vs generated)</td><td>Narrator voice for low-salience facts; three tones</td></tr>
+    <tr><td><span class="sev m">Medium</span> · Figure identity across poses in generated art</td><td>Image generators drift between edits</td><td>A1/A3 proof set; local vision grading; owner contact sheet</td><td>Fewer poses; effects carry the action; tinted silhouettes</td></tr>
+    <tr><td><span class="sev m">Medium</span> · Content multiplication (4 schools × 10 spells × AI)</td><td>Every school is a kit, an AI profile and art</td><td>Velocity of W4 (one school)</td><td>Two schools playable, four as tents; 6 spells a school</td></tr>
+    <tr><td><span class="sev l">Low</span> · Season length</td><td>42 days of three slots may drag</td><td>Slice: minutes per camp day (target 3-4)</td><td>Four-week season</td></tr>
+    <tr><td><span class="sev l">Low</span> · The Breaking with an AI partner feels scripted</td><td>Cooperation with a bot</td><td>W12 owner play</td><td>A fixed-rhythm set piece</td></tr>
+    <tr><td><span class="sev l">Low</span> · Stick memory with portraits and backdrops</td><td>1.7 GB device</td><td>W13 residency</td><td>Downscale atlases</td></tr>
+  </table>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section id="questions">
+  <p class="kicker">Owner</p>
+  <h2>Open questions, each with the default the plan uses</h2>
+  <table>
+    <tr><th>#</th><th>Question</th><th>Default if unanswered</th></tr>
+    <tr><td>Q1</td><td>Are you comfortable that the language model does not decide the camp's outcomes?</td><td>Yes: the Ledger decides; the Director (variant 2) stays available as a later optional mode with the same schema.</td></tr>
+    <tr><td>Q2</td><td>Fire TV + phone, or PC first?</td><td>Fire TV + phone, gamepad supported.</td></tr>
+    <tr><td>Q3</td><td>Do you accept the names (Brennic, Cassia, Garran, Iskar; Castra Clausa; the Janus Door)?</td><td>Yes; renaming is a data change.</td></tr>
+    <tr><td>Q4</td><td>Can anyone die? </td><td>No deaths in camp or below the Summa; a loser of the Summa leaves the cast ("taken by the Lanista").</td></tr>
+    <tr><td>Q5</td><td>Is the Fire main male?</td><td>Yes, as written; Water is female as you specified; Earth and Air male as written.</td></tr>
+    <tr><td>Q6</td><td>Typed Plea: in the game or not?</td><td>Experiment after G1 (W14), behind a flag.</td></tr>
+    <tr><td>Q7</td><td>Live voice on by default?</td><td>Off; a setting.</td></tr>
+    <tr><td>Q8</td><td>Season length</td><td>Six weeks; cut to four if a camp day takes more than 4 minutes.</td></tr>
+    <tr><td>Q9</td><td>Who walks through the Door at the Breaking?</td><td>Everyone who chooses to; the ending board lists who stayed.</td></tr>
+    <tr><td>Q10</td><td>Style direction</td><td>Four proof sets, you choose, as on Death Ride.</td></tr>
+  </table>
+</section>
+
+<!-- ============ FILES ============ -->
+<section id="files">
+  <p class="kicker">Owner</p>
+  <h2>Design files and known limits</h2>
+  <table>
+    <tr><th>File</th><th>Contents</th></tr>
+    <tr><td><code>design/data/*.json, *.csv</code></td><td>Characters, schools, stats, places, activities, goals, relationships, situations, quests, combat constants, Fire spells, enemies, arena tiers</td></tr>
+    <tr><td><code>design/reconciliation/</code></td><td>Night Ledger schema, the Crier prompt with example and validator, three worked nights (W2's golden test)</td></tr>
+    <tr><td><code>design/waves/</code></td><td>Full cards for W1 (arena kernel) and W2 (ledger kernel)</td></tr>
+    <tr><td><code>design/spell-sheet-fire.md</code></td><td>The Fire school: spells, Heat, three loadouts, how a duel should feel, the tests that pin it</td></tr>
+  </table>
+  <p class="footnote">Every number in this report and its files is authored, not measured; each names the wave whose simulation or measurement will confirm or replace it. Feel is never claimed: only the owner's hands certify it. All names, characters and text are original to this design.</p>
+</section>
+
+</div></main>
+
+<script>
+const K={code:['#2f5d8a','#e7eef7'],llm:['#7b3fa0','#f2e9f8'],player:['#2e7d4f','#e4f2e9'],state:['#6b604e','#f3ede1'],arena:['#b5481b','#fbeadf'],camp:['#8a6d1f','#f6efd8'],risk:['#b3261e','#fbe7e5'],data:['#44546a','#edf0f4']};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function clip(n,px,py){const cx=n.x+n.w/2,cy=n.y+n.h/2,dx=px-cx,dy=py-cy;if(!dx&&!dy)return[cx,cy];const sx=dx?(n.w/2)/Math.abs(dx):1e9,sy=dy?(n.h/2)/Math.abs(dy):1e9,s=Math.min(sx,sy);return[cx+dx*s,cy+dy*s];}
+function D(id,S){const el=document.getElementById(id);if(!el)return;const N={};S.nodes.forEach(n=>N[n.id]=n);
+ let o=`<svg viewBox="0 0 ${S.w} ${S.h}" role="img" aria-label="${esc(S.title||id)}"><defs>`;
+ for(const k in K)o+=`<marker id="m-${id}-${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${K[k][0]}"/></marker>`;
+ o+='</defs>';
+ if(S.title)o+=`<text x="12" y="20" class="dl" fill="#6b604e">${esc(S.title)}</text>`;
+ (S.lanes||[]).forEach(l=>{o+=`<rect x="${l.x||0}" y="${l.y}" width="${l.w||S.w}" height="${l.h}" fill="${K[l.k][1]}" opacity="0.6" rx="8"/><text x="${(l.x||0)+10}" y="${l.y+17}" class="dl" fill="${K[l.k][0]}">${esc(l.t)}</text>`;});
+ (S.edges||[]).forEach(e=>{const a=N[e.f],b=N[e.t],k=e.k||'state',col=K[k][0],P=e.p||[];
+  const f=P.length?P[0]:[b.x+b.w/2,b.y+b.h/2],l=P.length?P[P.length-1]:[a.x+a.w/2,a.y+a.h/2];
+  const A=[clip(a,f[0],f[1]),...P,clip(b,l[0],l[1])];
+  o+=`<polyline points="${A.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${col}" stroke-width="1.8" ${e.d?'stroke-dasharray="5 4"':''} marker-end="url(#m-${id}-${k})"/>`;
+  if(e.l){const i=Math.floor((A.length-1)/2),m=[(A[i][0]+A[i+1][0])/2+(e.lx||0),(A[i][1]+A[i+1][1])/2+(e.ly||0)],L=String(e.l).split('\n'),w=Math.max(...L.map(x=>x.length))*6.2+12,h=L.length*14+5;
+   o+=`<rect x="${m[0]-w/2}" y="${m[1]-h/2}" width="${w}" height="${h}" rx="4" fill="#fffdf8" stroke="${col}" stroke-width="0.7"/>`;
+   L.forEach((t,j)=>o+=`<text x="${m[0]}" y="${m[1]-h/2+13+j*14}" text-anchor="middle" class="de" fill="${col}">${esc(t)}</text>`);}});
+ S.nodes.forEach(n=>{const c=K[n.k||'state'];o+=`<rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="${n.r==null?8:n.r}" fill="${c[1]}" stroke="${c[0]}" stroke-width="${n.b?2.6:1.4}"/>`;
+  const L=[[n.t,'dt']].concat((n.s||'').split('\n').filter(Boolean).map(x=>[x,'ds']));let y=n.y+n.h/2-L.length*15/2+11.5;
+  L.forEach(([t,c2])=>{o+=`<text x="${n.x+n.w/2}" y="${y}" text-anchor="middle" class="${c2}" fill="${c2==='dt'?c[0]:'#3b352c'}">${esc(t)}</text>`;y+=15;});});
+ (S.notes||[]).forEach(t=>{if(t.to)o+=`<line x1="${t.x}" y1="${t.y-4}" x2="${t.to[0]}" y2="${t.to[1]}" stroke="#9a8f7c" stroke-dasharray="2 3"/>`;String(t.t).split('\n').forEach((x,j)=>o+=`<text x="${t.x}" y="${t.y+j*14}" class="dn" text-anchor="${t.a||'start'}">${esc(x)}</text>`);});
+ (S.raw||[]).forEach(r=>o+=r);o+='</svg>';el.innerHTML=o;}
+
+/* first ten minutes */
+D('d-first10',{w:880,h:250,title:'0:00 → 10:00',nodes:[
+ {id:'a',x:10,y:40,w:200,h:78,k:'arena',b:1,t:'The Ford · 0:00-2:30',s:'tutorial battle, skippable\nmove · Bolt · absorb · a perfect\ntier II unlocks at 15 s'},
+ {id:'b',x:222,y:40,w:120,h:78,k:'state',t:'The Collar',s:'2:30-3:30\nbetrayal in 4\nstory cards'},
+ {id:'c',x:354,y:40,w:140,h:78,k:'arena',b:1,t:'The Pricing',s:'3:30-5:00\n60-90 s bout\nodds → renown 5'},
+ {id:'d',x:506,y:40,w:180,h:78,k:'camp',b:1,t:'Day 1 · 5:00-8:00',s:'Yard · Commons · Tent\nFenna asks for bread'},
+ {id:'e',x:698,y:40,w:172,h:78,k:'llm',b:1,t:'Night 1 → Dawn',s:'8:00-9:00 ledger reveal\nthe world moved'},
+ {id:'f',x:698,y:160,w:172,h:62,k:'camp',t:'Day 2 begins',s:'9:00-10:00 · the Trial is\ntonight; Corvo glares'}],
+ edges:[{f:'a',t:'b'},{f:'b',t:'c'},{f:'c',t:'d'},{f:'d',t:'e'},{f:'e',t:'f'}],
+ notes:[{x:20,y:150,t:'Arena feel by minute 3: read a glow, hold, time it,\nhear the bell, watch a rune crack early.'},{x:360,y:150,t:'Camp feel by minute 9: "Fenna sleeps in the\nStone Tent now." "A rumour about you."'}]});
+
+/* camp day */
+D('d-camp',{w:880,h:330,nodes:[
+ {id:'dawn',x:20,y:40,w:150,h:64,k:'camp',b:1,t:'Dawn Board',s:'3-5 things that\nhappened overnight'},
+ {id:'m',x:210,y:40,w:140,h:64,k:'player',t:'Morning slot',s:'pick a place\n+ an activity'},
+ {id:'a',x:390,y:40,w:140,h:64,k:'player',t:'Afternoon slot',s:'events can interrupt\n(a beggar, a challenge)'},
+ {id:'ev',x:570,y:40,w:140,h:64,k:'player',t:'Evening slot',s:'schemes, the Ditch,\nthe Fourth Watch'},
+ {id:'npc',x:390,y:150,w:320,h:56,k:'code',t:'20 other characters act in parallel',s:'planned at dawn by the utility planner, same menu'},
+ {id:'night',x:740,y:40,w:126,h:64,k:'code',b:1,t:'Night Ledger',s:'resolve, apply,\nsituations, goals'},
+ {id:'crier',x:740,y:150,w:126,h:56,k:'llm',t:'The Crier',s:'words only'},
+ {id:'plan',x:20,y:250,w:330,h:56,k:'code',t:'Plan tomorrow',s:'each NPC: 3 slots by utility, 2-slot dwell, a trace row each'},
+ {id:'save',x:540,y:250,w:170,h:56,k:'data',t:'Save + checksum',s:'byte-identical replays'}],
+ edges:[{f:'dawn',t:'m',k:'player'},{f:'m',t:'a',k:'player'},{f:'a',t:'ev',k:'player'},{f:'ev',t:'night',k:'code'},{f:'npc',t:'night',k:'code',p:[[803,178]],d:1},{f:'night',t:'crier',k:'llm'},{f:'crier',t:'save',k:'code',p:[[803,278]]},{f:'save',t:'plan',k:'code'},{f:'plan',t:'dawn',k:'code',p:[[95,278]]}]});
+
+/* week */
+D('d-week',{w:880,h:150,nodes:[
+ {id:'d1',x:10,y:40,w:110,h:56,k:'camp',t:'Days 1-4',s:'camp, 3 slots'},
+ {id:'d5',x:150,y:40,w:120,h:56,k:'camp',t:'Day 5',s:'schemes open'},
+ {id:'d6',x:300,y:40,w:150,h:56,k:'arena',t:'Day 6 · Trial',s:'Pit bout vs rival\none entrant per tent'},
+ {id:'n6',x:480,y:40,w:140,h:56,k:'risk',t:'Eve night',s:'up to 3 schemes'},
+ {id:'d7',x:650,y:40,w:120,h:56,k:'arena',b:1,t:'Day 7 · Games',s:'4 waves'},
+ {id:'r',x:790,y:40,w:80,h:56,k:'code',t:'Ripple',s:'night 7'}],
+ edges:[{f:'d1',t:'d5'},{f:'d5',t:'d6'},{f:'d6',t:'n6',k:'risk'},{f:'n6',t:'d7',k:'risk'},{f:'d7',t:'r'}],
+ notes:[{x:150,y:122,t:'the slice = days 5, 6, 7 of week one'}]});
+
+/* arena loop */
+D('d-arena',{w:880,h:330,nodes:[
+ {id:'read',x:20,y:40,w:170,h:70,k:'arena',b:1,t:'Read',s:'colour = magic\nwhite = steel\nblack-red = unblockable'},
+ {id:'abs',x:250,y:20,w:150,h:56,k:'player',t:'Absorb (mana)',s:'perfect = mana back'},
+ {id:'roll',x:250,y:90,w:150,h:56,k:'player',t:'Roll (stamina)',s:'0.25 s invulnerable'},
+ {id:'strike',x:250,y:160,w:150,h:56,k:'player',t:'Staff strike',s:'breaks a cast'},
+ {id:'cast',x:460,y:60,w:170,h:70,k:'player',b:1,t:'Cast',s:'Bolt always; 4 slots\nlive by tier'},
+ {id:'res',x:690,y:40,w:170,h:70,k:'arena',t:'Resources',s:'mana · stamina · HP\nschool resource (Heat)'},
+ {id:'clock',x:460,y:220,w:250,h:70,k:'code',b:1,t:'Collar clock',s:'tier every 15 s; perfect −2 s\nunlocks the next slot tier'},
+ {id:'end',x:740,y:220,w:120,h:70,k:'state',t:'Bout ends',s:'missio at 0 HP\nnext wave'}],
+ edges:[{f:'read',t:'abs',k:'player'},{f:'read',t:'roll',k:'player'},{f:'read',t:'strike',k:'player'},{f:'abs',t:'cast',k:'player'},{f:'roll',t:'cast',k:'player'},{f:'cast',t:'res',k:'arena'},{f:'abs',t:'clock',k:'code',p:[[425,48],[425,255]],l:'perfect −2 s',d:1},{f:'clock',t:'cast',k:'code',l:'new tier'},{f:'res',t:'read',k:'arena',p:[[775,10],[105,10]],l:'enemy acts; repeat every ~0.5 s'},{f:'res',t:'end',k:'state'}]});
+
+/* progression */
+D('d-progress',{w:880,h:340,lanes:[{y:30,h:300,w:420,k:'camp',t:'Camp'},{x:460,y:30,h:300,w:420,k:'arena',t:'Arena'}],nodes:[
+ {id:'stat',x:30,y:60,w:170,h:56,k:'camp',t:'Train stats',s:'Vigor Focus Nerve Guile'},
+ {id:'bond',x:30,y:150,w:170,h:56,k:'camp',t:'Trust with teachers',s:'3 lessons = a spell'},
+ {id:'quest',x:30,y:240,w:170,h:56,k:'camp',t:'Quests, gold',s:'gear: talisman, garment'},
+ {id:'trial',x:240,y:150,w:160,h:56,k:'camp',b:1,t:'Tent Trial',s:'bout · elder · renown'},
+ {id:'num',x:490,y:60,w:170,h:56,k:'arena',t:'Arena numbers',s:'HP, mana, drain, scouting'},
+ {id:'kit',x:490,y:150,w:170,h:56,k:'arena',t:'Loadout',s:'4 slots, by tier'},
+ {id:'games',x:700,y:150,w:160,h:56,k:'arena',b:1,t:'The Games',s:'4 waves'},
+ {id:'rank',x:700,y:250,w:160,h:56,k:'arena',t:'Rank → tier',s:'Tiro → … → Summa'},
+ {id:'ren',x:490,y:250,w:170,h:56,k:'arena',t:'Gold + renown',s:'by stage reached'}],
+ edges:[{f:'stat',t:'num',k:'player'},{f:'bond',t:'kit',k:'player'},{f:'quest',t:'kit',k:'player',p:[[450,268],[450,190]]},{f:'trial',t:'games',k:'player',p:[[320,128],[780,128]],l:'entrant'},{f:'kit',t:'games',k:'arena'},{f:'num',t:'games',k:'arena',p:[[780,88]]},{f:'games',t:'rank',k:'arena',l:'eligibility'},{f:'games',t:'ren',k:'arena',p:[[740,232],[575,232]]},{f:'ren',t:'quest',k:'arena',p:[[575,318],[115,318]],l:'gold, renown, rumours back to camp'}]});
+
+/* reconciliation */
+D('d-recon',{w:880,h:560,lanes:[{y:30,h:80,k:'player',t:'Player acts'},{y:120,h:200,k:'code',t:'Code (deterministic, seeded)'},{y:330,h:80,k:'llm',t:'Language model: words only'},{y:420,h:50,k:'data',t:'Stored'},{y:480,h:70,k:'camp',t:'Player reads'}],nodes:[
+ {id:'acts',x:20,y:50,w:170,h:50,k:'player',t:'Day actions',s:'3 slots + arena results'},
+ {id:'r1',x:20,y:145,w:150,h:58,k:'code',t:'1 Resolve',s:'d20 = rng(seed, actor,\naction)'},
+ {id:'r2',x:190,y:145,w:150,h:58,k:'code',t:'2-3 Apply',s:'clamps · hunger ·\nloyalty'},
+ {id:'r3',x:360,y:145,w:150,h:58,k:'code',t:'4 Situations',s:'a, b, c, d in order\nclosed predicates'},
+ {id:'r4',x:530,y:145,w:150,h:58,k:'code',t:'5-6 People',s:'≤1 defection ·\ngoal retargets'},
+ {id:'r5',x:700,y:145,w:160,h:58,k:'code',t:'7 Facts',s:'visibility · salience'},
+ {id:'r6',x:700,y:240,w:160,h:58,k:'code',b:1,t:'Board selection',s:'3-5 facts: +3 you,\n+2 new'},
+ {id:'r9',x:20,y:240,w:200,h:58,k:'code',t:'9 Plan tomorrow',s:'utility + dwell + trace'},
+ {id:'bank',x:420,y:348,w:190,h:56,k:'llm',b:1,t:'Phrase bank (default)',s:'written at build time by\nthe local 27B; validated'},
+ {id:'live',x:640,y:348,w:220,h:56,k:'llm',t:'Live voice (optional)',s:'1 call, cut-off 4 s,\n≈ 0.002 USD a night'},
+ {id:'val',x:280,y:240,w:200,h:58,k:'code',b:1,t:'8 Validator',s:'facts cited · no new names\nor numbers · fail → bank'},
+ {id:'st',x:300,y:430,w:400,h:32,k:'data',t:'CampState + Ledger + decision traces (save, checksum)'},
+ {id:'board',x:20,y:502,w:220,h:44,k:'camp',b:1,t:'Dawn Board',s:'3-5 lines at the morning fire'}],
+ edges:[{f:'acts',t:'r1',k:'code'},{f:'r1',t:'r2',k:'code'},{f:'r2',t:'r3',k:'code'},{f:'r3',t:'r4',k:'code'},{f:'r4',t:'r5',k:'code'},{f:'r5',t:'r6',k:'code'},
+ {f:'r6',t:'live',k:'llm',d:1,l:'facts only'},{f:'r6',t:'bank',k:'llm',p:[[620,269],[620,330],[515,330]]},{f:'live',t:'val',k:'llm',p:[[750,322],[400,322]],d:1},{f:'bank',t:'val',k:'llm',p:[[440,322]]},{f:'val',t:'board',k:'code',p:[[260,269],[260,524]]},{f:'r5',t:'st',k:'data',p:[[870,174],[870,446]]},{f:'st',t:'r9',k:'code',p:[[120,446],[120,310]],d:1}],
+ notes:[{x:240,y:72,t:'The model never sees CampState and never writes to it.'},{x:280,y:522,t:'If the live voice is slow, wrong or absent, the bank fills the slot; the player never waits.'}]});
+
+/* situations */
+D('d-sa',{w:430,h:250,title:'(a) The Strays',nodes:[
+ {id:'s',x:15,y:40,w:110,h:44,k:'state',t:'scattered'},{id:'h',x:160,y:40,w:110,h:44,k:'state',t:'huddled'},{id:'d',x:305,y:40,w:110,h:44,k:'risk',t:'desperate'},
+ {id:'t',x:15,y:170,w:120,h:50,k:'camp',t:'taken in',s:'trust ≥ 20 + warm elder'},{id:'p',x:155,y:170,w:120,h:50,k:'llm',t:'pledged',s:'the fifth circle'},{id:'f',x:295,y:170,w:120,h:50,k:'risk',t:'fodder',s:'wave 1 of the Games'}],
+ edges:[{f:'s',t:'h',l:'helped'},{f:'h',t:'d',l:'hunger ≥ 70'},{f:'d',t:'h',p:[[360,104],[215,104]],l:'helped twice',d:1},{f:'h',t:'t',k:'camp'},{f:'h',t:'p',k:'llm'},{f:'d',t:'f',k:'risk',l:'3 nights + pinned'}]});
+D('d-sb',{w:430,h:250,title:'(b) Schemes before the Games',nodes:[
+ {id:'o',x:15,y:40,w:110,h:44,k:'state',t:'open',s:'day ≥ 4'},{id:'a',x:160,y:40,w:110,h:44,k:'risk',t:'attempted',s:'≤ 2 a night'},
+ {id:'ok',x:305,y:30,w:110,h:40,k:'risk',t:'succeeded'},{id:'fo',x:305,y:90,w:110,h:40,k:'camp',t:'foiled'},{id:'c',x:305,y:160,w:110,h:44,k:'code',t:'caught',s:'stocks, −5 renown'},
+ {id:'r',x:15,y:160,w:150,h:50,k:'state',t:'resolved',s:'Games day: effects land'}],
+ edges:[{f:'o',t:'a',k:'risk'},{f:'a',t:'ok',k:'risk',l:'> dc'},{f:'a',t:'fo',l:'≤ dc'},{f:'fo',t:'c',k:'code',l:'Vigil roll'},{f:'ok',t:'r',p:[[440,50],[440,232],[90,232]],d:1},{f:'c',t:'r',d:1}]});
+D('d-sc',{w:430,h:250,title:'(c) Duality of tribalism',nodes:[
+ {id:'cold',x:15,y:40,w:110,h:44,k:'arena',t:'same tent',s:'cold, −1 a night'},{id:'tr',x:160,y:40,w:110,h:44,k:'arena',t:'Trial'},{id:'bi',x:305,y:20,w:110,h:36,k:'risk',t:'bitter'},{id:'re',x:305,y:70,w:110,h:36,k:'camp',t:'respect'},
+ {id:'st',x:15,y:160,w:100,h:44,k:'state',t:'strangers'},{id:'pe',x:125,y:160,w:90,h:44,k:'camp',t:'peers',s:'≥ 20'},{id:'sw',x:225,y:160,w:90,h:44,k:'player',t:'sworn',s:'≥ 50'},{id:'to',x:325,y:160,w:90,h:44,k:'risk',t:'torn',s:'drawn'}],
+ edges:[{f:'cold',t:'tr'},{f:'tr',t:'bi',k:'risk'},{f:'tr',t:'re',k:'camp'},{f:'st',t:'pe',k:'camp'},{f:'pe',t:'sw',k:'player'},{f:'sw',t:'to',k:'risk'},{f:'to',t:'pe',k:'camp',p:[[370,226],[170,226]],l:'winner honours',d:1}]});
+D('d-sd',{w:430,h:250,title:'(d) The bond of four',nodes:[
+ {id:'s',x:15,y:40,w:120,h:44,k:'state',t:'scattered four'},{id:'w',x:160,y:40,w:120,h:44,k:'llm',t:'first watch',s:'3 pairs ≥ 20'},{id:'p',x:305,y:40,w:110,h:44,k:'player',t:'plotting',s:'a plan voted'},
+ {id:'sw',x:305,y:160,w:110,h:44,k:'camp',t:'sworn',s:'6 pairs ≥ 40'},{id:'f',x:120,y:160,w:130,h:44,k:'risk',t:'fractured',s:'a pair < −20'}],
+ edges:[{f:'s',t:'w',k:'llm'},{f:'w',t:'p',k:'player'},{f:'p',t:'sw',k:'camp'},{f:'p',t:'f',k:'risk',l:'informer'},{f:'f',t:'w',k:'camp',p:[[90,182],[90,110],[220,110]],l:'Salt and Bread quest',d:1}]});
+
+/* story */
+D('d-story',{w:880,h:280,nodes:[
+ {id:'a1',x:10,y:40,w:190,h:66,k:'state',t:'Act I · weeks 1-2',s:'Tiro · the camp\'s rules\nthe Strays · first Games'},
+ {id:'a2',x:220,y:40,w:200,h:66,k:'state',t:'Act II · weeks 3-4',s:'Veteranus · schemes, a fifth\ncircle · the Fourth Watch'},
+ {id:'a3',x:440,y:40,w:190,h:66,k:'state',t:'Act III · week 5',s:'Primus · Quill\'s secret:\nthe Wardstones drink'},
+ {id:'a4',x:650,y:40,w:220,h:66,k:'arena',b:1,t:'Act IV · week 6 · Summa',s:'semifinal, then the final\nwith whoever the camp raised'},
+ {id:'e1',x:650,y:160,w:105,h:56,k:'camp',b:1,t:'Breaking',s:'trust ≥ 60\n+ secret'},
+ {id:'e2',x:765,y:160,w:105,h:56,k:'arena',t:'Champion',s:'win the duel'},
+ {id:'e3',x:440,y:160,w:190,h:56,k:'risk',t:'Betrayed',s:'Breaking tried, trust < 60'},
+ {id:'e4',x:10,y:160,w:190,h:56,k:'state',t:'Unremembered',s:'never reached the Summa'}],
+ edges:[{f:'a1',t:'a2'},{f:'a2',t:'a3'},{f:'a3',t:'a4'},{f:'a4',t:'e1',k:'camp'},{f:'a4',t:'e2',k:'arena'},{f:'a4',t:'e3',k:'risk',p:[[700,130],[535,130]]},{f:'a3',t:'e4',d:1,p:[[535,140],[105,140]]}]});
+
+/* phone layout */
+D('d-phone',{w:880,h:300,raw:[
+ '<rect x="80" y="20" width="720" height="260" rx="34" fill="#2a241c"/><rect x="104" y="40" width="672" height="220" rx="14" fill="#fbf8f1"/>',
+ '<line x1="400" y1="50" x2="400" y2="250" stroke="#dacfbb" stroke-dasharray="4 4"/>',
+ '<circle cx="230" cy="170" r="62" fill="#e4f2e9" stroke="#2e7d4f" stroke-width="2"/><circle cx="250" cy="160" r="24" fill="#2e7d4f" opacity="0.8"/>',
+ '<text x="230" y="70" text-anchor="middle" class="dt" fill="#2e7d4f">floating stick: touch anywhere left</text><text x="230" y="88" text-anchor="middle" class="ds">push past 85% = sprint</text>',
+ '<circle cx="650" cy="175" r="44" fill="#fbeadf" stroke="#b5481b" stroke-width="2.4"/><text x="650" y="172" text-anchor="middle" class="dt" fill="#b5481b">BOLT</text><text x="650" y="188" text-anchor="middle" class="ds">hold: auto</text>',
+ '<circle cx="728" cy="212" r="28" fill="#e7eef7" stroke="#2f5d8a" stroke-width="2.4"/><text x="728" y="216" text-anchor="middle" class="de" fill="#2f5d8a">ABSORB</text>',
+ '<circle cx="740" cy="140" r="22" fill="#f3ede1" stroke="#6b604e" stroke-width="2"/><text x="740" y="144" text-anchor="middle" class="de" fill="#6b604e">ROLL</text>',
+ '<g><circle cx="540" cy="190" r="22" fill="#fbeadf" stroke="#b5481b"/><text x="540" y="194" text-anchor="middle" class="de" fill="#b5481b">I</text>',
+ '<circle cx="555" cy="128" r="22" fill="#fbeadf" stroke="#b5481b"/><text x="555" y="132" text-anchor="middle" class="de" fill="#b5481b">II</text>',
+ '<circle cx="605" cy="88" r="22" fill="#f3ede1" stroke="#6b604e" stroke-dasharray="3 3"/><text x="605" y="92" text-anchor="middle" class="de" fill="#6b604e">III 12s</text>',
+ '<circle cx="672" cy="80" r="22" fill="#f3ede1" stroke="#6b604e" stroke-dasharray="3 3"/><text x="672" y="84" text-anchor="middle" class="de" fill="#6b604e">IV 27s</text></g>',
+ '<text x="104" y="296" class="dn">dark slots show their rune countdown; press-drag-release aims; drag to the top edge to cancel</text>',
+ '<text x="104" y="13" class="dn">mana bar wraps the Absorb button; stamina wraps Roll; haptic double pulse on a perfect absorb</text>'],nodes:[]});
+
+/* plan */
+D('d-plan',{w:880,h:300,nodes:[
+ {id:'w1',x:10,y:40,w:120,h:50,k:'arena',b:1,t:'W1 Arena kernel'},
+ {id:'w2',x:10,y:120,w:120,h:50,k:'code',b:1,t:'W2 Ledger kernel'},
+ {id:'w3',x:160,y:40,w:120,h:50,k:'arena',t:'W3 Absorb + collar'},
+ {id:'w4',x:310,y:40,w:110,h:50,k:'arena',t:'W4 Fire kit'},
+ {id:'w5',x:450,y:40,w:120,h:50,k:'arena',t:'W5 Enemies, Tiro'},
+ {id:'w6',x:310,y:120,w:260,h:50,k:'llm',t:'W6 Camp screens + Crier'},
+ {id:'w7',x:600,y:80,w:130,h:58,k:'player',b:1,t:'W7 Slice · G1',s:'owner plays'},
+ {id:'w8',x:760,y:30,w:110,h:44,k:'state',t:'W8-W12',s:'depth'},
+ {id:'w13',x:760,y:100,w:110,h:44,k:'state',t:'W13-W15'},
+ {id:'w16',x:760,y:170,w:110,h:44,k:'player',b:1,t:'W16 · G2'},
+ {id:'art',x:160,y:220,w:570,h:50,k:'camp',t:'Art stream A1-A5 (style choice → portraits → figures → backdrops → icons)'}],
+ edges:[{f:'w1',t:'w3'},{f:'w3',t:'w4'},{f:'w4',t:'w5'},{f:'w2',t:'w6',k:'code'},{f:'w5',t:'w7'},{f:'w6',t:'w7',k:'code'},{f:'w7',t:'w8'},{f:'w8',t:'w13'},{f:'w13',t:'w16'},{f:'art',t:'w13',k:'camp',p:[[815,245]],d:1}]});
+
+/* nav highlight */
+const links=[...document.querySelectorAll('nav a')];const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+</script>
+</body>
+</html>

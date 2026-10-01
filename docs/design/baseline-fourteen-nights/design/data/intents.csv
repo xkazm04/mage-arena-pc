@@ -1,0 +1,14 @@
+intent,args,who_may,effect_on_actor,effect_on_target,contest,visibility,cap
+TRAIN,stat,all but venno and septima,stat points +3 (hungry +2),,none,public,
+WORK,,all but venno and septima,gold +4; tent stores +2,,none,public,
+BEFRIEND,target,all,trust(actor->target) +6,trust(target->actor) +6 (+9 cross-tent equal rank),none,public,
+CONFIDE,target and factId,all; the fact must be in the actor's knowledge,trust +4 both ways,target learns the fact,none,secret,
+PROTECT,target,all,gold or bread -2,trust +10 toward actor; debt(target->actor) +1; target counts as warned (+2 dc vs schemes) for one night,none,witnessed,
+WATCH,target,all,learns one fact the target holds of visibility witnessed or public,,actor guile*4 + d20 vs 10 + target guile*4 (fail: target notices; trust -6),secret,
+SCHEME,kind (steal|poison|persuade|rumour) and target,all minus forbiddenIntents,see arcs.json games_eve_schemes,see arcs.json,schemer guile*4 + d20 must exceed dc,secret (witnessed if caught),2 a night camp-wide (3 on the eve night); never the same target two nights running; resolves in the evening of the day it was chosen for (on a Games day: at dawn before the Door opens)
+RECRUIT,target,all,,loyalty(target) -8; trust(target->actor) +4,actor guile*4 + renown/10 + d20 vs 10 + target loyalty,witnessed,
+DEFECT,toTent,all minus forbiddenIntents,joins toTent at dawn,,code checks: loyalty < 20 AND trust >= 20 with someone in toTent AND its elder accepts,public,1 a night camp-wide
+REPORT,target,all minus forbiddenIntents,,the Vigil investigates the next day,vigil roll d20 + 8 vs target guile*4 + 10,secret,1 a night camp-wide
+PLOT,,the four mains only; arc bond_of_four >= first_watch,bond plan progress +1,,none,secret,
+REST,,all,fatigue -2,,none,private,
+OFFER,target and terms,venno only,,a deal appears in the target's journal,none,secret,1 a night
