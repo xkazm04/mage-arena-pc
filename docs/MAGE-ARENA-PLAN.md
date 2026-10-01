@@ -76,7 +76,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 
 | Stream | Id | Wave | Depends on | Status | Commit | Date |
 |---|---|---|---|---|---|---|
-| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | not started | | |
+| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | gates green; Fable review pending orchestrator | W0 commit (this wave) | 2026-10-01 |
 | Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | not started | | |
 | Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
@@ -153,3 +153,11 @@ Worktrees: `C:\Users\kazda\kiro\mage-arena` (main), `...\mage-arena-core`, `...\
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
+
+### CORE W0 ? 2026-10-01
+
+- Read the full project plan, chosen report/data/cards and Fable verdict; reconciled camp design under `docs/design/reconciled/`. Archived contest packages preserved. No game or art modifications.
+- Design note first: `docs/waves/W0-design-reconcile.md`. Season calendar, numeric effect authority, cast/locations, death reservations, defect dispositions, reference replayer and generated fixtures added.
+- Measured: `node packages/tools/replay/cli.mjs check` ? zero contradictions, three simulated nights, 237 traced changes. `node --test packages/tools/replay/*.test.mjs` ? seven passed, including planted prose/rule/fixture contradictions. `node packages/tools/replay/cli.mjs build` ? green. Full commands and boundaries in `docs/waves/W0-report.md`.
+- Authored numbers remain authored. Owner feel and live model quality not measured. Fable review is pending orchestrator dispatch, as assigned by the card. Deferred arcs/arena/Parley integrations explicitly listed in `docs/design/reconciled/defects.json`.
+- Next: W1; verify local Claude flags before any subscription calls, local bulk soak, capped Sonnet run.

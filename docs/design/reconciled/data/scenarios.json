@@ -1,0 +1,124 @@
+{
+  "seed": 73,
+  "startDay": 4,
+  "nights": [
+    {
+      "id": "shelter",
+      "choices": {
+        "garran": [
+          "PROTECT",
+          {
+            "target": "fenna"
+          }
+        ],
+        "brennic": [
+          "BEFRIEND",
+          {
+            "target": "cassia"
+          }
+        ],
+        "nysa": [
+          "SCHEME",
+          {
+            "kind": "rumour",
+            "target": "cassia",
+            "topic": "cowardice"
+          }
+        ],
+        "iskar": [
+          "BEFRIEND",
+          {
+            "target": "garran"
+          }
+        ],
+        "quill": [
+          "WORK",
+          {}
+        ]
+      }
+    },
+    {
+      "id": "consequence",
+      "choices": {
+        "garran": [
+          "PROTECT",
+          {
+            "target": "cassia"
+          }
+        ],
+        "nysa": [
+          "SCHEME",
+          {
+            "kind": "poison",
+            "target": "cassia"
+          }
+        ],
+        "ophel": [
+          "WATCH",
+          {
+            "target": "cassia"
+          }
+        ],
+        "fenna": [
+          "WORK",
+          {}
+        ],
+        "iskar": [
+          "BEFRIEND",
+          {
+            "target": "garran"
+          }
+        ]
+      }
+    },
+    {
+      "id": "games-eve",
+      "choices": {
+        "garran": [
+          "SCHEME",
+          {
+            "kind": "poison",
+            "target": "nysa"
+          }
+        ],
+        "nysa": [
+          "SCHEME",
+          {
+            "kind": "poison",
+            "target": "cassia"
+          }
+        ],
+        "corvo": [
+          "SCHEME",
+          {
+            "kind": "steal",
+            "target": "brennic"
+          }
+        ],
+        "sadruba": [
+          "SCHEME",
+          {
+            "kind": "steal",
+            "target": "ophel"
+          }
+        ],
+        "kesh": [
+          "SCHEME",
+          {
+            "kind": "rumour",
+            "target": "sadruba",
+            "topic": "serves_rome"
+          }
+        ],
+        "lio": [
+          "SCHEME",
+          {
+            "kind": "rumour",
+            "target": "corvo",
+            "topic": "cowardice"
+          }
+        ]
+      }
+    }
+  ]
+}

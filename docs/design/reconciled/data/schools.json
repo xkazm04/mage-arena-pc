@@ -1,0 +1,50 @@
+[
+  {
+    "id": "water",
+    "tent": "tide",
+    "hint": "patient, intelligent, wins before the fight",
+    "weights": {
+      "WATCH": 1.4,
+      "CONFIDE": 1.2,
+      "SCHEME:persuade": 1.3,
+      "SCHEME:rumour": 1.2,
+      "TRAIN:focus": 1.2
+    },
+    "preferredStat": "focus"
+  },
+  {
+    "id": "fire",
+    "tent": "ember",
+    "hint": "hard-headed, aggressive, stronger under tension",
+    "weights": {
+      "TRAIN:nerve": 1.4,
+      "SCHEME:poison": 1.1,
+      "BEFRIEND": 0.8,
+      "REPORT": 0.5
+    },
+    "preferredStat": "nerve"
+  },
+  {
+    "id": "earth",
+    "tent": "stone",
+    "hint": "calm, protective, slow to move and hard to move",
+    "weights": {
+      "PROTECT": 1.5,
+      "WORK": 1.3,
+      "SCHEME:*": 0.3
+    },
+    "preferredStat": "vigor"
+  },
+  {
+    "id": "air",
+    "tent": "gale",
+    "hint": "restless, free, contemptuous of rules",
+    "weights": {
+      "RECRUIT": 1.6,
+      "SCHEME:rumour": 1.4,
+      "REPORT": 0.3,
+      "DEFECT": 1.3
+    },
+    "preferredStat": "guile"
+  }
+]

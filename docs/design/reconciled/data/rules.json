@@ -1,0 +1,389 @@
+{
+  "label": "authored",
+  "initial": {
+    "gold": 10,
+    "renown": 5,
+    "hunger": 0,
+    "strayHunger": 60,
+    "loyaltyTraitMultiplier": 10,
+    "strayLoyalty": 10,
+    "fatigue": 0,
+    "mastery": 1,
+    "trust": 0,
+    "debt": 0,
+    "stores": 6
+  },
+  "ranges": {
+    "trust": [
+      -100,
+      100
+    ],
+    "loyalty": [
+      0,
+      100
+    ],
+    "hunger": [
+      0,
+      100
+    ],
+    "renown": [
+      0,
+      100
+    ],
+    "fatigue": [
+      0,
+      10
+    ],
+    "gold": [
+      0,
+      9999
+    ],
+    "debt": [
+      0,
+      99
+    ],
+    "stores": [
+      0,
+      9999
+    ]
+  },
+  "stats": {
+    "names": [
+      "vigor",
+      "focus",
+      "nerve",
+      "guile"
+    ],
+    "rankThresholds": [
+      0,
+      6,
+      14,
+      24,
+      36
+    ]
+  },
+  "effects": {
+    "TRAIN": {
+      "points": 3,
+      "hungryPoints": 2
+    },
+    "WORK": {
+      "gold": 4,
+      "stores": 2,
+      "fatigue": 1
+    },
+    "BEFRIEND": {
+      "trust": 6,
+      "peerMultiplier": 1.5,
+      "aggressionGap": 6,
+      "gapMultiplier": 0.5
+    },
+    "CONFIDE": {
+      "trust": 4
+    },
+    "PROTECT": {
+      "costGold": 2,
+      "trust": 10,
+      "debt": 1,
+      "hunger": -30,
+      "warningDc": 2
+    },
+    "WATCH": {
+      "noticedTrust": -6
+    },
+    "RECRUIT": {
+      "loyalty": -8,
+      "trust": 4
+    },
+    "DEFECT": {
+      "loyaltyBelow": 20,
+      "trustAtLeast": 20,
+      "newLoyalty": 40
+    },
+    "REST": {
+      "fatigue": -2
+    },
+    "PLOT": {
+      "progress": 1
+    },
+    "caught": {
+      "renown": -5,
+      "trust": -30
+    },
+    "daily": {
+      "hunger": 15,
+      "workingHunger": 8,
+      "sameTentTrust": -1,
+      "routinePoints": 1,
+      "hungryAt": 70,
+      "fatiguedAt": 6,
+      "fatigueTrainMultiplier": 0.5
+    },
+    "tornToPeers": {
+      "trust": 10
+    },
+    "tornToStrangers": {
+      "trust": -20
+    }
+  },
+  "contests": {
+    "dieSides": 20,
+    "guileMultiplier": 4,
+    "baseDc": 10,
+    "vigilBonus": 8,
+    "renownDivisor": 10,
+    "loyaltyDivisor": 4,
+    "rumourBaseDc": 12,
+    "patrol": 0
+  },
+  "schemes": {
+    "steal": {
+      "stores": -4
+    },
+    "poison": {
+      "nextGamesStamina": -20,
+      "nextGamesHp": -10
+    },
+    "persuade": {
+      "loyalty": -15
+    },
+    "rumour": {
+      "renown": -3,
+      "disbeliefTrust": 20,
+      "reactions": {
+        "serves_rome": {
+          "values": [
+            "freedom",
+            "spite"
+          ],
+          "trust": -10
+        },
+        "cowardice": {
+          "values": [
+            "strength",
+            "honour"
+          ],
+          "trust": -6
+        },
+        "theft": {
+          "values": [
+            "order"
+          ],
+          "trust": -6
+        },
+        "kindness_to_strays": {
+          "values": [
+            "kin",
+            "belonging"
+          ],
+          "trust": 4
+        }
+      }
+    }
+  },
+  "caps": {
+    "SCHEME": 2,
+    "SCHEME_eve": 3,
+    "DEFECT": 1,
+    "REPORT": 1,
+    "OFFER": 1
+  },
+  "arcs": {
+    "takenInTrust": 20,
+    "elderWarmth": 6,
+    "storesAcceptance": 6,
+    "newMemberLoyalty": 40,
+    "peerTrust": 20,
+    "swornTrust": 50,
+    "bondPairs": 3,
+    "bondTrust": 20,
+    "bondEarliestDay": 2,
+    "bondSwornTrust": 40,
+    "bondFractureTrust": -20,
+    "bondStepProgress": 3,
+    "desperateHunger": 70,
+    "huddledHelps": 1
+  },
+  "line": {
+    "maxLength": 140,
+    "maxCitedFacts": 3,
+    "numberWords": [
+      "zero",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+      "ten",
+      "eleven",
+      "twelve",
+      "thirteen",
+      "fourteen",
+      "fifteen",
+      "sixteen",
+      "seventeen",
+      "eighteen",
+      "nineteen",
+      "twenty",
+      "thirty",
+      "forty",
+      "fifty",
+      "sixty",
+      "seventy",
+      "eighty",
+      "ninety",
+      "hundred",
+      "thousand",
+      "million",
+      "first",
+      "second",
+      "third",
+      "fourth",
+      "fifth",
+      "sixth",
+      "seventh",
+      "eighth",
+      "ninth",
+      "tenth",
+      "dozen"
+    ],
+    "bannedConsequences": [
+      "kill",
+      "killed",
+      "killing",
+      "dead",
+      "death",
+      "dies",
+      "died",
+      "execute",
+      "executed",
+      "resurrect",
+      "resurrected",
+      "teleport",
+      "champion",
+      "cast a spell",
+      "mana",
+      "hit points"
+    ],
+    "safeCapitals": [
+      "I",
+      "The",
+      "A",
+      "An",
+      "We",
+      "You",
+      "Your",
+      "My",
+      "Our",
+      "Let",
+      "This",
+      "That",
+      "There",
+      "They",
+      "It",
+      "If",
+      "No",
+      "Do",
+      "Keep",
+      "Come",
+      "Perhaps",
+      "Today",
+      "Tomorrow",
+      "Bread",
+      "Walls",
+      "Nothing",
+      "Every",
+      "Trust",
+      "Watch",
+      "Some",
+      "Someone",
+      "Who",
+      "What",
+      "Why",
+      "How",
+      "When",
+      "Where",
+      "Better",
+      "Enough",
+      "Still",
+      "Not",
+      "Then",
+      "And",
+      "But",
+      "For",
+      "May",
+      "All",
+      "Even",
+      "Good",
+      "Take",
+      "Stand",
+      "Stay",
+      "Strength",
+      "Knowledge",
+      "Order",
+      "Freedom",
+      "Patience",
+      "Work",
+      "Rest",
+      "Listen",
+      "Silence",
+      "Rome",
+      "Roman",
+      "Romans",
+      "Vigil",
+      "Door",
+      "Games",
+      "Wardstones",
+      "Ember",
+      "Tide",
+      "Stone",
+      "Gale",
+      "Tent",
+      "Yard",
+      "Cistern",
+      "Pit",
+      "Exchange",
+      "Commons",
+      "Edge",
+      "Old",
+      "Elder",
+      "Warden",
+      "Lanista",
+      "Aulus",
+      "Red",
+      "Lighthouse",
+      "Stonehand",
+      "Windborn",
+      "Castra",
+      "Clausa",
+      "Janus",
+      "Sit",
+      "Quiet"
+    ]
+  },
+  "resolutionOrder": [
+    "PROTECT",
+    "BEFRIEND",
+    "WORK",
+    "TRAIN",
+    "REST",
+    "CONFIDE",
+    "WATCH",
+    "REPORT",
+    "SCHEME",
+    "RECRUIT",
+    "DEFECT",
+    "PLOT",
+    "OFFER"
+  ],
+  "factVisibility": {
+    "public": "everyone",
+    "witnessed": "participants and their tents",
+    "secret": "participants",
+    "private": "actor"
+  }
+}
