@@ -24,7 +24,7 @@ describe('catalog and composition', () => {
 describe('commitments and Flow', () => {
   it('snapshots a tier before unlock and retains cooldown across upgrade', () => {
     const { state, actor, target } = setup(); cast(state, actor, target); actor.tier = 2;
-    expect(actor.pending!.spellId).toBe('tide_orb:1:base'); advance(state, ticks(0.5)); expect(target.maxHp - target.hp).toBeCloseTo(14);
+    expect(actor.pending!.spellId).toBe('tide_orb:1:base'); advance(state, ticks(0.5)); expect(target.maxHp - target.hp).toBeCloseTo(7);
     const before = actor.mana; expect(trySpellCast(state, actor, { ...idleInput(target.pos), slot: 1, cast: true })).toBe(false); expect(actor.mana).toBe(before);
   });
   it('waits the entire unblockable warning and allows interruption', () => {
@@ -51,7 +51,7 @@ describe('commitments and Flow', () => {
 describe('damage geometry and control', () => {
   it('Crash Orb deduplicates direct and burst targets', () => {
     const { state, actor, target } = setup('tide_orb', 2), neighbour = addMage(state, 1, { x: target.pos.x, y: target.pos.y + 1 });
-    cast(state, actor, target); advance(state, ticks(1)); expect(target.maxHp - target.hp).toBe(24); expect(neighbour.maxHp - neighbour.hp).toBe(24);
+    cast(state, actor, target); advance(state, ticks(1)); expect(target.maxHp - target.hp).toBe(12); expect(neighbour.maxHp - neighbour.hp).toBe(12);
   });
   it('Twin Tides and the fan emit exact counts with symmetric angles', () => {
     for (const [tier, branch, count] of [[3,'A',2],[4,'B',5]] as const) {
@@ -66,7 +66,7 @@ describe('damage geometry and control', () => {
       expect(branch === 'A' ? target.pos.x < initial : target.pos.x > initial).toBe(true); expect(behind.hp).toBe(behind.maxHp);
     }
     const { state, actor, target } = setup('lash', 3), behind = addMage(state, 1, { x: 8, y: 10 });
-    cast(state, actor, target); advance(state, ticks(0.5)); expect(behind.maxHp - behind.hp).toBe(30);
+    cast(state, actor, target); advance(state, ticks(0.5)); expect(behind.maxHp - behind.hp).toBe(15);
   });
   it('Coil roots only after the warning', () => {
     const { state, actor, target } = setup('lash', 4, 'A', 2); cast(state, actor, target); advance(state, ticks(0.7)); expect(target.water.rootUntil).toBe(0);
@@ -78,7 +78,7 @@ describe('damage geometry and control', () => {
     stepArena(p.state, { [p.target.id]: { ...idleInput(), move: { x: 1, y: 0 } } }); expect(p.target.pos.x - x).toBeCloseTo(combat.movement.walkMps * 0.7 / combat.simStepHz);
     const f = setup('mire', 2); cast(f.state, f.actor, f.target); advance(f.state, ticks(0.5)); expect(hasLineOfSight(f.state, f.actor.pos, f.target.pos)).toBe(false);
     advance(f.state, ticks(5)); expect(hasLineOfSight(f.state, f.actor.pos, f.target.pos)).toBe(true);
-    const r = setup('mire', 3); cast(r.state, r.actor, r.target); advance(r.state, ticks(0.8)); expect(r.target.water.rootUntil).toBeGreaterThan(r.state.tick); expect(r.target.hp).toBe(85);
+    const r = setup('mire', 3); cast(r.state, r.actor, r.target); advance(r.state, ticks(0.8)); expect(r.target.water.rootUntil).toBeGreaterThan(r.state.tick); expect(r.target.hp).toBe(90);
   });
   it('Tomb makes a target immune, silent and immobile and clears its resource', () => {
     const { state, actor, target } = setup('mire', 4); target.water.flow = 4; cast(state, actor, target); advance(state, ticks(0.8)); expect(target.water.flow).toBe(0);
@@ -99,8 +99,8 @@ describe('sustain and mirror', () => {
     const { state, actor, target } = setup('mirror', 1); cast(state, actor, target); advance(state, ticks(0.1)); actor.mana = 20; actor.absorb = true; actor.absorbFreshTick = state.tick; actor.facing = { x: 1, y: 0 };
     const hit = { ownerId: target.id, activationId: 100, damage: 40, family: 'magic' as const, tier: 1, source: target.pos };
     resolveHit(state, actor, hit); expect(actor.mana).toBeCloseTo(36.5); expect(actor.water.stored).toBe(20);
-    for (let i = 0; i < 5; i++) resolveHit(state, actor, hit); expect(actor.water.stored).toBe(80);
-    actor.absorb = false; actor.water.flow = 0; actor.tier = 4; actor.water.cooldowns = {}; cast(state, actor, target); advance(state, ticks(0.4)); expect(actor.water.stored).toBe(0); expect(state.projectiles[0]!.damage).toBe(80);
+    for (let i = 0; i < 5; i++) resolveHit(state, actor, hit); expect(actor.water.stored).toBe(40);
+    actor.absorb = false; actor.water.flow = 0; actor.tier = 4; actor.water.cooldowns = {}; cast(state, actor, target); advance(state, ticks(0.4)); expect(actor.water.stored).toBe(0); expect(state.projectiles[0]!.damage).toBe(40);
   });
   it('Reflection returns only eligible magic even above tier II', () => {
     for (const [tier, family, reflected] of [[1,'magic',true],[4,'magic',false],[1,'physical',false]] as const) {
@@ -111,7 +111,7 @@ describe('sustain and mirror', () => {
   });
   it('Ripple hits once; Mirage expires; wave reset clears combat effects', () => {
     const { state, actor, target } = setup('mirror', 2, 'B'); actor.absorb = true; actor.absorbFreshTick = 0;
-    resolveHit(state, actor, { ownerId: target.id, activationId: 40, damage: 10, family: 'magic', tier: 1, source: target.pos }); expect(target.maxHp - target.hp).toBe(15);
+    resolveHit(state, actor, { ownerId: target.id, activationId: 40, damage: 10, family: 'magic', tier: 1, source: target.pos }); expect(target.maxHp - target.hp).toBe(7.5);
     actor.tier = 3; actor.absorb = false; cast(state, actor, target); advance(state, ticks(0.2)); expect(actor.water.decoy).toBeDefined(); advance(state, ticks(3)); expect(actor.water.decoy).toBeUndefined();
     actor.water.flow = 5; actor.water.stored = 80; actor.water.encasedUntil = 500; actor.water.cooldowns.mirror = 500; resetWave(state, actor);
     expect(actor.water.flow).toBe(0); expect(actor.water.stored).toBe(0); expect(actor.water.encasedUntil).toBe(0); expect(actor.water.cooldowns).toEqual({}); expect(actor.water.composition.branches.mirror).toBe('B');

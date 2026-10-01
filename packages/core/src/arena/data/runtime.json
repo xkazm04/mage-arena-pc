@@ -29,6 +29,24 @@
       { "name": "Rotation", "lines": ["tide_orb", "lash", "mirror"], "branches": { "lash": "B", "mirror": "B", "tide_orb": "B" } }
     ]
   },
+  "games": {
+    "_about": "W4 authored values absent from baseline. Tiro spawns, enemy stats/attacks, competence and duration targets stay baseline-owned.",
+    "playerSpawn": { "x": 8, "y": 10 }, "enemySpawn": { "x": 24, "y": 10 },
+    "spawnRowSpacingM": 2.2, "spawnJitterM": 0.8, "spawnMarginM": 2,
+    "defaultMeleeRangeM": 1.2, "meleeArcDeg": 80, "defaultRecoveryS": 1.1,
+    "rangedRangeM": 24, "netRangeM": 10, "tongueRangeM": 10, "tongueWidthM": 0.7,
+    "mawArtilleryCooldownS": 3.5, "chargeCooldownS": 5, "contactRangeM": 0.8,
+    "houndOrbitM": 3.5, "conscriptBackoffM": 3,
+    "separationM": 1, "separationWeight": 1.1,
+    "magePreferredDistanceM": [5, 8], "mageStrafePeriodS": 2.4, "mageAimLeadFraction": 0.45,
+    "mageDefenceHoldS": 0.35,
+    "referenceCompetence": 2, "referencePreset": "Rotation",
+    "opponentPresets": ["Undertow", "Mirror tide"],
+    "censusFightsPerWave": 2000, "censusSeedStart": 40000, "fightTimeoutS": 180,
+    "timeoutRateMax": 0.01, "sampleReplayStride": 199,
+    "ladderTrials": 500,
+    "rosterPracticeCount": 1
+  },
   "presentation": {
     "pixelsPerMetre": 36, "maxFrameDeltaS": 0.25,
     "widthPx": 1152, "heightPx": 720,

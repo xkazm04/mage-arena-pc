@@ -60,7 +60,7 @@ export function releaseSpell(state: ArenaState, a: Actor): void {
     const range = s.kind === 'zone' ? s.radiusM : s.rangeM;
     for (const target of state.actors) {
       if (target.down || target.team === a.team || distance(centre, target.pos) > range || !inArc(direction, sub(target.pos, centre), s.arcDeg)) continue;
-      const result = resolveHit(state, target, { ...hit, source: { ...centre } });
+      const result = resolveHit(state, target, { ...hit, source: { ...centre }, delivery: 'area' });
       if (!result.perfect && result.damage > 0) applyControl(state, a, target, s);
     }
   } else if (s.kind === 'zone') {
@@ -87,7 +87,7 @@ export function releaseSpell(state: ArenaState, a: Actor): void {
 export function updateWater(state: ArenaState, a: Actor): void {
   const w = a.water;
   if (state.tick - w.lastActivityTick >= ticks(combat.flow.resetAfterIdleS)) w.flow = 0;
-  if (state.tick <= w.hotUntil && state.tick >= w.encasedUntil) heal(a, w.hotPerTick);
+  if (state.tick <= w.hotUntil) heal(a, w.hotPerTick);
   if (w.decoy && w.decoy.until <= state.tick) w.decoy = undefined;
   for (const zone of state.zones) {
     const owner = state.actors.find(o => o.id === zone.ownerId);
@@ -112,7 +112,7 @@ export function waterAbsorbed(state: ArenaState, a: Actor, hit: Hit, prevented: 
   const ripple = effectSpell('ripple');
   const activationId = state.nextId++;
   for (const target of state.actors) if (!target.down && target.team !== a.team && distance(a.pos, target.pos) <= ripple.rangeM) resolveHit(state, target, {
-    ownerId: a.id, activationId, damage: ripple.damage, family: 'magic', tier: ripple.tier, source: { ...a.pos }, reaction: true
+    ownerId: a.id, activationId, damage: ripple.damage, family: 'magic', tier: ripple.tier, source: { ...a.pos }, reaction: true, delivery: 'area'
   });
 }
 export function reflectProjectile(state: ArenaState, target: Actor, p: Projectile): void {

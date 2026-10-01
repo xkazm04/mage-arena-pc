@@ -11,7 +11,9 @@
     "build": "npm run data && tsc -p tsconfig.arena.json",
     "test": "npm run data && vitest run",
     "report:w2": "npm run data && tsx scripts/report-w2.ts",
-    "report:w3": "npm run data && tsx scripts/report-w3.ts"
+    "report:w3": "npm run data && tsx scripts/report-w3.ts",
+    "report:w4": "npm run data && tsx scripts/report-w4.ts",
+    "report:w4:ladder": "npm run data && tsx scripts/report-ladder.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

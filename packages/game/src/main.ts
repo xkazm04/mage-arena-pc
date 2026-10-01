@@ -1,6 +1,7 @@
 import { Application, Graphics } from 'pixi.js';
 import { combat, createTraining, FixedStepper, runtime, seconds, stepTraining, timingBot, newWaterState, presets, spellFor, spells, type TrainingKind, type BotKind, type Composition } from '@mage-arena/core/arena';
 import { ArenaInput } from './input';
+import { addEnemy, advanceGames, attachMageAI, createGames, enemyInputs, enemyRoster, queueDeathEffects, stepArena, stepGames, tiro, type Games } from '@mage-arena/core/arena';
 import { compositionScreen } from './composition';
 import './style.css';
 
@@ -23,21 +24,45 @@ let backdropReady = false;
 const input = new ArenaInput(app.canvas, { x: combat.arena.widthM, y: combat.arena.heightM });
 let training = createTraining(), paused = false, clock = new FixedStepper(), bot: BotKind | undefined;
 let composition: Composition = structuredClone(presets[0]!);
+let mode: 'training' | 'roster' | 'tiro' = 'training', rosterId = 'conscript', games: Games | undefined, startGamesAfterCompose = false, referencePlayer = false;
 let lastPerfect = -1e9, lastEventIndex = 0, audio: AudioContext | undefined;
 const frames: number[] = [], cpu: number[] = []; let frameCount = 0;
 const params = new URLSearchParams(location.search);
 if (params.has('scenario')) training = createTraining(params.get('scenario') as TrainingKind);
 document.querySelector<HTMLSelectElement>('#scenario')!.value = training.kind;
 function restart(kind = training.kind): void {
+  mode = 'training'; games = undefined; referencePlayer = false;
   training = createTraining(kind); clock = new FixedStepper(); input.clear(); lastPerfect = -1e9; lastEventIndex = 0; paused = false;
   training.player.water = newWaterState(composition);
   document.querySelector('#pause')!.textContent = 'Pause';
+  app.canvas.focus();
 }
-document.querySelector('#restart')!.addEventListener('click', () => restart());
-const composer = compositionScreen(choice => { composition = choice; restart(); app.canvas.focus(); }, value => { paused = value; input.clear(); });
-const composeButton = document.createElement('button'); composeButton.id = 'compose'; composeButton.textContent = 'Compose'; composeButton.onclick = () => composer.open(); document.querySelector('.toolbar')!.prepend(composeButton);
-document.querySelector<HTMLSelectElement>('#scenario')!.addEventListener('change', e => restart((e.target as HTMLSelectElement).value as TrainingKind));
-document.querySelector('#pause')!.addEventListener('click', () => { paused = !paused; input.clear(); document.querySelector('#pause')!.textContent = paused ? 'Resume' : 'Pause'; });
+function startTiro(seed = Number(params.get('seed') ?? 1)): void {
+  restart(); mode = 'tiro'; games = createGames(seed, composition); syncGames(); document.querySelector<HTMLSelectElement>('#scenario')!.value = 'tiro';
+}
+function syncGames(): void { if (games) { training.state = games.state; training.player = games.player; training.dummy = games.state.actors[1]!; } }
+function startRoster(id: string): void {
+  restart(); mode = 'roster'; rosterId = id; training.state.actors = [training.player];
+  const spec = enemyRoster.find(s => s.id === id)!;
+  for (let i = 0; i < (spec.packSize ?? runtime.games.rosterPracticeCount); i++) addEnemy(training.state, id, { x: runtime.games.enemySpawn.x, y: runtime.games.enemySpawn.y + (i - ((spec.packSize ?? 1) - 1) / 2) * runtime.games.spawnRowSpacingM });
+  training.dummy = training.state.actors[1]!;
+}
+document.querySelector('#restart')!.addEventListener('click', () => mode === 'tiro' ? startTiro() : mode === 'roster' ? startRoster(rosterId) : restart());
+const composer = compositionScreen(choice => { composition = choice; if (startGamesAfterCompose) startTiro(); else restart(); app.canvas.focus(); }, value => { paused = value; input.clear(); });
+const composeButton = document.createElement('button'); composeButton.id = 'compose'; composeButton.textContent = 'Compose'; composeButton.onclick = () => { startGamesAfterCompose = false; composer.open(); }; document.querySelector('.toolbar')!.prepend(composeButton);
+const gamesButton = document.createElement('button'); gamesButton.id = 'start-tiro'; gamesButton.className = 'primary'; gamesButton.textContent = 'Tiro Games'; gamesButton.onclick = () => { startGamesAfterCompose = true; composer.open('Enter Tiro Games'); }; document.querySelector('.toolbar')!.prepend(gamesButton);
+const scenarioSelect = document.querySelector<HTMLSelectElement>('#scenario')!;
+const currentGamesOption = document.createElement('option'); currentGamesOption.value = 'tiro'; currentGamesOption.textContent = 'Tiro Games'; currentGamesOption.disabled = true; scenarioSelect.prepend(currentGamesOption);
+const rosterGroup = document.createElement('optgroup'); rosterGroup.label = 'Roster practice';
+for (const spec of enemyRoster) { const option = document.createElement('option'); option.value = `enemy:${spec.id}`; option.textContent = spec.name; rosterGroup.append(option); }
+scenarioSelect.append(rosterGroup);
+scenarioSelect.addEventListener('change', () => scenarioSelect.value.startsWith('enemy:') ? startRoster(scenarioSelect.value.slice(6)) : restart(scenarioSelect.value as TrainingKind));
+document.querySelector('#message')!.addEventListener('click', e => {
+  const action = (e.target as HTMLElement).closest<HTMLElement>('[data-game-action]')?.dataset.gameAction;
+  if (action === 'next' && games) { advanceGames(games); syncGames(); input.clear(); clock = new FixedStepper(); lastPerfect = -1e9; app.canvas.focus(); }
+  if (action === 'retry') { startTiro(); app.canvas.focus(); }
+});
+document.querySelector('#pause')!.addEventListener('click', () => { paused = !paused; input.clear(); document.querySelector('#pause')!.textContent = paused ? 'Resume' : 'Pause'; if (!paused) app.canvas.focus(); });
 for (const slot of document.querySelectorAll<HTMLButtonElement>('[data-slot]')) slot.addEventListener('click', () => { input.slot = Number(slot.dataset.slot); app.canvas.focus(); });
 function bell(): void {
   if (!audio || audio.state !== 'running') return;
@@ -62,10 +87,18 @@ function render(alpha: number): void {
   for (const t of state.telegraphs) {
     const x = t.origin.x * scale, y = t.origin.y * scale;
     const progress = (state.tick - t.startTick) / (t.resolveTick - t.startTick);
-    if (t.kind === 'lane') {
+    if (t.kind === 'lane' || t.kind === 'charge') {
       const angle = Math.atan2(t.target.y - t.origin.y, t.target.x - t.origin.x), dx = Math.cos(angle), dy = Math.sin(angle), w = t.widthM * scale / 2;
       const ex = x + dx * t.rangeM * scale, ey = y + dy * t.rangeM * scale;
       g.poly([x - dy * w, y + dx * w, ex - dy * w, ey + dx * w, ex + dy * w, ey - dx * w, x + dy * w, y - dx * w]).fill({ color: 0x181219, alpha: 0.8 }).stroke({ width: 2, color: color(t.family), alpha: 0.5 + progress / 2 });
+    }
+    if (t.kind === 'area') {
+      g.circle(t.target.x * scale, t.target.y * scale, t.widthM * scale).stroke({ color: color(t.family), width: 2 });
+      g.circle(t.target.x * scale, t.target.y * scale, t.widthM * scale * Math.max(0, progress)).fill({ color: color(t.family), alpha: 0.17 });
+    }
+    if (t.kind === 'melee') {
+      const angle = Math.atan2(t.target.y - t.origin.y, t.target.x - t.origin.x), arc = t.widthM * Math.PI / 360;
+      g.moveTo(x, y).arc(x, y, t.rangeM * scale, angle - arc, angle + arc).lineTo(x, y).fill({ color: color(t.family), alpha: 0.08 + progress * 0.15 }).stroke({ color: color(t.family), width: 1 });
     }
     g.circle(x, y, 18 + (1 - progress) * 27).stroke({ color: color(t.family), width: 2 });
   }
@@ -97,9 +130,19 @@ function render(alpha: number): void {
   for (const a of state.actors) {
     const x = (a.previousPos.x + (a.pos.x - a.previousPos.x) * alpha) * scale, y = (a.previousPos.y + (a.pos.y - a.previousPos.y) * alpha) * scale;
     g.ellipse(x, y + 10, 19, 8).fill({ color: 0x080f15, alpha: 0.5 });
-    if (a.dummy) g.poly([x, y - 20, x + 15, y, x, y + 20, x - 15, y]).fill(a.down ? 0x3c4347 : 0xad8460).stroke({ width: 2, color: 0xe1ba80 });
+    if (a.enemy) {
+      const id = a.enemy.id, c = a.down ? 0x455158 : id === 'cinder_hound' ? 0xd18b61 : id === 'mire_maw' ? 0x81976e : id === 'thornback' ? 0xab7978 : id === 'hush_moth' ? 0xaaa0c5 : 0xc5bcaa;
+      if (id === 'shieldman') {
+        g.roundRect(x - 12, y - 16, 24, 32, 4).fill(c);
+        const angle = Math.atan2(a.facing.y, a.facing.x); g.arc(x, y, 25, angle - Math.PI / 3, angle + Math.PI / 3).stroke({ color: 0xe3d5b7, width: 6 });
+      } else if (id === 'mire_maw') g.ellipse(x, y, 24, 19).fill(c).stroke({ color: 0xb8c59a, width: 2 });
+      else if (id === 'hush_moth') { g.ellipse(x - 6, y, 10, 6).fill(c); g.ellipse(x + 6, y, 10, 6).fill(c); }
+      else if (id === 'thornback') g.star(x, y, 7, 25, 16).fill(c).stroke({ color: 0xe2aca0, width: 1 });
+      else if (id === 'netter') { g.circle(x, y, 14).fill(c); g.rect(x - 8, y - 8, 16, 16).stroke({ color: 0x4b5b60, width: 2 }); }
+      else g.poly([x + a.facing.x * 19, y + a.facing.y * 19, x - a.facing.y * 12 - a.facing.x * 9, y + a.facing.x * 12 - a.facing.y * 9, x + a.facing.y * 12 - a.facing.x * 9, y - a.facing.x * 12 - a.facing.y * 9]).fill(c).stroke({ color: 0xe0caae, width: 1 });
+    } else if (a.dummy) g.poly([x, y - 20, x + 15, y, x, y + 20, x - 15, y]).fill(a.down ? 0x3c4347 : 0xad8460).stroke({ width: 2, color: 0xe1ba80 });
     else {
-      g.circle(x, y, a.radius * scale).fill(a.down ? 0x536167 : 0x68b9d0).stroke({ width: 2, color: 0xbbeaf0 });
+      g.circle(x, y, a.radius * scale).fill(a.down ? 0x536167 : a.team === player.team ? 0x68b9d0 : 0xb99dd5).stroke({ width: 2, color: 0xbbeaf0 });
       g.moveTo(x, y).lineTo(x + a.facing.x * 25, y + a.facing.y * 25).stroke({ width: 3, color: 0xe2f1ec });
       for (let i = 0; i < 4; i++) { const angle = i * Math.PI / 2 + Math.PI / 4; g.circle(x + Math.cos(angle) * 26, y + Math.sin(angle) * 26, 3).fill(i < a.tier ? 0xe2c88d : 0x596973); }
     }
@@ -118,7 +161,7 @@ function render(alpha: number): void {
     document.querySelector(`#${name}-value`)!.textContent = `${Math.ceil(current)} / ${max}`;
     (document.querySelector(`#${name}-bar`) as HTMLElement).style.width = `${current / max * 100}%`;
   }
-  document.querySelector('#clock')!.textContent = `COLLAR ${['', 'I', 'II', 'III', 'IV'][player.tier]} · ${seconds(state.tick).toFixed(1)} s`;
+  document.querySelector('#clock')!.textContent = `COLLAR ${['', 'I', 'II', 'III', 'IV'][player.tier]} · ${seconds(state.tick - player.waveStartTick).toFixed(1)} s`;
   const nextTier = (player.tier + 1) as 2 | 3 | 4;
   const until = nextTier <= 4 ? Math.max(combat.tierClock.unlockAtSeconds[nextTier] - seconds(state.tick - player.waveStartTick + player.clockAdvanceTicks), combat.tierClock.minimumSecondsBetweenUnlocks - seconds(state.tick - player.lastUnlockTick), 0) : 0;
   document.querySelector('#clock-detail')!.textContent = `${nextTier <= 4 ? `Next rune in ${until.toFixed(1)} s · ` : ''}${player.metrics.perfects} perfect absorbs`;
@@ -129,14 +172,24 @@ function render(alpha: number): void {
     b.querySelector('small')!.textContent = s.kind === 'passive' ? 'Passive · perfect absorb counter' : remaining > 0 ? `${remaining.toFixed(1)} s · recovering` : `${player.water.flow >= combat.flow.max ? 'FREE CREST' : `${s.mana} mana`} · ${s.cooldownS} s cooldown`;
   }
   document.querySelector('#instruction')!.textContent = `${composition.name} · Flow ${player.water.flow}/${combat.flow.max}${player.water.flow >= combat.flow.max ? ' · CREST READY' : ''} · Face the light. Time your ward.`;
-  document.querySelector('#message')!.innerHTML = player.down ? 'MISSIO<small>The crowd grants your life. Restart to train again.</small>' : paused ? 'PAUSED' : seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS ? 'PERFECT' : '';
+  const remainingEnemies = state.actors.filter(a => a.team !== player.team && !a.down).length;
+  document.querySelector('.arena-caption .eyebrow')!.textContent = mode === 'tiro' && games ? `Tiro Games · Bout ${games.wave + 1} / ${tiro.waves.length} · ${tiro.waves[games.wave]!.kind} · ${remainingEnemies} opponent${remainingEnemies === 1 ? '' : 's'}${games.wave >= 2 ? ' · Water proxy mage' : ''}` : mode === 'roster' ? `${training.dummy.label} · ${remainingEnemies} remaining` : 'The Tide · Cassia';
+  composeButton.disabled = mode === 'tiro' && !!games && (games.phase === 'active' || games.phase === 'intermission');
+  let message = player.down ? 'MISSIO<small>The crowd grants your life. Restart to train again.</small>' : paused ? 'PAUSED' : seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS ? 'PERFECT' : '';
+  if (games?.phase === 'intermission') message = `BOUT WON<small>The next gate is ready. Recover before you enter.</small><button data-game-action="next" id="next-bout">Enter bout ${games.wave + 2}</button>`;
+  if (games?.result) message = `${games.phase === 'complete' ? 'TIRO CHAMPION' : 'MISSIO'}<small>${games.result.wavesCleared} bouts won · ${games.result.gold} gold · ${games.result.renown} renown<br>The Games ${games.phase === 'complete' ? 'are yours' : 'end here. Your life is spared'}.</small><button data-game-action="retry" id="retry-games">New Tiro Games</button>`;
+  if (mode === 'roster' && !remainingEnemies && !state.telegraphs.length && !state.projectiles.length) message = 'PRACTICE CLEAR<small>Choose another opponent or enter the Tiro Games.</small>';
+  const messageNode = document.querySelector<HTMLElement>('#message')!; if (messageNode.innerHTML !== message) messageNode.innerHTML = message;
+  messageNode.classList.toggle('interactive', !!games && games.phase !== 'active');
 }
 let previous = performance.now();
 function frame(now: number): void {
   const elapsed = (now - previous) / 1000; previous = now; const start = performance.now();
   let alpha = 1;
   if (!paused && !training.player.down && !document.hidden) alpha = clock.advance(elapsed, () => {
-    stepTraining(training, bot ? timingBot(training, bot) : input.frame());
+    if (mode === 'tiro' && games) stepGames(games, referencePlayer ? undefined : input.frame());
+    else if (mode === 'roster') { stepArena(training.state, { ...enemyInputs(training.state), [training.player.id]: input.frame() }); queueDeathEffects(training.state); }
+    else stepTraining(training, bot ? timingBot(training, bot) : input.frame());
     for (const event of training.state.events.slice(lastEventIndex)) if (event.kind === 'perfect' && event.actorId === training.player.id) { lastPerfect = event.tick; bell(); }
     lastEventIndex = training.state.events.length;
   });
@@ -146,8 +199,11 @@ function frame(now: number): void {
 }
 requestAnimationFrame(frame);
 // Harness access is read-only in ordinary play and only exposes mutations with ?harness=1.
-const harness = { snapshot: () => ({ state: training.state, player: training.player, slot: input.slot, paused, projectiles: training.state.projectiles.length }), performance: () => ({ frames: [...frames], cpu: [...cpu], frameCount }),
-  ...(params.has('harness') ? { reset: restart, setBot: (kind?: BotKind) => { bot = kind; }, clearInput: () => input.clear() } : {}) };
+const harness = { snapshot: () => structuredClone({ state: training.state, player: training.player, slot: input.slot, paused, projectiles: training.state.projectiles.length, mode, games }), performance: () => ({ frames: [...frames], cpu: [...cpu], frameCount }),
+  ...(params.has('harness') ? { reset: restart, setBot: (kind?: BotKind) => { bot = kind; }, clearInput: () => input.clear(),
+    setReferencePlayer: (enabled: boolean) => { referencePlayer = enabled; if (games && enabled) attachMageAI(games.player, runtime.games.referenceCompetence, games.state.tick); },
+    runGamesTicks: (count: number) => { if (games) { for (let i = 0; i < count && games.phase === 'active'; i++) stepGames(games, referencePlayer ? undefined : input.frame()); lastEventIndex = games.state.events.length; } },
+    startGames: startTiro, startRoster } : {}) };
 Object.assign(window, { __arena: harness });
 }
 void main().catch(error => { console.error(error); document.querySelector('#app')!.textContent = `Arena could not start: ${String(error)}`; });

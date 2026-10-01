@@ -4,3 +4,6 @@ export * from './kernel';
 export * from './training';
 export * from './catalog';
 export * from './water';
+export * from './enemies';
+export * from './mage-ai';
+export * from './games';

@@ -22,3 +22,15 @@ Use **Compose** to compare Undertow, Mirror tide and Rotation, then change a bra
 - Does the branch preview match what you expect when the same button upgrades?
 
 Screenshots and automated mouse/keyboard checks exist in `docs/waves/W3-evidence/`; they do not certify feel. W4 will supply moving opponents and real Tiro bouts. No borrowed-school play or other-school identity is claimed yet.
+
+## W4 — living opponents and Tiro (pending; not felt)
+
+Choose **Tiro Games**, pick a composition, and play through the four bouts. Use **Next bout** after a clear; HP recovers by a fraction of missing HP while mana, stamina and collar reset. A loss grants missio. The eight individual enemy entries in **Training** expose the complete roster, including enemies outside Tiro.
+
+- Can you read spear, steel, net, charge, magic and hound death warnings while moving? Are shield flanks and roll escapes understandable?
+- Do mage mistakes look plausible, and does their ward leave useful openings? Other-school entrants are explicitly Water proxies until W8.
+- Does each composition offer useful choices against moving targets? Does Flow remain legible under pressure?
+- Record each bout's duration, outcome and any dull or unfair stretch. The simulated median gate does not certify human pacing or the full-Games win rate.
+- Check loadout locking, recovery, next-bout controls, missio and final reward clarity.
+
+Automated evidence is in `docs/waves/W4-evidence/`. Levels 1–4 obey reaction/stat caps, but level 4 overdefends in the tested duel and wins less than level 3; later-ladder tuning is logged for W9. No owner feel verdict or physical latency measurement has been supplied. G1 remains open.

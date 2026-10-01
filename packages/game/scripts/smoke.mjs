@@ -4,7 +4,9 @@ import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import assert from 'node:assert/strict';
-const directory = new URL('../../../docs/waves/W2-evidence/', import.meta.url);
+const evidence = process.argv[2] ?? 'W2-evidence';
+if (!/^W[234]-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
+const directory = new URL(`../../../docs/waves/${evidence}/`, import.meta.url);
 mkdirSync(directory, { recursive: true });
 const runtime = JSON.parse(readFileSync(new URL('../../core/src/arena/data/runtime.json', import.meta.url), 'utf8'));
 const port = 4175;
@@ -60,7 +62,7 @@ try {
   const percentile = (xs, q) => [...xs].sort((a, b) => a - b)[Math.min(xs.length - 1, Math.floor(xs.length * q))];
   const cpuP95Ms = percentile(perf.cpu, 0.95), frameP95Ms = percentile(perf.frames, 0.95);
   const gpu = await page.evaluate(() => { const gl = document.querySelector('canvas').getContext('webgl2'); const ext = gl?.getExtension('WEBGL_debug_renderer_info'); return ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : 'unavailable'; });
-  const report = { label: 'measured', command: 'npm --prefix packages/game run smoke', machine: { platform: os.platform(), release: os.release(), cpu: os.cpus()[0]?.model, node: process.version, browser: browser.version(), gpu, browserArgs: ['--use-angle=d3d11'] },
+  const report = { label: 'measured', command: `npm --prefix packages/game run smoke${process.argv[2] ? ` -- ${evidence}` : ''}`, machine: { platform: os.platform(), release: os.release(), cpu: os.cpus()[0]?.model, node: process.version, browser: browser.version(), gpu, browserArgs: ['--use-angle=d3d11'] },
     checks: ['WASD movement', 'sprint stamina', 'Space roll', 'mouse aim and cast', 'number/wheel selection', 'right-button ward', 'perfect feedback and collar advance', 'unblockable telegraph', 'pause'], errors,
     performance: { projectileCount: (await snap()).projectiles, samples: perf.frames.length, fpsFromMeanFrame: 1000 / (perf.frames.reduce((a, b) => a + b, 0) / perf.frames.length), frameP50Ms: percentile(perf.frames, 0.5), frameP95Ms, cpuP50Ms: percentile(perf.cpu, 0.5), cpuP95Ms, cpuBudgetMs: runtime.presentation.cpuP95BudgetMs,
       scope: 'Chromium headless requestAnimationFrame on this PC; CPU includes fixed steps, shape building, HUD updates and renderer submission. GPU completion and physical input-to-photon latency not measured.' } };
