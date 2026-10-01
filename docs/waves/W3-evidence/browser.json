@@ -1,0 +1,19 @@
+{
+  "label": "measured",
+  "command": "npm --prefix packages/game run smoke:w3",
+  "browser": "153.0.8010.12",
+  "errors": [],
+  "checks": [
+    "production boot",
+    "composition pauses simulation",
+    "preset preview",
+    "duplicate slots blocked",
+    "chosen branches applied",
+    "mouse/number-key line cast hits target",
+    "line cooldown",
+    "in-place tier upgrade"
+  ],
+  "finalTier": 2,
+  "finalSlot": "Riptide",
+  "ownerFeel": "not measured"
+}

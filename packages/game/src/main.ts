@@ -1,6 +1,7 @@
 import { Application, Graphics } from 'pixi.js';
-import { combat, createTraining, FixedStepper, runtime, seconds, stepTraining, timingBot, type TrainingKind, type BotKind } from '@mage-arena/core/arena';
+import { combat, createTraining, FixedStepper, runtime, seconds, stepTraining, timingBot, newWaterState, presets, spellFor, spells, type TrainingKind, type BotKind, type Composition } from '@mage-arena/core/arena';
 import { ArenaInput } from './input';
+import { compositionScreen } from './composition';
 import './style.css';
 
 async function main(): Promise<void> {
@@ -21,6 +22,7 @@ const backdrop = new Graphics(), graphics = new Graphics(); app.stage.addChild(b
 let backdropReady = false;
 const input = new ArenaInput(app.canvas, { x: combat.arena.widthM, y: combat.arena.heightM });
 let training = createTraining(), paused = false, clock = new FixedStepper(), bot: BotKind | undefined;
+let composition: Composition = structuredClone(presets[0]!);
 let lastPerfect = -1e9, lastEventIndex = 0, audio: AudioContext | undefined;
 const frames: number[] = [], cpu: number[] = []; let frameCount = 0;
 const params = new URLSearchParams(location.search);
@@ -28,9 +30,12 @@ if (params.has('scenario')) training = createTraining(params.get('scenario') as 
 document.querySelector<HTMLSelectElement>('#scenario')!.value = training.kind;
 function restart(kind = training.kind): void {
   training = createTraining(kind); clock = new FixedStepper(); input.clear(); lastPerfect = -1e9; lastEventIndex = 0; paused = false;
+  training.player.water = newWaterState(composition);
   document.querySelector('#pause')!.textContent = 'Pause';
 }
 document.querySelector('#restart')!.addEventListener('click', () => restart());
+const composer = compositionScreen(choice => { composition = choice; restart(); app.canvas.focus(); }, value => { paused = value; input.clear(); });
+const composeButton = document.createElement('button'); composeButton.id = 'compose'; composeButton.textContent = 'Compose'; composeButton.onclick = () => composer.open(); document.querySelector('.toolbar')!.prepend(composeButton);
 document.querySelector<HTMLSelectElement>('#scenario')!.addEventListener('change', e => restart((e.target as HTMLSelectElement).value as TrainingKind));
 document.querySelector('#pause')!.addEventListener('click', () => { paused = !paused; input.clear(); document.querySelector('#pause')!.textContent = paused ? 'Resume' : 'Pause'; });
 for (const slot of document.querySelectorAll<HTMLButtonElement>('[data-slot]')) slot.addEventListener('click', () => { input.slot = Number(slot.dataset.slot); app.canvas.focus(); });
@@ -63,6 +68,26 @@ function render(alpha: number): void {
       g.poly([x - dy * w, y + dx * w, ex - dy * w, ey + dx * w, ex + dy * w, ey - dx * w, x + dy * w, y - dx * w]).fill({ color: 0x181219, alpha: 0.8 }).stroke({ width: 2, color: color(t.family), alpha: 0.5 + progress / 2 });
     }
     g.circle(x, y, 18 + (1 - progress) * 27).stroke({ color: color(t.family), width: 2 });
+  }
+  for (const zone of state.zones) {
+    const color = zone.kind === 'fog' ? 0xb7c6cb : 0x4598b8;
+    g.circle(zone.pos.x * scale, zone.pos.y * scale, zone.radiusM * scale).fill({ color, alpha: 0.18 }).stroke({ color, width: 1 });
+  }
+  for (const a of state.actors) {
+    if (a.pending?.kind === 'spell') {
+      const s = spells.find(s => s.id === a.pending!.spellId)!;
+      const progress = (state.tick - a.pending.startTick) / Math.max(1, a.pending.releaseTick - a.pending.startTick);
+      const centre = s.kind === 'zone' || s.kind === 'target' ? a.pending.aim : a.pos;
+      const radius = s.radiusM || (s.kind === 'cone' || s.kind === 'ring' ? s.rangeM : 1);
+      g.circle(centre.x * scale, centre.y * scale, radius * scale).stroke({ color: color(s.family), width: 2, alpha: 0.4 + progress / 2 });
+      g.circle(centre.x * scale, centre.y * scale, radius * scale * progress).fill({ color: color(s.family), alpha: 0.1 });
+      if (s.family === 'unblockable' && s.kind === 'projectile') {
+        const angle = Math.atan2(a.pending.aim.y - a.pos.y, a.pending.aim.x - a.pos.x);
+        g.moveTo(a.pos.x * scale, a.pos.y * scale).lineTo((a.pos.x + Math.cos(angle) * s.rangeM) * scale, (a.pos.y + Math.sin(angle) * s.rangeM) * scale).stroke({ color: 0xec646a, width: (s.radiusM || 0.5) * scale * 2, alpha: 0.2 });
+      }
+    }
+    if (a.water.decoy) g.circle(a.water.decoy.pos.x * scale, a.water.decoy.pos.y * scale, a.radius * scale).fill({ color: 0x91e0ef, alpha: 0.3 }).stroke({ color: 0xc6eaf0, width: 1 });
+    if (state.tick < a.water.encasedUntil) g.rect((a.pos.x - 0.6) * scale, (a.pos.y - 0.6) * scale, 1.2 * scale, 1.2 * scale).fill({ color: 0x96e1ec, alpha: 0.45 });
   }
   for (const p of state.projectiles) {
     const x = (p.previousPos.x + (p.pos.x - p.previousPos.x) * alpha) * scale, y = (p.previousPos.y + (p.pos.y - p.previousPos.y) * alpha) * scale;
@@ -97,7 +122,13 @@ function render(alpha: number): void {
   const nextTier = (player.tier + 1) as 2 | 3 | 4;
   const until = nextTier <= 4 ? Math.max(combat.tierClock.unlockAtSeconds[nextTier] - seconds(state.tick - player.waveStartTick + player.clockAdvanceTicks), combat.tierClock.minimumSecondsBetweenUnlocks - seconds(state.tick - player.lastUnlockTick), 0) : 0;
   document.querySelector('#clock-detail')!.textContent = `${nextTier <= 4 ? `Next rune in ${until.toFixed(1)} s · ` : ''}${player.metrics.perfects} perfect absorbs`;
-  for (const b of document.querySelectorAll<HTMLElement>('[data-slot]')) b.classList.toggle('active', Number(b.dataset.slot) === input.slot);
+  for (const b of document.querySelectorAll<HTMLElement>('[data-slot]')) {
+    const slot = Number(b.dataset.slot), s = spellFor(player, slot)!; b.classList.toggle('active', slot === input.slot);
+    b.querySelector('.slot-name')!.textContent = s.name;
+    const remaining = Math.max(0, seconds((player.water.cooldowns[s.line] ?? 0) - state.tick));
+    b.querySelector('small')!.textContent = s.kind === 'passive' ? 'Passive · perfect absorb counter' : remaining > 0 ? `${remaining.toFixed(1)} s · recovering` : `${player.water.flow >= combat.flow.max ? 'FREE CREST' : `${s.mana} mana`} · ${s.cooldownS} s cooldown`;
+  }
+  document.querySelector('#instruction')!.textContent = `${composition.name} · Flow ${player.water.flow}/${combat.flow.max}${player.water.flow >= combat.flow.max ? ' · CREST READY' : ''} · Face the light. Time your ward.`;
   document.querySelector('#message')!.innerHTML = player.down ? 'MISSIO<small>The crowd grants your life. Restart to train again.</small>' : paused ? 'PAUSED' : seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS ? 'PERFECT' : '';
 }
 let previous = performance.now();

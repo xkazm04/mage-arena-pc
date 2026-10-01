@@ -11,3 +11,14 @@ Run the arena as described in `packages/game/README.md`. Use the magic thrower, 
 - Physical input-to-photon latency: **not measured**. Optional filmed button/flash method requires real hardware and owner observation; do not infer latency from frame rate.
 
 All placeholder visuals are authored code shapes, not an art direction choice. No owner verdict has been supplied.
+
+## W3 — Water composition and Flow (pending; not felt)
+
+Use **Compose** to compare Undertow, Mirror tide and Rotation, then change a branch. Check whether the tier table explains what will happen to each button and whether upgrades are noticeable without watching the clock. Alternate slots, try a Crest, then compare physical and magic training.
+
+- Do all five lines earn a slot, including Mire and Mend, whose value is not raw damage?
+- Is Flow readable while moving and timing absorbs? Does repetition resetting it feel fair?
+- Are the long unblockable warnings, freeze area, fog, decoy and encasement distinguishable?
+- Does the branch preview match what you expect when the same button upgrades?
+
+Screenshots and automated mouse/keyboard checks exist in `docs/waves/W3-evidence/`; they do not certify feel. W4 will supply moving opponents and real Tiro bouts. No borrowed-school play or other-school identity is claimed yet.

@@ -38,6 +38,6 @@ const bolt = { name: boltRow.name, castS: +boltRow.cast_s, cooldownS: +boltRow.c
   mana: +boltRow.mana, damage: +boltRow.damage, rangeM: +boltRow.range_m,
   speedMps: Number(boltRow.shape.match(/([\d.]+) m\/s/)[1]) };
 const output = '// GENERATED from baseline data. Edit the source data, never this file.\n' +
-  Object.entries({ combat, statRules, bolt, waterRows: rows }).map(([key, value]) => `export const ${key} = ${JSON.stringify(value, null, 2)} as const;`).join('\n');
+  Object.entries({ combat, statRules, bolt, waterRows: rows, enemyData: JSON.parse(read('enemies.json')), arenaTiers: JSON.parse(read('arena-tiers.json')) }).map(([key, value]) => `export const ${key} = ${JSON.stringify(value, null, 2)} as const;`).join('\n');
 writeFileSync(fileURLToPath(new URL('../src/arena/data.generated.ts', import.meta.url)), output + '\n');
 console.log('Arena data compiled from baseline; duplicate clock and Nerve formulas agree.');

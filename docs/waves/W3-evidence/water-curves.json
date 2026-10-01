@@ -1,0 +1,557 @@
+{
+  "label": "simulated",
+  "command": "npm --prefix packages/core run report:w3",
+  "linterErrors": [],
+  "mutationChecks": 2,
+  "methodology": "Same kernel and rank-one resources. Fixed half-second rotation policy plus instrumented ward timing. Starts with missing HP to measure healing. Stationary soldiers have Tiro wave-one counts/HP, no attacks/AI, and re-rack after each clear for continuous per-window curves. Range/formation are authored probe parameters; movement effects can push targets away. No mana/stamina refill, no player resurrection. This is not W4 balance or human play.",
+  "probes": [
+    {
+      "composition": "Undertow",
+      "scenario": "magic dummy",
+      "windows": [
+        {
+          "fromS": 0,
+          "toS": 15,
+          "damage": 308.08000000000004,
+          "dps": 20.538666666666668,
+          "healing": 0,
+          "mana": 37.32499999999996,
+          "flow": 3,
+          "crests": 2
+        },
+        {
+          "fromS": 15,
+          "toS": 30,
+          "damage": 104.51999999999998,
+          "dps": 6.967999999999999,
+          "healing": 0,
+          "mana": 49.19999999999996,
+          "flow": 1,
+          "crests": 2
+        },
+        {
+          "fromS": 30,
+          "toS": 45,
+          "damage": 0,
+          "dps": 0,
+          "healing": 0,
+          "mana": 49.19999999999996,
+          "flow": 1,
+          "crests": 2
+        },
+        {
+          "fromS": 45,
+          "toS": 60,
+          "damage": 0,
+          "dps": 0,
+          "healing": 0,
+          "mana": 49.19999999999996,
+          "flow": 1,
+          "crests": 2
+        }
+      ],
+      "firstClearS": null,
+      "cycles": 0,
+      "down": true,
+      "damage": 412.6,
+      "healing": 0,
+      "controlTicks": 482,
+      "perfects": 2,
+      "manaReturned": 22,
+      "finalMana": 49.19999999999996
+    },
+    {
+      "composition": "Undertow",
+      "scenario": "stationary soldiers",
+      "windows": [
+        {
+          "fromS": 0,
+          "toS": 15,
+          "damage": 370.16,
+          "dps": 24.677333333333333,
+          "healing": 0,
+          "mana": 40.625,
+          "flow": 5,
+          "crests": 2
+        },
+        {
+          "fromS": 15,
+          "toS": 30,
+          "damage": 337.92000000000024,
+          "dps": 22.528000000000016,
+          "healing": 0,
+          "mana": 15.125,
+          "flow": 0,
+          "crests": 3
+        },
+        {
+          "fromS": 30,
+          "toS": 45,
+          "damage": 270.31999999999994,
+          "dps": 18.021333333333327,
+          "healing": 0,
+          "mana": 15.625,
+          "flow": 0,
+          "crests": 3
+        },
+        {
+          "fromS": 45,
+          "toS": 60,
+          "damage": 268.3599999999998,
+          "dps": 17.890666666666654,
+          "healing": 0,
+          "mana": 22.125,
+          "flow": 0,
+          "crests": 3
+        }
+      ],
+      "firstClearS": 12.15,
+      "cycles": 4,
+      "down": false,
+      "damage": 1246.76,
+      "healing": 0,
+      "controlTicks": 2168,
+      "perfects": 0,
+      "manaReturned": 0,
+      "finalMana": 22.125
+    },
+    {
+      "composition": "Mirror tide",
+      "scenario": "magic dummy",
+      "windows": [
+        {
+          "fromS": 0,
+          "toS": 15,
+          "damage": 263.08000000000004,
+          "dps": 17.538666666666668,
+          "healing": 12,
+          "mana": 68.44999999999992,
+          "flow": 0,
+          "crests": 1
+        },
+        {
+          "fromS": 15,
+          "toS": 30,
+          "damage": 325.32000000000005,
+          "dps": 21.688000000000002,
+          "healing": 28.00000000000192,
+          "mana": 5.75,
+          "flow": 0,
+          "crests": 1
+        },
+        {
+          "fromS": 30,
+          "toS": 45,
+          "damage": 300.28,
+          "dps": 20.018666666666665,
+          "healing": 0,
+          "mana": 42.425,
+          "flow": 0,
+          "crests": 2
+        },
+        {
+          "fromS": 45,
+          "toS": 60,
+          "damage": 303.03999999999996,
+          "dps": 20.202666666666666,
+          "healing": 0,
+          "mana": 25.174999999999994,
+          "flow": 0,
+          "crests": 2
+        }
+      ],
+      "firstClearS": null,
+      "cycles": 0,
+      "down": false,
+      "damage": 1191.72,
+      "healing": 40.00000000000192,
+      "controlTicks": 0,
+      "perfects": 17,
+      "manaReturned": 198,
+      "finalMana": 25.174999999999994
+    },
+    {
+      "composition": "Mirror tide",
+      "scenario": "stationary soldiers",
+      "windows": [
+        {
+          "fromS": 0,
+          "toS": 15,
+          "damage": 208.6,
+          "dps": 13.906666666666666,
+          "healing": 24,
+          "mana": 53.625,
+          "flow": 0,
+          "crests": 0
+        },
+        {
+          "fromS": 15,
+          "toS": 30,
+          "damage": 560.6400000000006,
+          "dps": 37.37600000000004,
+          "healing": 0,
+          "mana": 12.125,
+          "flow": 0,
+          "crests": 0
+        },
+        {
+          "fromS": 30,
+          "toS": 45,
+          "damage": 174.72000000000003,
+          "dps": 11.648000000000001,
+          "healing": 0,
+          "mana": 17.625,
+          "flow": 0,
+          "crests": 0
+        },
+        {
+          "fromS": 45,
+          "toS": 60,
+          "damage": 267.8399999999998,
+          "dps": 17.855999999999987,
+          "healing": 0,
+          "mana": 15.125,
+          "flow": 0,
+          "crests": 0
+        }
+      ],
+      "firstClearS": 15.65,
+      "cycles": 4,
+      "down": false,
+      "damage": 1211.8000000000004,
+      "healing": 24,
+      "controlTicks": 0,
+      "perfects": 0,
+      "manaReturned": 0,
+      "finalMana": 15.125
+    },
+    {
+      "composition": "Rotation",
+      "scenario": "magic dummy",
+      "windows": [
+        {
+          "fromS": 0,
+          "toS": 15,
+          "damage": 284.32000000000005,
+          "dps": 18.95466666666667,
+          "healing": 0,
+          "mana": 57.474999999999895,
+          "flow": 2,
+          "crests": 1
+        },
+        {
+          "fromS": 15,
+          "toS": 30,
+          "damage": 173.76000000000005,
+          "dps": 11.584000000000003,
+          "healing": 0,
+          "mana": 5.75,
+          "flow": 0,
+          "crests": 1
+        },
+        {
+          "fromS": 30,
+          "toS": 45,
+          "damage": 30,
+          "dps": 2,
+          "healing": 0,
+          "mana": 0.25,
+          "flow": 0,
+          "crests": 1
+        },
+        {
+          "fromS": 45,
+          "toS": 60,
+          "damage": 0,
+          "dps": 0,
+          "healing": 0,
+          "mana": 0.25,
+          "flow": 0,
+          "crests": 1
+        }
+      ],
+      "firstClearS": null,
+      "cycles": 0,
+      "down": true,
+      "damage": 488.0800000000001,
+      "healing": 0,
+      "controlTicks": 1,
+      "perfects": 7,
+      "manaReturned": 82.5,
+      "finalMana": 0.25
+    },
+    {
+      "composition": "Rotation",
+      "scenario": "stationary soldiers",
+      "windows": [
+        {
+          "fromS": 0,
+          "toS": 15,
+          "damage": 327.92,
+          "dps": 21.861333333333334,
+          "healing": 0,
+          "mana": 43.625,
+          "flow": 0,
+          "crests": 0
+        },
+        {
+          "fromS": 15,
+          "toS": 30,
+          "damage": 492.4800000000004,
+          "dps": 32.83200000000003,
+          "healing": 0,
+          "mana": 7.125,
+          "flow": 0,
+          "crests": 0
+        },
+        {
+          "fromS": 30,
+          "toS": 45,
+          "damage": 174.72000000000003,
+          "dps": 11.648000000000001,
+          "healing": 0,
+          "mana": 12.625,
+          "flow": 0,
+          "crests": 0
+        },
+        {
+          "fromS": 45,
+          "toS": 60,
+          "damage": 174.7199999999999,
+          "dps": 11.647999999999994,
+          "healing": 0,
+          "mana": 18.125,
+          "flow": 0,
+          "crests": 0
+        }
+      ],
+      "firstClearS": 12.883333333333333,
+      "cycles": 4,
+      "down": false,
+      "damage": 1169.8400000000004,
+      "healing": 0,
+      "controlTicks": 3,
+      "perfects": 0,
+      "manaReturned": 0,
+      "finalMana": 18.125
+    }
+  ],
+  "authoredCeilings": [
+    {
+      "id": "bolt:0:base",
+      "name": "Rain Needle",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 360
+    },
+    {
+      "id": "tide_orb:1:base",
+      "name": "Bubble Shot",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 84
+    },
+    {
+      "id": "tide_orb:2:base",
+      "name": "Crash Orb",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 96
+    },
+    {
+      "id": "tide_orb:3:base",
+      "name": "Twin Tides",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 132
+    },
+    {
+      "id": "tide_orb:4:A",
+      "name": "Leviathan Orb",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 160
+    },
+    {
+      "id": "tide_orb:4:B",
+      "name": "Rain of Orbs",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 180
+    },
+    {
+      "id": "lash:1:base",
+      "name": "Tide Lash",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 128
+    },
+    {
+      "id": "lash:2:A",
+      "name": "Undertow",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 54
+    },
+    {
+      "id": "lash:2:B",
+      "name": "Riptide",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 54
+    },
+    {
+      "id": "lash:3:base",
+      "name": "Maelstrom Lash",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 60
+    },
+    {
+      "id": "lash:4:base",
+      "name": "Drown Coil",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 50
+    },
+    {
+      "id": "mire:1:base",
+      "name": "Puddle",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mire:2:base",
+      "name": "Fog Bank",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mire:3:base",
+      "name": "Freeze Field",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 20
+    },
+    {
+      "id": "mire:4:base",
+      "name": "Glacier Tomb",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mend:1:base",
+      "name": "Cool Draught",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mend:2:base",
+      "name": "Tide Ward",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mend:3:base",
+      "name": "Spring",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mend:4:base",
+      "name": "Font",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mirror:1:base",
+      "name": "Sheen",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mirror:2:A",
+      "name": "Reflection",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mirror:2:B",
+      "name": "Ripple",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mirror:3:base",
+      "name": "Mirage",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 0
+    },
+    {
+      "id": "mirror:4:base",
+      "name": "Return Tide",
+      "unit": "damage per 15 s; unlimited mana, all projectiles land; no Flow",
+      "damage": 80
+    }
+  ],
+  "profiles": [
+    {
+      "composition": "Undertow",
+      "capabilities": [
+        "pull",
+        "root",
+        "slow",
+        "fog",
+        "encase"
+      ],
+      "dps": [
+        20.538666666666668,
+        6.967999999999999,
+        0,
+        0,
+        24.677333333333333,
+        22.528000000000016,
+        18.021333333333327,
+        17.890666666666654
+      ]
+    },
+    {
+      "composition": "Mirror tide",
+      "capabilities": [
+        "heal",
+        "ward",
+        "hot",
+        "font",
+        "sheen",
+        "reflection",
+        "decoy",
+        "return"
+      ],
+      "dps": [
+        17.538666666666668,
+        21.688000000000002,
+        20.018666666666665,
+        20.202666666666666,
+        13.906666666666666,
+        37.37600000000004,
+        11.648000000000001,
+        17.855999999999987
+      ]
+    },
+    {
+      "composition": "Rotation",
+      "capabilities": [
+        "push",
+        "root",
+        "sheen",
+        "ripple",
+        "decoy",
+        "return"
+      ],
+      "dps": [
+        18.95466666666667,
+        11.584000000000003,
+        2,
+        0,
+        21.861333333333334,
+        32.83200000000003,
+        11.648000000000001,
+        11.647999999999994
+      ]
+    }
+  ],
+  "dominanceFlags": [],
+  "limitations": [
+    "DPS probe does not certify utility quality or feel.",
+    "Stationary soldier first-clear times are not AI wave durations.",
+    "Ceilings exclude travel/casting time and affordability; Return Tide ceiling assumes full storage."
+  ]
+}

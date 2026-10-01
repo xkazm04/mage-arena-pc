@@ -10,7 +10,8 @@
     "data": "node scripts/compile-arena-data.mjs",
     "build": "npm run data && tsc -p tsconfig.arena.json",
     "test": "npm run data && vitest run",
-    "report:w2": "npm run data && tsx scripts/report-w2.ts"
+    "report:w2": "npm run data && tsx scripts/report-w2.ts",
+    "report:w3": "npm run data && tsx scripts/report-w3.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
