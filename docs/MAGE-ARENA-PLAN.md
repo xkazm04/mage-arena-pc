@@ -178,52 +178,35 @@ Decisions: **D12** all A2 portraits and all A3 figures and poses are **discarded
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Art | A6 | **Identity reset**: at least six raw-magical style directions for the arena mages, enemies and arena environment, each shown as (1) an arena scene at the confirmed near oblique camera and (2) a late-90s CRPG-style painted bust portrait of the Water mage; the owner chooses | D12-D15 | delivered 2026-10-02: eight named pairs, six arena candidates and two capped camera rejects; owner choice pending; 33 new calls, 159/240 charged; `art/review/a6/index.html` |
+| Art | A6 | **Identity reset**: at least six raw-magical style directions for the arena mages, enemies and arena environment, each shown as (1) an arena scene at the confirmed near oblique camera and (2) a late-90s CRPG-style painted bust portrait of the Water mage; the owner chooses | D12-D15 | not started |
 | Art | A2b | New portraits (16 cast, expressions) in the chosen direction | A6 owner choice | blocked |
 | Art | A3b | New oblique figures, poses, spell and aura effects in the chosen direction, enemies included, finishing the three missing creatures with moderation-safe prompts | A6 owner choice | blocked |
 | Art | A4b | Camp map and backdrops re-checked against the new identity (the camp map is kept unless the owner says otherwise) | A6 owner choice | blocked |
+
+## o. Art direction v3, camera and UI as art (owner, 2026-10-02, after the A6 board and the G1 build)
+
+> "Regarding the art direction, I think 02, 03, 04 share similar artistic baseline for fidelity, characters. They can be combined and provide variations of arenas as each is dominated by different color pallette. Even 01, 05, 06 arena styles can be added, yet the artstyle there is too grainy, looking like page in a book which is a difficult world where to place moving characters and spells. All concepts are very cool, 04 is my portrait winner. For the game itself - I think camera distance and angle from art proposals are better than our current in game. More distance, so camera will move rarely only if player on the edge. The HUD is greatest pain - I guess because it should be part of art package - game feels like browser page wrapping screenshot in the center. At this point the quality is in shape as a player I don't want to interact with it at all. We will need to emphasize more into applying art into all parts of the game, trying to achieve videogame quality in TV interface. If grok reaches image limits, we can use 'agy' cli for gemini and create concept art, textures with Nano Banana 2. Not sure about its capabilities around editing."
+> "the art decision will have impact on HUD, current city art too."
+
+Decisions:
+- **D16 Art baseline = the "Covenant family": A6 directions 02 Verdigris Covenant, 03 Ragged Oracle and 04 Moonchalk Tempest merged into one style bible** (one fidelity, one way of drawing characters, enemies, effects and surfaces) with **arena variants by palette** (verdigris green, rust and sand, moonlit blue-black), each a different arena the player visits. Directions 01, 05, 06 may be added as further palette variants only if the grain is removed: the owner rejects the paper-and-book texture because moving characters and spells do not read on it. **Portraits follow 04 Moonchalk Tempest** (the owner's winner), in the late-1990s painted CRPG bust mood.
+- **D17 Camera = the distance and angle of the art proposals** (A1b far/standard and the A6 scenes), not the current in-game near camera: more distance, a mostly **fixed camera that moves rarely, only when the player approaches the edge of the view** (a wide dead zone, soft edge follow, no constant tracking). The scale contract is rewritten for it (figures about 3 to 4.5 percent of screen height at 1080p, readable by silhouette, aura and effect, so the figure design must carry identity at that size).
+- **D18 The camp ("city") art and the HUD follow the new style.** The A4 camp map, backdrops, story cards and Hollow Board frames and the A5 icons and HUD are superseded; they are redone in the Covenant family (palette variants for the different times and places). The earlier "camp map is kept" decision is withdrawn.
+- **D19 UI is part of the art package and the game is a video game, not a web page.** Full-screen canvas game (no browser page look: no HTML panels floating over a screenshot, no dropdowns, scrollbars, default fonts or form controls); every screen (main menu, camp, season map, Hollow Board, journal, Parley, composition screen, arena HUD, pause, results, save and load) is built from an **art-directed UI kit**: frames and nine-slice panels, bars, spell slots, the collar rune clock, cursor, buttons, tabs, tooltips, iconography, typography with a game feel, animated feedback. Layout and type sizes are **TV-grade** (readable from a sofa distance, generous safe areas, large touch-free targets, full keyboard and gamepad navigation) while mouse and keyboard remain the first input. Quality bar: a player wants to interact with it.
+- **D20 Image providers: Grok first, then the Antigravity CLI (`agy`) with Nano Banana 2 as fallback** for concept art and textures when Grok's allowance ends. `agy` is installed at `C:\Users\kazda\AppData\Local\agy\bin\agy.exe` (not on PATH, version 1.2.15) but **not signed in** (the owner must log in once); its image-generation and **image-editing capabilities are unverified**, so the first fallback task is a measured capability probe (generation, reference-guided generation, editing an existing sprite, transparency, consistency across a set) recorded in a provider ledger. Providers sit behind one interface with a budget guard each; a refusal or an unavailable provider routes to the next (registry: `generative-provider-routing`).
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | not started |
+| Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | not started |
+| Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | not started |
+| Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | not started |
+| Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | not started |
+| Game | U1 | **Camera and UI overhaul**: far fixed camera with edge follow; full-screen canvas UI framework with the nine-slice kit loader (placeholder kit until A5b lands); rebuild the HUD, main menu, camp, Hollow Board, journal, Parley, composition, pause and results screens as in-game art-directed screens; TV-grade layout; keyboard, mouse and gamepad navigation; screenshots at 1080p and 1440p | D17, D19 | not started |
+| Art/Game | P1 | **Provider probe**: `agy` and Nano Banana 2 capability probe and ledger once the owner has signed in | owner login | blocked |
 
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
-
-### ART session 4 / A6, 2026-10-02 — identity comparison, owner choice pending
-
-Read the full plan/reset, camera/scale/choice/style/acceptance, prior A3 evidence
-and the sister project's method. One design/results note:
-`docs/waves/A6-identity-reset.md`. Studied the chosen blue caster directly; no
-discarded portrait or figure supplied a generation reference. Delivered eight
-named arena/Cassia pairs, a combined sheet and portable HTML owner board with
-all 33 attempts. Six current arena candidates; Coal & Salt and Cinder Veil remain
-capped camera rejects after three attempts each. Added Lacquer & Ash and Granite
-Psalm as distinct directions, without resetting failed slots. Final six candidates
-use one common base skeleton per image kind; targeted correction appendices,
-pilot versions and reference-conditioning limitations are all retained.
-
-Six guarded CLI calls failed to establish the required camera in the initial two
-directions; 27 subsequent built-in calls used the same charged ledger, proof,
-file/hash, prompt, local/direct-review and quota-stop boundaries. First accepted
-technical continuation preceded siblings; no owner acceptance was created.
-Explicit moderation permits one rewritten retry per slot; quota always wins and
-latches all spending. Those error cases were tested synthetically; no actual A6
-moderation/quota/rate-limit incident occurred. Earlier owner-cleared latch and all
-126 inherited charges/events are preserved. Spend: 33 new / 159 of 240 charged,
-81 remaining, 158 saved, zero videos; shared subscription remainder not measured.
-
-`python tools/art/a6.py check` passes all 33 source/evidence chains, 16 current
-images, links, filters, zoom and Chrome at 1080p/1440p/mobile.
-`python tools/art/a6_audit.py` reproduces A6 HTML/manifest/contact bytes without
-ignored raw files. Forty-five tests and Python/prompt compilation pass. Thirty-three
-local image observations plus two board diagnostics only reject or route to owner.
-Global historical A3 checks retain `STOP_SNAPSHOT_DRIFT` after the authorized
-ledger resume and `UNRESOLVED_UI:ui-a3-poses.json`; no threshold was waived and
-not every project gate is green. Current scene bodies are approximately 5–8%,
-with scale/material/extra-enemy defects disclosed per card. Exact painted camera,
-motion, runtime texture/draw/fill costs, frame-time delta and owner feel remain
-unmeasured; preview storage costs are measured. No game build/package changed.
-
-Owner entry: `art/review/a6/index.html`. Recommendation is an owner-only comparison
-order, not a choice. OWNER-CHOICE.md, CAMERA-OK.md and the scale contract are
-unchanged. A2b/A3b/A4b remain blocked. One local A6 commit; never pushed.
