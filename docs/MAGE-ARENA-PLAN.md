@@ -86,6 +86,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Integration | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | automated gates PASS, including original pacing bands and 30-minute soak; independent rerun and owner G1 open | 53b49b5..6ddc5f3 + soak handoff | 2026-10-02 |
 | Game | U1-camera | D17 far fixed camera and projection | W7 | gate PASS: 147 tests; edge follow, no balance changes | this sub-wave commit | 2026-10-02 |
 | Game | U1-framework | Canvas primitives, bitmap fonts, art kit loader | U1-camera | gate PASS: 150 tests; art contract v1 aligned | this sub-wave commit | 2026-10-02 |
+| Game | U1-screens | Every production screen in one canvas | U1-framework | gate PASS; 29 captures, two-week 1080p route PASS | this sub-wave commit | 2026-10-02 |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
 | Core | W10 | Deaths and the Vigil: Plot objects, crackdown, executions, death census | G1 | not planned | | |
@@ -386,3 +387,7 @@ Read the full integration plan and imported missing section o from main read-onl
 ### GAME U1 framework ? 2026-10-02
 
 Design note U1-framework.md. Shared Pixi canvas toolkit, procedural nine-slice kit, bars, slots, buttons, tabs, tooltips, focus and cursor; bitmap Cinzel/Alegreya Sans with bundled OFL notices. Read art/ui/README.md from art worktree after it appeared and aligned schema/required IDs, SHA-256 pages, region bounds, anchors and slice insets. No art edits. `npm run gate` PASS: 150 TypeScript plus ten reference tests; production build PASS. The unchanged 2,000-fight census per wave passes with W7-identical digests and medians 38.233/44.633/45.483/58.000 s. Report destination allowlist extended for U1; first attempt rejected the directory before any fights, then rerun succeeded. Screen migration and physical sofa/controller feel remain pending. Next U1 screens; no push.
+
+### GAME U1 screens - 2026-10-02
+
+Design note U1-screens.md. Replaced all production DOM screens with one Pixi canvas: menu/pick, camp/places/calendar, Board/journal, listening, Parley with typing/letter board, composition, Trial, arena HUD, results/chapter, pause/settings/save/load. Old DOM modules removed; D18 old camp textures are no longer loaded. Original procedural Covenant environment and silhouettes remain placeholders. Art v2 arrived read-only: nominal camera now 3.75%, asymmetric edge zone and .35-second follow. `npm run gate` PASS: 150 TypeScript plus ten reference tests; production build PASS. `u1-browser.ts --quick` PASS: 29 1080p captures, zero page errors/text overflow, all screen types, native controls, two-week route with four receipts, victory/missio and camp/combat save-load. `u1-replay.ts` exact 1,296,151-byte envelope PASS. Test saves isolated from owner files. Next TV/controller navigation and both-resolution final evidence; human feel pending. No push.

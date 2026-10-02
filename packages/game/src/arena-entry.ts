@@ -1,212 +1,629 @@
-import { Application } from 'pixi.js';
-import { combat, createTraining, FixedStepper, runtime, seconds, stepTraining, timingBot, newWaterState, presets, spellFor, type TrainingKind, type BotKind, type Composition } from '@mage/core/arena';
-import { ArenaInput } from './input.ts';
-import { addEnemy, advanceGames, attachMageAI, createGames, enemyInputs, enemyRoster, queueDeathEffects, stepArena, stepGames, tiro, type Games } from '@mage/core/arena';
-import { compositionScreen } from './composition.ts';
-import { cameraMetrics, contract, groundToScreen, followCamera, interpolate, makeCamera, type Camera } from './camera.ts';
-import { ArenaScene } from './arena-scene.ts';
-import { openingPosition, openingSeparationM, spawnProjectile, addMage } from '@mage/core/arena';
-import './arena-style.css';
-import { applyBoutInput, boutHash, type BoutInput, type SeasonBout } from '@mage/core';
-export interface SeasonArenaOptions { bout: SeasonBout; send: (entries: BoutInput[], hash: string) => Promise<unknown>; finish: () => Promise<void> }
-export type ArenaDisposer = (() => void) & { pause: (value: boolean) => void; flush: () => Promise<void> };
+import { BitmapText, Graphics } from "pixi.js";
+import {
+  applyBoutInput,
+  boutHash,
+  type BoutInput,
+  type SeasonBout,
+} from "@mage/core";
+import {
+  combat,
+  createTraining,
+  FixedStepper,
+  runtime,
+  seconds,
+  stepTraining,
+  timingBot,
+  newWaterState,
+  presets,
+  spellFor,
+  createGames,
+  stepGames,
+  advanceGames,
+  addEnemy,
+  enemyRoster,
+  openingPosition,
+  enemyInputs,
+  stepArena,
+  queueDeathEffects,
+  attachMageAI,
+  addMage,
+  type TrainingKind,
+  type BotKind,
+  type Composition,
+  type Games,
+  type InputFrame,
+} from "@mage/core/arena";
+import { ArenaInput } from "./input.ts";
+import {
+  cameraMetrics,
+  followCamera,
+  groundToScreen,
+  interpolate,
+  makeCamera,
+  type Camera,
+} from "./camera.ts";
+import { ArenaScene } from "./arena-scene.ts";
+import { colours } from "./ui/kit.ts";
+import type { CanvasUI } from "./ui/ui.ts";
 
-export async function mountArena(root: HTMLElement, season?: SeasonArenaOptions): Promise<ArenaDisposer> {
-root.classList.add('arena-root');
-const lifetime = new AbortController();
-let raf = 0;
-let pending: Promise<void> | null = null, syncError = '', queued: BoutInput[] = [];
-async function flush(): Promise<void> {
-  if (pending) await pending;
-  if (syncError) throw Error(syncError);
-  if (!season || !queued.length) return;
-  const entries = queued; queued = [];
-  pending = season.send(entries, boutHash(season.bout)).then(() => {}).catch((e: unknown) => { syncError = String(e); throw e; });
-  try { await pending; } finally { pending = null; }
+export interface SeasonArenaOptions {
+  bout: SeasonBout;
+  send: (entries: BoutInput[], hash: string) => Promise<unknown>;
+  finish: () => Promise<void>;
 }
-function seasonStep(entry: BoutInput) { applyBoutInput(season!.bout, entry); queued.push(entry); }
-root.innerHTML = `
-<main class="shell"><header class="masthead"><div><div class="eyebrow">Castra Clausa · the proving ground</div><h1>Mage Arena</h1><div class="subtitle">Water answers what the collar cannot hold.</div></div>
-<div class="toolbar"><label for="scenario">Training</label><select id="scenario"><option value="magic">Magic thrower</option><option value="physical">Steel from the side</option><option value="flanker">Alternating flanks</option><option value="charge">Unblockable lane</option><option value="stream">Three-bolt stream</option><option value="performance">Projectile field</option></select><label for="zoom">View</label><input id="zoom" type="range" step="0.05" aria-label="Camera zoom"><button id="scale-debug" aria-pressed="false">Scale overlay</button><button id="restart">Restart</button><button id="pause">Pause</button></div></header>
-<div class="arena-wrap"><div class="arena-caption"><div class="eyebrow">The Tide · Cassia</div><p id="instruction">Face the light. Raise the ward just before impact.</p></div><div id="canvas"></div><pre id="scale-overlay" hidden></pre><div class="message" id="message"></div></div>
-<div class="resource-row"><div><div class="meter-label"><span>VITALITY</span><span id="hp-value"></span></div><div class="meter"><span class="hp" id="hp-bar"></span></div></div><div><div class="meter-label"><span>MANA</span><span id="mana-value"></span></div><div class="meter"><span class="mana" id="mana-bar"></span></div></div><div><div class="meter-label"><span>STAMINA</span><span id="stamina-value"></span></div><div class="meter"><span class="stamina" id="stamina-bar"></span></div></div><div><div class="clock-label" id="clock"></div><div class="clock-detail" id="clock-detail"></div></div></div>
-<div class="slots">${['Rain Needle', 'Line I', 'Line II', 'Line III'].map((name, i) => `<button class="slot ${i === 0 ? 'active' : ''}" data-slot="${i}"><span class="key">${i + 1}</span><span class="slot-name">${name}</span><small>${i === 0 ? 'Light bolt · staff at close range' : 'Composition unlocks in Water practice'}</small></button>`).join('')}</div>
-<div class="controls"><span><b>W A S D</b> move &nbsp; <b>Shift</b> sprint &nbsp; <b>Space</b> roll</span><span><b>Mouse</b> aim at feet &nbsp; <b>Left</b> cast &nbsp; <b>Right hold</b> absorb &nbsp; <b>1–4 / wheel</b> choose slot</span></div>
-<div class="legend"><span><i class="dot" style="background:#7de0ed"></i>MAGIC · face & absorb</span><span><i class="dot" style="background:#eee9da"></i>STEEL · roll</span><span><i class="dot" style="background:#e65e63"></i>UNBLOCKABLE · leave the mark</span></div>
-<p class="note">Training arena · placeholder shapes · missio at zero vitality</p></main>`;
-const app = new Application();
-await app.init({ width: window.innerWidth, height: window.innerHeight, background: '#98755a', antialias: true, autoStart: false, preference: 'webgl' });
-root.querySelector('#canvas')!.appendChild(app.canvas);
-app.canvas.tabIndex = 0; app.canvas.setAttribute('aria-label', 'Arena. WASD move, mouse aim, left cast, right absorb, Space roll.');
-const scene = new ArenaScene(app);
-let camera: Camera = makeCamera({ width: window.innerWidth, height: window.innerHeight }, runtime.training.player);
-let debugScale = new URLSearchParams(location.search).has('debug');
-const input = new ArenaInput(app.canvas, () => camera);
-let training = createTraining(), paused = false, clock = new FixedStepper(), bot: BotKind | undefined;
-let composition: Composition = structuredClone(presets[0]!);
-let mode: 'training' | 'roster' | 'tiro' = 'training', rosterId = 'conscript', games: Games | undefined, startGamesAfterCompose = false, referencePlayer = false;
-let lastPerfect = -1e9, lastEventIndex = 0, audio: AudioContext | undefined;
-const frames: number[] = [], cpu: number[] = [], projectileSamples: number[] = [], visibleProjectileSamples: number[] = []; let frameCount = 0;
-const params = new URLSearchParams(location.search);
-if (params.has('scenario')) training = createTraining(params.get('scenario') as TrainingKind);
-root.querySelector<HTMLSelectElement>('#scenario')!.value = training.kind;
-if (season) { if (!season.bout.games) throw Error('Season bout has not started'); games = season.bout.games; composition = season.bout.composition; mode = 'tiro'; syncGames(); }
-function restart(kind = training.kind): void {
-  mode = 'training'; games = undefined; referencePlayer = false;
-  training = createTraining(kind); clock = new FixedStepper(); input.clear(); lastPerfect = -1e9; lastEventIndex = 0; paused = false;
-  training.player.water = newWaterState(composition);
-  camera = makeCamera(camera, training.player.pos, camera.zoom);
-  root.querySelector('#pause')!.textContent = 'Pause';
-  app.canvas.focus();
-}
-function startTiro(seed = Number(params.get('seed') ?? 1)): void {
-  restart(); mode = 'tiro'; games = createGames(seed, composition); syncGames(); root.querySelector<HTMLSelectElement>('#scenario')!.value = 'tiro';
-}
-function syncGames(): void { if (games) { training.state = games.state; training.player = games.player; training.dummy = games.state.actors[1]!; } }
-function startRoster(id: string): void {
-  restart(); mode = 'roster'; rosterId = id; training.state.actors = [training.player];
-  const spec = enemyRoster.find(s => s.id === id)!;
-  const count = spec.packSize ?? runtime.games.rosterPracticeCount;
-  for (let i = 0; i < count; i++) addEnemy(training.state, id, openingPosition(i, count));
-  training.dummy = training.state.actors[1]!;
-}
-root.querySelector('#restart')!.addEventListener('click', () => mode === 'tiro' ? startTiro() : mode === 'roster' ? startRoster(rosterId) : restart());
-const composer = compositionScreen(choice => { composition = choice; if (startGamesAfterCompose) startTiro(); else restart(); app.canvas.focus(); }, value => { paused = value; input.clear(); }, root);
-const composeButton = document.createElement('button'); composeButton.id = 'compose'; composeButton.textContent = 'Compose'; composeButton.onclick = () => { startGamesAfterCompose = false; composer.open(); }; root.querySelector('.toolbar')!.prepend(composeButton);
-const gamesButton = document.createElement('button'); gamesButton.id = 'start-tiro'; gamesButton.className = 'primary'; gamesButton.textContent = 'Tiro Games'; gamesButton.onclick = () => { startGamesAfterCompose = true; composer.open('Enter Tiro Games'); }; root.querySelector('.toolbar')!.prepend(gamesButton);
-if (season) { composeButton.hidden = true; gamesButton.hidden = true; root.querySelector<HTMLElement>('#restart')!.hidden = true; root.querySelector<HTMLElement>('#scenario')!.hidden = true; root.querySelector<HTMLElement>('label[for=scenario]')!.hidden = true; }
-const scenarioSelect = root.querySelector<HTMLSelectElement>('#scenario')!;
-const currentGamesOption = document.createElement('option'); currentGamesOption.value = 'tiro'; currentGamesOption.textContent = 'Tiro Games'; currentGamesOption.disabled = true; scenarioSelect.prepend(currentGamesOption);
-const rosterGroup = document.createElement('optgroup'); rosterGroup.label = 'Roster practice';
-for (const spec of enemyRoster) { const option = document.createElement('option'); option.value = `enemy:${spec.id}`; option.textContent = spec.name; rosterGroup.append(option); }
-scenarioSelect.append(rosterGroup);
-scenarioSelect.addEventListener('change', () => scenarioSelect.value.startsWith('enemy:') ? startRoster(scenarioSelect.value.slice(6)) : restart(scenarioSelect.value as TrainingKind));
-root.querySelector('#message')!.addEventListener('click', e => {
-  const action = (e.target as HTMLElement).closest<HTMLElement>('[data-game-action]')?.dataset.gameAction;
-  if (action === 'next' && games && !pending) { if (season) seasonStep({ type: 'advance', tick: games.state.tick }); else advanceGames(games); syncGames(); input.clear(); clock = new FixedStepper(); lastPerfect = -1e9; app.canvas.focus(); }
-  if (action === 'return' && season) { paused = true; void flush().then(season.finish).catch(e => { syncError = String(e); }); }
-  if (action === 'retry' && !season) { startTiro(); app.canvas.focus(); }
-});
-root.querySelector('#pause')!.addEventListener('click', () => { paused = !paused; input.clear(); root.querySelector('#pause')!.textContent = paused ? 'Resume' : 'Pause'; if (!paused) app.canvas.focus(); });
-for (const slot of root.querySelectorAll<HTMLButtonElement>('[data-slot]')) slot.addEventListener('click', () => { input.slot = Number(slot.dataset.slot); app.canvas.focus(); });
-function bell(): void {
-  if (!audio || audio.state !== 'running' || localStorage.getItem('mage-sound') === 'off') return;
-  const osc = audio.createOscillator(), gain = audio.createGain(); osc.connect(gain); gain.connect(audio.destination);
-  osc.frequency.value = runtime.presentation.bellHz;
-  gain.gain.setValueAtTime(0.04, audio.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + runtime.presentation.bellDurationS);
-  osc.start(); osc.stop(audio.currentTime + runtime.presentation.bellDurationS);
-}
-app.canvas.addEventListener('pointerdown', () => { audio ??= new AudioContext(); void audio.resume(); });
-const zoomControl = root.querySelector<HTMLInputElement>('#zoom')!;
-zoomControl.min = String(contract.camera.zoom_range[0]); zoomControl.max = String(contract.camera.zoom_range[1]); zoomControl.value = String(camera.zoom);
-zoomControl.addEventListener('input', () => { camera = makeCamera(camera, camera.centre, Number(zoomControl.value)); });
-root.querySelector('#scale-debug')!.addEventListener('click', () => { debugScale = !debugScale; });
-window.addEventListener('resize', () => { app.renderer.resize(window.innerWidth, window.innerHeight); camera = makeCamera({ width: window.innerWidth, height: window.innerHeight }, camera.centre, camera.zoom); }, { signal: lifetime.signal });
-// Empty shipping manifest uses original procedural figures until accepted A3 frames arrive.
-void scene.library.load(new URL((!season && params.get('sprites')) || '/arena-sprites.json', location.href).href);
-function render(alpha: number, deltaSeconds = 1 / 60): void {
-  const { state, player } = training;
-  camera = followCamera(camera, interpolate(player.previousPos, player.pos, alpha), deltaSeconds);
-  input.refreshAim();
-  scene.render(state, player, camera, alpha, input.aim, lastPerfect, debugScale);
-  const overlay = root.querySelector<HTMLElement>('#scale-overlay')!; overlay.hidden = !debugScale;
-  root.querySelector('#scale-debug')!.setAttribute('aria-pressed', String(debugScale));
-  if (debugScale) {
-    const m = cameraMetrics(camera);
-    overlay.textContent = `${contract.version} · ${camera.width} × ${camera.height}
-Oblique ${camera.elevation}° · zoom ${camera.zoom.toFixed(2)} · near ${contract.distances.find(d => d.id === 'near')!.zoom.toFixed(2)}
-Mage head–sole ${m.figureHeightPx.toFixed(1)} px (${(m.figureHeightPx / camera.height * 100).toFixed(1)}%)
-Ground ${m.pxPerMetreX.toFixed(2)} / ${m.pxPerMetreY.toFixed(2)} px/m X/Y
-${m.metresPerPixelX.toFixed(4)} / ${m.metresPerPixelY.toFixed(4)} m/px X/Y
-Visible ${m.visibleGroundM.x.toFixed(2)} × ${m.visibleGroundM.y.toFixed(2)} m
-Oval ${contract.arena_metres.join(' × ')} m · ruler ${openingSeparationM} m
-Ward ${contract.absorb.angle_degrees}° · radius ${contract.absorb.visual_radius_metres} m · rear ${contract.absorb.rear_open_degrees}°
-Warning locator ≥ ${contract.telegraph.minimum_ground_diameter_metres} m · outline ≥ ${m.outlinePx.toFixed(1)} px
-Projectile core ≥ ${m.projectileCorePx.toFixed(1)} px · visible ${scene.visibleProjectiles}
-Aim ground ${input.aim.x.toFixed(2)}, ${input.aim.y.toFixed(2)}
-Sprites ${scene.library.loadedFrames} loaded · ${scene.library.diagnostics.length} load warnings`;
+export class ArenaGame {
+  readonly scene: ArenaScene;
+  readonly input: ArenaInput;
+  camera: Camera;
+  training = createTraining();
+  games?: Games;
+  composition: Composition = structuredClone(presets[0]!);
+  mode: "training" | "roster" | "tiro" = "training";
+  paused = false;
+  syncError = "";
+  private clock = new FixedStepper();
+  private queued: BoutInput[] = [];
+  private pending: Promise<void> | null = null;
+  private bot?: BotKind;
+  private lastPerfect = -1e9;
+  private lastEvents = 0;
+  private reference = false;
+  private hudUpdate: () => void = () => {};
+  private lastPhase = "";
+  private audio?: AudioContext;
+  private disposed = false;
+  private frames: number[] = [];
+  constructor(
+    readonly ui: CanvasUI,
+    readonly settings: () => void,
+    readonly results: () => void,
+    readonly season?: SeasonArenaOptions,
+  ) {
+    this.camera = makeCamera(
+      { width: ui.app.screen.width, height: ui.app.screen.height },
+      this.training.player.pos,
+    );
+    this.scene = new ArenaScene(ui.app, ui.world);
+    this.input = new ArenaInput(
+      ui.app.canvas,
+      () => this.camera,
+      () => !this.paused && ui.screen === "arena",
+      () => ui.blocksPointer(),
+    );
+    if (season) {
+      if (!season.bout.games) throw Error("Bout not started");
+      this.games = season.bout.games;
+      this.composition = season.bout.composition;
+      this.mode = "tiro";
+      this.sync();
+    }
+    this.camera = makeCamera(this.camera, this.training.player.pos);
+    void this.scene.library.load("/arena-sprites.json");
+    const params = new URLSearchParams(location.search);
+    const base = {
+      snapshot: () => this.snapshot(),
+      project: (p: { x: number; y: number }) => groundToScreen(p, this.camera),
+      performance: () => ({ frames: [...this.frames] }),
+    };
+    Object.assign(window, {
+      __arena: {
+        ...base,
+        ...(params.has("harness") && !season
+          ? {
+              reset: (kind: TrainingKind = "magic") => this.restart(kind),
+              setBot: (bot?: BotKind) => {
+                this.bot = bot;
+              },
+              clearInput: () => this.input.clear(),
+              startGames: (seed = 4) => this.startGames(seed),
+              startRoster: (id: string) => this.startRoster(id),
+              setReferencePlayer: (enabled: boolean) => {
+                this.reference = enabled;
+                if (this.games && enabled)
+                  attachMageAI(
+                    this.games.player,
+                    runtime.games.referenceCompetence,
+                    this.games.state.tick,
+                  );
+              },
+              runGamesTicks: (count: number) => {
+                for (
+                  let i = 0;
+                  i < count && this.games?.phase === "active";
+                  i++
+                )
+                  stepGames(
+                    this.games,
+                    this.reference ? undefined : this.input.frame(),
+                  );
+                this.sync();
+              },
+              stepInput: (count: number) => {
+                for (let i = 0; i < count; i++)
+                  stepArena(this.training.state, {
+                    [this.training.player.id]: this.input.frame(),
+                  });
+              },
+              visualFixture: (kind: string, direction = 0) => {
+                this.restart();
+                this.pause(true);
+                const { state, player } = this.training;
+                state.actors = [player];
+                state.projectiles = [];
+                state.telegraphs = [];
+                const target = addMage(state, 1, {
+                  x: player.pos.x + Math.cos(direction) * 9,
+                  y: player.pos.y + Math.sin(direction) * 9,
+                });
+                target.dummy = true;
+                this.training.dummy = target;
+                if (kind === "scale") {
+                  player.absorb = true;
+                  for (const [id, x, y] of [
+                    ["netter", -9, -6],
+                    ["shieldman", 10, -8],
+                    ["cinder_hound", -10, 7],
+                  ] as const)
+                    addEnemy(state, id, {
+                      x: player.pos.x + x,
+                      y: player.pos.y + y,
+                    });
+                }
+              },
+              panPlayer: (pos: { x: number; y: number }) => {
+                this.training.player.pos = { ...pos };
+                this.training.player.previousPos = { ...pos };
+              },
+            }
+          : {}),
+      },
+    });
+    if (season && params.has("harness"))
+      Object.assign(window, {
+        __seasonArena: {
+          snapshot: () => structuredClone(season.bout),
+          pause: (p: boolean) => this.pause(p),
+          inputs: async (frames: InputFrame[]) => {
+            this.pause(true);
+            await this.flush();
+            for (const input of frames) {
+              if (season.bout.phase !== "active") break;
+              this.seasonStep({
+                type: "tick",
+                tick: this.training.state.tick,
+                input,
+              });
+            }
+            await this.flush();
+            this.sync();
+          },
+        },
+      });
   }
-  for (const [name, current, max] of [['hp', player.hp, player.maxHp], ['mana', player.mana, player.maxMana], ['stamina', player.stamina, player.maxStamina]] as const) {
-    root.querySelector(`#${name}-value`)!.textContent = `${Math.ceil(current)} / ${max}`;
-    (root.querySelector(`#${name}-bar`) as HTMLElement).style.width = `${current / max * 100}%`;
+  private sync() {
+    if (this.games) {
+      this.training.state = this.games.state;
+      this.training.player = this.games.player;
+      this.training.dummy = this.games.state.actors[1]!;
+    }
   }
-  root.querySelector('#clock')!.textContent = `COLLAR ${['', 'I', 'II', 'III', 'IV'][player.tier]} · ${seconds(state.tick - player.waveStartTick).toFixed(1)} s`;
-  const nextTier = (player.tier + 1) as 2 | 3 | 4;
-  const until = nextTier <= 4 ? Math.max(combat.tierClock.unlockAtSeconds[nextTier] - seconds(state.tick - player.waveStartTick + player.clockAdvanceTicks), combat.tierClock.minimumSecondsBetweenUnlocks - seconds(state.tick - player.lastUnlockTick), 0) : 0;
-  root.querySelector('#clock-detail')!.textContent = `${nextTier <= 4 ? `Next rune in ${until.toFixed(1)} s · ` : ''}${player.metrics.perfects} perfect absorbs`;
-  for (const b of root.querySelectorAll<HTMLElement>('[data-slot]')) {
-    const slot = Number(b.dataset.slot), s = spellFor(player, slot)!; b.classList.toggle('active', slot === input.slot);
-    b.querySelector('.slot-name')!.textContent = s.name;
-    const remaining = Math.max(0, seconds((player.water.cooldowns[s.line] ?? 0) - state.tick));
-    b.querySelector('small')!.textContent = s.kind === 'passive' ? 'Passive · perfect absorb counter' : remaining > 0 ? `${remaining.toFixed(1)} s · recovering` : `${player.water.flow >= combat.flow.max ? 'FREE CREST' : `${s.mana} mana`} · ${s.cooldownS} s cooldown`;
+  restart(kind: TrainingKind = "magic") {
+    this.mode = "training";
+    this.games = undefined;
+    this.reference = false;
+    this.training = createTraining(kind);
+    this.training.player.water = newWaterState(this.composition);
+    this.clock = new FixedStepper();
+    this.input.clear();
+    this.paused = false;
+    this.lastEvents = 0;
+    this.lastPerfect = -1e9;
+    this.lastPhase = "";
+    this.camera = makeCamera(
+      this.camera,
+      this.training.player.pos,
+      this.camera.zoom,
+    );
   }
-  root.querySelector('#instruction')!.textContent = `${composition.name} · Flow ${player.water.flow}/${combat.flow.max}${player.water.flow >= combat.flow.max ? ' · CREST READY' : ''} · Face the light. Time your ward.`;
-  const remainingEnemies = state.actors.filter(a => a.team !== player.team && !a.down).length;
-  root.querySelector('.arena-caption .eyebrow')!.textContent = mode === 'tiro' && games ? `Tiro Games · Bout ${games.wave + 1} / ${tiro.waves.length} · ${tiro.waves[games.wave]!.kind} · ${remainingEnemies} opponent${remainingEnemies === 1 ? '' : 's'}${games.wave >= 2 ? ' · Water proxy mage' : ''}` : mode === 'roster' ? `${training.dummy.label} · ${remainingEnemies} remaining` : 'The Tide · Cassia';
-  composeButton.disabled = mode === 'tiro' && !!games && (games.phase === 'active' || games.phase === 'intermission');
-  let message = player.down ? 'MISSIO<small>The crowd grants your life. Restart to train again.</small>' : paused ? 'PAUSED' : seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS ? 'PERFECT' : '';
-  if (games?.phase === 'intermission') message = `BOUT WON<small>The next gate is ready. Recover before you enter.</small><button data-game-action="next" id="next-bout">Enter bout ${games.wave + 2}</button>`;
-  if (games?.result) message = `${games.phase === 'complete' ? 'TIRO CHAMPION' : 'MISSIO'}<small>${games.result.wavesCleared} bouts won · ${games.result.gold} gold · ${games.result.renown} renown<br>The Games ${games.phase === 'complete' ? 'are yours' : 'end here. Your life is spared'}.</small><button data-game-action="retry" id="retry-games">New Tiro Games</button>`;
-  if (mode === 'roster' && !remainingEnemies && !state.telegraphs.length && !state.projectiles.length) message = 'PRACTICE CLEAR<small>Choose another opponent or enter the Tiro Games.</small>';
-  if (season && games?.result) message = (season.bout.spectator ? 'THE TIDE RETURNS' : games.result.finalWon ? 'TIRO VICTOR' : 'MISSIO') + '<small>' + (season.bout.spectator ? 'You watched your tent entrant. No player payout.' : games.result.gold + ' gold · ' + games.result.renown + ' renown · the camp will hear of this.') + '</small><button data-game-action="return" id="return-camp">Return to camp</button>';
-  if (syncError) message = 'THE BOUT IS PAUSED<small>Checkpoint could not be accepted. Reload to resume the last accepted tick.</small>';
-  const messageNode = root.querySelector<HTMLElement>('#message')!; if (messageNode.innerHTML !== message) messageNode.innerHTML = message;
-  messageNode.classList.toggle('interactive', !!games && games.phase !== 'active');
-  messageNode.classList.toggle('paused-label', paused && message === 'PAUSED');
-}
-let previous = performance.now();
-function frame(now: number): void {
-  const elapsed = (now - previous) / 1000; previous = now; const start = performance.now();
-  let alpha = 1;
-  if (!paused && !pending && !syncError && !training.player.down && !document.hidden) alpha = clock.advance(elapsed, () => {
-    if (mode === 'tiro' && games) { if (season && games.phase === 'active') seasonStep({ type: 'tick', tick: games.state.tick, input: input.frame() }); else if (!season) stepGames(games, referencePlayer ? undefined : input.frame()); }
-    else if (mode === 'roster') { stepArena(training.state, { ...enemyInputs(training.state), [training.player.id]: input.frame() }); queueDeathEffects(training.state); }
-    else stepTraining(training, bot ? timingBot(training, bot) : input.frame());
-    for (const event of training.state.events.slice(lastEventIndex)) if (event.kind === 'perfect' && event.actorId === training.player.id) { lastPerfect = event.tick; bell(); }
-    lastEventIndex = training.state.events.length;
-  });
-  if (season && !pending && queued.length && (queued.length >= combat.simStepHz || games?.phase !== 'active')) void flush().catch(() => {});
-  render(alpha, elapsed);
-  if (frameCount++ >= runtime.presentation.performanceWarmupFrames) {
-    frames.push(elapsed * 1000); cpu.push(performance.now() - start); projectileSamples.push(training.state.projectiles.length); visibleProjectileSamples.push(scene.visibleProjectiles);
-    if (frames.length > runtime.presentation.performanceFrames) { frames.shift(); cpu.shift(); projectileSamples.shift(); visibleProjectileSamples.shift(); }
+  startGames(seed = 4) {
+    this.restart();
+    this.mode = "tiro";
+    this.games = createGames(seed, this.composition);
+    this.sync();
+    this.camera = makeCamera(
+      this.camera,
+      this.training.player.pos,
+      this.camera.zoom,
+    );
+    this.hud();
   }
-  raf = requestAnimationFrame(frame);
-}
-raf = requestAnimationFrame(frame);
-// Harness access is read-only in ordinary play and only exposes mutations with ?harness=1.
-const harness = { snapshot: () => structuredClone({ state: training.state, player: training.player, slot: input.slot, aim: input.aim, paused, projectiles: training.state.projectiles.length, visibleProjectiles: scene.visibleProjectiles, mode, games, camera, cameraMetrics: cameraMetrics(camera), sortedActorIds: scene.sortedActorIds, sprites: { loaded: scene.library.loadedFrames, diagnostics: scene.library.diagnostics } }), project: (point: { x: number; y: number }) => groundToScreen(point, camera), performance: () => ({ frames: [...frames], cpu: [...cpu], projectileSamples: [...projectileSamples], visibleProjectileSamples: [...visibleProjectileSamples], frameCount }),
-  ...(params.has('harness') && !season ? { reset: restart, setBot: (kind?: BotKind) => { bot = kind; }, clearInput: () => input.clear(),
-    setReferencePlayer: (enabled: boolean) => { referencePlayer = enabled; if (games && enabled) attachMageAI(games.player, runtime.games.referenceCompetence, games.state.tick); },
-    runGamesTicks: (count: number) => { if (games) { for (let i = 0; i < count && games.phase === 'active'; i++) stepGames(games, referencePlayer ? undefined : input.frame()); lastEventIndex = games.state.events.length; } },
-    startGames: startTiro, startRoster,
-    // Explicit, paused visual fixtures for scale/occlusion screenshots; never enter ordinary play.
-    visualFixture: (kind: 'scale' | 'depth' | 'aim', direction = 0) => {
-      restart('magic'); paused = true; const { state, player } = training;
-      state.actors = [player]; state.telegraphs = []; state.projectiles = [];
-      if (kind === 'aim') {
-        const target = addMage(state, 1, { x: player.pos.x + Math.cos(direction) * 9, y: player.pos.y + Math.sin(direction) * 9 }); target.dummy = true; training.dummy = target;
-      } else if (kind === 'depth') {
-        addMage(state, 1, { x: player.pos.x, y: player.pos.y - 0.6 });
-        addMage(state, 1, { x: player.pos.x + 0.3, y: player.pos.y + 0.6 });
-      } else {
-        player.absorb = true; player.facing = { x: 0.7, y: -0.7 };
-        for (const [id, x, y] of [['netter', -9, -6], ['shieldman', 10, -8], ['cinder_hound', -10, 7], ['slinger', 13, 8]] as const) addEnemy(state, id, { x: player.pos.x + x, y: player.pos.y + y });
-        for (const [x, y] of [[-6, -3], [7, 7]]) state.telegraphs.push({ id: state.nextId++, activationId: state.nextId++, ownerId: state.actors[1]!.id, source: player.pos, origin: player.pos, target: { x: player.pos.x + x!, y: player.pos.y + y! }, startTick: 0, resolveTick: 60, damage: 0, family: 'unblockable', tier: 1, kind: 'area', widthM: 2, rangeM: 10, speedMps: 0 });
-        spawnProjectile(state, { ownerId: player.id, activationId: state.nextId++, source: player.pos, damage: 0, family: 'magic', tier: 1 }, { x: player.pos.x + 5, y: player.pos.y - 5 }, { x: 1, y: -1 }, 8, 12);
-        spawnProjectile(state, { ownerId: state.actors[1]!.id, activationId: state.nextId++, source: player.pos, damage: 0, family: 'physical', tier: 1 }, { x: player.pos.x - 5, y: player.pos.y + 4 }, { x: 1, y: -1 }, 8, 12);
+  startRoster(id: string) {
+    this.restart();
+    this.mode = "roster";
+    this.training.state.actors = [this.training.player];
+    const spec = enemyRoster.find((s) => s.id === id)!;
+    const count = spec.packSize ?? runtime.games.rosterPracticeCount;
+    for (let i = 0; i < count; i++)
+      addEnemy(this.training.state, id, openingPosition(i, count));
+    this.training.dummy = this.training.state.actors[1]!;
+    this.hud();
+  }
+  pause(value: boolean) {
+    this.paused = value;
+    this.input.clear();
+    this.clock = new FixedStepper();
+  }
+  private seasonStep(entry: BoutInput) {
+    applyBoutInput(this.season!.bout, entry);
+    this.queued.push(entry);
+  }
+  async flush() {
+    if (this.pending) await this.pending;
+    if (this.syncError) throw Error(this.syncError);
+    if (!this.season || !this.queued.length) return;
+    const entries = this.queued;
+    this.queued = [];
+    this.pending = this.season
+      .send(entries, boutHash(this.season.bout))
+      .then(() => {})
+      .catch((e: unknown) => {
+        this.syncError = String(e);
+        this.pause(true);
+        throw e;
+      });
+    try {
+      await this.pending;
+    } finally {
+      this.pending = null;
+    }
+  }
+  async next() {
+    await this.flush();
+    if (!this.games) return;
+    if (this.season)
+      this.seasonStep({ type: "advance", tick: this.games.state.tick });
+    else advanceGames(this.games);
+    this.sync();
+    this.lastEvents = 0;
+    this.lastPerfect = -1e9;
+    this.lastPhase = "";
+    this.camera = makeCamera(
+      this.camera,
+      this.training.player.pos,
+      this.camera.zoom,
+    );
+    this.pause(false);
+    this.hud();
+  }
+  private bell() {
+    if (localStorage.getItem("mage-sound") === "off") return;
+    this.audio ??= new AudioContext();
+    if (this.audio.state !== "running") {
+      void this.audio.resume();
+      return;
+    }
+    const osc = this.audio.createOscillator(),
+      gain = this.audio.createGain();
+    osc.connect(gain);
+    gain.connect(this.audio.destination);
+    osc.frequency.value = runtime.presentation.bellHz;
+    gain.gain.setValueAtTime(0.025, this.audio.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      this.audio.currentTime + runtime.presentation.bellDurationS,
+    );
+    osc.start();
+    osc.stop(this.audio.currentTime + runtime.presentation.bellDurationS);
+  }
+  hud() {
+    const u = this.ui,
+      p = this.training.player;
+    u.begin("arena");
+    u.onBack = this.settings;
+    u.text(
+      this.mode === "tiro"
+        ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
+        : "THE PROVING GROUND",
+      96,
+      58,
+      24,
+      colours.gold,
+    );
+    const heading = u.text(
+      this.mode === "tiro" ? "The collar opens" : "Cassia of the Tide",
+      96,
+      94,
+      36,
+      colours.text,
+      700,
+      true,
+    );
+    u.button("pause", "Pause", 1644, 54, 180, 68, this.settings, {
+      tooltip: "Escape / Start opens pause and settings.",
+    });
+    u.panel(96, 824, 400, 202);
+    const hp = u.bar("VITALITY", 118, 840, 356, p.hp, p.maxHp, colours.danger),
+      mana = u.bar("MANA", 118, 898, 356, p.mana, p.maxMana, colours.water),
+      stamina = u.bar(
+        "STAMINA",
+        118,
+        956,
+        356,
+        p.stamina,
+        p.maxStamina,
+        colours.gold,
+      );
+    const labels: BitmapText[] = [],
+      detail: BitmapText[] = [],
+      masks: Graphics[] = [],
+      slotFrames: Graphics[] = [];
+    for (let i = 0; i < 4; i++) {
+      const x = 524 + i * 260,
+        y = 874;
+      u.button(
+        `slot-${i}`,
+        `${i + 1}`,
+        x,
+        y,
+        244,
+        152,
+        () => {
+          this.input.slot = i;
+        },
+        { kind: "slot", fontSize: 24 },
+      );
+      u.icon(
+        i === 0 ? "water" : this.composition.lines[i - 1]!,
+        x + 42,
+        y + 41,
+        24,
+      );
+      labels.push(u.text("", x + 80, y + 20, 28, colours.text, 150));
+      detail.push(u.text("", x + 20, y + 103, 24, colours.muted, 208));
+      const mask = new Graphics();
+      u.content.addChild(mask);
+      masks.push(mask);
+      const frame = new Graphics();
+      u.content.addChild(frame);
+      slotFrames.push(frame);
+    }
+    u.panel(1584, 866, 240, 160);
+    const flow = u.text("", 1604, 895, 28, colours.water, 200),
+      tip = u.text("Alternate spells", 1604, 943, 24, colours.muted, 200);
+    const clock = new Graphics();
+    u.content.addChild(clock);
+    const rune = u.text("", 1064, 64, 34, colours.gold, 400, true),
+      next = u.text("", 1064, 109, 26, colours.muted, 420);
+    const feedback = u.text("", 700, 220, 42, colours.water, 600, true);
+    const hint = u.text(
+      "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1?4 spells",
+      524,
+      824,
+      24,
+      colours.text,
+      1000,
+    );
+    this.hudUpdate = () => {
+      if (u.screen !== "arena") return;
+      const { state, player } = this.training;
+      hp(player.hp);
+      mana(player.mana);
+      stamina(player.stamina);
+      heading.text =
+        this.mode === "tiro"
+          ? `${state.actors.filter((a) => a.team !== player.team && !a.down).length} opponents remain`
+          : "Cassia of the Tide";
+      for (let i = 0; i < 4; i++) {
+        const s = spellFor(player, i)!;
+        labels[i]!.text = s.name;
+        const remaining = Math.max(
+          0,
+          seconds((player.water.cooldowns[s.line] ?? 0) - state.tick),
+        );
+        detail[i]!.text =
+          remaining > 0
+            ? `${remaining.toFixed(1)}s recovering`
+            : s.kind === "passive"
+              ? "Perfect counter"
+              : `${s.mana} mana  /  Tier ${player.tier}`;
+        const x = 524 + i * 260;
+        slotFrames[i]!.clear();
+        if (this.input.slot === i)
+          slotFrames[i]!.rect(x + 5, 879, 234, 142).stroke({
+            color: colours.water,
+            width: 3,
+          });
+        masks[i]!.clear();
+        if (remaining > 0)
+          masks[i]!.moveTo(x + 42, 915)
+            .arc(
+              x + 42,
+              915,
+              29,
+              -Math.PI / 2,
+              -Math.PI / 2 + Math.PI * 2 * Math.min(1, remaining / s.cooldownS),
+            )
+            .lineTo(x + 42, 915)
+            .fill({ color: 0x030a13, alpha: 0.7 });
       }
-      camera = makeCamera(camera, player.pos, camera.zoom); render(1);
-    },
-    stepInput: (count: number) => { for (let i = 0; i < count; i++) stepArena(training.state, { [training.player.id]: input.frame() }); render(1); },
-    panPlayer: (pos: { x: number; y: number }) => { training.player.pos = { ...pos }; training.player.previousPos = { ...pos }; render(1); }
-  } : {}) };
-Object.assign(window, { __arena: harness });
-if (season && params.has('harness')) Object.assign(window, { __seasonArena: {
-  snapshot: () => structuredClone(season.bout),
-  inputs: async (frames: import('@mage/core/arena').InputFrame[]) => { paused = true; await flush(); for (const frame of frames) { if (games?.phase !== 'active') break; seasonStep({ type: 'tick', tick: games.state.tick, input: frame }); } await flush(); render(1); },
-  pause: (value: boolean) => { paused = value; },
-} });
-const dispose = () => { lifetime.abort(); cancelAnimationFrame(raf); input.dispose(); composer.dispose(); void audio?.close(); scene.library.dispose(); app.destroy(true, { children: true }); delete (window as Window & { __arena?: unknown }).__arena; root.replaceChildren(); root.classList.remove('arena-root'); delete (window as Window & { __seasonArena?: unknown }).__seasonArena; };
-return Object.assign(dispose, { flush, pause: (value: boolean) => { paused = value; input.clear(); root.querySelector('#pause')!.textContent = paused ? 'Resume' : 'Pause'; } });
+      flow.text = `FLOW  ${player.water.flow} / ${combat.flow.max}`;
+      tip.text =
+        player.water.flow >= combat.flow.max
+          ? "FREE CREST"
+          : "Alternate spells";
+      const tier = player.tier,
+        elapsed = seconds(
+          state.tick - player.waveStartTick + player.clockAdvanceTicks,
+        ),
+        nextTier = (tier + 1) as 2 | 3 | 4;
+      const until =
+        nextTier <= 4
+          ? Math.max(
+              0,
+              combat.tierClock.unlockAtSeconds[nextTier] - elapsed,
+              combat.tierClock.minimumSecondsBetweenUnlocks -
+                seconds(state.tick - player.lastUnlockTick),
+            )
+          : 0;
+      rune.text = `COLLAR  ${["", "I", "II", "III", "IV"][tier]}`;
+      next.text =
+        tier < 4 ? `Next rune in ${until.toFixed(1)}s` : "All four runes awake";
+      clock
+        .clear()
+        .circle(993, 109, 43)
+        .stroke({ color: colours.edge, width: 3 })
+        .circle(993, 109, 36)
+        .stroke({ color: colours.gold, width: 1 });
+      for (let i = 0; i < 4; i++) {
+        const a = -Math.PI / 2 + (i * Math.PI) / 2;
+        clock
+          .poly([
+            993 + Math.cos(a) * 43,
+            109 + Math.sin(a) * 43 - 5,
+            998 + Math.cos(a) * 43,
+            109 + Math.sin(a) * 43,
+            993 + Math.cos(a) * 43,
+            114 + Math.sin(a) * 43,
+            988 + Math.cos(a) * 43,
+            109 + Math.sin(a) * 43,
+          ])
+          .fill(i < tier ? colours.water : colours.edge);
+      }
+      const a = -Math.PI / 2 + Math.PI * 2 * (tier < 4 ? 1 - until / 15 : 1);
+      clock
+        .moveTo(993, 109)
+        .lineTo(993 + Math.cos(a) * 27, 109 + Math.sin(a) * 27)
+        .stroke({ color: colours.water, width: 3 });
+      feedback.text =
+        seconds(state.tick - this.lastPerfect) <
+        runtime.presentation.perfectFlashS
+          ? "PERFECT ABSORB"
+          : player.absorb
+            ? "WARD RAISED"
+            : "";
+      hint.text =
+        u.modality === "gamepad"
+          ? "Left stick move  /  Right stick aim  /  RT cast  /  LT absorb  /  A roll  /  LB RB spells"
+          : "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1?4 spells";
+    };
+    u.end();
+    this.hudUpdate();
+  }
+  frame(dt: number) {
+    if (this.disposed) return;
+    this.frames.push(dt * 1000);
+    if (this.frames.length > 360) this.frames.shift();
+    if (
+      this.camera.width !== this.ui.app.screen.width ||
+      this.camera.height !== this.ui.app.screen.height
+    )
+      this.camera = makeCamera(
+        this.ui.app.screen,
+        this.camera.centre,
+        this.camera.zoom,
+      );
+    let alpha = 1;
+    if (
+      !this.paused &&
+      !this.pending &&
+      !this.syncError &&
+      !this.training.player.down &&
+      !document.hidden
+    )
+      alpha = this.clock.advance(dt, () => {
+        if (this.games) {
+          if (this.season && this.games.phase === "active")
+            this.seasonStep({
+              type: "tick",
+              tick: this.games.state.tick,
+              input: this.input.frame(),
+            });
+          else if (!this.season)
+            stepGames(
+              this.games,
+              this.reference ? undefined : this.input.frame(),
+            );
+        } else if (this.mode === "roster") {
+          stepArena(this.training.state, {
+            ...enemyInputs(this.training.state),
+            [this.training.player.id]: this.input.frame(),
+          });
+          queueDeathEffects(this.training.state);
+        } else
+          stepTraining(
+            this.training,
+            this.bot ? timingBot(this.training, this.bot) : this.input.frame(),
+          );
+        for (const e of this.training.state.events.slice(this.lastEvents))
+          if (e.kind === "perfect" && e.actorId === this.training.player.id) {
+            this.lastPerfect = e.tick;
+            this.bell();
+          }
+        this.lastEvents = this.training.state.events.length;
+      });
+    if (
+      this.season &&
+      !this.pending &&
+      this.queued.length &&
+      (this.queued.length >= combat.simStepHz || this.games?.phase !== "active")
+    )
+      void this.flush().catch(() =>
+        this.ui.notice(
+          "Checkpoint failed. Load the last accepted save to resume.",
+        ),
+      );
+    this.camera = followCamera(
+      this.camera,
+      interpolate(
+        this.training.player.previousPos,
+        this.training.player.pos,
+        alpha,
+      ),
+      dt,
+    );
+    this.input.refreshAim();
+    this.scene.render(
+      this.training.state,
+      this.training.player,
+      this.camera,
+      alpha,
+      this.input.aim,
+      this.lastPerfect,
+      false,
+    );
+    this.hudUpdate();
+    const phase =
+      this.games?.phase ?? (this.training.player.down ? "failed" : "active");
+    if (
+      phase !== "active" &&
+      phase !== this.lastPhase &&
+      this.ui.screen === "arena"
+    ) {
+      this.lastPhase = phase;
+      this.pause(true);
+      this.results();
+    }
+  }
+  snapshot() {
+    return structuredClone({
+      state: this.training.state,
+      player: this.training.player,
+      slot: this.input.slot,
+      aim: this.input.aim,
+      paused: this.paused,
+      mode: this.mode,
+      games: this.games,
+      camera: this.camera,
+      cameraMetrics: cameraMetrics(this.camera),
+      visibleProjectiles: this.scene.visibleProjectiles,
+    });
+  }
+  dispose() {
+    this.disposed = true;
+    this.input.dispose();
+    this.scene.dispose();
+    void this.audio?.close();
+    delete (window as Window & { __arena?: unknown }).__arena;
+    delete (window as Window & { __seasonArena?: unknown }).__seasonArena;
+  }
 }

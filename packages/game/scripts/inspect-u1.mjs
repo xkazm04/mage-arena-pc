@@ -1,0 +1,17 @@
+import { chromium } from 'playwright';
+const browser=await chromium.launch({headless:true});
+const page=await browser.newPage({viewport:{width:1920,height:1080}});
+page.on('pageerror',error=>console.log('ERROR',error.message));
+await page.goto('http://127.0.0.1:4187/?harness=1');
+await page.waitForFunction(()=>window.__ui?.snapshot().screen==='menu');
+const click=async id=>{const target=await page.evaluate(id=>window.__ui.snapshot().buttons.find(b=>b.id===id),id);if(!target)throw Error(`Missing ${id}`);await page.mouse.click(target.x+target.w/2,target.y+target.h/2);await page.waitForTimeout(300);};
+await page.screenshot({path:'.u1-menu.png'});
+await click('pick-character');await page.screenshot({path:'.u1-character.png'});
+await click('choose-water');await page.screenshot({path:'.u1-camp.png'});
+await click('nav-calendar');await page.screenshot({path:'.u1-calendar.png'});
+await click('nav-camp');await click('visit-place');await page.screenshot({path:'.u1-visit.png'});
+await page.keyboard.press('Escape');await page.waitForTimeout(300);await page.screenshot({path:'.u1-pause.png'});
+await click('main-menu');await click('training-arena');await click('training-magic');await page.screenshot({path:'.u1-compose.png'});
+await click('composition-start');await page.waitForTimeout(500);await page.screenshot({path:'.u1-arena.png'});
+console.log(await page.evaluate(()=>window.__ui.snapshot()));
+await browser.close();

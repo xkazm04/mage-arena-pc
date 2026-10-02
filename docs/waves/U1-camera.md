@@ -4,8 +4,12 @@ Owner D17 supersedes the near/player-follow camera. Game presentation numbers
 live in `packages/game/data/camera.json`; the art stream owns its independent
 `art/scale-contract-v2.json`. Cross-check those on delivery, never modify the art
 worktree. Keep the 55-degree ground projection, the 192 by 144 metre oval, all
-combat geometry, openings and pacing untouched. Default figures are 4% of screen
-height; the permitted view range is 3–4.5%.
+combat geometry, openings and pacing untouched. Initial default figures were 4%
+of screen height; the permitted view range is 3–4.5%. During U1-screens the art
+v2 contract arrived: the nominal value is aligned to 3.75% (40.5px at 1080p,
+54px at 1440p), 22.5 ground pixels/metre, the art's asymmetric normalized zone
+[.16,.18,.84,.8], and .35-second time constant. The game data file owns runtime
+values; no art worktree files were changed. No player zoom control is exposed.
 
 Anchor the view on entry. A wide screen-space dead zone keeps it perfectly still
 through ordinary movement. Outside it, exponentially approach the nearest edge

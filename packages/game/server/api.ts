@@ -11,7 +11,7 @@ import {
 import { campPlay, bridgeRules, type BoutInput } from "@mage/core";
 
 export function campApi() {
-  const saves = new SaveStore();
+  const saves = new SaveStore(process.env.MAGE_SAVE_DIRECTORY);
   const sessions = new Map<string, SeasonService>();
   const timer = setInterval(() => {
     for (const service of sessions.values()) service.tick();

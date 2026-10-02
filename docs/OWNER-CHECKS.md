@@ -155,3 +155,14 @@ D17 supersedes the historical near-view checks above. Default figures are now 4%
 ## U1 framework ? pending visual judgment
 
 Shared dark stone, verdigris and moonchalk canvas primitives replace browser controls in the following screen sub-wave. Assess texture restraint, luminous focus, bitmap type and mouse cursor against the Covenant direction. Art kit is a replaceable delivery; placeholder quality is not approval of final art. See [framework note](waves/U1-framework.md).
+
+## U1 screens - pending owner judgment
+
+Use the same Windows build/preview commands above. The page now fills the window
+with one game canvas. Begin your story, enter the camp, open Season/Board/Journal,
+visit places, then try the proving ground and compose Water. Escape pauses;
+settings and save/load are canvas screens. Fullscreen is a menu/settings action.
+D18 supersedes historical A4/A5 acceptance: camp scenery is now procedural until
+the Covenant delivery. Judge hierarchy, typography, texture, magical identity
+and whether you want to interact. The first 1080p two-week automated route passed;
+controller/1440p final checks follow. See [screens note](waves/U1-screens.md).
