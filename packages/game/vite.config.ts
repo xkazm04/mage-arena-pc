@@ -78,9 +78,13 @@ function campServer(): Plugin {
       });
     },
     closeBundle() {
-      cpSync(assets, resolve(root, "../../dist/game/assets"), {
-        recursive: true,
-      });
+      cpSync(
+        resolve(assets, "accepted/covenant"),
+        resolve(root, "../../dist/game/assets/accepted/covenant"),
+        {
+          recursive: true,
+        },
+      );
       if (existsSync(uiKit))
         cpSync(uiKit, resolve(root, "../../dist/game/art/ui"), {
           recursive: true,

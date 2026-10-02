@@ -34,4 +34,12 @@ describe("Covenant delivery boundary", () => {
       ).toThrow();
     }
   });
+  it("rejects bad portrait crops and landmarks before creating a scene", () => {
+    const badCrop = structuredClone(manifest);
+    badCrop.portraits[0].rect = [1000, 620, 256, 320];
+    expect(() => validateArt(badCrop)).toThrow("Invalid portrait crop");
+    const badLandmark = structuredClone(manifest);
+    badLandmark.places[0].anchor = [Infinity, 0.5];
+    expect(() => validateArt(badLandmark)).toThrow("Invalid camp landmark");
+  });
 });

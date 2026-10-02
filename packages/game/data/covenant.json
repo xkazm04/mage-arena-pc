@@ -8,7 +8,13 @@
     "5": "moonlit",
     "6": "moonlit"
   },
-  "plate": { "size": [1920, 1080], "worldMarginM": 6 },
+  "plate": {
+    "size": [1920, 1080],
+    "worldMarginM": 6,
+    "groundCrop": [120, 240, 1680, 560],
+    "edgeBlendPx": 128,
+    "rimStoneGroups": 24
+  },
   "props": [
     {
       "id": "west-pylon",

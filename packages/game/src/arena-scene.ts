@@ -71,6 +71,9 @@ export class ArenaScene {
   palette(value: Palette) {
     void this.scenery.load(value);
   }
+  depthSnapshot() {
+    return this.figures.children.map((c) => ({ id: c.label, y: c.zIndex }));
+  }
   dispose() {
     this.library.dispose();
     this.scenery.dispose();
@@ -414,11 +417,12 @@ export class ArenaScene {
         const root = new Container(),
           sprite = new Sprite(),
           details = new Graphics();
+        root.label = `actor:${a.id}`;
         root.addChild(sprite, details);
         view = { root, sprite, details };
         this.actors.set(a.id, view);
+        this.figures.addChild(root);
       }
-      this.figures.addChild(view.root);
       view.root.zIndex = foot.y;
       view.root.position.set(q.x, q.y);
       view.root.visible =

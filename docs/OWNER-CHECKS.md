@@ -212,3 +212,33 @@ D18 supersedes historical A4/A5 acceptance: camp scenery is now procedural until
 the Covenant delivery. Judge hierarchy, typography, texture, magical identity
 and whether you want to interact. Both two-week automated resolution routes and
 emulated-controller checks now pass. See [screens note](waves/U1-screens.md).
+
+
+## U2 ? Covenant delivery integrated; owner quality and G1 pending
+
+Use the Windows production build/preview commands above, or `npm run camp`.
+The [U2 gallery](waves/U2-evidence/index.html) contains native 1080p/1440p game
+screens, every cast expression, all eight places, three time maps, three arena
+palettes and failure examples. Read the short [U2 report](waves/U2-report.md)
+for measured performance and the next art backlog. These new A2c/A4c/A5b
+integrations supersede the historical discarded-portrait/procedural-camp notes;
+discarded A2/A3 art remains excluded.
+
+Begin a Water story; inspect camp landmarks and slot changes, visit a place,
+read the Hollow Board, open Journal ? People of the camp, and try Parley.
+Judge portrait identity/expression, text size from sofa distance, focus visibility,
+card hierarchy and whether the painted world and UI belong together. Use mouse,
+keyboard and a physical gamepad. Try reduced motion and fullscreen.
+
+Enter the proving ground, cast and absorb, sprint toward the rim and reverse.
+Judge far-camera silhouette and threat readability, ground tiling, pylon/figure
+occlusion, ward direction and the HUD while moving. All combat figures still
+use procedural silhouettes: A3c lacks valid consistent directional animation.
+Floor/rim crops are provisional adaptations of flattened paintings; proper
+layered surfaces/props and animated characters are the next art round.
+
+Automated gates, both complete chapter routes, missing/corrupt-asset playability,
+exact saves and the 8,000-fight census pass. Both measured 100-projectile samples
+reach 60 fps; screenshots/emulated controls do not establish physical latency,
+sofa readability or visual acceptance. No owner feel result or G1 closure is
+claimed by U2.

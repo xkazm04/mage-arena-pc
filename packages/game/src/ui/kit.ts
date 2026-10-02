@@ -168,7 +168,7 @@ export class UiKit {
   async load(url = metrics.atlasUrl) {
     const pages = new Map<string, Texture>();
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, { signal: AbortSignal.timeout(8000) });
       if (!response.ok) {
         this.diagnostics.push(
           `UI kit unavailable (${response.status}); procedural kit active`,
@@ -181,7 +181,9 @@ export class UiKit {
       }
       const manifest = validateAtlas(await response.json());
       for (const page of manifest.pages) {
-        const r = await fetch(new URL(page.file, new URL(url, location.href)));
+        const r = await fetch(new URL(page.file, new URL(url, location.href)), {
+          signal: AbortSignal.timeout(8000),
+        });
         if (!r.ok) throw Error(`Missing UI page: ${page.id}`);
         const bytes = await r.arrayBuffer(),
           digest = Array.from(

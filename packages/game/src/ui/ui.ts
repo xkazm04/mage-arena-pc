@@ -7,7 +7,7 @@ import {
   type Sprite,
 } from "pixi.js";
 import { colours, UiKit } from "./kit.ts";
-import { installFonts, fontDiagnostics } from "./fonts.ts";
+import { installFonts, fontDiagnostics, fontTextureBytes } from "./fonts.ts";
 import { art } from "../art.ts";
 import { PadNavigation } from "./gamepad.ts";
 import {
@@ -38,6 +38,8 @@ export interface Button extends Rect {
   background: NineSliceSprite;
   selection: NineSliceSprite;
   focusArt: NineSliceSprite;
+  treatment: NineSliceSprite;
+  state?: "cooldown" | "borrowed" | "locked";
   activate: () => void;
   hold?: (held: boolean) => void;
   selected: boolean;
@@ -66,6 +68,7 @@ export class CanvasUI {
   private padHeld?: Button;
   private hadPad = false;
   private artCursor?: Sprite;
+  private cursorParts = new Map<string, Sprite>();
   private pointer = { x: 960, y: 540 };
   private hover = "";
   private hoverSince = 0;
@@ -97,6 +100,10 @@ export class CanvasUI {
     ]);
     await this.kit.load();
     this.artCursor = this.kit.cursor("cursor.pointer");
+    for (const id of ["pointer", "aim", "interact", "blocked"]) {
+      const s = this.kit.cursor(`cursor.${id}`);
+      if (s) this.cursorParts.set(id, s);
+    }
     host.replaceChildren(this.app.canvas);
     this.app.canvas.tabIndex = 0;
     this.app.canvas.setAttribute(
@@ -369,6 +376,15 @@ export class CanvasUI {
       root,
     );
     selection.visible = focusArt.visible = false;
+    const treatment = this.panel(
+      x,
+      y,
+      w,
+      h,
+      base === "slot" ? "slot.cooldown" : "button.normal",
+      root,
+    );
+    treatment.visible = false;
     const inset = options.icon ? 84 : 38;
     const title = this.text(
       label,
@@ -411,6 +427,7 @@ export class CanvasUI {
       background,
       selection,
       focusArt,
+      treatment,
       ring,
       activate,
       hold: options.hold,
@@ -559,6 +576,39 @@ export class CanvasUI {
     update(value);
     return update;
   }
+  progress(
+    kind: "cast" | "cooldown",
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+  ) {
+    const root = new Container();
+    this.content.addChild(root);
+    this.panel(x, y, w, h, "bar.track", root);
+    const fill =
+      this.kit.source !== "procedural"
+        ? this.kit.sprite(`bar.${kind}`)
+        : undefined;
+    const clip = new Graphics();
+    if (fill) {
+      fill.position.set(x + 4, y + 4);
+      fill.width = w - 8;
+      fill.height = h - 8;
+      root.addChild(fill);
+      fill.mask = clip;
+    }
+    root.addChild(clip);
+    root.visible = false;
+    return (value: number | null) => {
+      root.visible = value !== null;
+      clip.clear();
+      if (value !== null)
+        clip
+          .rect(x + 4, y + 4, (w - 8) * Math.max(0, Math.min(1, value)), h - 8)
+          .fill(kind === "cast" ? colours.water : colours.gold);
+    };
+  }
   notice(message: string) {
     this.toast?.destroy({ children: true });
     const c = new Container();
@@ -662,6 +712,9 @@ export class CanvasUI {
         b.h,
       );
       b.selection.visible = b.selected && !b.disabled;
+      b.treatment.visible = base === "slot" && !!b.state;
+      if (b.treatment.visible)
+        this.kit.skin(b.treatment, `slot.${b.state}`, b.w, b.h);
       b.focusArt.visible =
         b.id === this.focus && !b.disabled && base !== "card";
       if (b.disabled)
@@ -746,11 +799,10 @@ export class CanvasUI {
           : this.screen === "arena"
             ? "aim"
             : "pointer";
-      const part = this.kit.cursor(`cursor.${id}`);
+      const part = this.cursorParts.get(id);
       if (part) {
         this.artCursor.texture = part.texture;
         this.artCursor.anchor.copyFrom(part.anchor);
-        part.destroy();
       }
       this.artCursor.visible = this.modality === "mouse";
       this.artCursor.position.set(this.pointer.x, this.pointer.y);
@@ -828,6 +880,7 @@ export class CanvasUI {
       art: art.snapshot(),
       uiTextureBytes: this.kit.rgbaBytes,
       fontDiagnostics,
+      fontTextureBytes,
       layout: this.layout,
       texts,
       overflow,
@@ -847,6 +900,7 @@ export class CanvasUI {
     cancelAnimationFrame(this.raf);
     this.release();
     this.lifetime.abort();
+    for (const s of this.cursorParts.values()) s.destroy();
     this.app.destroy(true, { children: true });
   }
 }

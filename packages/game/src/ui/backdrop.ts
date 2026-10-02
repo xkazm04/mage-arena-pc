@@ -242,7 +242,7 @@ export function backdrop(ui: CanvasUI, kind = "gate") {
   shade.rect(0, 0, 1920, 192).fill({ color: colours.ink, alpha: 0.72 });
   shade.rect(0, 928, 1920, 152).fill({ color: colours.ink, alpha: 0.75 });
   if (!kind.startsWith("camp-"))
-    shade.rect(0, 192, 1920, 736).fill({ color: colours.ink, alpha: 0.32 });
+    shade.rect(0, 192, 1920, 736).fill({ color: colours.ink, alpha: 0.52 });
   ui.content.addChild(shade);
   return s;
 }

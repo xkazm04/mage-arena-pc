@@ -17,6 +17,7 @@ import { CanvasUI } from "./ui/ui.ts";
 import { backdrop } from "./ui/backdrop.ts";
 import { picture, portrait, storyFor } from "./ui/artwork.ts";
 import { art } from "./art.ts";
+import castData from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
 import { colours } from "./ui/kit.ts";
 
 type Moment = SeasonView["parley"]["moments"][number];
@@ -48,6 +49,92 @@ export class GameShell {
   async init(host: HTMLElement) {
     await this.ui.init(host);
     await art.preload(["place.door", "portrait.cassia.neutral"]);
+    if (new URLSearchParams(location.search).has("harness"))
+      Object.assign(window, {
+        __artReview: {
+          portrait: (id: string) => {
+            if (!art.manifest?.characters.some((c) => c.id === id))
+              throw Error("Unknown portrait");
+            this.scene("art-review", id, "PORTRAIT DELIVERY FIXTURE");
+            [
+              "neutral",
+              "calm",
+              "proud",
+              "afraid",
+              "angry",
+              "scheming",
+              "grieving",
+            ].forEach((m, i) => {
+              portrait(this.ui, id, m, 106 + i * 244, 330, 220, 300);
+              this.ui.text(m, 106 + i * 244, 660, 28, colours.text, 220);
+            });
+            this.back(() => this.menu());
+            this.ui.end();
+          },
+          place: (id: string) => {
+            if (!art.manifest?.places.some((p) => p.id === id))
+              throw Error("Unknown place");
+            this.scene(
+              "art-review",
+              friendly(id),
+              "PLACE BACKDROP FIXTURE",
+              `place-${id}`,
+            );
+            this.back(() => this.menu());
+            this.ui.end();
+          },
+          slot: (slot: string) => {
+            if (!["day", "dusk", "night"].includes(slot))
+              throw Error("Unknown slot");
+            this.scene(
+              "art-review",
+              "Castra Clausa",
+              `MAP DELIVERY FIXTURE / ${slot.toUpperCase()}`,
+              `camp-${slot}`,
+            );
+            this.back(() => this.menu());
+            this.ui.end();
+          },
+          stories: () => {
+            this.scene(
+              "art-review",
+              "The Hollow Board",
+              "ILLUSTRATION FIXTURE — NO GENERATED EVENTS",
+            );
+            [
+              "shared-loaf",
+              "empty-bowl",
+              "watch-rota",
+              "ward-seam",
+              "quiet-bargain",
+              "before-grille",
+            ].forEach((id, i) => {
+              const x = 106 + (i % 3) * 578,
+                y = 270 + Math.floor(i / 3) * 308;
+              this.ui.panel(x, y, 552, 284, "card.normal");
+              picture(this.ui, `story.${id}`, x + 50, y + 40, 452, 178);
+              this.ui.text(
+                friendly(id.replaceAll("-", " ")),
+                x + 50,
+                y + 225,
+                24,
+                colours.text,
+                452,
+              );
+            });
+            this.back(() => this.menu());
+            this.ui.end();
+          },
+          preload: async () => {
+            await art.preload(
+              Object.keys(art.manifest?.entries ?? {}).filter((k) =>
+                k.startsWith("portrait-page."),
+              ),
+            );
+            return art.snapshot();
+          },
+        },
+      });
     this.view = await request<SeasonView>("session");
     this.ui.onFrame = (dt) => this.arena?.frame(dt);
     this.ui.onGamepad = (pad) => this.arena?.input.updateGamepad(pad);
@@ -720,7 +807,7 @@ export class GameShell {
     });
     const card = cards[this.cardSelected];
     u.panel(900, 307, 924, 554, "panel.story");
-    const subject = art.manifest?.characters.find(
+    const subject = castData.characters.find(
       (c) =>
         card?.text.includes(c.name) ||
         card?.text.includes(c.name.split(" ")[0]!),
@@ -805,7 +892,7 @@ export class GameShell {
   private castJournal() {
     this.campHeader("cast", "Those beneath the collar");
     const u = this.ui,
-      cast = art.manifest?.characters ?? [];
+      cast = castData.characters;
     u.text("FACES IN YOUR JOURNAL", 96, 300, 24, colours.gold);
     cast.slice(this.castPage * 8, this.castPage * 8 + 8).forEach((c, i) => {
       const x = 96 + (i % 4) * 440,
@@ -855,7 +942,7 @@ export class GameShell {
     u.end();
   }
   private castDetails(id: string) {
-    const c = art.manifest?.characters.find((c) => c.id === id);
+    const c = castData.characters.find((c) => c.id === id);
     if (!c) return;
     this.scene("cast-detail", c.name, "YOUR JOURNAL");
     portrait(this.ui, c.id, "neutral", 140, 268, 476, 596);
@@ -875,15 +962,7 @@ export class GameShell {
       colours.muted,
       990,
     );
-    this.ui.text(
-      known[0]?.text ??
-        "No private Knowing recorded. Listen, visit, and let the camp reveal its people.",
-      774,
-      499,
-      34,
-      colours.text,
-      990,
-    );
+    this.ui.text(known[0]?.text ?? c.bio, 774, 499, 34, colours.text, 990);
     this.back(() => this.castJournal(), "People");
     this.footer();
     this.ui.end();
@@ -1028,7 +1107,12 @@ export class GameShell {
   private parley(moment: Moment) {
     this.currentMoment = moment;
     const u = this.ui;
-    this.scene("parley", `Speak with ${moment.name}`, "A KNOWING MOMENT");
+    this.scene(
+      "parley",
+      `Speak with ${moment.name}`,
+      "A KNOWING MOMENT",
+      `place-${this.view.location}`,
+    );
     u.panel(96, 226, 790, 658);
     portrait(u, moment.target, "neutral", 136, 252, 140, 175);
     u.text("WHAT YOU KNOW", 308, 255, 26, colours.gold);
@@ -1216,7 +1300,12 @@ export class GameShell {
         revision: this.view.revision,
       });
       const r = this.view.parley.last!;
-      this.scene("parley-result", `${r.name} answers`, "A MOMENT BETWEEN YOU");
+      this.scene(
+        "parley-result",
+        `${r.name} answers`,
+        "A MOMENT BETWEEN YOU",
+        `place-${this.view.location}`,
+      );
       this.ui.panel(300, 276, 1320, 574, "panel.story");
       portrait(
         this.ui,
@@ -1383,6 +1472,7 @@ export class GameShell {
         "composition",
         "Compose your Water",
         "BEFORE THE COLLAR OPENS",
+        "arena",
       );
       u.text(
         "Rain Needle is always yours. Bring three lines; each grows as the collar unlocks.",
@@ -1541,6 +1631,7 @@ export class GameShell {
       "training",
       "The proving ground",
       "PRACTICE  /  NO SEASON STAKES",
+      "arena",
     );
     const u = this.ui;
     const entries = [
@@ -2014,6 +2105,10 @@ export class GameShell {
     this.ui.end();
   }
   private redraw(screen = this.ui.screen) {
+    if (screen === "cast") {
+      this.castJournal();
+      return;
+    }
     if (screen === "visit") this.visit();
     else if (screen === "calendar") this.calendar();
     else if (screen === "board" || screen === "journal") this.cards(screen);

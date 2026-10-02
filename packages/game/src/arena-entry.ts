@@ -118,6 +118,25 @@ export class ArenaGame {
                 if (["verdigris", "rust-sand", "moonlit"].includes(palette))
                   this.scene.palette(palette);
               },
+              propFixture: (front: boolean) => {
+                const prop = this.scene.scenery.props[1];
+                if (!prop) throw Error("Prop art not loaded");
+                this.pause(true);
+                this.training.state.actors = [this.training.player];
+                this.training.state.projectiles = [];
+                this.training.state.telegraphs = [];
+                this.training.player.pos = {
+                  x: prop.foot.x,
+                  y: prop.foot.y + (front ? 0.8 : -0.8),
+                };
+                this.training.player.previousPos = {
+                  ...this.training.player.pos,
+                };
+                this.camera = makeCamera(this.camera, {
+                  x: prop.foot.x,
+                  y: prop.foot.y + 8,
+                });
+              },
               reset: (kind: TrainingKind = "magic") => this.restart(kind),
               setBot: (bot?: BotKind) => {
                 this.bot = bot;
@@ -366,13 +385,14 @@ export class ArenaGame {
     const labels: BitmapText[] = [],
       detail: BitmapText[] = [],
       masks: Graphics[] = [],
-      slotFrames: Graphics[] = [];
+      slotFrames: Graphics[] = [],
+      cooldownBars: ((value: number | null) => void)[] = [];
     for (let i = 0; i < 4; i++) {
       const x = 524 + i * 260,
         y = 874;
       u.button(
         `slot-${i}`,
-        `${i + 1}`,
+        "",
         x,
         y,
         244,
@@ -389,6 +409,8 @@ export class ArenaGame {
         24,
       );
       labels.push(u.text("", x + 80, y + 20, 28, colours.text, 150));
+      u.text(String(i + 1), x + 31, y + 68, 24, colours.gold, 34);
+      cooldownBars.push(u.progress("cooldown", x + 76, y + 72, 146, 20));
       detail.push(u.text("", x + 20, y + 103, 24, colours.muted, 208));
       const mask = new Graphics();
       u.content.addChild(mask);
@@ -442,12 +464,26 @@ export class ArenaGame {
       colours.text,
       1000,
     );
+    const castBar = u.progress("cast", 524, 785, 1020, 22);
+    const castLabel = u.text("", 524, 750, 24, colours.water, 1020);
     this.hudUpdate = () => {
       if (u.screen !== "arena") return;
       const { state, player } = this.training;
       hp(player.hp);
       mana(player.mana);
       stamina(player.stamina);
+      const pending = player.pending;
+      castBar(
+        pending
+          ? (state.tick - pending.startTick) /
+              Math.max(1, pending.releaseTick - pending.startTick)
+          : null,
+      );
+      castLabel.text = pending
+        ? pending.kind === "staff"
+          ? "Staff strike"
+          : "Shaping a spell"
+        : "";
       heading.text =
         this.mode === "tiro"
           ? `${state.actors.filter((a) => a.team !== player.team && !a.down).length} opponents remain`
@@ -465,6 +501,10 @@ export class ArenaGame {
           0,
           seconds((player.water.cooldowns[s.line] ?? 0) - state.tick),
         );
+        slot.state = remaining > 0 ? "cooldown" : undefined;
+        cooldownBars[i]!(
+          remaining > 0 ? 1 - Math.min(1, remaining / s.cooldownS) : null,
+        );
         detail[i]!.text =
           remaining > 0
             ? `${remaining.toFixed(1)}s recovering`
@@ -473,7 +513,7 @@ export class ArenaGame {
               : `${s.mana} mana  /  Tier ${player.tier}`;
         const x = 524 + i * 260;
         slotFrames[i]!.clear();
-        if (this.input.slot === i)
+        if (this.input.slot === i && u.kit.source === "procedural")
           slotFrames[i]!.rect(x + 5, 879, 234, 142).stroke({
             color: colours.water,
             width: 3,
@@ -673,8 +713,10 @@ export class ArenaGame {
       cameraMetrics: cameraMetrics(this.camera),
       visibleProjectiles: this.scene.visibleProjectiles,
       palette: this.scene.scenery.palette,
+      derivedTextureBytes: this.scene.scenery.derivedBytes,
       figureSource:
         "Covenant procedural; A3c motion/facing continuity gates pending",
+      depthOrder: this.scene.depthSnapshot(),
     });
   }
   dispose() {

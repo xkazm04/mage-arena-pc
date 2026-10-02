@@ -23,8 +23,10 @@ export function validateArt(value: unknown): ArtManifest {
   if (
     m?.schema !== 1 ||
     !m.entries ||
+    Array.isArray(m.entries) ||
     !Array.isArray(m.places) ||
-    !Array.isArray(m.portraits)
+    !Array.isArray(m.portraits) ||
+    !Array.isArray(m.characters)
   )
     throw Error("Unsupported Covenant delivery");
   for (const e of Object.values(m.entries)) {
@@ -34,6 +36,49 @@ export function validateArt(value: unknown): ArtManifest {
       !/^[a-f0-9]{64}$/.test(e.sha256)
     )
       throw Error("Invalid Covenant entry");
+    if (
+      e.size &&
+      (e.size.length !== 2 ||
+        !e.size.every((n) => Number.isInteger(n) && n > 0 && n <= 8192))
+    )
+      throw Error("Invalid Covenant dimensions");
+  }
+  for (const p of m.places)
+    if (
+      typeof p.id !== "string" ||
+      !Array.isArray(p.anchor) ||
+      p.anchor.length !== 2 ||
+      !p.anchor.every((n) => Number.isFinite(n) && n >= 0 && n <= 1)
+    )
+      throw Error("Invalid camp landmark");
+  const identities = new Set(m.characters.map((c) => c.id));
+  if (
+    identities.size !== m.characters.length ||
+    m.characters.some(
+      (c) =>
+        typeof c.id !== "string" ||
+        typeof c.name !== "string" ||
+        typeof c.school !== "string",
+    )
+  )
+    throw Error("Invalid cast");
+  for (const p of m.portraits) {
+    const size = m.entries[`portrait-page.${p.atlas}`]?.size;
+    if (
+      !identities.has(p.character) ||
+      p.id !== `${p.character}.${p.mood}` ||
+      !size ||
+      !Array.isArray(p.rect) ||
+      p.rect.length !== 4 ||
+      !p.rect.every(Number.isInteger) ||
+      p.rect[0] < 0 ||
+      p.rect[1] < 0 ||
+      p.rect[2] <= 0 ||
+      p.rect[3] <= 0 ||
+      p.rect[0] + p.rect[2] > size[0]! ||
+      p.rect[1] + p.rect[3] > size[1]!
+    )
+      throw Error("Invalid portrait crop");
   }
   return m;
 }
@@ -42,13 +87,16 @@ export class CovenantArt {
   manifest?: ArtManifest;
   readonly diagnostics: string[] = [];
   private textures = new Map<string, Texture>();
+  private portraitFrames = new Map<string, Texture>();
   private pending = new Map<string, Promise<Texture | undefined>>();
   private failed = new Set<string>();
   private bytes = 0;
   readonly base = "/assets/accepted/covenant/";
   async init() {
     try {
-      const r = await fetch(this.base + "manifest.json");
+      const r = await fetch(this.base + "manifest.json", {
+        signal: AbortSignal.timeout(8000),
+      });
       if (!r.ok) throw Error(`Covenant manifest ${r.status}`);
       this.manifest = validateArt(await r.json());
     } catch (e) {
@@ -68,7 +116,9 @@ export class CovenantArt {
     if (pending) return pending;
     const task = (async () => {
       try {
-        const r = await fetch(this.base + entry.file);
+        const r = await fetch(this.base + entry.file, {
+          signal: AbortSignal.timeout(8000),
+        });
         if (!r.ok) throw Error(`Asset ${key}: ${r.status}`);
         const bytes = await r.arrayBuffer();
         const digest = Array.from(
@@ -111,11 +161,16 @@ export class CovenantArt {
       this.manifest?.portraits.find((p) => p.id === `${id}.${mood}`) ??
       this.manifest?.portraits.find((p) => p.id === `${id}.neutral`);
     const page = p && this.get(`portrait-page.${p.atlas}`);
-    return page && p
-      ? new Sprite(
-          new Texture({ source: page.source, frame: new Rectangle(...p.rect) }),
-        )
-      : undefined;
+    if (!page || !p) return;
+    let frame = this.portraitFrames.get(p.id);
+    if (!frame) {
+      frame = new Texture({
+        source: page.source,
+        frame: new Rectangle(...p.rect),
+      });
+      this.portraitFrames.set(p.id, frame);
+    }
+    return new Sprite(frame);
   }
   snapshot() {
     return {

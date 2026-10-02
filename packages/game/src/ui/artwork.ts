@@ -18,6 +18,12 @@ export function picture(
   root.position.set(x, y);
   parent.addChild(root);
   const under = new Graphics().rect(0, 0, w, h).fill(colours.ink);
+  under
+    .poly([w / 2, h * 0.22, w * 0.65, h / 2, w / 2, h * 0.78, w * 0.35, h / 2])
+    .stroke({ color: colours.edge, width: 2 });
+  under
+    .circle(w / 2, h / 2, Math.min(w, h) * 0.1)
+    .stroke({ color: colours.water, width: 1 });
   root.addChild(under);
   const s = new Sprite(Texture.EMPTY);
   root.addChild(s);

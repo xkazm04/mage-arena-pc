@@ -88,6 +88,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Game | U1-framework | Canvas primitives, bitmap fonts, art kit loader | U1-camera | gate PASS: 150 tests; art contract v1 aligned | ac95883 | 2026-10-02 |
 | Game | U1-screens | Every production screen in one canvas | U1-framework | gate PASS; 29 captures, two-week 1080p route PASS | f99c302 | 2026-10-02 |
 | Game | U1-TV | TV layout, keyboard/mouse/gamepad, both-resolution evidence | U1-screens | gate PASS: 153 tests + 10 reference; 64 captures, atlas/fullscreen, replay and census PASS; G1 open | commit containing U1-report.md | 2026-10-02 |
+| Game | U2 | Covenant art wiring: assets, UI, arena, camp, polish | U1, A7/A5b/A4c/A2c, partial A3c | implemented; gate 156 + 10 PASS, both-resolution routes/fallbacks/replay/census PASS; animated figures and layered arena art pending; owner quality/G1 open | five commits ending with commit containing U2-report.md | 2026-10-03 |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
 | Core | W10 | Deaths and the Vigil: Plot objects, crackdown, executions, death census | G1 | not planned | | |
@@ -418,3 +419,39 @@ simulated season/census, measured tests/screens; physical controller/latency,
 sofa readability, camera comfort and G1 are not measured/felt. No new 30-minute
 soak. Next: owner U1 play and contract-conforming A5b art integration. No art
 worktree writes, pushes or model/provider calls.
+
+
+### GAME U2 art wiring ? 2026-10-03
+
+Read the full plan, owner checks, U1 report, game code, session-5 handoff, UI
+contract, Covenant board and deliveries. One design note: [U2-art-wiring.md](waves/U2-art-wiring.md).
+Five sub-waves: real merge/assets `9c34091` (art `d619258`, integration plan kept),
+UI `9e6ea1f`, arena `6ffee76`, camp `1c8a3e6`, polish in the commit containing
+[U2-report.md](waves/U2-report.md). Art worktree untouched. Removed discarded
+A3 figure/review files brought by the merge; no old A2/A3 or art/raw runtime use.
+
+Authored: 246 hashed assets/sidecars; A5b 90-region atlas and Cinzel/Source Sans 3;
+three palette grounds with sorted prop crops; A3c painted effects plus exact
+code-owned telegraphs/ward; three Covenant camp time maps, eight places, Board
+illustrations and all sixteen Moonchalk cast identities / 112 expressions.
+All twelve arena figures remain procedural under individual documented gates;
+proper animation/facings and layered tileable arena art are the next art inputs.
+
+Measured: `npm run gate` PASS (156 TypeScript + ten reference tests, zero
+contradictions). `npm run smoke:u2` PASS: both complete chapter routes, 80 capture
+events / 76 distinct PNGs, safe bounds/focus, sixteen mouse aim hits, emulated
+controller, camp/combat save-load. `npx tsx packages/tools/src/u2-art-browser.ts`
+checks all delivery variants and six injected failures through camp and combat.
+100 visible moving projectiles / 360 frames: **60.00 fps** at both resolutions;
+CPU p95 **2.0 / 2.2 ms**, frame p95 **16.7 / 16.8 ms**, decoded texture estimates
+**193.0 / 199.1 MiB** (not driver VRAM). Final production rerun includes the
+fixed actor/prop sort regression; failed attempts remain archived.
+
+Simulated: `npx tsx packages/tools/src/u2-replay.ts` preserves U1's exact
+1,296,151-byte envelope/hash. Fresh `npm --prefix packages/core run report:w4 --
+--evidence U2-evidence --tag census`: 2,000 fights per wave PASS, U1-identical
+digests and medians 38.233/44.633/45.483/58.000 s. No core, Director, geometry,
+balance or save-schema changes. Report, scripts and native screenshot gallery
+are in [U2 evidence](waves/U2-evidence/index.html). Sofa readability, physical
+input feel and visual acceptance remain for the owner; G1 stays open. No new
+long soak, provider calls or push.
