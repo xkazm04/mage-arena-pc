@@ -26,6 +26,7 @@ function scheduleAttack(state: ArenaState, a: Actor, target: Actor, spec: EnemyS
   state.telegraphs.push(t); brain.attackIndex++;
   const cooldown = attack.cooldownS ?? (spec.id === 'mire_maw' ? runtime.games.mawArtilleryCooldownS : spec.id === 'thornback' ? runtime.games.chargeCooldownS : attack.windupS + (attack.recoveryS ?? runtime.games.defaultRecoveryS));
   brain.readyTick = state.tick + 1 + ticks(cooldown);
+  if (spec.id === 'slinger') brain.recoveryUntil = state.tick + 1 + ticks(attack.windupS + runtime.games.slingerReloadS);
   if (spec.id === 'conscript') { brain.backoffUntil = brain.readyTick + ticks(extract(spec.behaviour, /back off ([\d.]+) s/)); brain.readyTick = brain.backoffUntil; }
 }
 export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
@@ -41,22 +42,29 @@ export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
     if (state.tick < brain.stunnedUntil || state.tick < a.water.encasedUntil) continue;
     const windup = state.telegraphs.find(t => t.ownerId === a.id && !t.survivesOwner);
     if (windup) { input.aim = { ...windup.target }; continue; }
+    if (state.tick < (brain.recoveryUntil ?? 0)) continue;
     if (spec.id === 'conscript' && state.tick < brain.backoffUntil - ticks(extract(spec.behaviour, /back off ([\d.]+) s/))) continue;
     const delta = sub(target.pos, a.pos), d = distance(target.pos, a.pos), toward = unit(delta);
     let desired = { ...toward };
     const attack = spec.attacks[brain.attackIndex % spec.attacks.length]!;
     let attackRange = attack.rangeM ?? runtime.games.defaultMeleeRangeM;
     if (attack.projectileMps) attackRange = runtime.games.rangedRangeM;
+    // A kiter must reach its authored engagement band before planting to shoot.
+    // Projectile travel range remains unchanged in scheduleAttack.
+    if (spec.keepDistanceM) attackRange = spec.keepDistanceM[1]!;
     if (attack.id === 'net_cast') attackRange = runtime.games.netRangeM;
     if (attack.id === 'tongue_pull') attackRange = runtime.games.tongueRangeM;
     if (attack.id === 'thorn_charge') attackRange = extract(attack.telegraph, /x ([\d.]+) m/);
     if (spec.keepDistanceM) {
-      desired = d < spec.keepDistanceM[0]! ? { x: -toward.x, y: -toward.y } : d > spec.keepDistanceM[1]! ? toward : { x: -toward.y, y: toward.x };
+      desired = d < spec.keepDistanceM[0]! ? { x: -toward.x, y: -toward.y } : d > spec.keepDistanceM[1]! ? toward : { x: 0, y: 0 };
     } else if (spec.id === 'mire_maw') desired = d <= attackRange ? { x: 0, y: 0 } : toward;
     else if (spec.id === 'netter') desired = d < runtime.games.netRangeM / 2 ? { x: -toward.x, y: -toward.y } : d > runtime.games.netRangeM ? toward : { x: -toward.y, y: toward.x };
     else if (spec.id === 'conscript' && state.tick < brain.backoffUntil) desired = d < runtime.games.conscriptBackoffM ? { x: -toward.x, y: -toward.y } : { x: 0, y: 0 };
     else if (d < attackRange * 0.8) desired = { x: 0, y: 0 };
-    const engaged = spec.id !== 'cinder_hound' || hounds.indexOf(a) < extract(spec.behaviour, /uses (\d+) engagement slots/);
+    // Engagement belongs to the nearest available pack members, not spawn order.
+    // Distant first-spawned hounds must not reserve both slots while a close hound circles.
+    const pack = [...hounds].sort((x, y) => distance(x.pos, target.pos) - distance(y.pos, target.pos) || x.id - y.id);
+    const engaged = spec.id !== 'cinder_hound' || pack.indexOf(a) < extract(spec.behaviour, /uses (\d+) engagement slots/);
     if (!engaged) desired = d > runtime.games.houndOrbitM ? toward : { x: -toward.y, y: toward.x };
     if (spec.id === 'hush_moth') {
       desired = d > runtime.games.contactRangeM ? toward : { x: 0, y: 0 };
@@ -71,6 +79,9 @@ export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
         if (gap > 0 && gap < runtime.games.separationM) { const away = unit(sub(a.pos, other.pos)); desired.x += away.x * runtime.games.separationWeight; desired.y += away.y * runtime.games.separationWeight; }
       }
       input.move = unit(desired);
+      // Close open-ground gaps using the same stamina-costed sprint as any actor.
+      // Backoff, attack windup and recovery retain the authored walk/stop rules.
+      input.sprint = spec.id === 'conscript' && state.tick >= brain.backoffUntil && d > attackRange;
     }
   }
   return inputs;

@@ -33,6 +33,10 @@
   "games": {
     "_about": "W4 authored values absent from baseline. Tiro spawns, enemy stats/attacks, competence and duration targets stay baseline-owned.",
     "playerSpawn": { "x": 8, "y": 10 }, "enemySpawn": { "x": 24, "y": 10 },
+    "multiEnemyApproachReductionM": 8,
+    "creatureOpeningOrder": [1, 2, 3, 0],
+    "soldierOpeningOrder": [2, 3, 4, 5, 0, 1],
+    "slingerReloadS": 0.8,
     "spawnJitterM": 0.8, "spawnMarginM": 2,
     "defaultMeleeRangeM": 1.2, "meleeArcDeg": 80, "defaultRecoveryS": 1.1,
     "rangedRangeM": 24, "netRangeM": 10, "tongueRangeM": 10, "tongueWidthM": 0.7,

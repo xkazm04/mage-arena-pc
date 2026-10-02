@@ -1,4 +1,4 @@
-import { openingPosition } from './geometry.ts';
+import { openingPosition, openingSeparationM } from './geometry.ts';
 import { arenaTiers } from './data.generated.ts';
 import { newWaterState, presets, validateComposition } from './catalog.ts';
 import { addEnemy, enemyInputs, queueDeathEffects } from './enemies.ts';
@@ -25,8 +25,11 @@ function spawnWave(g: Games): void {
   for (const spawn of wave.spawns) {
     const count = 'count' in spawn ? spawn.count : 1;
     for (let i = 0; i < count; i++) {
-      const pos = openingPosition(index, total, { x: (random(g.state, `wave ${g.wave} spawn x`) * 2 - 1) * runtime.games.spawnJitterM,
-        y: (random(g.state, `wave ${g.wave} spawn y`) * 2 - 1) * runtime.games.spawnJitterM });
+      const formationIndex = wave.kind === 'creatures' ? runtime.games.creatureOpeningOrder[index]! : wave.kind === 'soldiers' ? runtime.games.soldierOpeningOrder[index]! : index;
+      const pos = openingPosition(formationIndex, total, { x: (random(g.state, `wave ${g.wave} spawn x`) * 2 - 1) * runtime.games.spawnJitterM,
+        y: (random(g.state, `wave ${g.wave} spawn y`) * 2 - 1) * runtime.games.spawnJitterM }, wave.kind === 'soldiers'
+          ? runtime.games.enemySpawn.x - runtime.games.playerSpawn.x - openingSeparationM - runtime.games.spawnJitterM
+          : total > 1 ? runtime.games.multiEnemyApproachReductionM : 0);
       let actor: Actor;
       if ('enemy' in spawn) actor = addEnemy(g.state, spawn.enemy, pos);
       else {

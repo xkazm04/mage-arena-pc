@@ -19,8 +19,8 @@ export function constrainToArena(p: Vec, inset = 0): Vec {
 }
 export const openingSeparationM = scaleContract.minimum_combatant_centre_separation_metres;
 /** A compact sparse formation leaves room between bodies without a long off-screen queue. */
-export function openingPosition(index: number, count: number, jitter: Vec = { x: 0, y: 0 }): Vec {
+export function openingPosition(index: number, count: number, jitter: Vec = { x: 0, y: 0 }, approachReductionM = 0): Vec {
   const rows = Math.ceil(Math.sqrt(count)), spacing = openingSeparationM + 2 * runtime.games.spawnJitterM;
-  return constrainToArena({ x: runtime.games.enemySpawn.x + Math.floor(index / rows) * spacing + jitter.x,
+  return constrainToArena({ x: runtime.games.enemySpawn.x - approachReductionM + Math.floor(index / rows) * spacing + jitter.x,
     y: runtime.games.enemySpawn.y + (index % rows - (rows - 1) / 2) * spacing + jitter.y }, runtime.games.spawnMarginM);
 }

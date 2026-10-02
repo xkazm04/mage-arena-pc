@@ -60,3 +60,65 @@ external input policy. Browser first Games loses in the final (three cleared),
 second deliberately idles to missio; neither is relabelled a full win. Zero page
 errors. See W7-evidence/season-browser.json and screens. Five live subscription
 calls, all valid provider responses, ledger cap remains 20; no bulk model calls.
+
+## Pacing candidate (before measurement)
+
+The fresh merged 200-seed baseline confirms 46.2167 / 45.4 / 45.6 / 58.45 s
+medians, first two failing. Move only multi-enemy formation anchors eight metres
+toward the player, keeping the same grid, jitter and >=6 m separation. Single
+mage openings remain unchanged. Hounds now assign their two engagement slots to
+the nearest live pack members (stable ID tie-break), fixing distant first-spawned
+hounds reserving attacks while close hounds circle. Speeds, HP, damage, resource
+rules, reference policy, target bands and the accepted camera/oval are unchanged.
+Retain this candidate's raw reports whether it passes or fails.
+
+First candidate remains FAIL: 44.0167 / 45.2 / 45.6 / 58.45 s (200 seeds).
+Trace inspection at seed 40000 shows slingers untouched until the conscripts die,
+then prolonged lateral kiting; the maw remains 16.9 m away after the pack dies.
+Second candidate gives slingers an explicit 0.8 s planted reload after release
+(the 2.2 s cooldown and 0.5 s warning are unchanged) and moves the maw into the
+front formation cell, permuting the same four separated spawn cells. No hidden
+combat stat changes. The nearest-pack correction and closer anchor remain.
+
+Second candidate: soldiers 44.6167 s FAIL, creatures 44.3 s PASS (200 seeds).
+Reload alone worsened soldiers because they still planted at the projectile's
+24 m travel range, long before their authored 8–10 m engagement band. Third
+candidate schedules kiter attacks only once within that band; approach runs at
+the existing 3.6 m/s. Projectile range, attack warning and cooldown are unchanged.
+
+Third candidate still FAILS soldiers at 44.7167 s; creatures remain 44.3 s.
+Fourth candidate changes soldier opening assignment: the two slingers take the
+front flanks, with one conscript in front centre and three advancing behind.
+This makes the priority targets reachable while melee closes, instead of placing
+both behind four bodies. The six cells and their separation remain unchanged.
+
+Fourth candidate soldiers 42.1 s FAIL. Fifth candidate removes unbounded lateral
+orbiting inside the slinger's firing band: it plants there, retreats if crowded,
+and closes if out of range. Its authored role remains a kiter, with exactly the
+same band/speed/attack. This is a readable firing-position policy rather than a
+perpetually circling moving target on a wall-less court.
+
+Fifth candidate soldiers 41.9333 s FAIL (200 seeds). Sixth places one slinger
+in front centre as well as one front flank; the fourth conscript takes the other
+flank. The player can engage a priority ranged target immediately while the
+melee formation closes. This changes assignment only, never cell spacing.
+
+Sixth candidate's full 2,000/wave census FAILS narrowly: 40.65 / 44.6333 /
+45.4833 / 58 s. Preserved as candidate-six-census*.json, no discarded seeds.
+Seventh moves the soldier front anchor to the closest legal opening: player X
+plus the contract separation plus maximum X jitter (14.8 m here). Worst-case
+centre separation stays >=6 m. Creature and mage geometry stays as measured.
+
+Seventh probe soldiers 41 s FAIL; the last metre is not the underlying fix.
+Eighth lets conscripts spend their real stamina on the existing shared sprint
+while approaching attack range. They still walk during backoff and stop during
+windup/recovery; sprint drains and regeneration obey the unchanged kernel. This
+closes the walk-speed gap on the enlarged court without granting free speed,
+resources, damage or health. The roster behavior text now states this explicitly.
+Final pacing gate: `integrated-census.json` records 2,000 fights per wave,
+medians **38.233 / 44.633 / 45.483 / 58.000 s**, all four original bands passed.
+Zero timeouts, invalid states, or replay failures. Creature median remains close
+to its upper limit; the full seed sample is retained, without dropping losses.
+Root gate after the sprint change: 137 TypeScript tests and 10 reference tests
+passed; no design contradictions. Numeric health and damage data, reference
+controller, camera contract and duration bands are unchanged.

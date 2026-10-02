@@ -8,7 +8,7 @@ export interface WaterState { composition: Composition; flow: number; lastLine: 
   crests: number; healing: number; controlTicks: number; decoy?: { pos: Vec; until: number } }
 export interface InputFrame { move: Vec; aim: Vec; slot: number; cast: boolean; absorb: boolean; roll: boolean; sprint: boolean }
 export interface Hit { ownerId: number; activationId: number; damage: number; family: Family; tier: number; source: Vec; bolt?: boolean; reaction?: boolean; delivery?: 'projectile' | 'area' | 'melee' }
-export interface EnemyBrain { id: string; readyTick: number; backoffUntil: number; stunnedUntil: number; attackIndex: number; deathQueued: boolean }
+export interface EnemyBrain { id: string; readyTick: number; backoffUntil: number; stunnedUntil: number; attackIndex: number; deathQueued: boolean; recoveryUntil?: number }
 export interface MageBrain { competence: number; nextDecisionTick: number; input: InputFrame; observed: { id: number; firstSeenTick: number; reacted: boolean }[]; defendUntil: number; plannedRaiseTick: number; plannedReleaseTick: number; targetPoint: Vec; decisionTicks: number[]; reactionAges: number[] }
 export interface PendingCast { kind: 'bolt' | 'staff' | 'spell'; releaseTick: number; startTick: number; aim: Vec; activationId: number; spellId?: string; damageMult?: number; targetId?: number }
 export interface Actor {
