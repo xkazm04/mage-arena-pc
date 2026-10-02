@@ -83,7 +83,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | implemented; compact-court gate passed; W4b reopened soldier/creature pacing | 4b21c57 | 2026-10-02 |
 | Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | engineering PASS: Pixi camp, accepted art loader, deterministic slots/listening, 1080p/1440p browser gates; owner feel pending | d18ef80 | 2026-10-02 |
 | Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | engineering PASS for bounded effects: 100-case suite, offline cards, typed browser play; four bounded semantic false positives and timeout fallbacks disclosed; owner feel pending | c464f16 | 2026-10-02 |
-| Integration | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | workspace merge gates pass; season/save/pacing/soak in progress; G1 open | merge sub-wave | 2026-10-02 |
+| Integration | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | automated gates PASS, including original pacing bands and 30-minute soak; independent rerun and owner G1 open | 53b49b5..6ddc5f3 + soak handoff | 2026-10-02 |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
 | Core | W10 | Deaths and the Vigil: Plot objects, crackdown, executions, death census | G1 | not planned | | |
@@ -346,8 +346,10 @@ Decisions: **D12** all A2 portraits and all A3 figures and poses are **discarded
 | Art | A3b | New oblique figures, poses, spell and aura effects in the chosen direction, enemies included, finishing the three missing creatures with moderation-safe prompts | A6 owner choice | blocked |
 | Art | A4b | Camp map and backdrops re-checked against the new identity (the camp map is kept unless the owner says otherwise) | A6 owner choice | blocked |
 
-### INTEGRATION W7 merge sub-wave - 2026-10-02
+### INTEGRATION W7 two-week chapter - 2026-10-02
 
-- Merged pinned arena 68a4d68 into integration at ff99607, resolving the eight documented conflicts. Unified workspace exports, lock, NodeNext imports, scoped CSS, and owned camp/arena lifecycles. Promoted active arena tables byte-for-byte; imported section n.
-- npm run gate: 129 TS plus ten reference tests PASS, zero design contradictions. npm run build:game PASS. Water production smoke PASS with real pointer and keyboard controls. W7-evidence/merge-water preserves new measurements.
-- Arena pacing remains FAIL pending its sub-wave. Season/save/soak and owner feel/G1 not measured. No push. Next: season bridge and authoritative replay receipts.
+- Merged pinned arena 68a4d68 into integration at ff99607, resolving the eight documented conflicts. One workspace/lock/data authority, owned camp/arena lifecycles, Water menu, Trials, Tiro Games, replay-checked social/reward receipts, Director morning boards, pause/settings and exact saves. Five sub-wave commits: merge, season, pacing, save/load, soak/handoff.
+- `npm run gate`: 144 TypeScript plus ten reference tests PASS, zero contradictions. Production and package builds/tests PASS. Refreshed W2-W4/W4b gates, real mouse/keyboard, 1080p/1440p two-week browser route, deterministic replay and malformed/pending save matrix PASS. Final byte-identical envelope: 1,296,151 bytes. Commands and evidence: [W7 report](waves/W7-report.md).
+- Original 2,000-fight-per-wave bands now PASS: 38.233 / 44.633 / 45.483 / 58.000 s. Openings, spacing and approach/AI changed; HP, damage, reference controller and confirmed camera/oval did not. Each candidate, including failures, is recorded in the [single design note](waves/W7-execution.md).
+- Final hardened-source soak PASS: 1,800,083 ms, 60 cycles/days, four complete seasons plus four days, 5.0-7.3 MiB retained browser heap, no errors or added calls. Claude CLI Sonnet 5.5 medium used 7/20 reservations; bulk work used the offline planner. Discarded A2 portrait/review files removed; accepted camp art and loader fallbacks retained, no A3 dependency.
+- [OWNER-CHECKS.md](OWNER-CHECKS.md) gives Windows commands and the G1 route. Independent orchestrator rerun and owner play/feel remain pending; automated results do not close G1. Test save reset to day 1. No push.

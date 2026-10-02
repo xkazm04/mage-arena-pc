@@ -2,7 +2,8 @@ import { chromium, type Page } from "playwright";
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import type { CampView } from "@mage/core";
-const out = "docs/waves/W5-evidence/screens";
+const evidence = process.env.W7_EVIDENCE ? "docs/waves/W7-evidence/camp" : "docs/waves/W5-evidence";
+const out = `${evidence}/screens`;
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const errors: string[] = [],
@@ -120,7 +121,7 @@ try {
   await context.close();
   assert.deepEqual(errors, []);
   writeFileSync(
-    "docs/waves/W5-evidence/browser.json",
+    `${evidence}/browser.json`,
     JSON.stringify(
       {
         label: "measured",

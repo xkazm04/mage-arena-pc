@@ -1,14 +1,15 @@
 import { closeSync, copyFileSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { bridgeRules, boutHash, linkBout, replayBout, type SeasonBout, type SeasonProgress, type Tables } from '@mage/core';
+import { bridgeRules, boutHash, linkBout, prepareBout, replayBout, type SeasonBout, type SeasonProgress, type Tables } from '@mage/core';
 import { gamesResult, validateComposition, type Games } from '@mage/core/arena';
 import { hash } from './cache.ts';
 import { groups, request } from './input.ts';
 import { validateGroup } from './validator.ts';
 import { saveValidator } from './save-schema.ts';
 import type { CampCheckpoint } from './camp-service.ts';
-import type { SeasonService } from './season-service.ts';
+import { SeasonService } from './season-service.ts';
+import { parleyInputProblem } from './parley.ts';
 
 export interface SavePayload { camp: CampCheckpoint; progress: SeasonProgress }
 type SavedGames = Omit<Games, 'player'> & { playerId: number };
@@ -29,7 +30,8 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
   const p = value as SavePayload, s = p.camp.session, camp = s.camp;
   const ids = new Set(camp.facts.map(f=>f.id));
   if (ids.size !== camp.facts.length || camp.board.some(b=>!ids.has(b.factId))) throw Error('Save fact references are corrupt.');
-  for (const c of Object.values(camp.characters)) {
+  for (const [id,c] of Object.entries(camp.characters)) {
+    if (c.id !== id) throw Error('Save character identity does not match its key.');
     if (c.knowledge.some(id=>!ids.has(id)) || new Set(c.knowledge).size !== c.knowledge.length) throw Error('Save knowledge references are corrupt.');
     const sheet = t.characters.characters.find(x=>x.id===c.id)!;
     for (const key of ['name','school','role','traits','values','voice','bio','forbiddenIntents','knowledgeSeed'] as const) if (hash(c[key]) !== hash(sheet[key])) throw Error('Save character identity differs from authored data.');
@@ -41,6 +43,8 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
   if (p.progress.bout) {
     const b = p.progress.bout;
     if (receipts.some(r=>r.id===b.id) || b.day !== camp.day || b.entrant.id !== (receipts.find(r=>r.kind==='trial' && r.day===b.day-t.season.trialOffsetBeforeGames)?.entrant)) throw Error('Save bout identity or receipt is invalid.');
+    const expected=prepareBout(t,s,{...p.progress,bout:null},b.composition);
+    if (hash(expected)!==hash({...b,phase:'prepared',games:null,log:[]}) || hash(b.composition)!==hash(p.progress.composition)) throw Error('Save entrant or seed differs from the camp snapshot.');
     const replay = replayBout(b);
     // Independent replay validates every arena field, not just the client's hash.
     if (hash(json(replay)) !== hash(json(b))) throw Error('Save arena replay differs from the checkpoint.');
@@ -62,7 +66,8 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
       if (checked.verdicts.some(v=>v.rejected) || hash(checked.items)!==hash(completed.items)) throw Error('Saved Director decisions are not valid.');
     }
   }
-  if (p.camp.pendingDawn && (!s.nightFinished || !n)) throw Error('Invalid saved pending dawn.');
+  if (p.camp.pendingDawn && (s.slot !== 'night' || !s.nightFinished || !n)) throw Error('Invalid saved pending dawn.');
+  if (p.camp.pendingParley && parleyInputProblem(t,s,p.camp.pendingParley.input)) throw Error('Invalid saved pending Parley.');
   return p;
 }
 export function encodeSave(service: SeasonService): SaveEnvelope {
@@ -126,5 +131,12 @@ export class SaveStore {
 const boutHashSafe=(p:SeasonProgress)=>p.bout?boutHash(p.bout):'camp';
 export function restoreSave(service: SeasonService,payload: SavePayload) {
   const validated=validatePayload(service.tables,json(payload));
-  service.restoreCamp(validated.camp); service.progress=validated.progress; service.paused=true;
+  // Resolve every fallback in isolation before replacing the live service. Even a
+  // future semantic check that throws during restoration cannot partially load.
+  const staged=new SeasonService(service.tables,service.options,validated.camp.session.camp.seed,service.parleyDirector.options);
+  try {
+    staged.restoreCamp(validated.camp);
+    const settled=staged.checkpointCamp();
+    service.restoreCamp(settled); service.progress=validated.progress; service.paused=true;
+  } finally { staged.close(); }
 }

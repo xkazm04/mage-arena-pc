@@ -5,12 +5,24 @@ import { applyBoutInput, bridgeRules, linkBout, type SeasonBout, type TrialStanc
 import { idleInput, type InputFrame } from '@mage/core/arena';
 import type { SeasonView } from '../../game/src/season-api.ts';
 import { SeasonPolicy } from './season-policy.ts';
+import { hash } from '@mage/director';
 const out = 'docs/waves/W7-evidence'; mkdirSync(`${out}/screens`, { recursive: true });
 const base = process.env.CAMP_URL ?? 'http://127.0.0.1:5173';
 const browser = await chromium.launch({ headless: true, args: ['--use-angle=d3d11'] });
 const errors: string[] = [], runs: unknown[] = [];
 const view = (page: Page) => page.evaluate(async () => (await fetch('/api/session')).json()) as Promise<SeasonView>;
 const shot = (page: Page, name: string) => page.screenshot({ path: `${out}/screens/${name}.png` });
+async function saveLoad(page:Page) {
+  await page.locator('#settings').click(); await page.locator('#settings-dialog[open]').waitFor();
+  const before=await view(page);
+  await page.locator('#save-season').click(); await page.waitForFunction(()=>document.querySelector('#save-status')?.textContent==='Season saved.');
+  const bout=await page.evaluate(async()=> (await fetch('/api/bout')).json());
+  await page.locator('#load-season').click(); await page.waitForFunction(()=>document.querySelector('#save-status')?.textContent==='Save loaded. Resume when ready.');
+  assert.deepEqual(await view(page),before);
+  assert.equal(hash(await page.evaluate(async()=> (await fetch('/api/bout')).json())),hash(bout));
+  await page.locator('#resume-season').click();
+  await page.locator('#settings-dialog[open]').waitFor({state:'hidden'});
+}
 async function click(page: Page, selector: string) {
   const before = await view(page); await page.locator(selector).click();
   await page.waitForFunction(async revision => (await (await fetch('/api/session')).json()).revision !== revision, before.revision);
@@ -34,6 +46,7 @@ try {
     await shot(page, `${height}-character-pick`); await page.locator('#choose-water').click(); await page.waitForSelector('body[data-ready=true]');
     await shot(page, `${height}-camp-map`);
     await page.keyboard.press('Escape'); await page.locator('#settings-dialog[open]').waitFor(); await shot(page, `${height}-controls`); await page.locator('#resume-season').click();
+    await saveLoad(page);
     const checkpoints: unknown[] = [];
     while ((await view(page)).day.day <= 14) {
       const v = await view(page), day = v.day.day;
@@ -44,6 +57,7 @@ try {
         await page.locator('canvas').focus(); await page.keyboard.down('KeyD'); await page.waitForTimeout(150); await page.keyboard.up('KeyD');
         await page.mouse.move(height, height / 2); await page.mouse.down(); await page.waitForTimeout(150); await page.mouse.up();
         await page.mouse.down({ button: 'right' }); await page.waitForTimeout(150); await page.mouse.up({ button: 'right' });
+        await saveLoad(page);
         await page.evaluate(() => (window as unknown as ArenaWindow).__seasonArena.pause(true));
         await page.waitForTimeout(200); await shot(page, `${height}-day-${day}-games`);
         const policy = new SeasonPolicy();
@@ -95,6 +109,7 @@ try {
       if ([7, 14].includes(day)) await shot(page, `${height}-day-${day + 1}-board`);
     }
     const final = await view(page); assert(final.season.complete); assert.equal(final.season.receipts.length, 4); assert(final.board.length > 0);
+    await saveLoad(page);
     await shot(page, `${height}-two-weeks`); runs.push({ height, checkpoints, receipts: final.season.receipts, day: final.day.day });
     await context.close();
   }

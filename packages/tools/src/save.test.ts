@@ -59,6 +59,8 @@ describe('season save', () => {
   it('replays prepared, active, intermission, terminal and received checkpoints without duplicate payout', async () => {
     const original=await gamesMorning();
     original.seasonCommand({type:'prepare',composition:presets[2]!},original.session.revision);
+    const forged=decodeSave(original.tables,JSON.stringify(encodeSave(original))); forged.progress.bout!.entrant.ranks.vigor=5;
+    const prepared=digest(original); expect(()=>restoreSave(original,forged)).toThrow(); expect(digest(original)).toBe(prepared);
     let loaded=clone(original);
     for(const s of [original,loaded]) s.seasonCommand({type:'start'},s.session.revision);
     const policy=new SeasonPolicy(); let checkedActive=false, checkedIntermission=false;
@@ -94,6 +96,9 @@ describe('season save', () => {
     original.session=knowingFixture(original.tables);
     const pending=original.parley({target:'nysa',cardId:'ask',text:'Tell me about the bread.'},original.session.revision);
     const e=encodeSave(original), key=e.payload.camp.pendingParley!.key, ledger=readFileSync(guard.path,'utf8');
+    const bad=decodeSave(original.tables,JSON.stringify(e)); bad.camp.pendingParley!.input.cardId='missing-card';
+    const frozen=digest(original);
+    expect(()=>restoreSave(original,bad)).toThrow(); expect(digest(original)).toBe(frozen);
     const loaded=new SeasonService(original.tables,original.options);
     restoreSave(loaded,decodeSave(original.tables,JSON.stringify(e))); loaded.paused=false;
     await pending; late(result(authoredParley(original.session,'nysa','reveal'))); await Promise.resolve();
@@ -114,6 +119,8 @@ describe('season save', () => {
     await expect(original.command({type:'dawn'},original.session.revision)).rejects.toThrow();
     const e=encodeSave(original), ledger=readFileSync(original.options.guard.path,'utf8');
     expect(e.payload.camp.pendingDawn).toBe(true); expect(e.payload.camp.night!.completed).toHaveLength(1);
+    const invalid=decodeSave(original.tables,JSON.stringify(e)); invalid.camp.session.slot='day';
+    const frozen=digest(original); expect(()=>restoreSave(original,invalid)).toThrow(); expect(digest(original)).toBe(frozen);
     const loaded=new SeasonService(original.tables,original.options); restoreSave(loaded,decodeSave(original.tables,JSON.stringify(e))); loaded.paused=false;
     late(result(null)); await pending;
     expect(digest(loaded)).toBe(digest(original)); expect(calls).toBe(2); expect(readFileSync(original.options.guard.path,'utf8')).toBe(ledger);
@@ -130,6 +137,8 @@ describe('season save', () => {
     }
     const malformed=structuredClone(valid); malformed.payload.camp.session.camp.characters.cassia.gold=NaN;
     expect(()=>restoreSave(original,malformed.payload)).toThrow(); expect(digest(original)).toBe(before);
+    const duplicate=structuredClone(valid); duplicate.payload.camp.session.camp.characters.cassia=structuredClone(duplicate.payload.camp.session.camp.characters.nysa);
+    expect(()=>restoreSave(original,duplicate.payload)).toThrow(); expect(digest(original)).toBe(before);
     store.write(original); expect(readFileSync(`${store.filename}.previous`,'utf8')).toBe(first);
     restoreSave(original,store.read(original.tables,true)); expect(original.session.camp.day).toBe(1); original.close();
   });

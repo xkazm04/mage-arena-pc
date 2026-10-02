@@ -9,6 +9,7 @@ import type { SeasonView as View } from "./season-api.ts";
 export async function mountCamp(root: HTMLElement, enterArena: () => void = () => {}): Promise<() => void> {
 const lifetime = new AbortController();
 let disposed = false;
+const toastTimers = new Set<number>();
 const listen = <K extends keyof WindowEventMap>(type: K, handler: (e: WindowEventMap[K]) => void) => window.addEventListener(type, handler, { signal: lifetime.signal });
 let poll: number | undefined;
 root.innerHTML = `<div class="loading"><p class="eyebrow">Mage Arena</p><h1>Beyond the closed grille</h1><p>Entering Castra Clausa…</p></div>`;
@@ -66,11 +67,14 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
   return result;
 }
 function toast(message: string) {
+  if (disposed) return;
   const el = root.querySelector(".toast")!;
   el.textContent = message;
-  window.setTimeout(() => {
+  const timer = window.setTimeout(() => {
+    toastTimers.delete(timer);
     if (el.textContent === message) el.textContent = "";
   }, 6000);
+  toastTimers.add(timer);
 }
 function select(id: string) {
   ui.selected = id;
@@ -161,7 +165,7 @@ function render() {
     : view.player.stocks
       ? "The Vigil keeps you in the stocks. Rest or wait for release."
       : view.day.games
-        ? "Games day · the arena chapter joins this season in the integration wave."
+        ? "Games day · prepare your Water composition and enter the Tiro arena."
         : view.day.eve
           ? "Games eve · the Tent Trials are on the calendar."
           : `${view.budget} time remaining · travel uses time · one activity ends this slot`;
@@ -386,5 +390,5 @@ async function boot() {
   document.body.dataset.ready = "true";
 }
 await boot();
-return () => { disposed = true; lifetime.abort(); clearInterval(poll); scenes.dispose(); parley.dialog.remove(); root.replaceChildren(); delete document.body.dataset.ready; };
+return () => { disposed = true; lifetime.abort(); clearInterval(poll); for (const timer of toastTimers) clearTimeout(timer); toastTimers.clear(); scenes.dispose(); parley.dialog.remove(); root.replaceChildren(); delete document.body.dataset.ready; };
 }

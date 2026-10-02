@@ -44,9 +44,7 @@ export function campApi() {
             error: "Too many open camps. Restart the camp server.",
           });
         id = randomUUID();
-        const mode =
-          process.env.CAMP_DIRECTOR === "local" ? "local" : "offline";
-        service = createCampRuntime(mode);
+        service = createCampRuntime();
         sessions.set(id, service);
         res.setHeader(
           "set-cookie",

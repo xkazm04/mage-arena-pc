@@ -29,8 +29,8 @@ export function seasonPanel(host: HTMLElement, view: SeasonView, refresh: (view:
     action('Compose and enter the Games', 'prepare-games', async () => {
       const shell = document.createElement('div'); shell.className = 'arena-root'; host.append(shell);
       const composer = compositionScreen(choice => {
-        void seasonCommand({ type: 'prepare', composition: choice }).then(() => seasonCommand({ type: 'start' })).then(() => { composer.dispose(); shell.remove(); arena(); }).catch(error);
-      }, () => {}, shell);
+        void seasonCommand({ type: 'prepare', composition: choice }).then(() => seasonCommand({ type: 'start' })).then(() => { composer.dispose(); shell.remove(); arena(); }).catch(e => { composer.dispose(); shell.remove(); error(e); });
+      }, paused => { if (!paused) { composer.dispose(); shell.remove(); } }, shell);
       composer.open('Enter season Games');
     });
   }

@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { runTimingBot, runtime, type BotKind } from '../src/arena/index.ts';
-const destination = new URL('../../../docs/waves/W2-evidence/', import.meta.url);
+const evidence = process.argv[2] ?? 'W2-evidence';
+if (!/^W(?:2|7)-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
+const destination = new URL(`../../../docs/waves/${evidence}/`, import.meta.url);
 mkdirSync(destination, { recursive: true });
 const policies = (['perfect', 'holder', 'never', 'late'] as BotKind[]).map(kind => runTimingBot(kind));
 const sweep = runtime.training.windowSweepTicks.map(lead => runTimingBot('perfect', runtime.training.reportDurationS, lead));

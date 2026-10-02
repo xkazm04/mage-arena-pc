@@ -148,3 +148,78 @@ pending Parley, partially completed pending dawn, prepared/active/intermission/
 terminal bouts, before/after reward, duplicate payout, corrupted files and previous
 good recovery. Full root gate: **144 TypeScript + 10 reference tests PASS**, lint,
 both compiler checks and zero design contradictions (2026-10-02).
+
+## Final browser and soak sub-wave
+
+The CLI night runtime is now selectable entirely in the Director layer, with the
+same fixed W7 ledger and 20-call cap as the initial sample. The first browser night
+reused three groups and added two live requests, for **seven total reservations**.
+The new browser driver's asynchronous wait returned before listening finished;
+two attempted runs failed at the dawn locator, and their reservations/cache were
+retained. Explicit bounded server-state polling completed the next attempt from
+validated cache, with no further calls. All bulk work uses the offline planner.
+
+Production weeks 1-2 pass at 1080p and 1440p with camp visits, a real 45-second
+listening act, Parley, both Trials, actual arena input replay, champion and missio,
+four once-only receipts, next-morning boards and save/load at camp/combat/final
+checkpoints. Native keyboard/mouse precede the disclosed external input policy.
+The final browser runs supersede the earlier season-sub-wave first-Games missio;
+they now demonstrate a champion return as well as an ordinary-damage loss.
+
+Repeated composer cancellation exposed retained hidden dialogs; the season
+callback now removes each cancelled/failed composer. Six Back/Escape cancellations
+and eight arena remounts pass with one bout identity, one canvas and no extra
+receipt. Camp disposal also clears owned toast timers and ignores late errors.
+Package-local game tests initially attempted to load the HTTP sidecar via Vite's
+config and hit Node strip-only syntax. A dedicated unit-test config runs the same
+camera/loader tests without starting a server. Root and both package gates pass.
+
+The source comparison found Windows CRLF conversion in the promoted text tables.
+Explicit LF attributes now keep combat/stats/spells/tiers byte-identical to the
+pinned Git blobs. Enemy data changes only the disclosed conscript behavior prose;
+every numeric field remains identical. The full census was rerun, preserving all
+four passing medians and fight digests. Accepted camera bytes are unchanged.
+
+Section n is enforced in the current tree: 120 discarded A2 delivery/review files
+and portrait images are removed, with history retained. No A3 runtime images were
+present. Accepted camp asset hashes remain unchanged. A1b is a camera/ground proof
+containing figures, not a clean floor texture; the current floor is procedural.
+
+The soak runs a single production browser through repeated menu/camp/training
+lifecycles, checks poll/RAF ownership and native wheel input, loads real simulated
+season checkpoints, and completes normal Trial/Games seasons with the offline
+planner. Its first one-minute probe used a CDP freeze command that did not suspend
+the visible renderer, so that assertion failed; the failed record is preserved.
+The corrected probe measures a deliberate two-second renderer stall and verifies
+bounded catch-up. The acceptance run requires thirty actual wall-clock minutes,
+retains all samples, verifies a stable simulation/source hash and unchanged cost
+ledger, and cannot pass before that interval finishes. It is not a human soak.
+
+The report, screenshot gallery and OWNER-CHECKS contain concrete Windows commands.
+Owner G1 and the independent orchestrator rerun remain outside this executing
+agent's completed automated claims. No push or owner-feel assertion is made.
+
+The first full soak passed at 1,800,091 ms: 60 cycles, four complete simulated
+seasons plus four days, 5.0-7.3 MiB retained browser heap, no page errors and no
+new calls. It is retained as `soak-before-validation-hardening.json`. Additional
+malformed-save probes then exposed four real gaps: unknown pending Parley card
+and wrong pending-dawn slot could mutate the live service before throwing;
+duplicated character identity and an entrant rank inconsistent with the camp
+could pass validation. All four probes first failed, then passed after correction.
+
+Validation now checks keyed identities, pending-action eligibility and the
+deterministically prepared entrant/seed against the camp. Restoration resolves
+fallbacks in an isolated service before replacing the live service, so an error
+cannot leave a partial restore. A prepared save also boots into an arena at tick
+zero and remains paused; a dedicated production browser check covers that route.
+The pause button label follows global settings. The final source fingerprint,
+byte-exact replay, browser route and thirty-minute soak are remeasured after this
+hardening rather than relabelling the earlier run.
+
+The final hardened-source soak **PASS** is 1,800,083 ms: 60 scene cycles and
+simulated days, four complete seasons plus four days, 5.0-7.3 MiB retained browser
+heap, zero errors and zero added calls. Its source fingerprint matches the final
+1,296,151-byte replay/save artifact. Both final production browser resolutions
+also passed after hardening. The total CLI ledger remains **7/20**. All automated
+W7 gates are complete; independent orchestrator rerun and owner G1 remain open.
+The test-generated local save slot is reset to day 1 for the owner handoff.

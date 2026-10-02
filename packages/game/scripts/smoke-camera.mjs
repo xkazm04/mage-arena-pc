@@ -5,7 +5,9 @@ import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import assert from 'node:assert/strict';
 
-const directory = new URL('../../../docs/waves/W4b-evidence/', import.meta.url);
+const evidence = process.argv[2] ?? 'W4b-evidence';
+if (!/^W(?:4b|7)-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
+const directory = new URL(`../../../docs/waves/${evidence}/`, import.meta.url);
 mkdirSync(directory, { recursive: true });
 const runtime = JSON.parse(readFileSync(new URL('../../core/src/arena/data/runtime.json', import.meta.url), 'utf8'));
 const contract = JSON.parse(readFileSync(new URL('../../../art/scale-contract-v1.json', import.meta.url), 'utf8'));

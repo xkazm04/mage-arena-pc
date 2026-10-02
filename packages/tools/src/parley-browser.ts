@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import type { CampService } from "@mage/director";
 type View = ReturnType<CampService["view"]>;
-const out = "docs/waves/W6-evidence/screens";
+const evidence = process.env.W7_EVIDENCE ? "docs/waves/W7-evidence/parley" : "docs/waves/W6-evidence";
+const out = `${evidence}/screens`;
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const base = process.env.CAMP_URL ?? "http://127.0.0.1:5174";
@@ -27,6 +28,7 @@ const ledgerCount = () => {
   }
 };
 const beforeCalls = ledgerCount();
+const offline = process.env.W7_OFFLINE === "1";
 try {
   const context = await browser.newContext({
     viewport: { width: 1920, height: 1080 },
@@ -37,8 +39,8 @@ try {
   await page.waitForSelector('body[data-ready="true"]');
   assert.equal(
     (await view(page)).parley.canType,
-    true,
-    "Run this gate against a local-mode server",
+    !offline,
+    "Run this gate against the explicitly selected provider mode",
   );
   await page.locator("[data-visit]").click();
   assert.equal(await page.locator("[data-parley-target]").count(), 0);
@@ -79,6 +81,7 @@ try {
     "Nysa, I know you leave bread by the southern tent rope after dusk. Stand with me when the camp falls quiet.",
   );
   assert.equal(await field.getAttribute("maxlength"), "280");
+  if (offline) await page.locator("#parley-approach").selectOption("reveal");
   await shot(page, "1080-typed-parley");
   await page.setViewportSize({ width: 2560, height: 1440 });
   await shot(page, "1440-typed-parley");
@@ -89,7 +92,7 @@ try {
   );
   const result = (await view(page)).parley.last!;
   assert.equal(result.effect, "flip_next_intent");
-  assert.equal(result.usedCard, false);
+  assert.equal(result.usedCard, offline);
   assert.equal((await view(page)).slot, "dusk");
   assert.ok(ledgerCount() - callStart <= 1);
   await shot(page, "1440-parley-reply");
@@ -98,7 +101,7 @@ try {
   await page.locator("[data-parley-close]").click();
   assert.equal(await page.locator("[data-parley-target]").count(), 0);
   checks.push(
-    "typing absent without Knowing; real listening earns moment; typed local reply flips intended act; one slot and daily cap enforced",
+    offline ? "typing at Knowing uses explicit authored fallback offline; selected reveal flips intended act; one slot and daily cap enforced" : "typing absent without Knowing; real listening earns moment; typed local reply flips intended act; one slot and daily cap enforced",
   );
   await page.locator('[data-command="wait"]').click();
   await page.waitForFunction(
@@ -129,7 +132,7 @@ try {
   await context.close();
   assert.deepEqual(errors, []);
   const report = {
-    label: "measured browser play with local typed reply and authored card",
+    label: offline ? "measured offline browser fallback; no live typing claim" : "measured browser play with local typed reply and authored card",
     checks,
     errors,
     result,
@@ -140,7 +143,7 @@ try {
     gameplayReservationsAdded: ledgerCount() - beforeCalls,
   };
   writeFileSync(
-    "docs/waves/W6-evidence/browser.json",
+    `${evidence}/browser.json`,
     JSON.stringify(report, null, 2) + "\n",
   );
   console.log(JSON.stringify(report));

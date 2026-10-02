@@ -1,0 +1,8174 @@
+{
+  "label": "simulated",
+  "command": "npm --prefix packages/core run report:w2",
+  "methodology": "Fixed-step stationary timing oracle versus front magic dummy; ranks from runtime data. Down HP reset solely to continue sampling, never mana. Mana returned is actual capped credit. Holder never releases after exhaustion. Lead ticks count impact age. No human-feel or filmed-latency claim.",
+  "policies": [
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 6,
+      "attacks": 40,
+      "perfects": 40,
+      "blocks": 0,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 0,
+      "manaDrained": 144.00000000000017,
+      "manaRaised": 200,
+      "manaReturned": 309.0000000000009,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 95,
+      "perfectRate": 1,
+      "unlockSeconds": [
+        0,
+        9,
+        18,
+        27
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 4,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 6,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 7,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 9,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 10,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 12,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 13,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 15,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 16,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 40
+        }
+      ],
+      "hash": "5ada9897"
+    },
+    {
+      "kind": "holder",
+      "durationS": 120,
+      "leadTicks": null,
+      "attacks": 40,
+      "perfects": 0,
+      "blocks": 1,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 531,
+      "manaDrained": 124.50000000000009,
+      "manaRaised": 5,
+      "manaReturned": 0,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 5,
+      "finalMana": 95,
+      "perfectRate": 0,
+      "unlockSeconds": [
+        0,
+        15,
+        30,
+        45
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 70.37499999999983,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 50.87499999999966,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 31.374999999999496,
+          "perfects": 0
+        },
+        {
+          "second": 4,
+          "mana": 11.874999999999538,
+          "perfects": 0
+        },
+        {
+          "second": 5,
+          "mana": 2.875,
+          "perfects": 0
+        },
+        {
+          "second": 6,
+          "mana": 10.375,
+          "perfects": 0
+        },
+        {
+          "second": 7,
+          "mana": 17.875,
+          "perfects": 0
+        },
+        {
+          "second": 8,
+          "mana": 25.375,
+          "perfects": 0
+        },
+        {
+          "second": 9,
+          "mana": 32.875,
+          "perfects": 0
+        },
+        {
+          "second": 10,
+          "mana": 40.375,
+          "perfects": 0
+        },
+        {
+          "second": 11,
+          "mana": 47.875,
+          "perfects": 0
+        },
+        {
+          "second": 12,
+          "mana": 55.375,
+          "perfects": 0
+        },
+        {
+          "second": 13,
+          "mana": 62.875,
+          "perfects": 0
+        },
+        {
+          "second": 14,
+          "mana": 70.375,
+          "perfects": 0
+        },
+        {
+          "second": 15,
+          "mana": 77.875,
+          "perfects": 0
+        },
+        {
+          "second": 16,
+          "mana": 85.375,
+          "perfects": 0
+        },
+        {
+          "second": 17,
+          "mana": 92.875,
+          "perfects": 0
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 0
+        }
+      ],
+      "hash": "40b7ca21"
+    },
+    {
+      "kind": "never",
+      "durationS": 120,
+      "leadTicks": null,
+      "attacks": 40,
+      "perfects": 0,
+      "blocks": 0,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 545,
+      "manaDrained": 0,
+      "manaRaised": 0,
+      "manaReturned": 0,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 5,
+      "finalMana": 95,
+      "perfectRate": 0,
+      "unlockSeconds": [
+        0,
+        15,
+        30,
+        45
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 4,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 6,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 7,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 9,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 10,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 12,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 13,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 15,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 16,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 0
+        }
+      ],
+      "hash": "529b208f"
+    },
+    {
+      "kind": "late",
+      "durationS": 120,
+      "leadTicks": 10,
+      "attacks": 40,
+      "perfects": 0,
+      "blocks": 40,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 83.99999999999999,
+      "manaDrained": 215.99999999999835,
+      "manaRaised": 200,
+      "manaReturned": 0,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 86.97499999999997,
+      "perfectRate": 0,
+      "unlockSeconds": [
+        0,
+        15,
+        30,
+        45
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 4,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 6,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 7,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 9,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 10,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 12,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 13,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 15,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 16,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 18,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 19,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 21,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 22,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 24,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 25,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 27,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 28,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 30,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 31,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 33,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 34,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 36,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 37,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 39,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 40,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 42,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 43,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 45,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 46,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 48,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 49,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 51,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 52,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 54,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 55,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 57,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 58,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 60,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 61,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 63,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 64,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 66,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 67,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 69,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 70,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 72,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 73,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 75,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 76,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 78,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 79,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 81,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 82,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 84,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 85,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 87,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 88,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 90,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 91,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 93,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 94,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 96,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 97,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 99,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 100,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 102,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 103,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 105,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 106,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 108,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 109,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 111,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 112,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 114,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 115,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 117,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 118,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 120,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        }
+      ],
+      "hash": "1c0da04a"
+    }
+  ],
+  "sweep": [
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 0,
+      "attacks": 40,
+      "perfects": 40,
+      "blocks": 0,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 0,
+      "manaDrained": 35.999999999999986,
+      "manaRaised": 200,
+      "manaReturned": 231.00000000000023,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 95,
+      "perfectRate": 1,
+      "unlockSeconds": [
+        0,
+        9,
+        18,
+        27
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 4,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 6,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 7,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 9,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 10,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 12,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 13,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 15,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 16,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 40
+        }
+      ],
+      "hash": "585e7928"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 1,
+      "attacks": 40,
+      "perfects": 40,
+      "blocks": 0,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 0,
+      "manaDrained": 54.0000000000001,
+      "manaRaised": 200,
+      "manaReturned": 244.00000000000063,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 95,
+      "perfectRate": 1,
+      "unlockSeconds": [
+        0,
+        9,
+        18,
+        27
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 4,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 6,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 7,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 9,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 10,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 12,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 13,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 15,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 16,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 40
+        }
+      ],
+      "hash": "481b003c"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 3,
+      "attacks": 40,
+      "perfects": 40,
+      "blocks": 0,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 0,
+      "manaDrained": 90.00000000000033,
+      "manaRaised": 200,
+      "manaReturned": 270.0000000000003,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 95,
+      "perfectRate": 1,
+      "unlockSeconds": [
+        0,
+        9,
+        18,
+        27
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 4,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 6,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 7,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 9,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 10,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 12,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 13,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 15,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 16,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 40
+        }
+      ],
+      "hash": "41507b05"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 6,
+      "attacks": 40,
+      "perfects": 40,
+      "blocks": 0,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 0,
+      "manaDrained": 144.00000000000017,
+      "manaRaised": 200,
+      "manaReturned": 309.0000000000009,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 95,
+      "perfectRate": 1,
+      "unlockSeconds": [
+        0,
+        9,
+        18,
+        27
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 4,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 6,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 7,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 9,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 10,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 12,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 13,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 15,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 16,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 40
+        }
+      ],
+      "hash": "5ada9897"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 8,
+      "attacks": 40,
+      "perfects": 40,
+      "blocks": 0,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 0,
+      "manaDrained": 179.99999999999926,
+      "manaRaised": 200,
+      "manaReturned": 335.0000000000009,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 95,
+      "perfectRate": 1,
+      "unlockSeconds": [
+        0,
+        9,
+        18,
+        27
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 4,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 1
+        },
+        {
+          "second": 6,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 7,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 2
+        },
+        {
+          "second": 9,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 10,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 3
+        },
+        {
+          "second": 12,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 13,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 4
+        },
+        {
+          "second": 15,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 16,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 5
+        },
+        {
+          "second": 18,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 19,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 6
+        },
+        {
+          "second": 21,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 22,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 7
+        },
+        {
+          "second": 24,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 25,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 8
+        },
+        {
+          "second": 27,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 28,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 9
+        },
+        {
+          "second": 30,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 31,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 10
+        },
+        {
+          "second": 33,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 34,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 11
+        },
+        {
+          "second": 36,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 37,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 12
+        },
+        {
+          "second": 39,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 40,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 13
+        },
+        {
+          "second": 42,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 43,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 14
+        },
+        {
+          "second": 45,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 46,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 15
+        },
+        {
+          "second": 48,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 49,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 16
+        },
+        {
+          "second": 51,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 52,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 17
+        },
+        {
+          "second": 54,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 55,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 18
+        },
+        {
+          "second": 57,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 58,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 19
+        },
+        {
+          "second": 60,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 61,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 20
+        },
+        {
+          "second": 63,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 64,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 21
+        },
+        {
+          "second": 66,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 67,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 22
+        },
+        {
+          "second": 69,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 70,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 23
+        },
+        {
+          "second": 72,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 73,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 24
+        },
+        {
+          "second": 75,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 76,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 25
+        },
+        {
+          "second": 78,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 79,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 26
+        },
+        {
+          "second": 81,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 82,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 27
+        },
+        {
+          "second": 84,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 85,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 28
+        },
+        {
+          "second": 87,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 88,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 29
+        },
+        {
+          "second": 90,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 91,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 30
+        },
+        {
+          "second": 93,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 94,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 31
+        },
+        {
+          "second": 96,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 97,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 32
+        },
+        {
+          "second": 99,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 100,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 33
+        },
+        {
+          "second": 102,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 103,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 34
+        },
+        {
+          "second": 105,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 106,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 35
+        },
+        {
+          "second": 108,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 109,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 36
+        },
+        {
+          "second": 111,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 112,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 37
+        },
+        {
+          "second": 114,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 115,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 38
+        },
+        {
+          "second": 117,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 118,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 39
+        },
+        {
+          "second": 120,
+          "mana": 95,
+          "perfects": 40
+        }
+      ],
+      "hash": "72bc66e0"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 9,
+      "attacks": 40,
+      "perfects": 0,
+      "blocks": 40,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 83.99999999999999,
+      "manaDrained": 197.9999999999988,
+      "manaRaised": 200,
+      "manaReturned": 0,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 87.29999999999997,
+      "perfectRate": 0,
+      "unlockSeconds": [
+        0,
+        15,
+        30,
+        45
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 4,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 6,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 7,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 9,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 10,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 12,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 13,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 15,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 16,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 18,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 19,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 21,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 22,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 24,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 25,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 27,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 28,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 30,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 31,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 33,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 34,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 36,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 37,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 39,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 40,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 42,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 43,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 45,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 46,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 48,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 49,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 51,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 52,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 54,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 55,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 57,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 58,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 60,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 61,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 63,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 64,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 66,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 67,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 69,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 70,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 72,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 73,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 75,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 76,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 78,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 79,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 81,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 82,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 84,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 85,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 87,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 88,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 90,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 91,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 93,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 94,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 96,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 97,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 99,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 100,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 102,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 103,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 105,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 106,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 108,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 109,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 111,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 112,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 114,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 115,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 117,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 118,
+          "mana": 94.79999999999997,
+          "perfects": 0
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 120,
+          "mana": 87.29999999999997,
+          "perfects": 0
+        }
+      ],
+      "hash": "72ead01d"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 10,
+      "attacks": 40,
+      "perfects": 0,
+      "blocks": 40,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 83.99999999999999,
+      "manaDrained": 215.99999999999835,
+      "manaRaised": 200,
+      "manaReturned": 0,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 86.97499999999997,
+      "perfectRate": 0,
+      "unlockSeconds": [
+        0,
+        15,
+        30,
+        45
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 4,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 6,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 7,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 9,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 10,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 12,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 13,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 15,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 16,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 18,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 19,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 21,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 22,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 24,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 25,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 27,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 28,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 30,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 31,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 33,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 34,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 36,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 37,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 39,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 40,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 42,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 43,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 45,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 46,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 48,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 49,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 51,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 52,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 54,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 55,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 57,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 58,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 60,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 61,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 63,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 64,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 66,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 67,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 69,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 70,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 72,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 73,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 75,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 76,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 78,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 79,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 81,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 82,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 84,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 85,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 87,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 88,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 90,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 91,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 93,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 94,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 96,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 97,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 99,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 100,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 102,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 103,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 105,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 106,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 108,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 109,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 111,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 112,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 114,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 115,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 117,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 118,
+          "mana": 94.47499999999997,
+          "perfects": 0
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 120,
+          "mana": 86.97499999999997,
+          "perfects": 0
+        }
+      ],
+      "hash": "1c0da04a"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 12,
+      "attacks": 40,
+      "perfects": 0,
+      "blocks": 40,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 83.99999999999999,
+      "manaDrained": 251.99999999999744,
+      "manaRaised": 200,
+      "manaReturned": 0,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 86.32499999999996,
+      "perfectRate": 0,
+      "unlockSeconds": [
+        0,
+        15,
+        30,
+        45
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 4,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 6,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 7,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 9,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 10,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 12,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 13,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 15,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 16,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 18,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 19,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 21,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 22,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 24,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 25,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 27,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 28,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 30,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 31,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 33,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 34,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 36,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 37,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 39,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 40,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 42,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 43,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 45,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 46,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 48,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 49,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 51,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 52,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 54,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 55,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 57,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 58,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 60,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 61,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 63,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 64,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 66,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 67,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 69,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 70,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 72,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 73,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 75,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 76,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 78,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 79,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 81,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 82,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 84,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 85,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 87,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 88,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 90,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 91,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 93,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 94,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 96,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 97,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 99,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 100,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 102,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 103,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 105,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 106,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 108,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 109,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 111,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 112,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 114,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 115,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 117,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 118,
+          "mana": 93.82499999999996,
+          "perfects": 0
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 120,
+          "mana": 86.32499999999996,
+          "perfects": 0
+        }
+      ],
+      "hash": "c1bbfd16"
+    },
+    {
+      "kind": "perfect",
+      "durationS": 120,
+      "leadTicks": 18,
+      "attacks": 40,
+      "perfects": 0,
+      "blocks": 40,
+      "hits": 40,
+      "damageDealt": 0,
+      "damageTaken": 83.99999999999999,
+      "manaDrained": 359.9999999999947,
+      "manaRaised": 200,
+      "manaReturned": 0,
+      "casts": 0,
+      "rolls": 0,
+      "downs": 0,
+      "finalMana": 84.37499999999994,
+      "perfectRate": 0,
+      "unlockSeconds": [
+        0,
+        15,
+        30,
+        45
+      ],
+      "manaCurve": [
+        {
+          "second": 1,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 2,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 3,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 4,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 5,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 6,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 7,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 8,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 9,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 10,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 11,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 12,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 13,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 14,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 15,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 16,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 17,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 18,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 19,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 20,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 21,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 22,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 23,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 24,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 25,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 26,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 27,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 28,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 29,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 30,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 31,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 32,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 33,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 34,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 35,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 36,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 37,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 38,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 39,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 40,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 41,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 42,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 43,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 44,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 45,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 46,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 47,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 48,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 49,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 50,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 51,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 52,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 53,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 54,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 55,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 56,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 57,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 58,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 59,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 60,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 61,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 62,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 63,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 64,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 65,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 66,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 67,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 68,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 69,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 70,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 71,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 72,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 73,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 74,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 75,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 76,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 77,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 78,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 79,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 80,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 81,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 82,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 83,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 84,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 85,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 86,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 87,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 88,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 89,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 90,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 91,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 92,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 93,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 94,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 95,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 96,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 97,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 98,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 99,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 100,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 101,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 102,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 103,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 104,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 105,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 106,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 107,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 108,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 109,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 110,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 111,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 112,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 113,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 114,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 115,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 116,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 117,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 118,
+          "mana": 91.87499999999994,
+          "perfects": 0
+        },
+        {
+          "second": 119,
+          "mana": 95,
+          "perfects": 0
+        },
+        {
+          "second": 120,
+          "mana": 84.37499999999994,
+          "perfects": 0
+        }
+      ],
+      "hash": "62d3b6e6"
+    }
+  ],
+  "deterministic": true
+}

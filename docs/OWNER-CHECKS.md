@@ -1,5 +1,56 @@
 # Owner checks
 
+## W7 / G1 - owner plays weeks 1-2 (pending; not felt)
+
+From `C:\Users\kazda\kiro\mage-arena-int` in Windows PowerShell:
+
+```powershell
+npm ci
+npm run gate
+npm run build:game
+node --import tsx node_modules/vite/bin/vite.js preview --config packages/game/vite.config.ts --host 127.0.0.1 --port 4173 --strictPort
+```
+
+Open **http://127.0.0.1:4173**, choose **Water / Cassia**, and play to the morning
+of day 15. Use 1920x1080 or 2560x1440 at browser zoom 100%. The default is offline;
+no provider setup is needed. Other schools are camp allies, and both weeks use Tiro.
+
+- Spend day and dusk time visiting the Yard, Cistern, Pit, Exchange and Commons.
+  Try training and a social act; check travel costs and the changes shown afterward.
+- On the first night, listen at the tent flap. A/D or 1-3 changes cover, Space
+  listens, releasing hides. Follow the voices and avoid the patrol. With the bread
+  Knowing, visit Nysa in the Commons on the next day and open Parley. Try a card,
+  then typing on another day; offline typing uses the selected authored approach.
+- Read the Hollow Board each morning. Distinguish a rumour from a witnessed result;
+  check whether relationships and facts make yesterday's choices matter.
+- On days **6 and 13**, go to the Pit at dusk for the Tent Trial. Read the stance
+  tell and counter it (brace beats press, feint beats brace, press beats feint).
+  An escort is available when travel is spent. A lost selection leads to spectating.
+- On days **7 and 14**, choose three Water lines and branches, fight the Tiro waves,
+  absorb incoming magic, watch the collar tiers and enter each next bout. Aim at
+  feet. WASD moves; left mouse casts; right mouse absorbs; Space rolls; Shift
+  sprints; 1-4/wheel changes slot. Try both a win and missio if practical; don't
+  restart a season bout to reroll it. Returning should show gold, renown, trust and
+  the following morning's result/rumour cards.
+- Press **Escape** for pause, sound and controls. Save in camp and during combat,
+  change something, then load. Loading stays paused until Resume. Close and reopen
+  the server/browser and use **Load saved season**. The slot lives at
+  `.director-runtime/saves/season.json`; **Recover previous save** loads its backup.
+  A changed source build rejects old saves clearly rather than partially loading.
+
+Record whether the first two weeks make you want to continue, whether camp choices
+have readable consequences, whether the Trial is understandable, and whether the
+55-degree near camera and ground aiming are comfortable. Record dull/unfair
+encounters and actual bout times. Placeholder figure quality is not an art approval.
+The measured census now passes all four original median bands; this supersedes the
+historical W4b pacing failure below. Automated play and screenshots cannot close G1.
+
+All discarded A2/A3 figure work is excluded from runtime. Accepted A4/A5 camp art
+remains; the arena uses the A1b camera/ground reference and procedural placeholders.
+See [W7 execution and evidence](waves/W7-execution.md) and
+[build/controls details](../packages/game/README.md). **G1 remains open for the owner.**
+
+
 ## W2 — absorb and aim (pending; not felt)
 
 Run the arena as described in `packages/game/README.md`. Use the magic thrower, then alternating flanks, then the three-bolt stream for about five minutes. Controls follow D4; a white ring and bell mark a perfect.
@@ -68,14 +119,12 @@ figure measurement do not override those numbers.
 Static images do not establish motion readability, timing, aim feel or performance.
 
 
-## A2 - identity and expressions pending
+## A2 - discarded by the owner
 
-Open the [expression gallery](../art/review/a2/portraits.html) and
-[cast contact sheet](../art/review/a2/cast-contact-sheet.jpg). Review the 16 faces as
-one cast, then compare calm/proud/afraid/angry/scheming/grieving per character.
-Inspect thin collar treatments and fear/grief separation noted in the source
-reviews. Corrected Iskar and Corvo replace their rejected first sheets for export.
-No portrait is promoted to production acceptance by an automated gate.
+Plan section n supersedes the former portrait review. The rejected galleries and
+portrait files were removed from the current tree in W7; their historical versions
+remain in Git. Use the procedural figures for G1. New portraits and mage/enemy
+figures require a separate owner-directed art pass.
 
 
 ## A4 - camp atmosphere and story presentation pending

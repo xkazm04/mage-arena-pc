@@ -1,7 +1,9 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { arenaTiers, enemyData } from '../src/arena/data.generated.ts';
 import { addMage, combat, createTraining, idleInput, lintSpells, newWaterState, presets, runtime, seconds, spellFor, spells, stepTraining, ticks, timingBot, type Composition } from '../src/arena/index.ts';
-const destination = new URL('../../../docs/waves/W3-evidence/', import.meta.url); mkdirSync(destination, { recursive: true });
+const evidence = process.argv[2] ?? 'W3-evidence';
+if (!/^W(?:3|7)-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
+const destination = new URL(`../../../docs/waves/${evidence}/`, import.meta.url); mkdirSync(destination, { recursive: true });
 const errors = lintSpells(); if (errors.length) throw Error(errors.join('\n'));
 const mutation = structuredClone(spells); mutation.find(s => s.family === 'unblockable')!.telegraphS = 0; mutation.find(s => s.line === 'mend')!.branch = 'A';
 if (lintSpells(mutation).length !== 2) throw Error('Linter failed to reject planted contradictions');

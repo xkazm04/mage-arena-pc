@@ -207,5 +207,5 @@ if (season && params.has('harness')) Object.assign(window, { __seasonArena: {
   pause: (value: boolean) => { paused = value; },
 } });
 const dispose = () => { lifetime.abort(); cancelAnimationFrame(raf); input.dispose(); composer.dispose(); void audio?.close(); scene.library.dispose(); app.destroy(true, { children: true }); delete (window as Window & { __arena?: unknown }).__arena; root.replaceChildren(); root.classList.remove('arena-root'); delete (window as Window & { __seasonArena?: unknown }).__seasonArena; };
-return Object.assign(dispose, { flush, pause: (value: boolean) => { paused = value; input.clear(); } });
+return Object.assign(dispose, { flush, pause: (value: boolean) => { paused = value; input.clear(); root.querySelector('#pause')!.textContent = paused ? 'Resume' : 'Pause'; } });
 }

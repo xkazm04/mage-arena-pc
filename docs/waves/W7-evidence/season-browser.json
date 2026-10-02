@@ -8,164 +8,6 @@
         {
           "day": 7,
           "result": {
-            "kind": "missio",
-            "wavesCleared": 3,
-            "gold": 60,
-            "renown": 15,
-            "finalReached": true,
-            "finalWon": false
-          },
-          "tick": 10008,
-          "spectator": false
-        },
-        {
-          "day": 14,
-          "result": {
-            "kind": "missio",
-            "wavesCleared": 0,
-            "gold": 0,
-            "renown": 0,
-            "finalReached": false,
-            "finalWon": false
-          },
-          "tick": 548,
-          "spectator": false
-        }
-      ],
-      "receipts": [
-        {
-          "id": "trial:73:6",
-          "day": 6,
-          "kind": "trial",
-          "entrant": "cassia",
-          "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.157],\"entrant\":\"cassia\"}",
-          "trace": [
-            {
-              "path": "trust/nysa>cassia",
-              "before": -9,
-              "after": -6,
-              "rule": "season-bridge/trial/respectTrust"
-            }
-          ]
-        },
-        {
-          "id": "games:73:7",
-          "day": 7,
-          "kind": "games",
-          "entrant": "cassia",
-          "result": {
-            "kind": "missio",
-            "wavesCleared": 3,
-            "gold": 60,
-            "renown": 15,
-            "finalReached": true,
-            "finalWon": false
-          },
-          "hash": "lost:3:3:121c5505",
-          "trace": [
-            {
-              "path": "characters/cassia/gold",
-              "before": 10,
-              "after": 70,
-              "rule": "arena/arena-tiers/tiro/gold"
-            },
-            {
-              "path": "characters/cassia/renown",
-              "before": 5,
-              "after": 20,
-              "rule": "arena/arena-tiers/tiro/renown"
-            },
-            {
-              "path": "trust/brennic>cassia",
-              "before": 15,
-              "after": 16,
-              "rule": "season-bridge/aftermath"
-            },
-            {
-              "path": "trust/garran>cassia",
-              "before": 33,
-              "after": 34,
-              "rule": "season-bridge/aftermath"
-            },
-            {
-              "path": "trust/iskar>cassia",
-              "before": 10,
-              "after": 11,
-              "rule": "season-bridge/aftermath"
-            }
-          ]
-        },
-        {
-          "id": "trial:73:13",
-          "day": 13,
-          "kind": "trial",
-          "entrant": "cassia",
-          "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[74,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[30,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[44,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6000000000000001,0.28300000000000003],\"entrant\":\"cassia\"}",
-          "trace": [
-            {
-              "path": "trust/nysa>cassia",
-              "before": -13,
-              "after": -10,
-              "rule": "season-bridge/trial/respectTrust"
-            }
-          ]
-        },
-        {
-          "id": "games:73:14",
-          "day": 14,
-          "kind": "games",
-          "entrant": "cassia",
-          "result": {
-            "kind": "missio",
-            "wavesCleared": 0,
-            "gold": 0,
-            "renown": 0,
-            "finalReached": false,
-            "finalWon": false
-          },
-          "hash": "lost:0:0:e59854af",
-          "trace": [
-            {
-              "path": "characters/cassia/gold",
-              "before": 70,
-              "after": 70,
-              "rule": "arena/arena-tiers/tiro/gold"
-            },
-            {
-              "path": "characters/cassia/renown",
-              "before": 20,
-              "after": 20,
-              "rule": "arena/arena-tiers/tiro/renown"
-            },
-            {
-              "path": "trust/brennic>cassia",
-              "before": 16,
-              "after": 17,
-              "rule": "season-bridge/aftermath"
-            },
-            {
-              "path": "trust/garran>cassia",
-              "before": 46,
-              "after": 47,
-              "rule": "season-bridge/aftermath"
-            },
-            {
-              "path": "trust/iskar>cassia",
-              "before": 11,
-              "after": 12,
-              "rule": "season-bridge/aftermath"
-            }
-          ]
-        }
-      ],
-      "day": 15
-    },
-    {
-      "height": 1440,
-      "checkpoints": [
-        {
-          "day": 7,
-          "result": {
             "kind": "champion",
             "wavesCleared": 4,
             "gold": 100,
@@ -173,7 +15,7 @@
             "finalReached": true,
             "finalWon": true
           },
-          "tick": 9335,
+          "tick": 8311,
           "spectator": false
         },
         {
@@ -186,7 +28,7 @@
             "finalReached": false,
             "finalWon": false
           },
-          "tick": 548,
+          "tick": 443,
           "spectator": false
         }
       ],
@@ -219,7 +61,7 @@
             "finalReached": true,
             "finalWon": true
           },
-          "hash": "complete:3:4:60af331a",
+          "hash": "complete:3:4:646ee0ec",
           "trace": [
             {
               "path": "characters/cassia/gold",
@@ -281,7 +123,165 @@
             "finalReached": false,
             "finalWon": false
           },
-          "hash": "lost:0:0:6aec84ff",
+          "hash": "lost:0:0:aac2ac5d",
+          "trace": [
+            {
+              "path": "characters/cassia/gold",
+              "before": 110,
+              "after": 110,
+              "rule": "arena/arena-tiers/tiro/gold"
+            },
+            {
+              "path": "characters/cassia/renown",
+              "before": 30,
+              "after": 30,
+              "rule": "arena/arena-tiers/tiro/renown"
+            },
+            {
+              "path": "trust/brennic>cassia",
+              "before": 18,
+              "after": 19,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/garran>cassia",
+              "before": 48,
+              "after": 49,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/iskar>cassia",
+              "before": 13,
+              "after": 14,
+              "rule": "season-bridge/aftermath"
+            }
+          ]
+        }
+      ],
+      "day": 15
+    },
+    {
+      "height": 1440,
+      "checkpoints": [
+        {
+          "day": 7,
+          "result": {
+            "kind": "champion",
+            "wavesCleared": 4,
+            "gold": 100,
+            "renown": 25,
+            "finalReached": true,
+            "finalWon": true
+          },
+          "tick": 7008,
+          "spectator": false
+        },
+        {
+          "day": 14,
+          "result": {
+            "kind": "missio",
+            "wavesCleared": 0,
+            "gold": 0,
+            "renown": 0,
+            "finalReached": false,
+            "finalWon": false
+          },
+          "tick": 443,
+          "spectator": false
+        }
+      ],
+      "receipts": [
+        {
+          "id": "trial:73:6",
+          "day": 6,
+          "kind": "trial",
+          "entrant": "cassia",
+          "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.157],\"entrant\":\"cassia\"}",
+          "trace": [
+            {
+              "path": "trust/nysa>cassia",
+              "before": -9,
+              "after": -6,
+              "rule": "season-bridge/trial/respectTrust"
+            }
+          ]
+        },
+        {
+          "id": "games:73:7",
+          "day": 7,
+          "kind": "games",
+          "entrant": "cassia",
+          "result": {
+            "kind": "champion",
+            "wavesCleared": 4,
+            "gold": 100,
+            "renown": 25,
+            "finalReached": true,
+            "finalWon": true
+          },
+          "hash": "complete:3:4:625ef8b9",
+          "trace": [
+            {
+              "path": "characters/cassia/gold",
+              "before": 10,
+              "after": 110,
+              "rule": "arena/arena-tiers/tiro/gold"
+            },
+            {
+              "path": "characters/cassia/renown",
+              "before": 5,
+              "after": 30,
+              "rule": "arena/arena-tiers/tiro/renown"
+            },
+            {
+              "path": "trust/brennic>cassia",
+              "before": 15,
+              "after": 18,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/garran>cassia",
+              "before": 33,
+              "after": 36,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/iskar>cassia",
+              "before": 10,
+              "after": 13,
+              "rule": "season-bridge/aftermath"
+            }
+          ]
+        },
+        {
+          "id": "trial:73:13",
+          "day": 13,
+          "kind": "trial",
+          "entrant": "cassia",
+          "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[74,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[30,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[44,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6200000000000001,0.28300000000000003],\"entrant\":\"cassia\"}",
+          "trace": [
+            {
+              "path": "trust/nysa>cassia",
+              "before": -13,
+              "after": -10,
+              "rule": "season-bridge/trial/respectTrust"
+            }
+          ]
+        },
+        {
+          "id": "games:73:14",
+          "day": 14,
+          "kind": "games",
+          "entrant": "cassia",
+          "result": {
+            "kind": "missio",
+            "wavesCleared": 0,
+            "gold": 0,
+            "renown": 0,
+            "finalReached": false,
+            "finalWon": false
+          },
+          "hash": "lost:0:0:eab9892b",
           "trace": [
             {
               "path": "characters/cassia/gold",

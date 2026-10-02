@@ -1,0 +1,11 @@
+{
+  "label": "measured attempt record, no additional model calls requested by this record",
+  "attempts": [
+    {"attempt": 1, "callsBefore": 5, "callsAfter": 7, "outcome": "driver failure: clicked dawn before the 45-second listening act ended; locator timed out after 30 seconds", "cache": "three original sample groups reused; two new groups completed and cached"},
+    {"attempt": 2, "callsBefore": 7, "callsAfter": 7, "outcome": "diagnostic repeat reproduced early wait completion; observed nightFinished false and listening tick 1 immediately after the wait", "cache": "all five groups reused"},
+    {"attempt": 3, "callsBefore": 7, "callsAfter": 7, "outcome": "PASS with explicit bounded server-state polling; morning board has two visible cards; no page errors", "cache": "all five groups reused and revalidated"}
+  ],
+  "cap": 20,
+  "ledger": "director-ledger.json",
+  "successfulEvidence": "director-browser.json"
+}

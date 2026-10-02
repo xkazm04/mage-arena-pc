@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 const evidence = process.argv[2] ?? 'W4-evidence';
 if (!/^W(?:4|4b|7)-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
 const destination = new URL(`../../../docs/waves/${evidence}/`, import.meta.url); mkdirSync(destination, { recursive: true });
-const fixture = JSON.parse(readFileSync(new URL('../../../docs/waves/W4b-evidence/competence-ladder.json', import.meta.url), 'utf8')).completion;
+const fixture = JSON.parse(readFileSync(new URL(`../../../docs/waves/${evidence.startsWith('W7') ? 'W7-evidence' : 'W4b-evidence'}/competence-ladder.json`, import.meta.url), 'utf8')).completion;
 const server = spawn(process.execPath, ['--import', 'tsx', '../../node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4177', '--strictPort'], { cwd: fileURLToPath(new URL('..', import.meta.url)), windowsHide: true, stdio: 'ignore' });
 let browser;
 try {

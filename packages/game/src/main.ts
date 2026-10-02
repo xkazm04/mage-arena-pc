@@ -36,7 +36,8 @@ settings.querySelector<HTMLButtonElement>('#save-season')!.onclick = () => { voi
 async function load(previous = false) {
   arena?.pause(true); await arena?.flush();
   await request('session'); await request(previous ? 'load-previous' : 'load', {});
-  dispose?.(); dispose = undefined; arena = undefined; settings.close(); await navigate('/camp');
+  dispose?.(); dispose = undefined; arena = undefined; settings.close(); await navigate('/camp', true);
+  settings.showModal(); status('Save loaded. Resume when ready.');
 }
 settings.querySelector<HTMLButtonElement>('#load-season')!.onclick = () => void load().catch(e => status(String(e)));
 settings.querySelector<HTMLButtonElement>('#load-previous')!.onclick = () => void load(true).catch(e => status(String(e)));
@@ -59,22 +60,27 @@ async function pick() {
     b.onclick = () => void navigate('/camp'); card.append(title, label, b); root.querySelector('.character-picks')!.append(card);
   }
 }
-async function navigate(path: string) {
+async function navigate(path: string, restored = false) {
   if (routing) return; routing = true;
   try {
     arena?.pause(true); await arena?.flush(); dispose?.(); dispose = undefined; arena = undefined;
     root.replaceChildren(); history.replaceState(null, '', `${path}${location.search}`);
     if (path === '/') { await request('session'); await request('pause', { paused: true }); menu(); return; }
-    await request('session'); await request('pause', { paused: false });
+    await request('session'); await request('pause', { paused: restored });
     const view = await request<SeasonView>('session');
     if (path === '/training') { arena = await mountArena(root); dispose = arena; }
     else if (view.season.bout) {
-      if (view.season.bout.phase === 'prepared') await seasonCommand({ type: 'start' });
+      if (view.season.bout.phase === 'prepared') {
+        // Mount the saved entrant at tick zero, then keep a loaded scene paused.
+        if (restored) await request('pause', { paused: false });
+        await seasonCommand({ type: 'start' });
+        if (restored) await request('pause', { paused: true });
+      }
       const bout = linkBout(await request<SeasonBout>('bout'));
       arena = await mountArena(root, { bout,
         send: (entries, hash) => request('bout-input', { id: bout.id, entries, hash }),
         finish: async () => { await seasonCommand({ type: 'receive' }); await navigate('/camp'); },
-      }); dispose = arena;
+      }); dispose = arena; arena.pause(restored);
     } else dispose = await mountCamp(root, () => { void navigate('/arena'); });
   } catch (e) { console.error(e); root.textContent = `The scene could not open: ${String(e)}`; }
   finally { routing = false; }
