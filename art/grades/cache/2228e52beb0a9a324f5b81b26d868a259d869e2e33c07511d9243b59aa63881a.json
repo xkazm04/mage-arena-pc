@@ -1,0 +1,98 @@
+{
+  "artifact": "a5-icons",
+  "at": "2026-10-02T08:03:35.599194+00:00",
+  "input_hash": "2228e52beb0a9a324f5b81b26d868a259d869e2e33c07511d9243b59aa63881a",
+  "source": "art/review/a5/contact-sheet.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "e799b682c553fcdab04907fefb0b5557d42a28a5896af9044f711e332226260b",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: 46 authored original SVG symbols on lime and dark surfaces with legible labels: four schools, four school resources, five Water spell lines plus bolt, ten Fire reference spell glyphs, 22 interface marks. Assess distinct silhouettes, theme coherence and small-symbol readability. Fire line migration and Earth/Air line glyphs explicitly pending W8; do not reject absent undefined content. No production or owner acceptance.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The image displays a grid of 46 interface symbols, each presented in two variations: a light 'lime' background and a dark background. The symbols are vector-based (SVG) and use a consistent color palette of terracotta, umber, mineral blue, and gold, matching the expected style. The layout is clean and organized into rows and columns, with clear labels and sub-labels for each symbol (e.g., 'Tide Orb', 'Water lines', 'water-tide-orb'). The text is legible and well-spaced. There are no watermarks, logos, or photographic inserts. The symbols themselves are distinct and appear to be original, covering the categories mentioned: schools (Water, Fire, Earth, Air), resources (Flow, Heat, Footing, Momentum), Water spells (Rain Needle, Lash, Mire, Mend, Mirror), Fire spells (Ember Dart, Flick Flame, Cinder Step, Kindle, Brand Lance, Ring of Cinders, Pyre Circle, Furnace Heart, Sunfall, Brand Wrath), and interface marks (Health, Mana, Stamina, Absorb, Perfect Absorb, Tier Clock, Roll, Sprint, Staff Strike, Lock, Borrowed, Knowing, Trust, Ration, Inventory, Renown, Day, Dusk, Night, Warning, Close, Settings). The count matches the expectation of 46 symbols. The presentation is professional and meets the requirements for an authored UI capture.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The image displays a grid of 46 interface symbols, each presented in two variations: a light 'lime' background and a dark background. The symbols are vector-based (SVG) and use a consistent color palette of terracotta, umber, mineral blue, and gold, matching the expected style. The layout is clean and organized into rows and columns, with clear labels and sub-labels for each symbol (e.g., 'Tide Orb', 'Water lines', 'water-tide-orb'). The text is legible and well-spaced. There are no watermarks, logos, or photographic inserts. The symbols themselves are distinct and appear to be original, covering the categories mentioned: schools (Water, Fire, Earth, Air), resources (Flow, Heat, Footing, Momentum), Water spells (Rain Needle, Lash, Mire, Mend, Mirror), Fire spells (Ember Dart, Flick Flame, Cinder Step, Kindle, Brand Lance, Ring of Cinders, Pyre Circle, Furnace Heart, Sunfall, Brand Wrath), and interface marks (Health, Mana, Stamina, Absorb, Perfect Absorb, Tier Clock, Roll, Sprint, Staff Strike, Lock, Borrowed, Knowing, Trust, Ration, Inventory, Renown, Day, Dusk, Night, Warning, Close, Settings). The count matches the expectation of 46 symbols. The presentation is professional and meets the requirements for an authored UI capture."
+  },
+  "eval_count": 369,
+  "elapsed_seconds": 13.312
+}

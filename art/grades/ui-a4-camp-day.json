@@ -1,0 +1,103 @@
+{
+  "artifact": "a4-camp-day",
+  "at": "2026-10-02T07:40:40.054690+00:00",
+  "input_hash": "bc25f14ddf592267e1913838c6fae4373095517e97c59cb3dcd961d3d007e559",
+  "source": "art/delivery/a4/screens/camp-day-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "49ce55bb9d6c7601ef23a0bee5f83e5c6b50ff0a8ddc3fbbe990846971f572fe",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Camp map with eight labeled places and Day/Dusk/Night controls. Current slot day. Open places reflect that slot, disabled places have opening labels. Labels must stay legible above map. The side panel shows selected place and Visit. Judge readability and overlap, not game behavior.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\"forbidden_rendering\": false, \"overhead_view\": \"yes\", \"required_content\": \"yes\", \"style_match\": \"yes\", \"readability\": 3, \"confidence\": 0.75, \"observation\": \"The UI successfully implements the expected camp map layout with eight distinct labeled locations (The Yard, The Cistern, The Pit, The Exchange, The Commons, The Door, Your tent, The Edge) and functional Day/Dusk/Night controls in the top right. The current slot is correctly set to 'Day', and the side panel accurately reflects this by showing 'The Yard' as selected with a 'Visit' button, while other locations display their availability status (e.g., 'Open now' vs 'Opens: Dusk/Night'). The visual style adheres to the specified palette of chalk-lime, umber, terracotta, and mineral blue, creating a cohesive aesthetic. All labels are clearly legible and positioned above the map art without significant overlap or obscuring of controls. The side panel provides clear information about the selected location and its availability. There are no forbidden renderings such as unintended watermarks or logos. The overall design is clean and functional, meeting the stated expectations for readability and layout.\"}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The UI successfully implements the expected camp map layout with eight distinct labeled locations (The Yard, The Cistern, The Pit, The Exchange, The Commons, The Door, Your tent, The Edge) and functional Day/Dusk/Night controls in the top right. The current slot is correctly set to 'Day', and the side panel accurately reflects this by showing 'The Yard' as selected with a 'Visit' button, while other locations display their availability status (e.g., 'Open now' vs 'Opens: Dusk/Night'). The visual style adheres to the specified palette of chalk-lime, umber, terracotta, and mineral blue, creating a cohesive aesthetic. All labels are clearly legible and positioned above the map art without significant overlap or obscuring of controls. The side panel provides clear information about the selected location and its availability. There are no forbidden renderings such as unintended watermarks or logos. The overall design is clean and functional, meeting the stated expectations for readability and layout."
+  },
+  "eval_count": 258,
+  "elapsed_seconds": 13.75,
+  "verdict": "owner-review",
+  "codes": [
+    "OWNER_CHOICE_PENDING"
+  ],
+  "owner_accepted": false
+}

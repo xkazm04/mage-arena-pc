@@ -1,0 +1,77 @@
+{
+  "id": "01-tessera-arena-a01",
+  "style_id": "01-tessera",
+  "scene": "arena",
+  "attempt": 1,
+  "input_hash": "7f6c83a7f975c3ef57a9ccac118d51c41b0735ceb2c4f1d09bf282efe1b5b5b4",
+  "input": {
+    "version": "a1-v1",
+    "style": {
+      "id": "01-tessera",
+      "name": "Tessera & Lime",
+      "line": "broken umber contours and hand-painted tessera joins",
+      "palette": "chalk, terracotta, ochre, mineral blue",
+      "shading": "flat fresco planes with sparse tile shadows",
+      "density": "medium, ornament confined to edges",
+      "mood": "sun-bleached civic grandeur and captivity",
+      "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+      "ui": {
+        "paper": "#f3e6c5",
+        "ink": "#38261f",
+        "accent": "#226b8b"
+      }
+    },
+    "scene": "arena",
+    "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nACTION: A wide overhead action-RPG arena fight, viewed steeply down onto the sand with no horizon: a small adult Water mage in a short tunic at the lower centre, mid-cast toward enemies in the upper half. Her outstretched casting hand sends a thin cyan water bolt toward a shield-bearing soldier; a distinct forward-facing crescent ward catches an incoming orange magic orb in a tight white impact flash, leaving her back visibly open. A slinger flanks on the left, a cinder hound runs on the right, and a distant enemy mage casts the orb; a separate black-centred jagged red ground warning stays away from the player silhouette. Low Roman arena walls, distant stepped seats and upright ward stones frame generous navigable sand, with effects separated by shape and value instead of a full-screen explosion. Keep the combat subjects inside the middle of the image, with calm space along the top and bottom for later interface labels.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+    "aspect_ratio": "16:9"
+  },
+  "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nACTION: A wide overhead action-RPG arena fight, viewed steeply down onto the sand with no horizon: a small adult Water mage in a short tunic at the lower centre, mid-cast toward enemies in the upper half. Her outstretched casting hand sends a thin cyan water bolt toward a shield-bearing soldier; a distinct forward-facing crescent ward catches an incoming orange magic orb in a tight white impact flash, leaving her back visibly open. A slinger flanks on the left, a cinder hound runs on the right, and a distant enemy mage casts the orb; a separate black-centred jagged red ground warning stays away from the player silhouette. Low Roman arena walls, distant stepped seats and upright ward stones frame generous navigable sand, with effects separated by shape and value instead of a full-screen explosion. Keep the combat subjects inside the middle of the image, with calm space along the top and bottom for later interface labels.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+  "session_id": "d15c5907-b4bb-4076-b091-876f8585363e",
+  "origin": "grok-cli",
+  "model": "grok-4.7",
+  "seed": null,
+  "correction": null,
+  "at": "2026-10-01T21:57:12.329245+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_gen",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "d15c5907-b4bb-4076-b091-876f8585363e",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-arena-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "tool_calls": [
+    {
+      "name": "image_gen",
+      "arguments": {
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nACTION: A wide overhead action-RPG arena fight, viewed steeply down onto the sand with no horizon: a small adult Water mage in a short tunic at the lower centre, mid-cast toward enemies in the upper half. Her outstretched casting hand sends a thin cyan water bolt toward a shield-bearing soldier; a distinct forward-facing crescent ward catches an incoming orange magic orb in a tight white impact flash, leaving her back visibly open. A slinger flanks on the left, a cinder hound runs on the right, and a distant enemy mage casts the orb; a separate black-centred jagged red ground warning stays away from the player silhouette. Low Roman arena walls, distant stepped seats and upright ward stones frame generous navigable sand, with effects separated by shape and value instead of a full-screen explosion. Keep the combat subjects inside the middle of the image, with calm space along the top and bottom for later interface labels.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "tool_results": [
+    "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-arena-a01\\\\d15c5907-b4bb-4076-b091-876f8585363e\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-arena-a01\\\\d15c5907-b4bb-4076-b091-876f8585363e\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+  ],
+  "prompt_verbatim_verified": true,
+  "returncode": 0,
+  "source": "art/raw/01-tessera-arena-a01/source.jpg",
+  "sha256": "29cfbc9b27214d5aee6e4238e9116ca578cf793fa289cec9ae9cd167175eaa22",
+  "elapsed_seconds": 18.953
+}
