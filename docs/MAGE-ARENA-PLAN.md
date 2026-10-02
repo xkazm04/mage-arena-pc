@@ -164,8 +164,8 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | not started |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | not started |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
-| Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | **owner confirms the arena camera** (`art/CAMERA-OK.md`) | blocked |
-| Arena | W4b | Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
+| Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | owner confirmed the camera 2026-10-02 (`art/CAMERA-OK.md`: open-oval-sparse-near-a01, near distance) | not started |
+| Arena | W4b | (camera confirmed: near distance, open oval) Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
 
 ## l. Session log
 
