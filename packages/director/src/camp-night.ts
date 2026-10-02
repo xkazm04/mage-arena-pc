@@ -1,9 +1,16 @@
 import { type CampState, type Decision, type Tables } from "@mage/core";
-import { groups, request } from "./input.ts";
+import { groups, request, type ProviderRequest } from "./input.ts";
 import { hash } from "./cache.ts";
 import { plan } from "./planner.ts";
 import { validateGroup } from "./validator.ts";
 import type { HarnessOptions } from "./harness.ts";
+export interface NightCheckpoint {
+  state: CampState;
+  caps: Tables['rules']['caps'];
+  completed: { group: string; items: Decision[] }[];
+  audit: CampNight['audit'];
+  requests: { group: string; key: string; request: ProviderRequest }[];
+}
 
 /** Partial results survive slow groups. Closing a job seals both results and cache. */
 export class CampNight {
@@ -19,12 +26,24 @@ export class CampNight {
   }[] = [];
   readonly done: Promise<void>;
   private closed = false;
+  readonly requests: NightCheckpoint['requests'];
   constructor(
     readonly tables: Tables,
     readonly state: CampState,
     readonly options: HarnessOptions,
+    checkpoint?: NightCheckpoint,
   ) {
-    this.done = this.run();
+    this.requests = checkpoint?.requests ?? groups(state).map(({ group, members }) => { const req = request(tables, state, group, members, options.provider.model, options.provider.options); return { group, key: hash(req), request: req }; });
+    if (checkpoint) {
+      for (const { group, items } of checkpoint.completed) this.completed.set(group, structuredClone(items));
+      this.audit.push(...structuredClone(checkpoint.audit));
+      this.closed = true;
+      this.done = Promise.resolve();
+    } else this.done = this.run();
+  }
+  checkpoint(): NightCheckpoint {
+    this.close();
+    return structuredClone({ state: this.state, caps: this.tables.rules.caps, completed: [...this.completed].map(([group, items]) => ({ group, items })), audit: this.audit, requests: this.requests });
   }
   private async run() {
     for (const { group, members } of groups(this.state)) {

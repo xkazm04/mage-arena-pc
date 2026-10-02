@@ -122,3 +122,29 @@ to its upper limit; the full seed sample is retained, without dropping losses.
 Root gate after the sprint change: 137 TypeScript tests and 10 reference tests
 passed; no design contradictions. Numeric health and damage data, reference
 controller, camera contract and duration bands are unchanged.
+## Save/load sub-wave
+
+Version-one saves contain the source fingerprint, checksum, arena checkpoint hash,
+camp/session state, input log, receipts, carried effects, promises, and completed
+validated Director groups with their original request identities. Arena player
+references are serialized as IDs and re-linked before replay validation. The local
+sidecar writes `.director-runtime/saves/season.json` through a flushed temporary
+file and preserves `.previous`; malformed/version/source failures leave play
+unchanged. Pause/settings and the menu provide load; settings also offers recovery.
+
+Checkpointing seals unfinished inference. Both the continuing service and a loaded
+copy use the selected authored Parley card / offline night fallback for unfinished
+work. Completed groups survive; reservations remain in the durable cost ledger,
+outside the save. Epoch checks reject late responses and old asynchronous cleanup
+cannot unlock newer work. No new paid call is made by restore.
+
+Tests exposed historical-object aliasing: the live camp shared the last resolution
+and history board, so later Games rewards rewrote prior records in an uninterrupted
+run but not a JSON-loaded run. `camp-session.ts` now snapshots both records at
+creation. This changes no combat rules or census results.
+
+Save matrix covers initial/final weeks, next-day continuation, listening ticks,
+pending Parley, partially completed pending dawn, prepared/active/intermission/
+terminal bouts, before/after reward, duplicate payout, corrupted files and previous
+good recovery. Full root gate: **144 TypeScript + 10 reference tests PASS**, lint,
+both compiler checks and zero design contradictions (2026-10-02).

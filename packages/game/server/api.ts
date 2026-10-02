@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { randomUUID } from "node:crypto";
 import {
   createCampRuntime,
+  SaveStore, restoreSave,
   type SeasonService,
   type SeasonCommand,
   type ParleyInput,
@@ -10,6 +11,7 @@ import {
 import { campPlay, bridgeRules, type BoutInput } from "@mage/core";
 
 export function campApi() {
+  const saves = new SaveStore();
   const sessions = new Map<string, SeasonService>();
   const timer = setInterval(() => {
     for (const service of sessions.values()) service.tick();
@@ -68,6 +70,11 @@ export function campApi() {
           return send(413, { error: "That message is too long." });
       }
       const payload = JSON.parse(body) as Record<string, unknown>;
+      if (req.url === '/api/save') return send(200, saves.write(service));
+      if (req.url === '/api/load' || req.url === '/api/load-previous') {
+        restoreSave(service, saves.read(service.tables, req.url.endsWith('-previous')));
+        return send(200, service.view());
+      }
       if (req.url === '/api/season') return send(200, service.seasonCommand(payload.command as SeasonCommand, payload.revision as number));
       if (req.url === '/api/bout-input') return send(200, service.boutInputs(payload.id as string, payload.entries as BoutInput[], payload.hash as string));
       if (req.url === '/api/pause') { service.paused = payload.paused === true; return send(200, service.view()); }

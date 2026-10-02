@@ -212,7 +212,7 @@ export function actCamp(
   s.carry = result.carry!;
   s.dayActs.push(structuredClone(d));
   s.dayEvents.push(...result.events);
-  s.lastResolution = result;
+  s.lastResolution = structuredClone(result);
   return s;
 }
 export function beginListening(before: CampSession): CampSession {
@@ -376,9 +376,9 @@ export function settleCamp(
     nightFinished: false,
     history: [
       ...before.history,
-      { day: before.camp.day, board: result.state.board },
+      { day: before.camp.day, board: structuredClone(result.state.board) },
     ],
-    lastResolution: result,
+    lastResolution: structuredClone(result),
     intentPromises: [],
   };
 }

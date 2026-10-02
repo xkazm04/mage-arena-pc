@@ -15,7 +15,7 @@ settings.innerHTML = `<p class="eyebrow">PAUSED / SETTINGS</p><h2>Your hands, yo
 <p><b>W A S D</b> move · <b>Mouse</b> aim at feet · <b>Left button</b> cast<br><b>Right button held</b> directional absorb · <b>Space</b> roll · <b>Shift</b> sprint<br><b>1–4 / wheel</b> choose spell slot · <b>View slider</b> camera zoom</p>
 <p>Camp: click places and actions; Tab / Enter activate controls.<br>Listening: A / D or 1–3 choose cover, hold Space to listen.<br>Trial: choose a stance; brace beats press, feint beats brace, press beats feint.</p>
 <label><input type="checkbox" id="sound-setting" checked> Perfect absorb bell</label>
-<p id="save-status" role="status"></p><div class="menu-actions"><button id="save-season">Save season</button><button id="load-season">Load season</button><button id="resume-season" class="primary">Resume</button></div>`;
+<p id="save-status" role="status"></p><div class="menu-actions"><button id="save-season">Save season</button><button id="load-season">Load season</button><button id="load-previous">Recover previous save</button><button id="resume-season" class="primary">Resume</button></div>`;
 document.body.append(settings);
 const status = (message: string) => { settings.querySelector('#save-status')!.textContent = message; };
 const sound = settings.querySelector<HTMLInputElement>('#sound-setting')!;
@@ -33,11 +33,18 @@ nav.querySelector<HTMLButtonElement>('#settings')!.onclick = () => void showSett
 nav.querySelector<HTMLButtonElement>('#main-menu')!.onclick = () => void navigate('/');
 window.addEventListener('keydown', e => { if (e.code === 'Escape' && !document.querySelector('dialog[open]')) { e.preventDefault(); void showSettings(); } });
 settings.querySelector<HTMLButtonElement>('#save-season')!.onclick = () => { void request('save', {}).then(() => status('Season saved.')).catch(e => status(String(e))); };
-settings.querySelector<HTMLButtonElement>('#load-season')!.onclick = () => { void request('load', {}).then(async () => { settings.close(); await navigate('/camp'); }).catch(e => status(String(e))); };
+async function load(previous = false) {
+  arena?.pause(true); await arena?.flush();
+  await request('session'); await request(previous ? 'load-previous' : 'load', {});
+  dispose?.(); dispose = undefined; arena = undefined; settings.close(); await navigate('/camp');
+}
+settings.querySelector<HTMLButtonElement>('#load-season')!.onclick = () => void load().catch(e => status(String(e)));
+settings.querySelector<HTMLButtonElement>('#load-previous')!.onclick = () => void load(true).catch(e => status(String(e)));
 
 function menu() {
-  root.innerHTML = '<main class="main-menu"><p class="eyebrow">MAGE ARENA</p><h1>Beyond the closed grille</h1><p>Six weeks beneath the collar. Two weeks to find your feet.</p><div class="menu-actions"><button id="pick-character" class="primary">Choose your mage</button><button id="continue-season">Continue season</button><button id="training-arena">Training arena</button></div><p>Water is playable in this chapter. Fire, Earth and Air share the camp as allies and rivals.</p><p class="menu-note">Tiro Games · mouse and keyboard · procedural figure placeholders</p></main>';
+  root.innerHTML = '<main class="main-menu"><p class="eyebrow">MAGE ARENA</p><h1>Beyond the closed grille</h1><p>Six weeks beneath the collar. Two weeks to find your feet.</p><div class="menu-actions"><button id="pick-character" class="primary">Choose your mage</button><button id="continue-season">Continue season</button><button id="menu-load">Load saved season</button><button id="training-arena">Training arena</button></div><p>Water is playable in this chapter. Fire, Earth and Air share the camp as allies and rivals.</p><p class="menu-note">Tiro Games · mouse and keyboard · procedural figure placeholders</p></main>';
   root.querySelector<HTMLButtonElement>('#pick-character')!.onclick = () => void pick();
+  root.querySelector<HTMLButtonElement>('#menu-load')!.onclick = () => void load().catch(e => { root.querySelector('.menu-note')!.textContent = String(e); });
   root.querySelector<HTMLButtonElement>('#continue-season')!.onclick = () => void navigate('/camp');
   root.querySelector<HTMLButtonElement>('#training-arena')!.onclick = () => void navigate('/training');
 }

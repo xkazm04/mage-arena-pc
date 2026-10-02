@@ -1,5 +1,6 @@
 import {
   applyParley,
+  authoredParley,
   parleyMoments,
   parleyRules,
   seedParleyFacts,
@@ -17,12 +18,14 @@ import {
   type CampSession,
   type Tables,
 } from "@mage/core";
-import { CampNight } from "./camp-night.ts";
+import { CampNight, type NightCheckpoint } from "./camp-night.ts";
+import { hash } from './cache.ts';
 import { plan } from "./planner.ts";
 import type { HarnessOptions } from "./harness.ts";
 import {
   ParleyDirector,
   parleyInputProblem,
+  parleyRequest,
   type ParleyInput,
   type ParleyOptions,
 } from "./parley.ts";
@@ -32,12 +35,22 @@ export type CampCommand =
   | { type: "travel"; place: string }
   | { type: "act"; action: string }
   | { type: "wait" | "listen" | "dawn" };
+export interface CampCheckpoint {
+  session: CampSession;
+  input: { lane: number; listening: boolean };
+  night: NightCheckpoint | null;
+  parleyAudit: CampService['parleyAudit'];
+  pendingParley: { input: ParleyInput; key: string | null } | null;
+  pendingDawn: boolean;
+}
 export class CampService {
   session: CampSession;
   job: CampNight | null = null;
   protected dawn: Promise<void> | null = null;
   protected conversation: Promise<void> | null = null;
   protected closed = false;
+  private epoch = 0;
+  private pendingParley: CampCheckpoint['pendingParley'] = null;
   readonly parleyDirector: ParleyDirector;
   readonly parleyAudit: {
     day: number;
@@ -148,11 +161,12 @@ export class CampService {
       case "dawn": {
         if (!this.session.nightFinished || !this.job)
           throw new Error("Finish your night act first.");
-        this.dawn = this.finish();
+        const pending = this.finish();
+        this.dawn = pending;
         try {
           await this.dawn;
         } finally {
-          this.dawn = null;
+          if (this.dawn === pending) this.dawn = null;
         }
         break;
       }
@@ -180,22 +194,26 @@ export class CampService {
       throw new Error("The camp has moved on. Try again.");
     const problem = parleyInputProblem(this.tables, this.session, input);
     if (problem) throw new Error(problem);
-    this.conversation = this.speak(input);
+    const pending = this.speak(input);
+    this.conversation = pending;
     try {
       await this.conversation;
     } finally {
-      this.conversation = null;
+      if (this.conversation === pending) this.conversation = null;
     }
     return this.view();
   }
   private async speak(input: ParleyInput) {
+    const epoch = this.epoch, transport = this.parleyDirector.options.transport;
+    this.pendingParley = { input: structuredClone(input), key: input.text && transport ? hash(parleyRequest(this.session, input.target, input.text, transport.model, transport.options)) : null };
     const beforeSlot = this.session.slot;
     const result = await this.parleyDirector.speak(
       this.tables,
       structuredClone(this.session),
       input,
     );
-    if (this.closed) return;
+    if (this.closed || epoch !== this.epoch) return;
+    this.pendingParley = null;
     this.session = applyParley(
       this.tables,
       this.session,
@@ -213,8 +231,12 @@ export class CampService {
       this.startNight();
   }
   private async finish() {
+    const epoch = this.epoch;
     const proposals = await this.job!.finish(campPlay.listening.graceMs);
-    if (this.closed) return;
+    if (this.closed || epoch !== this.epoch) return;
+    this.settle(proposals);
+  }
+  private settle(proposals: import('@mage/core').Decision[]) {
     this.session = settleCamp(
       this.tables,
       this.session,
@@ -232,6 +254,32 @@ export class CampService {
             parleyRules.friendlyIntents.includes(d.intent),
         ),
     );
+  }
+  /** Freeze transport, never refund paid reservations. The original run and a loaded
+   * copy resume the same authored fallback for work not complete at this boundary. */
+  checkpointCamp(): CampCheckpoint {
+    const checkpoint = structuredClone({ session: this.session, input: this.input, night: this.job?.checkpoint() ?? null, parleyAudit: this.parleyAudit, pendingParley: this.pendingParley, pendingDawn: this.dawn !== null });
+    this.restoreCamp(checkpoint);
+    return checkpoint;
+  }
+  restoreCamp(checkpoint: CampCheckpoint) {
+    this.epoch++; this.job?.close(); this.parleyDirector.close();
+    this.dawn = null; this.conversation = null; this.pendingParley = null;
+    this.session = structuredClone(checkpoint.session); this.input = { ...checkpoint.input };
+    this.parleyAudit.splice(0, this.parleyAudit.length, ...structuredClone(checkpoint.parleyAudit));
+    const night = checkpoint.night;
+    this.job = night ? new CampNight({ ...this.tables, rules: { ...this.tables.rules, caps: night.caps } }, structuredClone(night.state), this.options, night) : null;
+    if (checkpoint.pendingParley) {
+      const pending = checkpoint.pendingParley, oldSlot = this.session.slot;
+      this.session = applyParley(this.tables, this.session, pending.input.target, authoredParley(this.session, pending.input.target, pending.input.cardId));
+      this.parleyAudit.push({ day: this.session.camp.day, source: 'checkpoint-card', problem: 'unfinished-at-checkpoint', key: pending.key, replyReplaced: null });
+      if (oldSlot === 'dusk' && this.session.slot === 'night' && !this.job) {
+        // The fallback crosses dusk. A restored checkpoint never initiates inference.
+        const tables = remainingCaps(this.tables, this.session), state = structuredClone(this.session.camp);
+        this.job = new CampNight(tables, state, this.options, { state, caps: tables.rules.caps, completed: [], audit: [], requests: [] });
+      }
+    }
+    if (checkpoint.pendingDawn) this.settle(night?.completed.flatMap(g => g.items) ?? []);
   }
   close() {
     this.closed = true;
