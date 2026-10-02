@@ -76,6 +76,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 
 | Stream | Id | Wave | Depends on | Status | Commit | Date |
 |---|---|---|---|---|---|---|
+| Audio [`audio`] | AU1 | Philosophy, guarded generation, audition and investment evidence | D21-D24 | partial; billing latch after 2/40 proofs; reports validated; stopped for owner | this AU1 handoff commit | 2026-10-02 |
 | Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | not started | | |
 | Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | not started | | |
 | Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
@@ -215,7 +216,7 @@ Pattern to follow (read-only): `C:\Users\kazda\kiro\garden-vr\docs\audio\` (`AUD
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Audio [`audio`] | AU1 | **Philosophy and audition round 1**: audio bible (pillars, palette of sound, mix and priority rules, adaptive music design tied to the collar clock, loudness targets); the project ElevenLabs tool with ledger and credit guard; about 30 to 40 samples across directions and themes; the audition report; stop for the owner | D21-D24 | not started |
+| Audio [`audio`] | AU1 | **Philosophy and audition round 1**: audio bible (pillars, palette of sound, mix and priority rules, adaptive music design tied to the collar clock, loudness targets); the project ElevenLabs tool with ledger and credit guard; about 30 to 40 samples across directions and themes; the audition report; stop for the owner | D21-D24 | partial: bible and both reports ready, 2/40 proofs generated; local billing latch, no provider quota error; stopped for owner |
 | Audio | AU2 | Round 2 refinement of the chosen directions (variants inside the chosen family), narration or bark voice if wanted | AU1 owner choice | blocked |
 | Audio | AU3 | Production set: the full effect list per element and event, the music set (title, camp day/dusk/night, arena per palette, win and loss stingers, adaptive layers), UI sounds, ambiences; loudness-normalised, loop-checked, sidecars and ledger | AU2 | blocked |
 | Game | AU4 | In-game audio engine: WebAudio mixer with buses, priority, cooldown and concurrency limits, ducking, adaptive music following the collar tiers and absorb events, UI sounds from the UI kit, volume and mute settings, tests for the priority table | AU3 or placeholders | not started |
@@ -225,3 +226,13 @@ Pattern to follow (read-only): `C:\Users\kazda\kiro\garden-vr\docs\audio\` (`AUD
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
+
+### AU1 audio — 2026-10-02 — partial handoff, owner stop
+
+Read full plan, owner notes, baseline combat/camp design, garden-vr audio patterns and registry audio guidance. Wrote `docs/audio/AUDIO-BIBLE.md` (all unchosen sound/mix directions are proposals), empty owner choices, 40 original comparison briefs, adapted guarded generator, committed-ledger/sidecar workflow, offline measurements, `docs/audio/audition/r1/index.html` and `docs/audio/PROOF-REPORT.html`. Owner's investment-evidence addition is reflected in the proof report, including forecasts and a proposed same-list Google comparison; no Google service invoked.
+
+Generation stopped after a 2 s Fire SFX proof and a 20 s arena music proof. **No quota/429 and no cap exhaustion.** Music returned no billing header, which tripped the tool's additional billing-uncertainty latch. The owner instructed stopping on a latch, so it was not cleared. Exact SFX charge 20; music actual unresolved, 1,200 reserved; total conservative cap debit 1,220/12,000. Shared account change across the interval 620, remaining 42,061 at 19:14:19 UTC, reserve 8,000, reset 2026-10-04 19:31:41 UTC. The 38 other samples and the voice proof were not generated; this is incomplete AU1 coverage, not proof of a Starter plan limitation.
+
+Validation commands: `node --test tools/audio/guard.test.mjs` (7 offline guard tests); `node tools/audio/plan-audition.mjs` (40 authored briefs, no calls); `python tools/audio/measure.py` (both files decoded and ebur128 measured); `python tools/audio/build-reports.py`; `python tools/audio/check-reports.py` (file:// desktop 1440px + phone 390px, light/dark, every audio plays, no browser errors, no page overflow, localStorage/Markdown export/repeat checks, every reference exists, sidecars/ledger/hashes agree). Evidence in `docs/audio/evidence/validation.json` and meter outputs/screenshots. SFX -10.0 LUFS / +0.8 dBTP; music -14.4 LUFS / -1.5 dBTP; music direct-repeat edge RMS difference 5.21 dB fails the authored 3 dB screen despite a near-zero endpoint jump. Raw files remain unchanged; report playback applies measured attenuation.
+
+Not measured: owner listening, actual music billing attribution, voice cost, alternate-direction/family coherence, music tempo/grid, adaptive stems and in-game mix. Next action is owner review/accounting resolution for any future AU1 continuation; AU2–AU4 and production remain untouched. See `docs/waves/AU1-audio-philosophy.md` and `docs/OWNER-CHECKS.md`. One local commit; never pushed.
