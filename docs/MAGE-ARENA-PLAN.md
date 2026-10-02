@@ -167,6 +167,22 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 | Art | A3 | Oblique-view figures (upright, about 55 degrees elevation, NOT straight 90-degree top-down), poses, spell effects at the confirmed scale | owner confirmed the camera 2026-10-02 (`art/CAMERA-OK.md`: open-oval-sparse-near-a01, near distance) | not started |
 | Arena | W4b | (camera confirmed: near distance, open oval) Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
 
+## n. Character and arena identity reset (owner, 2026-10-02, after the A3 board)
+
+> "The character manifestation in arena does not look very natural. Main blue caster in center looks authentic to the artstyle, with size, angle, style. All others look like they don't belong there, rather belonging on papyrus paintings. The style of characters is too clean and generic - we should find our own raw and brutal tone like Death Race did to find identity of the arena character styles and environment in arena. Mages in arena are not politicians, but well equiped magicians knowing the battlefield, overpowering with sparkles and energy around them caused by their elemental alignment. We took the roman culture as worldbuilding baseline correctly, but now we should go into more raw and magical/fantastical direction to create our own flavor of the world. Throw all portraits and current looks of key characters and start again - portraits can have more aura of old Baldurs Gate games. Clothing more fitting RPG mages known - staff, accessories, lightweight colored cloth designs."
+
+Decisions: **D12** all A2 portraits and all A3 figures and poses are **discarded** (kept in git history only, never used). **D13** the bar for in-arena figures is the **blue hooded caster in the chosen proof `01-tessera-open-oval-sparse-near-a01`**: its size, angle, rendering and integration with the ground.
+**D14** Roman culture stays as the worldbuilding baseline (the camp, the Games, the legion as non-magical enemy waves), but the **mages and the arena get their own raw, magical, fantastical identity**: not clean, not generic, not museum-painting.
+**D15** the mages are **battle mages, not politicians**: well equipped, knowing the battlefield, overpowering, surrounded by **sparkles and energy of their elemental alignment** (fire embers and heat shimmer, water mist and droplets, earth stone motes and dust, air wind wisps and arcs of lightning); **staff, accessories, light coloured layered cloth** as in classic RPG mages;
+**portraits with the aura of late-1990s painted CRPG bust portraits** (rich, dark, painterly, strong light, characterful faces), original designs only, no franchise names in prompts or files. The method of the sister project's art direction v2 (rough ink-brush line, wear everywhere, silhouette first, palette discipline, a CHOICE of directions before commitment) is the pattern: read `C:\Users\kazda\kiro\firetv-deathride-art\docs\concepts\DEATH-RIDE-ART-DIRECTION-V2.md` as a method, never as a style to copy.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Art | A6 | **Identity reset**: at least six raw-magical style directions for the arena mages, enemies and arena environment, each shown as (1) an arena scene at the confirmed near oblique camera and (2) a late-90s CRPG-style painted bust portrait of the Water mage; the owner chooses | D12-D15 | not started |
+| Art | A2b | New portraits (16 cast, expressions) in the chosen direction | A6 owner choice | blocked |
+| Art | A3b | New oblique figures, poses, spell and aura effects in the chosen direction, enemies included, finishing the three missing creatures with moderation-safe prompts | A6 owner choice | blocked |
+| Art | A4b | Camp map and backdrops re-checked against the new identity (the camp map is kept unless the owner says otherwise) | A6 owner choice | blocked |
+
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
