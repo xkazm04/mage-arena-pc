@@ -1,0 +1,32 @@
+{
+  "name": "mage-arena",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/director",
+    "packages/tools"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run && node --test packages/tools/replay/*.test.mjs",
+    "lint": "eslint packages --max-warnings 0",
+    "check:design": "node packages/tools/replay/cli.mjs check",
+    "gate": "npm run build && npm run lint && npm run test && npm run check:design",
+    "soak": "tsx packages/tools/src/soak.ts",
+    "report": "tsx packages/tools/src/report.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.3",
+    "eslint": "^10.11.0",
+    "prettier": "^3.9.9",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.3"
+  }
+}

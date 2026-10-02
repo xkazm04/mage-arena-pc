@@ -9,7 +9,7 @@ This file is the single source of truth: every session starts here (status table
 An action RPG about elemental mages (Fire, Water, Earth, Air) of the Roman era, betrayed and locked in a magic-warded camp, forced to fight in the arena for food and equipment.
 Two halves feed each other: a **camp** played on a Persona-style calendar (places to visit in time slots, relationships, schemes, loyalty) in which an LLM **Director** decides what every character does each night,
 and an **arena** (diablo-style top-down real-time combat, one hand moves and one hand casts, spell tiers that unlock every 15 seconds, a mana-costed magical **absorb** with a perfect-absorb window).
-One season of six weeks, six Games, four endings computed from state; the ending, the Breaking, is the absorb mechanic played as trust.
+One season of six weeks, six Games, endings computed from state; the ending, the Breaking, is the absorb mechanic played as trust.
 Windows first, mouse and keyboard first; a Fire TV port is a later spike only if the game ends well.
 
 ## b. The owner's direction (verbatim, 2026-10-01) and the design baseline
@@ -76,8 +76,8 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 
 | Stream | Id | Wave | Depends on | Status | Commit | Date |
 |---|---|---|---|---|---|---|
-| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | gates green; Fable review pending orchestrator | W0 commit (this wave) | 2026-10-01 |
-| Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | not started | | |
+| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | gates green; Fable accepts handover with six fixes owed (logged) | cd29a21 | 2026-10-01 |
+| Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | STOPPED after interruption exceeded time window: code gates green; local 155/300, Sonnet 30/30; judge not run; wave incomplete | W1 stop commit (see git log) | 2026-10-02 |
 | Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
@@ -161,3 +161,15 @@ Worktrees: `C:\Users\kazda\kiro\mage-arena` (main), `...\mage-arena-core`, `...\
 - Measured: `node packages/tools/replay/cli.mjs check` ? zero contradictions, three simulated nights, 237 traced changes. `node --test packages/tools/replay/*.test.mjs` ? seven passed, including planted prose/rule/fixture contradictions. `node packages/tools/replay/cli.mjs build` ? green. Full commands and boundaries in `docs/waves/W0-report.md`.
 - Authored numbers remain authored. Owner feel and live model quality not measured. Fable review is pending orchestrator dispatch, as assigned by the card. Deferred arcs/arena/Parley integrations explicitly listed in `docs/design/reconciled/defects.json`.
 - Next: W1; verify local Claude flags before any subscription calls, local bulk soak, capped Sonnet run.
+
+### CORE W1 — 2026-10-02 (stopped; wave incomplete)
+
+- Design note first: `docs/waves/W1-director-harness.md`. Strict TypeScript/npm workspaces, pure camp core, utility planner, schema/domain validation, camp caps, content-hash cache, durable call budgets and three providers implemented. Game and art untouched.
+- CLI flags verified before calls; subscription-compatible minimal settings recorded. Sonnet measurement finished at exactly 30 nights / 150 calls, including the initial probe. No more Sonnet calls are scheduled.
+- `npm run gate`: build and ESLint green, 18 Director tests and seven W0 tests passed. The checker reports zero contradictions within its implemented template/foreign-key/fixture scope; it is not a semantic proof of arbitrary prose. `npm run report` independently replayed all 155 saved local and 30 Sonnet nights. W0 fixture bytes remain unchanged. `npx tsx packages/tools/src/cache-replay.ts`: 925 cache hits across those 185 nights, zero provider calls.
+- Local bulk stopped at 155/300 nights on `qwen3.8:27b-64k`: 110/2325 intents rejected (4.73%), one recorded timeout. The 15% kill threshold was not exceeded in this partial sample; the required full-sample gate is not passed. Sonnet completed 30 nights, 150 calls, zero rejected intents; subscription cap preserved. Line repairs and raw latency/token measurements remain visible in `docs/waves/W1-report.md` and evidence.
+- Interruption: a requested 55-second wait reported 25926.6283 seconds elapsed. Execution resumed at 06:34 UTC, past the roughly five-hour work window. Cause is not established. The local runner was stopped; the queued judge exited at its deadline and made no calls. The last recorded local night includes the elapsed interruption and timeout; it was retained. Ledger shows 776 local-soak reservations for 775 recorded calls: one stopped in-flight reservation remains charged. No retries or reset were used.
+- Partial evidence preserved with `npx tsx packages/tools/src/archive.ts --partial`; hashes and expected/actual row counts in the archive manifest. `npx tsx packages/tools/src/blind.ts local-soak` generated three blind morning comparisons from the saved sample. Owner read remains pending.
+- Remaining before W1 acceptance: the other 145 local nights; local-model character judgments for both providers; regenerate the complete report/archive; address Fable’s six residual design-package fixes. Resume must preserve checkpoint/evidence and the cost ledger, explicitly account for the charged in-flight local call, and make no additional Sonnet calls. Do not begin W5 on a claim that W1 passed.
+- Fable review arrived during the interruption: accepted W0 for handover with six fixes owed. `docs/judging/fable-w0-review.md` is preserved as supplied; open fixes and observations are recorded in `docs/design/reconciled/defects.json`. This later review supersedes the earlier W0-session pending-review status.
+- Labels: rules authored, camp outcomes simulated, timings/rejections/tokens measured. Character quality and owner feel remain not measured. No game/art modifications and no push.

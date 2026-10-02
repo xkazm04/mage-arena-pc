@@ -1,23 +1,110 @@
 {
   "label": "authored disposition; see gate report for measured checks",
   "defects": [
-    {"id":"cache-input", "status":"fixed contract; W1 provider tests", "resolution":"Hash the complete actual request including prompt, schema, qualitative facts, model and options. No loop fields or claimed cross-loop hits."},
-    {"id":"missing-output-fields", "status":"fixed", "resolution":"Every generated item contains goal, mood, value, citations and line. W1 adds strict JSON Schema validation at the provider boundary."},
-    {"id":"consecutive-scheme", "status":"fixed", "resolution":"Actor's last executed scheme records resolution day and target. The consecutive target is rejected independently of scheme kind."},
-    {"id":"trial-calendar", "status":"fixed", "resolution":"Calendar derives Trial from Games weekday and offset. Golden nights carry derived calendar metadata; no invented trial outcomes."},
-    {"id":"missing-well", "status":"fixed", "resolution":"Fourth Watch at Edge; Quill studies Cistern. Locations carry references to activities, not independent gains."},
-    {"id":"gale-cache-claim", "status":"removed", "resolution":"Discard handcrafted historical outcomes. Visible relationship changes are part of the complete request and invalidate its key."},
-    {"id":"activity-count", "status":"fixed", "resolution":"Closed vocabulary count generated from intents.json. Ledger's separate activities are not an active second vocabulary."},
-    {"id":"trust-authorities", "status":"fixed", "resolution":"Only rules.json effects owns social gain. Locations contain activity references; prose is rendered from rule references."},
-    {"id":"fed-hunger", "status":"fixed", "resolution":"Protected Strays get feeding reduction and no nightly increment; working unprotected Strays use workingHunger."},
-    {"id":"aggression-gap", "status":"fixed", "resolution":"Apply gap multiplier after peer multiplier, floor once; symmetric directed trust."},
-    {"id":"torn-to-peers", "status":"reserved W7 arena bridge", "resolution":"Correct delta in rules/effects/tornToPeers; no fabricated arena result in headless nights. Duality bout transitions need arena results."},
-    {"id":"same-tent-decay", "status":"fixed", "resolution":"Apply to every living same-tent equal-rank directed pair in a real tent, after admissions."},
-    {"id":"invented-deaths-deltas", "status":"removed", "resolution":"No Doros or Sadruba starvation delta; no untraced effects. Death objects disabled until W10."},
-    {"id":"crier-consequences-numbers", "status":"fixed", "resolution":"Line validator rejects Unicode numbers, number words and banned consequences. Board facts rendered by code; model lines never claim resolved outcomes."},
-    {"id":"ring-echo-chronicle", "status":"removed", "resolution":"Season-only active data, cast and prose. Historical archives intentionally unchanged."},
-    {"id":"report-order", "status":"fixed", "resolution":"Report before scheme permits investigation to foil that day's attempt. This explicit order supersedes conflicting baseline orders."},
-    {"id":"remaining-arcs", "status":"reserved W6/W7/W11", "resolution":"Parley, Trial results, duality bouts, fodder transfer, complex goal retargeting, reconciliation quests and detailed plan steps need their later wave systems. W0/W1 implement guarded intents, shelter and bond progression only; no coverage claim for deferred edges."},
-    {"id":"arena-loop-content", "status":"reserved arena stream", "resolution":"Echo opponent and loop-specific arena prose are archived only. Core does not copy or modify arena rules; arena stream owns its season adaptation."}
+    {
+      "id": "cache-input",
+      "status": "fixed contract; W1 provider tests",
+      "resolution": "Hash the complete actual request including prompt, schema, qualitative facts, model and options. No loop fields or claimed cross-loop hits."
+    },
+    {
+      "id": "missing-output-fields",
+      "status": "fixed",
+      "resolution": "Every generated item contains goal, mood, value, citations and line. W1 adds strict JSON Schema validation at the provider boundary."
+    },
+    {
+      "id": "consecutive-scheme",
+      "status": "fixed",
+      "resolution": "Actor's last executed scheme records resolution day and target. The consecutive target is rejected independently of scheme kind."
+    },
+    {
+      "id": "trial-calendar",
+      "status": "fixed",
+      "resolution": "Calendar derives Trial from Games weekday and offset. Golden nights carry derived calendar metadata; no invented trial outcomes."
+    },
+    {
+      "id": "missing-well",
+      "status": "fixed",
+      "resolution": "Fourth Watch at Edge; Quill studies Cistern. Locations carry references to activities, not independent gains."
+    },
+    {
+      "id": "gale-cache-claim",
+      "status": "removed",
+      "resolution": "Discard handcrafted historical outcomes. Visible relationship changes are part of the complete request and invalidate its key."
+    },
+    {
+      "id": "activity-count",
+      "status": "fixed",
+      "resolution": "Closed vocabulary count generated from intents.json. Ledger's separate activities are not an active second vocabulary."
+    },
+    {
+      "id": "trust-authorities",
+      "status": "fixed",
+      "resolution": "Only rules.json effects owns social gain. Locations contain activity references; prose is rendered from rule references."
+    },
+    {
+      "id": "fed-hunger",
+      "status": "fixed",
+      "resolution": "Protected Strays get feeding reduction and no nightly increment; working unprotected Strays use workingHunger."
+    },
+    {
+      "id": "aggression-gap",
+      "status": "fixed",
+      "resolution": "Apply gap multiplier after peer multiplier, floor once; symmetric directed trust."
+    },
+    {
+      "id": "torn-to-peers",
+      "status": "reserved W7 arena bridge",
+      "resolution": "Correct delta in rules/effects/tornToPeers; no fabricated arena result in headless nights. Duality bout transitions need arena results."
+    },
+    {
+      "id": "same-tent-decay",
+      "status": "fixed",
+      "resolution": "Apply to every living same-tent equal-rank directed pair in a real tent, after admissions."
+    },
+    {
+      "id": "invented-deaths-deltas",
+      "status": "removed",
+      "resolution": "No Doros or Sadruba starvation delta; no untraced effects. Death objects disabled until W10."
+    },
+    {
+      "id": "crier-consequences-numbers",
+      "status": "fixed",
+      "resolution": "Line validator rejects Unicode numbers, number words and banned consequences. Board facts rendered by code; model lines never claim resolved outcomes."
+    },
+    {
+      "id": "ring-echo-chronicle",
+      "status": "removed",
+      "resolution": "Season-only active data, cast and prose. Historical archives intentionally unchanged."
+    },
+    {
+      "id": "report-order",
+      "status": "fixed",
+      "resolution": "Report before scheme permits investigation to foil that day's attempt. This explicit order supersedes conflicting baseline orders."
+    },
+    {
+      "id": "remaining-arcs",
+      "status": "reserved W6/W7/W11",
+      "resolution": "Parley, Trial results, duality bouts, fodder transfer, complex goal retargeting, reconciliation quests and detailed plan steps need their later wave systems. W0/W1 implement guarded intents, shelter and bond progression only; no coverage claim for deferred edges."
+    },
+    {
+      "id": "arena-loop-content",
+      "status": "reserved arena stream",
+      "resolution": "Echo opponent and loop-specific arena prose are archived only. Core does not copy or modify arena rules; arena stream owns its season adaptation."
+    },
+    {
+      "id": "ending-count",
+      "status": "fixed in W1 source review",
+      "resolution": "The project overview still said four endings after the martyr default was added. Removed the duplicated count from that prose; season.json endings remains the authority."
+    },
+    {
+      "id": "fable-w0-followups",
+      "status": "open; review arrived during execution interruption, recorded at W1 stop",
+      "resolution": "Fable accepted W0 for handover with six fixes owed: remove lowercase well from goals and widen obsolete-place matching; rewrite Ledger goal-plan verbs into the closed vocabulary or move flavour out of data; place SCHEME and DEFECT and separate the trial event from intent activities; publish the generated decision schema in the design package and correct request-day wording; change last executed scheme to last resolved attempt; render schemeOpensWeekday in the README. W1 ships a schema builder and real-request cache tests, but these design-package followups remain open. See docs/judging/fable-w0-review.md."
+    },
+    {
+      "id": "fable-w0-observations",
+      "status": "recorded for followup; authored balance unchanged",
+      "resolution": "Review also flags self-reaction to rumours, automatic low-renown rumours, PROTECT on fed targets, explicit salt/none school handling and school foreign keys, broader fixture branch coverage, checker claim scope, and the PLOT/Plot naming collision. W1 content tests cover all closed verbs and full planner seasons, but do not claim every branch is in the three golden nights. Balance belongs to W11 and death naming to W10."
+    }
   ]
 }

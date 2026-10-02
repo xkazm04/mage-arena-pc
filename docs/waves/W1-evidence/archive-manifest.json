@@ -1,0 +1,42 @@
+{
+  "label": "measured",
+  "partial": true,
+  "files": [
+    {
+      "file": "local-pilot-a/nights.jsonl.gz",
+      "rows": 3,
+      "expectedRows": 3,
+      "rawBytes": 356109,
+      "compressedBytes": 39781,
+      "sha256Raw": "4852be10f9454f30076dc0113d521050484083d5025a537e249702fd185fee2a",
+      "sha256Gzip": "c6923e8808e6f9f127b8da0d92254970d934a9189af6a48d4f300704c85d1e4f"
+    },
+    {
+      "file": "local-soak/nights.jsonl.gz",
+      "rows": 155,
+      "expectedRows": 300,
+      "rawBytes": 47823362,
+      "compressedBytes": 2914149,
+      "sha256Raw": "3b7071eabf737b9132af5030a9a0d7b993017092c171a7347ca771686bffb63e",
+      "sha256Gzip": "db5713cf4e8d54d5255bb15c7fe70e76f49df3682498071888deea4000580d79"
+    },
+    {
+      "file": "sonnet/nights.jsonl.gz",
+      "rows": 30,
+      "expectedRows": 30,
+      "rawBytes": 7412704,
+      "compressedBytes": 518567,
+      "sha256Raw": "435c64a40db3f81f7abafc150fe65959dfe24383d4cf3e5bf3938c98140cc15f",
+      "sha256Gzip": "0e418c137ba064b7ce2c6b002ab518d5ae8fe0149b0c80674644b144ef6dbea2"
+    },
+    {
+      "file": "seeded-draws.jsonl.gz",
+      "rows": 185,
+      "expectedRows": 330,
+      "rawBytes": 2904991,
+      "compressedBytes": 345400,
+      "sha256Raw": "b2060caa92b7b35956d5c98ade4e653ac820184ce90f434dda896d259bfbe4b9",
+      "sha256Gzip": "b184dcd767a26f395d57d41f52f6ffce2f8b3260aea8b6531ee3caafe4ba8f57"
+    }
+  ]
+}
