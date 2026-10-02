@@ -7,7 +7,8 @@ import {
   type Sprite,
 } from "pixi.js";
 import { colours, UiKit } from "./kit.ts";
-import { installFonts } from "./fonts.ts";
+import { installFonts, fontDiagnostics } from "./fonts.ts";
+import { art } from "../art.ts";
 import { PadNavigation } from "./gamepad.ts";
 import {
   contains,
@@ -35,6 +36,8 @@ export interface Button extends Rect {
   root: Container;
   ring: Graphics;
   background: NineSliceSprite;
+  selection: NineSliceSprite;
+  focusArt: NineSliceSprite;
   activate: () => void;
   hold?: (held: boolean) => void;
   selected: boolean;
@@ -74,12 +77,13 @@ export class CanvasUI {
   private previous = 0;
   private ready = false;
   private focusedBefore = "";
+  private revealStart = 0;
   private frameTimes: number[] = [];
   private cpuTimes: number[] = [];
   layout = viewportLayout(1920, 1080);
   async init(host: HTMLElement) {
     await Promise.all([
-      installFonts(),
+      art.init().then(() => installFonts()),
       this.app.init({
         width: innerWidth,
         height: innerHeight,
@@ -255,6 +259,7 @@ export class CanvasUI {
   begin(screen: string) {
     this.release();
     this.focusedBefore = this.focus;
+    if (this.screen !== screen) this.revealStart = performance.now();
     this.screen = screen;
     this.buttons = [];
     this.onKey = undefined;
@@ -338,22 +343,40 @@ export class CanvasUI {
   ) {
     const root = new Container();
     this.content.addChild(root);
-    const background = this.panel(
+    const background = this.panel(x, y, w, h, options.kind ?? "button", root);
+    const base =
+      options.kind === "slot"
+        ? "slot"
+        : options.kind === "tab"
+          ? "tab"
+          : options.kind?.startsWith("card.")
+            ? "card"
+            : "button";
+    const selection = this.panel(
       x,
       y,
       w,
       h,
-      options.selected ? "button-focus" : (options.kind ?? "button"),
+      base === "button" ? "button.focus" : `${base}.selected`,
       root,
     );
-    const inset = options.icon ? 84 : 26;
+    const focusArt = this.panel(
+      x,
+      y,
+      w,
+      h,
+      base === "card" ? "card.selected" : `${base}.focus`,
+      root,
+    );
+    selection.visible = focusArt.visible = false;
+    const inset = options.icon ? 84 : 38;
     const title = this.text(
       label,
       x + inset,
       y,
-      options.fontSize ?? 32,
+      options.fontSize ?? 28,
       options.selected ? colours.water : colours.text,
-      w - inset - 20,
+      w - inset - 38,
       false,
       root,
     );
@@ -364,7 +387,7 @@ export class CanvasUI {
           y,
           24,
           colours.muted,
-          w - inset - 20,
+          w - inset - 38,
           false,
           root,
         )
@@ -386,6 +409,8 @@ export class CanvasUI {
       tooltip: options.tooltip ?? "",
       root,
       background,
+      selection,
+      focusArt,
       ring,
       activate,
       hold: options.hold,
@@ -625,21 +650,20 @@ export class CanvasUI {
           : "disabled"
         : this.pressed?.id === b.id
           ? "pressed"
-          : b.selected
-            ? "selected"
-            : b.id === this.focus
-              ? "focus"
-              : b.id === this.hover
-                ? "hover"
-                : "normal";
+          : b.id === this.hover
+            ? "hover"
+            : "normal";
       this.kit.skin(
         b.background,
-        base === "card" && state === "normal"
+        base === "card"
           ? b.kind
-          : `${base}.${state === "selected" && base === "button" ? "focus" : state}`,
+          : `${base}.${state === "pressed" && base !== "button" ? "hover" : state}`,
         b.w,
         b.h,
       );
+      b.selection.visible = b.selected && !b.disabled;
+      b.focusArt.visible =
+        b.id === this.focus && !b.disabled && base !== "card";
       if (b.disabled)
         b.ring
           .moveTo(b.x + b.w - 25, b.y + 14)
@@ -653,22 +677,23 @@ export class CanvasUI {
             ? 1
             : 0.65 +
               0.3 *
-                Math.sin(
-                  ((now / 1000) * Math.PI * 2) / metrics.focusPulseSeconds,
-                );
-        b.ring
-          .roundRect(b.x - 4, b.y - 4, b.w + 8, b.h + 8, 5)
-          .stroke({ color: colours.water, width: 3, alpha: a });
-        b.ring
-          .poly([
-            b.x + 12,
-            b.y + b.h / 2,
-            b.x + 19,
-            b.y + b.h / 2 - 5,
-            b.x + 19,
-            b.y + b.h / 2 + 5,
-          ])
-          .fill(colours.water);
+                Math.sin((now * Math.PI * 2) / this.kit.motion.focusPulseMs);
+        b.focusArt.alpha = a;
+        if (this.kit.source === "procedural" || base === "card")
+          b.ring
+            .roundRect(b.x - 4, b.y - 4, b.w + 8, b.h + 8, 5)
+            .stroke({ color: colours.water, width: 3, alpha: a });
+        if (this.kit.source === "procedural" || base === "card")
+          b.ring
+            .poly([
+              b.x + 12,
+              b.y + b.h / 2,
+              b.x + 19,
+              b.y + b.h / 2 - 5,
+              b.x + 19,
+              b.y + b.h / 2 + 5,
+            ])
+            .fill(colours.water);
       }
       b.root.alpha = b.disabled ? 0.4 : Math.min(1, b.root.alpha + dt * 3);
     }
@@ -677,7 +702,7 @@ export class CanvasUI {
     );
     if (
       target?.tooltip &&
-      now - this.hoverSince > metrics.tooltipDelayMs &&
+      now - this.hoverSince > this.kit.motion.tooltipDelayMs &&
       !this.tooltip
     ) {
       const t = new Container();
@@ -699,7 +724,8 @@ export class CanvasUI {
     }
     if (
       this.tooltip &&
-      (!target?.tooltip || now - this.hoverSince < metrics.tooltipDelayMs)
+      (!target?.tooltip ||
+        now - this.hoverSince < this.kit.motion.tooltipDelayMs)
     ) {
       this.tooltip.destroy({ children: true });
       this.tooltip = undefined;
@@ -710,6 +736,22 @@ export class CanvasUI {
     }
     this.cursor.clear();
     if (this.artCursor) {
+      const blocked = this.buttons.some(
+        (b) => b.disabled && contains(b, this.pointer.x, this.pointer.y),
+      );
+      const id = blocked
+        ? "blocked"
+        : this.hit()
+          ? "interact"
+          : this.screen === "arena"
+            ? "aim"
+            : "pointer";
+      const part = this.kit.cursor(`cursor.${id}`);
+      if (part) {
+        this.artCursor.texture = part.texture;
+        this.artCursor.anchor.copyFrom(part.anchor);
+        part.destroy();
+      }
       this.artCursor.visible = this.modality === "mouse";
       this.artCursor.position.set(this.pointer.x, this.pointer.y);
     }
@@ -721,6 +763,10 @@ export class CanvasUI {
         .stroke({ color: colours.text, width: 2 });
       this.cursor.circle(x + 10, y + 11, 2).fill(colours.water);
     }
+    this.content.alpha =
+      localStorage.getItem("mage-motion") === "reduced"
+        ? 1
+        : Math.min(1, (now - this.revealStart) / this.kit.motion.panelRevealMs);
     this.app.renderer.render(this.app.stage);
     this.frameTimes.push(actualElapsed);
     this.cpuTimes.push(performance.now() - cpuStart);
@@ -779,6 +825,9 @@ export class CanvasUI {
       modality: this.modality,
       kit: this.kit.source,
       diagnostics: this.kit.diagnostics,
+      art: art.snapshot(),
+      uiTextureBytes: this.kit.rgbaBytes,
+      fontDiagnostics,
       layout: this.layout,
       texts,
       overflow,

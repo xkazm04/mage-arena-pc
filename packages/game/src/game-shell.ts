@@ -137,7 +137,15 @@ export class GameShell {
     this.ui.line(96, 183, 1728);
   }
   private back(action: () => void, label = "Back") {
-    this.ui.button("back", label, 96, 946, 236, 68, action);
+    this.ui.button(
+      "back",
+      label === "Return to camp" ? "Camp map" : label,
+      96,
+      946,
+      236,
+      68,
+      action,
+    );
     this.ui.onBack = action;
   }
   private footer(
@@ -701,7 +709,7 @@ export class GameShell {
         96,
         354 + i * 125,
         766,
-        107,
+        112,
         () => {
           this.cardSelected = index;
           this.cards(kind);

@@ -52,6 +52,13 @@ export interface UiAtlas {
   designSize: [number, number];
   pages: { id: string; file: string; size: [number, number]; sha256: string }[];
   regions: Record<string, AtlasFrame>;
+  motion?: {
+    hoverMs: number;
+    pressMs: number;
+    focusPulseMs: number;
+    tooltipDelayMs: number;
+    panelRevealMs: number;
+  };
 }
 export function validateAtlas(value: unknown): UiAtlas {
   if (!value || typeof value !== "object") throw Error("Invalid UI atlas");
@@ -142,14 +149,24 @@ export class UiKit {
   >();
   readonly diagnostics: string[] = [];
   source = "procedural";
-  constructor() {
-    for (const kind of requiredRegions)
-      this.textures.set(kind, {
-        texture: this.generate(kind),
-        borders: [16, 16, 16, 16],
-      });
+  rgbaBytes = 0;
+  motion = {
+    hoverMs: 100,
+    pressMs: 70,
+    focusPulseMs: 1200,
+    tooltipDelayMs: 450,
+    panelRevealMs: 160,
+  };
+  private fallback(id: string) {
+    let f = this.textures.get(id);
+    if (!f) {
+      f = { texture: this.generate(id), borders: [16, 16, 16, 16] };
+      this.textures.set(id, f);
+    }
+    return f;
   }
   async load(url = metrics.atlasUrl) {
+    const pages = new Map<string, Texture>();
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -163,7 +180,6 @@ export class UiKit {
         return;
       }
       const manifest = validateAtlas(await response.json());
-      const pages = new Map<string, Texture>();
       for (const page of manifest.pages) {
         const r = await fetch(new URL(page.file, new URL(url, location.href)));
         if (!r.ok) throw Error(`Missing UI page: ${page.id}`);
@@ -176,10 +192,13 @@ export class UiKit {
         const bitmap = await createImageBitmap(new Blob([bytes]), {
           premultiplyAlpha: "premultiply",
         });
-        if (bitmap.width !== page.size[0] || bitmap.height !== page.size[1])
+        if (bitmap.width !== page.size[0] || bitmap.height !== page.size[1]) {
+          bitmap.close();
           throw Error(`UI page dimensions: ${page.id}`);
+        }
         const pageTexture = Texture.from(bitmap);
         pageTexture.source.alphaMode = "premultiplied-alpha";
+        pageTexture.source.autoGenerateMipmaps = false;
         pages.set(page.id, pageTexture);
       }
       const staged = new Map<
@@ -205,7 +224,13 @@ export class UiKit {
       }
       for (const [id, frame] of staged) this.textures.set(id, frame);
       if (staged.size) this.source = url;
+      this.rgbaBytes = manifest.pages.reduce(
+        (n, p) => n + p.size[0] * p.size[1] * 4,
+        0,
+      );
+      if (manifest.motion) this.motion = manifest.motion;
     } catch (error) {
+      for (const t of pages.values()) t.destroy(true);
       this.diagnostics.push(String(error));
     }
   }
@@ -222,7 +247,7 @@ export class UiKit {
     };
     const f =
       this.textures.get(aliases[kind] ?? kind) ??
-      this.textures.get("panel.body")!;
+      this.fallback(aliases[kind] ?? kind);
     if (f.minSize && (w < f.minSize[0]! || h < f.minSize[1]!))
       throw Error(`UI size below contract: ${kind}`);
     const s = new NineSliceSprite({
@@ -243,7 +268,8 @@ export class UiKit {
           (key) =>
             key.startsWith("icon.") &&
             (key.endsWith("." + id.slice(5)) ||
-              key.endsWith("." + id.slice(5).replaceAll("_", "-"))),
+              key.endsWith("." + id.slice(5).replaceAll("_", "-")) ||
+              key.endsWith("-" + id.slice(5).replaceAll("_", "-"))),
         )
       : undefined;
     const f =
@@ -255,7 +281,11 @@ export class UiKit {
     return s;
   }
   skin(sprite: NineSliceSprite, id: string, w: number, h: number) {
-    const f = this.textures.get(id);
+    const f =
+      this.textures.get(id) ??
+      (this.source === "procedural" && requiredRegions.includes(id)
+        ? this.fallback(id)
+        : undefined);
     if (!f || sprite.texture === f.texture) return;
     if (f.minSize && (w < f.minSize[0]! || h < f.minSize[1]!))
       throw Error(`UI size below contract: ${id}`);
