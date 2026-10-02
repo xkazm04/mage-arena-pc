@@ -4,6 +4,8 @@
   "claude": {"model":"claude-sonnet-5-5", "effort":"medium", "timeoutMs":90000},
   "ollama": {"model":"qwen3.8:27b-64k", "alternate":"mimo-9b:q8-64k", "endpoint":"http://localhost:11434", "timeoutMs":120000, "temperature":0.3, "numPredict":1800, "numCtx":8192},
   "limits": {"responseBytes":1048576, "promptFactsPerMember":6, "publicBoardFacts":4, "recentInvestigations":3},
+  "completion": {"chunkNights":10,"retainedLocalReservations":1,"heartbeatMs":15000,"gapMultiplier":3},
+  "judge": {"numCtx":8192,"numPredict":1600,"maxAttemptsPerNight":6,"timeoutMs":600000,"reasonChars":80,"calibrationCalls":3},
   "budget": {"game":{"runCalls":200,"dayCalls":40}, "w1":{"sonnetNights":30,"localNights":300,"pilotLocalNights":3,"fuzzCases":500,"rejectionKillRate":0.15}},
   "bands": {"trustEnemyBelow":-20,"trustFriendAt":20,"trustSwornAt":50,"wealthLowBelow":2,"wealthComfortableAt":20,"traitLowBelow":4,"traitHighAt":7},
   "planner": {

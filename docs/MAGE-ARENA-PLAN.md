@@ -76,8 +76,8 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 
 | Stream | Id | Wave | Depends on | Status | Commit | Date |
 |---|---|---|---|---|---|---|
-| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | six Fable fixes and lower-severity followups closed; gates green | W0 review-fixes commit | 2026-10-02 |
-| Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | STOPPED after interruption exceeded time window: code gates green; local 155/300, Sonnet 30/30; judge not run; wave incomplete | W1 stop commit (see git log) | 2026-10-02 |
+| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | six Fable fixes and lower-severity followups closed; gates green | 2833a30 | 2026-10-02 |
+| Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | engineering PASS: 300 local + 30 Sonnet nights, complete local judge; rejection 4.73%; owner blind read pending | W1b completion commit | 2026-10-02 |
 | Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
@@ -203,3 +203,22 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 - Remaining before W1 acceptance: the other 145 local nights; local-model character judgments for both providers; regenerate the complete report/archive; address Fable’s six residual design-package fixes. Resume must preserve checkpoint/evidence and the cost ledger, explicitly account for the charged in-flight local call, and make no additional Sonnet calls. Do not begin W5 on a claim that W1 passed.
 - Fable review arrived during the interruption: accepted W0 for handover with six fixes owed. `docs/judging/fable-w0-review.md` is preserved as supplied; open fixes and observations are recorded in `docs/design/reconciled/defects.json`. This later review supersedes the earlier W0-session pending-review status.
 - Labels: rules authored, camp outcomes simulated, timings/rejections/tokens measured. Character quality and owner feel remain not measured. No game/art modifications and no push.
+
+### CORE W1b completion - 2026-10-02, second session
+
+- Completed the original 300-night local experiment in detached ten-night chunks;
+  preserved the first 155 rows and all 30 Sonnet nights byte for byte. No new
+  subscription calls: 150/150 reservations. No new wall-clock gaps; the earlier
+  interruption and orphan reservation remain charged and archived.
+- Local rejection 213/4,500 (4.73%) is below the 15% kill rule. Engineering PASS;
+  proceed to W5. Local judge covers all 330 nights / 4,950 actors. Five failed
+  attempts retained. Gross-contradiction calibration passes, but observed answer
+  category/reason disagreements and 821 local line repairs are explicit limits.
+- `npm run gate`: build/lint green, 20 TypeScript and ten replayer tests pass.
+  `npm run report`: exact request, rejection and state audit for every night.
+  Cache replay: 1,650 hits, zero calls. Provenance hashes prove original evidence
+  preserved. Full archive row counts, hashes and compression round trips pass.
+- Full-sample blind mornings pass desktop/mobile browser checks; screenshots
+  saved. Owner read pending, not felt. Cost report separates CLI reference USD
+  3.7934884 from unmeasured subscription debit and electricity. No art/arena edits
+  and no push. Next: W5 camp scenes, then W6 Parley.

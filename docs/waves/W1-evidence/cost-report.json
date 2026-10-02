@@ -1,0 +1,54 @@
+{
+  "label": "measured token usage and charged call reservations; dollars only where reported",
+  "runs": {
+    "ollama:local-pilot-a": 15,
+    "claude:W1-sonnet-total": 150,
+    "ollama:local-soak": 1501,
+    "ollama:judge-sonnet": 31,
+    "ollama:judge-local-soak": 304,
+    "ollama:judge-calibration": 1
+  },
+  "subscriptionCalls": 150,
+  "subscriptionCap": 150,
+  "localUnrecordedReservations": 1,
+  "subscriptionReferenceUsd": 3.793488399999999,
+  "marginalSubscriptionUsd": null,
+  "localElectricityUsd": null,
+  "calibrationTokens": {
+    "input": 2381,
+    "output": 508
+  },
+  "judgeTokens": {
+    "local-soak": {
+      "input": 1885706,
+      "output": 118977
+    },
+    "sonnet": {
+      "input": 186783,
+      "output": 11760
+    }
+  },
+  "projections": {
+    "local-pilot-a": {
+      "label": "arithmetic projection from measured nightly means; not billed",
+      "seasonDays": 42,
+      "inputTokens": 508018,
+      "outputTokens": 62874,
+      "cliReferenceCostUsd": null
+    },
+    "local-soak": {
+      "label": "arithmetic projection from measured nightly means; not billed",
+      "seasonDays": 42,
+      "inputTokens": 612965,
+      "outputTokens": 73344,
+      "cliReferenceCostUsd": null
+    },
+    "sonnet": {
+      "label": "arithmetic projection from measured nightly means; not billed",
+      "seasonDays": 42,
+      "inputTokens": 1747236,
+      "outputTokens": 102810,
+      "cliReferenceCostUsd": 5.3108837599999985
+    }
+  }
+}

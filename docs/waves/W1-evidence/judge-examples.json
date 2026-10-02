@@ -1,0 +1,116 @@
+{
+  "label": "measured model diagnostic examples; not established character defects",
+  "selection": "first three negative judgments per question and source, zero-based night index",
+  "examples": {
+    "local-soak": {
+      "goal": [
+        {
+          "index": 87,
+          "character": "senna",
+          "reason": "Goal: Target is Stone, not Ember; Values: Cites Ember's win to justify training,",
+          "requestHash": "a301ee939ca98cc081279c478eae36deeab5d70b6b50753b2043a1804f758d70",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 206,
+          "character": "kesh",
+          "reason": "Goal: Profit goal contradicted by offering a secret for training (non-monetary).",
+          "requestHash": "aa328666f78ccc00745fa86a71e8da4b90281f04112016cf35941fd7929a9c47",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 264,
+          "character": "iskar",
+          "reason": "Goal is build_fifth_tent, not win_games; SCHEME contradicts goal. Cites facts (4",
+          "requestHash": "ad4a49672175c70bcfdc042f7e1cb735b4d22047887e5715f3296da7073e64b5",
+          "evidence": "local-soak/judge.jsonl.gz"
+        }
+      ],
+      "values": [
+        {
+          "index": 87,
+          "character": "senna",
+          "reason": "Goal: Target is Stone, not Ember; Values: Cites Ember's win to justify training,",
+          "requestHash": "a301ee939ca98cc081279c478eae36deeab5d70b6b50753b2043a1804f758d70",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 206,
+          "character": "kesh",
+          "reason": "Goal: Profit goal contradicted by offering a secret for training (non-monetary).",
+          "requestHash": "aa328666f78ccc00745fa86a71e8da4b90281f04112016cf35941fd7929a9c47",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 264,
+          "character": "iskar",
+          "reason": "Goal is build_fifth_tent, not win_games; SCHEME contradicts goal. Cites facts (4",
+          "requestHash": "ad4a49672175c70bcfdc042f7e1cb735b4d22047887e5715f3296da7073e64b5",
+          "evidence": "local-soak/judge.jsonl.gz"
+        }
+      ],
+      "voice": [
+        {
+          "index": 13,
+          "character": "brennic",
+          "reason": "Voice contradicted: line is first-person and lacks the required second-person or",
+          "requestHash": "887f9046cd7c31c98d1d2a26fdef188e1dfb256d25057cd55bd2c1f4f1bc55fc",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 35,
+          "character": "brennic",
+          "reason": "Voice contradicted: 'sharpen my edge' is a metaphor, not the short, loud, second",
+          "requestHash": "296e033249741e8312f6f35edd66d15055389eed97af574a5f0aa9094076c43d",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 35,
+          "character": "corvo",
+          "reason": "Voice contradicted: 'prove my worth' is abstract, not the boastful retelling of",
+          "requestHash": "296e033249741e8312f6f35edd66d15055389eed97af574a5f0aa9094076c43d",
+          "evidence": "local-soak/judge.jsonl.gz"
+        }
+      ],
+      "knowledge": [
+        {
+          "index": 279,
+          "character": "septima",
+          "reason": "Knowledge: Septima does not have access to the secret fact 'event:27:quill:confd",
+          "requestHash": "6e5b541b3865c17e33a026af13cbab56ad08ca27dd9bcabce9e37af2547f4089",
+          "evidence": "local-soak/judge.jsonl.gz"
+        }
+      ],
+      "continuity": [
+        {
+          "index": 3,
+          "character": "lio",
+          "reason": "Cites fact 'K-ember-won-last-games' which is not in his knowledge list.",
+          "requestHash": "573d7c5316f9a2e052fbb7aaa7ae94ff15a7d2a07c44a95a7566c105361a2c59",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 3,
+          "character": "senna",
+          "reason": "Cites fact 'K-ember-won-last-games' which is not in her knowledge list.",
+          "requestHash": "573d7c5316f9a2e052fbb7aaa7ae94ff15a7d2a07c44a95a7566c105361a2c59",
+          "evidence": "local-soak/judge.jsonl.gz"
+        },
+        {
+          "index": 13,
+          "character": "brennic",
+          "reason": "Voice contradicted: line is first-person and lacks the required second-person or",
+          "requestHash": "887f9046cd7c31c98d1d2a26fdef188e1dfb256d25057cd55bd2c1f4f1bc55fc",
+          "evidence": "local-soak/judge.jsonl.gz"
+        }
+      ]
+    },
+    "sonnet": {
+      "goal": [],
+      "values": [],
+      "voice": [],
+      "knowledge": [],
+      "continuity": []
+    }
+  }
+}

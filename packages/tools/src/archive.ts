@@ -13,7 +13,10 @@ const files = [
   "local-soak/judge.jsonl",
   "sonnet/nights.jsonl",
   "sonnet/judge.jsonl",
+  "local-soak/judge-attempts.jsonl",
+  "sonnet/judge-attempts.jsonl",
   "seeded-draws.jsonl",
+  "w1b-process.jsonl",
 ];
 const manifest = [];
 for (const file of files) {
@@ -24,13 +27,16 @@ for (const file of files) {
   }
   const raw = readFileSync(path);
   const rows = raw.toString("utf8").trim().split("\n").filter(Boolean);
-  const expected = file.startsWith("local-pilot-a/")
-    ? config.budget.w1.pilotLocalNights
-    : file.startsWith("local-soak/")
-      ? config.budget.w1.localNights
-      : file.startsWith("sonnet/")
-        ? config.budget.w1.sonnetNights
-        : config.budget.w1.localNights + config.budget.w1.sonnetNights;
+  const expected =
+    file === "w1b-process.jsonl" || file.endsWith("judge-attempts.jsonl")
+      ? rows.length
+      : file.startsWith("local-pilot-a/")
+        ? config.budget.w1.pilotLocalNights
+        : file.startsWith("local-soak/")
+          ? config.budget.w1.localNights
+          : file.startsWith("sonnet/")
+            ? config.budget.w1.sonnetNights
+            : config.budget.w1.localNights + config.budget.w1.sonnetNights;
   if (!partial && rows.length !== expected)
     throw new Error(
       `Incomplete evidence: ${file} has ${rows.length} rows, expected ${expected}`,

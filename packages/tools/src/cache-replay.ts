@@ -2,16 +2,11 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createState } from "@mage/core";
-import {
-  CostGuard,
-  loadTables,
-  night,
-  RequestCache,
-  type Provider,
-} from "@mage/director";
+import { CostGuard, night, RequestCache, type Provider } from "@mage/director";
 import { readNights } from "./evidence.ts";
+import { experimentTables } from "./experiment.ts";
 
-const t = loadTables(),
+const t = experimentTables(),
   results = [];
 for (const source of ["sonnet", "local-soak"]) {
   const rows = readNights(`docs/waves/W1-evidence/${source}/nights.jsonl`),

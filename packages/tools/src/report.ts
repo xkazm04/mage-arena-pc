@@ -1,16 +1,13 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { Ajv } from "ajv";
 import { join, resolve as pathResolve } from "node:path";
-import { createState, resolve, reconcile, type CampState } from "@mage/core";
-import {
-  loadTables,
-  plan,
-  hash,
-  validateGroup,
-  type PlannerDraw,
-} from "@mage/director";
+import { createState, type CampState } from "@mage/core";
+import { loadTables, hash } from "@mage/director";
+import { auditNight } from "./audit.ts";
+import { decodeJudgments, judgeQuestions } from "./judge-format.ts";
 import { fuzz } from "../../director/src/fuzz.ts";
 import config from "../../director/src/config.json" with { type: "json" };
+import { experimentTables, experimentHash } from "./experiment.ts";
 import {
   readNights,
   readEvidence,
@@ -20,13 +17,13 @@ import {
 
 const root = pathResolve("docs/waves/W1-evidence");
 mkdirSync(root, { recursive: true });
-const t = loadTables();
+const t = experimentTables();
 const sources = ["local-pilot-a", "local-soak", "sonnet"];
 const reports: Record<string, ReturnType<typeof summarize>> = {};
 for (const name of sources)
   if (hasEvidence(join(root, name, "nights.jsonl")))
     reports[name] = summarize(readNights(join(root, name, "nights.jsonl")));
-const fuzzReport = fuzz(t);
+const fuzzReport = fuzz(loadTables());
 writeFileSync(
   join(root, "fuzz.json"),
   JSON.stringify(fuzzReport, null, 2) + "\n",
@@ -47,10 +44,13 @@ interface JudgeSummary {
   judgeModel: string;
   nights: number;
   failedCalls: number;
+  failedAttempts: number;
   items: number;
+  tokens: { input: number; output: number };
   no: Record<string, { count: number; rate: number | null }>;
 }
 const judgeReports: Record<string, JudgeSummary> = {};
+const judgeExamples: Record<string, unknown> = {};
 const judgeValidator = new Ajv({ allErrors: true });
 for (const name of ["local-soak", "sonnet"]) {
   const path = join(root, name, "judge.jsonl");
@@ -63,13 +63,26 @@ for (const name of ["local-soak", "sonnet"]) {
       (l) =>
         JSON.parse(l) as {
           judgeModel: string;
+          index: number;
+          formatVersion?: string;
           error: string | null;
-          raw: { judgments: Record<string, unknown>[] };
+          raw: unknown;
           requestHash: string;
-          request: { format: Record<string, unknown> };
+          request: {
+            format: Record<string, unknown>;
+            options: { num_ctx: number };
+          };
+          inputTokens?: number;
+          outputTokens?: number;
         },
     );
   for (const judgment of judgments) {
+    if (
+      !judgment.error &&
+      (judgment.inputTokens ?? 0) + (judgment.outputTokens ?? 0) >
+        judgment.request.options.num_ctx
+    )
+      throw new Error("Stored judge output exceeded context capacity");
     if (hash(judgment.request) !== judgment.requestHash)
       throw new Error("Judge request hash mismatch");
     if (
@@ -79,22 +92,66 @@ for (const name of ["local-soak", "sonnet"]) {
       throw new Error("Stored judge verdict violates its schema");
     if (
       !judgment.error &&
-      new Set(judgment.raw.judgments.map((j) => j.character)).size !==
-        judgment.raw.judgments.length
+      new Set(
+        decodeJudgments(judgment.raw, judgment.formatVersion).map(
+          (j) => j.character,
+        ),
+      ).size !== decodeJudgments(judgment.raw, judgment.formatVersion).length
     )
       throw new Error("Stored judge verdict contains duplicate actors");
   }
   const valid = judgments
     .filter((j) => !j.error)
-    .flatMap((j) => j.raw.judgments);
+    .flatMap((j) => decodeJudgments(j.raw, j.formatVersion));
+  judgeExamples[name] = Object.fromEntries(
+    judgeQuestions.map((question) => [
+      question,
+      judgments
+        .filter((j) => !j.error)
+        .flatMap((row) =>
+          decodeJudgments(row.raw, row.formatVersion)
+            .filter((j) => !j[question])
+            .map((j) => ({
+              index: row.index,
+              character: j.character,
+              reason: j.reason,
+              requestHash: row.requestHash,
+              evidence: `${name}/judge.jsonl.gz`,
+            })),
+        )
+        .slice(0, 3),
+    ]),
+  );
+  if (judgments.some((j, index) => j.index !== index))
+    throw new Error("Judge sample coverage mismatch");
+  const attemptsPath = join(root, name, "judge-attempts.jsonl");
+  const attempts = hasEvidence(attemptsPath)
+    ? readEvidence(attemptsPath)
+        .trim()
+        .split("\n")
+        .filter(Boolean)
+        .map(
+          (line) =>
+            JSON.parse(line) as {
+              error: string | null;
+              inputTokens?: number;
+              outputTokens?: number;
+            },
+        )
+    : judgments;
   judgeReports[name] = {
     label: "model diagnostic; not felt",
     judgeModel: judgments[0]?.judgeModel,
     nights: judgments.length,
     failedCalls: judgments.filter((j) => j.error).length,
+    failedAttempts: attempts.filter((j) => j.error).length,
     items: valid.length,
+    tokens: {
+      input: attempts.reduce((n, j) => n + (j.inputTokens ?? 0), 0),
+      output: attempts.reduce((n, j) => n + (j.outputTokens ?? 0), 0),
+    },
     no: Object.fromEntries(
-      ["goal", "values", "voice", "knowledge", "continuity"].map((q) => [
+      judgeQuestions.map((q) => [
         q,
         {
           count: valid.filter((j) => j[q] === false).length,
@@ -112,11 +169,64 @@ const judgeComplete = ["local-soak", "sonnet"].every(
     judgeReports[name]?.items === reports[name]?.items &&
     judgeReports[name]?.failedCalls === 0,
 );
+writeFileSync(
+  join(root, "judge-examples.json"),
+  JSON.stringify(
+    {
+      label:
+        "measured model diagnostic examples; not established character defects",
+      selection:
+        "first three negative judgments per question and source, zero-based night index",
+      examples: judgeExamples,
+    },
+    null,
+    2,
+  ) + "\n",
+);
 const seasonDays = t.season.weeks * t.season.daysPerWeek;
+const calibrationPath = join(root, "judge-calibration.json");
+const calibration = hasEvidence(calibrationPath)
+  ? (JSON.parse(readEvidence(calibrationPath)) as {
+      passed: boolean;
+      inputTokens: number;
+      outputTokens: number;
+      raw: unknown;
+      expectedNegativeIds: string[];
+      requestHash: string;
+      request: { format: Record<string, unknown> };
+    })
+  : null;
+if (calibration) {
+  if (
+    hash(calibration.request) !== calibration.requestHash ||
+    !judgeValidator.validate(calibration.request.format, calibration.raw)
+  )
+    throw new Error("Calibration evidence mismatch");
+  const checks = decodeJudgments(calibration.raw, "compact-v2");
+  calibration.passed = checks.every((j) =>
+    judgeQuestions.every(
+      (q) => j[q] === !calibration.expectedNegativeIds.includes(j.character),
+    ),
+  );
+}
 const interruptionPath = join(root, "interruption.json");
 const interruption = hasEvidence(interruptionPath)
   ? (JSON.parse(readEvidence(interruptionPath)) as Record<string, unknown>)
   : null;
+const processPath = join(root, "w1b-process.jsonl");
+const processEvents = hasEvidence(processPath)
+  ? readEvidence(processPath)
+      .trim()
+      .split("\n")
+      .filter(Boolean)
+      .map(
+        (line) =>
+          JSON.parse(line) as { event: string; elapsedMs?: number; at: string },
+      )
+  : [];
+const wallClockGaps = processEvents.filter(
+  (event) => event.event === "wall-clock-gap",
+);
 const projections = Object.fromEntries(
   Object.entries(reports).map(([name, r]) => [
     name,
@@ -132,14 +242,45 @@ const projections = Object.fromEntries(
     },
   ]),
 );
+const ledger = JSON.parse(
+  readFileSync(".director-runtime/cost-ledger.json", "utf8"),
+) as { runs: Record<string, number> };
+const costReport = {
+  label:
+    "measured token usage and charged call reservations; dollars only where reported",
+  runs: ledger.runs,
+  subscriptionCalls: ledger.runs["claude:W1-sonnet-total"] ?? 0,
+  subscriptionCap: config.budget.w1.sonnetNights * config.groups.length,
+  localUnrecordedReservations:
+    (ledger.runs["ollama:local-soak"] ?? 0) - (local?.liveCalls ?? 0),
+  subscriptionReferenceUsd: sonnet?.cliReportedReferenceCostUsd,
+  marginalSubscriptionUsd: null,
+  localElectricityUsd: null,
+  calibrationTokens: calibration
+    ? { input: calibration.inputTokens, output: calibration.outputTokens }
+    : null,
+  judgeTokens: Object.fromEntries(
+    Object.entries(judgeReports).map(([name, r]) => [name, r.tokens]),
+  ),
+  projections,
+};
+if (costReport.subscriptionCalls > costReport.subscriptionCap)
+  throw new Error("Subscription cap exceeded");
+writeFileSync(
+  join(root, "cost-report.json"),
+  JSON.stringify(costReport, null, 2) + "\n",
+);
 writeFileSync(
   join(root, "summary.json"),
   JSON.stringify(
     {
       label: "measured",
+      experimentHash: experimentHash(),
       complete,
       judgeComplete,
+      judgeCalibrationPassed: calibration?.passed ?? false,
       interruption,
+      wallClockGaps,
       kill,
       threshold: config.budget.w1.rejectionKillRate,
       reports,
@@ -162,32 +303,9 @@ for (const name of ["local-soak", "sonnet"]) {
   let state: CampState = createState(t, rows[0].seed, rows[0].day),
     cacheKeysChecked = 0;
   for (const row of rows) {
-    const plannerDraws: PlannerDraw[] = [];
     if (state.ended) state = createState(t, state.seed + 1);
-    if (hash(state) !== row.beforeHash)
-      throw new Error(`${name} before hash mismatch ${row.index}`);
-    const accepted = row.groups.flatMap((g) => {
-      if (hash(g.request) !== g.key)
-        throw new Error("Logged request/hash mismatch");
-      cacheKeysChecked++;
-      return validateGroup(
-        t,
-        state,
-        g.group,
-        g.members,
-        g.error ? null : g.raw,
-        plannerDraws,
-      ).items;
-    });
-    const capped = reconcile(t, state, accepted, (id) =>
-        plan(t, state, id, true, plannerDraws),
-      ),
-      replayed = resolve(t, state, capped.items);
-    if (
-      hash(replayed.state) !== row.afterHash ||
-      hash(row.state) !== row.afterHash
-    )
-      throw new Error(`${name} replay mismatch ${row.index}`);
+    const { result: replayed, draws: plannerDraws } = auditNight(t, state, row);
+    cacheKeysChecked += row.groups.length;
     state = replayed.state;
     replayDraws.push({
       run: name,
@@ -201,6 +319,7 @@ for (const name of ["local-soak", "sonnet"]) {
     nights: rows.length,
     cacheKeysChecked,
     exactStateReplays: rows.length,
+    exactRejectionCensuses: rows.length,
   };
 }
 writeFileSync(
@@ -217,15 +336,17 @@ const fmt = (x: number | null | undefined) =>
 const lines = [
   "# W1 Director harness report",
   "",
-  `Status: ${complete ? "requested live night counts completed" : interruption ? "stopped after wall-clock window; W1 gate incomplete" : "measurement in progress"}. Local kill threshold result: ${kill ? "STOP — rejection exceeds the authored threshold" : "not exceeded in recorded samples"}.`,
+  `Status: ${complete ? "requested live night counts completed" : "measurement in progress; W1 gate incomplete"}. Local kill threshold result: ${kill ? "STOP — rejection exceeds the authored threshold" : "not exceeded in recorded samples"}.`,
   ...(interruption
     ? [
         "",
-        "An unexpected execution interruption exceeded seven hours during a requested short wait. The final saved local night includes a timeout and that elapsed interval; the raw latency data is retained. The runner was stopped after resumption because the requested wall-clock window had passed. One additional in-flight local reservation has no saved response and remains charged. The judge made no calls. Remaining: finish the local sample and run the character diagnostic. See `W1-evidence/interruption.json` and the session log.",
+        "The first session had an interruption exceeding seven hours. Its last saved local night retains that elapsed interval and a timeout; the unsaved in-flight reservation remains charged. W1b resumes the original evidence in detached ten-night chunks. See `W1-evidence/interruption.json` and the supervisor evidence for subsequent wall-clock gaps.",
       ]
     : []),
   "",
   "All model runs are **measured** on this host. State outcomes are **simulated**. Balancing data is **authored**; owner feel is **not measured**.",
+  "",
+  `W1b supervisor recorded ${wallClockGaps.length} wall-clock gaps beyond its heartbeat tolerance. Gaps are retained, not attributed to sleep without evidence.`,
   "",
   "| Run | Nights | Calls | Rejected items | Rejection rate | Line repairs | Call p50 / p95 (ms) |",
   "|---|---:|---:|---:|---:|---:|---:|",
@@ -235,6 +356,7 @@ const lines = [
   ),
   "",
   "Rejection includes malformed/illegal decisions, unavailable transport and camp cap drops. Line-only repairs preserve legal acts and are reported separately. The owner should evaluate how often the authored bank replaces model voice; low intent rejection alone does not establish character quality.",
+  `Local line repairs: ${local?.lineRepairs ?? 0}/${local?.items ?? 0} (${fmt((local?.lineRepairRate ?? 0) * 100)}%). These are not added to the item-rejection kill numerator because the intent remains valid, but they are a material voice-quality limitation.`,
   "",
   "Local calls run serially to avoid GPU queue contention. Sonnet groups run concurrently. Night latency is separately recorded in `W1-evidence/summary.json`; per-call latency must not be confused with the duration of a whole night.",
   "",
@@ -253,7 +375,7 @@ const lines = [
   "",
   `The hostile fuzz census generated ${fuzzReport.cases} cases (${fuzzReport.uniqueOutputs} unique malformed outputs): no invalid item escaped, no fallback was illegal, and no valid sibling was lost. Details: W1-evidence/fuzz.json.`,
   "",
-  "Commands: `npm run gate`; `npm run report`. The report command revalidates every recorded raw group output and replays each night from the previous state, verifying complete request keys and final state hashes. The W0 fixture oracle remains unchanged.",
+  "Commands: `npm run gate`; `npm run report`. The report revalidates every raw group output and replays each night, verifying complete request keys and final state hashes. The live experiment uses the pinned pre-review-fix tables in `W1-evidence/experiment-tables.json` throughout all 300 local nights; the original 155 nights are retained. Current authored balance has regenerated W0 fixtures and the 500-case fuzz gate, not a separate 300-night live claim.",
   "",
   "`npx tsx packages/tools/src/cache-replay.ts` restores each forced-live night's pinned response snapshot and repeats it with a zero-call budget. Normal cache records are immutable after the first valid write; independent forced-live samples do not share an immutable timeline. `W1-evidence/seeded-draws.jsonl.gz` records deterministic replays of all planner and contest draws, including samples collected before runtime planner-draw logging was added.",
   "",
@@ -270,10 +392,12 @@ const lines = [
   "",
   "CLI-reported cost is a provider reference/API-equivalent figure, **not an invoice or measured subscription debit**. Marginal subscription dollars and local electricity cost are not measured. Ollama has no hosted token charge. No placeholder API pricing is presented as actual spend.",
   "",
+  `Charged subscription reservations: ${costReport.subscriptionCalls}/${costReport.subscriptionCap}; unrecorded local reservations retained: ${costReport.localUnrecordedReservations}. Local judge token usage and season projections are in W1-evidence/cost-report.json. Judge calls use only the local model.`,
+  "",
   "## Character diagnostic and owner read",
   "",
   Object.keys(judgeReports).length
-    ? `Judge coverage ${judgeComplete ? "complete" : "in progress"}. Questions below show the share of negative judgments on raw proposals before validation or line repair.`
+    ? `Judge coverage ${judgeComplete ? "complete" : "in progress"}. Questions below show negative judgments on raw proposals before validation or line repair where available. A missing proposal is judged using its recorded planner item; each request records this distinction in judgedSource.`
     : "Local judge diagnostic: pending. No character-quality claim yet.",
   "",
   "| Run / judge | Items | Goal no | Values no | Voice no | Knowledge no | Continuity no |",
@@ -284,6 +408,12 @@ const lines = [
   ),
   "",
   "The local judge is a model diagnostic, not an independent human certification. It answers goal, values, voice, knowledge and continuity questions against supplied personal context. The same local model judging itself is a limitation. Blind morning material and source mapping are generated separately; no source labels appear on the owner page.",
+  "Traceable negative examples (the first three per question and source, without cherry-picking) are in W1-evidence/judge-examples.json. Each names the original night index, actor and request hash; the full context and verdict remain in the compressed judge evidence.",
+  "Observed diagnostic limitation: some reasons describe a knowledge violation while the compact answer marks continuity (for example local sample index 3). The code preserves the actual returned answers; it does not silently relabel them. The calibration below tests gross contradictions versus clean controls, not isolated sensitivity of every answer position. Per-question rates therefore remain fallible model assessments, not ground-truth defect rates.",
+  "",
+  `Judge calibration: ${calibration?.passed ? "passed" : "not passed"}. The same prompt and output format distinguish planted goal, value, voice, unknown-fact and continuity contradictions from quiet-rest controls. Broad approval of ordinary samples should still be treated as a lenient model diagnostic, not proof of character quality. Evidence: W1-evidence/judge-calibration.json.`,
+  "",
+  `The first verbose judge request timed out. A later 16K-context headroom probe also timed out, and its identical in-flight retry was stopped and remains charged. Requests and charges are retained in judge-attempts.jsonl.gz. Successful judging uses an 8K context, compact Y/N answers in fixed question order, brief reasons, and a bounded local retry policy. Reported prompt-plus-output token counts are checked against context capacity. Failed attempts retained: ${Object.values(judgeReports).reduce((n, r) => n + r.failedAttempts, 0)}. Successful coverage is counted separately from attempts.`,
   "",
   "## Boundaries",
   "",
@@ -291,7 +421,9 @@ const lines = [
   "",
   "Text checks are lexical guardrails, not proof of narrative truth. The fuzz claim concerns the enforced schema and domain rules. Model prompts, voice quality, implied knowledge and invented natural-language details remain fallible and are assessed diagnostically and by the owner.",
   "",
-  "The orchestrator supplied Fable's W0 review: accepted for handover with six fixes owed. Those residual fixes are recorded in the defect register and session log; they are not silently marked closed. Owner blind reading remains pending. Nothing is labelled felt.",
+  "Fable's six W0 fixes and lower-severity followups are closed in the preceding W0 commit. Owner blind reading remains pending. Nothing is labelled felt.",
+  "",
+  `W1 engineering decision: ${complete && judgeComplete && calibration?.passed && !kill ? "PASS — required sample, character diagnostic, deterministic audit and rejection gate complete. Proceed to W5; owner blind read remains pending." : kill ? "STOP — rejection kill rule exceeded; do not begin W5." : "INCOMPLETE — do not begin W5 until all required measurements finish."}`,
   "",
 ];
 writeFileSync(pathResolve("docs/waves/W1-report.md"), lines.join("\n"));

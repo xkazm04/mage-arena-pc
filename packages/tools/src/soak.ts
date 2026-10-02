@@ -20,6 +20,7 @@ import {
   type Provider,
 } from "@mage/director";
 import config from "../../director/src/config.json" with { type: "json" };
+import { experimentTables, experimentHash } from "./experiment.ts";
 
 const args = process.argv.slice(2);
 const opt = (name: string, fallback: string) => {
@@ -51,7 +52,10 @@ const directory = pathResolve(opt("out", `docs/waves/W1-evidence/${run}`));
 mkdirSync(directory, { recursive: true });
 const log = join(directory, "nights.jsonl"),
   checkpoint = join(directory, "checkpoint.json"),
-  t = loadTables();
+  t = args.includes("--w1-experiment") ? experimentTables() : loadTables();
+const chunk = Number(opt("chunk", String(limit)));
+if (!Number.isInteger(chunk) || chunk < 1)
+  throw new Error("Invalid chunk size");
 const provider: Provider =
   mode === "claude"
     ? new ClaudeProvider(pathResolve(".director-runtime"))
@@ -62,13 +66,15 @@ mkdirSync(".director-runtime", { recursive: true });
 const cap =
   mode === "claude"
     ? config.budget.w1.sonnetNights * config.groups.length
-    : limit * config.groups.length;
+    : limit * config.groups.length +
+      (run === "local-soak" ? config.completion.retainedLocalReservations : 0);
 // One fixed Sonnet run identity for all invocations/probes; command-line run names cannot reset its cap.
 const localDayCap =
   (config.budget.w1.localNights + config.budget.w1.pilotLocalNights) *
     config.groups.length +
   config.budget.w1.localNights +
-  config.budget.w1.sonnetNights;
+  config.budget.w1.sonnetNights +
+  config.completion.retainedLocalReservations;
 const guard = new CostGuard(
   pathResolve(".director-runtime/cost-ledger.json"),
   mode === "claude" ? "W1-sonnet-total" : run,
@@ -112,7 +118,8 @@ console.log(
     startedAt: saved.startedAt,
   }),
 );
-for (let i = saved.completed; i < limit; i++) {
+const stopAt = Math.min(limit, saved.completed + chunk);
+for (let i = saved.completed; i < stopAt; i++) {
   if (saved.state.ended) saved.state = createState(t, saved.state.seed + 1);
   const start = performance.now();
   const result = await night(t, saved.state, {
@@ -124,6 +131,7 @@ for (let i = saved.completed; i < limit; i++) {
   });
   const row = {
     index: i,
+    experimentHash: args.includes("--w1-experiment") ? experimentHash() : null,
     label: mode === "planner" ? "simulated" : "measured",
     provider: mode,
     model: provider.model,

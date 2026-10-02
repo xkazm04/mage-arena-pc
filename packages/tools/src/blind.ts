@@ -7,10 +7,11 @@ import {
   type CampState,
   type Decision,
 } from "@mage/core";
-import { loadTables, plan } from "@mage/director";
+import { plan } from "@mage/director";
 import { readNights } from "./evidence.ts";
+import { experimentTables } from "./experiment.ts";
 
-const t = loadTables(),
+const t = experimentTables(),
   root = pathResolve("docs/waves/W1-evidence"),
   source = process.argv[2] ?? "local-soak",
   rows = readNights(join(root, source, "nights.jsonl"));

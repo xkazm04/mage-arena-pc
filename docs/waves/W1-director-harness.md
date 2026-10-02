@@ -81,3 +81,10 @@ are now listed in the defect register; frozen rules and fixture bytes were not
 changed to hide those findings. Reported zero contradictions means the checker’s
 implemented template, foreign-key and fixture checks, not semantic proof of all
 free prose.
+
+Second-session continuation is specified in `W1b-completion.md`. W0 review fixes
+now have regenerated active fixtures. The original measured experiment's tables
+are pinned separately so the saved 155 local and 30 subscription nights remain
+exactly replayable; the resumed sample uses those same inputs. The frozen prompt
+and subscription cap are unchanged. See the generated report for completion,
+character diagnostics and the final pass/kill decision.
