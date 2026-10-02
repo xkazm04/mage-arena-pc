@@ -17,6 +17,16 @@ const scaleContract = JSON.parse(readFileSync(new URL('../../../art/scale-contra
 if (combat.absorb.arcDeg !== scaleContract.absorb.angle_degrees) throw Error('Absorb contract contradiction');
 if (combat.tierClock.perfectAbsorbAdvanceS !== combat.absorb.perfect.tierClockAdvanceS) throw Error('Clock reward contradiction');
 const stats = csv(read('stats.csv'));
+const campRules = JSON.parse(readFileSync(new URL('../../../docs/design/reconciled/data/rules.json', import.meta.url), 'utf8'));
+for (const name of campRules.stats.names) {
+  const row = stats.find(row => row.stat === name);
+  if (!row || JSON.stringify(row.points_for_rank_1_2_3_4_5.split(';').map(Number)) !== JSON.stringify(campRules.stats.rankThresholds)) throw Error('Camp/arena rank mapping contradiction');
+}
+const rankRange = { min: 1, max: campRules.stats.rankThresholds.length };
+const tierData = JSON.parse(read('arena-tiers.json'));
+const trialMatch = tierData.tentTrial.score.match(/bout result (\d+)% \+ elder favour (\d+)%.*renown (\d+)%/);
+if (!trialMatch) throw Error('Unrecognized Trial score authority');
+const trialWeights = trialMatch.slice(1).map(Number).map(n => n / 100);
 function formula(stat, variable) {
   const source = stats.find(row => row.stat === stat).arena_effect;
   const match = source.match(new RegExp(`${variable} = ([\\d.]+) \\+ ([\\d.]+)\\*rank`));
@@ -40,6 +50,6 @@ const bolt = { name: boltRow.name, castS: +boltRow.cast_s, cooldownS: +boltRow.c
   mana: +boltRow.mana, damage: +boltRow.damage, rangeM: +boltRow.range_m,
   speedMps: Number(boltRow.shape.match(/([\d.]+) m\/s/)[1]) };
 const output = '// GENERATED from reconciled arena data and art/scale-contract-v1.json. Edit the source data, never this file.\n' +
-  Object.entries({ scaleContract, combat, statRules, bolt, waterRows: rows, enemyData: JSON.parse(read('enemies.json')), arenaTiers: JSON.parse(read('arena-tiers.json')) }).map(([key, value]) => `export const ${key} = ${JSON.stringify(value, null, 2)} as const;`).join('\n');
+  Object.entries({ scaleContract, combat, statRules, rankRange, trialWeights, bolt, waterRows: rows, enemyData: JSON.parse(read('enemies.json')), arenaTiers: tierData }).map(([key, value]) => `export const ${key} = ${JSON.stringify(value, null, 2)} as const;`).join('\n');
 writeFileSync(fileURLToPath(new URL('../src/arena/data.generated.ts', import.meta.url)), output + '\n');
 console.log('Arena data compiled from reconciled arena and scale contract; clock, Nerve and absorb authorities agree.');

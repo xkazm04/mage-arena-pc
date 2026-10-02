@@ -2,14 +2,15 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { randomUUID } from "node:crypto";
 import {
   createCampRuntime,
-  type CampService,
+  type SeasonService,
+  type SeasonCommand,
   type ParleyInput,
   type CampCommand,
 } from "@mage/director";
-import { campPlay } from "@mage/core";
+import { campPlay, bridgeRules, type BoutInput } from "@mage/core";
 
 export function campApi() {
-  const sessions = new Map<string, CampService>();
+  const sessions = new Map<string, SeasonService>();
   const timer = setInterval(() => {
     for (const service of sessions.values()) service.tick();
   }, campPlay.listening.tickMs);
@@ -53,6 +54,8 @@ export function campApi() {
       if (!service) return send(409, { error: "Return to camp to begin." });
       if (req.method === "GET" && req.url === "/api/session")
         return send(200, service.view());
+      if (req.method === "GET" && req.url === "/api/bout")
+        return send(200, service.progress.bout);
       if (
         req.method !== "POST" ||
         req.headers["content-type"] !== "application/json"
@@ -61,10 +64,13 @@ export function campApi() {
       let body = "";
       for await (const part of req) {
         body += String(part);
-        if (body.length > 8192)
+        if (body.length > bridgeRules.limits.maxBodyBytes)
           return send(413, { error: "That message is too long." });
       }
       const payload = JSON.parse(body) as Record<string, unknown>;
+      if (req.url === '/api/season') return send(200, service.seasonCommand(payload.command as SeasonCommand, payload.revision as number));
+      if (req.url === '/api/bout-input') return send(200, service.boutInputs(payload.id as string, payload.entries as BoutInput[], payload.hash as string));
+      if (req.url === '/api/pause') { service.paused = payload.paused === true; return send(200, service.view()); }
       if (req.url === "/api/parley")
         return send(
           200,

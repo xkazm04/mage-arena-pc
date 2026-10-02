@@ -1,16 +1,20 @@
 import { openingPosition } from './geometry.ts';
 import { arenaTiers } from './data.generated.ts';
-import { newWaterState, presets } from './catalog.ts';
+import { newWaterState, presets, validateComposition } from './catalog.ts';
 import { addEnemy, enemyInputs, queueDeathEffects } from './enemies.ts';
 import { addMage, combat, createArena, random, resetWave, runtime, seconds, stateHash, stepArena, ticks } from './kernel.ts';
 import { attachMageAI, mageInput } from './mage-ai.ts';
-import { type Actor, type ArenaState, type Composition, type InputFrame } from './types.ts';
+import { type Actor, type ArenaState, type Composition, type InputFrame, type Ranks } from './types.ts';
 export const tiro = arenaTiers.tiers[0];
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
 export interface Games { state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false): Games {
+export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
-  const state = createArena(seed), player = addMage(state, 0, runtime.games.playerSpawn, 'Cassia'); player.water = newWaterState(composition);
+  if (validateComposition(composition).length) throw Error('Invalid composition');
+  if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
+  const state = createArena(seed), player = addMage(state, 0, runtime.games.playerSpawn, snapshot?.name ?? 'Cassia', snapshot?.ranks); player.water = newWaterState(composition);
+  if (snapshot) { player.hp = Math.max(1, player.hp - snapshot.hpPenalty); player.maxStamina = Math.max(1, player.maxStamina - snapshot.staminaPenalty); player.stamina = player.maxStamina; }
   if (referencePlayer) attachMageAI(player, runtime.games.referenceCompetence);
   const games: Games = { state, player, wave: startWave, phase: 'active', wavesCleared: 0, waveStartTick: state.tick, spawnLog: [] };
   spawnWave(games); return games;

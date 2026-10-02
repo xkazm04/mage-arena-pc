@@ -8,6 +8,11 @@ const assets = resolve(root, "../../assets");
 function campServer(): Plugin {
   return {
     name: "camp-sidecar",
+    configurePreviewServer(server) {
+      const api = campApi();
+      server.httpServer.on('close', () => api.close());
+      server.middlewares.use((req, res, next) => { void api.handle(req, res, next); });
+    },
     configureServer(server) {
       const api = campApi();
       server.httpServer?.on("close", () => api.close());

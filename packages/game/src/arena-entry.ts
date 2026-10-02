@@ -7,11 +7,24 @@ import { cameraMetrics, contract, groundToScreen, interpolate, makeCamera, type 
 import { ArenaScene } from './arena-scene.ts';
 import { openingPosition, openingSeparationM, spawnProjectile, addMage } from '@mage/core/arena';
 import './arena-style.css';
+import { applyBoutInput, boutHash, type BoutInput, type SeasonBout } from '@mage/core';
+export interface SeasonArenaOptions { bout: SeasonBout; send: (entries: BoutInput[], hash: string) => Promise<unknown>; finish: () => Promise<void> }
+export type ArenaDisposer = (() => void) & { pause: (value: boolean) => void; flush: () => Promise<void> };
 
-export async function mountArena(root: HTMLElement): Promise<() => void> {
+export async function mountArena(root: HTMLElement, season?: SeasonArenaOptions): Promise<ArenaDisposer> {
 root.classList.add('arena-root');
 const lifetime = new AbortController();
 let raf = 0;
+let pending: Promise<void> | null = null, syncError = '', queued: BoutInput[] = [];
+async function flush(): Promise<void> {
+  if (pending) await pending;
+  if (syncError) throw Error(syncError);
+  if (!season || !queued.length) return;
+  const entries = queued; queued = [];
+  pending = season.send(entries, boutHash(season.bout)).then(() => {}).catch((e: unknown) => { syncError = String(e); throw e; });
+  try { await pending; } finally { pending = null; }
+}
+function seasonStep(entry: BoutInput) { applyBoutInput(season!.bout, entry); queued.push(entry); }
 root.innerHTML = `
 <main class="shell"><header class="masthead"><div><div class="eyebrow">Castra Clausa · the proving ground</div><h1>Mage Arena</h1><div class="subtitle">Water answers what the collar cannot hold.</div></div>
 <div class="toolbar"><label for="scenario">Training</label><select id="scenario"><option value="magic">Magic thrower</option><option value="physical">Steel from the side</option><option value="flanker">Alternating flanks</option><option value="charge">Unblockable lane</option><option value="stream">Three-bolt stream</option><option value="performance">Projectile field</option></select><label for="zoom">View</label><input id="zoom" type="range" step="0.05" aria-label="Camera zoom"><button id="scale-debug" aria-pressed="false">Scale overlay</button><button id="restart">Restart</button><button id="pause">Pause</button></div></header>
@@ -37,6 +50,7 @@ const frames: number[] = [], cpu: number[] = [], projectileSamples: number[] = [
 const params = new URLSearchParams(location.search);
 if (params.has('scenario')) training = createTraining(params.get('scenario') as TrainingKind);
 root.querySelector<HTMLSelectElement>('#scenario')!.value = training.kind;
+if (season) { if (!season.bout.games) throw Error('Season bout has not started'); games = season.bout.games; composition = season.bout.composition; mode = 'tiro'; syncGames(); }
 function restart(kind = training.kind): void {
   mode = 'training'; games = undefined; referencePlayer = false;
   training = createTraining(kind); clock = new FixedStepper(); input.clear(); lastPerfect = -1e9; lastEventIndex = 0; paused = false;
@@ -59,6 +73,7 @@ root.querySelector('#restart')!.addEventListener('click', () => mode === 'tiro' 
 const composer = compositionScreen(choice => { composition = choice; if (startGamesAfterCompose) startTiro(); else restart(); app.canvas.focus(); }, value => { paused = value; input.clear(); }, root);
 const composeButton = document.createElement('button'); composeButton.id = 'compose'; composeButton.textContent = 'Compose'; composeButton.onclick = () => { startGamesAfterCompose = false; composer.open(); }; root.querySelector('.toolbar')!.prepend(composeButton);
 const gamesButton = document.createElement('button'); gamesButton.id = 'start-tiro'; gamesButton.className = 'primary'; gamesButton.textContent = 'Tiro Games'; gamesButton.onclick = () => { startGamesAfterCompose = true; composer.open('Enter Tiro Games'); }; root.querySelector('.toolbar')!.prepend(gamesButton);
+if (season) { composeButton.hidden = true; gamesButton.hidden = true; root.querySelector<HTMLElement>('#restart')!.hidden = true; root.querySelector<HTMLElement>('#scenario')!.hidden = true; root.querySelector<HTMLElement>('label[for=scenario]')!.hidden = true; }
 const scenarioSelect = root.querySelector<HTMLSelectElement>('#scenario')!;
 const currentGamesOption = document.createElement('option'); currentGamesOption.value = 'tiro'; currentGamesOption.textContent = 'Tiro Games'; currentGamesOption.disabled = true; scenarioSelect.prepend(currentGamesOption);
 const rosterGroup = document.createElement('optgroup'); rosterGroup.label = 'Roster practice';
@@ -67,13 +82,14 @@ scenarioSelect.append(rosterGroup);
 scenarioSelect.addEventListener('change', () => scenarioSelect.value.startsWith('enemy:') ? startRoster(scenarioSelect.value.slice(6)) : restart(scenarioSelect.value as TrainingKind));
 root.querySelector('#message')!.addEventListener('click', e => {
   const action = (e.target as HTMLElement).closest<HTMLElement>('[data-game-action]')?.dataset.gameAction;
-  if (action === 'next' && games) { advanceGames(games); syncGames(); input.clear(); clock = new FixedStepper(); lastPerfect = -1e9; app.canvas.focus(); }
-  if (action === 'retry') { startTiro(); app.canvas.focus(); }
+  if (action === 'next' && games && !pending) { if (season) seasonStep({ type: 'advance', tick: games.state.tick }); else advanceGames(games); syncGames(); input.clear(); clock = new FixedStepper(); lastPerfect = -1e9; app.canvas.focus(); }
+  if (action === 'return' && season) { paused = true; void flush().then(season.finish).catch(e => { syncError = String(e); }); }
+  if (action === 'retry' && !season) { startTiro(); app.canvas.focus(); }
 });
 root.querySelector('#pause')!.addEventListener('click', () => { paused = !paused; input.clear(); root.querySelector('#pause')!.textContent = paused ? 'Resume' : 'Pause'; if (!paused) app.canvas.focus(); });
 for (const slot of root.querySelectorAll<HTMLButtonElement>('[data-slot]')) slot.addEventListener('click', () => { input.slot = Number(slot.dataset.slot); app.canvas.focus(); });
 function bell(): void {
-  if (!audio || audio.state !== 'running') return;
+  if (!audio || audio.state !== 'running' || localStorage.getItem('mage-sound') === 'off') return;
   const osc = audio.createOscillator(), gain = audio.createGain(); osc.connect(gain); gain.connect(audio.destination);
   osc.frequency.value = runtime.presentation.bellHz;
   gain.gain.setValueAtTime(0.04, audio.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + runtime.presentation.bellDurationS);
@@ -86,7 +102,7 @@ zoomControl.addEventListener('input', () => { camera = makeCamera(camera, camera
 root.querySelector('#scale-debug')!.addEventListener('click', () => { debugScale = !debugScale; });
 window.addEventListener('resize', () => { app.renderer.resize(window.innerWidth, window.innerHeight); camera = makeCamera({ width: window.innerWidth, height: window.innerHeight }, camera.centre, camera.zoom); }, { signal: lifetime.signal });
 // Empty shipping manifest uses original procedural figures until accepted A3 frames arrive.
-void scene.library.load(new URL(params.get('sprites') ?? 'arena-sprites.json', location.href).href);
+void scene.library.load(new URL((!season && params.get('sprites')) || '/arena-sprites.json', location.href).href);
 function render(alpha: number): void {
   const { state, player } = training;
   camera = makeCamera({ width: app.screen.width, height: app.screen.height }, interpolate(player.previousPos, player.pos, alpha), camera.zoom);
@@ -131,6 +147,8 @@ Sprites ${scene.library.loadedFrames} loaded · ${scene.library.diagnostics.leng
   if (games?.phase === 'intermission') message = `BOUT WON<small>The next gate is ready. Recover before you enter.</small><button data-game-action="next" id="next-bout">Enter bout ${games.wave + 2}</button>`;
   if (games?.result) message = `${games.phase === 'complete' ? 'TIRO CHAMPION' : 'MISSIO'}<small>${games.result.wavesCleared} bouts won · ${games.result.gold} gold · ${games.result.renown} renown<br>The Games ${games.phase === 'complete' ? 'are yours' : 'end here. Your life is spared'}.</small><button data-game-action="retry" id="retry-games">New Tiro Games</button>`;
   if (mode === 'roster' && !remainingEnemies && !state.telegraphs.length && !state.projectiles.length) message = 'PRACTICE CLEAR<small>Choose another opponent or enter the Tiro Games.</small>';
+  if (season && games?.result) message = (season.bout.spectator ? 'THE TIDE RETURNS' : games.result.finalWon ? 'TIRO VICTOR' : 'MISSIO') + '<small>' + (season.bout.spectator ? 'You watched your tent entrant. No player payout.' : games.result.gold + ' gold · ' + games.result.renown + ' renown · the camp will hear of this.') + '</small><button data-game-action="return" id="return-camp">Return to camp</button>';
+  if (syncError) message = 'THE BOUT IS PAUSED<small>Checkpoint could not be accepted. Reload to resume the last accepted tick.</small>';
   const messageNode = root.querySelector<HTMLElement>('#message')!; if (messageNode.innerHTML !== message) messageNode.innerHTML = message;
   messageNode.classList.toggle('interactive', !!games && games.phase !== 'active');
   messageNode.classList.toggle('paused-label', paused && message === 'PAUSED');
@@ -139,13 +157,14 @@ let previous = performance.now();
 function frame(now: number): void {
   const elapsed = (now - previous) / 1000; previous = now; const start = performance.now();
   let alpha = 1;
-  if (!paused && !training.player.down && !document.hidden) alpha = clock.advance(elapsed, () => {
-    if (mode === 'tiro' && games) stepGames(games, referencePlayer ? undefined : input.frame());
+  if (!paused && !pending && !syncError && !training.player.down && !document.hidden) alpha = clock.advance(elapsed, () => {
+    if (mode === 'tiro' && games) { if (season && games.phase === 'active') seasonStep({ type: 'tick', tick: games.state.tick, input: input.frame() }); else if (!season) stepGames(games, referencePlayer ? undefined : input.frame()); }
     else if (mode === 'roster') { stepArena(training.state, { ...enemyInputs(training.state), [training.player.id]: input.frame() }); queueDeathEffects(training.state); }
     else stepTraining(training, bot ? timingBot(training, bot) : input.frame());
     for (const event of training.state.events.slice(lastEventIndex)) if (event.kind === 'perfect' && event.actorId === training.player.id) { lastPerfect = event.tick; bell(); }
     lastEventIndex = training.state.events.length;
   });
+  if (season && !pending && queued.length && (queued.length >= combat.simStepHz || games?.phase !== 'active')) void flush().catch(() => {});
   render(alpha);
   if (frameCount++ >= runtime.presentation.performanceWarmupFrames) {
     frames.push(elapsed * 1000); cpu.push(performance.now() - start); projectileSamples.push(training.state.projectiles.length); visibleProjectileSamples.push(scene.visibleProjectiles);
@@ -156,7 +175,7 @@ function frame(now: number): void {
 raf = requestAnimationFrame(frame);
 // Harness access is read-only in ordinary play and only exposes mutations with ?harness=1.
 const harness = { snapshot: () => structuredClone({ state: training.state, player: training.player, slot: input.slot, aim: input.aim, paused, projectiles: training.state.projectiles.length, visibleProjectiles: scene.visibleProjectiles, mode, games, camera, cameraMetrics: cameraMetrics(camera), sortedActorIds: scene.sortedActorIds, sprites: { loaded: scene.library.loadedFrames, diagnostics: scene.library.diagnostics } }), project: (point: { x: number; y: number }) => groundToScreen(point, camera), performance: () => ({ frames: [...frames], cpu: [...cpu], projectileSamples: [...projectileSamples], visibleProjectileSamples: [...visibleProjectileSamples], frameCount }),
-  ...(params.has('harness') ? { reset: restart, setBot: (kind?: BotKind) => { bot = kind; }, clearInput: () => input.clear(),
+  ...(params.has('harness') && !season ? { reset: restart, setBot: (kind?: BotKind) => { bot = kind; }, clearInput: () => input.clear(),
     setReferencePlayer: (enabled: boolean) => { referencePlayer = enabled; if (games && enabled) attachMageAI(games.player, runtime.games.referenceCompetence, games.state.tick); },
     runGamesTicks: (count: number) => { if (games) { for (let i = 0; i < count && games.phase === 'active'; i++) stepGames(games, referencePlayer ? undefined : input.frame()); lastEventIndex = games.state.events.length; } },
     startGames: startTiro, startRoster,
@@ -182,5 +201,11 @@ const harness = { snapshot: () => structuredClone({ state: training.state, playe
     panPlayer: (pos: { x: number; y: number }) => { training.player.pos = { ...pos }; training.player.previousPos = { ...pos }; render(1); }
   } : {}) };
 Object.assign(window, { __arena: harness });
-return () => { lifetime.abort(); cancelAnimationFrame(raf); input.dispose(); composer.dispose(); void audio?.close(); scene.library.dispose(); app.destroy(true, { children: true }); delete (window as Window & { __arena?: unknown }).__arena; root.replaceChildren(); root.classList.remove('arena-root'); };
+if (season && params.has('harness')) Object.assign(window, { __seasonArena: {
+  snapshot: () => structuredClone(season.bout),
+  inputs: async (frames: import('@mage/core/arena').InputFrame[]) => { paused = true; await flush(); for (const frame of frames) { if (games?.phase !== 'active') break; seasonStep({ type: 'tick', tick: games.state.tick, input: frame }); } await flush(); render(1); },
+  pause: (value: boolean) => { paused = value; },
+} });
+const dispose = () => { lifetime.abort(); cancelAnimationFrame(raf); input.dispose(); composer.dispose(); void audio?.close(); scene.library.dispose(); app.destroy(true, { children: true }); delete (window as Window & { __arena?: unknown }).__arena; root.replaceChildren(); root.classList.remove('arena-root'); delete (window as Window & { __seasonArena?: unknown }).__seasonArena; };
+return Object.assign(dispose, { flush, pause: (value: boolean) => { paused = value; input.clear(); } });
 }

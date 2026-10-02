@@ -33,7 +33,7 @@ try {
   });
   const page = await context.newPage();
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(base);
+  await page.goto(`${base}/camp`);
   await page.waitForSelector('body[data-ready="true"]');
   assert.equal(
     (await view(page)).parley.canType,

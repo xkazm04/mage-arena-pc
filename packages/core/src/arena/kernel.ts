@@ -1,4 +1,4 @@
-import { combat, statRules, bolt } from './data.generated.ts';
+import { combat, statRules, bolt, rankRange } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
 import { constrainToArena } from './geometry.ts';
 import { distance, inArc, length, segmentHit, sub, unit, type Vec } from './math.ts';
@@ -26,7 +26,7 @@ export function random(state: ArenaState, purpose: string): number {
   state.randomLog.push({ tick: state.tick, purpose, value }); return value;
 }
 export function addMage(state: ArenaState, team: number, pos: Vec, label = 'Water mage', ranks: Ranks = runtime.training.defaultRanks): Actor {
-  if (Object.values(ranks).some(r => !Number.isInteger(r) || r < 1 || r > 5)) throw Error('Arena ranks must be integers from 1 to 5');
+  if (Object.keys(ranks).length !== 3 || ['vigor', 'focus', 'nerve'].some(key => !Number.isInteger(ranks[key as keyof Ranks]) || ranks[key as keyof Ranks] < rankRange.min || ranks[key as keyof Ranks] > rankRange.max)) throw Error('Arena ranks are outside the shared mapping');
   const actor: Actor = {
     id: state.nextId++, team, label, pos: { ...pos }, previousPos: { ...pos }, facing: { x: 1, y: 0 }, radius: runtime.geometry.mageRadiusM,
     ranks: { ...ranks }, hp: maximum(statRules.hp, ranks.vigor), maxHp: maximum(statRules.hp, ranks.vigor),

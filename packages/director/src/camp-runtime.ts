@@ -1,4 +1,4 @@
-import { CampService } from "./camp-service.ts";
+import { SeasonService } from "./season-service.ts";
 import { loadTables } from "./data.ts";
 import { CostGuard } from "./budget.ts";
 import { RequestCache } from "./cache.ts";
@@ -7,7 +7,7 @@ import config from "./config.json" with { type: "json" };
 /** Provider names and budgets belong here, not in game UI or assets. */
 export function createCampRuntime(mode: "local" | "offline") {
   const tables = loadTables();
-  const service: CampService = new CampService(tables, {
+  const service: SeasonService = new SeasonService(tables, {
     provider:
       mode === "local"
         ? new OllamaProvider()

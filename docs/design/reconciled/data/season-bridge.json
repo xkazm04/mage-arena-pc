@@ -1,0 +1,34 @@
+{
+  "label": "authored W7 bridge supplements",
+  "sources": {
+    "calendar": "season.json",
+    "stats": "arena/stats.csv and rules.json/stats/rankThresholds",
+    "poison": "rules.json/schemes/poison",
+    "games": "arena/arena-tiers.json/tiers/tiro",
+    "trialScore": "arena/arena-tiers.json/tentTrial/score"
+  },
+  "playableSchool": "water",
+  "playableCharacter": "cassia",
+  "weeksPlayable": 2,
+  "fatigueStaminaPerPoint": 2,
+  "minimumStartingResource": 1,
+  "trial": {
+    "exchangesToWin": 2,
+    "maxExchanges": 3,
+    "stances": ["press", "brace", "feint"],
+    "beats": { "press": "feint", "brace": "press", "feint": "brace" },
+    "costs": { "press": 18, "brace": 8, "feint": 12 },
+    "rankWeight": 2,
+    "counterBonus": 12,
+    "exhaustedPenalty": 8,
+    "respectTrust": 3,
+    "scoreScale": 100,
+    "spectatorCompetence": 2
+  },
+  "aftermath": { "allyTrustOnFinal": 3, "allyTrustOnMissio": 1 },
+  "limits": { "batchTicks": 600, "maxBoutTicks": 43200, "maxLogEntries": 43204, "maxBodyBytes": 524288, "saveBytes": 33554432 },
+  "rumours": {
+    "champion": "Some say the Tide has found a crack in the collar. The story outruns its proof.",
+    "missio": "Some say the Tide saved its strength for another gate. Nobody agrees why."
+  }
+}

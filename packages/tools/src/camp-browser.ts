@@ -17,7 +17,7 @@ async function shot(page: Page, name: string) {
 }
 async function boot(page: Page) {
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(base);
+  await page.goto(`${base}/camp`);
   await page.waitForSelector('body[data-ready="true"]');
   assert.equal(await page.locator("canvas").count(), 1);
 }

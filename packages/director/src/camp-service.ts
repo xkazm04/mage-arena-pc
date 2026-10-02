@@ -35,9 +35,9 @@ export type CampCommand =
 export class CampService {
   session: CampSession;
   job: CampNight | null = null;
-  private dawn: Promise<void> | null = null;
-  private conversation: Promise<void> | null = null;
-  private closed = false;
+  protected dawn: Promise<void> | null = null;
+  protected conversation: Promise<void> | null = null;
+  protected closed = false;
   readonly parleyDirector: ParleyDirector;
   readonly parleyAudit: {
     day: number;
@@ -46,7 +46,7 @@ export class CampService {
     key: string | null;
     replyReplaced: string | null;
   }[] = [];
-  private input = { lane: 0, listening: false };
+  protected input = { lane: 0, listening: false };
   constructor(
     readonly tables: Tables,
     readonly options: HarnessOptions,
@@ -163,7 +163,7 @@ export class CampService {
       this.startNight();
     return this.view();
   }
-  private startNight() {
+  protected startNight() {
     this.job = new CampNight(
       remainingCaps(this.tables, this.session),
       structuredClone(this.session.camp),

@@ -1,11 +1,12 @@
 import "./style.css";
-import type { CampCommand, CampService } from "@mage/director";
+import type { CampCommand } from "@mage/director";
 import { CampAssets } from "./assets.ts";
 import { CampScenes, type Presentation, type Scene } from "./scenes.ts";
 import { ParleyPanel } from "./parley-panel.ts";
 
-type View = ReturnType<CampService["view"]>;
-export async function mountCamp(root: HTMLElement): Promise<() => void> {
+import { seasonPanel } from "./season-panel.ts";
+import type { SeasonView as View } from "./season-api.ts";
+export async function mountCamp(root: HTMLElement, enterArena: () => void = () => {}): Promise<() => void> {
 const lifetime = new AbortController();
 let disposed = false;
 const listen = <K extends keyof WindowEventMap>(type: K, handler: (e: WindowEventMap[K]) => void) => window.addEventListener(type, handler, { signal: lifetime.signal });
@@ -139,6 +140,7 @@ async function command(command: CampCommand) {
   }
 }
 function render() {
+  if (disposed) return;
   root.querySelector(".eyebrow")!.textContent =
     `MAGE ARENA / WEEK ${view.day.week} / DAY ${view.day.day}`;
   root.querySelector(".slots")!.innerHTML = ["day", "dusk", "night"]
@@ -148,7 +150,7 @@ function render() {
     )
     .join("");
   root.querySelector(".stats")!.innerHTML =
-    `<strong>${escape(view.player.name)}</strong> · ${escape(view.player.school)}<br>${view.player.gold} gold · ${view.player.fatigue} fatigue · ${view.budget} time left`;
+    `<strong>${escape(view.player.name)}</strong> · ${escape(view.player.school)}<br>${view.player.gold} gold · ${view.season.renown} renown · ${view.player.fatigue} fatigue · ${view.budget} time left`;
   for (const b of root.querySelectorAll<HTMLButtonElement>("[data-scene]"))
     b.classList.toggle("active", b.dataset.scene === ui.scene);
   root.querySelector(".board-count")!.textContent = String(
@@ -179,6 +181,7 @@ function render() {
   scenes.draw(view, ui);
 }
 function renderSide() {
+  if (disposed) return;
   const side = root.querySelector<HTMLElement>(".side")!;
   const disabled = busy || view.settling || view.parley.pending || view.ended;
   let content: string;
@@ -245,6 +248,7 @@ function renderSide() {
   else if (!view.listening && !view.ended)
     content += `<hr><button class="secondary" data-command="wait" ${disabled ? "disabled" : ""}>${view.slot === "night" ? "Let the night pass" : `Let ${view.slot} pass`}</button>`;
   side.innerHTML = content;
+  seasonPanel(side, view, next => { view = next; render(); }, enterArena);
   for (const b of side.querySelectorAll<HTMLButtonElement>(
     "[data-parley-target]",
   ))
