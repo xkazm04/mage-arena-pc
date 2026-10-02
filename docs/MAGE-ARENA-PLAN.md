@@ -225,3 +225,5 @@ Pattern to follow (read-only): `C:\Users\kazda\kiro\garden-vr\docs\audio\` (`AUD
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
+
+**Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
