@@ -1,2 +1,2 @@
-// Compatibility adapter: the W0 fixtures are unchanged; implementation now has strict types.
+// Committed adapter: fixtures are generated from this shared pure TypeScript core.
 export * from '../../core/src/camp.ts';

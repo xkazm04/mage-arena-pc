@@ -131,7 +131,7 @@ export interface Tables {
     string,
     { args: string[]; optionalArgs: string[]; visibility: string }
   >;
-  goals: Record<string, string>;
+  goals: Record<string, { intent: Intent; args: Record<string, string>; location?: string }[]>;
   phrases: Record<string, string>;
   locations: {
     id: string;

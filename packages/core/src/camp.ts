@@ -545,11 +545,14 @@ export function resolve(
         );
         break;
       }
-      case "PROTECT":
+      case "PROTECT": {
+        const socialGain = !r.reviewPolicy?.protectNeedsHungerForSocialGain || b.hunger > r.ranges.hunger[0];
         change(a.id, "gold", -e.costGold, `${ref}/costGold`);
         change(b.id, "hunger", e.hunger, `${ref}/hunger`);
-        trust(b.id, a.id, e.trust, `${ref}/trust`);
-        add(`debt/${b.id}>${a.id}`, e.debt, `${ref}/debt`, r.ranges.debt);
+        if (socialGain) {
+          trust(b.id, a.id, e.trust, `${ref}/trust`);
+          add(`debt/${b.id}>${a.id}`, e.debt, `${ref}/debt`, r.ranges.debt);
+        }
         set(`characters/${b.id}/warned`, true, `${ref}/warningDc`);
         helped.add(b.id);
         fact(
@@ -560,6 +563,7 @@ export function resolve(
           `${a.name} brought bread to ${b.name}.`,
         );
         break;
+      }
       case "CONFIDE":
         trust(a.id, b.id, e.trust, `${ref}/trust`);
         trust(b.id, a.id, e.trust, `${ref}/trust`);
@@ -642,7 +646,8 @@ export function resolve(
         const score =
           a.stats.guile * r.contests.guileMultiplier +
           die(a.id, `SCHEME:${kind}:${b.id}`);
-        const success = !stopped.has(a.id) && score > dc;
+        const success = !stopped.has(a.id) && score > dc &&
+          !(kind === "rumour" && rolls.at(-1)!.value <= (r.reviewPolicy?.rumourFailsAtOrBelow ?? 0));
         rolls.at(-1)!.score = score;
         rolls.at(-1)!.dc = dc;
         rolls.at(-1)!.success = success;
@@ -678,6 +683,7 @@ export function resolve(
             for (const listener of Object.values(state.characters))
               if (
                 listener.id !== b.id &&
+                (!r.reviewPolicy?.rumourExcludesAuthor || listener.id !== a.id) &&
                 ([a.tent, b.tent].includes(listener.tent) ||
                   (b.role === "main" && listener.role === "main")) &&
                 state.trust[`${listener.id}>${b.id}`] <

@@ -16,6 +16,7 @@ Ending resolution belongs to the later ending wave.
 - Season weeks: 6; days per week: 7.
 - Games weekday: 7; Trial offset before Games: 1.
 - Slots: ["day","dusk","night"]. Trial: pit at dusk.
+- Schemes open on weekday 4 through Games.
 - Fourth Watch: edge at night.
 - Closed intents: ["TRAIN","WORK","BEFRIEND","CONFIDE","PROTECT","WATCH","SCHEME","RECRUIT","DEFECT","REPORT","PLOT","REST","OFFER"]. Count: 13.
 - Places: 8; cast: 16.
@@ -28,17 +29,29 @@ Ending resolution belongs to the later ending wave.
 - Camp caps: {"SCHEME":2,"SCHEME_eve":3,"DEFECT":1,"REPORT":1,"OFFER":1}. Priority retains higher cunning, then alphabetically earlier actor.
 - Death gameplay enabled: false. Reserved life states: ["Alive","Dead","Executed"].
 
+Goal plans use closed intents with argument bindings resolved against the current
+actor and state; they are guidance, not a second executable vocabulary. Official
+school exceptions: {"septima":"salt","venno":"none"}; these officials have no routine
+school training or tent stores. Review policy: {"rumourExcludesAuthor":true,"rumourFailsAtOrBelow":1,"protectNeedsHungerForSocialGain":true}. Paid
+protection still warns a fed target, but adds no trust or debt. Rumour authors
+do not react to their own claim, and minimum rumour rolls fail.
+
+PLOT means nonlethal bond planning (player label: Plan the bond); it never creates
+or advances the reserved death Plot object. Trial is a calendar event, not an intent.
+
 ## Night transaction
 
-Decisions explicitly name their resolution calendar day in the request. All groups
-see the same immutable start state. Validation precedes resolution; invalid items
+The request envelope describes the resolution phase qualitatively; the host records
+the numeric resolution day outside the model request. Decision items contain no day.
+`data/decision.schema.json` is generated from the shared schema builder and checked
+against every generated proposal and accepted item. All groups see the same immutable start state. Validation precedes resolution; invalid items
 use the planner. Caps apply across the whole camp, in deterministic order, after
 group validation. A capped fallback cannot consume any scarce slot.
 
 Resolution order is ["PROTECT","BEFRIEND","WORK","TRAIN","REST","CONFIDE","WATCH","REPORT","SCHEME","RECRUIT","DEFECT","PLOT","OFFER"]. Reports investigate before schemes;
 this corrects the baseline's conflicting order and warning prose. Schemes compare
-against the actor's last attempted target on the preceding resolution day. A
-rejected attempt is never recorded as an executed scheme. Poison is nonlethal and
+against the actor's last resolved attempt’s target on the preceding resolution day. A
+rejected or capped item never records an attempt. Poison is nonlethal and
 lasts through the next Games. Games settlement clears it in this reference model;
 the arena bridge must consume its penalty before settlement.
 
@@ -73,5 +86,6 @@ contradictions and content assertions. Run `node packages/tools/replay/cli.mjs b
 for source syntax checks. Generate fixtures with `node packages/tools/replay/cli.mjs generate`.
 
 The checker is limited to the active contract and executable fixtures. It does not
-claim to parse arbitrary prose in historical reports or verify deferred quests.
+prove free-prose semantics, including prose edited identically in the template and
+README, or verify deferred quests.
 See `defects.json` for each inherited defect and its disposition.

@@ -14,7 +14,7 @@
     {
       "id": "consecutive-scheme",
       "status": "fixed",
-      "resolution": "Actor's last executed scheme records resolution day and target. The consecutive target is rejected independently of scheme kind."
+      "resolution": "Actor's last resolved scheme attempt records day and target, success or failure; rejected and capped items never record an attempt."
     },
     {
       "id": "trial-calendar",
@@ -98,13 +98,13 @@
     },
     {
       "id": "fable-w0-followups",
-      "status": "open; review arrived during execution interruption, recorded at W1 stop",
-      "resolution": "Fable accepted W0 for handover with six fixes owed: remove lowercase well from goals and widen obsolete-place matching; rewrite Ledger goal-plan verbs into the closed vocabulary or move flavour out of data; place SCHEME and DEFECT and separate the trial event from intent activities; publish the generated decision schema in the design package and correct request-day wording; change last executed scheme to last resolved attempt; render schemeOpensWeekday in the README. W1 ships a schema builder and real-request cache tests, but these design-package followups remain open. See docs/judging/fable-w0-review.md."
+      "status": "closed in W0 review fixes",
+      "resolution": "See docs/waves/W0-review-fixes.md and generated branch fixtures; all six defects and lower-severity observations have explicit fixes or documented naming/scope dispositions."
     },
     {
       "id": "fable-w0-observations",
-      "status": "recorded for followup; authored balance unchanged",
-      "resolution": "Review also flags self-reaction to rumours, automatic low-renown rumours, PROTECT on fed targets, explicit salt/none school handling and school foreign keys, broader fixture branch coverage, checker claim scope, and the PLOT/Plot naming collision. W1 content tests cover all closed verbs and full planner seasons, but do not claim every branch is in the three golden nights. Balance belongs to W11 and death naming to W10."
+      "status": "closed in W0 review fixes",
+      "resolution": "See docs/waves/W0-review-fixes.md and generated branch fixtures; all six defects and lower-severity observations have explicit fixes or documented naming/scope dispositions."
     }
   ]
 }

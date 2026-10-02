@@ -76,7 +76,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 
 | Stream | Id | Wave | Depends on | Status | Commit | Date |
 |---|---|---|---|---|---|---|
-| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | gates green; Fable accepts handover with six fixes owed (logged) | cd29a21 | 2026-10-01 |
+| Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | six Fable fixes and lower-severity followups closed; gates green | W0 review-fixes commit | 2026-10-02 |
 | Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | STOPPED after interruption exceeded time window: code gates green; local 155/300, Sonnet 30/30; judge not run; wave incomplete | W1 stop commit (see git log) | 2026-10-02 |
 | Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
@@ -104,7 +104,7 @@ Rhythm of every wave: design note first (`docs/waves/<id>-*.md`), data first, te
 
 ### W0 Design reconcile (docs and tools, no engine)
 Read the baseline design and Fable's verdict. Produce the **reconciled design** under `docs/design/reconciled/`: season calendar (six weeks, Games weekly, day slots) in `data/season.json`; loops removed; deaths reserved in the data model (Plot object, Vigil attention, Executed state) with no gameplay yet; every defect in section f fixed or explicitly logged; the data files become the only authority.
-Build the **replayer** (`packages/tools/replay`): it applies Director output to a CampState using only the tables and produces golden nights, so worked nights are generated, never typed. Gate: the replayer reproduces three nights with every delta derivable from a table; a consistency checker (script) finds zero contradictions between prose, tables and fixtures; a mutation test proves the checker fails on a planted contradiction.
+Build the **replayer** (`packages/tools/replay`): it applies Director output to a CampState using only the tables and produces golden nights, so worked nights are generated, never typed. Gate: the replayer reproduces three nights with every delta derivable from a table; a consistency checker verifies rendered template/data agreement, explicit foreign keys and vocabularies, and deterministic fixture replay (not arbitrary prose semantics); a mutation test proves the checker fails on a planted contradiction.
 Fable 5.1 reviews the reconciled package at the end (the orchestrator dispatches it). Kill: none (docs).
 
 ### W1 Scaffold and Director harness (headless, the hardest claim first)
@@ -150,9 +150,39 @@ Worktrees: `C:\Users\kazda\kiro\mage-arena` (main), `...\mage-arena-core`, `...\
 | Q4 | Desktop shell: browser window first, Electron or Tauri at packaging? | Browser first; decide at W14 |
 | Q5 | Typed role-play (Parley) scope? | Only at Knowing moments, via the Director, with offline cards |
 
+## m. Art and camera direction after A1 (owner, 2026-10-02)
+
+> "Looking at the styles, in terms of feasibility of arena battles many can be a problem to achieve. The arena camera angle is too close and characters too large then to be playable or fit to decide. Lets go with Tessera & Lime as the baseline. For arena and camera imagine Diablo or Path of Exile to set up camera, distance, larger spacing. Attempts like 02-salt-ink-arena-a01, 08-rain-wash-arena-a01 are one step towards the idea."
+
+Decisions: **D10** the visual baseline is **Tessera & Lime** (style id `01-tessera` in `art/styles/a1-v1.json`); **D11** the arena camera follows the **Diablo / Path of Exile framing**: a high, distant, near-top-down camera (roughly 45-60 degrees of tilt), the whole fight readable at a glance,
+a character about 4-6% of the screen height (a mage about 60-90 px tall at 1080p), enemies and projectiles clearly separated, wide spacing between combatants, an arena that is several screens of fight space wide, spell effects and the 140-degree absorb arc readable at that scale, telegraphs bigger than the figures. The A1 arena images were too close and too large; attempts 02 and 08 are the nearest framing.
+The arena kernel (W2-W4) and every arena sprite must be authored for this camera and scale: a **scale contract** (metres per pixel, mage height in px, arena size, camera zoom range, minimum readable telegraph size) is the first deliverable of W4b and of A1b.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Art | A1b | Tessera & Lime baseline: scale contract and **arena camera proofs** (Diablo/PoE framing, three camera distances, several arena layouts), camp map re-check | A1 owner choice (done) | not started |
+| Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | not started |
+| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | not started |
+| Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
+| Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | **owner confirms the arena camera** (`art/CAMERA-OK.md`) | blocked |
+| Arena | W4b | Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
+
+
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
+
+### CORE W0 review closure — 2026-10-02, second session
+
+- Read baseline report/data, W1 report, Fable review and full plan; section m was
+  absent on core and read from the main worktree, then carried into this plan.
+- Closed review items 1–14 with fixes and explicit naming/scope dispositions.
+  `docs/waves/W0-review-fixes.md` was written before edits. No arena or art edits.
+- `npm run gate`: build/lint green, 18 Director plus ten replayer tests pass;
+  checker zero contradictions in its stated scope, three golden nights / 216
+  traced changes, five additional generated branch nights. Syntax build passes.
+- Pinned the pre-fix W1 experiment tables to preserve all saved live evidence.
+  New balance authored, outcomes simulated; owner feel not measured. Next W1b.
 
 ### CORE W0 ? 2026-10-01
 
