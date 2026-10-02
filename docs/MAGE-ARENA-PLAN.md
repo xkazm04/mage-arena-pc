@@ -77,11 +77,11 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Stream | Id | Wave | Depends on | Status | Commit | Date |
 |---|---|---|---|---|---|---|
 | Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | six Fable fixes and lower-severity followups closed; gates green | 2833a30 | 2026-10-02 |
-| Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | engineering PASS: 300 local + 30 Sonnet nights, complete local judge; rejection 4.73%; owner blind read pending | W1b completion commit | 2026-10-02 |
+| Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | engineering PASS: 300 local + 30 Sonnet nights, complete local judge; rejection 4.73%; owner blind read pending | 27a74fb | 2026-10-02 |
 | Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
-| Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | not started | | |
+| Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | engineering PASS: Pixi camp, accepted art loader, deterministic slots/listening, 1080p/1440p browser gates; owner feel pending | W5 completion commit | 2026-10-02 |
 | Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | not started | | |
 | Core | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | not started | | |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
@@ -222,3 +222,35 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
   saved. Owner read pending, not felt. Cost report separates CLI reference USD
   3.7934884 from unmeasured subscription debit and electricity. No art/arena edits
   and no push. Next: W5 camp scenes, then W6 Parley.
+
+### CORE W5 completion - 2026-10-02, third session
+
+- Read the full plan, section j and the Tessera/camera direction, W1 report,
+  unfinished W5 design and prior session logs. Reviewed and retained the
+  uncommitted headless session/slot groundwork. W1 remains engineering PASS:
+  213/4,500 rejected local intents (4.73%), below the 15% kill rule.
+- Built the Pixi season map, eight visits, time slots, Hollow Board, private
+  journal and playable listening act. Sidecar owns revisions, ticks, partial
+  Director groups, bounded grace and exactly one dawn. Core stays pure.
+- Read the art delivery and copied 22 approved-for-integration textures with
+  sidecars and original provenance archives. Source hashes verified; source
+  owner-review labels preserved alongside current user authorization. No art
+  worktree edits and no arena imports. Loader placeholders remain playable.
+- `npm run gate`: build/lint, 41 TypeScript tests, ten reference tests, zero
+  design contradictions; three original golden nights / 216 changes preserved.
+  `npm run build:game` passes. Three additional generated camp mornings replay
+  exactly. Six-week camp-only simulation completes; arena integration not claimed.
+- `npx tsx packages/tools/src/camp-browser.ts`: final browser gate passes with
+  zero page errors and 14 screenshots at 1080p/1440p. Travel, training, all slots,
+  real-time listening reward, refresh, board/journal and placeholder fallback
+  checked. A rerun overlapped source formatting/hot reload and timed out;
+  its partial capture was superseded by the completed run.
+- `npx tsx packages/tools/src/camp-local-night.ts`: five live local calls,
+  zero rejected intents, four groups complete during the measured 48.59-second
+  act, final post-act wait 0.80 seconds. Separate durable five-call ledger;
+  zero subscription calls. No clock jump observed; local sample gap list empty.
+  A 15-second heartbeat is running for the rest of this session and records any
+  gap over 45 seconds, without assuming its cause.
+- Art/rules authored; state simulated; tests/screens/latency measured. Owner feel
+  pending in OWNER-CHECKS. W5-report.md records boundaries. One W5 commit, no push.
+  Next: W6 typed Parley at Knowing moments, code checks and offline cards.

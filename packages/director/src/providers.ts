@@ -18,7 +18,7 @@ export interface Provider {
   id: string;
   model: string;
   options: ProviderRequest["options"];
-  decide(request: ProviderRequest): Promise<ProviderResult>;
+  decide(request: ProviderRequest, signal?: AbortSignal): Promise<ProviderResult>;
 }
 
 export async function runChild(
@@ -208,14 +208,14 @@ export class OllamaProvider implements Provider {
     readonly endpoint: string = config.ollama.endpoint,
     readonly timeoutMs = config.ollama.timeoutMs,
   ) {}
-  async decide(request: ProviderRequest): Promise<ProviderResult> {
+  async decide(request: ProviderRequest, signal?: AbortSignal): Promise<ProviderResult> {
     const start = performance.now();
     try {
       const { think, ...options } = request.options;
       const response = await fetch(`${this.endpoint}/api/chat`, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        signal: AbortSignal.timeout(this.timeoutMs),
+        signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(this.timeoutMs)]) : AbortSignal.timeout(this.timeoutMs),
         body: JSON.stringify({
           model: request.model,
           messages: [

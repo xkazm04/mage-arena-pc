@@ -5,7 +5,8 @@
   "workspaces": [
     "packages/core",
     "packages/director",
-    "packages/tools"
+    "packages/tools",
+    "packages/game"
   ],
   "engines": {
     "node": ">=24"
@@ -17,7 +18,9 @@
     "check:design": "node packages/tools/replay/cli.mjs check",
     "gate": "npm run build && npm run lint && npm run test && npm run check:design",
     "soak": "tsx packages/tools/src/soak.ts",
-    "report": "tsx packages/tools/src/report.ts"
+    "report": "tsx packages/tools/src/report.ts",
+    "camp": "tsx node_modules/vite/bin/vite.js --config packages/game/vite.config.ts",
+    "build:game": "tsx node_modules/vite/bin/vite.js build --config packages/game/vite.config.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

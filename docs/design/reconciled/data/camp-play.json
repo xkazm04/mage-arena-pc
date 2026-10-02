@@ -1,0 +1,84 @@
+{
+  "label": "authored",
+  "startLocation": "tent",
+  "actionCost": 1,
+  "travelBudget": { "day": 3, "dusk": 3, "night": 4 },
+  "map": {
+    "width": 1000,
+    "height": 600,
+    "nodes": {
+      "yard": [200, 138],
+      "cistern": [530, 120],
+      "pit": [800, 144],
+      "exchange": [210, 312],
+      "commons": [430, 258],
+      "door": [655, 282],
+      "tent": [360, 486],
+      "edge": [890, 432]
+    },
+    "routes": [
+      ["tent", "commons", 1],
+      ["tent", "exchange", 1],
+      ["tent", "cistern", 1],
+      ["commons", "yard", 1],
+      ["commons", "cistern", 1],
+      ["commons", "pit", 1],
+      ["commons", "exchange", 1],
+      ["commons", "door", 1],
+      ["commons", "edge", 2],
+      ["exchange", "door", 1]
+    ]
+  },
+  "presence": {
+    "cassia": ["cistern", "tent", "tent"],
+    "brennic": ["yard", "pit", "edge"],
+    "garran": ["commons", "yard", "edge"],
+    "iskar": ["exchange", "commons", "edge"],
+    "nysa": ["commons", "tent", "tent"],
+    "senna": ["commons", "tent", "tent"],
+    "lio": ["exchange", "pit", "tent"],
+    "corvo": ["yard", "pit", "tent"],
+    "sadruba": ["yard", "pit", "tent"],
+    "ruadh": ["commons", "yard", "tent"],
+    "ophel": ["cistern", "tent", "tent"],
+    "kesh": ["exchange", "commons", "tent"],
+    "fenna": ["commons", "commons", "tent"],
+    "quill": ["cistern", "commons", "tent"],
+    "septima": ["door", "pit", "tent"],
+    "venno": ["door", "commons", "tent"]
+  },
+  "descriptions": {
+    "yard": "Dust, worn posts and room to make the body stronger.",
+    "cistern": "The basin is dry. Still your hands and watch who lingers.",
+    "pit": "A hollow of red earth. At dusk, courage has witnesses.",
+    "exchange": "Small wages and careful bargains beneath the awnings.",
+    "commons": "Bread changes hands here. So do loyalties.",
+    "door": "The Vigil hears accusations at the guarded gate.",
+    "tent": "Canvas offers little privacy. Rest, confide, or listen at the flap.",
+    "edge": "Beyond the last lantern, the four can plan the bond."
+  },
+  "listening": {
+    "tickMs": 100,
+    "durationTicks": 450,
+    "lanes": 3,
+    "patrolPeriod": 60,
+    "beaconPeriod": 90,
+    "warningTicks": 12,
+    "captureTicks": 10,
+    "requiredClues": 3,
+    "alertClueLoss": 1,
+    "graceMs": 12000
+  },
+  "discoveries": [
+    {
+      "id": "K-nysa-bread",
+      "text": "Nysa leaves bread beside the southern tent rope after dusk.",
+      "visibility": "secret",
+      "type": "knowing",
+      "actor": "nysa",
+      "target": "nysa",
+      "truth": true,
+      "holders": ["nysa", "quill"]
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import type {
   Roll,
   Fact,
   Resolution,
+  DayCarry,
 } from "./types.ts";
 export function createState(
   t: Tables,
@@ -167,9 +168,10 @@ export function legalProblem(
   t: Tables,
   state: CampState,
   item: Decision,
+  allowPlayer = false,
 ): string | null {
   const c = state.characters[item.character];
-  if (!c || c.life !== "Alive" || item.character === state.player)
+  if (!c || c.life !== "Alive" || (!allowPlayer && item.character === state.player))
     return "actor";
   if (!Object.hasOwn(t.intents, item.intent)) return "intent";
   const def = t.intents[item.intent];
@@ -383,6 +385,7 @@ export function resolve(
   t: Tables,
   before: CampState,
   items: Decision[],
+  options: { settleNight?: boolean; namespace?: string; carry?: DayCarry } = {},
 ): Resolution {
   const state = structuredClone(before),
     trace: Trace[] = [],
@@ -452,7 +455,7 @@ export function resolve(
     truth = true,
   ) => {
     const f = {
-      id: `event:${state.day}:${actor}:${type}:${events.length}`,
+      id: `event:${state.day}:${options.namespace ? `${options.namespace}:` : ""}${actor}:${type}:${events.length}`,
       type,
       actor,
       target,
@@ -489,11 +492,13 @@ export function resolve(
       "rules/stats/rankThresholds",
     );
   };
-  const helped = new Set<string>(),
-    working = new Set<string>(),
-    stopped = new Set<string>();
+  const helped = new Set<string>(options.carry?.helped),
+    working = new Set<string>(options.carry?.working),
+    stopped = new Set<string>(options.carry?.stopped),
+    freshStocks = new Set<string>(options.carry?.freshStocks);
   for (const c of Object.values(state.characters)) {
-    set(`characters/${c.id}/warned`, false, "rules/effects/PROTECT/warningDc");
+    if (options.settleNight !== false && !helped.has(c.id))
+      set(`characters/${c.id}/warned`, false, "rules/effects/PROTECT/warningDc");
   }
   for (const item of [...items].sort(
     (a, b) =>
@@ -711,6 +716,7 @@ export function resolve(
           a.stats.guile * r.contests.guileMultiplier + r.contests.baseDc
         ) {
           set(`characters/${a.id}/stocks`, true, "rules/effects/caught");
+          if (options.settleNight === false) freshStocks.add(a.id);
           change(
             a.id,
             "renown",
@@ -780,6 +786,12 @@ export function resolve(
         break;
     }
   }
+  if (options.settleNight === false) {
+    set("facts", [...state.facts, ...events], "rules/factVisibility");
+    return { state, trace, rolls, events, carry: {
+      helped: [...helped], working: [...working], stopped: [...stopped], freshStocks: [...freshStocks],
+    } };
+  }
   for (const c of Object.values(state.characters)) {
     if (c.life !== "Alive") continue;
     if (c.tent === "strays" && !helped.has(c.id))
@@ -799,7 +811,7 @@ export function resolve(
         r.effects.daily.routinePoints,
         "rules/effects/daily/routinePoints",
       );
-    if (before.characters[c.id].stocks)
+    if (before.characters[c.id].stocks && !freshStocks.has(c.id))
       set(`characters/${c.id}/stocks`, false, "rules/effects/caught");
   }
   if ([...helped].some((id) => before.characters[id].tent === "strays"))

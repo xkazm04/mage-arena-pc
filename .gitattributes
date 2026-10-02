@@ -1,3 +1,6 @@
+# Accepted delivery hashes describe bytes; never rewrite their line endings.
+assets/accepted/** -text
+docs/waves/W5-evidence/art-provenance/** -text
 *.png filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.jpeg filter=lfs diff=lfs merge=lfs -text

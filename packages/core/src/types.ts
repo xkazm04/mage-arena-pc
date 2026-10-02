@@ -177,5 +177,12 @@ export interface Resolution {
   trace: Trace[];
   rolls: Roll[];
   events: Fact[];
+  carry?: DayCarry;
+}
+export interface DayCarry {
+  helped: string[];
+  working: string[];
+  stopped: string[];
+  freshStocks: string[];
 }
 export type Fallback = (id: string) => Decision;
