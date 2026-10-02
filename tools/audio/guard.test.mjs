@@ -5,16 +5,16 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { checkFunds, estimate } from './elevenlabs.mjs';
+import { checkFunds, estimate, accountCost } from './elevenlabs.mjs';
 const b = JSON.parse(fs.readFileSync(new URL('./budget.json', import.meta.url)));
 test('cap and reserve boundaries, invalid counters and pending reservations', () => {
-  assert.doesNotThrow(() => checkFunds(b, 11900, 0, 8100, 100));
-  assert.throws(() => checkFunds(b, 11901, 0, 90000, 100), /cap refusal/);
+  assert.doesNotThrow(() => checkFunds(b, 3900, 0, 8100, 100));
+  assert.throws(() => checkFunds(b, 3901, 0, 90000, 100), /cap refusal/);
   assert.throws(() => checkFunds(b, 0, 0, 8099, 100), /reserve refusal/);
-  assert.throws(() => checkFunds(b, 11800, 101, 90000, 100), /cap refusal/);
+  assert.throws(() => checkFunds(b, 3800, 101, 90000, 100), /cap refusal/);
   for (const bad of [NaN, Infinity, -1]) assert.throws(() => checkFunds(b, bad, 0, 90000, 100));
-  assert.equal(estimate('sfx', 2, 0, b), 100);
-  assert.equal(estimate('music', 20, 0, b), 1200);
+  assert.equal(estimate('sfx', 2, 0, b), 40);
+  assert.equal(estimate('music', 20, 0, b), 600);
 });
 function fixture(t, scenario) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mage-audio-guard-'));
@@ -34,6 +34,7 @@ let gets=0;
 globalThis.fetch = async (url, init) => {
  fs.appendFileSync(${JSON.stringify(path.join(dir, 'calls.txt'))}, init.method+' '+new URL(url).pathname+'\\n');
  ${scenario === 'get429' ? "if(init.method==='GET' && gets++===0) return Response.json({detail:{status:'rate_limit_exceeded'}},{status:429});" : ''}
+ ${scenario === 'postGet429' ? "if(init.method==='GET' && gets++===1) return Response.json({detail:{status:'rate_limited'}},{status:429});" : ''}
  if(new URL(url).pathname==='/v1/user/subscription') return Response.json({tier:'starter',character_count:1000,character_limit:90000,next_character_count_reset_unix:1791142301});
  if(init.method!=='POST'||!new URL(url).pathname.includes('sound-generation')) throw Error('Unexpected request blocked');
  ${scenario === '429' ? "return Response.json({detail:{status:'rate_limit_exceeded'}},{status:429});" : scenario === 'quota' ? "return Response.json({detail:{status:'quota_exceeded'}},{status:401});" : scenario === 'missing-header' ? "return new Response(new Uint8Array([73,68,51,0]));" : "return new Response(new Uint8Array([73,68,51,0]),{headers:{'character-cost':'20'}});"}
@@ -58,19 +59,19 @@ test('read-only 429 backs off but recovered lookup never proceeds to POST', t =>
   assert.equal((f.calls().match(/POST/g)||[]).length, 0);
   assert.ok(fs.existsSync(path.join(f.dir, 'tools/audio/STOP.json')));
 });
-test('missing billing header preserves the sample, reservation and debit, and latches', t => {
+test('missing billing header settles by estimate and allows another call', t => {
   const f = fixture(t, 'missing-header');
-  assert.equal(f.run().status, 0); // a sample exists, but generation is latched
+  assert.equal(f.run().status, 0); // stale shared counter uses nonzero estimate
   const entry = JSON.parse(fs.readFileSync(path.join(f.dir, 'tools/audio/ledger.jsonl'), 'utf8'));
   assert.equal(entry.measuredCredits, null);
-  assert.equal(entry.chargedCredits, 100);
-  assert.ok(JSON.parse(fs.readFileSync(path.join(f.dir, 'tools/audio/state.json'))).pending);
-  assert.ok(fs.existsSync(path.join(f.dir, 'tools/audio/STOP.json')));
+  assert.equal(entry.chargedCredits, 40);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir, 'tools/audio/state.json'))).pending, null);
+  assert.equal(fs.existsSync(path.join(f.dir, 'tools/audio/STOP.json')), false);
   const old = f.calls();
-  assert.equal(f.run('second').status, 1);
-  assert.equal(f.calls(), old);
+  assert.equal(f.run('second').status, 0);
+  assert.notEqual(f.calls(), old);
 });
-test('successful stale-balance response accounts by header and creates matching ledger and sidecar', t => {
+test('successful stale-balance response retains conservative estimate alongside header and creates matching ledger and sidecar', t => {
   const f = fixture(t, 'ok');
   const first = f.run();
   assert.equal(first.status, 0, first.stderr);
@@ -78,7 +79,7 @@ test('successful stale-balance response accounts by header and creates matching 
   const side = JSON.parse(fs.readFileSync(path.join(f.dir, 'docs/audio/audition/r1/test.mp3.json')));
   assert.deepEqual(entry, side);
   assert.equal(entry.accountDelta, 0);
-  assert.equal(entry.chargedCredits, 20);
+  assert.equal(entry.chargedCredits, 40);
   assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir, 'tools/audio/state.json'))).pending, null);
   const old = f.calls();
   assert.equal(f.run().status, 1); // paid overwrite is refused before network
@@ -95,4 +96,37 @@ test('closed budget, invalid duration, and unresolved pending block POST', t => 
   fs.writeFileSync(path.join(f.dir, 'tools/audio/budget.json'), JSON.stringify({ ...b, status: 'closed' }));
   assert.equal(f.run().status, 1);
   assert.equal(f.calls(), '');
+});
+
+test('shared billing anomalies are flagged, not fatal, and always debited conservatively', () => {
+ assert.deepEqual(accountCost(-20, 40), {chargedCredits:40,flags:['negative_balance_delta']});
+ assert.deepEqual(accountCost(300, 40), {chargedCredits:300,flags:['shared_delta_implausibly_large']});
+ assert.deepEqual(accountCost(0, 40), {chargedCredits:40,flags:['balance_may_lag']});
+ assert.deepEqual(accountCost(null, 40), {chargedCredits:40,flags:['balance_unavailable']});
+ assert.equal(accountCost(50, 40).chargedCredits,50);
+ assert.equal(accountCost(0, 40, 60).chargedCredits,60);
+});
+test('cap cannot be raised and exhaustion refuses before POST with a funds latch', t => {
+ const f=fixture(t,'ok');
+ const budgetPath=path.join(f.dir,'tools/audio/budget.json');
+ fs.writeFileSync(budgetPath,JSON.stringify({...b,status:'proofs',capCredits:4001}));
+ assert.equal(f.run().status,1);assert.equal(f.calls(),'');
+ fs.writeFileSync(budgetPath,JSON.stringify({...b,status:'proofs',capCredits:20}));
+ assert.equal(f.run().status,1);
+ assert.equal((f.calls().match(/POST/g)||[]).length,0);
+ assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/STOP.json'))).reason,'cap_or_reserve_refusal');
+});
+
+test('postflight subscription 429 saves successful audio, settles balance and latches all further generation', t => {
+ const f=fixture(t,'postGet429');
+ assert.equal(f.run().status,0);
+ assert.equal((f.calls().match(/POST/g)||[]).length,1);
+ assert.equal((f.calls().match(/GET/g)||[]).length,3);
+ const entry=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/ledger.jsonl'),'utf8'));
+ assert.equal(entry.chargedCredits,40);
+ assert.ok(entry.accountAfter);
+ const stop=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/STOP.json')));
+ assert.equal(stop.status,429);assert.equal(stop.method,'GET');
+ assert.equal(stop.endpoint,'/v1/user/subscription');
+ const old=f.calls();assert.equal(f.run('second').status,1);assert.equal(f.calls(),old);
 });

@@ -1,49 +1,49 @@
-# AU1 cost evidence — incomplete proof series
+# AU1 smaller audition: cost evidence
 
-2026-10-02. **Only two generations. The cap was not reached and the provider did not return a quota or rate-limit error.** The local tool's stricter billing-uncertainty stop latch fired on the music response because it had no `character-cost` header. The owner instructed that a tripped latch ends generation; it remains latched. Voice proof and the other 38 planned samples were not called. This is a tooling/accounting stop, not evidence that Starter cannot deliver a larger audition.
+2026-10-02. **15 samples; 1,852 conservative credits against the 4,000 total cap. 2,148 unused. Generation stopped on a real HTTP 429, not cap exhaustion.** The 8,000 shared reserve remains. There were 13 new samples plus the two retained first-session proofs. The original 12,000 allowance is superseded, not an additional pot.
 
-| Quantity | Evidence | Interpretation |
-|---|---|---|
-| Fire cast, 2 seconds | response `character-cost: 20` | exact provider header measurement: 10 credits per requested second; n=1 |
-| Arena music, 20 seconds | no billing header; account 42,681 → 42,061 | 620-credit shared account change; not an exact music charge |
-| Music working inference | 620 minus 20 delayed SFX credits = 600 | 30 credits/s **if** these are the only settling charges; not measured per request |
-| Music budget debit | 1,200 | original conservative bound of 60/s, retained; not a claim of actual spend |
-| Voice | no call | credits/character **not measured**; 1/character is the planning bound for multilingual v2, not a result |
-| Total exact attributed billing | 20 | SFX only; music unresolved |
-| Total conservative project debit | 1,220 / 12,000 | 20 measured + 1,200 reserved; 10,780 unspent capacity is locked, not used |
-| Latest balance at generation stop | 42,061 / 90,000, starter | measured 19:14:19 UTC; other projects continue using the account |
-| Reserve | 8,000 | remains protected; even initial 42,681 minus full 12,000 is 30,681 before other projects' spend |
-| Reset | 2026-10-04 19:31:41 UTC | measured subscription response |
+## Three modality proofs before the batch
 
-The first initial read was 42,721 at 19:13:09 UTC, already below the owner's older 43,319 snapshot. The SFX preflight at 19:13:21 was 42,681; immediate postflight stayed the same. The subsequent music preflight still showed 42,681. This demonstrates why a zero immediate delta is not a free call. A read-only analytics query found this sound-generation request at 19:13:22.593 and music at 19:13:59.008, with another music request at 19:14:20.716 and another SFX at 19:14:29.741. Shared requests exist. Analytics exposed timestamps and routes, not credit costs. No identity or API-key columns were retained.
+Session 2 generated Fire B, Ashen vault and George in that order before continuing the short SFX batch. All estimates, immediate before/after balances and optional billing headers are in each sidecar and the ledger.
 
-## Public price context (retrieved 2026-10-02; account billing wins)
+| Modality | Measured evidence | Documented estimate | Conservative estimate used |
+|---|---|---|---|
+| Fire B SFX, 2 s | Header 20 credits; delta 0. All 12 SFX: 240 header credits / 24 requested seconds = **10 credits/s** | API duration-specified: 20/s | 20/s; each 2 s cue reserves 40. No fixed minimum with explicit duration |
+| Ashen vault music, 20 s | No header; immediate delta 0. Earlier 20 s proof delta 620 = **31/s shared upper-bound proxy**, not attributed billing | Public Creative rate 900/min = 15/s; account/API route may differ | 30/s working inference from earlier delta: 600 music plus 20 delayed SFX if no competing charges. 600 reserved per 20 s |
+| George, 32 text characters | Header 32; delta 0 = **1 credit/character**, n=1; 2.090 decoded seconds | Multilingual v2 1/character | 1/character; 32 reserved and debited |
 
-- [SFX API reference](https://elevenlabs.io/docs/api-reference/text-to-sound-effects/convert) documents the optional billing header, duration and loop flag. Header absence must have an accounting path; this implementation chose to stop.
-- [SFX help pricing](https://help.elevenlabs.io/hc/en-us/articles/25735337678481-How-much-does-it-cost-to-generate-sound-effects) distinguishes website and API charging, listing 20 credits/s for duration-specified API use; this one account response is 10/s. Do not silently substitute the public rate for the measurement.
-- [Creative pricing](https://elevenlabs.io/pricing) lists Starter $6 / 30k monthly credits and Creator $22 / 121k monthly credits, excluding taxes; introductory and temporary offers can differ. The account's 90k limit is a measured balance limit, **not proof of 90k recurring credits each month**.
-- [API pricing](https://elevenlabs.io/pricing/api) currently describes dollar metering, including music $0.15/min and effects $0.12/min. This live account exposes legacy-style credit counters. A plan change or new billing route must be quoted against this account; these dollar rates are not treated as a measured conversion factor for its credits.
-- [Music compose API](https://elevenlabs.io/docs/api-reference/music/compose) provides full music generation; a full mix is not an adaptive stem contract. [History API](https://elevenlabs.io/docs/api-reference/history/list) explicitly excludes music and SFX from its retrieval coverage.
+An immediate zero delta does not mean free audio. The second-session proof preflight was 25,524; the read before the next SFX had settled to 24,872. Those 652 credits equal the working 600 music + 20 SFX + 32 voice, but shared/delayed billing prevents exact attribution. This corroborates the working model only conditionally.
 
-## Production extrapolation — scenario, not quote
+The three fresh proofs brought the conservative total to 1,332. The remaining priorities then estimated 1,432 (25 SFX at 800, camp night at 600, second voice at 32), leaving 1,236 forecast capacity before optional beds and unexpected shared deltas. No cap increase or extra credit purchase occurred.
 
-Assumptions: 150 SFX × 2 s, 20 UI sounds × 1 s, 8 ambiences × 30 s, and 12 music tracks × 90 s × 4 independently authored layers. This is **4,320 generated music seconds**, not 1,080. Rendering an isolated usable layer at the same rate is unverified. One take per item is optimistic. At the observed SFX rate (10/s), the inferred music rate (30/s), and with no voice, totals are:
+## Accounting and shared-account uncertainty
 
-| Category | Requested output | Conditional credits |
-|---|---:|---:|
-| SFX | 300 s | 3,000 |
-| UI | 20 s | 200 |
-| Ambience | 240 s | 2,400 |
-| Music, four layers | 4,320 s | 129,600 |
-| Total one take | | 135,200 |
-| With 50% regeneration allowance | | 202,800 |
+Charge **max(shared balance delta, conservative model estimate, optional exact billing header)** against the cap. Retain a separate documented-price estimate. A delta is an **upper-bound proxy** because another project can spend concurrently; lag means it is not a mathematical bound on eventual per-request billing. Negative deltas and deltas greater than twice the estimate are flagged, not fatal. Missing headers do not stop generation and are never treated as zero cost.
 
-These rates are weakly evidenced: one exact SFX proof, one inferred music rate, no layer generation proof. Conservative preflight bounds instead yield 285,800 one-take credits (15,000 SFX + 2,000 UI + 9,600 ambience + 259,200 music), or 428,700 with 50% extra. Neither figure includes mastering, loop edits, stem repair, actor direction or human review.
+| Category | Samples | Requested output | Header-attributed credits | Conservative cap debit |
+|---|---:|---:|---:|---:|
+| Elemental cast SFX | 8 | 16 s | 160 | 340 |
+| Absorb SFX | 4 | 8 s | 80 | 260 |
+| Arena music | 2 | 40 s | unavailable | 1,220 |
+| Voice | 1 | 32 characters | 32 | 32 |
+| **Total** | **15** | **64 s + voice** | **272 attributed subset** | **1,852** |
 
-At 30k recurring Starter credits with an 8k reserve, 135,200 credits need ceil((135,200+8,000)/30,000) = **5 months, $30**; 202,800 need **8 months, $48**. At 121k Creator credits and the same reserve they need **2 months, $44** each. These are whole-month pooled-credit scenarios with no sister-project use, not an upgrade quote. Conservative 285,800 requires **10 Starter months ($60)** or **3 Creator months ($66)**; 428,700 requires **15 ($90)** or **4 ($88)**. Rollover caps, current offers, purchased extra credits and whether the account remains on this credit model may change feasibility.
+The last absorb has a 140-credit shared delta, 3.5 times its 40 estimate, but an exact SFX header of 20. It is flagged as implausibly large for this call and the full 140 is still debited. Earth A has a 60 delta against its 40 estimate. These deltas may include settling neighbouring calls; conservative accounting can therefore count some charges twice. The 1,852 is **not claimed as the provider's exact project invoice**.
 
-A single full-mix tier/segment per track reduces the conditional first-take total to **38,000** (or 57,000 with 50% extra), but supplies neither four layers nor the same adaptive capability. Source-separated stems are also not automatically independent compositions. The main unknown is cost per **accepted usable adaptive set**, not cost per decoded minute. No production was generated.
+Session 1's original ledger, reservation, budget and billing-fault STOP are preserved under `session1/`. Under the host's explicit reconciliation instruction, its Fire debit became max(0, 40, 20) = 40 and music max(620, 600) = 620. Prior total 660; session 2 adds 1,192. The old 1,200 unresolved music reservation was replaced, not forgotten. Its original evidence remains available. Completed audio has one current ledger entry and exactly matching sidecar; the request journal records reconciliation.
 
-## Next comparison, not a service call
+## The real stopping event
 
-The 40-item `tools/audio/audition-plan.json` is the proposed identical request list for a future Google comparison. No Google service was invoked. Before investing: which Google product actually exposes short SFX, instrumental music, independent stems and selectable narration; does the owner's Ultra allowance cover those calls or only consumer UI; can outputs be exported for a game; what are measured duration, latency, price, daily limits and reuse terms? Keep prompts, durations and blind labels equal; report unsupported categories explicitly. Measure one proof of each modality before a batch. Compare transient onset, exact event count, unwanted speech, element/family recognition, 96 BPM conformance, three loop joins, stem subsets, pronunciation, loudness and accepted takes per credit. More allowance does not fix bad seams or unavailable stems.
+At **2026-10-02 21:02:26.023 UTC**, the tool received HTTP **429**, code `rate_limited`. The last audio POST had succeeded; the following subscription GET was rate-limited. Read-only exponential backoff recovered a valid balance, but the first error had already persisted the latch. No billable POST was retried and no later generation occurred. The original latch format did not retain endpoint/method; this attribution follows the executed control flow and saved successful completion. The tool now records endpoint/method on future latches too.
+
+The final balance was **24,672** at the timestamp recorded in the last sidecar, **16,672 above reserve**; reset **2026-10-04 19:31:41 UTC**. The second-session interval fell by 852, which may include other projects and delayed charges. The guard additionally subtracts all prior project debit from the latest balance as a lag allowance before approving a call. That deliberately over-reserves after settled charges; no client can atomically protect a shared account from an independent writer.
+
+The new 429 latch stays set. The older billing-fault latch was cleared only under the explicit host authorization and is archived. Missing metadata no longer latches. Durable pending reservations still protect unknown/crashed requests; they are not automatically erased. No API keys, raw error bodies or authorization headers are written to evidence.
+
+## Public source context, checked 2026-10-02
+
+- [SFX API credit pricing](https://help.elevenlabs.io/hc/en-us/articles/25735337678481-How-much-does-it-cost-to-generate-sound-effects): explicit-duration API estimate 20/s, unlike this account's measured 10/s headers.
+- [Creative pricing](https://elevenlabs.io/pricing): Starter $6 / 30k monthly credits, Creator $22 / 121k; music estimate 900/min and Multilingual v2 1/character. Taxes/offers and account metering can differ. Rollover is capped; a 90k balance limit does not establish 90k new credits each month.
+- [Billing documentation](https://elevenlabs.io/docs/overview/administration/billing): legacy and newer billing routes differ. No upgrade or extra-credit purchase was made.
+
+Public rates are documented estimates, not replacements for measured account evidence. Header attribution is exact when provided; the music model remains conditional. A larger credit plan is not demonstrated to cure a subscription-read rate limit.

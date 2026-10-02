@@ -1,0 +1,50 @@
+{
+  "ts": "2026-10-02T21:02:23.782Z",
+  "id": "ad5c447a-5375-4be0-ba64-73c39dbc556e",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One precisely timed magical catch: a narrow inward shimmer and a liquid resonant core, immediate sharp return pulse then a clear opening resonance, energy returning outward. Short and decisive, no fanfare. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r1/absorb-B-perfect.mp3",
+  "request": {
+    "text": "One precisely timed magical catch: a narrow inward shimmer and a liquid resonant core, immediate sharp return pulse then a clear opening resonance, energy returning outward. Short and decisive, no fanfare. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 33062,
+  "sha256": "f59ed08256b12f9acd9da0ba95f58358512ebd20ca6f4d4399178d40fbdd2a74",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:02:23.781Z",
+    "tier": "starter",
+    "used": 65188,
+    "limit": 90000,
+    "remaining": 24812,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 140,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:02:34.049Z",
+    "tier": "starter",
+    "used": 65328,
+    "limit": 90000,
+    "remaining": 24672,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 140,
+  "flags": [
+    "shared_delta_implausibly_large"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

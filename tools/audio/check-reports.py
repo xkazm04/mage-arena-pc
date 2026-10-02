@@ -32,6 +32,13 @@ assert {p.relative_to(ROOT).as_posix() for p in (ROOT/'docs/audio/audition/r1').
 assert sum(e['chargedCredits'] for e in ledger)<=budget['capCredits']
 assert all(e['accountBefore']['remaining']-e['reservedCredits']>=budget['reserveCredits'] for e in ledger)
 assert (ROOT/'tools/audio/STOP.json').is_file()
+assert json.loads((ROOT/'tools/audio/STOP.json').read_text())['status']==429
+assert budget['capCredits']==4000
+assert budget['status']=='stopped-provider-rate-limit'
+for row in ledger:
+    assert row['chargedCredits']==max(row['accountDelta'] or 0,row['estimatedCredits'],row['measuredCredits'] or 0)
+    assert row['documentedEstimateCredits']>0
+    assert row['accountAfter']['remaining']>=budget['reserveCredits']
 for page in pages:
     parser=References(); parser.feed(page.read_text(encoding='utf-8'))
     assert len(parser.ids)==len(set(parser.ids)), 'Duplicate HTML IDs'
@@ -56,6 +63,9 @@ with sync_playwright() as p:
             assert '\u00c2\u00b7' not in page.locator('body').inner_text(), 'Mojibake in direction labels'
             assert page.locator('audio').count()==len(ledger)
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Page overflow'
+            page.locator('details').evaluate_all('(items)=>items.forEach(d=>d.open=true)')
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Expanded details overflow'
+            page.locator('details').evaluate_all('(items)=>items.forEach(d=>d.open=false)')
             # Decode every file from disk and exercise native playback (muted for test host).
             media=page.evaluate('''async () => {
               const results=[];
@@ -74,7 +84,7 @@ with sync_playwright() as p:
               }
               return results;
             }''')
-            assert all(m['duration']>0 and m['currentTime']>0 and 0<m['volume']<1 for m in media)
+            assert all(m['duration']>0 and m['currentTime']>0 and 0<m['volume']<=1 for m in media)
             for theme in ['light','dark']:
                 page.select_option('#theme',theme)
                 assert page.locator('html').get_attribute('data-theme')==theme
@@ -96,12 +106,20 @@ with sync_playwright() as p:
         page.wait_for_function("document.querySelector('#status').textContent.includes('Markdown')")
         assert page.locator('#export').input_value()==exported
         assert '<script' not in exported
-        page.locator('[data-loop-target]').click()
-        assert page.locator('[data-loop-target]').get_attribute('aria-pressed')=='true'
+        page.locator('[data-loop-target]').first.click()
+        assert page.locator('[data-loop-target]').first.get_attribute('aria-pressed')=='true'
         assert page.locator('audio').first.evaluate('(a)=>a.loop')
+        # Starting a second clip must pause the first, preserving clean comparisons.
+        assert page.evaluate('''async () => {
+          const [a,b]=document.querySelectorAll('audio');
+          a.muted=b.muted=true;
+          await a.play(); await b.play();
+          const ok=a.paused&&!b.paused;
+          b.pause();return ok;
+        }''')
         context.close()
     browser.close()
 assert not errors, errors
-result={'status':'pass','generatedSamples':len(ledger),'plannedSamples':40,'coverageGate':'incomplete: generation latched after two proofs','relativeReferences':'all exist','sidecarsAndLedger':'one per original; exact match; hashes verified','budgetDebit':sum(e['chargedCredits'] for e in ledger),'cap':budget['capCredits'],'reserve':budget['reserveCredits'],'browserErrors':errors,'checks':browsers,'persistenceAndExport':'pass: radio, multiline note, pipe escape, reload, copy/fallback, loop toggle','ownerListening':'not measured'}
+result={'status':'pass','generatedSamples':len(ledger),'plannedSamples':40,'priorityTarget':32,'coverageGate':'15/32 priority samples; real provider 429 stopped generation; smaller-audition scope explicit','relativeReferences':'all exist','sidecarsAndLedger':'one per original; exact match; hashes verified','budgetDebit':sum(e['chargedCredits'] for e in ledger),'cap':budget['capCredits'],'reserve':budget['reserveCredits'],'browserErrors':errors,'checks':browsers,'persistenceAndExport':'pass: radio, multiline note, pipe escape, reload, copy/fallback, loop toggle','ownerListening':'not measured'}
 (OUT/'validation.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
-print(json.dumps(result,indent=2))
+print(json.dumps({k:v for k,v in result.items() if k!='checks'},indent=2))

@@ -1,11 +1,13 @@
 # Owner checks
 
-## AU1 — 2026-10-02 — partial audition, stopped for owner
+## AU1 — 2026-10-02 — smaller audition, stopped for owner
 
-[Open direction triage](audio/audition/r1/index.html) and [investment evidence](audio/PROOF-REPORT.html) from disk. Keep the directory together. The two actual samples are one Fire cast and one arena music sketch; 38 of the authored 40-sample matrix are explicitly unrendered.
+Open [direction triage](audio/audition/r1/index.html) and [investment evidence](audio/PROOF-REPORT.html) from disk; keep the audio directory together. **15 samples** are available: all four elemental cast A/B pairs, two normal/perfect absorb pairs, two arena music directions and one narrator line. No direction is preselected.
 
-Only the owner can judge the fire attack's weight, whether the music direction fits the world, comfort on headphones/small speakers, and whether the proposed material-versus-radiance split is worth pursuing. Use keep/maybe/reject and notes, then copy Markdown into `audio/CHOICES.md`. No choices have been inferred.
+Judge element recognition, physical versus radiant identity, clear normal/perfect outcomes, whether either arena palette fits the world, and whether the narrator register is worth pursuing. Use keep/maybe/reject and optional notes, then copy Markdown into [audio/CHOICES.md](audio/CHOICES.md). Keep selects a direction to explore, not a production-ready raw file. Match playback levels before comparing; try headphones and small speakers.
 
-The 12,000-credit cap was **not** reached. No provider quota/429 occurred. The local tool stopped on unresolved music billing after its second proof call; the latch was retained per the owner's stop instruction. Exact SFX billing is 20 credits; music has a 1,200-credit conservative reservation and no exact per-request cost. 620 credits settled on the shared account across the interval. The report does not use that uncertainty as evidence to recommend a plan upgrade.
+The smaller **4,000-credit total cap was not reached**. Generation stopped on a real **HTTP 429** during the postflight subscription check; the new STOP remains set. **1,852 conservative credits debited**, including the earlier two proofs, **2,148 unused**; 272 credits have exact SFX/voice headers, while music attribution remains uncertain. Last shared balance 24,672, reserve 8,000. The proof report separates these numbers and does not treat a rate limit as evidence to buy a larger plan.
 
-AU1 coverage and the voice cost proof remain incomplete. AU2–AU4 and production generation have not started. Any future continuation needs accounting reconciliation before more paid calls; this handoff does not silently clear the latch.
+Six SFX exceed full scale when decoded; both music clips fail raw direct-repeat level continuity. Review playback is attenuated, originals preserved. Quality notes are technical and explicitly do not claim an ear-based assessment. Camp music/ambience, all UI, hit/impact, collar, roll, crowd and a second voice remain ungenerated (17 priority gaps, two optional beds; six original directions deferred by scope).
+
+File playback, report functionality, loudness and provenance gates pass; audition coverage is incomplete because the required stop fired. AU2–AU4 and production have not started. No Google calls, plan changes or push occurred. Owner choices remain the authority.

@@ -39,6 +39,11 @@ for (const [letter, name, palette] of [['A', 'Cut bronze', 'muted worn bronze ag
 for (const [letter, name, voice, intent] of [['A', 'George', 'JBFqnCBsd6RMkjVDRZzb', 'Warm camp storyteller'], ['B', 'Lily', 'pFZP5JQG7iQjIQuC4Bku', 'Measured herald with a clear midrange'], ['C', 'Brian', 'nPczCjzI2devNBz1zQrb', 'Low, reassuring storyteller']]) add(`voice-${letter}-${name.toLowerCase()}`, 'Voice', `${letter} · ${name}`, `${intent}; identical line and settings for a fair comparison.`, 'tts', null, 'The collar loosens. Keep your strength for what comes next.', { voice, performanceIntent: 'Calm herald or camp storyteller, not a battle shout; intent is not spoken text.' });
 add('ambience-A-day-canvas', 'Camp ambience', 'A · Working canvas', 'Tests a featureless day loop; no repeated foreground event should count time.', 'sfx', 20, 'Quiet outdoor camp ambience: soft moving air and gentle canvas movement, diffuse distant indistinct work without words, stable even texture, no distinct knocks, no music, no intro or ending, seamless loop.', { loop: true, bed: true });
 add('ambience-B-night-edge', 'Camp ambience', 'B · The waiting edge', 'Tests night stillness and remote ward pressure without implying camp spellcasting.', 'sfx', 20, 'Very quiet night air at the edge of a guarded camp, faint canvas breath far away and nearly imperceptible low stone tension, stable featureless texture, no footsteps, no voices, no music, seamless loop.', { loop: true, bed: true });
-if (samples.length !== 40) throw Error(`Expected 40, got ${samples.length}`);
-fs.writeFileSync('tools/audio/audition-plan.json', JSON.stringify({ status: 'authored; generation stopped after 2 proofs', sampleCount: 40, samples }, null, 2) + '\n');
-console.log(`Authored ${samples.length} samples; no provider calls.`);
+const deferred = new Set(['arena-C-bone-and-thread', 'arena-D-black-standard', 'camp-A-day-hearth', 'camp-B-dusk-thread', 'title-A-four-breaths', 'voice-C-brian']);
+for (const s of samples) {
+  s.scope = deferred.has(s.id) ? 'deferred-smaller-audition' : s.bed && s.kind === 'sfx' ? 'optional-loop-evidence' : 'smaller-audition';
+  if (s.id === 'crowd-A-stone-bowl') { s.seconds = 3; s.prompt = s.prompt.replace('Four seconds.', 'Three seconds.'); }
+  if (s.kind === 'tts') s.prompt = 'The collar loosens. Stand ready.';
+}
+fs.writeFileSync('tools/audio/audition-plan.json', JSON.stringify({ status: 'smaller audition: 27 short SFX, 3 music, at most 2 voices; 2 optional beds only within cap', sampleCount: samples.length, targetCount: 32, samples }, null, 2) + '\n');
+console.log(`Authored ${samples.length} briefs; 32 priority samples and 2 optional beds; no provider calls.`);

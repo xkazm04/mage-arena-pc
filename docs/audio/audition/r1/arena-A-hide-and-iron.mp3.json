@@ -1,6 +1,6 @@
 {
-  "id": "cbb8c9f2-606d-4d07-8f25-6d9b8c3ecf8c",
   "ts": "2026-10-02T19:13:57.287Z",
+  "id": "cbb8c9f2-606d-4d07-8f25-6d9b8c3ecf8c",
   "kind": "music",
   "model": "music_v1",
   "voice": null,
@@ -26,9 +26,9 @@
     "resetsAt": "2026-10-04T19:31:41.000Z"
   },
   "reservedCredits": 1200,
-  "chargedCredits": 1200,
+  "chargedCredits": 620,
   "measuredCredits": null,
-  "costBasis": "reserved-unresolved",
+  "costBasis": "max-shared-delta-estimate-header",
   "accountAfter": {
     "observedAt": "2026-10-02T19:14:19.396Z",
     "tier": "starter",
@@ -37,5 +37,10 @@
     "remaining": 42061,
     "resetsAt": "2026-10-04T19:31:41.000Z"
   },
-  "accountDelta": 620
+  "accountDelta": 620,
+  "estimatedCredits": 600,
+  "documentedEstimateCredits": 300,
+  "deltaBasis": "shared-account upper-bound proxy; may include concurrent or delayed charges",
+  "flags": [],
+  "accountingRevision": "2026-10-02 session2 authorization; original ledger archived in docs/audio/evidence/session1"
 }

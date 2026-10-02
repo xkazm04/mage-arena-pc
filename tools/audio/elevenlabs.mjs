@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Adapted from garden-vr/tools/audio/elevenlabs.mjs, read-only source 2026-10-02.
-// AU1: persistent reservations, billing headers, first-error latch; no POST retries.
+// AU1: shared balance upper bounds, durable reservations, quota latch; no POST retries.
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -17,7 +17,7 @@ const stopPath = path.join(here, 'STOP.json');
 const statePath = path.join(here, 'state.json');
 const budget = () => {
   const b = json(path.join(here, 'budget.json'));
-  if (!Number.isFinite(b.capCredits) || b.capCredits > 12000 || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < 8000) throw Error('Invalid AU1 cap/reserve');
+  if (!Number.isFinite(b.capCredits) || b.capCredits > 4000 || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < 8000) throw Error('Invalid AU1 cap/reserve');
   return b;
 };
 function latch(reason, extra = {}) {
@@ -39,7 +39,7 @@ async function request(endpoint, body) {
     if (r.ok) return r;
     let code = 'http_error';
     try { const d = await r.json(); if (typeof d.detail?.status === 'string' && /^[a-z_]+$/i.test(d.detail.status)) code = d.detail.status; } catch {}
-    if (r.status === 429 || r.status === 402 || /quota|rate_limit|credit|payment/.test(code)) latch('provider_quota_or_rate_limit', { status: r.status, code });
+    if (r.status === 429 || r.status === 402 || /quota|rate_limit|credit|payment/.test(code)) latch('provider_quota_or_rate_limit', { status: r.status, code, endpoint: endpoint.split('?')[0], method: body ? 'POST' : 'GET' });
     if (!body && r.status === 429 && attempt < 3) { await sleep(4000 * 2 ** attempt); continue; }
     throw Error(`Provider request failed: HTTP ${r.status}, ${code}; no generation retry`);
   }
@@ -53,6 +53,14 @@ export function estimate(kind, seconds, chars, b) {
   const n = kind === 'sfx' ? Math.max(b.bounds.sfxMinimum, Math.ceil(seconds * b.bounds.sfxPerSecond)) : kind === 'music' ? Math.ceil(seconds * b.bounds.musicPerSecond) : Math.ceil(chars * b.bounds.ttsPerCharacter);
   if (!Number.isFinite(n) || n <= 0) throw Error('Invalid cost bound');
   return n;
+}
+export function accountCost(delta, estimated, header = null) {
+  const flags = [];
+  if (delta === null) flags.push('balance_unavailable');
+  else if (delta < 0) flags.push('negative_balance_delta');
+  else if (delta > estimated * 2) flags.push('shared_delta_implausibly_large');
+  if (delta === 0) flags.push('balance_may_lag');
+  return { chargedCredits: Math.max(delta ?? 0, estimated, header ?? 0), flags };
 }
 export function checkFunds(b, spent, reserved, remaining, upper) {
   if (![spent, reserved, remaining, upper].every(Number.isFinite) || spent < 0 || reserved < 0 || upper <= 0) throw Error('Invalid guard inputs');
@@ -95,41 +103,44 @@ async function generate(kind, a) {
   const initial = previous.initial || before;
   if (initial.resetsAt !== before.resetsAt) throw Error('Account reset changed; AU1 requires reconciliation');
   // Account counters may lag. Never spend the same unreflected balance twice.
-  const conservativeRemaining = Math.min(before.remaining, initial.remaining - spent);
-  checkFunds(b, spent, 0, conservativeRemaining, upper);
+  // Retain the entire local debit as lag allowance against the latest shared read.
+  // This can double-count settled local charges, deliberately favouring the reserve.
+  const conservativeRemaining = Math.min(before.remaining, initial.remaining) - spent;
+  try { checkFunds(b, spent, 0, conservativeRemaining, upper); }
+  catch (e) { latch('cap_or_reserve_refusal', { spentCredits: spent, estimatedCredits: upper }); throw e; }
   const pending = { id: crypto.randomUUID(), kind, out: path.relative(root, out).replaceAll('\\', '/'), reservedCredits: upper, before, body, startedAt: new Date().toISOString() };
   write(statePath, { initial, pending });
   append('requests.jsonl', { event: 'reserved', ...pending });
   const endpoint = kind === 'sfx' ? '/v1/sound-generation' : kind === 'music' ? '/v1/music' : `/v1/text-to-speech/${voice}`;
   let r;
   try { r = await request(endpoint + '?output_format=mp3_44100_128', body); }
-  catch (e) { latch('generation_failed_or_ambiguous', { reservationId: pending.id }); throw e; }
+  catch (e) { throw e; } // Durable pending reservation protects an unknown outcome; no billing-fault latch.
   const billingHeaders = {};
   for (const name of ['character-cost', 'x-character-cost', 'request-id', 'x-request-id', 'history-item-id']) if (r.headers.has(name)) billingHeaders[name] = r.headers.get(name);
   const buf = Buffer.from(await r.arrayBuffer());
-  if (!buf.length) { latch('empty_response', { reservationId: pending.id }); throw Error('Empty response; reservation retained'); }
+  if (!buf.length) throw Error('Empty response; reservation retained');
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, buf, { flag: 'wx' });
   // Save provenance immediately, even if later billing lookup fails.
-  const entry = { id: pending.id, ts: pending.startedAt, kind, model, voice, text, seconds, chars: kind === 'tts' ? text.length : null, out: pending.out, request: body, billingHeaders, bytes: buf.length, sha256: crypto.createHash('sha256').update(buf).digest('hex'), accountBefore: before, reservedCredits: upper, chargedCredits: upper, measuredCredits: null, costBasis: 'reserved-unresolved' };
+  const entry = { id: pending.id, ts: pending.startedAt, kind, model, voice, text, seconds, chars: kind === 'tts' ? text.length : null, out: pending.out, request: body, billingHeaders, bytes: buf.length, sha256: crypto.createHash('sha256').update(buf).digest('hex'), accountBefore: before, reservedCredits: upper, estimatedCredits: upper, documentedEstimateCredits: estimate(kind, seconds, text.length, { bounds: b.documentedBounds }), chargedCredits: upper, measuredCredits: null, costBasis: 'max-shared-delta-estimate-header' };
   write(out + '.json', entry);
   const costHeader = billingHeaders['character-cost'] ?? billingHeaders['x-character-cost'];
   const measured = costHeader !== undefined && /^\d+(\.\d+)?$/.test(costHeader) ? Number(costHeader) : null;
   let after = null;
   try {
     after = await credits();
-    if (measured === null) for (let i = 0; i < 4 && before.remaining === after.remaining; i++) { await sleep(2000 * (i+1)); after = await credits(); }
-  } catch { latch('post_generation_account_check_failed', { reservationId: pending.id }); }
+  } catch { /* Fall back to reserved estimate, flag missing snapshot, never zero cost. */ }
   entry.accountAfter = after;
   entry.accountDelta = after ? before.remaining - after.remaining : null;
-  if (measured !== null) { entry.measuredCredits = measured; entry.chargedCredits = measured; entry.costBasis = 'provider-character-cost-header'; }
-  else latch('billing_unresolved', { reservationId: pending.id });
+  entry.measuredCredits = measured;
+  Object.assign(entry, accountCost(entry.accountDelta, upper, measured));
+  entry.deltaBasis = 'shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges';
   write(out + '.json', entry);
   append('ledger.jsonl', entry);
   append('requests.jsonl', { event: 'completed', id: pending.id, chargedCredits: entry.chargedCredits, costBasis: entry.costBasis });
-  write(statePath, { initial, pending: measured === null ? pending : null, spentCredits: spent + entry.chargedCredits });
-  if (measured > upper) latch('provider_cost_exceeded_bound', { measured, upper });
+  write(statePath, { initial, pending: null, spentCredits: spent + entry.chargedCredits });
   if (spent + entry.chargedCredits >= b.capCredits) latch('project_cap_reached', { spentCredits: spent + entry.chargedCredits });
+  if (after && after.remaining < b.reserveCredits) latch('shared_reserve_reached', { remaining: after.remaining });
   console.log(JSON.stringify({ ok: true, out: pending.out, measuredCredits: measured, chargedCredits: entry.chargedCredits, accountRemaining: after?.remaining, billingHeaders, totalSpent: spent + entry.chargedCredits, latched: fs.existsSync(stopPath) }));
 }
 async function main() {

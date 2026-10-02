@@ -47,7 +47,7 @@
   }));
   const escapeCell = value => String(value || '').replaceAll('|', '\\|').replace(/\r?\n/g, '<br>').replaceAll('<script', '&lt;script');
   const exportText = () => {
-    const lines = ['## AU1 round 1 — owner triage', '', 'Only two proof samples were generated before the billing latch. Unrendered directions remain unjudged.', '', '| Theme / direction | Pick | Samples | Owner note |', '|---|---|---|---|'];
+    const lines = ['## AU1 round 1 — owner triage', '', 'Smaller audition: 15 samples generated before a provider 429 stop; 4,000-credit cap. Unrendered directions remain unjudged.', '', '| Theme / direction | Pick | Samples | Owner note |', '|---|---|---|---|'];
     document.querySelectorAll('[data-direction]').forEach(card => {
       const choice = state.choices[card.dataset.direction] || {};
       if (!choice.pick && !choice.note) return;

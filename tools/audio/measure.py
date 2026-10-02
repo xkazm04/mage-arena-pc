@@ -50,7 +50,7 @@ for entry in ledger:
     # Check both actual joins of a three-repeat PCM sequence without writing a derivative asset.
     repeated = np.tile(pcm, (3, 1))
     seam['jointJumpsDbFS'] = [db(np.max(np.abs(repeated[j*len(pcm)]-repeated[j*len(pcm)-1]))) for j in (1, 2)]
-    gain = min(0, (-20 if entry['kind'] == 'sfx' else -24) - lufs, -3 - peak)
+    gain = min(0, (-26 if entry['kind'] == 'sfx' else -24) - lufs, -3 - peak)
     result = {
         'id': source.stem, 'source': entry['out'], 'sourceSha256': hashlib.sha256(source.read_bytes()).hexdigest(),
         'codec': stream['codec_name'], 'sampleRate': rate, 'channels': channels,
@@ -71,4 +71,4 @@ for entry in ledger:
 lines = ['# AU1 raw audio measurements', '', 'Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not a quality score. Audition trim is browser gain; raw files are unchanged.', '', '| Sample | Decoded seconds | LUFS-I | dBTP | LRA LU | Audition trim dB |', '|---|---:|---:|---:|---:|---:|']
 for m in results: lines.append(f"| {m['id']} | {m['decodedSeconds']} | {m['integratedLufs']} | {m['truePeakDbTP']} | {m['loudnessRangeLu']} | {m['auditionGainDb']} |")
 (EVIDENCE / 'LOUDNESS.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
-print(json.dumps([{k:v for k,v in m.items() if k not in ['envelope10msRmsDbFS']} for m in results], indent=2))
+print(json.dumps({'measuredSamples':len(results),'output':'docs/audio/evidence/measurements.json'}))

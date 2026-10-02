@@ -1,10 +1,33 @@
 {
   "project": "mage-arena",
   "wave": "AU1",
-  "capCredits": 12000,
+  "capCredits": 4000,
   "reserveCredits": 8000,
-  "initialOwnerSnapshot": {"date": "2026-10-02", "tier": "starter", "remaining": 43319, "limit": 90000, "reset": "2026-10-04"},
-  "status": "stopped-billing-unresolved",
-  "bounds": {"sfxPerSecond": 40, "sfxMinimum": 100, "musicPerSecond": 60, "ttsPerCharacter": 1},
-  "note": "Bounds may only be recalibrated from measured proof billing. Cap and reserve cannot be loosened by CLI or environment. A first quota/429 creates STOP.json; no automatic reset."
+  "initialOwnerSnapshot": {
+    "date": "2026-10-02",
+    "tier": "starter",
+    "remaining": 43319,
+    "limit": 90000,
+    "reset": "2026-10-04"
+  },
+  "status": "stopped-provider-rate-limit",
+  "bounds": {
+    "sfxPerSecond": 20,
+    "sfxMinimum": 0,
+    "musicPerSecond": 30,
+    "ttsPerCharacter": 1
+  },
+  "note": "Conservative model: documented SFX API 20/s; music 30/s inferred from prior proof versus public 15/s; multilingual v2 stock voice 1/character. Balance delta is an upper-bound proxy, not attributed spend. No POST retry. Quota/429 or funds refusal latches.",
+  "documentedBounds": {
+    "sfxPerSecond": 20,
+    "sfxMinimum": 0,
+    "musicPerSecond": 15,
+    "ttsPerCharacter": 1
+  },
+  "session2Authorization": "Owner/host 2026-10-02 22:25: reduce cap to 4000 including prior samples; clear billing-fault latch; charge max(shared balance delta, estimate), flag anomalies. Never raise cap.",
+  "sources": {
+    "sfx": "https://help.elevenlabs.io/hc/en-us/articles/25735337678481-How-much-does-it-cost-to-generate-sound-effects",
+    "musicAndVoice": "https://elevenlabs.io/pricing",
+    "retrieved": "2026-10-02"
+  }
 }

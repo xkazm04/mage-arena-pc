@@ -1,0 +1,50 @@
+{
+  "id": "3493c366-f8e6-43cf-9bb4-f6a6edfad277",
+  "ts": "2026-10-02T21:01:44.127Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One earth spell cast: a mineral crack opening into resonant stone partials and hovering motes. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r1/earth-B-bound-radiance.mp3",
+  "request": {
+    "text": "One earth spell cast: a mineral crack opening into resonant stone partials and hovering motes. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 33062,
+  "sha256": "31c6b278b6fefbe8fd0b950f6941ea3ae146cad7fe7ac28820b755d68baf343b",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:01:44.126Z",
+    "tier": "starter",
+    "used": 65188,
+    "limit": 90000,
+    "remaining": 24812,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 40,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:01:50.954Z",
+    "tier": "starter",
+    "used": 65188,
+    "limit": 90000,
+    "remaining": 24812,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

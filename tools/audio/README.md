@@ -1,15 +1,10 @@
-# AU1 audio tooling
+# AU1 audio tooling — smaller audition, generation stopped
 
-Run from the repository root. Requires Node (fetch/Response built in), Python 3 with numpy and Playwright, ffmpeg/ffprobe on PATH, and installed Chromium. No repository-wide app dependencies are introduced.
+Run offline commands from the repository root. Requires Node with fetch, Python with numpy/markdown/Playwright, ffmpeg/ffprobe on PATH and Playwright Chromium.
 
-**Generation is stopped.** `STOP.json` records the missing music billing header; `state.json` keeps its unresolved reservation. The cap was not reached; no quota or rate-limit response occurred. Do not remove the latch or resume as part of this AU1 handoff.
-
-## Read-only / offline commands
+**STOP.json records a real HTTP 429. Do not clear it or resume generation.** The host authorized clearing only the earlier billing-fault stop, preserved under `docs/audio/evidence/session1/`. Budget status also closes generation. Total cap 4,000; reserve 8,000. Current debit 1,852 for 15 samples. This is AU1, not production or AU2–AU4.
 
 ```
-node tools/audio/elevenlabs.mjs credits
-node tools/audio/elevenlabs.mjs voices --filter george
-node tools/audio/elevenlabs.mjs usage --from 2026-10-02T19:13:15Z --to 2026-10-02T19:14:30Z
 node --test tools/audio/guard.test.mjs
 node tools/audio/plan-audition.mjs
 python tools/audio/measure.py
@@ -17,14 +12,22 @@ python tools/audio/build-reports.py
 python tools/audio/check-reports.py
 ```
 
-`plan-audition.mjs` writes only the 40 original briefs. It is not a batch launcher. Measurements and reports derive from actual ledger entries. `check-reports.py` opens both pages via file URLs, verifies every asset/sidecar/hash/ledger relationship, decodes and plays all media, checks desktop/phone light/dark layouts, and exercises radio/note persistence, Markdown export and repeat control. It uses isolated browser contexts; test choices never become owner decisions.
-
-The generator was copied from garden-vr and adapted in this repository only. Environment key takes precedence; otherwise only the two explicitly authorized original `.env` files are read. The key remains in memory, never printed, copied to a new env file or written to metadata. API error bodies and request authorization headers are never logged. Only safe response billing fields are retained. No environment override can loosen the AU1 cap/reserve.
+The plan command authors metadata only: 32 priority briefs, two optional ambience probes and six deferred briefs. `run-sample.mjs <id>` is the single-brief launcher through the guard; it is currently blocked by the persistent latch and closed status. It never executes a whole matrix implicitly. No report launches generation.
 
 ## Accounting
 
-`budget.json`: 12,000 cap and 8,000 shared reserve; pre-proof bounds remain conservative because the proof series stopped. `requests.jsonl`: durable reservations/completions. `ledger.jsonl`: exactly one original per successful response. `.mp3.json`: matching provenance. `state.json`: current unresolved reservation and starting snapshot. `STOP.json`: first latch reason, never automatically reset. The legacy name `chargedCredits` means **budget debit**, not necessarily a measured charge: consult `measuredCredits` and `costBasis`. For music it is 1,200 reserved, with actual billing unresolved.
+Each call reads subscription balance immediately before/after. Sidecar and committed ledger record `documentedEstimateCredits`, conservative `estimatedCredits`, raw shared `accountDelta`, optional exact `measuredCredits` from a header and **`chargedCredits` as conservative budget debit**. Debit = max(delta, conservative estimate, available header). A shared delta is an upper-bound proxy, not attributed billing; delayed counters can underreport, concurrent usage can overreport. Zero never means free. Negative or >2× estimate deltas get flags. They do not latch.
 
-Exponential 429 backoff exists for read-only subscription requests (4, 8, 16 s); first 429 writes the latch immediately. No billable POST is retried. A recovered lookup cannot authorize a POST after the latch. Quota errors, unknown generation outcomes and unmeasured billing also stop generation. This is intentionally stricter than stopping only for quota/429, and caused the early stop in this run. An unresolved reservation blocks crashes from silently resetting the budget. Project lock prevents overlapping local writers; it cannot serialize the read-only sister project's existing writer, so this is not a server-side atomic account-wide reserve.
+SFX guard 20/s (documented API rate), measured headers 10/s; music guard 30/s (conditional prior-proof inference), public model 15/s, exact account music attribution unavailable; stock multilingual v2 voice 1/character measured. These are not interchangeable claims. See `docs/audio/evidence/COST-MODEL.md`.
 
-One optional music billing header was incorrectly assumed to be necessary for proceeding. That conservative implementation choice limited this audition to two samples; it is not a Starter capacity limit. A future authorized run should design and prove a request-attributed music accounting fallback before generation. Never treat immediate zero balance deltas as free output or clear this latch merely to continue spending.
+Reservations persist before POST; an unresolved outcome cannot silently reset spending. A local lock serializes writers, and existing output refuses paid overwrite. The guard hard-refuses a cap above 4,000 or reserve below 8,000. Latest balance minus all project debit retains a conservative allowance for lag, sometimes double-counting settled local charges. A separate project can still spend concurrently; this is not a server-side atomic reserve.
+
+First quota/429 persists STOP. Read-only 429 checks back off 4/8/16 s; paid POSTs never retry. A recovered GET cannot authorize more generation after a latch. Cap/reserve refusal also latches. Missing headers and unusual deltas alone do not. Crashed/ambiguous calls retain pending reservations rather than guessing outcomes.
+
+## Provenance and verification
+
+`requests.jsonl` journals reservations/completions/reconciliation; `ledger.jsonl` has exactly one row per generated original; `<asset>.mp3.json` matches it. Hashes verify the original bytes. Historical first-session evidence is archived separately and excluded from current debit totals. No discarded paid files are hidden.
+
+The copied generator reads ELEVENLABS_API_KEY from environment first, else only `C:/Users/kazda/kiro/garden-vr/.env` and `C:/Users/kazda/kiro/pof/.env`, read-only. It writes no key or raw provider error body. Tests mock every network call and use only fake credentials.
+
+The file:// Playwright gate checks desktop/phone and light/dark, every audio file, metadata equality/hashes, relative references, radio/notes/localStorage, Markdown export/copy fallback and repeat controls. Test choices live only in isolated browser contexts. Measurements and quality notes are technical; owner listening remains unmeasured. The reports preserve originals and apply review gain at playback only.
