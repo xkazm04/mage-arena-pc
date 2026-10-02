@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-02T07:15:24.756037+00:00",
+  "at": "2026-10-02T07:28:21.769708+00:00",
   "label": "measured disposable copy; ignored raw evidence absent",
   "status": "pass",
   "commands": [
@@ -9,8 +9,8 @@
         "build"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 13.11,
-      "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 57, \"weekly_reserved\": 57, \"target_remaining\": 73, \"hard_remaining\": 123, \"generated\": 57, \"observed_image_tool_calls\": 57, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n",
+      "elapsed_seconds": 13.265,
+      "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 75, \"weekly_reserved\": 75, \"target_remaining\": 55, \"hard_remaining\": 105, \"generated\": 75, \"observed_image_tool_calls\": 75, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n",
       "stderr": ""
     },
     {
@@ -19,7 +19,7 @@
         "validate"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 0.625,
+      "elapsed_seconds": 0.641,
       "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"direction_pairs\": 8,\n  \"generated_attempts\": 30,\n  \"graded_attempts\": 30,\n  \"current_rejects\": 0,\n  \"scope\": \"delivery integrity; does not turn semantic rejects into acceptance\",\n  \"owner_accepted\": false\n}\n",
       "stderr": ""
     }
@@ -43,6 +43,20 @@
       "wave": "A1b",
       "exit_code": 0,
       "sources": 27,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A2",
+      "exit_code": 0,
+      "sources": 18,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A2 portrait crops",
+      "exit_code": 0,
+      "sources": 96,
       "hashes_identical": true,
       "stderr": ""
     }

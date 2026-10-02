@@ -4471,6 +4471,1446 @@
       "source": "art/raw/01-tessera-staggered-plinths-sparse-near-a02/source.jpg",
       "sha256": "03b8c07e39a9789c376482fdc9a5941d3d3e10b6dd64bd23627fdc69afd2af79",
       "elapsed_seconds": 19.86
+    },
+    {
+      "id": "01-tessera-portrait-cassia-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-cassia",
+      "attempt": 1,
+      "input_hash": "d4914a4246be4fd26c84c65ffebf2753b4c97be9c3b6ace3b32989735cec5ce8",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-cassia",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "2fe1ff11-584f-454d-8820-3ef8b2ab926d",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:17:33.150074+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "2fe1ff11-584f-454d-8820-3ef8b2ab926d",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-cassia-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-cassia-a01\\\\2fe1ff11-584f-454d-8820-3ef8b2ab926d\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-cassia-a01\\\\2fe1ff11-584f-454d-8820-3ef8b2ab926d\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-cassia-a01/source.jpg",
+      "sha256": "49cde10c90abef8e7a657a0404b282f45845d60f40f7144f8fec527055ae2d48",
+      "elapsed_seconds": 21.094
+    },
+    {
+      "id": "01-tessera-portrait-brennic-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-brennic",
+      "attempt": 1,
+      "input_hash": "df192e09accf9cec8c36654c545462471bfdca638d1d462b290f1fbc4aaef89e",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-brennic",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "99dd41c1-396d-4adf-8fbd-09a7be894e77",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:18:40.938346+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "99dd41c1-396d-4adf-8fbd-09a7be894e77",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-brennic-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-brennic-a01\\\\99dd41c1-396d-4adf-8fbd-09a7be894e77\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-brennic-a01\\\\99dd41c1-396d-4adf-8fbd-09a7be894e77\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-brennic-a01/source.jpg",
+      "sha256": "23928a2800109a4e34410495e4057fa744b8a5d0850d2082340be10eb013490f",
+      "elapsed_seconds": 19.891
+    },
+    {
+      "id": "01-tessera-portrait-garran-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-garran",
+      "attempt": 1,
+      "input_hash": "182a6fea523ac25a2f17b1b28f7a3b986d2ed40f0c12ddf1f78b56ead216ce85",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-garran",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "07da55a3-b91d-46e5-a814-dc3018bba768",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:19:00.903467+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "07da55a3-b91d-46e5-a814-dc3018bba768",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-garran-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-garran-a01\\\\07da55a3-b91d-46e5-a814-dc3018bba768\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-garran-a01\\\\07da55a3-b91d-46e5-a814-dc3018bba768\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-garran-a01/source.jpg",
+      "sha256": "c2eb03d2e1bbc92d8fdf7f40789407cda680452a862ce19941fcc470444b6641",
+      "elapsed_seconds": 20.953
+    },
+    {
+      "id": "01-tessera-portrait-iskar-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-iskar",
+      "attempt": 1,
+      "input_hash": "016f0e7c01c477808db2982459333ad49bbddff1b0ff7ef34cf2be2cea11803e",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-iskar",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "88c36f58-cd0d-4bfe-9f4e-be9cb0ba9578",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:19:21.920800+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "88c36f58-cd0d-4bfe-9f4e-be9cb0ba9578",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-iskar-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-iskar-a01\\\\88c36f58-cd0d-4bfe-9f4e-be9cb0ba9578\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-iskar-a01\\\\88c36f58-cd0d-4bfe-9f4e-be9cb0ba9578\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-iskar-a01/source.jpg",
+      "sha256": "7dd218b15074cb5872a7a58e96636c8f7c38b16058f09b38b59db848a111dca8",
+      "elapsed_seconds": 19.86
+    },
+    {
+      "id": "01-tessera-portrait-sadruba-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-sadruba",
+      "attempt": 1,
+      "input_hash": "7a7534dffff7d3389508250ed0954e99a040853bbbc75952ea17b6ea0bd43fbe",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-sadruba",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older woman about 58, deep brown skin, strong long jaw, short tightly curled grey hair, a thin healed scar down left eyebrow, deep-set eyes and powerful neck. Terracotta red wool wrap over chalk tunic, plain bronze collar. Commanding arena elder; no crown or modern clothing.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older woman about 58, deep brown skin, strong long jaw, short tightly curled grey hair, a thin healed scar down left eyebrow, deep-set eyes and powerful neck. Terracotta red wool wrap over chalk tunic, plain bronze collar. Commanding arena elder; no crown or modern clothing.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "0920faa1-3f9b-45c6-aa10-8ea84a1b319c",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:19:41.861447+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "0920faa1-3f9b-45c6-aa10-8ea84a1b319c",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-sadruba-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older woman about 58, deep brown skin, strong long jaw, short tightly curled grey hair, a thin healed scar down left eyebrow, deep-set eyes and powerful neck. Terracotta red wool wrap over chalk tunic, plain bronze collar. Commanding arena elder; no crown or modern clothing.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-sadruba-a01\\\\0920faa1-3f9b-45c6-aa10-8ea84a1b319c\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-sadruba-a01\\\\0920faa1-3f9b-45c6-aa10-8ea84a1b319c\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-sadruba-a01/source.jpg",
+      "sha256": "91e523a369725995a8ca6c5f22395c67d466983091718d4b2b4a2d40dcf2a571",
+      "elapsed_seconds": 23.031
+    },
+    {
+      "id": "01-tessera-portrait-ophel-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-ophel",
+      "attempt": 1,
+      "input_hash": "aaafa6ede74705cf0760faeba02f1fdf961b39c4d01eadcb0c4cdc1279084e54",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-ophel",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older man about 63, olive skin, long narrow face, receding short silver hair, small pointed silver beard, tired hooded dark eyes and arched eyebrows. Mineral-blue robe with simple chalk border, plain bronze collar. Dry scholar and debt keeper; no spectacles or hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older man about 63, olive skin, long narrow face, receding short silver hair, small pointed silver beard, tired hooded dark eyes and arched eyebrows. Mineral-blue robe with simple chalk border, plain bronze collar. Dry scholar and debt keeper; no spectacles or hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "ecbaba08-a447-498e-bc8b-3d13752155e5",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:20:04.964409+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "ecbaba08-a447-498e-bc8b-3d13752155e5",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-ophel-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older man about 63, olive skin, long narrow face, receding short silver hair, small pointed silver beard, tired hooded dark eyes and arched eyebrows. Mineral-blue robe with simple chalk border, plain bronze collar. Dry scholar and debt keeper; no spectacles or hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-ophel-a01\\\\ecbaba08-a447-498e-bc8b-3d13752155e5\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-ophel-a01\\\\ecbaba08-a447-498e-bc8b-3d13752155e5\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-ophel-a01/source.jpg",
+      "sha256": "24fcd6e6194b89e8bc966cbfe65b0ece6ad430fb011f142f68185ea417020994",
+      "elapsed_seconds": 20.968
+    },
+    {
+      "id": "01-tessera-portrait-ruadh-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-ruadh",
+      "attempt": 1,
+      "input_hash": "daaeb1fd83d720ae206b7c625120c74afde039a8425510e5010e5c60d3d7ae6a",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-ruadh",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older woman about 61, ruddy light skin, broad soft face, deep smile lines, thick grey braid laid over one shoulder, broad straight nose. Dull ochre wool shawl over linen and plain bronze collar. Patient steady tent elder, flour dust at shoulder, no decorative jewellery.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older woman about 61, ruddy light skin, broad soft face, deep smile lines, thick grey braid laid over one shoulder, broad straight nose. Dull ochre wool shawl over linen and plain bronze collar. Patient steady tent elder, flour dust at shoulder, no decorative jewellery.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "52c5e361-13fd-44e2-9ecc-e6a959b4caca",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:20:25.987276+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "52c5e361-13fd-44e2-9ecc-e6a959b4caca",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-ruadh-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older woman about 61, ruddy light skin, broad soft face, deep smile lines, thick grey braid laid over one shoulder, broad straight nose. Dull ochre wool shawl over linen and plain bronze collar. Patient steady tent elder, flour dust at shoulder, no decorative jewellery.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-ruadh-a01\\\\52c5e361-13fd-44e2-9ecc-e6a959b4caca\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-ruadh-a01\\\\52c5e361-13fd-44e2-9ecc-e6a959b4caca\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-ruadh-a01/source.jpg",
+      "sha256": "9f60b62aa0b27100e8086cf26c761ea066779f61c268b01be6d02edc0e663514",
+      "elapsed_seconds": 20.969
+    },
+    {
+      "id": "01-tessera-portrait-kesh-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-kesh",
+      "attempt": 1,
+      "input_hash": "df05b359a517939f18bfc94ac48bfafc674a2cc3f9e7fb09f7a62758e5b3e418",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-kesh",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older man about 66, tawny brown skin, weathered narrow face, grey-black moustache and long divided chin beard, bald crown with grey hair tied behind. Muted sage scarf across one shoulder over chalk tunic, plain bronze collar. Amused trader, asymmetric brows and a small pale healed cheek scar.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older man about 66, tawny brown skin, weathered narrow face, grey-black moustache and long divided chin beard, bald crown with grey hair tied behind. Muted sage scarf across one shoulder over chalk tunic, plain bronze collar. Amused trader, asymmetric brows and a small pale healed cheek scar.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "1c28d61b-f496-4c1e-9ebf-e259bb3776ab",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:20:47.030680+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "1c28d61b-f496-4c1e-9ebf-e259bb3776ab",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-kesh-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Older man about 66, tawny brown skin, weathered narrow face, grey-black moustache and long divided chin beard, bald crown with grey hair tied behind. Muted sage scarf across one shoulder over chalk tunic, plain bronze collar. Amused trader, asymmetric brows and a small pale healed cheek scar.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-kesh-a01\\\\1c28d61b-f496-4c1e-9ebf-e259bb3776ab\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-kesh-a01\\\\1c28d61b-f496-4c1e-9ebf-e259bb3776ab\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-kesh-a01/source.jpg",
+      "sha256": "97da165210d91890d4767c92be4f495934f5785ce4d68c3d25b2af80daadd92f",
+      "elapsed_seconds": 18.937
+    },
+    {
+      "id": "01-tessera-portrait-corvo-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-corvo",
+      "attempt": 1,
+      "input_hash": "ade9e5969448e77d8db58ac9907e3d3e66c37f6501910df98fcd89b60200d41a",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-corvo",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 25, light olive skin, compact triangular face, hooked nose, very short black curls, clean shaven, one notched eyebrow. Faded red sleeveless tunic and plain bronze collar. Boastful rival with tense jaw, no mask, no hood, no borrowed character costume.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 25, light olive skin, compact triangular face, hooked nose, very short black curls, clean shaven, one notched eyebrow. Faded red sleeveless tunic and plain bronze collar. Boastful rival with tense jaw, no mask, no hood, no borrowed character costume.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "ebcb9f21-5aed-45a0-ab45-eecc58f8edb7",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:21:06.045818+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "ebcb9f21-5aed-45a0-ab45-eecc58f8edb7",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-corvo-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 25, light olive skin, compact triangular face, hooked nose, very short black curls, clean shaven, one notched eyebrow. Faded red sleeveless tunic and plain bronze collar. Boastful rival with tense jaw, no mask, no hood, no borrowed character costume.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-corvo-a01\\\\ebcb9f21-5aed-45a0-ab45-eecc58f8edb7\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-corvo-a01\\\\ebcb9f21-5aed-45a0-ab45-eecc58f8edb7\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-corvo-a01/source.jpg",
+      "sha256": "5768d4d84fb81cd11ecb3ecae499b81ace59f2020b56a40930fc937f8339b4a4",
+      "elapsed_seconds": 18.891
+    },
+    {
+      "id": "01-tessera-portrait-nysa-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-nysa",
+      "attempt": 1,
+      "input_hash": "611af3f3754b2d57efb14af3b1fa355624728fa4a873e298d4ef38142a0f1f76",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-nysa",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 26, medium olive skin, round heart-shaped face, full dark eyebrows, wide dark eyes, dark wavy hair held by a narrow blue cloth band with a single braid over shoulder. Mineral-blue tunic, plain bronze collar. Socially warm bargaining rival, small dimple, no cosmetics or gems.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 26, medium olive skin, round heart-shaped face, full dark eyebrows, wide dark eyes, dark wavy hair held by a narrow blue cloth band with a single braid over shoulder. Mineral-blue tunic, plain bronze collar. Socially warm bargaining rival, small dimple, no cosmetics or gems.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "94d9570f-fc9b-4233-8440-abff76934558",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:21:25.007890+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "94d9570f-fc9b-4233-8440-abff76934558",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-nysa-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 26, medium olive skin, round heart-shaped face, full dark eyebrows, wide dark eyes, dark wavy hair held by a narrow blue cloth band with a single braid over shoulder. Mineral-blue tunic, plain bronze collar. Socially warm bargaining rival, small dimple, no cosmetics or gems.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-nysa-a01\\\\94d9570f-fc9b-4233-8440-abff76934558\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-nysa-a01\\\\94d9570f-fc9b-4233-8440-abff76934558\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-nysa-a01/source.jpg",
+      "sha256": "b96f1a5ec46f0c140197a1ad53a8754d3f36d24400d74f25f95a38101159fc8d",
+      "elapsed_seconds": 22.063
+    },
+    {
+      "id": "01-tessera-portrait-senna-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-senna",
+      "attempt": 1,
+      "input_hash": "97b0bc7bef058129528311fdefb1b450b423961d628ff51fd2964d851bf07dc3",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-senna",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 29, dark brown skin, square athletic face, short natural coiled hair, level brows, broad nose, small healed chin scar. Ochre linen shoulder wrap and plain bronze collar. Proud formal fighter, upright posture, no helmet.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 29, dark brown skin, square athletic face, short natural coiled hair, level brows, broad nose, small healed chin scar. Ochre linen shoulder wrap and plain bronze collar. Proud formal fighter, upright posture, no helmet.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "1a719f8a-d7a2-41ec-9ac9-1ced5a788ffb",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:21:47.132119+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "1a719f8a-d7a2-41ec-9ac9-1ced5a788ffb",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-senna-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 29, dark brown skin, square athletic face, short natural coiled hair, level brows, broad nose, small healed chin scar. Ochre linen shoulder wrap and plain bronze collar. Proud formal fighter, upright posture, no helmet.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-senna-a01\\\\1a719f8a-d7a2-41ec-9ac9-1ced5a788ffb\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-senna-a01\\\\1a719f8a-d7a2-41ec-9ac9-1ced5a788ffb\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-senna-a01/source.jpg",
+      "sha256": "6cbb149aa5687046488be9bd21e80170a2c83c935f512562d0417c2ff2dad739",
+      "elapsed_seconds": 23.125
+    },
+    {
+      "id": "01-tessera-portrait-lio-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-lio",
+      "attempt": 1,
+      "input_hash": "37c394d65947ba654f736d470509201eb3788bbc6c18ebf26aaa4bfda33ce5ca",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-lio",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 23, tan freckled skin, long lean face, uneven curly chestnut hair, wide smile and a small gap between front teeth, clean shaven. Sage-edged chalk tunic and plain bronze collar. Reckless likeable gambler, energetic brows, no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 23, tan freckled skin, long lean face, uneven curly chestnut hair, wide smile and a small gap between front teeth, clean shaven. Sage-edged chalk tunic and plain bronze collar. Reckless likeable gambler, energetic brows, no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "30af6455-daa2-40d9-8c1e-4ae855064d03",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:22:10.342531+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "30af6455-daa2-40d9-8c1e-4ae855064d03",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-lio-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 23, tan freckled skin, long lean face, uneven curly chestnut hair, wide smile and a small gap between front teeth, clean shaven. Sage-edged chalk tunic and plain bronze collar. Reckless likeable gambler, energetic brows, no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-lio-a01\\\\30af6455-daa2-40d9-8c1e-4ae855064d03\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-lio-a01\\\\30af6455-daa2-40d9-8c1e-4ae855064d03\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-lio-a01/source.jpg",
+      "sha256": "f69028cde90531c3981da2f024c5eb154ba2bfe33299ed3d02b2dcee4e2dd7a7",
+      "elapsed_seconds": 16.813
+    },
+    {
+      "id": "01-tessera-portrait-fenna-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-fenna",
+      "attempt": 1,
+      "input_hash": "2cd864873c0a19cb79d4efdca3022773d1f3ff1e1729dadd59ba12b14887ea16",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-fenna",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 22, pale olive skin, narrow pointed face, dark tired eyes, messy short black hair tucked behind one ear. Patched flax tunic with tiny faded sage thread repair and plain bronze collar. Wary clever displaced camp member; no glamor or childish proportions.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 22, pale olive skin, narrow pointed face, dark tired eyes, messy short black hair tucked behind one ear. Patched flax tunic with tiny faded sage thread repair and plain bronze collar. Wary clever displaced camp member; no glamor or childish proportions.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "d7a5505c-65cc-4e53-9387-6adc2ca4439f",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:22:27.234363+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "d7a5505c-65cc-4e53-9387-6adc2ca4439f",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-fenna-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 22, pale olive skin, narrow pointed face, dark tired eyes, messy short black hair tucked behind one ear. Patched flax tunic with tiny faded sage thread repair and plain bronze collar. Wary clever displaced camp member; no glamor or childish proportions.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-fenna-a01\\\\d7a5505c-65cc-4e53-9387-6adc2ca4439f\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-fenna-a01\\\\d7a5505c-65cc-4e53-9387-6adc2ca4439f\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-fenna-a01/source.jpg",
+      "sha256": "a2769476a457516e7e3e722bff339b36bd463789a1d65454906747b382773b6d",
+      "elapsed_seconds": 19.969
+    },
+    {
+      "id": "01-tessera-portrait-quill-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-quill",
+      "attempt": 1,
+      "input_hash": "2650d08df5d9ae117b08b6b3b075856df5b8c8d350c6819d9aa82b998e9443db",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-quill",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Elderly man about 74, sun-browned skin, thin deeply lined face, sparse white hair standing in wisps, untrimmed white beard, one drooping eyelid. Frayed chalk robe stained with earth pigment and plain bronze collar. Wry secretive scholar, alert eyes, no wizard hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Elderly man about 74, sun-browned skin, thin deeply lined face, sparse white hair standing in wisps, untrimmed white beard, one drooping eyelid. Frayed chalk robe stained with earth pigment and plain bronze collar. Wry secretive scholar, alert eyes, no wizard hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "acc4da75-6814-4561-bf30-5ef8d92a8972",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:22:47.279244+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "acc4da75-6814-4561-bf30-5ef8d92a8972",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-quill-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Elderly man about 74, sun-browned skin, thin deeply lined face, sparse white hair standing in wisps, untrimmed white beard, one drooping eyelid. Frayed chalk robe stained with earth pigment and plain bronze collar. Wry secretive scholar, alert eyes, no wizard hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-quill-a01\\\\acc4da75-6814-4561-bf30-5ef8d92a8972\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-quill-a01\\\\acc4da75-6814-4561-bf30-5ef8d92a8972\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-quill-a01/source.jpg",
+      "sha256": "0274f691de9d56335c768bab6ad084d9a35c6a691e583742a65eaeaaf9edbc5b",
+      "elapsed_seconds": 18.906
+    },
+    {
+      "id": "01-tessera-portrait-septima-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-septima",
+      "attempt": 1,
+      "input_hash": "b80249759c142ae4327e24b2b843bc5efa5b506083ba44ea6d470347b8342912",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-septima",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 47, deep olive skin, long stern symmetrical face, black hair pulled tightly into a bun with one silver streak, dark steady eyes. Chalk-white mantle with salt-grey angular edging and a small square bronze clasp; NO prisoner collar. Ritual warden, restrained authority, no crown.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 47, deep olive skin, long stern symmetrical face, black hair pulled tightly into a bun with one silver streak, dark steady eyes. Chalk-white mantle with salt-grey angular edging and a small square bronze clasp; NO prisoner collar. Ritual warden, restrained authority, no crown.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "0fbf77ae-57fb-4f47-bc31-b5137649923b",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:23:06.268490+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "0fbf77ae-57fb-4f47-bc31-b5137649923b",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-septima-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult woman about 47, deep olive skin, long stern symmetrical face, black hair pulled tightly into a bun with one silver streak, dark steady eyes. Chalk-white mantle with salt-grey angular edging and a small square bronze clasp; NO prisoner collar. Ritual warden, restrained authority, no crown.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-septima-a01\\\\0fbf77ae-57fb-4f47-bc31-b5137649923b\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-septima-a01\\\\0fbf77ae-57fb-4f47-bc31-b5137649923b\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-septima-a01/source.jpg",
+      "sha256": "d056ea005bd50ac39d2cc209729cf360402e9f9d3461ea61fd6a08d011af0737",
+      "elapsed_seconds": 19.938
+    },
+    {
+      "id": "01-tessera-portrait-venno-a01",
+      "style_id": "01-tessera",
+      "scene": "portrait-venno",
+      "attempt": 1,
+      "input_hash": "e45f52d8b4fafc127b9cc4adcd56a9b4438ebc0266e8e39d7e6f835c3ef2a703",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-venno",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 51, fair warm skin, broad heavy face, receding closely waved dark hair, clean shaven, fleshy nose and smiling eyes. Cream Roman draped wool with narrow muted terracotta stripe and small bronze clasp; NO prisoner collar. Genial calculating games broker, no laurel crown, no jewellery display.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 51, fair warm skin, broad heavy face, receding closely waved dark hair, clean shaven, fleshy nose and smiling eyes. Cream Roman draped wool with narrow muted terracotta stripe and small bronze clasp; NO prisoner collar. Genial calculating games broker, no laurel crown, no jewellery display.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+      "session_id": "b1a8352e-5620-4c0b-a037-72150551e58e",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": null,
+      "wave": "A2",
+      "at": "2026-10-02T07:23:26.281637+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "b1a8352e-5620-4c0b-a037-72150551e58e",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-venno-a01\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 51, fair warm skin, broad heavy face, receding closely waved dark hair, clean shaven, fleshy nose and smiling eyes. Cream Roman draped wool with narrow muted terracotta stripe and small bronze clasp; NO prisoner collar. Genial calculating games broker, no laurel crown, no jewellery display.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-venno-a01\\\\b1a8352e-5620-4c0b-a037-72150551e58e\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-venno-a01\\\\b1a8352e-5620-4c0b-a037-72150551e58e\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-venno-a01/source.jpg",
+      "sha256": "cf5966cf381ab599b788c5db80aa374ba92b3bbe22f64c9637491e3cea19c0e1",
+      "elapsed_seconds": 18.906
+    },
+    {
+      "id": "01-tessera-portrait-iskar-a02",
+      "style_id": "01-tessera",
+      "scene": "portrait-iskar",
+      "attempt": 2,
+      "input_hash": "016f0e7c01c477808db2982459333ad49bbddff1b0ff7ef34cf2be2cea11803e",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-iskar",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.\n\nCORRECTION FROM DIRECT PIXEL REVIEW: Identity correction: all SIX portraits must show the SAME clearly visible thin BLACK MOUSTACHE above the upper lip, including the proud TOP MIDDLE and scheming BOTTOM MIDDLE. Never remove facial hair for an expression. Keep the black tied hair, shaved temples, tawny skin, high cheekbones, sage wrap and plain bronze neck band identical. Expression changes only eyebrows, eyes and mouth; moustache stays dark and continuous in every panel.",
+      "session_id": "86812e0d-661b-4953-be81-f46f9c5041e9",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": "Identity correction: all SIX portraits must show the SAME clearly visible thin BLACK MOUSTACHE above the upper lip, including the proud TOP MIDDLE and scheming BOTTOM MIDDLE. Never remove facial hair for an expression. Keep the black tied hair, shaved temples, tawny skin, high cheekbones, sage wrap and plain bronze neck band identical. Expression changes only eyebrows, eyes and mouth; moustache stays dark and continuous in every panel.",
+      "wave": "A2",
+      "at": "2026-10-02T07:24:25.653621+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "86812e0d-661b-4953-be81-f46f9c5041e9",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-iskar-a02\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.\n\nCORRECTION FROM DIRECT PIXEL REVIEW: Identity correction: all SIX portraits must show the SAME clearly visible thin BLACK MOUSTACHE above the upper lip, including the proud TOP MIDDLE and scheming BOTTOM MIDDLE. Never remove facial hair for an expression. Keep the black tied hair, shaved temples, tawny skin, high cheekbones, sage wrap and plain bronze neck band identical. Expression changes only eyebrows, eyes and mouth; moustache stays dark and continuous in every panel.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-iskar-a02\\\\86812e0d-661b-4953-be81-f46f9c5041e9\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-iskar-a02\\\\86812e0d-661b-4953-be81-f46f9c5041e9\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-iskar-a02/source.jpg",
+      "sha256": "01a5fa4139a9650172c45d53b778aa324e2bb02f8f9467c4f3dad2ca6144f49b",
+      "elapsed_seconds": 17.843
+    },
+    {
+      "id": "01-tessera-portrait-corvo-a02",
+      "style_id": "01-tessera",
+      "scene": "portrait-corvo",
+      "attempt": 2,
+      "input_hash": "ade9e5969448e77d8db58ac9907e3d3e66c37f6501910df98fcd89b60200d41a",
+      "input": {
+        "version": "a2-v1",
+        "wave": "A2",
+        "style": {
+          "id": "01-tessera",
+          "name": "Tessera & Lime",
+          "line": "broken umber contours and hand-painted tessera joins",
+          "palette": "chalk, terracotta, ochre, mineral blue",
+          "shading": "flat fresco planes with sparse tile shadows",
+          "density": "medium, ornament confined to edges",
+          "mood": "sun-bleached civic grandeur and captivity",
+          "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+          "ui": {
+            "paper": "#f3e6c5",
+            "ink": "#38261f",
+            "accent": "#226b8b"
+          }
+        },
+        "scene": "portrait-corvo",
+        "aspect_ratio": "16:9",
+        "brief_hash": "5a48c5823183196d69c5cd90ddc97ef386d158819cab157a8c5c374d3d57b0f8",
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 25, light olive skin, compact triangular face, hooked nose, very short black curls, clean shaven, one notched eyebrow. Faded red sleeveless tunic and plain bronze collar. Boastful rival with tense jaw, no mask, no hood, no borrowed character costume.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face."
+      },
+      "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 25, light olive skin, compact triangular face, hooked nose, very short black curls, clean shaven, one notched eyebrow. Faded red sleeveless tunic and plain bronze collar. Boastful rival with tense jaw, no mask, no hood, no borrowed character costume.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.\n\nCORRECTION FROM DIRECT PIXEL REVIEW: Costume correction: all SIX portraits must wear an unmistakable wide plain BRONZE PRISONER COLLAR snugly around the bare neck, ABOVE the red tunic neckline. It is a separate rigid metal band with a simple seam, not garment trim, jewellery, a cape clasp or a necklace. Preserve identical short black curls, olive skin, angular face and red sleeveless tunic in all six. No green marks on face. Six clear expressions in the same 3-column 2-row order.",
+      "session_id": "55483e89-83cb-4055-b1e5-e63f0f79c1fc",
+      "origin": "grok-cli",
+      "model": "grok-4.7",
+      "seed": null,
+      "correction": "Costume correction: all SIX portraits must wear an unmistakable wide plain BRONZE PRISONER COLLAR snugly around the bare neck, ABOVE the red tunic neckline. It is a separate rigid metal band with a simple seam, not garment trim, jewellery, a cape clasp or a necklace. Preserve identical short black curls, olive skin, angular face and red sleeveless tunic in all six. No green marks on face. Six clear expressions in the same 3-column 2-row order.",
+      "wave": "A2",
+      "at": "2026-10-02T07:24:48.721285+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "command": [
+        "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+        "-m",
+        "grok-4.7",
+        "--effort",
+        "low",
+        "--always-approve",
+        "--permission-mode",
+        "bypassPermissions",
+        "--no-subagents",
+        "--disable-web-search",
+        "--tools",
+        "image_gen",
+        "--max-turns",
+        "2",
+        "--session-id",
+        "55483e89-83cb-4055-b1e5-e63f0f79c1fc",
+        "--prompt-file",
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-portrait-corvo-a02\\request.txt",
+        "--output-format",
+        "streaming-json"
+      ],
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: stylized-concept. Asset: one original character portrait expression sheet for a Roman-era elemental-mage camp. EXACTLY SIX equal panels arranged in THREE columns and TWO rows, each showing the SAME person from upper chest to crown. Uniform head size and identical hair, costume, collar, skin and age in all six. Plain pale chalk-lime background with no scenery. Flat hand-painted fresco colour planes, broken umber contour, rubbed matte pigment, occasional tiny tessera marks at shoulder edges. Faces must remain expressive living drawings, not stone mosaics or sculpture. No photorealism, 3D, text, labels, numbers, watermarks, modern costume, magic effects, weapons or hands in frame. Leave clear gaps around each head for rectangular export. Panels fill an exact regular 3 by 2 grid without decorative frame.\n\nSUBJECT: Adult man about 25, light olive skin, compact triangular face, hooked nose, very short black curls, clean shaven, one notched eyebrow. Faded red sleeveless tunic and plain bronze collar. Boastful rival with tense jaw, no mask, no hood, no borrowed character costume.\nExpressions in reading order: TOP LEFT calm attentive neutral; TOP MIDDLE proud with lifted chin and firm small smile; TOP RIGHT afraid with lifted inner brows, wider eyes and tense mouth; BOTTOM LEFT angry with drawn-down brows and tight jaw; BOTTOM MIDDLE scheming with one raised eyebrow and subtle asymmetric smile; BOTTOM RIGHT grieving with lowered eyes, lifted inner brows and downturned mouth. Distinguish the six expressions clearly while retaining exactly the same face.\n\nCORRECTION FROM DIRECT PIXEL REVIEW: Costume correction: all SIX portraits must wear an unmistakable wide plain BRONZE PRISONER COLLAR snugly around the bare neck, ABOVE the red tunic neckline. It is a separate rigid metal band with a simple seam, not garment trim, jewellery, a cape clasp or a necklace. Preserve identical short black curls, olive skin, angular face and red sleeveless tunic in all six. No green marks on face. Six clear expressions in the same 3-column 2-row order.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "tool_results": [
+        "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-corvo-a02\\\\55483e89-83cb-4055-b1e5-e63f0f79c1fc\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-portrait-corvo-a02\\\\55483e89-83cb-4055-b1e5-e63f0f79c1fc\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+      ],
+      "prompt_verbatim_verified": true,
+      "returncode": 0,
+      "source": "art/raw/01-tessera-portrait-corvo-a02/source.jpg",
+      "sha256": "0a71e6aaec8ad660faf20c58882d4e035e812b3d3baf0650dccb74bd650b2469",
+      "elapsed_seconds": 18.938
     }
   ],
   "events": [
@@ -5328,6 +6768,276 @@
       "event": "generated",
       "id": "01-tessera-staggered-plinths-sparse-near-a02",
       "at": "2026-10-02T07:12:06.983860+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-cassia-a01",
+      "at": "2026-10-02T07:17:33.150074+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-cassia-a01",
+      "at": "2026-10-02T07:17:33.166823+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-cassia-a01",
+      "at": "2026-10-02T07:17:54.258429+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-brennic-a01",
+      "at": "2026-10-02T07:18:40.938346+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-brennic-a01",
+      "at": "2026-10-02T07:18:40.949959+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-brennic-a01",
+      "at": "2026-10-02T07:19:00.854954+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-garran-a01",
+      "at": "2026-10-02T07:19:00.903467+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-garran-a01",
+      "at": "2026-10-02T07:19:00.915550+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-garran-a01",
+      "at": "2026-10-02T07:19:21.870661+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-iskar-a01",
+      "at": "2026-10-02T07:19:21.920800+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-iskar-a01",
+      "at": "2026-10-02T07:19:21.933850+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-iskar-a01",
+      "at": "2026-10-02T07:19:41.819214+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-sadruba-a01",
+      "at": "2026-10-02T07:19:41.861447+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-sadruba-a01",
+      "at": "2026-10-02T07:19:41.873479+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-sadruba-a01",
+      "at": "2026-10-02T07:20:04.924214+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-ophel-a01",
+      "at": "2026-10-02T07:20:04.964409+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-ophel-a01",
+      "at": "2026-10-02T07:20:04.977450+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-ophel-a01",
+      "at": "2026-10-02T07:20:25.948147+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-ruadh-a01",
+      "at": "2026-10-02T07:20:25.987276+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-ruadh-a01",
+      "at": "2026-10-02T07:20:25.999878+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-ruadh-a01",
+      "at": "2026-10-02T07:20:46.986916+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-kesh-a01",
+      "at": "2026-10-02T07:20:47.030680+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-kesh-a01",
+      "at": "2026-10-02T07:20:47.042348+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-kesh-a01",
+      "at": "2026-10-02T07:21:05.994179+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-corvo-a01",
+      "at": "2026-10-02T07:21:06.045818+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-corvo-a01",
+      "at": "2026-10-02T07:21:06.060431+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-corvo-a01",
+      "at": "2026-10-02T07:21:24.968935+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-nysa-a01",
+      "at": "2026-10-02T07:21:25.007890+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-nysa-a01",
+      "at": "2026-10-02T07:21:25.023285+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-nysa-a01",
+      "at": "2026-10-02T07:21:47.086915+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-senna-a01",
+      "at": "2026-10-02T07:21:47.132119+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-senna-a01",
+      "at": "2026-10-02T07:21:47.148155+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-senna-a01",
+      "at": "2026-10-02T07:22:10.288677+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-lio-a01",
+      "at": "2026-10-02T07:22:10.342531+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-lio-a01",
+      "at": "2026-10-02T07:22:10.354798+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-lio-a01",
+      "at": "2026-10-02T07:22:27.193032+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-fenna-a01",
+      "at": "2026-10-02T07:22:27.234363+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-fenna-a01",
+      "at": "2026-10-02T07:22:27.247408+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-fenna-a01",
+      "at": "2026-10-02T07:22:47.229334+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-quill-a01",
+      "at": "2026-10-02T07:22:47.279244+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-quill-a01",
+      "at": "2026-10-02T07:22:47.294629+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-quill-a01",
+      "at": "2026-10-02T07:23:06.223143+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-septima-a01",
+      "at": "2026-10-02T07:23:06.268490+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-septima-a01",
+      "at": "2026-10-02T07:23:06.282367+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-septima-a01",
+      "at": "2026-10-02T07:23:26.236125+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-venno-a01",
+      "at": "2026-10-02T07:23:26.281637+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-venno-a01",
+      "at": "2026-10-02T07:23:26.297841+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-venno-a01",
+      "at": "2026-10-02T07:23:45.220740+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-iskar-a02",
+      "at": "2026-10-02T07:24:25.653621+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-iskar-a02",
+      "at": "2026-10-02T07:24:25.669624+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-iskar-a02",
+      "at": "2026-10-02T07:24:43.528533+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "01-tessera-portrait-corvo-a02",
+      "at": "2026-10-02T07:24:48.721285+00:00"
+    },
+    {
+      "event": "running",
+      "id": "01-tessera-portrait-corvo-a02",
+      "at": "2026-10-02T07:24:48.737317+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "01-tessera-portrait-corvo-a02",
+      "at": "2026-10-02T07:25:07.683529+00:00"
     }
   ]
 }

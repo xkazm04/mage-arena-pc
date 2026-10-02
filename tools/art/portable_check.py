@@ -42,6 +42,15 @@ def main():
                          and all(r['gate']['verdict'] == 'technical-pass' for r in copied['rows']))
             later.append({'wave': wave, 'exit_code': result.returncode, 'sources': len(copied['rows']),
                           'hashes_identical': identical, 'stderr': result.stderr})
+        portrait_manifest = ART / 'delivery/a2/manifest.json'
+        if portrait_manifest.exists():
+            original = read(portrait_manifest)
+            result = subprocess.run([sys.executable, 'tools/art/portraits.py', 'build'], cwd=target,
+                                    capture_output=True, text=True, encoding='utf-8', errors='replace')
+            copied = read(target / 'art/delivery/a2/manifest.json')
+            later.append({'wave':'A2 portrait crops', 'exit_code':result.returncode,
+                          'sources':len(copied['portraits']), 'hashes_identical':original == copied,
+                          'stderr':result.stderr})
     passed = (len(results) == 2 and all(r['exit_code'] == 0 for r in results) and originals == rebuilt
               and all(r['exit_code'] == 0 and r['hashes_identical'] for r in later))
     report = {'at': now(), 'label': 'measured disposable copy; ignored raw evidence absent',

@@ -1,6 +1,6 @@
 # Mage Arena art pipeline
 
-Standalone Python tools for A1. Run from the repository root. They do not depend on
+Standalone Python tools for the art waves. Run from the repository root. They do not depend on
 or modify code packages. The Grok subscription is shared: never invoke image tools
 outside this guard for the wave.
 
@@ -72,5 +72,19 @@ Its input signature binds the exact current exports; rebuild afterward to displa
 that advisory ordering. No extra image subscription call occurs. `portable_check.py`
 rebuilds without ignored raw files in a disposable copy and compares screen hashes.
 
-After the A1 handoff, stop. `art/OWNER-CHOICE.md` is pending until the owner supplies
-a choice; neither this pipeline nor the local grader writes an approval.
+The owner chose Tessera & Lime in `art/OWNER-CHOICE.md`. A1b, A2, A4 and A5
+are authorized. A3 is blocked until owner-supplied `art/CAMERA-OK.md` exists;
+neither this pipeline nor the local grader writes that approval.
+
+
+Later waves use `waves.py generate|grade|review|build|check <wave>`. Briefs are
+immutable versioned JSON; `art/waves/brief-index.json` chooses any non-default
+version. Historical sources validate against their own recorded brief. Generation
+resumes an existing exact input with zero spend; the A1b pilot that exhausted its
+attempt cap stays archived. Changing an input never resets a scene's attempt cap.
+
+For each wave, generate only its proof item, inspect it, run the local grade, and
+record `review --proof --job <id> --note <actual observations>` before siblings.
+A local rejection, missing grade, changed source or changed brief invalidates the
+proof. Technical continuation is never owner approval. A2 portrait crops and the
+expression gallery are reproduced with `python tools/art/portraits.py check`.

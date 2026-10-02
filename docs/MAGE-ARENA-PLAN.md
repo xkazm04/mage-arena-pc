@@ -94,7 +94,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Core | W15 | Release candidate, balance report, **Gate G2** | all | not planned | | |
 | Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | delivered; owner chose Tessera & Lime; camera superseded | A1 (this commit) | 2026-10-02 |
 | Art | A1b | Scale contract, distant camera proofs, camp re-check | A1 owner choice | delivered for owner review; 27 attempts, 18 rejects retained | A1b (this commit) | 2026-10-02 |
-| Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | next | | |
+| Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered; 16 characters / 96 expression exports | A2 (this commit) | 2026-10-02 |
 | Art | A3 | Top-down figures, poses, spell effects | art/CAMERA-OK.md | blocked; owner camera file absent | | 2026-10-02 |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | queued after A2 | | |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | queued after A2 | | |
@@ -162,7 +162,7 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
 | Art | A1b | Tessera & Lime baseline: scale contract and **arena camera proofs** (Diablo/PoE framing, three camera distances, several arena layouts), camp map re-check | A1 owner choice (done) | delivered for owner review; 27 attempts |
-| Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | not started |
+| Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered for owner review |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | not started |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
 | Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | **owner confirms the arena camera** (`art/CAMERA-OK.md`) | blocked |
@@ -227,3 +227,25 @@ pipeline gate and portable rebuild results are in `art/reports/checks.json` and
 `portable-check.json`. Initial A1 validation during live generation correctly
 reported STALE_BUDGET; rerun after the ledger stopped changing. Design note:
 `docs/waves/A1b-camera-proofs.md`. One A1b commit; never pushed. Next: A2.
+
+
+### A2 - 2026-10-02 - ART / art
+
+Delivered 16 original cast identities with all six data-defined moods: 18 generated
+sheets (16 initial, two focused corrections), 96 deterministic opaque portrait
+exports, source/crop manifest, expression gallery and cast contact sheet. The
+moustache loss on Iskar and missing collar on Corvo were rejected and corrected;
+all failed bytes and direct/local review remain visible. Existing project names
+and roles are retained; visual identities are authored, not new game rules.
+
+Commands: `python tools/art/waves.py check A2` PASS; `python tools/art/portraits.py
+check` PASS (16 IDs, 96 crops, exact source pixels, mood filter, Chrome desktop and
+mobile); `python tools/art/check.py` and `python tools/art/portable_check.py` are
+recorded in their reports. Owner identity approval, emotional recognition, engine
+integration and production acceptance are not measured. Thin collars and subtle
+fear/grief separation on some sheets remain documented owner-review limitations.
+
+Spend: A2 18; cumulative 75 charged / 75 observed image calls, 105 remaining under
+180. No quota/rate-limit errors, no videos; shared-account remainder not measured.
+A3 remains blocked: owner CAMERA-OK.md absent; no figures, poses or effects started.
+Design note: `docs/waves/A2-portraits.md`; one A2 commit, no push. Next: A4.

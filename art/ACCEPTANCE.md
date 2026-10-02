@@ -89,3 +89,14 @@ measured. `CAMERA-OK.md` remains absent and A3 is blocked.
 checks at 1080p, 1440p and mobile. All 27 sources have local diagnostics and direct
 observations; local models can only reject or route to the owner. Spend snapshot:
 57 cumulative, 123 local-cap remaining; shared-account remainder not measured.
+
+
+# A2 delivery
+
+[Expression gallery](review/a2/portraits.html), [source board](review/a2/index.html),
+[cast contact sheet](review/a2/cast-contact-sheet.jpg),
+[crop manifest](delivery/a2/manifest.json). Six moods for each of 16 cast members,
+96 opaque PNG panels. 18 source calls include two rejected first attempts and
+their corrected replacements. Exact crop and browser gates pass; identities,
+mood recognition and costume details still route to owner judgment. No A3 work.
+Spend snapshot: 75 cumulative; 105 local-cap remaining, shared allowance unknown.

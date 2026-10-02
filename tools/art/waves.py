@@ -147,6 +147,9 @@ def build(wave):
     extra = ART / 'waves' / wave / 'board-note.txt'
     if extra.exists():
         body += '<p class="status">' + html.escape(extra.read_text(encoding='utf-8')) + '</p>'
+    links = ART / 'waves' / wave / 'links.json'
+    if links.exists():
+        body += '<nav class="nav">' + ''.join('<a href="' + html.escape(link['href'], quote=True) + '">' + html.escape(link['label']) + '</a>' for link in read(links)) + '</nav>'
     if wave == 'A1b':
         body += '<p><a href="../../SCALE-CONTRACT.md">Scale contract</a> / <a href="../../waves/A1b/camp-recheck.json">Camp re-check</a> / <a href="../screens/01-tessera-camp.png">Camp screen</a></p>'
         body += '<label>Camera target <select id="distance"><option value="all">All distances</option><option>near</option><option>standard</option><option>far</option></select></label> <label><input id="hide-rejects" type="checkbox"> Hide rejected attempts</label><p>Targets are prompt instructions. Observed bounds are approximate manual measurements, not calibrated camera zooms. Click any image for untouched full size.</p>'
