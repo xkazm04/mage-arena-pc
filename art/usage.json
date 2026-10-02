@@ -1,9 +1,6 @@
 {
   "schema": 1,
-  "stop": {
-    "at": "2026-10-02T11:21:51.279862+00:00",
-    "reason": "01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry"
-  },
+  "stop": null,
   "jobs": [
     {
       "id": "01-tessera-arena-a01",
@@ -11891,5 +11888,13 @@
       "id": "01-tessera-figure-cinder_hound-injury-a01",
       "at": "2026-10-02T11:21:51.309730+00:00"
     }
-  ]
+  ],
+  "stop_cleared": {
+    "at": "2026-10-02 owner session",
+    "was": {
+      "at": "2026-10-02T11:21:51.279862+00:00",
+      "reason": "01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry"
+    },
+    "why": "the latch was a content-moderation HTTP 400 on one prompt (cinder hound injury), not a quota or rate-limit error; host cleared it for the A6 identity reset; quota and rate-limit errors still latch"
+  }
 }
