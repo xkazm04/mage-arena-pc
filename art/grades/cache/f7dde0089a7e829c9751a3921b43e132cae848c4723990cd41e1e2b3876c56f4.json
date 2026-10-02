@@ -1,0 +1,98 @@
+{
+  "artifact": "a5-hud-borrowed",
+  "at": "2026-10-02T08:05:48.931903+00:00",
+  "input_hash": "f7dde0089a7e829c9751a3921b43e132cae848c4723990cd41e1e2b3876c56f4",
+  "source": "art/delivery/a5/screens/hud-borrowed-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "c200236c4010e0ae45df9fdbd98a4753f0b9a6c850dff514649f8959095468cc",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Distant arena HUD composition. Selected first slot uses dashed outline and explicit Borrowed label. Readable state without relying only on colour; larger 16px line and 14px spell names. No combat outcome or owner acceptance asserted.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The HUD is fully visible and legible. The selected first slot ('Tide Orb') correctly features a dashed blue outline and an explicit 'Borrowed' text label, ensuring the state is readable without relying solely on color. Text sizes appear appropriate (approx. 14-16px for spell names), and there are no overlapping elements or obscured controls. The color palette matches the requested chalk-lime, umber, terracotta, and mineral blue scheme. No watermarks or unintended photographic inserts are present.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The HUD is fully visible and legible. The selected first slot ('Tide Orb') correctly features a dashed blue outline and an explicit 'Borrowed' text label, ensuring the state is readable without relying solely on color. Text sizes appear appropriate (approx. 14-16px for spell names), and there are no overlapping elements or obscured controls. The color palette matches the requested chalk-lime, umber, terracotta, and mineral blue scheme. No watermarks or unintended photographic inserts are present."
+  },
+  "eval_count": 174,
+  "elapsed_seconds": 13.375
+}

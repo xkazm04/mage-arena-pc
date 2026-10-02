@@ -1,0 +1,655 @@
+{
+  "version": "icon-catalogue-v1",
+  "origin": "original authored SVG path data",
+  "source_data": {
+    "water": {
+      "path": "docs/design/baseline-fourteen-nights/design/data/spells-water.csv",
+      "sha256": "ec50dfd7692df883f0a0d9adf975023ac47f23f4904bcea95706dcee0286d9ab"
+    },
+    "schools": {
+      "path": "docs/design/baseline-fourteen-nights/design/data/schools.json",
+      "sha256": "72b8b7179c4930181b1e5d561dfc4ac413929b2ec0b2afd57c2a3064cfd60df8"
+    },
+    "combat": {
+      "path": "docs/design/baseline-fourteen-nights/design/data/combat.json",
+      "sha256": "bebe556c6c9723ce7425fe4159bf72f58c1e6e198c104041cce5b596e4001bb0"
+    },
+    "fire_reference": {
+      "path": "docs/design/reference-the-ledger/design/data/spells-fire.csv",
+      "sha256": "e973bb540155a31b4eea1dc7edae96346c5e311c01b65725ecb4a7291fea2468"
+    }
+  },
+  "icons": [
+    {
+      "id": "water-tide-orb",
+      "label": "Tide Orb",
+      "category": "Water lines",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M32 9C28 19 14 27 14 38a18 17 0 0 0 36 0C50 27 37 18 32 9Z\"/><path d=\"M19 39q7-7 14 0t12 0\" fill=\"none\" stroke=\"#f3e7c7\"/><path d=\"M33 20l6 9-6 3-4-7z\" fill=\"#f3e7c7\" stroke=\"none\"/>"
+    },
+    {
+      "id": "school-water",
+      "label": "Water",
+      "category": "Schools",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M9 25q8-13 18 0t28 0v18q-14 15-28 0T9 43Z\"/><path d=\"M10 36q9-12 21 0t23 0\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "school-fire",
+      "label": "Fire",
+      "category": "Schools",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M34 7c4 15 21 19 18 34C49 60 14 60 12 39c-1-9 7-15 13-21l-1 14C33 28 36 20 34 7Z\"/><path d=\"M33 34l8 12-9 7-8-7z\" fill=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "school-earth",
+      "label": "Earth",
+      "category": "Schools",
+      "school": "earth",
+      "fill": "#7a6a3a",
+      "drawing": "<path d=\"M10 27L25 11l21 4 9 21-8 17H18L8 41Z\"/><path d=\"M25 12l-5 23 17 7 17-7M20 35l-2 17M37 42l9 10\" fill=\"none\"/>"
+    },
+    {
+      "id": "school-air",
+      "label": "Air",
+      "category": "Schools",
+      "school": "air",
+      "fill": "#5f9e98",
+      "drawing": "<path d=\"M9 23h31q15 0 12-10-3-8-12-3M9 33h40q11 0 8 10-3 8-10 2M9 43h18q14 0 11 10-2 6-9 2\" fill=\"none\" stroke=\"#5f9e98\" stroke-width=\"6\"/>"
+    },
+    {
+      "id": "resource-flow",
+      "label": "Flow",
+      "category": "School resources",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M8 24l10-9 10 9-10 10ZM26 36l10-9 10 9-10 10ZM43 19l8-8 8 8-8 9Z\"/><path d=\"M9 47q11 11 24 6t22-13\" fill=\"none\"/>"
+    },
+    {
+      "id": "resource-heat",
+      "label": "Heat",
+      "category": "School resources",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M25 9h14v29a10 10 0 1 1-14 0Z\"/><path d=\"M32 17v28M20 17h-5M44 27h5\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "resource-footing",
+      "label": "Footing",
+      "category": "School resources",
+      "school": "earth",
+      "fill": "#7a6a3a",
+      "drawing": "<path d=\"M17 10h13l-3 24 13 8v9H10v-9l6-9ZM37 12h12l5 20H37Z\"/><path d=\"M7 57h49M39 39h16\" fill=\"none\"/>"
+    },
+    {
+      "id": "resource-momentum",
+      "label": "Momentum",
+      "category": "School resources",
+      "school": "air",
+      "fill": "#5f9e98",
+      "drawing": "<path d=\"M13 15l16 17-16 17 12 4 23-21L25 11Z\"/><path d=\"M45 15l12 17-12 17M6 24h5M6 40h5\" fill=\"none\"/>"
+    },
+    {
+      "id": "water-bolt",
+      "label": "Rain Needle",
+      "category": "Water lines",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M13 47L40 12l11 8-30 30Z\"/><path d=\"M26 46l6 6M9 36l7 5M34 16l9 10\" fill=\"none\"/>"
+    },
+    {
+      "id": "water-lash",
+      "label": "Lash",
+      "category": "Water lines",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M10 44c0-30 43-39 43-15 0 15-32 17-25-2-14 5-14 18-10 25Z\"/>"
+    },
+    {
+      "id": "water-mire",
+      "label": "Mire",
+      "category": "Water lines",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M10 36l14-8 25 4 8 10-12 11H21L7 45Z\"/><path d=\"M12 20h27M24 12h25M22 42h20\" fill=\"none\"/>"
+    },
+    {
+      "id": "water-mend",
+      "label": "Mend",
+      "category": "Water lines",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M32 9c-4 8-10 11-10 18a10 10 0 0 0 20 0c0-7-6-10-10-18Z\"/><path d=\"M10 37l7-3 11 8h13l10-8 5 5-15 15H25L10 44Z\"/>"
+    },
+    {
+      "id": "water-mirror",
+      "label": "Mirror",
+      "category": "Water lines",
+      "school": "water",
+      "fill": "#236d84",
+      "drawing": "<path d=\"M32 8l21 24-21 24L11 32Z\"/><path d=\"M32 16v32M22 28l5-6M37 42l5-6\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "fire-bolt",
+      "label": "Ember Dart",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M9 50l8-23 10 7L45 9l9 10-28 27-7-5Z\"/><path d=\"M36 30l8-8\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "fire-flick",
+      "label": "Flick Flame",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M12 49l2-30 10 8 4-16 8 14 15-10-1 18 7 6-34 14Z\"/>"
+    },
+    {
+      "id": "fire-cinderstep",
+      "label": "Cinder Step",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M12 12h15l-3 22 17 9v10H10v-9l5-11Z\"/><path d=\"M37 16l7-8 3 15 9 7-12 7-7-8Z\"/>"
+    },
+    {
+      "id": "fire-kindle",
+      "label": "Kindle",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M25 11l-8 13 4 8 12-5 8-12ZM12 43l17-10 12 3 13 14-8 6-18-10-12 4Z\"/><path d=\"M42 28l8-5M32 8l3-3\" fill=\"none\"/>"
+    },
+    {
+      "id": "fire-lance",
+      "label": "Brand Lance",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M7 48l35-31 1-9 15-3-4 16-9 1-32 33Z\"/><path d=\"M32 25l7 8M43 17l4 4\" fill=\"none\"/>"
+    },
+    {
+      "id": "fire-ring",
+      "label": "Ring of Cinders",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M10 31l7-17 10 3 8-10 8 13 11 1 3 16-8 15-17 6-17-7Z\"/><path d=\"M24 28l9-5 9 10-9 10-11-8Z\" fill=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "fire-pyre",
+      "label": "Pyre Circle",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M9 42l11-9 24-2 13 11-12 12H21Z\"/><path d=\"M26 35l-6-13 13-15 2 14 9 5-5 11Z\"/><path d=\"M18 44l13 5 14-5\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "fire-furnace",
+      "label": "Furnace Heart",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M10 15h44v41H10Z\"/><path d=\"M18 7h28v8M23 56V42q0-12 9-12t9 12v14\" fill=\"#f3e7c7\"/><path d=\"M29 50l-3-8 7-6 5 12Z\"/>"
+    },
+    {
+      "id": "fire-sunfall",
+      "label": "Sunfall",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M10 9l28 9 15-4-10 23-4-13-26-8Z\"/><path d=\"M46 38l10 9-7 10-14-3-3-11Z\"/><path d=\"M14 31l10 6M17 47l10 2M44 7l-4 5\" fill=\"none\"/>"
+    },
+    {
+      "id": "fire-wrath",
+      "label": "Brand Wrath",
+      "category": "Fire reference spells",
+      "school": "fire",
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M7 23l13 5 35-18-8 15 10 7-37 4-9 10-4-7Z\"/><path d=\"M29 45l18 8M32 21l17-11\" fill=\"none\"/>"
+    },
+    {
+      "id": "health",
+      "label": "Health",
+      "category": "Interface",
+      "school": null,
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M32 54L11 34C-1 16 18 6 32 20 46 6 65 16 53 34Z\"/><path d=\"M15 31h10l5-7 6 15 5-8h9\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "mana",
+      "label": "Mana",
+      "category": "Interface",
+      "school": null,
+      "fill": "#236d84",
+      "drawing": "<path d=\"M23 9h18v10l11 16v19H12V35l11-16Z\"/><path d=\"M15 37q8-7 17 0t17 0M23 16h18\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "stamina",
+      "label": "Stamina",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M35 7L14 36h15l-5 22 28-34H36l8-17Z\"/>"
+    },
+    {
+      "id": "absorb",
+      "label": "Absorb",
+      "category": "Interface",
+      "school": null,
+      "fill": "#236d84",
+      "drawing": "<path d=\"M9.447 23.792A24 24 0 0 1 54.553 23.792\" fill=\"none\" stroke=\"#236d84\" stroke-width=\"7\"/><path d=\"M32 25l-8 15h16Z\"/><path d=\"M32 43v11\" fill=\"none\"/>"
+    },
+    {
+      "id": "perfect-absorb",
+      "label": "Perfect Absorb",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M9.447 23.792A24 24 0 0 1 54.553 23.792\" fill=\"none\" stroke=\"#236d84\" stroke-width=\"7\"/><path d=\"M32 25l5 12 12 5-12 5-5 12-5-12-12-5 12-5Z\"/>"
+    },
+    {
+      "id": "tier-clock",
+      "label": "Tier Clock",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M32 8a24 24 0 1 1-24 24A24 24 0 0 1 32 8Z\"/><path d=\"M32 16v17l11 7M12 32h5M47 32h5M32 47v5\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "roll",
+      "label": "Roll",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M47 25c-3-22-35-21-38 3-3 28 40 33 45 6l-12 5 12-5 3 14\" fill=\"none\" stroke=\"#b48b47\" stroke-width=\"5\"/><path d=\"M27 22l14 11-12 11-9-13Z\"/>"
+    },
+    {
+      "id": "sprint",
+      "label": "Sprint",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<circle cx=\"39\" cy=\"13\" r=\"6\"/><path d=\"M24 24l10-3 9 11 9 2-2 6-13-4-5-7-5 11 12 10-4 6-17-13 4-14-9 5-3-5Z\"/><path d=\"M24 45L10 54\" fill=\"none\" stroke-width=\"6\"/>"
+    },
+    {
+      "id": "staff-strike",
+      "label": "Staff Strike",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M11 51L48 10l6 5-38 42Z\"/><path d=\"M10 16l8 6M28 7l1 9M43 38l11 3\" fill=\"none\"/>"
+    },
+    {
+      "id": "lock",
+      "label": "Lock",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M19 28V20a13 13 0 0 1 26 0v8\" fill=\"none\" stroke-width=\"6\"/><path d=\"M12 28h40v28H12Z\"/><path d=\"M32 37v10\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "borrowed",
+      "label": "Borrowed",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M12 14h22v13H23v23H12Z\"/><path d=\"M52 50H30V37h11V14h11Z\"/><path d=\"M25 29l7 7 7-7\" fill=\"none\"/>"
+    },
+    {
+      "id": "knowing",
+      "label": "Knowing",
+      "category": "Interface",
+      "school": null,
+      "fill": "#236d84",
+      "drawing": "<path d=\"M7 32q25-34 50 0-25 34-50 0Z\"/><path d=\"M32 22l9 10-9 10-9-10Z\" fill=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "trust",
+      "label": "Trust",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M8 23l12-9 12 12 12-12 12 9-8 19-11 11-5-5-5 5-11-11Z\"/><path d=\"M18 26l14 14 14-14M23 41l-5-5M41 41l5-5\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "ration",
+      "label": "Ration",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M8 31q2-21 25-21t24 21v20H8Z\"/><path d=\"M21 21l-4 10M34 17l-5 13M47 22l-4 10M9 41h47\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "inventory",
+      "label": "Inventory",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M20 9h24l-5 13 15 19-3 15H13l-3-15 15-19Z\"/><path d=\"M23 23h19M27 36h11v11H27Z\" fill=\"none\" stroke=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "renown",
+      "label": "Renown",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M32 9l6 13 14 2-11 10 3 15-12-7-12 7 3-15-11-10 14-2Z\"/><path d=\"M9 37l4 12 9 7M55 37l-4 12-9 7\" fill=\"none\"/>"
+    },
+    {
+      "id": "day",
+      "label": "Day",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M32 18a14 14 0 1 1 0 28 14 14 0 0 1 0-28Z\"/><path d=\"M32 6v6M32 52v6M6 32h6M52 32h6M13 13l5 5M46 46l5 5M13 51l5-5M46 18l5-5\" fill=\"none\"/>"
+    },
+    {
+      "id": "dusk",
+      "label": "Dusk",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M14 37a18 18 0 0 1 36 0Z\"/><path d=\"M8 38h48M16 48h32M25 56h15M32 9v6M10 19l5 5M49 24l5-5\" fill=\"none\"/>"
+    },
+    {
+      "id": "night",
+      "label": "Night",
+      "category": "Interface",
+      "school": null,
+      "fill": "#236d84",
+      "drawing": "<path d=\"M39 9C15 5 3 36 22 51c15 12 35 0 34-13C38 48 22 26 39 9Z\"/><path d=\"M48 10l2 7 7 2-7 2-2 7-2-7-7-2 7-2Z\" fill=\"#f3e7c7\"/>"
+    },
+    {
+      "id": "warning",
+      "label": "Warning",
+      "category": "Interface",
+      "school": null,
+      "fill": "#a64e39",
+      "drawing": "<path d=\"M32 7L59 54H5Z\"/><path d=\"M32 23v14M32 44v2\" fill=\"none\" stroke=\"#f3e7c7\" stroke-width=\"5\"/>"
+    },
+    {
+      "id": "close",
+      "label": "Close",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M15 10l17 17 17-17 5 5-17 17 17 17-5 5-17-17-17 17-5-5 17-17-17-17Z\"/>"
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "category": "Interface",
+      "school": null,
+      "fill": "#b48b47",
+      "drawing": "<path d=\"M8 16h48M8 32h48M8 48h48\" fill=\"none\"/><path d=\"M18 10h9v12h-9ZM38 26h9v12h-9ZM24 42h9v12h-9Z\"/>"
+    }
+  ],
+  "water_bindings": [
+    {
+      "line": "bolt",
+      "tier": 0,
+      "branch": null,
+      "name": "Rain Needle",
+      "icon": "water-bolt"
+    },
+    {
+      "line": "tide_orb",
+      "tier": 1,
+      "branch": null,
+      "name": "Bubble Shot",
+      "icon": "water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": 2,
+      "branch": null,
+      "name": "Crash Orb",
+      "icon": "water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": 3,
+      "branch": null,
+      "name": "Twin Tides",
+      "icon": "water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": 4,
+      "branch": "A",
+      "name": "Leviathan Orb",
+      "icon": "water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": 4,
+      "branch": "B",
+      "name": "Rain of Orbs",
+      "icon": "water-tide-orb"
+    },
+    {
+      "line": "lash",
+      "tier": 1,
+      "branch": null,
+      "name": "Tide Lash",
+      "icon": "water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": 2,
+      "branch": "A",
+      "name": "Undertow",
+      "icon": "water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": 2,
+      "branch": "B",
+      "name": "Riptide",
+      "icon": "water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": 3,
+      "branch": null,
+      "name": "Maelstrom Lash",
+      "icon": "water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": 4,
+      "branch": null,
+      "name": "Drown Coil",
+      "icon": "water-lash"
+    },
+    {
+      "line": "mire",
+      "tier": 1,
+      "branch": null,
+      "name": "Puddle",
+      "icon": "water-mire"
+    },
+    {
+      "line": "mire",
+      "tier": 2,
+      "branch": null,
+      "name": "Fog Bank",
+      "icon": "water-mire"
+    },
+    {
+      "line": "mire",
+      "tier": 3,
+      "branch": null,
+      "name": "Freeze Field",
+      "icon": "water-mire"
+    },
+    {
+      "line": "mire",
+      "tier": 4,
+      "branch": null,
+      "name": "Glacier Tomb",
+      "icon": "water-mire"
+    },
+    {
+      "line": "mend",
+      "tier": 1,
+      "branch": null,
+      "name": "Cool Draught",
+      "icon": "water-mend"
+    },
+    {
+      "line": "mend",
+      "tier": 2,
+      "branch": null,
+      "name": "Tide Ward",
+      "icon": "water-mend"
+    },
+    {
+      "line": "mend",
+      "tier": 3,
+      "branch": null,
+      "name": "Spring",
+      "icon": "water-mend"
+    },
+    {
+      "line": "mend",
+      "tier": 4,
+      "branch": null,
+      "name": "Font",
+      "icon": "water-mend"
+    },
+    {
+      "line": "mirror",
+      "tier": 1,
+      "branch": null,
+      "name": "Sheen",
+      "icon": "water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": 2,
+      "branch": "A",
+      "name": "Reflection",
+      "icon": "water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": 2,
+      "branch": "B",
+      "name": "Ripple",
+      "icon": "water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": 3,
+      "branch": null,
+      "name": "Mirage",
+      "icon": "water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": 4,
+      "branch": null,
+      "name": "Return Tide",
+      "icon": "water-mirror"
+    }
+  ],
+  "fire_reference_bindings": [
+    {
+      "id": "fire_bolt",
+      "name": "Ember Dart",
+      "tier": 0,
+      "icon": "fire-bolt",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_flick",
+      "name": "Flick Flame",
+      "tier": 1,
+      "icon": "fire-flick",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_cinderstep",
+      "name": "Cinder Step",
+      "tier": 1,
+      "icon": "fire-cinderstep",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_kindle",
+      "name": "Kindle",
+      "tier": 1,
+      "icon": "fire-kindle",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_lance",
+      "name": "Brand Lance",
+      "tier": 2,
+      "icon": "fire-lance",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_ring",
+      "name": "Ring of Cinders",
+      "tier": 2,
+      "icon": "fire-ring",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_pyre",
+      "name": "Pyre Circle",
+      "tier": 3,
+      "icon": "fire-pyre",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_furnace",
+      "name": "Furnace Heart",
+      "tier": 3,
+      "icon": "fire-furnace",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_sunfall",
+      "name": "Sunfall",
+      "tier": 4,
+      "icon": "fire-sunfall",
+      "status": "reference individual spell; W8 line mapping pending"
+    },
+    {
+      "id": "fire_wrath",
+      "name": "Brand Wrath",
+      "tier": 4,
+      "icon": "fire-wrath",
+      "status": "reference individual spell; W8 line mapping pending"
+    }
+  ],
+  "pending": [
+    {
+      "school": "fire",
+      "scope": "approved spell-line migration",
+      "dependency": "W8",
+      "reason": "Only individual reference spells exist in this checkout."
+    },
+    {
+      "school": "earth",
+      "scope": "line-specific icons",
+      "dependency": "W8",
+      "reason": "No spell-line catalogue exists in this checkout."
+    },
+    {
+      "school": "air",
+      "scope": "line-specific icons",
+      "dependency": "W8",
+      "reason": "No spell-line catalogue exists in this checkout."
+    }
+  ],
+  "owner_accepted": false
+}

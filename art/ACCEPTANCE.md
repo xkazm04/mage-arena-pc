@@ -112,3 +112,23 @@ closed-place controls, previews and mobile layout pass browser checks. Four loca
 UI diagnostics route to owner only. Night tint preserves static source residents;
 these screens are art presentation, not game-state or engine evidence.
 Spend snapshot: 89 cumulative / 91 local-cap remaining. A3 remains blocked.
+
+
+# A5 delivery
+
+[Icon board](review/a5/index.html), [contact sheet](review/a5/contact-sheet.png),
+[HUD study](delivery/a5/hud.html), [manifest](delivery/a5/manifest.json).
+46 original authored SVGs and 184 transparent PNGs at 32/48/64/128 px. Includes
+four schools, four school resources, five Water lines plus bolt, ten explicitly
+labelled Fire reference spell marks and 22 interface symbols. All 24 Water spell
+rows map to line glyphs. Fire line migration and Earth/Air line-specific glyphs
+remain pending W8 source catalogues; no gameplay lines have been invented.
+
+The one-icon proof, local diagnostics and direct observations remain owner-review
+only. Exact exports, data mappings, tier boundaries, keyboard/wheel selection,
+slot states, desktop/mobile layout and 1080p/1440p captures pass gates. A clipped
+Heat export was corrected; spell labels were enlarged after local feedback.
+HUD panels cover 12.74% at 1080p and 8.27% at 1440p, with the central fight clear.
+Those are measured rectangle areas, not a claim of readable combat in motion.
+Native interface art consumes zero Grok images; cumulative 89, local-cap remaining
+91, shared-account remainder unknown. No A3 work or camera approval was created.

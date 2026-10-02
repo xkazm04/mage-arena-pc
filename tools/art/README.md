@@ -88,3 +88,26 @@ record `review --proof --job <id> --note <actual observations>` before siblings.
 A local rejection, missing grade, changed source or changed brief invalidates the
 proof. Technical continuation is never owner approval. A2 portrait crops and the
 expression gallery are reproduced with `python tools/art/portraits.py check`.
+
+A4 presentation uses `python tools/art/camp.py build|check` for the data-driven
+camp slots, unchanged map plate, exact source backdrops/story cards and native SVG
+Hollow Board frames. `grade_ui.py` permits code-drawn labels when locally inspecting
+actual UI captures; it retains the reject-or-owner boundary.
+
+A5 is native SVG/HTML, with no paid image calls. `python tools/art/icons.py proof`
+renders one Tide Orb pilot; `art/proofs/A5.json` binds its source, capture, brief,
+style and local diagnostic before `icons.py build` permits batch export. The
+catalogue JSON is the authority for original vector drawings and source mappings.
+`icons.py check` validates all exports and browser states; `icons.py review-check`
+requires the final captured board/HUD to match direct and local review records.
+SVGs have transparent canvases; PNGs are browser rasterizations at exact sizes.
+The proof's nominal inset is 6 units; individual delivered glyphs use the full
+canvas with a measured minimum one-pixel transparent border at every export size.
+
+`portable_check.py` rebuilds A1, A1b, A2 crops, A4 camp assets and A5 vectors/PNGs/
+HUD in a disposable checkout-shaped copy without raw evidence or paid calls.
+Fire glyphs bind to the explicitly labelled reference spell CSV, not approved
+lines. W8 must supply Fire's line migration and Earth/Air's line catalogues before
+their missing line-specific icons can be authored. A3 still needs owner CAMERA-OK.
+`verify_ui.py` runs offline in both the main gate and disposable rebuild, rejecting
+stale screenshot/local-grade/direct-review hashes and any automated acceptance.

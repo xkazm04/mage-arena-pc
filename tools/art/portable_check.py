@@ -14,7 +14,7 @@ def main():
     originals = {p.name: sha(p) for p in (ART / 'review/screens').glob('*.png')}
     with tempfile.TemporaryDirectory(prefix='mage-a1-portable-') as directory:
         target = Path(directory)
-        for relative in ('art', 'tools/art', 'docs/design/baseline-fourteen-nights'):
+        for relative in ('art', 'tools/art', 'docs/design/baseline-fourteen-nights', 'docs/design/reference-the-ledger'):
             shutil.copytree(ROOT / relative, target / relative,
                             ignore=shutil.ignore_patterns('raw', 'browser', '__pycache__', '*.pyc', '*.tmp', '*.lock'))
         assert not (target / 'art/raw').exists()
@@ -62,7 +62,22 @@ def main():
             later.append({'wave':'A4 camp and frames', 'exit_code':result.returncode,
                           'sources':len(copied['exports']), 'hashes_identical':original == copied and html_identical,
                           'stderr':result.stderr})
-    passed = (len(results) == 2 and all(r['exit_code'] == 0 for r in results) and originals == rebuilt
+        icon_manifest = ART / 'delivery/a5/manifest.json'
+        if icon_manifest.exists():
+            original = read(icon_manifest)
+            result = subprocess.run([sys.executable, 'tools/art/icons.py', 'build'], cwd=target,
+                                    capture_output=True, text=True, encoding='utf-8', errors='replace')
+            copied = read(target / 'art/delivery/a5/manifest.json')
+            later.append({'wave':'A5 native icons and HUD', 'exit_code':result.returncode,
+                          'sources':len(copied['exports']), 'hashes_identical':original == copied,
+                          'stderr':result.stderr})
+        start = time.monotonic()
+        result = subprocess.run([sys.executable,'tools/art/verify_ui.py'],cwd=target,
+                                capture_output=True,text=True,encoding='utf-8',errors='replace')
+        results.append({'command':['tools/art/verify_ui.py'],'exit_code':result.returncode,
+                        'elapsed_seconds':round(time.monotonic()-start,3),
+                        'stdout':result.stdout,'stderr':result.stderr})
+    passed = (len(results) == 3 and all(r['exit_code'] == 0 for r in results) and originals == rebuilt
               and all(r['exit_code'] == 0 and r['hashes_identical'] for r in later))
     report = {'at': now(), 'label': 'measured disposable copy; ignored raw evidence absent',
               'status': 'pass' if passed else 'fail', 'commands': results,

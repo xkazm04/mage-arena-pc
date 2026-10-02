@@ -97,7 +97,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered; 16 characters / 96 expression exports | A2 (this commit) | 2026-10-02 |
 | Art | A3 | Top-down figures, poses, spell effects | art/CAMERA-OK.md | blocked; owner camera file absent | | 2026-10-02 |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | delivered for owner review | A4 (this commit) | 2026-10-02 |
-| Art | A5 | Icons, HUD, spell-line icons | A1b | queued after A2 | | |
+| Art | A5 | Icons, HUD, spell-line icons | A1b | delivered; 46 SVGs / 184 PNGs and HUD; W8 mappings pending | A5 (this commit) | 2026-10-02 |
 
 ## h. Wave cards
 
@@ -164,7 +164,7 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 | Art | A1b | Tessera & Lime baseline: scale contract and **arena camera proofs** (Diablo/PoE framing, three camera distances, several arena layouts), camp map re-check | A1 owner choice (done) | delivered for owner review; 27 attempts |
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered for owner review |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | delivered for owner review |
-| Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
+| Art | A5 | Icons, HUD, spell-line icons | A1b | delivered for owner review; Fire line migration and Earth/Air lines await W8 |
 | Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | **owner confirms the arena camera** (`art/CAMERA-OK.md`) | blocked |
 | Arena | W4b | Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
 
@@ -274,3 +274,43 @@ under 180. Reused map and native SVG frames consume zero image calls. No quota
 errors or videos; shared-account remainder unknown. A3 remains BLOCKED because
 owner `art/CAMERA-OK.md` is absent. Design note: `docs/waves/A4-camp-and-story.md`.
 One A4 commit, no push. Next: A5.
+
+
+### A5 - 2026-10-02 - ART / art
+
+Delivered 46 original native SVG icons and 184 transparent PNGs (32/48/64/128 px),
+an owner board/contact sheet and interactive HUD compositions at 1080p/1440p.
+Four schools, four school resources, five Water lines plus bolt, ten Fire reference
+spell glyphs and 22 interface marks. All 24 Water spell rows are mapped by exact
+line/tier/branch/name. Fire's reference CSV contains individual spells, not approved
+lines; Fire line migration and Earth/Air line-specific glyphs remain pending W8's
+absent catalogues. No new gameplay names or lines were invented.
+
+The single Tide Orb proof was rendered, directly inspected and locally graded
+before batch exports. Native SVG fits this small UI task and uses no subscription
+image generation. A clipped 32 px Heat export was rejected and corrected; spell
+labels enlarged after local feedback. Final board/HUD/borrowed-state diagnostics
+route to owner, never approve. Exact 140-degree geometry exists only in the small
+interface glyph; it does not repair or approve the unchanged camera plate's arc.
+
+Commands: `python tools/art/icons.py build`, `check` and `review-check` PASS;
+`python tools/art/check.py` and `python tools/art/portable_check.py` results retained
+in reports. Browser checks cover three slots, all eight tier boundary samples,
+four slot treatments, number-key/wheel selection, five Flow pips, mobile overflow,
+and transparent export sizes. HUD panel areas measured 12.74% at 1080p and 8.27%
+at 1440p, outside the central fight rectangle. No motion or engine claim.
+Final evidence audit refreshed two A4 capture diagnostics after recapture, folded
+into the single A4 commit. Added offline `verify_ui.py` to both normal and portable
+checks so stale UI grade/direct-review hashes cannot silently pass the handoff.
+
+Spend: A5 zero new images; cumulative 89 charged / 89 observed calls, 91 remaining
+under the local 180 cap; stop latch clear and no quota errors. Shared-account
+remainder remains unknown. Session totals: 57 new calls, two recovered previous
+A1b calls reused, 30 historical A1 calls. No duplicated recovery spend or videos.
+Design note: `docs/waves/A5-icons-and-hud.md`. One A5 commit, no push.
+
+A3 is still BLOCKED: owner `art/CAMERA-OK.md` does not exist. No top-down figure,
+pose or spell-effect production began. Remaining handoff: owner camera decision,
+owner review of delivered art, W8's missing spell-line catalogues, and W13 engine
+integration. All authorized independent art work is delivered as review candidates;
+unused time and subscription allowance are not instructions to spend more.

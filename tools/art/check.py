@@ -16,7 +16,8 @@ def main():
         [sys.executable, '-m', 'compileall', '-q', 'tools/art'],
         [sys.executable, 'tools/art/pipeline.py', 'compile'],
         [sys.executable, 'tools/art/pipeline.py', 'build'],
-        [sys.executable, 'tools/art/pipeline.py', 'validate']
+        [sys.executable, 'tools/art/pipeline.py', 'validate'],
+        [sys.executable, 'tools/art/verify_ui.py']
     ]
     if not args.skip_browser:
         commands.append([sys.executable, 'tools/art/browser_check.py'])

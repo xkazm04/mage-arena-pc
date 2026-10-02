@@ -37,3 +37,15 @@ card hierarchy, frame states and legibility. Night lighting is an authored tint
 over the same static map; actual camp activity will come from the game stream.
 Review the recorded source deviations and atmospheric coherence before accepting
 these candidates for integration.
+
+
+## A5 - icon recognition and HUD hierarchy pending
+
+Open the [icon board](../art/review/a5/index.html) at 32 and 64 px, then the
+[HUD study](../art/delivery/a5/hud.html). Inspect the light/dark silhouettes and
+change tier time and slot state. Labels accompany locked, cooldown and borrowed
+treatments. Check line names against arena focus at both desktop resolutions.
+Readability in motion remains an engine/owner check, not a static-art result.
+Fire reference spell names retain their reference status; W8's missing Fire line
+migration and Earth/Air line catalogues are explicitly deferred. Native symbols
+are candidates for integration review, not automatically accepted production art.
