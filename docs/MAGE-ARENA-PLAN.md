@@ -82,8 +82,8 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
 | Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | engineering PASS: Pixi camp, accepted art loader, deterministic slots/listening, 1080p/1440p browser gates; owner feel pending | d18ef80 | 2026-10-02 |
-| Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | engineering PASS for bounded effects: 100-case suite, offline cards, typed browser play; four bounded semantic false positives and timeout fallbacks disclosed; owner feel pending | W6 completion commit | 2026-10-02 |
-| Core | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | not started | | |
+| Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | engineering PASS for bounded effects: 100-case suite, offline cards, typed browser play; four bounded semantic false positives and timeout fallbacks disclosed; owner feel pending | c464f16 | 2026-10-02 |
+| Core | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | integration plan and exact merge steps written; eight conflicts measured read-only; implementation/G1 open, arena pacing follow-up required | W7 plan commit | 2026-10-02 |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
 | Core | W10 | Deaths and the Vigil: Plot objects, crackdown, executions, death census | G1 | not planned | | |
@@ -286,3 +286,26 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
   feel pending in OWNER-CHECKS. One W6 commit, no push, no art/arena edits.
   Next: requested W7 integration plan and exact merge steps, without importing
   arena implementation on core.
+
+### CORE W7 groundwork - 2026-10-02, third session
+
+- W7-integration-plan.md is a plan only, per the session instruction. Read arena
+  source/manifests, its current W4b evidence and the camera end note with `git show`;
+  no arena imports, merges or edits. Art and arena worktrees remain clean.
+- Pinned core c464f16 and arena 68a4d68. `git merge-tree --write-tree --name-only
+  core arena` reports eight conflicts without changing the index/worktree. Exact
+  future isolated-worktree merge commands and per-file resolutions are written.
+- Plan covers workspace exports/lockfiles, active data authority, dual renderer
+  lifecycle, real deterministic Games receipts, Trial/Games chronology, sickness
+  carry, versioned atomic saves, replay and input validation, owner G1 gates.
+- The core checkout lacked the final owner camera note. Read it from arena and
+  preserve it below: 55-degree oblique, upright figures, near-distance open oval.
+  Current arena evidence explicitly FAILS soldier/creature pacing (44.3833 and
+  45.55 seconds). No claim that old W4 PASS applies; arena follow-up precedes G1.
+- CORE implementation gates remain those passed for c464f16; documentation-only
+  groundwork adds no unmeasured gameplay claim. Owner feel/G1 remains open.
+- Session started 11:51:51 UTC. Heartbeat from 12:17:31 through 13:13:33 UTC has
+  224 samples and no >45-second gap; no PC-sleep clock jump observed. No push,
+  no new subscription calls. Next: orchestrator integration on a separate branch.
+
+**Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md. Read-only source: arena 68a4d68; confirmed near-distance open oval. This note supersedes ambiguous older top-down wording above.
