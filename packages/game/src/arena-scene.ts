@@ -20,6 +20,8 @@ import {
   type Point,
 } from "./camera.ts";
 import { FigureLibrary } from "./sprites.ts";
+import { ArenaArt, type Palette } from "./arena-art.ts";
+import { art } from "./art.ts";
 
 const ink = 0x07161e;
 const familyColour = (family: string) =>
@@ -30,10 +32,14 @@ const familyColour = (family: string) =>
       : 0x6df1e1;
 export class ArenaScene {
   readonly library: FigureLibrary;
+  readonly scenery: ArenaArt;
   private floor = new Container();
   private ground = new Graphics();
   private figures = new Container();
   private effects = new Graphics();
+  private painted = new Container();
+  private motifs: Sprite[] = [];
+  private motifIndex = 0;
   private actors = new Map<
     number,
     { root: Container; sprite: Sprite; details: Graphics }
@@ -44,13 +50,64 @@ export class ArenaScene {
   sortedActorIds: number[] = [];
   constructor(app: Application, parent: Container = app.stage) {
     this.library = new FigureLibrary(app);
-    parent.addChild(this.floor, this.ground, this.figures, this.effects);
+    parent.addChild(
+      this.floor,
+      this.ground,
+      this.figures,
+      this.painted,
+      this.effects,
+    );
+    this.figures.sortableChildren = true;
     this.buildFloor();
+    this.scenery = new ArenaArt(this.floor, this.figures);
+    void art.preload(
+      ["water", "fire", "earth", "air"].flatMap((s) => [
+        `effect.${s}.painted.aura`,
+        `effect.${s}.painted.bolt`,
+        `effect.${s}.painted.impact`,
+      ]),
+    );
+  }
+  palette(value: Palette) {
+    void this.scenery.load(value);
   }
   dispose() {
     this.library.dispose();
-    for (const c of [this.floor, this.ground, this.figures, this.effects])
+    this.scenery.dispose();
+    for (const c of [
+      this.floor,
+      this.ground,
+      this.figures,
+      this.painted,
+      this.effects,
+    ])
       c.destroy({ children: true });
+  }
+  private motif(
+    key: string,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    angle = 0,
+    opacity = 0.65,
+  ) {
+    const t = art.get(`effect.${key}`);
+    if (!t) return;
+    let s = this.motifs[this.motifIndex++];
+    if (!s) {
+      s = new Sprite();
+      this.motifs.push(s);
+      this.painted.addChild(s);
+    }
+    s.texture = t;
+    s.anchor.set(0.5);
+    s.position.set(x, y);
+    s.width = w;
+    s.height = h;
+    s.rotation = angle;
+    s.alpha = opacity;
+    s.visible = true;
   }
   private buildFloor(): void {
     const g = new Graphics(),
@@ -224,6 +281,9 @@ export class ArenaScene {
       e = this.effects;
     g.clear();
     e.clear();
+    this.motifIndex = 0;
+    for (const s of this.motifs) s.visible = false;
+    this.scenery.render(c);
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
     this.floor.position.set(
       c.width / 2 - c.centre.x * m.pxPerMetreX,
@@ -359,12 +419,37 @@ export class ArenaScene {
         this.actors.set(a.id, view);
       }
       this.figures.addChild(view.root);
+      view.root.zIndex = foot.y;
       view.root.position.set(q.x, q.y);
       view.root.visible =
         q.x > -h && q.x < c.width + h && q.y > -h && q.y < c.height + h;
       this.library.apply(view.sprite, a, player.team, h);
       const d = view.details;
       d.clear();
+      if (!a.enemy && !a.dummy && !a.down) {
+        // Water is the only implemented school; opposing mages remain Water proxies.
+        const tint = 0x8cded8;
+        this.motif(
+          "water.painted.aura",
+          q.x,
+          q.y - h * 0.36,
+          h * 1.8,
+          h * 1.35,
+          0,
+          0.28,
+        );
+        for (let i = 0; i < 7; i++) {
+          const phase = state.tick / 75 + i * 2.4;
+          d.circle(
+            Math.cos(phase) * h * 0.43,
+            -h * 0.35 + Math.sin(phase * 0.7) * h * 0.47,
+            m.resolutionScale * (i % 2 ? 0.8 : 1.3),
+          ).fill({ color: tint, alpha: 0.7 });
+        }
+        d.moveTo(-h * 0.38, -h * 0.09)
+          .quadraticCurveTo(-h * 0.62, -h * 0.48, -h * 0.34, -h * 0.79)
+          .stroke({ color: tint, width: m.resolutionScale, alpha: 0.35 });
+      }
       if (state.tick < a.water.encasedUntil)
         d.poly([
           -h * 0.3,
@@ -456,6 +541,18 @@ export class ArenaScene {
       if (q.x < -r || q.x > c.width + r || q.y < -r || q.y > c.height + r)
         continue;
       this.visibleProjectiles++;
+      if (p.family === "magic")
+        this.motif(
+          "water.painted.bolt",
+          q.x,
+          q.y,
+          30 * m.resolutionScale,
+          14 * m.resolutionScale,
+          Math.atan2(
+            p.velocity.y * m.pxPerMetreY,
+            p.velocity.x * m.pxPerMetreX,
+          ),
+        );
       const colour = familyColour(p.family),
         speed = Math.hypot(p.velocity.x, p.velocity.y) || 1;
       const tail = groundToScreen(
@@ -484,7 +581,19 @@ export class ArenaScene {
         e.star(q.x, q.y, 4, r * 1.7, r).fill(colour);
       else e.circle(q.x, q.y, r).fill(colour);
     }
-    if (seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS)
+    if (
+      seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS
+    ) {
+      const q = groundToScreen(player.pos, c);
+      this.motif(
+        "water.painted.impact",
+        q.x,
+        q.y - m.figureHeightPx / 2,
+        m.figureHeightPx * 2.5,
+        m.figureHeightPx * 2,
+        0,
+        0.5,
+      );
       this.circle(
         interpolate(player.previousPos, player.pos, alpha),
         1.4 + seconds(state.tick - lastPerfect) * 5,
@@ -493,6 +602,7 @@ export class ArenaScene {
           seconds(state.tick - lastPerfect) /
             runtime.presentation.perfectFlashS,
       );
+    }
     const target = groundToScreen(aim, c),
       cross = 7 * m.resolutionScale;
     e.circle(target.x, target.y, cross).stroke({

@@ -43,6 +43,7 @@ import {
   type Camera,
 } from "./camera.ts";
 import { ArenaScene } from "./arena-scene.ts";
+import { paletteForGames, type Palette } from "./arena-art.ts";
 import { colours } from "./ui/kit.ts";
 import type { CanvasUI } from "./ui/ui.ts";
 
@@ -99,7 +100,9 @@ export class ArenaGame {
       this.sync();
     }
     this.camera = makeCamera(this.camera, this.training.player.pos);
-    void this.scene.library.load("/arena-sprites.json");
+    this.scene.palette(
+      paletteForGames(season ? season.bout.day / 7 : undefined),
+    );
     const params = new URLSearchParams(location.search);
     const base = {
       snapshot: () => this.snapshot(),
@@ -111,6 +114,10 @@ export class ArenaGame {
         ...base,
         ...(params.has("harness") && !season
           ? {
+              setPalette: (palette: Palette) => {
+                if (["verdigris", "rust-sand", "moonlit"].includes(palette))
+                  this.scene.palette(palette);
+              },
               reset: (kind: TrainingKind = "magic") => this.restart(kind),
               setBot: (bot?: BotKind) => {
                 this.bot = bot;
@@ -665,6 +672,9 @@ export class ArenaGame {
       camera: this.camera,
       cameraMetrics: cameraMetrics(this.camera),
       visibleProjectiles: this.scene.visibleProjectiles,
+      palette: this.scene.scenery.palette,
+      figureSource:
+        "Covenant procedural; A3c motion/facing continuity gates pending",
     });
   }
   dispose() {

@@ -1,0 +1,96 @@
+{
+  "palettes": {
+    "training": "verdigris",
+    "1": "verdigris",
+    "2": "verdigris",
+    "3": "rust-sand",
+    "4": "rust-sand",
+    "5": "moonlit",
+    "6": "moonlit"
+  },
+  "plate": { "size": [1920, 1080], "worldMarginM": 6 },
+  "props": [
+    {
+      "id": "west-pylon",
+      "foot": [196, 199],
+      "polygon": [
+        148, 180, 168, 160, 177, 83, 196, 51, 216, 106, 221, 170, 247, 187, 246,
+        199, 169, 204
+      ]
+    },
+    {
+      "id": "north-pylon",
+      "foot": [953, 118],
+      "polygon": [
+        902, 99, 925, 71, 937, 17, 954, 0, 970, 14, 985, 87, 1010, 103, 1007,
+        117, 923, 124
+      ]
+    },
+    {
+      "id": "east-pylon",
+      "foot": [1730, 206],
+      "polygon": [
+        1683, 188, 1703, 151, 1718, 65, 1737, 46, 1754, 88, 1762, 180, 1787,
+        191, 1784, 207, 1698, 212
+      ]
+    },
+    {
+      "id": "southwest-pylon",
+      "foot": [163, 973],
+      "polygon": [
+        107, 953, 126, 922, 143, 859, 169, 823, 188, 869, 202, 944, 227, 961,
+        212, 981, 119, 985
+      ]
+    },
+    {
+      "id": "southeast-pylon",
+      "foot": [1758, 967],
+      "polygon": [
+        1710, 945, 1722, 890, 1739, 826, 1753, 802, 1776, 847, 1793, 940, 1814,
+        951, 1800, 975, 1721, 978
+      ]
+    },
+    {
+      "id": "northwest-stones",
+      "foot": [482, 179],
+      "polygon": [389, 135, 555, 94, 574, 114, 574, 140, 405, 185, 390, 173]
+    },
+    {
+      "id": "northeast-stones",
+      "foot": [1460, 185],
+      "polygon": [
+        1397, 103, 1459, 122, 1467, 146, 1487, 135, 1534, 159, 1534, 181, 1508,
+        188, 1483, 166, 1381, 147, 1382, 126
+      ]
+    },
+    {
+      "id": "south-stones",
+      "foot": [480, 1076],
+      "polygon": [
+        333, 979, 378, 986, 435, 1011, 480, 1016, 557, 1040, 620, 1041, 638,
+        1079, 321, 1079, 323, 1002
+      ]
+    }
+  ],
+  "figures": {
+    "cassia": "procedural: ready/cast absent; rear run/absorb facings differ; continuity gate not passed",
+    "brennic": "procedural: four rear static keys; no other facings or gait; painterly continuity unresolved",
+    "garran": "procedural: rear static keys and approximate camera; gait/facing continuity unresolved",
+    "iskar": "procedural: strong outlined rear keys; style and gait continuity unresolved",
+    "conscript": "procedural: attack turns toward camera; rear keys lack facings and gait",
+    "shieldman": "procedural: opposite facing; sword action contradicts shield bash",
+    "slinger": "procedural: attacks excluded; moving key hides sling",
+    "netter": "procedural: raised trident is not net cast; release excluded",
+    "cinder_hound": "procedural: rear pose studies lack directional gait and death keys",
+    "mire_maw": "procedural: attack turns frontal and bakes projectile into body",
+    "thornback": "procedural: near-identical ready/move; no charge gait or directional continuity",
+    "hush_moth": "procedural: partial wing keys; no directional flight/contact sequence"
+  },
+  "effects": {
+    "aura": "A3c painted water/fire/earth/air motifs plus code motes",
+    "bolt": "A3c painted water bolt with code-owned core/trail",
+    "absorb": "procedural exact 140-degree forward arc, 220-degree open rear",
+    "telegraphs": "procedural exact footprints with contrasting outlines and locator ticks",
+    "perfect": "procedural expanding white ring plus A3c painted water impact"
+  }
+}
