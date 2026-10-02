@@ -151,3 +151,7 @@ are candidates for integration review, not automatically accepted production art
 ## U1 camera ? pending owner feel
 
 D17 supersedes the historical near-view checks above. Default figures are now 4% of viewport height. Move in the central view: the camera should remain fixed. Sprint toward each edge, reverse direction and aim at feet while the view eases. Judge distant silhouette/telegraph readability and whether movement occurs rarely enough. Both resolutions are required. Combat geometry and pacing remain unchanged. See [camera note](waves/U1-camera.md).
+
+## U1 framework ? pending visual judgment
+
+Shared dark stone, verdigris and moonchalk canvas primitives replace browser controls in the following screen sub-wave. Assess texture restraint, luminous focus, bitmap type and mouse cursor against the Covenant direction. Art kit is a replaceable delivery; placeholder quality is not approval of final art. See [framework note](waves/U1-framework.md).

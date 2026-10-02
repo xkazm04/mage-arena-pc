@@ -85,6 +85,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | engineering PASS for bounded effects: 100-case suite, offline cards, typed browser play; four bounded semantic false positives and timeout fallbacks disclosed; owner feel pending | c464f16 | 2026-10-02 |
 | Integration | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | automated gates PASS, including original pacing bands and 30-minute soak; independent rerun and owner G1 open | 53b49b5..6ddc5f3 + soak handoff | 2026-10-02 |
 | Game | U1-camera | D17 far fixed camera and projection | W7 | gate PASS: 147 tests; edge follow, no balance changes | this sub-wave commit | 2026-10-02 |
+| Game | U1-framework | Canvas primitives, bitmap fonts, art kit loader | U1-camera | gate PASS: 150 tests; art contract v1 aligned | this sub-wave commit | 2026-10-02 |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
 | Core | W10 | Deaths and the Vigil: Plot objects, crackdown, executions, death census | G1 | not planned | | |
@@ -381,3 +382,7 @@ Decisions:
 ### GAME U1 camera ? 2026-10-02
 
 Read the full integration plan and imported missing section o from main read-only. D17 supersedes near tracking. Design note U1-camera.md; game camera data fixes figures at 4% with a 3?4.5% range, 55-degree oblique ground, wide fixed zone and exponential edge follow. Art UI contract was absent at session start; no art worktree writes. `npm run gate` PASS: 147 TypeScript plus ten reference tests, zero contradictions. Projection, stationary-pointer inversion and ground hits preserved; new immobility/convergence/frame-rate tests pass. Census started for final evidence; no arena size, spacing, core or balance edits. Camera feel and sofa readability not measured. Next: U1 framework. No push.
+
+### GAME U1 framework ? 2026-10-02
+
+Design note U1-framework.md. Shared Pixi canvas toolkit, procedural nine-slice kit, bars, slots, buttons, tabs, tooltips, focus and cursor; bitmap Cinzel/Alegreya Sans with bundled OFL notices. Read art/ui/README.md from art worktree after it appeared and aligned schema/required IDs, SHA-256 pages, region bounds, anchors and slice insets. No art edits. `npm run gate` PASS: 150 TypeScript plus ten reference tests; production build PASS. The unchanged 2,000-fight census per wave passes with W7-identical digests and medians 38.233/44.633/45.483/58.000 s. Report destination allowlist extended for U1; first attempt rejected the directory before any fights, then rerun succeeded. Screen migration and physical sofa/controller feel remain pending. Next U1 screens; no push.
