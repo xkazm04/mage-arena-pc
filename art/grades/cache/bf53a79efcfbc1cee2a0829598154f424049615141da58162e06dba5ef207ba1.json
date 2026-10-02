@@ -1,0 +1,98 @@
+{
+  "artifact": "a4-hollow",
+  "at": "2026-10-02T07:41:31.277572+00:00",
+  "input_hash": "bf53a79efcfbc1cee2a0829598154f424049615141da58162e06dba5ef207ba1",
+  "source": "art/delivery/a4/screens/hollow-board-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "33a01aed07a6f8e60913a2547d3887bd7fbdc7a6d49a60927e77ed3943f80a2a",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Six story cards with clear original titles and short prose, illustrated header art, framed paper panels and explicit New/Read/Attention/Selected status text. No text overlaps illustrations; clear content hierarchy.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.5,\n  \"observation\": \"The UI presents six story cards in a 2x3 grid on a dark background. Each card features a distinct illustrated header (painting style), a status label (NEW, READ, ATTENTION, SELECTED) in the top-left corner, a title, and a short prose description. The cards have a parchment-like background with decorative corner brackets. The color palette includes earthy tones (terracotta, umber, mineral blue) consistent with the style match. Text is legible and does not overlap the illustrations. The layout is clean with clear content hierarchy. A 'Return to camp' link is visible in the top right. The bottom left contains a small text line 'Messages travel farther than footsteps.' No watermarks, logos, or photographic inserts are present. The 'overhead_view' is interpreted as the UI framing/layout being present (grid of cards), not a literal overhead camera view, which is appropriate for this card-based interface.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.5,
+    "observation": "The UI presents six story cards in a 2x3 grid on a dark background. Each card features a distinct illustrated header (painting style), a status label (NEW, READ, ATTENTION, SELECTED) in the top-left corner, a title, and a short prose description. The cards have a parchment-like background with decorative corner brackets. The color palette includes earthy tones (terracotta, umber, mineral blue) consistent with the style match. Text is legible and does not overlap the illustrations. The layout is clean with clear content hierarchy. A 'Return to camp' link is visible in the top right. The bottom left contains a small text line 'Messages travel farther than footsteps.' No watermarks, logos, or photographic inserts are present. The 'overhead_view' is interpreted as the UI framing/layout being present (grid of cards), not a literal overhead camera view, which is appropriate for this card-based interface."
+  },
+  "eval_count": 259,
+  "elapsed_seconds": 13.75
+}

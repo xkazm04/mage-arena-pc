@@ -1,0 +1,77 @@
+{
+  "id": "01-tessera-camp-a01",
+  "style_id": "01-tessera",
+  "scene": "camp",
+  "attempt": 1,
+  "input_hash": "d35ba17b5433b86aef21de95398784fc909442b0f18432dc16aaa1cbb1992c77",
+  "input": {
+    "version": "a1-v2",
+    "style": {
+      "id": "01-tessera",
+      "name": "Tessera & Lime",
+      "line": "broken umber contours and hand-painted tessera joins",
+      "palette": "chalk, terracotta, ochre, mineral blue",
+      "shading": "flat fresco planes with sparse tile shadows",
+      "density": "medium, ornament confined to edges",
+      "mood": "sun-bleached civic grandeur and captivity",
+      "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+      "ui": {
+        "paper": "#f3e6c5",
+        "ink": "#38261f",
+        "accent": "#226b8b"
+      }
+    },
+    "scene": "camp",
+    "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nACTION: A wide overhead illustrated navigation map of the guarded mage camp, a complete walkable enclosure with branching paths and small collared adult inhabitants, no combat or spellcasting. Arrange a staff-training yard at upper left, a dry round cistern at upper centre, a sunken sparring pit at upper right; a market of awnings at middle left, a communal bread table and gathering square at the centre, a monumental barred arena door at middle right; a cluster of patched living tents at lower left, and a fogbound camp boundary with a secluded meeting path at lower right. Make each destination a distinct recognizable landmark with empty ground nearby for later code-drawn labels; salt ward posts and patrolling guards communicate confinement without obscuring routes. Leave calm space along the top for the day time-slot strip and along the bottom for destination information; draw only the map, all text and time-slot controls are added in code.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+    "aspect_ratio": "16:9"
+  },
+  "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nACTION: A wide overhead illustrated navigation map of the guarded mage camp, a complete walkable enclosure with branching paths and small collared adult inhabitants, no combat or spellcasting. Arrange a staff-training yard at upper left, a dry round cistern at upper centre, a sunken sparring pit at upper right; a market of awnings at middle left, a communal bread table and gathering square at the centre, a monumental barred arena door at middle right; a cluster of patched living tents at lower left, and a fogbound camp boundary with a secluded meeting path at lower right. Make each destination a distinct recognizable landmark with empty ground nearby for later code-drawn labels; salt ward posts and patrolling guards communicate confinement without obscuring routes. Leave calm space along the top for the day time-slot strip and along the bottom for destination information; draw only the map, all text and time-slot controls are added in code.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+  "session_id": "0c705230-d652-4375-beaf-e6d89e11b4b2",
+  "origin": "grok-cli",
+  "model": "grok-4.7",
+  "seed": null,
+  "correction": null,
+  "at": "2026-10-01T22:04:10.325082+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_gen",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "0c705230-d652-4375-beaf-e6d89e11b4b2",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-camp-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "tool_calls": [
+    {
+      "name": "image_gen",
+      "arguments": {
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nACTION: A wide overhead illustrated navigation map of the guarded mage camp, a complete walkable enclosure with branching paths and small collared adult inhabitants, no combat or spellcasting. Arrange a staff-training yard at upper left, a dry round cistern at upper centre, a sunken sparring pit at upper right; a market of awnings at middle left, a communal bread table and gathering square at the centre, a monumental barred arena door at middle right; a cluster of patched living tents at lower left, and a fogbound camp boundary with a secluded meeting path at lower right. Make each destination a distinct recognizable landmark with empty ground nearby for later code-drawn labels; salt ward posts and patrolling guards communicate confinement without obscuring routes. Leave calm space along the top for the day time-slot strip and along the bottom for destination information; draw only the map, all text and time-slot controls are added in code.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "tool_results": [
+    "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-camp-a01\\\\0c705230-d652-4375-beaf-e6d89e11b4b2\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-camp-a01\\\\0c705230-d652-4375-beaf-e6d89e11b4b2\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+  ],
+  "prompt_verbatim_verified": true,
+  "returncode": 0,
+  "source": "art/raw/01-tessera-camp-a01/source.jpg",
+  "sha256": "6c041e4c9f61a5072007fd31e17bc77f91105d7d8dfe93c82f729de4e3a662ea",
+  "elapsed_seconds": 23.0
+}

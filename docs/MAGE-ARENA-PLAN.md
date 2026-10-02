@@ -78,12 +78,12 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 |---|---|---|---|---|---|---|
 | Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | six Fable fixes and lower-severity followups closed; gates green | 2833a30 | 2026-10-02 |
 | Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | engineering PASS: 300 local + 30 Sonnet nights, complete local judge; rejection 4.73%; owner blind read pending | 27a74fb | 2026-10-02 |
-| Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
-| Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
-| Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
+| Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | implemented; owner feel pending | 2494ab9 | 2026-10-02 |
+| Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | implemented; owner feel pending | 2126f57 | 2026-10-02 |
+| Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | implemented; compact-court gate passed; W4b reopened soldier/creature pacing | 4b21c57 | 2026-10-02 |
 | Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | engineering PASS: Pixi camp, accepted art loader, deterministic slots/listening, 1080p/1440p browser gates; owner feel pending | d18ef80 | 2026-10-02 |
 | Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | engineering PASS for bounded effects: 100-case suite, offline cards, typed browser play; four bounded semantic false positives and timeout fallbacks disclosed; owner feel pending | c464f16 | 2026-10-02 |
-| Core | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | integration plan and exact merge steps written; eight conflicts measured read-only; implementation/G1 open, arena pacing follow-up required | W7 plan commit | 2026-10-02 |
+| Integration | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | workspace merge gates pass; season/save/pacing/soak in progress; G1 open | merge sub-wave | 2026-10-02 |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
 | Core | W10 | Deaths and the Vigil: Plot objects, crackdown, executions, death census | G1 | not planned | | |
@@ -309,3 +309,45 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
   no new subscription calls. Next: orchestrator integration on a separate branch.
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md. Read-only source: arena 68a4d68; confirmed near-distance open oval. This note supersedes ambiguous older top-down wording above.
+
+
+## Imported arena stream history (pinned 68a4d68)
+
+
+
+(each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
+
+**Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
+
+### ARENA session 2 — W4b and W4c, 2026-10-02
+
+Read the complete plan, confirmed camera/scale contract, A1b board/manifest and chosen full-size source, W2–W4 notes and game README. Implemented a full-viewport player-following 55° camera, near 1.2 baseline and 0.8–1.2 zoom, foreshortened ground, foot-depth-sorted upright procedural billboards, the 192×144 m playable open oval, sparse 6 m opening formations, exact forward 140° visual ward, readable warnings/projectile minimums, debug contract overlay and validated sprite-manifest loading with fallback. The old 32×20 m bounds and fixed canvas scale are superseded by the imported art contract. W4c implements cursor-to-ground inversion, refreshing under follow/zoom/resize, and tests ground hit/ward geometry separately from billboard pixels. No director or camp package was touched; no push.
+
+`npm --prefix packages/core run build`, `npm --prefix packages/game run build`, core tests (51) and game tests (13) pass. `smoke:w4b` passes at native 1920×1080 and 2560×1440 with near/far screenshots, overlapping upright figures, live warnings, 32 real-pointer hit cases and sprite success/failure probes. Its uncontended 360-frame samples sustain approximately 60 fps with **100 visible moving projectiles in every sampled frame**, below the 8 ms CPU p95 budget on the recorded Windows/D3D11 machine. Exact final measurements and commands: `docs/waves/W4b-evidence/browser.json`. Prior controls, composition and Tiro lifecycle smoke commands pass into separate subfolders. The new selected completion fixture is seed 30, 159.05 simulated seconds, with normal resources and explicit between-bout recovery.
+
+Revalidation beyond the camera gate: `npm --prefix packages/core run report:w4 -- --evidence W4b-evidence --tag oval-census` runs 2,000 fights per wave and deliberately returns **FAIL/exit 1** for soldier/creature pacing on the enlarged layout. Medians are **44.3833 / 45.55 / 45.4833 / 58 s** against bands 25–40 / 30–45 / 45–70 / 45–80. No timeouts, early Downs, invalid states or sampled replay mismatches. The old W4 pass is historical, not a pass for the new arena. Initial row-layout and final sparse-grid measurements are retained; no HP, spell damage, resource, competence or duration-band tuning was performed. Stop balance tuning here and queue a dedicated opening-encounter rework before G1, preserving the confirmed camera and 6 m separation. See `docs/waves/W4b-camera-scale.md` for a concrete proposal.
+
+Still **not measured/felt**: owner motion readability, camera comfort, naturalness of foot-plane aiming, physical input-to-photon latency. `OWNER-CHECKS.md` supplies the trial. A3 animation/pose delivery and W8 schools remain their own waves. Next arena work: resolve the disclosed Tiro pacing regression and owner feedback; integrate accepted A3 assets through the loader boundary. G1 remains open.
+
+
+## n. Character and arena identity reset (owner, 2026-10-02, after the A3 board)
+
+> "The character manifestation in arena does not look very natural. Main blue caster in center looks authentic to the artstyle, with size, angle, style. All others look like they don't belong there, rather belonging on papyrus paintings. The style of characters is too clean and generic - we should find our own raw and brutal tone like Death Race did to find identity of the arena character styles and environment in arena. Mages in arena are not politicians, but well equiped magicians knowing the battlefield, overpowering with sparkles and energy around them caused by their elemental alignment. We took the roman culture as worldbuilding baseline correctly, but now we should go into more raw and magical/fantastical direction to create our own flavor of the world. Throw all portraits and current looks of key characters and start again - portraits can have more aura of old Baldurs Gate games. Clothing more fitting RPG mages known - staff, accessories, lightweight colored cloth designs."
+
+Decisions: **D12** all A2 portraits and all A3 figures and poses are **discarded** (kept in git history only, never used). **D13** the bar for in-arena figures is the **blue hooded caster in the chosen proof `01-tessera-open-oval-sparse-near-a01`**: its size, angle, rendering and integration with the ground.
+**D14** Roman culture stays as the worldbuilding baseline (the camp, the Games, the legion as non-magical enemy waves), but the **mages and the arena get their own raw, magical, fantastical identity**: not clean, not generic, not museum-painting.
+**D15** the mages are **battle mages, not politicians**: well equipped, knowing the battlefield, overpowering, surrounded by **sparkles and energy of their elemental alignment** (fire embers and heat shimmer, water mist and droplets, earth stone motes and dust, air wind wisps and arcs of lightning); **staff, accessories, light coloured layered cloth** as in classic RPG mages;
+**portraits with the aura of late-1990s painted CRPG bust portraits** (rich, dark, painterly, strong light, characterful faces), original designs only, no franchise names in prompts or files. The method of the sister project's art direction v2 (rough ink-brush line, wear everywhere, silhouette first, palette discipline, a CHOICE of directions before commitment) is the pattern: read `C:\Users\kazda\kiro\firetv-deathride-art\docs\concepts\DEATH-RIDE-ART-DIRECTION-V2.md` as a method, never as a style to copy.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Art | A6 | **Identity reset**: at least six raw-magical style directions for the arena mages, enemies and arena environment, each shown as (1) an arena scene at the confirmed near oblique camera and (2) a late-90s CRPG-style painted bust portrait of the Water mage; the owner chooses | D12-D15 | not started |
+| Art | A2b | New portraits (16 cast, expressions) in the chosen direction | A6 owner choice | blocked |
+| Art | A3b | New oblique figures, poses, spell and aura effects in the chosen direction, enemies included, finishing the three missing creatures with moderation-safe prompts | A6 owner choice | blocked |
+| Art | A4b | Camp map and backdrops re-checked against the new identity (the camp map is kept unless the owner says otherwise) | A6 owner choice | blocked |
+
+### INTEGRATION W7 merge sub-wave - 2026-10-02
+
+- Merged pinned arena 68a4d68 into integration at ff99607, resolving the eight documented conflicts. Unified workspace exports, lock, NodeNext imports, scoped CSS, and owned camp/arena lifecycles. Promoted active arena tables byte-for-byte; imported section n.
+- npm run gate: 129 TS plus ten reference tests PASS, zero design contradictions. npm run build:game PASS. Water production smoke PASS with real pointer and keyboard controls. W7-evidence/merge-water preserves new measurements.
+- Arena pacing remains FAIL pending its sub-wave. Season/save/soak and owner feel/G1 not measured. No push. Next: season bridge and authoritative replay receipts.

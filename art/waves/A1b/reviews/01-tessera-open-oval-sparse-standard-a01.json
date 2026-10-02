@@ -1,0 +1,17 @@
+{
+  "job": "01-tessera-open-oval-sparse-standard-a01",
+  "sha256": "13fc7b88859ccdb767e8b372484a5a1800f15812b43a2a71ec6af721a63f599f",
+  "note": "Rejected: player head-to-sole approximately y=384..526 in 720px image (19.7%, excluding raised arm), not the requested 5%. Camera reads an illustrated wall with side-on figures. Absorb sits behind/below the player; this cannot unlock the batch.",
+  "at": "2026-10-02T06:40:35.770644+00:00",
+  "verdict": "reject",
+  "owner_accepted": false,
+  "reviewer": "executing-agent",
+  "label": "direct pixel observation; not owner feel",
+  "measurement": {
+    "method": "manual source-coordinate estimate",
+    "head_y": 384,
+    "sole_y": 526,
+    "source_height": 720,
+    "fraction": 0.19722222222222222
+  }
+}

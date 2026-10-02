@@ -1,0 +1,238 @@
+{
+  "label": "simulated",
+  "command": "npm --prefix packages/core run report:w4",
+  "countPerWave": 2000,
+  "seedRange": [
+    40000,
+    41999
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation",
+    "ranks": {
+      "vigor": 1,
+      "focus": 1,
+      "nerve": 1
+    }
+  },
+  "methodology": "Independent fresh wave starts, baseline enemy HP/counts/attacks. Both sides use fixed-step combat and resource rules; the reference player is an explicitly authored input policy. Completed-bout median includes wins and losses. No resource refill, forced outcome, duration padding, or dropped seeds. Remaining hostile hazards settle before a clear.",
+  "wallSecondsMeasured": 106.1375266,
+  "waves": [
+    {
+      "wave": 1,
+      "kind": "soldiers",
+      "fights": 2000,
+      "targetDurationS": [
+        25,
+        40
+      ],
+      "wins": 2000,
+      "losses": 0,
+      "timeouts": 0,
+      "durationS": {
+        "min": 19.966666666666665,
+        "p10": 26.8,
+        "p50": 37.416666666666664,
+        "p90": 46.21666666666667,
+        "max": 57.6
+      },
+      "winDurationS": {
+        "min": 19.966666666666665,
+        "p10": 26.8,
+        "p50": 37.416666666666664,
+        "p90": 46.21666666666667,
+        "max": 57.6
+      },
+      "inBandFraction": 0.621,
+      "deadAirFraction": 0,
+      "perfectRate": 0,
+      "finalMana": {
+        "min": 0.125,
+        "p10": 5,
+        "p50": 13.375,
+        "p90": 22.5,
+        "max": 34
+      },
+      "finalHp": {
+        "min": 41,
+        "p10": 81,
+        "p50": 95,
+        "p90": 95,
+        "max": 95
+      },
+      "failures": {
+        "medianOutOfBand": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": true,
+      "digest": "e6903480e40e770f4b59b21e5ebd77df557354a7e933d17d1a5d60717d8ec66d"
+    },
+    {
+      "wave": 2,
+      "kind": "creatures",
+      "fights": 2000,
+      "targetDurationS": [
+        30,
+        45
+      ],
+      "wins": 2000,
+      "losses": 0,
+      "timeouts": 0,
+      "durationS": {
+        "min": 21.916666666666668,
+        "p10": 29.4,
+        "p50": 38.166666666666664,
+        "p90": 48,
+        "max": 68.71666666666667
+      },
+      "winDurationS": {
+        "min": 21.916666666666668,
+        "p10": 29.4,
+        "p50": 38.166666666666664,
+        "p90": 48,
+        "max": 68.71666666666667
+      },
+      "inBandFraction": 0.7045,
+      "deadAirFraction": 0,
+      "perfectRate": 0.3011744966442953,
+      "finalMana": {
+        "min": 0,
+        "p10": 2.375,
+        "p50": 8.724999999999966,
+        "p90": 20.12499999999997,
+        "max": 33.42499999999999
+      },
+      "finalHp": {
+        "min": 48.8,
+        "p10": 76,
+        "p50": 90,
+        "p90": 95,
+        "max": 95
+      },
+      "failures": {
+        "medianOutOfBand": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": true,
+      "digest": "e0197db28c6d7e50e048a83094826dc2735e5c30491420aa38998ee021bc8ca3"
+    },
+    {
+      "wave": 3,
+      "kind": "semifinal",
+      "fights": 2000,
+      "targetDurationS": [
+        45,
+        70
+      ],
+      "wins": 1794,
+      "losses": 206,
+      "timeouts": 0,
+      "durationS": {
+        "min": 20.85,
+        "p10": 34.6,
+        "p50": 44.55,
+        "p90": 54.85,
+        "max": 69.38333333333334
+      },
+      "winDurationS": {
+        "min": 20.85,
+        "p10": 33.9,
+        "p50": 43.85,
+        "p90": 53.916666666666664,
+        "max": 69.38333333333334
+      },
+      "inBandFraction": 0.4665,
+      "deadAirFraction": 0.0013095019297923176,
+      "perfectRate": 0.005943399131586241,
+      "finalMana": {
+        "min": 0.04999999999998295,
+        "p10": 3.799999999999983,
+        "p50": 10.625,
+        "p90": 15.149999999999949,
+        "max": 20.824999999999918
+      },
+      "finalHp": {
+        "min": 0,
+        "p10": 0,
+        "p50": 23.275999999999947,
+        "p90": 44.32199999999996,
+        "max": 72.98399999999995
+      },
+      "failures": {
+        "medianOutOfBand": true,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": false,
+      "digest": "f1b930ce64e79d4388e00a2a3b1908544e257678cb4da2ee2c960a62109818ee"
+    },
+    {
+      "wave": 4,
+      "kind": "final",
+      "fights": 2000,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "wins": 1329,
+      "losses": 671,
+      "timeouts": 0,
+      "durationS": {
+        "min": 27.85,
+        "p10": 44.5,
+        "p50": 55.31666666666667,
+        "p90": 66.21666666666667,
+        "max": 85.83333333333333
+      },
+      "winDurationS": {
+        "min": 27.85,
+        "p10": 43.2,
+        "p50": 54.9,
+        "p90": 65.78333333333333,
+        "max": 85.83333333333333
+      },
+      "inBandFraction": 0.8895,
+      "deadAirFraction": 0,
+      "perfectRate": 0.011722918158829462,
+      "finalMana": {
+        "min": 0,
+        "p10": 1.875,
+        "p50": 4.94999999999996,
+        "p90": 11.75,
+        "max": 55.324999999999996
+      },
+      "finalHp": {
+        "min": 0,
+        "p10": 0,
+        "p50": 8.92499999999999,
+        "p90": 36.30499999999994,
+        "max": 72.98399999999995
+      },
+      "failures": {
+        "medianOutOfBand": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": true,
+      "digest": "d34198b315d1936425e8ba8b44f93de39773d8bfb892b16f10168dda5b243e0b"
+    }
+  ],
+  "fullCensus": true,
+  "allPassed": false,
+  "sourceHashes": {
+    "combat.json": "bebe556c6c9723ce7425fe4159bf72f58c1e6e198c104041cce5b596e4001bb0",
+    "spells-water.csv": "7b291fe55540055b581c9a4fdd3d71b228d67a707df5384da8074aeca30d861f",
+    "enemies.json": "2444e1ad65c798d0c40fc965376a0172a0114077620601f01f5eb9f2600d1dc6",
+    "arena-tiers.json": "0854e17ff47ea93b4aa8382900c0d007244f71c0ac1d15b83d4076a7a4a586d7"
+  }
+}

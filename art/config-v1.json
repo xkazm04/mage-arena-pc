@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "brief_version": "a1-v3",
+  "brief_file": "briefs/a1-v3.json",
+  "cli_model": "grok-4.7",
+  "cli_effort": "low",
+  "generation_timeout_seconds": 600,
+  "poll_seconds": 1,
+  "aspect_ratio": "16:9",
+  "minimum_width": 1024,
+  "minimum_height": 576,
+  "aspect_tolerance": 0.02,
+  "minimum_luminance_stddev": 8,
+  "review_width": 1600,
+  "review_height": 900,
+  "contact_columns": 2,
+  "contact_tile_width": 640,
+  "contact_tile_height": 420,
+  "grader": {
+    "host": "http://127.0.0.1:11434",
+    "model": "qwen3.8:27b-64k",
+    "timeout_seconds": 240,
+    "image_max_edge": 1600,
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200,
+    "confidence_min": 0.75,
+    "score_values": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "confidence_values": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "shortlist_count": 3,
+    "ranking_image_max_edge": 3600,
+    "ranking_num_ctx": 32768,
+    "ranking_num_predict": 2400
+  },
+  "sources": {
+    "locations": "docs/design/baseline-fourteen-nights/design/data/locations.csv",
+    "slots": "docs/design/baseline-fourteen-nights/design/data/loops.json",
+    "combat": "docs/design/baseline-fourteen-nights/design/data/combat.json"
+  },
+  "camp": {
+    "note": "Authored comparison layout only; slot names/opening rules loaded from baseline data. Season structure follows the current plan, with no loop UI.",
+    "default_slot": "day",
+    "heading": "CASTRA CLAUSA",
+    "calendar_label": "SEASON / BEFORE THE GAMES",
+    "positions": {
+      "yard": [
+        0.21,
+        0.3
+      ],
+      "cistern": [
+        0.5,
+        0.28
+      ],
+      "pit": [
+        0.77,
+        0.3
+      ],
+      "exchange": [
+        0.19,
+        0.54
+      ],
+      "commons": [
+        0.5,
+        0.53
+      ],
+      "door": [
+        0.79,
+        0.55
+      ],
+      "tent": [
+        0.28,
+        0.77
+      ],
+      "edge": [
+        0.69,
+        0.79
+      ]
+    }
+  }
+}

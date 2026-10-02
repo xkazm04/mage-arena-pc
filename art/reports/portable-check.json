@@ -1,0 +1,94 @@
+{
+  "at": "2026-10-02T08:13:47.211257+00:00",
+  "label": "measured disposable copy; ignored raw evidence absent",
+  "status": "pass",
+  "commands": [
+    {
+      "command": [
+        "tools/art/pipeline.py",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 14.157,
+      "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 89, \"weekly_reserved\": 89, \"target_remaining\": 41, \"hard_remaining\": 91, \"generated\": 89, \"observed_image_tool_calls\": 89, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/art/pipeline.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.781,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"direction_pairs\": 8,\n  \"generated_attempts\": 30,\n  \"graded_attempts\": 30,\n  \"current_rejects\": 0,\n  \"scope\": \"delivery integrity; does not turn semantic rejects into acceptance\",\n  \"owner_accepted\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/art/verify_ui.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.266,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"reviewed_artifacts\": 3,\n  \"scope\": \"review integrity; local models and agent do not approve owner feel\",\n  \"pending\": [\n    {\n      \"school\": \"fire\",\n      \"scope\": \"approved spell-line migration\",\n      \"dependency\": \"W8\",\n      \"reason\": \"Only individual reference spells exist in this checkout.\"\n    },\n    {\n      \"school\": \"earth\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    },\n    {\n      \"school\": \"air\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    }\n  ],\n  \"owner_accepted\": false,\n  \"image_generation_calls\": 0\n}\n{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_ui_grades\": 8,\n  \"owner_accepted\": false,\n  \"model_calls\": 0,\n  \"image_generation_calls\": 0\n}\n",
+      "stderr": ""
+    }
+  ],
+  "screen_hashes_identical": true,
+  "screens": 16,
+  "validation": {
+    "status": "pass",
+    "errors": [],
+    "current_images": 16,
+    "direction_pairs": 8,
+    "generated_attempts": 30,
+    "graded_attempts": 30,
+    "current_rejects": 0,
+    "scope": "delivery integrity; does not turn semantic rejects into acceptance",
+    "owner_accepted": false
+  },
+  "image_generation_calls": 0,
+  "later_waves": [
+    {
+      "wave": "A1b",
+      "exit_code": 0,
+      "sources": 27,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A2",
+      "exit_code": 0,
+      "sources": 18,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A4",
+      "exit_code": 0,
+      "sources": 14,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A2 portrait crops",
+      "exit_code": 0,
+      "sources": 96,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A4 camp and frames",
+      "exit_code": 0,
+      "sources": 18,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A5 native icons and HUD",
+      "exit_code": 0,
+      "sources": 233,
+      "hashes_identical": true,
+      "stderr": ""
+    }
+  ]
+}

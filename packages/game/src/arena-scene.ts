@@ -1,0 +1,163 @@
+import { Container, Graphics, Sprite, type Application } from 'pixi.js';
+import { arenaGeometry, combat, runtime, seconds, spells, type Actor, type ArenaState, type Vec } from '@mage/core/arena';
+import { arcPoints, cameraMetrics, contract, depthOrder, groundToScreen, interpolate, type Camera, type Point } from './camera.ts';
+import { FigureLibrary } from './sprites.ts';
+
+const ink = 0x453e34;
+const familyColour = (family: string) => family === 'unblockable' ? 0xa12f39 : family === 'physical' ? 0x65462d : 0x126c95;
+export class ArenaScene {
+  readonly library: FigureLibrary;
+  private floor = new Container();
+  private ground = new Graphics();
+  private figures = new Container();
+  private effects = new Graphics();
+  private actors = new Map<number, { root: Container; sprite: Sprite; details: Graphics }>();
+  private c!: Camera;
+  private debug = false;
+  visibleProjectiles = 0;
+  sortedActorIds: number[] = [];
+  constructor(private app: Application) {
+    this.library = new FigureLibrary(app);
+    app.stage.addChild(this.floor, this.ground, this.figures, this.effects);
+    this.buildFloor();
+  }
+  private buildFloor(): void {
+    const g = new Graphics(), { centre, widthM, heightM } = arenaGeometry;
+    const rx = widthM / 2, ry = heightM / 2;
+    g.ellipse(centre.x, centre.y, rx + 6, ry + 6).fill(0x98755a);
+    g.ellipse(centre.x, centre.y, rx + 3, ry + 3).fill(0xc2a87e).stroke({ color: 0x795b43, width: 0.4 });
+    g.ellipse(centre.x, centre.y, rx, ry).fill(0xded7b4).stroke({ color: 0x4e8690, width: 0.32 });
+    g.ellipse(centre.x, centre.y, rx - 0.65, ry - 0.65).stroke({ color: 0xb2905c, width: 0.16 });
+    // Quiet, deterministic pigment marks; no generated bitmap or random source.
+    for (let i = 0; i < 900; i++) {
+      const angle = i * 2.399963, r = Math.sqrt((i + 0.5) / 900);
+      const x = centre.x + Math.cos(angle) * (rx - 1.2) * r, y = centre.y + Math.sin(angle) * (ry - 1.2) * r;
+      g.ellipse(x, y, 0.4 + i % 5 * 0.14, 0.16 + i % 3 * 0.07).fill({ color: i % 2 ? 0xaca66e : 0xf7efd4, alpha: 0.18 });
+    }
+    // Narrow tessera border follows the ellipse; the centre stays free of obstacles.
+    for (let i = 0; i < 360; i++) {
+      const a = i * Math.PI * 2 / 360, b = a + 0.013;
+      g.poly([centre.x + Math.cos(a) * (rx + 0.45), centre.y + Math.sin(a) * (ry + 0.45), centre.x + Math.cos(b) * (rx + 0.45), centre.y + Math.sin(b) * (ry + 0.45), centre.x + Math.cos(b) * (rx + 1.2), centre.y + Math.sin(b) * (ry + 1.2), centre.x + Math.cos(a) * (rx + 1.2), centre.y + Math.sin(a) * (ry + 1.2)]).fill(i % 3 ? 0xb88055 : 0x648e91);
+    }
+    this.floor.addChild(g);
+  }
+  private path(points: Point[], g = this.ground): Graphics {
+    for (let i = 0; i < points.length; i++) { const p = groundToScreen(points[i]!, this.c); if (!i) g.moveTo(p.x, p.y); else g.lineTo(p.x, p.y); }
+    return g;
+  }
+  private circle(p: Vec, radius: number, colour: number, alpha = 1, fill = false): void {
+    const m = cameraMetrics(this.c), q = groundToScreen(p, this.c);
+    this.ground.ellipse(q.x, q.y, radius * m.pxPerMetreX, radius * m.pxPerMetreY);
+    if (fill) this.ground.fill({ color: colour, alpha }); else this.ground.stroke({ color: colour, width: m.outlinePx, alpha });
+  }
+  private locator(p: Vec, actualRadius: number, colour: number): void {
+    const radius = Math.max(actualRadius, contract.telegraph.minimum_ground_diameter_metres / 2);
+    // Separate radial ticks locate small threats. The solid line always gives the real hit boundary.
+    for (let i = 0; i < 12; i++) {
+      const a = i * Math.PI / 6;
+      this.path([{ x: p.x + Math.cos(a) * (radius + 0.13), y: p.y + Math.sin(a) * (radius + 0.13) }, { x: p.x + Math.cos(a) * (radius + 0.35), y: p.y + Math.sin(a) * (radius + 0.35) }]).stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
+    }
+  }
+  private area(p: Vec, radius: number, colour: number, progress: number): void {
+    this.circle(p, radius, colour); this.circle(p, radius * Math.max(0, Math.min(1, progress)), colour, 0.13, true); this.locator(p, radius, colour);
+  }
+  private lane(origin: Vec, target: Vec, range: number, width: number, colour: number): void {
+    const angle = Math.atan2(target.y - origin.y, target.x - origin.x), dx = Math.cos(angle), dy = Math.sin(angle), w = width / 2;
+    const end = { x: origin.x + dx * range, y: origin.y + dy * range };
+    this.path([{ x: origin.x - dy * w, y: origin.y + dx * w }, { x: end.x - dy * w, y: end.y + dx * w }, { x: end.x + dy * w, y: end.y - dx * w }, { x: origin.x + dy * w, y: origin.y - dx * w }]).closePath().fill({ color: colour, alpha: 0.12 }).stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
+    for (let d = 1; d < range; d += 1.5) this.path([{ x: origin.x + dx * d - dy * w, y: origin.y + dy * d + dx * w }, { x: origin.x + dx * (d + 0.6) + dy * w, y: origin.y + dy * (d + 0.6) - dx * w }]).stroke({ color: colour, width: cameraMetrics(this.c).resolutionScale, alpha: 0.6 });
+  }
+  private sector(origin: Vec, target: Vec, radius: number, degrees: number, colour: number): void {
+    this.path([origin, ...arcPoints(origin, radius, Math.atan2(target.y - origin.y, target.x - origin.x), degrees), origin]).fill({ color: colour, alpha: 0.13 }).stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
+    this.locator(origin, radius, colour);
+  }
+  render(state: ArenaState, player: Actor, c: Camera, alpha: number, aim: Vec, lastPerfect: number, debug: boolean): void {
+    this.c = c; this.debug = debug;
+    const m = cameraMetrics(c), g = this.ground, e = this.effects; g.clear(); e.clear();
+    this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY); this.floor.position.set(c.width / 2 - c.centre.x * m.pxPerMetreX, c.height / 2 - c.centre.y * m.pxPerMetreY);
+    for (const z of state.zones) { this.circle(z.pos, z.radiusM, z.kind === 'fog' ? 0x82969c : 0x398d98, 0.2, true); this.circle(z.pos, z.radiusM, 0x39818f, 0.65); }
+    for (const t of state.telegraphs) {
+      const colour = familyColour(t.family), progress = (state.tick - t.startTick) / Math.max(1, t.resolveTick - t.startTick);
+      if (t.kind === 'lane' || t.kind === 'charge') this.lane(t.origin, t.target, t.rangeM, t.widthM, colour);
+      else if (t.kind === 'area') this.area(t.target, t.widthM, colour, progress);
+      else if (t.kind === 'melee') this.sector(t.origin, t.target, t.rangeM, t.widthM, colour);
+      else { this.area(t.origin, 0.8, colour, progress); this.path([t.origin, t.target]).stroke({ color: colour, width: m.outlinePx, alpha: 0.3 }); }
+    }
+    for (const a of state.actors) {
+      if (a.pending?.kind === 'spell') {
+        const pending = a.pending, s = spells.find(s => s.id === pending.spellId)!;
+        const progress = (state.tick - pending.startTick) / Math.max(1, pending.releaseTick - pending.startTick), colour = familyColour(s.family);
+        if (s.kind === 'cone') this.sector(a.pos, pending.aim, s.rangeM, s.arcDeg, colour);
+        else if (s.kind === 'ring') this.area(a.pos, s.rangeM, colour, progress);
+        else if (s.kind === 'zone') this.area(pending.aim, s.radiusM, colour, progress);
+        else if (s.kind === 'target') {
+          const target = state.actors.find(candidate => candidate.id === pending.targetId);
+          if (target) this.area(target.pos, target.radius, colour, progress);
+        }
+        else if (s.kind === 'projectile' && s.family === 'unblockable') this.lane(a.pos, pending.aim, s.rangeM, (s.radiusM || runtime.geometry.projectileRadiusM) * 2, colour);
+        else this.area(a.pos, 0.8, colour, progress);
+      }
+      if (a.water.decoy) { this.circle(a.water.decoy.pos, 0.6, 0x327b9d, 0.4, true); this.locator(a.water.decoy.pos, 0.6, 0x327b9d); }
+    }
+    const bodies = state.actors.map(a => ({ id: a.id, a, foot: a.down ? a.pos : interpolate(a.previousPos, a.pos, alpha) })).sort(depthOrder);
+    this.sortedActorIds = bodies.map(b => b.id);
+    const live = new Set(bodies.map(b => b.id));
+    for (const [id, view] of this.actors) if (!live.has(id)) { view.root.destroy({ children: true }); this.actors.delete(id); }
+    for (const { a, foot } of bodies) {
+      const q = groundToScreen(foot, c);
+      const h = m.figureHeightPx * (a.enemy && ['cinder_hound','hush_moth'].includes(a.enemy.id) ? 0.65 : 1);
+      g.ellipse(q.x + h * 0.16, q.y + h * 0.02, h * 0.32, h * 0.09).fill({ color: ink, alpha: 0.2 });
+      this.circle(foot, a.radius, a.team === player.team ? 0x226580 : 0x89452f, 0.65);
+      if (a.absorb) {
+        const angle = Math.atan2(a.facing.y, a.facing.x), radius = contract.absorb.visual_radius_metres;
+        this.path(arcPoints(foot, radius, angle, combat.absorb.arcDeg)).stroke({ color: 0x205f78, width: m.outlinePx * 2.6 });
+        this.path(arcPoints(foot, radius, angle, combat.absorb.arcDeg)).stroke({ color: 0x9de9df, width: m.outlinePx * 1.3 });
+        for (const end of [angle - combat.absorb.arcDeg * Math.PI / 360, angle + combat.absorb.arcDeg * Math.PI / 360]) this.path([{ x: foot.x + Math.cos(end) * (radius - 0.18), y: foot.y + Math.sin(end) * (radius - 0.18) }, { x: foot.x + Math.cos(end) * (radius + 0.18), y: foot.y + Math.sin(end) * (radius + 0.18) }]).stroke({ color: 0x205f78, width: m.outlinePx });
+      }
+      let view = this.actors.get(a.id);
+      if (!view) { const root = new Container(), sprite = new Sprite(), details = new Graphics(); root.addChild(sprite, details); view = { root, sprite, details }; this.actors.set(a.id, view); }
+      this.figures.addChild(view.root); view.root.position.set(q.x, q.y); view.root.visible = q.x > -h && q.x < c.width + h && q.y > -h && q.y < c.height + h;
+      this.library.apply(view.sprite, a, player.team, h); const d = view.details; d.clear();
+      if (state.tick < a.water.encasedUntil) d.poly([-h * 0.3, 0, -h * 0.4, -h * 0.75, 0, -h * 1.1, h * 0.4, -h * 0.75, h * 0.3, 0]).fill({ color: 0x80d9e0, alpha: 0.45 }).stroke({ color: 0x216c88, width: m.outlinePx });
+      if (state.tick < a.immuneUntil) d.ellipse(0, -h / 2, h * 0.4, h * 0.56).stroke({ color: 0xfffbdd, width: m.outlinePx });
+      if (a.hp < a.maxHp && !a.down) { d.rect(-h * 0.35, -h - 10 * m.resolutionScale, h * 0.7, 4 * m.resolutionScale).fill(ink); d.rect(-h * 0.35, -h - 10 * m.resolutionScale, h * 0.7 * a.hp / a.maxHp, 4 * m.resolutionScale).fill(a.team === player.team ? 0x78c9ca : 0xc05e46); }
+      if (a.id === player.id) {
+        this.path([foot, { x: foot.x + a.facing.x * 1.1, y: foot.y + a.facing.y * 1.1 }]).stroke({ color: 0x216780, width: m.outlinePx });
+        if (this.debug) { d.moveTo(-h * 0.55, 0).lineTo(-h * 0.55, -h).moveTo(-h * 0.62, 0).lineTo(-h * 0.48, 0).moveTo(-h * 0.62, -h).lineTo(-h * 0.48, -h).stroke({ color: 0x202f37, width: 2 * m.resolutionScale }); }
+      }
+      // Keep distant enemies locatable when the follow camera or HUD hides their feet.
+      if (!a.down && a.team !== player.team && (q.x < 24 * m.resolutionScale || q.x > c.width - 24 * m.resolutionScale || q.y < 180 * m.resolutionScale || q.y > c.height - 240 * m.resolutionScale)) {
+        const dx = q.x - c.width / 2, dy = q.y - c.height / 2;
+        const tx = (c.width / 2 - 24 * m.resolutionScale) / Math.max(0.001, Math.abs(dx));
+        const ty = (c.height / 2 - (dy < 0 ? 180 : 240) * m.resolutionScale) / Math.max(0.001, Math.abs(dy));
+        const t = Math.min(1, tx, ty), x = c.width / 2 + dx * t, y = c.height / 2 + dy * t;
+        const angle = Math.atan2(dy, dx), size = 9 * m.resolutionScale;
+        e.poly([x + Math.cos(angle) * size, y + Math.sin(angle) * size, x + Math.cos(angle + 2.4) * size, y + Math.sin(angle + 2.4) * size, x + Math.cos(angle - 2.4) * size, y + Math.sin(angle - 2.4) * size]).fill(0xa34c36).stroke({ color: 0xf8e8ba, width: 2 * m.resolutionScale });
+      }
+    }
+    this.visibleProjectiles = 0;
+    for (const p of state.projectiles) {
+      const pos = interpolate(p.previousPos, p.pos, alpha), q = groundToScreen(pos, c);
+      const r = Math.max(p.radius * m.pxPerMetreY, m.projectileCorePx / 2);
+      if (q.x < -r || q.x > c.width + r || q.y < -r || q.y > c.height + r) continue;
+      this.visibleProjectiles++;
+      const colour = familyColour(p.family), speed = Math.hypot(p.velocity.x, p.velocity.y) || 1;
+      const tail = groundToScreen({ x: pos.x - p.velocity.x / speed * 0.65, y: pos.y - p.velocity.y / speed * 0.65 }, c);
+      e.moveTo(tail.x, tail.y).lineTo(q.x, q.y).stroke({ color: colour, width: r * 1.5, alpha: 0.6 });
+      e.circle(q.x, q.y, r + 2 * m.resolutionScale).fill(0xf8efd4);
+      if (p.family === 'physical') e.poly([q.x, q.y - r * 1.6, q.x + r, q.y, q.x, q.y + r * 1.6, q.x - r, q.y]).fill(colour);
+      else if (p.family === 'unblockable') e.star(q.x, q.y, 4, r * 1.7, r).fill(colour);
+      else e.circle(q.x, q.y, r).fill(colour);
+    }
+    if (seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS) this.circle(interpolate(player.previousPos, player.pos, alpha), 1.4 + seconds(state.tick - lastPerfect) * 5, 0xffffff, 1 - seconds(state.tick - lastPerfect) / runtime.presentation.perfectFlashS);
+    const target = groundToScreen(aim, c), cross = 7 * m.resolutionScale;
+    e.circle(target.x, target.y, cross).stroke({ color: ink, width: 1.5 * m.resolutionScale });
+    e.moveTo(target.x - cross * 1.5, target.y).lineTo(target.x + cross * 1.5, target.y).moveTo(target.x, target.y - cross * 1.5).lineTo(target.x, target.y + cross * 1.5).stroke({ color: ink, width: m.resolutionScale });
+    if (this.debug) {
+      const p = interpolate(player.previousPos, player.pos, alpha);
+      this.path([p, { x: p.x + contract.minimum_combatant_centre_separation_metres, y: p.y }]).stroke({ color: 0x243f47, width: 2 * m.resolutionScale, alpha: 0.7 });
+      this.path([p, { x: p.x, y: p.y + contract.minimum_combatant_centre_separation_metres }]).stroke({ color: 0x243f47, width: 2 * m.resolutionScale, alpha: 0.7 });
+    }
+    this.app.renderer.render(this.app.stage);
+  }
+}

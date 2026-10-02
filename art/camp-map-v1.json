@@ -1,0 +1,96 @@
+{
+  "version": "camp-map-v1",
+  "map_source": "art/review/sources/01-tessera-camp-a01.jpg",
+  "map_source_sha256": "6c041e4c9f61a5072007fd31e17bc77f91105d7d8dfe93c82f729de4e3a662ea",
+  "location_source": "docs/design/baseline-fourteen-nights/design/data/locations.csv",
+  "location_source_sha256": "a0761406c89343f3c5af52ae119a132397cf8b377f5c1c54a0e0df52e3492a92",
+  "slot_source": "docs/design/baseline-fourteen-nights/design/data/loops.json",
+  "slots": [
+    "day",
+    "dusk",
+    "night"
+  ],
+  "anchors": {
+    "yard": [
+      0.2,
+      0.23
+    ],
+    "cistern": [
+      0.53,
+      0.2
+    ],
+    "pit": [
+      0.8,
+      0.24
+    ],
+    "exchange": [
+      0.21,
+      0.52
+    ],
+    "commons": [
+      0.43,
+      0.43
+    ],
+    "door": [
+      0.655,
+      0.47
+    ],
+    "tent": [
+      0.36,
+      0.81
+    ],
+    "edge": [
+      0.89,
+      0.72
+    ]
+  },
+  "labels": {
+    "yard": [
+      0.2,
+      0.34
+    ],
+    "cistern": [
+      0.53,
+      0.3
+    ],
+    "pit": [
+      0.8,
+      0.35
+    ],
+    "exchange": [
+      0.18,
+      0.63
+    ],
+    "commons": [
+      0.43,
+      0.59
+    ],
+    "door": [
+      0.67,
+      0.62
+    ],
+    "tent": [
+      0.36,
+      0.92
+    ],
+    "edge": [
+      0.87,
+      0.84
+    ]
+  },
+  "palette": {
+    "ink": "#38291e",
+    "paper": "#f3e7c7",
+    "blue": "#236d84",
+    "clay": "#a64e39",
+    "gold": "#b48b47",
+    "night": "#172832"
+  },
+  "slot_overlays": {
+    "day": "transparent",
+    "dusk": "rgba(135,58,30,.18)",
+    "night": "rgba(10,25,48,.62)"
+  },
+  "scope": "authored art/UI presentation; availability read from locations.csv, no stat or travel logic",
+  "owner_accepted": false
+}

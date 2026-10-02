@@ -1,0 +1,28 @@
+{
+  "image_generation_calls": 0,
+  "changes": [
+    {
+      "artifact": "resource-heat",
+      "finding": "32 px alpha occupied the final row, violating one-pixel export margin",
+      "before_arc": "a12 12 0 1 1-14 0",
+      "after_arc": "a10 10 0 1 1-14 0",
+      "evidence": "art/waves/A5/first-export-rejection.json"
+    },
+    {
+      "artifact": "HUD line panel",
+      "finding": "Local diagnostic noted crowded small spell names",
+      "before": {
+        "panel_width_px": 564,
+        "line_label_px": 14,
+        "spell_label_px": 12
+      },
+      "after": {
+        "panel_width_px": 620,
+        "line_label_px": 16,
+        "spell_label_px": 14
+      },
+      "regraded": true
+    }
+  ],
+  "owner_accepted": false
+}

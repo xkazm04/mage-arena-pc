@@ -1,0 +1,80 @@
+{
+  "id": "01-tessera-story-ward-seam-a01",
+  "style_id": "01-tessera",
+  "scene": "story-ward-seam",
+  "attempt": 1,
+  "input_hash": "3839cbd906bef34d611e2e90ae9af3f348a68b0c60c95649769cacf198efe796",
+  "input": {
+    "version": "a4-v1",
+    "wave": "A4",
+    "style": {
+      "id": "01-tessera",
+      "name": "Tessera & Lime",
+      "line": "broken umber contours and hand-painted tessera joins",
+      "palette": "chalk, terracotta, ochre, mineral blue",
+      "shading": "flat fresco planes with sparse tile shadows",
+      "density": "medium, ornament confined to edges",
+      "mood": "sun-bleached civic grandeur and captivity",
+      "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+      "ui": {
+        "paper": "#f3e6c5",
+        "ink": "#38261f",
+        "accent": "#226b8b"
+      }
+    },
+    "scene": "story-ward-seam",
+    "aspect_ratio": "16:9",
+    "brief_hash": "e248fe2a08a2a5734aba974dff282339f5dd4dbe3c7e48f04f43ee5c6787bec4",
+    "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: illustration-story. Original Roman-era elemental-mage prison camp, Tessera & Lime hand-drawn digital fresco, broken umber contours, broad matte chalk-lime and terracotta planes, small mineral-blue tessera accents at edges. Flattened painted shadows, worn pigment, quiet civic restraint. No 3D render, photorealism, logos, lettering, numbers, text, modern objects, borrowed designs or active spellcasting. Full bleed 16:9; no ornamental border or interface.\n\nOne full-width symbolic narrative illustration, not a card layout. Close view of a small chipped corner in a chalk-lime wardstone, a simple dark line between two repaired blocks, a sprig of dry grass and loose tessera chips. Blue-grey dusk, no glowing beam, magical explosion or written runes."
+  },
+  "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: illustration-story. Original Roman-era elemental-mage prison camp, Tessera & Lime hand-drawn digital fresco, broken umber contours, broad matte chalk-lime and terracotta planes, small mineral-blue tessera accents at edges. Flattened painted shadows, worn pigment, quiet civic restraint. No 3D render, photorealism, logos, lettering, numbers, text, modern objects, borrowed designs or active spellcasting. Full bleed 16:9; no ornamental border or interface.\n\nOne full-width symbolic narrative illustration, not a card layout. Close view of a small chipped corner in a chalk-lime wardstone, a simple dark line between two repaired blocks, a sprig of dry grass and loose tessera chips. Blue-grey dusk, no glowing beam, magical explosion or written runes.",
+  "session_id": "07f862b1-accc-49e5-9f7f-cb5d182f9a28",
+  "origin": "grok-cli",
+  "model": "grok-4.7",
+  "seed": null,
+  "correction": null,
+  "wave": "A4",
+  "at": "2026-10-02T07:36:44.549438+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_gen",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "07f862b1-accc-49e5-9f7f-cb5d182f9a28",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-story-ward-seam-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "tool_calls": [
+    {
+      "name": "image_gen",
+      "arguments": {
+        "prompt": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.\n\nUse case: illustration-story. Original Roman-era elemental-mage prison camp, Tessera & Lime hand-drawn digital fresco, broken umber contours, broad matte chalk-lime and terracotta planes, small mineral-blue tessera accents at edges. Flattened painted shadows, worn pigment, quiet civic restraint. No 3D render, photorealism, logos, lettering, numbers, text, modern objects, borrowed designs or active spellcasting. Full bleed 16:9; no ornamental border or interface.\n\nOne full-width symbolic narrative illustration, not a card layout. Close view of a small chipped corner in a chalk-lime wardstone, a simple dark line between two repaired blocks, a sprig of dry grass and loose tessera chips. Blue-grey dusk, no glowing beam, magical explosion or written runes.",
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "tool_results": [
+    "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-story-ward-seam-a01\\\\07f862b1-accc-49e5-9f7f-cb5d182f9a28\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-story-ward-seam-a01\\\\07f862b1-accc-49e5-9f7f-cb5d182f9a28\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+  ],
+  "prompt_verbatim_verified": true,
+  "returncode": 0,
+  "source": "art/raw/01-tessera-story-ward-seam-a01/source.jpg",
+  "sha256": "349e731e3160c75b81d59195cf2d6bc16303dfb20f5966e0d6c91f7050d891a0",
+  "elapsed_seconds": 16.797
+}

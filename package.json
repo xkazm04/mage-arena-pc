@@ -12,7 +12,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "npm --prefix packages/core run data && tsc -p tsconfig.json && tsc -p packages/core/tsconfig.arena.json",
     "test": "vitest run && node --test packages/tools/replay/*.test.mjs",
     "lint": "eslint packages --max-warnings 0",
     "check:design": "node packages/tools/replay/cli.mjs check",
@@ -31,6 +31,7 @@
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.0",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "@playwright/test": "^1.63.0"
   }
 }

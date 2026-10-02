@@ -49,7 +49,7 @@ function campServer(): Plugin {
 }
 export default defineConfig({
   root,
-  publicDir: false,
+  publicDir: "public",
   plugins: [campServer()],
   server: { host: "127.0.0.1", port: 5173, strictPort: true },
   build: { outDir: "../../dist/game", emptyOutDir: true },

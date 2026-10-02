@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "errors": [],
+  "reviewed_artifacts": 3,
+  "scope": "review integrity; local models and agent do not approve owner feel",
+  "pending": [
+    {
+      "school": "fire",
+      "scope": "approved spell-line migration",
+      "dependency": "W8",
+      "reason": "Only individual reference spells exist in this checkout."
+    },
+    {
+      "school": "earth",
+      "scope": "line-specific icons",
+      "dependency": "W8",
+      "reason": "No spell-line catalogue exists in this checkout."
+    },
+    {
+      "school": "air",
+      "scope": "line-specific icons",
+      "dependency": "W8",
+      "reason": "No spell-line catalogue exists in this checkout."
+    }
+  ],
+  "owner_accepted": false,
+  "image_generation_calls": 0
+}

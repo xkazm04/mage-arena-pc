@@ -35,6 +35,8 @@ const pins: Record<string, [number, number]> = {
   edge: [0.87, 0.84],
 };
 export class CampScenes {
+  private observer?: ResizeObserver;
+  dispose() { this.observer?.disconnect(); this.app.destroy(true, { children: true }); }
   readonly app = new Application();
   readonly root = new Container();
   constructor(
@@ -59,14 +61,15 @@ export class CampScenes {
       "Camp scene. All actions also appear in the controls beside it.",
     );
     this.app.canvas.setAttribute("role", "img");
-    new ResizeObserver(() => {
+    this.observer = new ResizeObserver(() => {
       const width = host.clientWidth,
         height = host.clientHeight;
       const scale = Math.min(width / W, height / H);
       this.app.renderer.resize(width, height);
       this.root.scale.set(scale);
       this.root.position.set((width - W * scale) / 2, (height - H * scale) / 2);
-    }).observe(host);
+    });
+    this.observer.observe(host);
   }
   private rect(
     x: number,

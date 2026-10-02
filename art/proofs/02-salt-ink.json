@@ -1,0 +1,25 @@
+{
+  "job": "02-salt-ink-arena-a02",
+  "style_id": "02-salt-ink",
+  "source": "art/raw/02-salt-ink-arena-a02/source.jpg",
+  "sha256": "5f3efad380488a96a97b6d1d73a6f56bda1e1c9bdb459913d2ef60465db1a6eb",
+  "style_hash": "919e35c7c3be03c22e9ee10a3a77cdfdb7d04b820f2a9375a6256e03e2e67b46",
+  "pair_input_hash": "5f46ea176459caa83981c22d225e046bd87a5e40d6055a9846092ceb1e9f7cfe",
+  "verdict": "exploration-sibling-ready",
+  "reviewer": "executing-agent",
+  "note": "Direct pixels: pen hatching and parchment reserves, overhead arena floor with separated enemies; player faces upward beneath a cyan forward shield; orange fireball meets its top rim, with a distinct needle toward upper left. The needle resembles a drawn dart and the crescent is oversized, but the front/back protection is now visible. Style exploration sibling only.",
+  "owner_accepted": false,
+  "label": "authored direct pixel observation; not felt",
+  "gate": {
+    "verdict": "technical-pass",
+    "codes": [],
+    "metrics": {
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG",
+      "aspect": 1.7777777777777777,
+      "luminance_stddev": 37.51171122535452
+    },
+    "scope": "file, dimensions, aspect, alpha, contrast and hash only; semantics and taste not measured here"
+  }
+}

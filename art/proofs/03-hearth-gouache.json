@@ -1,0 +1,25 @@
+{
+  "job": "03-hearth-gouache-arena-a02",
+  "style_id": "03-hearth-gouache",
+  "source": "art/raw/03-hearth-gouache-arena-a02/source.jpg",
+  "sha256": "e8ee3d1b45b35dbf4374f4a9467f9bcc2e0cbaa76b780d4dac5abd3d9ffa7792",
+  "style_hash": "abb8d3b3f4941e3cf9ac43a48195117e1c2fb2b3a4cb84cfb60052e916368fc7",
+  "pair_input_hash": "130826151141b533881d7e59b9594e0cddc1e7805ee7b0913c5a62e54a01c1f0",
+  "verdict": "exploration-sibling-ready",
+  "reviewer": "executing-agent",
+  "note": "Actual pixels: chalky pastel gouache, soft edges and warm sand; elevated full-body mage below a forward cyan arc, orange projectile hits its upper rim, separated enemies and a thin outgoing cyan dart. The dart is very fine and the arc is oversized; concept only.",
+  "owner_accepted": false,
+  "label": "authored direct pixel observation; not felt",
+  "gate": {
+    "verdict": "technical-pass",
+    "codes": [],
+    "metrics": {
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG",
+      "aspect": 1.7777777777777777,
+      "luminance_stddev": 37.10951809931509
+    },
+    "scope": "file, dimensions, aspect, alpha, contrast and hash only; semantics and taste not measured here"
+  }
+}

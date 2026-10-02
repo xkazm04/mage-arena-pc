@@ -1,7 +1,7 @@
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 export default tseslint.config(
-  { ignores: ["dist/**", "node_modules/**", "packages/tools/replay/**"] },
+  { ignores: ["**/dist/**", "node_modules/**", "packages/tools/replay/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -15,7 +15,8 @@ export default tseslint.config(
     },
   },
   {
-    files: ["packages/core/**/*.ts"],
+    files: ["packages/core/src/**/*.ts"],
+    ignores: ["**/*.test.ts"],
     rules: {
       "no-restricted-imports": [
         "error",
@@ -35,5 +36,10 @@ export default tseslint.config(
         "performance",
       ],
     },
+  },
+  {
+    // Build/report scripts execute in Node; Playwright callbacks execute in Chromium.
+    files: ["packages/*/scripts/*.mjs"],
+    languageOptions: { globals: Object.fromEntries(["URL", "console", "process", "fetch", "setTimeout", "window", "document"].map(name => [name, "readonly"])) },
   },
 );

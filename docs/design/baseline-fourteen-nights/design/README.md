@@ -24,3 +24,11 @@ Every number is authored unless a file says otherwise; feel is the owner's to ce
 | `waves/plan.md` | All waves with gates and dependencies | every session |
 
 Consistency rule: when a number appears in two files, the data file wins and the other is a defect.
+
+Arena implementation amendment, W4 (2026-10-02): `spells-water.csv` and three HP entries in
+`enemies.json` were tuned against seeded fights in the arena stream, directly in these authorities.
+`spell-sheet-water.md` now reflects those damage values and D4 controls. The original `index.html`,
+gamepad/JVM wave card and loop-era prose are historical design context; the current project plan and
+`docs/waves/W2-*`, `W3-*`, `W4-*` govern execution. Original authored values remain in Git history.
+Do not create a second editable copy of these arena tables at integration; either keep the arena compiler's
+explicit baseline paths or move the authority and update its imports, carrying the W4 tuning with it.

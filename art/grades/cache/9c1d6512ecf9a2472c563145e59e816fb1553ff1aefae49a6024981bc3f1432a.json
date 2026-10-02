@@ -1,0 +1,98 @@
+{
+  "artifact": "a5-hud-borrowed",
+  "at": "2026-10-02T08:04:07.894296+00:00",
+  "input_hash": "9c1d6512ecf9a2472c563145e59e816fb1553ff1aefae49a6024981bc3f1432a",
+  "source": "art/delivery/a5/screens/hud-borrowed-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "162e0ee58feccf36232d9df29f5f2d49876ff23604cf88da338077eb3a657cf3",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Same distant arena HUD composition, selected first slot uses dashed outline and explicit Borrowed label. Assess that this UI state is readable without relying only on colour. No combat outcome or owner acceptance is asserted.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The UI is rendered as a clean, code-drawn HTML/SVG overlay on a stylized arena background. The composition matches the expected distant arena HUD layout: top-left context panel, top-center tier/timer bar, top-right flow meter, bottom-left vitals (Health/Mana/Stamina), bottom-center equipped lines, and bottom-right action hints. The first slot in the 'Equipped lines' panel is clearly selected, indicated by a dashed blue outline and the explicit text label 'Borrowed' beneath the skill name 'Tide Orb'. This selection state is readable without relying solely on color, as the dashed border and text provide non-color cues. All text is legible, with no overlapping elements obscuring controls or labels. The color palette aligns with the specified style: chalk-lime (background), umber (text/lines), terracotta (arena markers), and mineral blue (UI accents, player, water). No unintended watermarks, logos, or photographic inserts are present. The bottom banner 'AUTHORIZED HUD STUDY...' is part of the intended UI state per the prompt's allowance for code-drawn text. Minor note: the 'Flow 3/5' meter uses filled/unfilled diamonds, which is a standard non-color-dependent indicator. The 'Tier II' progress bar uses numbered segments with time labels, also readable via text. No defects in text size, overlap, or obscured controls were observed. The UI state is clear and self-contained.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The UI is rendered as a clean, code-drawn HTML/SVG overlay on a stylized arena background. The composition matches the expected distant arena HUD layout: top-left context panel, top-center tier/timer bar, top-right flow meter, bottom-left vitals (Health/Mana/Stamina), bottom-center equipped lines, and bottom-right action hints. The first slot in the 'Equipped lines' panel is clearly selected, indicated by a dashed blue outline and the explicit text label 'Borrowed' beneath the skill name 'Tide Orb'. This selection state is readable without relying solely on color, as the dashed border and text provide non-color cues. All text is legible, with no overlapping elements obscuring controls or labels. The color palette aligns with the specified style: chalk-lime (background), umber (text/lines), terracotta (arena markers), and mineral blue (UI accents, player, water). No unintended watermarks, logos, or photographic inserts are present. The bottom banner 'AUTHORIZED HUD STUDY...' is part of the intended UI state per the prompt's allowance for code-drawn text. Minor note: the 'Flow 3/5' meter uses filled/unfilled diamonds, which is a standard non-color-dependent indicator. The 'Tier II' progress bar uses numbered segments with time labels, also readable via text. No defects in text size, overlap, or obscured controls were observed. The UI state is clear and self-contained."
+  },
+  "eval_count": 367,
+  "elapsed_seconds": 17.125
+}

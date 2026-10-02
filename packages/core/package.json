@@ -2,5 +2,17 @@
   "name": "@mage/core",
   "private": true,
   "type": "module",
-  "exports": "./src/index.ts"
+  "exports": {
+    ".": "./src/index.ts",
+    "./arena": "./src/arena/index.ts"
+  },
+  "scripts": {
+    "data": "node scripts/compile-arena-data.mjs",
+    "build": "npm run data && tsc -p tsconfig.arena.json",
+    "test": "npm run data && vitest run",
+    "report:w2": "npm run data && tsx scripts/report-w2.ts",
+    "report:w3": "npm run data && tsx scripts/report-w3.ts",
+    "report:w4": "npm run data && tsx scripts/report-w4.ts",
+    "report:w4:ladder": "npm run data && tsx scripts/report-ladder.ts"
+  }
 }
