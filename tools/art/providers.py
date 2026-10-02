@@ -154,16 +154,20 @@ def generate(spec):
             if len(refused) > 1 or spec.get('rewrite_of') != refused[0]['id'] or spec['prompt'] == refused[0]['prompt']:
                 raise RuntimeError('ONE_EXPLICIT_MODERATION_REWRITE_REQUIRED')
         for j in old:
-            if j['status'] == 'generated':
-                if j['input_hash'] != digest(spec): raise RuntimeError('IMMUTABLE_BRIEF_CHANGED')
+            if j['status'] == 'generated' and j['input_hash'] == digest(spec):
                 if sha(ROOT / j['archive']) != j['sha256']: raise RuntimeError('ARCHIVE_CHANGED')
                 print(json.dumps({'resume': j['id'], 'new_calls': 0}), flush=True); return j
+        correcting = bool(old and spec.get('correction_of') == old[-1]['id'])
+        if old and old[-1]['status'] == 'generated':
+            rp = ART / 'waves' / spec['wave'] / 'reviews' / (old[-1]['id'] + '.json')
+            if not correcting or not rp.exists() or read(rp)['verdict'] != 'reject' or read(rp)['sha256'] != old[-1]['sha256']:
+                raise RuntimeError('HASH_BOUND_REJECTION_REQUIRED')
         order = spec.get('providers', ['agy', 'grok'])
         for provider in order:
             ok, reason = pb.available(provider)
             if not ok:
                 print(json.dumps({'skip_provider': provider, 'reason': reason}), flush=True); continue
-            if any(j.get('provider') == provider for j in old):
+            if any(j.get('provider') == provider for j in old) and not correcting and not spec.get('rewrite_of'):
                 continue  # never repeat an uncertain/refused attempt with the same brief
             exe = Path(r'C:\Users\kazda\AppData\Local\agy\bin\agy.exe') if provider == 'agy' else shutil.which('grok')
             if not exe or not Path(exe).exists():

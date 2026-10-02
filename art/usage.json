@@ -12187,6 +12187,822 @@
       "source": "art/raw/a7-arena-moonlit-agy-a01/source.png",
       "archive": "art/review/sources/a7-arena-moonlit-agy-a01.png",
       "sha256": "5f70fb89c6b79e67ea82ff4a3f8e9002bc6f0bb0e3a64d5f9e87568010d6af11"
+    },
+    {
+      "id": "a3c-cassia-poses-grok-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "cassia-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "cassia-poses",
+        "wave": "A3c",
+        "pilot": true,
+        "providers": [
+          "grok",
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+            "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+          }
+        ],
+        "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nUse the provided Moonchalk portrait as face, cloth, staff and painted-material reference. Create ONE sprite sheet: FOUR equally sized full-body WATER battle mage figures in a single horizontal row, clearly separated in four equal cells. Same adult woman Cassia in every cell, angular weathered face, dark curly hair, dark blue hood, pale ivory and pale blue layered lightweight cloth, worn silver clasps, belts with pouches and water-glass charms, tall wooden staff with silver crescent and glass orb. All are upright game billboards seen from a high 55-degree oblique camera, showing hood top and shoulders, compressed legs; three-quarter facing down-right. Left to right: braced ready stance; forward running stride; forceful staff casting gesture; defensive forward raised-hand absorb gesture holding staff back. Keep each full figure, staff, feet, cloth and small aura well inside its cell, at least 12 percent empty margins per cell. Compact blue mist and isolated droplets around lower body, no giant spell. Broad readable pale torso and dark silhouette edges designed to read at 40 pixels body height on a 1080p game screen. Solid perfectly uniform vivid magenta #FF00FF background, NO gradient, shadow on background, floor, panel lines, text, labels or borders. Do not use magenta in the figure. No anatomy overlap between cells. No grain or paper."
+      },
+      "input_hash": "572648b5f162d4a49e22c1fea178e4020ae61fa5d9b77b41fe84473de3fa11d4",
+      "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nUse the provided Moonchalk portrait as face, cloth, staff and painted-material reference. Create ONE sprite sheet: FOUR equally sized full-body WATER battle mage figures in a single horizontal row, clearly separated in four equal cells. Same adult woman Cassia in every cell, angular weathered face, dark curly hair, dark blue hood, pale ivory and pale blue layered lightweight cloth, worn silver clasps, belts with pouches and water-glass charms, tall wooden staff with silver crescent and glass orb. All are upright game billboards seen from a high 55-degree oblique camera, showing hood top and shoulders, compressed legs; three-quarter facing down-right. Left to right: braced ready stance; forward running stride; forceful staff casting gesture; defensive forward raised-hand absorb gesture holding staff back. Keep each full figure, staff, feet, cloth and small aura well inside its cell, at least 12 percent empty margins per cell. Compact blue mist and isolated droplets around lower body, no giant spell. Broad readable pale torso and dark silhouette edges designed to read at 40 pixels body height on a 1080p game screen. Solid perfectly uniform vivid magenta #FF00FF background, NO gradient, shadow on background, floor, panel lines, text, labels or borders. Do not use magenta in the figure. No anatomy overlap between cells. No grain or paper.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "e6310476-6e81-4fca-a8b9-9be8a89829b8",
+      "at": "2026-10-02T19:04:21.997061+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 33.407,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_edit",
+          "arguments": {
+            "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nUse the provided Moonchalk portrait as face, cloth, staff and painted-material reference. Create ONE sprite sheet: FOUR equally sized full-body WATER battle mage figures in a single horizontal row, clearly separated in four equal cells. Same adult woman Cassia in every cell, angular weathered face, dark curly hair, dark blue hood, pale ivory and pale blue layered lightweight cloth, worn silver clasps, belts with pouches and water-glass charms, tall wooden staff with silver crescent and glass orb. All are upright game billboards seen from a high 55-degree oblique camera, showing hood top and shoulders, compressed legs; three-quarter facing down-right. Left to right: braced ready stance; forward running stride; forceful staff casting gesture; defensive forward raised-hand absorb gesture holding staff back. Keep each full figure, staff, feet, cloth and small aura well inside its cell, at least 12 percent empty margins per cell. Compact blue mist and isolated droplets around lower body, no giant spell. Broad readable pale torso and dark silhouette edges designed to read at 40 pixels body height on a 1080p game screen. Solid perfectly uniform vivid magenta #FF00FF background, NO gradient, shadow on background, floor, panel lines, text, labels or borders. Do not use magenta in the figure. No anatomy overlap between cells. No grain or paper.",
+            "image": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a3c-cassia-poses-grok-a01\\reference-1.png"
+            ],
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a3c-cassia-poses-grok-a01/source.jpg",
+      "archive": "art/review/sources/a3c-cassia-poses-grok-a01.jpg",
+      "sha256": "6200512b803d01589e522240ed114f38a51402d716153d771017fbf645b20f66",
+      "invocation_evidence": "art/providers/runs/a3c-cassia-poses-grok-a01"
+    },
+    {
+      "id": "a3c-cassia-poses-agy-a02",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "cassia-poses",
+      "attempt": 2,
+      "input": {
+        "version": 2,
+        "id": "cassia-poses",
+        "wave": "A3c",
+        "pilot": true,
+        "correction_of": "a3c-cassia-poses-grok-a01",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+            "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+          }
+        ],
+        "prompt": "Create ONE square sprite sheet with FOUR separated Water mage pose keys arranged in a 2 by 2 grid on solid flat magenta #FF00FF. CAMERA IS THE MAIN REQUIREMENT: copy the distant high oblique view of the small water mage in reference-1.png. We look DOWN at hood top, shoulders, staff and shortened legs from about 55 degrees above ground. NOT eye level, NOT frontal character concept art. Each figure is a small complete upright game sprite with full staff, occupying only the central 55 percent of its cell height. Top left ready; top right running; bottom left staff casting; bottom right one hand forward absorbing with staff in other hand. All face diagonally down-right with visible top surfaces and compressed legs. Reference-2.png informs ONLY costume and face: adult woman, dark hood, pale blue/ivory layered cloth, worn silver fittings, belt pouches, crescent orb staff. Painterly game-scale volume, broad pale cloth masses, dark silhouette edge. Sparse compact water droplets/mist around feet, no large bubbles. Exactly one figure in each quadrant; generous clean magenta gutters, no panel lines, shadows, ground, text or labels. No grain, no paper, no texture over background. Original designs."
+      },
+      "input_hash": "3d3eb60238bcdd86ce6439fb47ca39c3a1ec7818c1b4e789da979dcf4f58b857",
+      "prompt": "Create ONE square sprite sheet with FOUR separated Water mage pose keys arranged in a 2 by 2 grid on solid flat magenta #FF00FF. CAMERA IS THE MAIN REQUIREMENT: copy the distant high oblique view of the small water mage in reference-1.png. We look DOWN at hood top, shoulders, staff and shortened legs from about 55 degrees above ground. NOT eye level, NOT frontal character concept art. Each figure is a small complete upright game sprite with full staff, occupying only the central 55 percent of its cell height. Top left ready; top right running; bottom left staff casting; bottom right one hand forward absorbing with staff in other hand. All face diagonally down-right with visible top surfaces and compressed legs. Reference-2.png informs ONLY costume and face: adult woman, dark hood, pale blue/ivory layered cloth, worn silver fittings, belt pouches, crescent orb staff. Painterly game-scale volume, broad pale cloth masses, dark silhouette edge. Sparse compact water droplets/mist around feet, no large bubbles. Exactly one figure in each quadrant; generous clean magenta gutters, no panel lines, shadows, ground, text or labels. No grain, no paper, no texture over background. Original designs.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "10f310de-7ea5-408a-9a68-4e93bd332a82",
+      "at": "2026-10-02T19:07:25.707695+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 61.063,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-cassia-poses-agy-a02/source.png",
+      "archive": "art/review/sources/a3c-cassia-poses-agy-a02.png",
+      "sha256": "ae581e19c6eba9a7ac831900e649ed6790dbb42d3571e123a84d860109d2bf14",
+      "invocation_evidence": "art/providers/runs/a3c-cassia-poses-agy-a02"
+    },
+    {
+      "id": "a3c-cassia-poses-agy-a03",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "cassia-poses",
+      "attempt": 3,
+      "input": {
+        "version": 3,
+        "id": "cassia-poses",
+        "wave": "A3c",
+        "pilot": true,
+        "correction_of": "a3c-cassia-poses-agy-a02",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          },
+          {
+            "path": "art/review/sources/a3c-cassia-poses-agy-a02.png",
+            "sha256": "ae581e19c6eba9a7ac831900e649ed6790dbb42d3571e123a84d860109d2bf14"
+          }
+        ],
+        "prompt": "ONE square 2x2 game sprite sheet, solid flat magenta background. Exactly four SMALL upright mage sprites, one per quadrant. CRITICAL CAMERA: high overhead isometric view, looking DOWN from 60 degrees ABOVE the ground, like the small figures in reference-1.png. NOT a character illustration photographed from the front. Show the TOP AND BACK of the hood, broad shoulder tops, shortened torso and VERY SHORT foreshortened legs. All four face AWAY FROM CAMERA toward the UPPER RIGHT, rear three-quarter view. Mostly back and shoulder, face only a tiny side sliver, never front of chest. Reference-2.png supplies ONLY the costume: pale ivory/blue layered split-hem cloth, dark blue hood/cape, silver clasps, belt pouches, crescent-orb staff. Top left braced ready; top right forward running; bottom left staff casting toward upper right; bottom right free hand forward absorbing toward upper right. Keep sprites small within cells, full bodies and staffs visible, clean broad magenta gutters, no labels or cell lines. Compact blue droplets near boots, no background shadows or floor. Painterly sculpted cloth planes, broken dark contour, no grain or paper. Original 2D game art, no 3D."
+      },
+      "input_hash": "19c2371d09a01fd26ff7598416bfc4394a9df76fc2312be74679b735267512c0",
+      "prompt": "ONE square 2x2 game sprite sheet, solid flat magenta background. Exactly four SMALL upright mage sprites, one per quadrant. CRITICAL CAMERA: high overhead isometric view, looking DOWN from 60 degrees ABOVE the ground, like the small figures in reference-1.png. NOT a character illustration photographed from the front. Show the TOP AND BACK of the hood, broad shoulder tops, shortened torso and VERY SHORT foreshortened legs. All four face AWAY FROM CAMERA toward the UPPER RIGHT, rear three-quarter view. Mostly back and shoulder, face only a tiny side sliver, never front of chest. Reference-2.png supplies ONLY the costume: pale ivory/blue layered split-hem cloth, dark blue hood/cape, silver clasps, belt pouches, crescent-orb staff. Top left braced ready; top right forward running; bottom left staff casting toward upper right; bottom right free hand forward absorbing toward upper right. Keep sprites small within cells, full bodies and staffs visible, clean broad magenta gutters, no labels or cell lines. Compact blue droplets near boots, no background shadows or floor. Painterly sculpted cloth planes, broken dark contour, no grain or paper. Original 2D game art, no 3D.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "18ab647f-56b9-4f16-bee4-69c85beb8ee2",
+      "at": "2026-10-02T19:12:37.997214+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 72.64,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-cassia-poses-agy-a03/source.png",
+      "archive": "art/review/sources/a3c-cassia-poses-agy-a03.png",
+      "sha256": "8ad95303358d6e6e0325dc3140c9f2aa228a44b5af09e8f0f0af55d2e3d1f3dc",
+      "invocation_evidence": "art/providers/runs/a3c-cassia-poses-agy-a03"
+    },
+    {
+      "id": "a3c-brennic-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "brennic-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "brennic-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Adult broad-shouldered man, shaved dark head and short copper beard, pale warm ivory layered battle cloth with burnt-orange split sash, dark short shoulder mantle, ember jars and hammered rings on belt, forked charred staff cradling an ember. Compact embers and heat.\nRead order poses: ready, running, staff casting, one hand forward absorbing. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Staff, accessories, light coloured layered cloth and compact elemental energy. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "abe934cd40b6ec46185410ef77f5904eb254ba42f0ea4f6ca9f512f99026600c",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Adult broad-shouldered man, shaved dark head and short copper beard, pale warm ivory layered battle cloth with burnt-orange split sash, dark short shoulder mantle, ember jars and hammered rings on belt, forked charred staff cradling an ember. Compact embers and heat.\nRead order poses: ready, running, staff casting, one hand forward absorbing. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Staff, accessories, light coloured layered cloth and compact elemental energy. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "7f7f2588-7fbe-4383-8ea3-7bda3362f2e0",
+      "at": "2026-10-02T19:17:39.834778+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 61.297,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-brennic-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-brennic-poses-agy-a01.png",
+      "sha256": "5a76ab2802eb54cb612395a9fb99a9135631b7673c6b50fb3fb3b54e2d68de86",
+      "invocation_evidence": "art/providers/runs/a3c-brennic-poses-agy-a01"
+    },
+    {
+      "id": "a3c-garran-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "garran-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "garran-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust.\nRead order poses: ready, running, staff casting, one hand forward absorbing. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Staff, accessories, light coloured layered cloth and compact elemental energy. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "f83fe84516c5a7e63e2e8785705e4ab6ca9ca1552d844ef615718e41ff254e00",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust.\nRead order poses: ready, running, staff casting, one hand forward absorbing. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Staff, accessories, light coloured layered cloth and compact elemental energy. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "5d381909-5751-4368-99e1-f188445f6ee3",
+      "at": "2026-10-02T19:20:05.250574+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 55.969,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-garran-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-garran-poses-agy-a01.png",
+      "sha256": "01208d763d1b0c1e33d1e0a9f039edc1d43b10c5d04f9144f34470cf155c3eb9",
+      "invocation_evidence": "art/providers/runs/a3c-garran-poses-agy-a01"
+    },
+    {
+      "id": "a3c-iskar-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "iskar-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "iskar-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Lean adult man, copper skin, long black hair tied high behind swept pale lilac hood, ivory layered cloth with two narrow trailing lilac panels, silver wire charms and belt tools, slender bifurcated silver-bound staff. Sparse wind wisps and tiny branching lightning.\nRead order poses: ready, running, staff casting, one hand forward absorbing. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Staff, accessories, light coloured layered cloth and compact elemental energy. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "17dff9ce53110d9d5432201609b19c7692a4a76982f1dd39266f6d46ed34c381",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Lean adult man, copper skin, long black hair tied high behind swept pale lilac hood, ivory layered cloth with two narrow trailing lilac panels, silver wire charms and belt tools, slender bifurcated silver-bound staff. Sparse wind wisps and tiny branching lightning.\nRead order poses: ready, running, staff casting, one hand forward absorbing. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Staff, accessories, light coloured layered cloth and compact elemental energy. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "e37320d1-212f-4fa4-835d-dfc641306fd8",
+      "at": "2026-10-02T19:22:16.435896+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 72.297,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-iskar-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-iskar-poses-agy-a01.png",
+      "sha256": "2b9af4905b2268b4b34c3002dabeb102472f12c645478ed90b958edfe6160c7a",
+      "invocation_evidence": "art/providers/runs/a3c-iskar-poses-agy-a01"
+    },
+    {
+      "id": "a3c-conscript-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "conscript-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "conscript-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "a1ae61f9468d7c2756bc7d72a014786a489159ee59b96647df9a7f28942e744a",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "eec15a05-0d77-44f0-95cb-25778e2ea6f9",
+      "at": "2026-10-02T19:23:29.674156+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 44.328,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-conscript-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-conscript-poses-agy-a01.png",
+      "sha256": "fae6566551bd0b69d1fcb8c23fb3a7fa14ae31cb345f6f7fc7d514ac8d85c4f0",
+      "invocation_evidence": "art/providers/runs/a3c-conscript-poses-agy-a01"
+    },
+    {
+      "id": "a3c-shieldman-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "shieldman-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "shieldman-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman legion heavy shield bearer, worn helmet and segmented iron torso plates, huge battered rectangular curved dark red shield with plain metal boss, short sword, leather sandals. Broad shield silhouette; no magic.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "aff9502da7e69602efdfaa9b2ce36aedf50e3a9f34ac98de9ff6457f9783d3ef",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman legion heavy shield bearer, worn helmet and segmented iron torso plates, huge battered rectangular curved dark red shield with plain metal boss, short sword, leather sandals. Broad shield silhouette; no magic.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "62ddc835-b5a9-4d2f-9592-0a81f61b4951",
+      "at": "2026-10-02T19:24:14.412207+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 63.593,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-shieldman-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-shieldman-poses-agy-a01.png",
+      "sha256": "d0bdf41ec0b48508044ab99c6fd0f54527d1ebc61612e3944acc853e506dfcea",
+      "invocation_evidence": "art/providers/runs/a3c-shieldman-poses-agy-a01"
+    },
+    {
+      "id": "a3c-slinger-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "slinger-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "slinger-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman auxiliary slinger, plain head wrap, dull sand short tunic, leather sling visibly extended, stone pouch on hip, no helmet, compact light human silhouette; no magical aura.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "71cfcb7225e89eb29c3e1de11e918e34a1589cdebcf5c6045d1628ad7f87be83",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman auxiliary slinger, plain head wrap, dull sand short tunic, leather sling visibly extended, stone pouch on hip, no helmet, compact light human silhouette; no magical aura.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "95d55819-ccf3-4042-a1fd-7cd2c03e38e6",
+      "at": "2026-10-02T19:25:18.612686+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 51.437,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-slinger-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-slinger-poses-agy-a01.png",
+      "sha256": "e56b50da3ce02101f0cb249de037f33bf6b72be8cdecb589a4027320a6e9ac86",
+      "invocation_evidence": "art/providers/runs/a3c-slinger-poses-agy-a01"
+    },
+    {
+      "id": "a3c-netter-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "netter-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "netter-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "16d4cb420a8ec723b8a722318df5da9da0fbdd4a70ea5c72fe4a6d10bd5e786f",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "8af1e505-e708-4990-bbf3-de41f8bf1204",
+      "at": "2026-10-02T19:26:10.412156+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 53.219,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-netter-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-netter-poses-agy-a01.png",
+      "sha256": "a288536214b3bd9df7ee54ecef5839ed70359a7240b239c46dea6012fd101890",
+      "invocation_evidence": "art/providers/runs/a3c-netter-poses-agy-a01"
+    },
+    {
+      "id": "a3c-cinder_hound-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "cinder_hound-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "cinder_hound-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical low lean canine made of charcoal-black cracked stone hide, ember seams, angular pointed ears, long jointed legs, compact flame tail. Four legs and distinct lean hound muzzle; no gore.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "01bc7957ba1d4eb638688c7f410932a678c7a80ca4a50841ec7af0d132c8df54",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical low lean canine made of charcoal-black cracked stone hide, ember seams, angular pointed ears, long jointed legs, compact flame tail. Four legs and distinct lean hound muzzle; no gore.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "c60d57d9-3bfa-4b8d-9e96-32881d65b2aa",
+      "at": "2026-10-02T19:27:03.847711+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 59.281,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-cinder_hound-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-cinder_hound-poses-agy-a01.png",
+      "sha256": "25915ce606f575ae7d9d0775232f539b62f07a175723b1de01ad9e2827b2257f",
+      "invocation_evidence": "art/providers/runs/a3c-cinder_hound-poses-agy-a01"
+    },
+    {
+      "id": "a3c-mire_maw-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "mire_maw-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "mire_maw-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical broad squat amphibian-like bog creature, four short splayed legs, heavy moss-green stone hide, broad round mouth, luminous turquoise throat sac, root tendrils and wet mist. Chunky artillery silhouette; intact non-gory creature.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "cb9b5f94a0187929084aeb9da7eeabe8d58dd050de7e60a55ae3437af4de81a2",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical broad squat amphibian-like bog creature, four short splayed legs, heavy moss-green stone hide, broad round mouth, luminous turquoise throat sac, root tendrils and wet mist. Chunky artillery silhouette; intact non-gory creature.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "c12ac163-7492-482c-aefd-1f67e6173584",
+      "at": "2026-10-02T19:28:03.314885+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 61.438,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-mire_maw-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-mire_maw-poses-agy-a01.png",
+      "sha256": "7ae6c3bcbfc1a4d96142508b694db0b40d01ba81de6091e9b69496d9c5cf7d6c",
+      "invocation_evidence": "art/providers/runs/a3c-mire_maw-poses-agy-a01"
+    },
+    {
+      "id": "a3c-thornback-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "thornback-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "thornback-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical heavy four-legged stone beast, squat broad body, blunt mineral horns and tall angular thorn-like back plates, ochre mineral seams, heavy blunt feet, small armored head. Charging wedge silhouette; no gore.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "c97a761734ab4351fc93246df89e60151cd0a2653c605f0fa3eb20e7d3cf2862",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical heavy four-legged stone beast, squat broad body, blunt mineral horns and tall angular thorn-like back plates, ochre mineral seams, heavy blunt feet, small armored head. Charging wedge silhouette; no gore.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "50a56dd3-8a68-4752-8f0d-a020e980c74f",
+      "at": "2026-10-02T19:29:04.950181+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 60.063,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-thornback-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-thornback-poses-agy-a01.png",
+      "sha256": "3c347da56718cf5bc40de09caefb8f97d6237d2eefac690f0ef77b74ad4c14ca",
+      "invocation_evidence": "art/providers/runs/a3c-thornback-poses-agy-a01"
+    },
+    {
+      "id": "a3c-hush_moth-poses-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "hush_moth-poses",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "hush_moth-poses",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/references/covenant/cassia-rear-run.png",
+            "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          }
+        ],
+        "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical oversized moth, four ragged triangular midnight-blue wings, pale silver wing veins and moonlike empty markings, small dark segmented body and fine antennae, restrained lilac wisps. Clear wing silhouette, no human face.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+      },
+      "input_hash": "317fe4219ce26c2c5a3bf48e39ec507999545c688a63d46fac1c711431792cd1",
+      "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical oversized moth, four ragged triangular midnight-blue wings, pale silver wing veins and moonlike empty markings, small dark segmented body and fine antennae, restrained lilac wisps. Clear wing silhouette, no human face.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "fa91bbcd-c438-430a-b61a-9083252d0b0d",
+      "at": "2026-10-02T19:30:05.186115+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 109.609,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-hush_moth-poses-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-hush_moth-poses-agy-a01.png",
+      "sha256": "4f1cd55b87e97e85737a772c8f37e1d73212be3df48ce111db6b680199b60a72",
+      "invocation_evidence": "art/providers/runs/a3c-hush_moth-poses-agy-a01"
+    },
+    {
+      "id": "a3c-elemental-effects-grok-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "elemental-effects",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "elemental-effects",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "grok",
+          "agy"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [],
+        "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nONE square 4 by 4 grid game VFX motif sheet with sixteen clearly isolated painted magic effects. Each cell contains one effect, generous completely empty flat magenta #FF00FF gutters, no lines or labels. Rows top to bottom: FIRE amber embers/heat; WATER icy blue droplets/mist; EARTH warm ochre stones/dust; AIR pale silver-lilac wind wisps/lightning. Columns left to right: compact horizontal projectile with bright core and short trail; small impact burst; low ground aura ring seen at high oblique 55-degree view with broken gaps; forward crescent absorb ward seen high oblique, open at rear. Effects are sharp hand-painted shapes with bright narrow cores and dark contour separation, broad simple readable forms, sparse particles; NOT fog clouds or generic blurry glow. Solid uniform magenta outside effect shapes, no magenta inside effects, no checkerboard, no shadow, no characters, no arena, no text. Each effect entirely within its own cell with at least 15 percent margin. Original stylized 2D fantasy magic, no grain or paper."
+      },
+      "input_hash": "fd38b4d24dc6da3ef405e23b4f883f75514810c53e19ffcde6be0f169fe1e722",
+      "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nONE square 4 by 4 grid game VFX motif sheet with sixteen clearly isolated painted magic effects. Each cell contains one effect, generous completely empty flat magenta #FF00FF gutters, no lines or labels. Rows top to bottom: FIRE amber embers/heat; WATER icy blue droplets/mist; EARTH warm ochre stones/dust; AIR pale silver-lilac wind wisps/lightning. Columns left to right: compact horizontal projectile with bright core and short trail; small impact burst; low ground aura ring seen at high oblique 55-degree view with broken gaps; forward crescent absorb ward seen high oblique, open at rear. Effects are sharp hand-painted shapes with bright narrow cores and dark contour separation, broad simple readable forms, sparse particles; NOT fog clouds or generic blurry glow. Solid uniform magenta outside effect shapes, no magenta inside effects, no checkerboard, no shadow, no characters, no arena, no text. Each effect entirely within its own cell with at least 15 percent margin. Original stylized 2D fantasy magic, no grain or paper.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "d3646fec-a876-43ee-84af-5cd7bd5f66d6",
+      "at": "2026-10-02T19:31:55.381617+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 24.094,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_gen",
+          "arguments": {
+            "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nONE square 4 by 4 grid game VFX motif sheet with sixteen clearly isolated painted magic effects. Each cell contains one effect, generous completely empty flat magenta #FF00FF gutters, no lines or labels. Rows top to bottom: FIRE amber embers/heat; WATER icy blue droplets/mist; EARTH warm ochre stones/dust; AIR pale silver-lilac wind wisps/lightning. Columns left to right: compact horizontal projectile with bright core and short trail; small impact burst; low ground aura ring seen at high oblique 55-degree view with broken gaps; forward crescent absorb ward seen high oblique, open at rear. Effects are sharp hand-painted shapes with bright narrow cores and dark contour separation, broad simple readable forms, sparse particles; NOT fog clouds or generic blurry glow. Solid uniform magenta outside effect shapes, no magenta inside effects, no checkerboard, no shadow, no characters, no arena, no text. Each effect entirely within its own cell with at least 15 percent margin. Original stylized 2D fantasy magic, no grain or paper.",
+            "aspect_ratio": "1:1"
+          }
+        }
+      ],
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a3c-elemental-effects-grok-a01/source.jpg",
+      "archive": "art/review/sources/a3c-elemental-effects-grok-a01.jpg",
+      "sha256": "9f52abd118d0da42772afabf84515a0e11af7e4fdb27213bbceef93a1d17af9b",
+      "invocation_evidence": "art/providers/runs/a3c-elemental-effects-grok-a01"
+    },
+    {
+      "id": "a3c-four-mages-painted-cast-agy-a01",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "four-mages-painted-cast",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "four-mages-painted-cast",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "16:9",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+          },
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+            "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+          }
+        ],
+        "prompt": "Create ONE wide 16:9 sheet of FOUR separate battle mage sprites in a single horizontal row on solid magenta #FF00FF, one mage per equal cell. Reference-1.png is the exact painted ARENA FIGURE style and high distant oblique camera. Reference-2.png is the realistic hand-painted cloth/metal/face material fidelity. NO cartoon outlines, NO comic book, NO cel shading, NO smooth plastic or clean generic character design. Dense rough brush-painted volumes with selectively broken edges and worn physical materials, NOT grain or paper texture. Four adult experienced battle mages seen from 55 degrees ABOVE the ground, rear three-quarter facing upper right, tops of heads and shoulders visible, short foreshortened legs. Each in a forceful staff-casting combat stance, NOT upright fashion model. Complete head-to-sole bodies and staffs fully inside cell, generous magenta margins. Left: FIRE broad man shaved dark head and copper beard, pale ivory layers, rust sash, charcoal mantle, forked ember staff, embers and heat. Second: WATER woman in dark blue hood and pale ivory/blue split layers, silver-glass charms, crescent orb staff, mist and droplets. Third: EARTH broad older deep-brown man with short grey beard, pale ochre shoulder cloth over ivory, stone charms, gnarled mineral staff, stones and dust. Fourth: AIR lean copper-skinned man, high black ponytail, pale ivory/lilac split layers, silver charms and slender fork staff, wisps and lightning. Realistic human proportions, rugged original fantasy equipment. Match the painterly gravity and light of the source references, not flat outlines. Magenta is perfectly flat only outside figures; no ground shadow, no grid, no text, no logo."
+      },
+      "input_hash": "0ac1bb877deda6de5bd5bc428b8ef05a14a430fc228b31f50b71d40408b24501",
+      "prompt": "Create ONE wide 16:9 sheet of FOUR separate battle mage sprites in a single horizontal row on solid magenta #FF00FF, one mage per equal cell. Reference-1.png is the exact painted ARENA FIGURE style and high distant oblique camera. Reference-2.png is the realistic hand-painted cloth/metal/face material fidelity. NO cartoon outlines, NO comic book, NO cel shading, NO smooth plastic or clean generic character design. Dense rough brush-painted volumes with selectively broken edges and worn physical materials, NOT grain or paper texture. Four adult experienced battle mages seen from 55 degrees ABOVE the ground, rear three-quarter facing upper right, tops of heads and shoulders visible, short foreshortened legs. Each in a forceful staff-casting combat stance, NOT upright fashion model. Complete head-to-sole bodies and staffs fully inside cell, generous magenta margins. Left: FIRE broad man shaved dark head and copper beard, pale ivory layers, rust sash, charcoal mantle, forked ember staff, embers and heat. Second: WATER woman in dark blue hood and pale ivory/blue split layers, silver-glass charms, crescent orb staff, mist and droplets. Third: EARTH broad older deep-brown man with short grey beard, pale ochre shoulder cloth over ivory, stone charms, gnarled mineral staff, stones and dust. Fourth: AIR lean copper-skinned man, high black ponytail, pale ivory/lilac split layers, silver charms and slender fork staff, wisps and lightning. Realistic human proportions, rugged original fantasy equipment. Match the painterly gravity and light of the source references, not flat outlines. Magenta is perfectly flat only outside figures; no ground shadow, no grid, no text, no logo.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "94d4095d-4fe1-47ef-85d0-b02dab1dea14",
+      "at": "2026-10-02T19:33:57.406583+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 52.062,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-four-mages-painted-cast-agy-a01/source.png",
+      "archive": "art/review/sources/a3c-four-mages-painted-cast-agy-a01.png",
+      "sha256": "ba8392bdbb2079ea0a2e7a17d4544efdb4410f4bb776e173f3875361d5583d6d",
+      "invocation_evidence": "art/providers/runs/a3c-four-mages-painted-cast-agy-a01"
+    },
+    {
+      "id": "a3c-elemental-effects-agy-a02",
+      "wave": "A3c",
+      "style_id": "covenant",
+      "scene": "elemental-effects",
+      "attempt": 2,
+      "input": {
+        "version": 2,
+        "id": "elemental-effects",
+        "wave": "A3c",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [],
+        "prompt": "Generate ONE square 4x4 sheet of sixteen FREE-FLOATING MAGIC EFFECTS on a single perfectly uniform pure magenta #FF00FF background. No cards, rectangles, panels or grid lines: the same magenta goes inside all empty holes and between all particles. Effects are raw painted energy, NOT objects or icons. No metal rims, arrowheads, stones forming circular frames, physical shields or borders. Four rows: fire embers/flame; water liquid/mist/droplets; earth loose angular stone motes/dust; air wind/lightning. Four columns: a small narrow energy projectile with bright core and short trail; compact impact burst; low broken aura swirl viewed from high oblique camera; thin open crescent of energy, rear visibly empty. Original dark fantasy hand-painted VFX with rich organic detail, no cartoon outline, no grain, no paper. Each motif fits within the central 65 percent of its cell with generous blank magenta around it. Keep colours amber, icy blue, ochre and silver-lilac respectively; no magenta in effect pigments. No text, labels, characters, floor or shadows. Bright cores and sparse particles, not a blurry opaque cloud.",
+        "correction_of": "a3c-elemental-effects-grok-a01"
+      },
+      "input_hash": "61ca1ca47b19195488b4c4163f888a4b01fd02fdfc9d9653606a044b4e8cf982",
+      "prompt": "Generate ONE square 4x4 sheet of sixteen FREE-FLOATING MAGIC EFFECTS on a single perfectly uniform pure magenta #FF00FF background. No cards, rectangles, panels or grid lines: the same magenta goes inside all empty holes and between all particles. Effects are raw painted energy, NOT objects or icons. No metal rims, arrowheads, stones forming circular frames, physical shields or borders. Four rows: fire embers/flame; water liquid/mist/droplets; earth loose angular stone motes/dust; air wind/lightning. Four columns: a small narrow energy projectile with bright core and short trail; compact impact burst; low broken aura swirl viewed from high oblique camera; thin open crescent of energy, rear visibly empty. Original dark fantasy hand-painted VFX with rich organic detail, no cartoon outline, no grain, no paper. Each motif fits within the central 65 percent of its cell with generous blank magenta around it. Keep colours amber, icy blue, ochre and silver-lilac respectively; no magenta in effect pigments. No text, labels, characters, floor or shadows. Bright cores and sparse particles, not a blurry opaque cloud.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "758c4b1e-a671-48ab-a642-7bc1db17a149",
+      "at": "2026-10-02T19:37:44.844544+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 36.031,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a3c-elemental-effects-agy-a02/source.png",
+      "archive": "art/review/sources/a3c-elemental-effects-agy-a02.png",
+      "sha256": "3d29c31f02ea1514aac38fa80ec9bc84420d171c4517a53b531b57fc18c4e8c2",
+      "invocation_evidence": "art/providers/runs/a3c-elemental-effects-agy-a02"
     }
   ],
   "events": [
@@ -14489,6 +15305,261 @@
       "event": "generated",
       "id": "a7-arena-moonlit-agy-a01",
       "at": "2026-10-02T19:00:49.685403+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-cassia-poses-grok-a01",
+      "at": "2026-10-02T19:04:21.997061+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-cassia-poses-grok-a01",
+      "at": "2026-10-02T19:04:22.032876+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-cassia-poses-grok-a01",
+      "at": "2026-10-02T19:04:55.548913+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-cassia-poses-agy-a02",
+      "at": "2026-10-02T19:07:25.707695+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-cassia-poses-agy-a02",
+      "at": "2026-10-02T19:07:25.754845+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-cassia-poses-agy-a02",
+      "at": "2026-10-02T19:08:26.885518+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-cassia-poses-agy-a03",
+      "at": "2026-10-02T19:12:37.997214+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-cassia-poses-agy-a03",
+      "at": "2026-10-02T19:12:38.045033+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-cassia-poses-agy-a03",
+      "at": "2026-10-02T19:13:50.795856+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-brennic-poses-agy-a01",
+      "at": "2026-10-02T19:17:39.834778+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-brennic-poses-agy-a01",
+      "at": "2026-10-02T19:17:40.049753+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-brennic-poses-agy-a01",
+      "at": "2026-10-02T19:18:41.526908+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-garran-poses-agy-a01",
+      "at": "2026-10-02T19:20:05.250574+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-garran-poses-agy-a01",
+      "at": "2026-10-02T19:20:05.344604+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-garran-poses-agy-a01",
+      "at": "2026-10-02T19:21:01.548398+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-iskar-poses-agy-a01",
+      "at": "2026-10-02T19:22:16.435896+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-iskar-poses-agy-a01",
+      "at": "2026-10-02T19:22:16.497654+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-iskar-poses-agy-a01",
+      "at": "2026-10-02T19:23:29.498944+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-conscript-poses-agy-a01",
+      "at": "2026-10-02T19:23:29.674156+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-conscript-poses-agy-a01",
+      "at": "2026-10-02T19:23:29.735480+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-conscript-poses-agy-a01",
+      "at": "2026-10-02T19:24:14.144844+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-shieldman-poses-agy-a01",
+      "at": "2026-10-02T19:24:14.412207+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-shieldman-poses-agy-a01",
+      "at": "2026-10-02T19:24:14.589430+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-shieldman-poses-agy-a01",
+      "at": "2026-10-02T19:25:18.452683+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-slinger-poses-agy-a01",
+      "at": "2026-10-02T19:25:18.612686+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-slinger-poses-agy-a01",
+      "at": "2026-10-02T19:25:18.688712+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-slinger-poses-agy-a01",
+      "at": "2026-10-02T19:26:10.210595+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-netter-poses-agy-a01",
+      "at": "2026-10-02T19:26:10.412156+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-netter-poses-agy-a01",
+      "at": "2026-10-02T19:26:10.480434+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-netter-poses-agy-a01",
+      "at": "2026-10-02T19:27:03.764877+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-cinder_hound-poses-agy-a01",
+      "at": "2026-10-02T19:27:03.847711+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-cinder_hound-poses-agy-a01",
+      "at": "2026-10-02T19:27:03.898022+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-cinder_hound-poses-agy-a01",
+      "at": "2026-10-02T19:28:03.228894+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-mire_maw-poses-agy-a01",
+      "at": "2026-10-02T19:28:03.314885+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-mire_maw-poses-agy-a01",
+      "at": "2026-10-02T19:28:03.364876+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-mire_maw-poses-agy-a01",
+      "at": "2026-10-02T19:29:04.875692+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-thornback-poses-agy-a01",
+      "at": "2026-10-02T19:29:04.950181+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-thornback-poses-agy-a01",
+      "at": "2026-10-02T19:29:04.991367+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-thornback-poses-agy-a01",
+      "at": "2026-10-02T19:30:05.114408+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-hush_moth-poses-agy-a01",
+      "at": "2026-10-02T19:30:05.186115+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-hush_moth-poses-agy-a01",
+      "at": "2026-10-02T19:30:05.224145+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-hush_moth-poses-agy-a01",
+      "at": "2026-10-02T19:31:54.970793+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-elemental-effects-grok-a01",
+      "at": "2026-10-02T19:31:55.381617+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-elemental-effects-grok-a01",
+      "at": "2026-10-02T19:31:55.502492+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-elemental-effects-grok-a01",
+      "at": "2026-10-02T19:32:19.723478+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-four-mages-painted-cast-agy-a01",
+      "at": "2026-10-02T19:33:57.406583+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-four-mages-painted-cast-agy-a01",
+      "at": "2026-10-02T19:33:57.445530+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-four-mages-painted-cast-agy-a01",
+      "at": "2026-10-02T19:34:49.573034+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a3c-elemental-effects-agy-a02",
+      "at": "2026-10-02T19:37:44.844544+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a3c-elemental-effects-agy-a02",
+      "at": "2026-10-02T19:37:44.891055+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a3c-elemental-effects-agy-a02",
+      "at": "2026-10-02T19:38:20.988699+00:00"
     }
   ],
   "stop_cleared": {

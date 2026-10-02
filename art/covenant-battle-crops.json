@@ -1,0 +1,743 @@
+{
+  "schema": 1,
+  "entities": [
+    {
+      "id": "cassia",
+      "kind": "mage",
+      "job": "a3c-cassia-poses-agy-a03",
+      "frames": [
+        {
+          "state": "run",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            78,
+            409
+          ],
+          "foot": [
+            789,
+            407
+          ]
+        },
+        {
+          "state": "absorb",
+          "crop": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "body_y": [
+            588,
+            951
+          ],
+          "foot": [
+            763,
+            948
+          ]
+        }
+      ],
+      "excluded_cells": [
+        0,
+        2
+      ],
+      "exclusion": "front/low camera keys excluded"
+    },
+    {
+      "id": "brennic",
+      "kind": "mage",
+      "job": "a3c-brennic-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            37,
+            481
+          ],
+          "foot": [
+            258,
+            475
+          ]
+        },
+        {
+          "state": "run",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            57,
+            469
+          ],
+          "foot": [
+            829,
+            447
+          ]
+        },
+        {
+          "state": "cast",
+          "crop": [
+            0,
+            512,
+            620,
+            1024
+          ],
+          "body_y": [
+            572,
+            990
+          ],
+          "foot": [
+            248,
+            975
+          ]
+        },
+        {
+          "state": "absorb",
+          "crop": [
+            540,
+            512,
+            1024,
+            1024
+          ],
+          "body_y": [
+            551,
+            997
+          ],
+          "foot": [
+            748,
+            982
+          ]
+        }
+      ]
+    },
+    {
+      "id": "garran",
+      "kind": "mage",
+      "job": "a3c-garran-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            58,
+            490
+          ],
+          "foot": [
+            255,
+            479
+          ]
+        },
+        {
+          "state": "run",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            77,
+            443
+          ],
+          "foot": [
+            828,
+            424
+          ]
+        },
+        {
+          "state": "cast",
+          "crop": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "body_y": [
+            585,
+            1001
+          ],
+          "foot": [
+            242,
+            984
+          ]
+        },
+        {
+          "state": "absorb",
+          "crop": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "body_y": [
+            583,
+            1000
+          ],
+          "foot": [
+            744,
+            981
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iskar",
+      "kind": "mage",
+      "job": "a3c-iskar-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            62,
+            470
+          ],
+          "foot": [
+            264,
+            456
+          ]
+        },
+        {
+          "state": "run",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            59,
+            437
+          ],
+          "foot": [
+            826,
+            422
+          ]
+        },
+        {
+          "state": "cast",
+          "crop": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "body_y": [
+            578,
+            973
+          ],
+          "foot": [
+            249,
+            957
+          ]
+        },
+        {
+          "state": "absorb",
+          "crop": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "body_y": [
+            573,
+            978
+          ],
+          "foot": [
+            751,
+            961
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conscript",
+      "kind": "soldier",
+      "job": "a3c-conscript-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            4,
+            4,
+            507,
+            507
+          ],
+          "body_y": [
+            71,
+            467
+          ],
+          "foot": [
+            248,
+            454
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            517,
+            4,
+            1020,
+            507
+          ],
+          "body_y": [
+            80,
+            430
+          ],
+          "foot": [
+            811,
+            414
+          ]
+        },
+        {
+          "state": "release",
+          "crop": [
+            517,
+            517,
+            1020,
+            1020
+          ],
+          "body_y": [
+            622,
+            978
+          ],
+          "foot": [
+            722,
+            948
+          ]
+        }
+      ],
+      "exclusion": "Frontal overhead spear windup excluded."
+    },
+    {
+      "id": "shieldman",
+      "kind": "soldier",
+      "job": "a3c-shieldman-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            48,
+            491
+          ],
+          "foot": [
+            284,
+            478
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            56,
+            506
+          ],
+          "foot": [
+            803,
+            491
+          ]
+        }
+      ],
+      "exclusion": "Attack keys mismatch baseline attack or clip; static concept evidence only."
+    },
+    {
+      "id": "slinger",
+      "kind": "soldier",
+      "job": "a3c-slinger-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            47,
+            476
+          ],
+          "foot": [
+            278,
+            461
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            54,
+            468
+          ],
+          "foot": [
+            798,
+            444
+          ]
+        }
+      ]
+    },
+    {
+      "id": "netter",
+      "kind": "soldier",
+      "job": "a3c-netter-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            52,
+            472
+          ],
+          "foot": [
+            273,
+            451
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            52,
+            478
+          ],
+          "foot": [
+            750,
+            456
+          ]
+        }
+      ],
+      "exclusion": "Attack keys mismatch baseline attack or clip; static concept evidence only."
+    },
+    {
+      "id": "cinder_hound",
+      "kind": "creature",
+      "job": "a3c-cinder_hound-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            70,
+            486
+          ],
+          "foot": [
+            248,
+            462
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            78,
+            449
+          ],
+          "foot": [
+            762,
+            428
+          ]
+        },
+        {
+          "state": "windup",
+          "crop": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "body_y": [
+            568,
+            997
+          ],
+          "foot": [
+            240,
+            970
+          ]
+        },
+        {
+          "state": "release",
+          "crop": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "body_y": [
+            581,
+            987
+          ],
+          "foot": [
+            750,
+            956
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mire_maw",
+      "kind": "creature",
+      "job": "a3c-mire_maw-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            86,
+            408
+          ],
+          "foot": [
+            251,
+            386
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            119,
+            418
+          ],
+          "foot": [
+            762,
+            394
+          ]
+        },
+        {
+          "state": "windup",
+          "crop": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "body_y": [
+            590,
+            986
+          ],
+          "foot": [
+            241,
+            950
+          ]
+        },
+        {
+          "state": "release",
+          "crop": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "body_y": [
+            644,
+            945
+          ],
+          "foot": [
+            741,
+            914
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thornback",
+      "kind": "creature",
+      "job": "a3c-thornback-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            137,
+            473
+          ],
+          "foot": [
+            256,
+            449
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            143,
+            458
+          ],
+          "foot": [
+            767,
+            431
+          ]
+        },
+        {
+          "state": "windup",
+          "crop": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "body_y": [
+            654,
+            984
+          ],
+          "foot": [
+            256,
+            952
+          ]
+        },
+        {
+          "state": "release",
+          "crop": [
+            512,
+            512,
+            1024,
+            1024
+          ],
+          "body_y": [
+            645,
+            984
+          ],
+          "foot": [
+            765,
+            956
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hush_moth",
+      "kind": "creature",
+      "job": "a3c-hush_moth-poses-agy-a01",
+      "frames": [
+        {
+          "state": "ready",
+          "crop": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "body_y": [
+            90,
+            473
+          ],
+          "foot": [
+            269,
+            397
+          ]
+        },
+        {
+          "state": "move",
+          "crop": [
+            512,
+            0,
+            1024,
+            512
+          ],
+          "body_y": [
+            75,
+            445
+          ],
+          "foot": [
+            770,
+            418
+          ]
+        },
+        {
+          "state": "windup",
+          "crop": [
+            0,
+            512,
+            512,
+            1024
+          ],
+          "body_y": [
+            558,
+            924
+          ],
+          "foot": [
+            253,
+            889
+          ]
+        }
+      ]
+    }
+  ]
+}

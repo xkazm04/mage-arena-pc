@@ -1,0 +1,49 @@
+{
+  "id": "a3c-cassia-poses-agy-a02",
+  "wave": "A3c",
+  "style_id": "covenant",
+  "scene": "cassia-poses",
+  "attempt": 2,
+  "input": {
+    "version": 2,
+    "id": "cassia-poses",
+    "wave": "A3c",
+    "pilot": true,
+    "correction_of": "a3c-cassia-poses-grok-a01",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+      }
+    ],
+    "prompt": "Create ONE square sprite sheet with FOUR separated Water mage pose keys arranged in a 2 by 2 grid on solid flat magenta #FF00FF. CAMERA IS THE MAIN REQUIREMENT: copy the distant high oblique view of the small water mage in reference-1.png. We look DOWN at hood top, shoulders, staff and shortened legs from about 55 degrees above ground. NOT eye level, NOT frontal character concept art. Each figure is a small complete upright game sprite with full staff, occupying only the central 55 percent of its cell height. Top left ready; top right running; bottom left staff casting; bottom right one hand forward absorbing with staff in other hand. All face diagonally down-right with visible top surfaces and compressed legs. Reference-2.png informs ONLY costume and face: adult woman, dark hood, pale blue/ivory layered cloth, worn silver fittings, belt pouches, crescent orb staff. Painterly game-scale volume, broad pale cloth masses, dark silhouette edge. Sparse compact water droplets/mist around feet, no large bubbles. Exactly one figure in each quadrant; generous clean magenta gutters, no panel lines, shadows, ground, text or labels. No grain, no paper, no texture over background. Original designs."
+  },
+  "input_hash": "3d3eb60238bcdd86ce6439fb47ca39c3a1ec7818c1b4e789da979dcf4f58b857",
+  "prompt": "Create ONE square sprite sheet with FOUR separated Water mage pose keys arranged in a 2 by 2 grid on solid flat magenta #FF00FF. CAMERA IS THE MAIN REQUIREMENT: copy the distant high oblique view of the small water mage in reference-1.png. We look DOWN at hood top, shoulders, staff and shortened legs from about 55 degrees above ground. NOT eye level, NOT frontal character concept art. Each figure is a small complete upright game sprite with full staff, occupying only the central 55 percent of its cell height. Top left ready; top right running; bottom left staff casting; bottom right one hand forward absorbing with staff in other hand. All face diagonally down-right with visible top surfaces and compressed legs. Reference-2.png informs ONLY costume and face: adult woman, dark hood, pale blue/ivory layered cloth, worn silver fittings, belt pouches, crescent orb staff. Painterly game-scale volume, broad pale cloth masses, dark silhouette edge. Sparse compact water droplets/mist around feet, no large bubbles. Exactly one figure in each quadrant; generous clean magenta gutters, no panel lines, shadows, ground, text or labels. No grain, no paper, no texture over background. Original designs.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "10f310de-7ea5-408a-9a68-4e93bd332a82",
+  "at": "2026-10-02T19:07:25.707695+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 61.063,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a3c-cassia-poses-agy-a02/source.png",
+  "archive": "art/review/sources/a3c-cassia-poses-agy-a02.png",
+  "sha256": "ae581e19c6eba9a7ac831900e649ed6790dbb42d3571e123a84d860109d2bf14",
+  "invocation_evidence": "art/providers/runs/a3c-cassia-poses-agy-a02"
+}

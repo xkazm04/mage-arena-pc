@@ -198,7 +198,7 @@ Decisions:
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
 | Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | delivered for owner review; see docs/waves/A7-covenant-bible.md |
-| Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | not started |
+| Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | partial owner-review delivery: 12 identities, 38 keys; pose/style backlog |
 | Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | not started |
 | Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | not started |
 | Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | not started |
@@ -222,3 +222,15 @@ images; 162/240 project charges, 78 remain, no live incident. Check A7 + browser
 PASS; 50 tests PASS. Exact agy internal tool prompt unverified; CLI request and
 outputs archived. Owner acceptance, engine motion/performance not measured.
 Inherited historical A3 failures remain. Next A3c; no push.
+
+### ART session 5 ? A3c ? 2026-10-02
+
+A7 committed as 67edc02. Delivered 12 identity candidates, 38 reviewed pose keys,
+12 RGBA atlases, 20 native effects, 12 keyed painted motifs, six native palette/
+resolution composites and scale strip. Kept four source rejects and excluded
+incorrect/clipped subframes. Partial pose set and stronger-than-reference outlines
+are explicit backlog, not acceptance. Seventeen images charged; cumulative
+179/240, 61 remain, both stops clear. Battle/board/browser integrity PASS;
+54 tests PASS. First 159 ledger jobs unchanged. Local source/composite diagnostics
+reject or route owner only. Engine motion, performance, owner feel not measured.
+Next A5b; contract 06cd5e4 unchanged; no push.

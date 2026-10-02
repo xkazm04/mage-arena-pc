@@ -1,0 +1,48 @@
+{
+  "id": "a3c-mire_maw-poses-agy-a01",
+  "wave": "A3c",
+  "style_id": "covenant",
+  "scene": "mire_maw-poses",
+  "attempt": 1,
+  "input": {
+    "version": 1,
+    "id": "mire_maw-poses",
+    "wave": "A3c",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/references/covenant/cassia-rear-run.png",
+        "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+      }
+    ],
+    "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical broad squat amphibian-like bog creature, four short splayed legs, heavy moss-green stone hide, broad round mouth, luminous turquoise throat sac, root tendrils and wet mist. Chunky artillery silhouette; intact non-gory creature.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+  },
+  "input_hash": "cb9b5f94a0187929084aeb9da7eeabe8d58dd050de7e60a55ae3437af4de81a2",
+  "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Raw magical broad squat amphibian-like bog creature, four short splayed legs, heavy moss-green stone hide, broad round mouth, luminous turquoise throat sac, root tendrils and wet mist. Chunky artillery silhouette; intact non-gory creature.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "c12ac163-7492-482c-aefd-1f67e6173584",
+  "at": "2026-10-02T19:28:03.314885+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 61.438,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a3c-mire_maw-poses-agy-a01/source.png",
+  "archive": "art/review/sources/a3c-mire_maw-poses-agy-a01.png",
+  "sha256": "7ae6c3bcbfc1a4d96142508b694db0b40d01ba81de6091e9b69496d9c5cf7d6c",
+  "invocation_evidence": "art/providers/runs/a3c-mire_maw-poses-agy-a01"
+}

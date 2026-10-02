@@ -1,3 +1,11 @@
+# A3c session 5 update
+
+[Battle board](review/a3c/index.html): 12 identities, 38 reviewed keys, 12 atlases,
+32 effect sprites, six native composites. Integrity passes; four source rejects
+and excluded subframes remain visible. Pose/camera/style continuity is partial;
+no full animation or owner acceptance. 179/240 project charges, 61 remain.
+See [wave note](../docs/waves/A3c-covenant-battle.md) for actual tests and backlog.
+
 # Current boundary ? Covenant session 5
 
 Owner chose the Covenant family and Moonchalk portrait style under D16?D20.

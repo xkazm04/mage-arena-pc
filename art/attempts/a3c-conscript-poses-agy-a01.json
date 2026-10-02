@@ -1,0 +1,48 @@
+{
+  "id": "a3c-conscript-poses-agy-a01",
+  "wave": "A3c",
+  "style_id": "covenant",
+  "scene": "conscript-poses",
+  "attempt": 1,
+  "input": {
+    "version": 1,
+    "id": "conscript-poses",
+    "wave": "A3c",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/references/covenant/cassia-rear-run.png",
+        "sha256": "7ba4a195bfe7dd87ef23e598393d1ad322a1cb5f2474fef32956adec591a6e73"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+      }
+    ],
+    "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art."
+  },
+  "input_hash": "a1ae61f9468d7c2756bc7d72a014786a489159ee59b96647df9a7f28942e744a",
+  "prompt": "ONE square sprite sheet, 2 by 2 grid with FOUR separated full-body keys of the SAME entity. Reference-1.png is the camera/scale/paint reference: copy its high oblique REAR THREE-QUARTER camera, looking down at hood/back/shoulder tops and short compressed legs. Reference-2.png is world material and lighting. NEW ENTITY: Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura.\nRead order poses: ready, moving, attack windup, attack release. All face AWAY toward UPPER RIGHT, never frontal. High 55-60 degree oblique game camera, no horizon. Whole entity and equipment inside each quadrant with at least 12 percent margin; centred in cell. Four clearly distinct poses. Painterly broad volumes, dark readable silhouette, selected cool edge highlights. Match material richness to the mage reference, but use the described original enemy silhouette; no mage costume. Solid uniform vivid magenta #FF00FF background. No shadow on matte, no floor, panel lines, labels or text. No grain, paper or canvas texture. No injuries, gore or anatomical damage. Original 2D art.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "eec15a05-0d77-44f0-95cb-25778e2ea6f9",
+  "at": "2026-10-02T19:23:29.674156+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 44.328,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a3c-conscript-poses-agy-a01/source.png",
+  "archive": "art/review/sources/a3c-conscript-poses-agy-a01.png",
+  "sha256": "fae6566551bd0b69d1fcb8c23fb3a7fa14ae31cb345f6f7fc7d514ac8d85c4f0",
+  "invocation_evidence": "art/providers/runs/a3c-conscript-poses-agy-a01"
+}

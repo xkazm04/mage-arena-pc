@@ -1,0 +1,55 @@
+{
+  "id": "a3c-cassia-poses-grok-a01",
+  "wave": "A3c",
+  "style_id": "covenant",
+  "scene": "cassia-poses",
+  "attempt": 1,
+  "input": {
+    "version": 1,
+    "id": "cassia-poses",
+    "wave": "A3c",
+    "pilot": true,
+    "providers": [
+      "grok",
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+      }
+    ],
+    "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nUse the provided Moonchalk portrait as face, cloth, staff and painted-material reference. Create ONE sprite sheet: FOUR equally sized full-body WATER battle mage figures in a single horizontal row, clearly separated in four equal cells. Same adult woman Cassia in every cell, angular weathered face, dark curly hair, dark blue hood, pale ivory and pale blue layered lightweight cloth, worn silver clasps, belts with pouches and water-glass charms, tall wooden staff with silver crescent and glass orb. All are upright game billboards seen from a high 55-degree oblique camera, showing hood top and shoulders, compressed legs; three-quarter facing down-right. Left to right: braced ready stance; forward running stride; forceful staff casting gesture; defensive forward raised-hand absorb gesture holding staff back. Keep each full figure, staff, feet, cloth and small aura well inside its cell, at least 12 percent empty margins per cell. Compact blue mist and isolated droplets around lower body, no giant spell. Broad readable pale torso and dark silhouette edges designed to read at 40 pixels body height on a 1080p game screen. Solid perfectly uniform vivid magenta #FF00FF background, NO gradient, shadow on background, floor, panel lines, text, labels or borders. Do not use magenta in the figure. No anatomy overlap between cells. No grain or paper."
+  },
+  "input_hash": "572648b5f162d4a49e22c1fea178e4020ae61fa5d9b77b41fe84473de3fa11d4",
+  "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nUse the provided Moonchalk portrait as face, cloth, staff and painted-material reference. Create ONE sprite sheet: FOUR equally sized full-body WATER battle mage figures in a single horizontal row, clearly separated in four equal cells. Same adult woman Cassia in every cell, angular weathered face, dark curly hair, dark blue hood, pale ivory and pale blue layered lightweight cloth, worn silver clasps, belts with pouches and water-glass charms, tall wooden staff with silver crescent and glass orb. All are upright game billboards seen from a high 55-degree oblique camera, showing hood top and shoulders, compressed legs; three-quarter facing down-right. Left to right: braced ready stance; forward running stride; forceful staff casting gesture; defensive forward raised-hand absorb gesture holding staff back. Keep each full figure, staff, feet, cloth and small aura well inside its cell, at least 12 percent empty margins per cell. Compact blue mist and isolated droplets around lower body, no giant spell. Broad readable pale torso and dark silhouette edges designed to read at 40 pixels body height on a 1080p game screen. Solid perfectly uniform vivid magenta #FF00FF background, NO gradient, shadow on background, floor, panel lines, text, labels or borders. Do not use magenta in the figure. No anatomy overlap between cells. No grain or paper.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "e6310476-6e81-4fca-a8b9-9be8a89829b8",
+  "at": "2026-10-02T19:04:21.997061+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 33.407,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nUse the provided Moonchalk portrait as face, cloth, staff and painted-material reference. Create ONE sprite sheet: FOUR equally sized full-body WATER battle mage figures in a single horizontal row, clearly separated in four equal cells. Same adult woman Cassia in every cell, angular weathered face, dark curly hair, dark blue hood, pale ivory and pale blue layered lightweight cloth, worn silver clasps, belts with pouches and water-glass charms, tall wooden staff with silver crescent and glass orb. All are upright game billboards seen from a high 55-degree oblique camera, showing hood top and shoulders, compressed legs; three-quarter facing down-right. Left to right: braced ready stance; forward running stride; forceful staff casting gesture; defensive forward raised-hand absorb gesture holding staff back. Keep each full figure, staff, feet, cloth and small aura well inside its cell, at least 12 percent empty margins per cell. Compact blue mist and isolated droplets around lower body, no giant spell. Broad readable pale torso and dark silhouette edges designed to read at 40 pixels body height on a 1080p game screen. Solid perfectly uniform vivid magenta #FF00FF background, NO gradient, shadow on background, floor, panel lines, text, labels or borders. Do not use magenta in the figure. No anatomy overlap between cells. No grain or paper.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a3c-cassia-poses-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a3c-cassia-poses-grok-a01/source.jpg",
+  "archive": "art/review/sources/a3c-cassia-poses-grok-a01.jpg",
+  "sha256": "6200512b803d01589e522240ed114f38a51402d716153d771017fbf645b20f66",
+  "invocation_evidence": "art/providers/runs/a3c-cassia-poses-grok-a01"
+}
