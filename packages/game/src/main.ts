@@ -1,10 +1,10 @@
 import "./style.css";
-import type { CampView } from "@mage/core";
-import type { CampCommand } from "@mage/director";
+import type { CampCommand, CampService } from "@mage/director";
 import { CampAssets } from "./assets.ts";
 import { CampScenes, type Presentation, type Scene } from "./scenes.ts";
+import { ParleyPanel } from "./parley-panel.ts";
 
-type View = CampView & { settling: boolean };
+type View = ReturnType<CampService["view"]>;
 const root = document.querySelector<HTMLDivElement>("#app")!;
 root.innerHTML = `<div class="loading"><p class="eyebrow">Mage Arena</p><h1>Beyond the closed grille</h1><p>Entering Castra Clausa…</p></div>`;
 const ui: Presentation = {
@@ -21,6 +21,19 @@ let view: View,
   held = false;
 const assets = new CampAssets();
 const scenes = new CampScenes(assets, select, selectCard, selectLane);
+const parley = new ParleyPanel(async (input, revision) => {
+  busy = true;
+  renderSide();
+  try {
+    view = await api<View>("parley", { input, revision });
+    ui.scene = "visit";
+    render();
+    return view;
+  } finally {
+    busy = false;
+    render();
+  }
+});
 const escape = (value: unknown) =>
   String(value).replace(
     /[&<>"']/g,
@@ -161,7 +174,7 @@ function render() {
 }
 function renderSide() {
   const side = document.querySelector<HTMLElement>(".side")!;
-  const disabled = busy || view.settling || view.ended;
+  const disabled = busy || view.settling || view.parley.pending || view.ended;
   let content: string;
   if (ui.scene === "map") {
     const place = view.places.find((p) => p.id === ui.selected)!;
@@ -185,6 +198,12 @@ function renderSide() {
       !view.player.stocks
     )
       content += `<button class="action" data-command="listen" ${disabled ? "disabled" : ""}><strong>Listen at the tent flap</strong><small>Follow the voices and avoid the Vigil. A Knowing may reach your journal.</small></button>`;
+    content += view.parley.moments
+      .map(
+        (m) =>
+          `<button class="action knowing-action" data-parley-target="${m.target}" ${disabled ? "disabled" : ""}><strong>A Knowing moment · ${escape(m.name)}</strong><small>${escape(m.cards[0].knowing)}</small></button>`,
+      )
+      .join("");
     content += view.actions
       .map(
         (a, i) =>
@@ -220,6 +239,15 @@ function renderSide() {
   else if (!view.listening && !view.ended)
     content += `<hr><button class="secondary" data-command="wait" ${disabled ? "disabled" : ""}>${view.slot === "night" ? "Let the night pass" : `Let ${view.slot} pass`}</button>`;
   side.innerHTML = content;
+  for (const b of side.querySelectorAll<HTMLButtonElement>(
+    "[data-parley-target]",
+  ))
+    b.onclick = () => {
+      const moment = view.parley.moments.find(
+        (m) => m.target === b.dataset.parleyTarget,
+      );
+      if (moment) parley.open(moment, view);
+    };
   side
     .querySelector<HTMLButtonElement>("[data-visit]")
     ?.addEventListener("click", () => {
@@ -316,7 +344,9 @@ async function boot() {
       const next = await api<View>("session");
       if (
         !busy &&
-        (next.revision !== view.revision || next.settling !== view.settling)
+        (next.revision !== view.revision ||
+          next.settling !== view.settling ||
+          next.parley.pending !== view.parley.pending)
       ) {
         const ended = !view.nightFinished && next.nightFinished;
         view = next;

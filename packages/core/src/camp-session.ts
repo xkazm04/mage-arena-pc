@@ -1,4 +1,6 @@
 import data from "../../../docs/design/reconciled/data/camp-play.json" with { type: "json" };
+import parleyData from "../../../docs/design/reconciled/data/parley.json" with { type: "json" };
+import type { ParleyRecord } from "./parley.ts";
 import {
   calendar,
   createState,
@@ -31,6 +33,8 @@ export interface Listening {
   learned: string | null;
 }
 export interface CampSession {
+  parleys: ParleyRecord[];
+  intentPromises: { target: string; day: number }[];
   camp: CampState;
   slot: Slot;
   location: string;
@@ -63,6 +67,8 @@ export function createCampSession(
         camp.characters[id].knowledge.push(fact.id);
   }
   return {
+    parleys: [],
+    intentPromises: [],
     camp,
     slot: "day",
     location: data.startLocation,
@@ -313,11 +319,32 @@ export function settleCamp(
   before: CampSession,
   proposals: Decision[],
   fallback: (id: string) => Decision,
+  friendly?: (id: string) => Decision,
 ): CampSession {
   if (before.slot !== "night" || !before.nightFinished)
     throw new Error("The night act has not ended.");
   const limited = remainingCaps(t, before);
-  const accepted = reconcile(limited, before.camp, proposals, fallback);
+  const replaced = [...proposals];
+  for (const promise of before.intentPromises.filter(
+    (p) => p.day === before.camp.day,
+  )) {
+    const candidate =
+      friendly?.(promise.target) ??
+      decision(t, before.camp, promise.target, "BEFRIEND", {
+        target: before.camp.player,
+      });
+    if (
+      candidate.character === promise.target &&
+      candidate.args.target === before.camp.player &&
+      parleyData.friendlyIntents.includes(candidate.intent) &&
+      !legalProblem(t, before.camp, candidate)
+    ) {
+      for (let i = replaced.length - 1; i >= 0; i--)
+        if (replaced[i].character === promise.target) replaced.splice(i, 1);
+      replaced.push(candidate);
+    }
+  }
+  const accepted = reconcile(limited, before.camp, replaced, fallback);
   const result = resolve(t, before.camp, accepted.items, {
     carry: before.carry,
   });
@@ -352,6 +379,7 @@ export function settleCamp(
       { day: before.camp.day, board: result.state.board },
     ],
     lastResolution: result,
+    intentPromises: [],
   };
 }
 export function campActions(t: Tables, s: CampSession) {

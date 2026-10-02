@@ -40,5 +40,8 @@ client build: `npm run build:game`. Browser gate while the server runs:
 `npx tsx packages/tools/src/camp-browser.ts`. Screens, limitations and the measured
 night-latency sample are in [the W5 report](docs/waves/W5-report.md).
 
-W6 owns Parley, W7 durable saves and arena/camp integration, W10 death gameplay
-and W11 deeper arcs. Arena bouts and endings are not yet connected to this camp.
+Parley opens at held Knowing moments with a present character. The three authored
+cards work offline; local mode interprets optional typed dialogue through the
+Director and core checks. See [W6 evidence and limits](docs/waves/W6-report.md).
+W7 owns durable saves and arena/camp integration, W10 death gameplay and W11
+deeper arcs. Arena bouts and endings are not yet connected to this camp.

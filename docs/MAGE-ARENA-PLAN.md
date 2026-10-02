@@ -81,8 +81,8 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
 | Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
-| Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | engineering PASS: Pixi camp, accepted art loader, deterministic slots/listening, 1080p/1440p browser gates; owner feel pending | W5 completion commit | 2026-10-02 |
-| Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | not started | | |
+| Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | engineering PASS: Pixi camp, accepted art loader, deterministic slots/listening, 1080p/1440p browser gates; owner feel pending | d18ef80 | 2026-10-02 |
+| Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | engineering PASS for bounded effects: 100-case suite, offline cards, typed browser play; four bounded semantic false positives and timeout fallbacks disclosed; owner feel pending | W6 completion commit | 2026-10-02 |
 | Core | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | not started | | |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
@@ -254,3 +254,35 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 - Art/rules authored; state simulated; tests/screens/latency measured. Owner feel
   pending in OWNER-CHECKS. W5-report.md records boundaries. One W5 commit, no push.
   Next: W6 typed Parley at Knowing moments, code checks and offline cards.
+
+### CORE W6 completion - 2026-10-02, third session
+
+- Design note before implementation: W6-parley.md. Typed role-play is gated by a
+  real held Knowing, presence, legal slot and once/day use. Director proposals
+  pass schema/domain checks and pure core contests. Offline authored cards use
+  the same path. Trust, disclosures and the next friendly act remain code-owned.
+- `npm run gate`: strict build/lint, 65 TypeScript tests, ten reference tests,
+  zero checker contradictions. Existing W0/W5 fixtures preserved. Production
+  `npm run build:game` passes. Timeout/late-result, budget, cache, concurrent
+  travel/dawn and already-completed night-job promise regressions covered.
+- `npx tsx packages/tools/src/parley-report.ts`: 100 simulated hostile cases,
+  20 families/five contexts, zero state escapes; 300 seeded authored outcomes.
+  `parley-local-suite.ts`: 100 hostile probes plus three distinct positive
+  controls. Final hostile outcomes: 70 refusal, four bounded small trust gains,
+  26 timed-out selected-card fallbacks. Controls all select their intended
+  effects. Semantic false positives are disclosed, not called clean refusals.
+- All prompt iterations retained: 349 local reservations, 348 recorded rows,
+  one stopped pilot call still charged. No reset/retry expansion after the final
+  cap. Zero new subscription calls. `parley-audit.test.ts` replays evidence and
+  `parley-archive.ts` records byte hashes/ledger/heartbeat. W1 evidence untouched.
+- `npx tsx packages/tools/src/parley-browser.ts`: earned Knowing, typed reply,
+  once/day/slot checks and direct card, zero browser errors, six screenshots at
+  1080p/1440p. Initial eight plus final three gameplay reservations; cached
+  replies explicitly retained. Canvas shrink fix verified in final screenshots.
+- No PC-sleep clock jump observed. The 15-second heartbeat's >45-second gap list
+  is empty through the archived W6 observation. Local inference timeouts remain
+  measured failures with unknown cause, not attributed to sleep.
+- Rules/cards authored, state simulated, calls/tests/screens measured; owner
+  feel pending in OWNER-CHECKS. One W6 commit, no push, no art/arena edits.
+  Next: requested W7 integration plan and exact merge steps, without importing
+  arena implementation on core.

@@ -123,6 +123,7 @@ header {
 }
 .left {
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -467,5 +468,145 @@ header {
   }
   .toast {
     bottom: 20px;
+  }
+}
+.knowing-action {
+  border: 2px solid #236d84;
+  background: #e5e8cb;
+}
+.parley-dialog {
+  width: min(1120px, 94vw);
+  max-height: 94vh;
+  padding: 28px;
+  background: #f3e7c7;
+  color: #38291e;
+  border: 3px solid #b48b47;
+  box-shadow: 0 12px 70px #0009;
+}
+.parley-dialog::backdrop {
+  background: #0c1b25df;
+}
+.parley-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 24px;
+  border-bottom: 1px solid #b7a37c;
+  padding-bottom: 14px;
+}
+.parley-heading h2 {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+.parley-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  padding-top: 24px;
+}
+.parley-dialog blockquote {
+  font:
+    25px/1.5 Georgia,
+    serif;
+  margin: 0 0 18px;
+  padding-left: 20px;
+  border-left: 4px solid #236d84;
+}
+.parley-dialog h3 {
+  margin-top: 0;
+}
+.parley-dialog label {
+  display: block;
+  font-size: 14px;
+  margin: 14px 0 7px;
+}
+.parley-dialog select,
+.parley-dialog textarea {
+  width: 100%;
+  border: 1px solid #9c8252;
+  background: #fff8e2;
+  color: #38291e;
+  font:
+    17px/1.5 "Segoe UI",
+    sans-serif;
+  padding: 12px;
+  border-radius: 2px;
+}
+.parley-dialog textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+.parley-dialog select {
+  font-size: 16px;
+}
+.parley-count {
+  text-align: right;
+  margin: 4px 0;
+}
+.parley-dialog .primary {
+  width: 100%;
+  margin: 7px 0 10px;
+}
+.parley-result {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.parley-result .reply {
+  font:
+    26px/1.45 Georgia,
+    serif;
+}
+.parley-cards {
+  margin-top: 12px;
+}
+.parley-dialog .action small {
+  font-size: 14px;
+}
+.parley-dialog button:disabled {
+  opacity: 0.5;
+}
+.parley-dialog .parley-result .meta {
+  line-height: 1.5;
+}
+@media (min-width: 2200px) {
+  .parley-dialog {
+    width: 1440px;
+    padding: 36px;
+  }
+  .parley-heading h2 {
+    font-size: 44px;
+  }
+  .parley-dialog blockquote {
+    font-size: 31px;
+  }
+  .parley-dialog label,
+  .parley-dialog .meta,
+  .parley-dialog .action small {
+    font-size: 18px;
+  }
+  .parley-dialog select,
+  .parley-dialog textarea {
+    font-size: 22px;
+  }
+  .parley-result {
+    font-size: 21px;
+  }
+  .parley-result .reply {
+    font-size: 34px;
+  }
+  .parley-columns {
+    gap: 46px;
+  }
+}
+@media (max-width: 800px) {
+  .parley-columns {
+    grid-template-columns: 1fr;
+  }
+  .parley-dialog {
+    padding: 18px;
+  }
+  .parley-heading h2 {
+    font-size: 28px;
   }
 }

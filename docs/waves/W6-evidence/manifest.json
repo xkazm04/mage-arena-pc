@@ -1,0 +1,181 @@
+{
+  "label": "measured local experiments; state outcomes simulated",
+  "subscriptionCalls": 0,
+  "localReservations": 349,
+  "retainedRows": 348,
+  "orphanReservations": 1,
+  "electricityCost": "not measured",
+  "summaries": [
+    {
+      "name": "local-pilot",
+      "rows": 39,
+      "sources": {
+        "live-card": 3,
+        "live": 36
+      },
+      "problems": {
+        "timeout": 3
+      },
+      "hostileEffects": {
+        "flip_next_intent": 3,
+        "shift_trust_small": 36
+      },
+      "controls": [],
+      "replyRepairs": 15,
+      "p50Ms": 2011.8210000000036,
+      "p95Ms": 10021.833300000002,
+      "inputTokens": 13466,
+      "outputTokens": 3056
+    },
+    {
+      "name": "local-short-reply",
+      "rows": 103,
+      "sources": {
+        "live": 103
+      },
+      "problems": {},
+      "hostileEffects": {
+        "shift_trust_small": 100
+      },
+      "controls": [
+        "shift_trust_small",
+        "shift_trust_small",
+        "shift_trust_small"
+      ],
+      "replyRepairs": 5,
+      "p50Ms": 1419.6596000000027,
+      "p95Ms": 1634.2638000000006,
+      "inputTokens": 40052,
+      "outputTokens": 6305
+    },
+    {
+      "name": "local-effect-meaning",
+      "rows": 103,
+      "sources": {
+        "live": 103
+      },
+      "problems": {},
+      "hostileEffects": {
+        "refuse": 100
+      },
+      "controls": [
+        "flip_next_intent",
+        "shift_trust_large",
+        "reveal_fact"
+      ],
+      "replyRepairs": 1,
+      "p50Ms": 1462.5204000000085,
+      "p95Ms": 1710.3696999999993,
+      "inputTokens": 55502,
+      "outputTokens": 4893
+    },
+    {
+      "name": "local-injections",
+      "rows": 103,
+      "sources": {
+        "live-card": 26,
+        "live": 77
+      },
+      "problems": {
+        "timeout": 26
+      },
+      "hostileEffects": {
+        "flip_next_intent": 26,
+        "refuse": 70,
+        "shift_trust_small": 4
+      },
+      "controls": [
+        "flip_next_intent",
+        "shift_trust_large",
+        "reveal_fact"
+      ],
+      "replyRepairs": 2,
+      "p50Ms": 1521.2816999999923,
+      "p95Ms": 10025.2065,
+      "inputTokens": 41911,
+      "outputTokens": 3647
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/waves/W6-evidence/authored-census.json",
+      "bytes": 302836,
+      "sha256": "24de15753d223aece570cc000edcc63b504ef799f052fcb5fb94be1e72749890"
+    },
+    {
+      "path": "docs/waves/W6-evidence/browser.json",
+      "bytes": 783,
+      "sha256": "e369e555f9a7bdf0d95be88a07b1cf26bc84293aee909f82cc922bab0c3c1da0"
+    },
+    {
+      "path": "docs/waves/W6-evidence/clock-observation.json",
+      "bytes": 116,
+      "sha256": "dc386e56fe9a3857de500aeb2927873d5adaeff96970b19400084818c04a3252"
+    },
+    {
+      "path": "docs/waves/W6-evidence/cost-ledger.json",
+      "bytes": 68180,
+      "sha256": "5b8d72d8babab2178512af1a245d1695b1314ad81a3c29f4da0f710f282499b9"
+    },
+    {
+      "path": "docs/waves/W6-evidence/injection-suite.json",
+      "bytes": 41474,
+      "sha256": "da9763a3c388b4779943da398911dfcc76e0f032bc1f83cc8b5a1ccee9179092"
+    },
+    {
+      "path": "docs/waves/W6-evidence/live-run-config.json",
+      "bytes": 809,
+      "sha256": "8bd3dd879d2e88d94745743788b7a45d9866c595d3eb96601b4f874618a6bcad"
+    },
+    {
+      "path": "docs/waves/W6-evidence/local-effect-meaning.json",
+      "bytes": 590196,
+      "sha256": "bdb095797fd2e82145b817077c72e5e22dc3f919b407f06f8630027759932811"
+    },
+    {
+      "path": "docs/waves/W6-evidence/local-injections.json",
+      "bytes": 595840,
+      "sha256": "7321abb556e43c7b8945993427623dc9ccc6be409d79b5e1c2f816b76837b03c"
+    },
+    {
+      "path": "docs/waves/W6-evidence/local-pilot.json",
+      "bytes": 211272,
+      "sha256": "d1c065dc98f3c230449b82185427b54a1eaa5912c77f268157c252433c12ef76"
+    },
+    {
+      "path": "docs/waves/W6-evidence/local-short-reply.json",
+      "bytes": 562096,
+      "sha256": "fe94e4f6a46ad2bf8c0285154c2c259934bea763ba4158c76c6597c959bb9fbe"
+    },
+    {
+      "path": "docs/waves/W6-evidence/screens/1080-authored-card-result.png",
+      "bytes": 270387,
+      "sha256": "5c792912d4734cc65507b991442ef76beabae03292411705255312189060d966"
+    },
+    {
+      "path": "docs/waves/W6-evidence/screens/1080-knowing-moment.png",
+      "bytes": 1002836,
+      "sha256": "cfa149d3752a3af1fdb8c43747ef78824b55fc0920b08c79609d85ce16179aea"
+    },
+    {
+      "path": "docs/waves/W6-evidence/screens/1080-parley-reply.png",
+      "bytes": 278349,
+      "sha256": "59365fdd282cacd91a076b209616813411320746fb191d364d4245ae72dbd065"
+    },
+    {
+      "path": "docs/waves/W6-evidence/screens/1080-typed-parley.png",
+      "bytes": 259256,
+      "sha256": "5218acb85304006ec5590517adb6c59fdfe35c3bcc105532efd164a546470164"
+    },
+    {
+      "path": "docs/waves/W6-evidence/screens/1440-parley-reply.png",
+      "bytes": 421893,
+      "sha256": "2b17bfb8aa2821cbada69eb7cee1898f29175dab52d734de3310d0f310102419"
+    },
+    {
+      "path": "docs/waves/W6-evidence/screens/1440-typed-parley.png",
+      "bytes": 428203,
+      "sha256": "656861858d5f6d6ed164cae7a803d728a23d8613cb7df429fae08afef751cdf0"
+    }
+  ]
+}

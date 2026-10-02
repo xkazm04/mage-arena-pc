@@ -1,19 +1,14 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { randomUUID } from "node:crypto";
 import {
-  CampService,
-  CostGuard,
-  loadTables,
-  OllamaProvider,
-  PlannerProvider,
-  RequestCache,
+  createCampRuntime,
+  type CampService,
+  type ParleyInput,
   type CampCommand,
 } from "@mage/director";
-import config from "../../director/src/config.json" with { type: "json" };
 import { campPlay } from "@mage/core";
 
 export function campApi() {
-  const tables = loadTables();
   const sessions = new Map<string, CampService>();
   const timer = setInterval(() => {
     for (const service of sessions.values()) service.tick();
@@ -48,20 +43,7 @@ export function campApi() {
         id = randomUUID();
         const mode =
           process.env.CAMP_DIRECTOR === "local" ? "local" : "offline";
-        service = new CampService(tables, {
-          provider:
-            mode === "local"
-              ? new OllamaProvider()
-              : new PlannerProvider(tables, () => service!.session.camp),
-          cache: new RequestCache(".director-runtime/camp-cache"),
-          guard: new CostGuard(
-            ".director-runtime/camp-ledger.json",
-            "camp-play",
-            mode,
-            config.budget.game.runCalls,
-            config.budget.game.dayCalls,
-          ),
-        });
+        service = createCampRuntime(mode);
         sessions.set(id, service);
         res.setHeader(
           "set-cookie",
@@ -83,6 +65,14 @@ export function campApi() {
           return send(413, { error: "That message is too long." });
       }
       const payload = JSON.parse(body) as Record<string, unknown>;
+      if (req.url === "/api/parley")
+        return send(
+          200,
+          await service.parley(
+            payload.input as ParleyInput,
+            payload.revision as number,
+          ),
+        );
       if (req.url === "/api/input") {
         service.control(
           payload.lane as number,

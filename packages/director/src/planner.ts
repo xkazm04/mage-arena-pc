@@ -66,12 +66,15 @@ export function plan(
   id: string,
   excludeCapped = false,
   draws?: PlannerDraw[],
+  include?: (d: Decision) => boolean,
 ): Decision {
   const c = state.characters[id],
     p = config.planner;
   const school = t.schools.find((s) => s.id === c.school);
   const choices = candidates(t, state, id).filter(
-    (d) => !excludeCapped || !Object.hasOwn(t.rules.caps, d.intent),
+    (d) =>
+      (!excludeCapped || !Object.hasOwn(t.rules.caps, d.intent)) &&
+      (!include || include(d)),
   );
   const goals: Record<string, string[]> = p.goalIntents;
   const scored = choices.map((d) => {

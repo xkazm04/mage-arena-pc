@@ -1,4 +1,8 @@
 import {
+  applyParley,
+  parleyMoments,
+  parleyRules,
+  seedParleyFacts,
   actCamp,
   beginListening,
   campActions,
@@ -16,6 +20,13 @@ import {
 import { CampNight } from "./camp-night.ts";
 import { plan } from "./planner.ts";
 import type { HarnessOptions } from "./harness.ts";
+import {
+  ParleyDirector,
+  parleyInputProblem,
+  type ParleyInput,
+  type ParleyOptions,
+} from "./parley.ts";
+import { OllamaProvider } from "./providers.ts";
 
 export type CampCommand =
   | { type: "travel"; place: string }
@@ -25,18 +36,65 @@ export class CampService {
   session: CampSession;
   job: CampNight | null = null;
   private dawn: Promise<void> | null = null;
+  private conversation: Promise<void> | null = null;
+  private closed = false;
+  readonly parleyDirector: ParleyDirector;
+  readonly parleyAudit: {
+    day: number;
+    source: string;
+    problem: string | null;
+    key: string | null;
+    replyReplaced: string | null;
+  }[] = [];
   private input = { lane: 0, listening: false };
   constructor(
     readonly tables: Tables,
     readonly options: HarnessOptions,
     seed = 73,
+    parleyOptions?: ParleyOptions,
   ) {
-    this.session = createCampSession(tables, seed);
+    this.session = seedParleyFacts(createCampSession(tables, seed));
+    this.parleyDirector = new ParleyDirector(
+      parleyOptions ?? {
+        cache: options.cache,
+        guard: options.guard,
+        transport:
+          options.provider instanceof OllamaProvider
+            ? options.provider
+            : undefined,
+      },
+    );
   }
   view() {
     return {
       ...campView(this.tables, this.session),
       settling: this.dawn !== null,
+      parley: {
+        pending: this.conversation !== null,
+        maxTextChars: parleyRules.maxTextChars,
+        canType: Boolean(this.parleyDirector.options.transport),
+        moments: parleyMoments(this.tables, this.session),
+        last: this.session.parleys.length
+          ? (() => {
+              const last = this.session.parleys.at(-1)!;
+              return {
+                day: last.day,
+                target: last.target,
+                name: this.session.camp.characters[last.target].name,
+                reply: last.reply,
+                effect: last.effect,
+                trustDelta: last.trustDelta,
+                reason: last.reason,
+                usedCard:
+                  this.parleyAudit.at(-1)?.source.includes("card") ?? false,
+                revealed:
+                  this.session.camp.facts.find(
+                    (f) => f.id === last.revealedFact,
+                  )?.text ?? null,
+              };
+            })()
+          : null,
+      },
     };
   }
   control(lane: number, listening: boolean, day: number) {
@@ -60,7 +118,12 @@ export class CampService {
       this.session = stepListening(this.session, this.input);
   }
   async command(command: CampCommand, revision: number) {
-    if (revision !== this.session.revision || this.dawn)
+    if (
+      revision !== this.session.revision ||
+      this.dawn ||
+      this.conversation ||
+      this.closed
+    )
       throw new Error("The camp has moved on. Try again.");
     const beforeSlot = this.session.slot;
     switch (command.type) {
@@ -96,22 +159,83 @@ export class CampService {
       default:
         throw new Error("Unknown camp action.");
     }
-    if (beforeSlot === "dusk" && this.session.slot === "night") {
-      this.job = new CampNight(
-        remainingCaps(this.tables, this.session),
-        structuredClone(this.session.camp),
-        this.options,
-      );
+    if (beforeSlot === "dusk" && this.session.slot === "night")
+      this.startNight();
+    return this.view();
+  }
+  private startNight() {
+    this.job = new CampNight(
+      remainingCaps(this.tables, this.session),
+      structuredClone(this.session.camp),
+      this.options,
+    );
+  }
+  async parley(input: ParleyInput, revision: number) {
+    if (
+      revision !== this.session.revision ||
+      this.dawn ||
+      this.conversation ||
+      this.closed
+    )
+      throw new Error("The camp has moved on. Try again.");
+    const problem = parleyInputProblem(this.tables, this.session, input);
+    if (problem) throw new Error(problem);
+    this.conversation = this.speak(input);
+    try {
+      await this.conversation;
+    } finally {
+      this.conversation = null;
     }
     return this.view();
   }
+  private async speak(input: ParleyInput) {
+    const beforeSlot = this.session.slot;
+    const result = await this.parleyDirector.speak(
+      this.tables,
+      structuredClone(this.session),
+      input,
+    );
+    if (this.closed) return;
+    this.session = applyParley(
+      this.tables,
+      this.session,
+      input.target,
+      result.proposal,
+    );
+    this.parleyAudit.push({
+      day: this.session.camp.day,
+      source: result.source,
+      problem: result.problem,
+      key: result.key,
+      replyReplaced: result.replyReplaced,
+    });
+    if (beforeSlot === "dusk" && this.session.slot === "night")
+      this.startNight();
+  }
   private async finish() {
     const proposals = await this.job!.finish(campPlay.listening.graceMs);
-    this.session = settleCamp(this.tables, this.session, proposals, (id) =>
-      plan(this.tables, this.session.camp, id, true),
+    if (this.closed) return;
+    this.session = settleCamp(
+      this.tables,
+      this.session,
+      proposals,
+      (id) => plan(this.tables, this.session.camp, id, true),
+      (id) =>
+        plan(
+          this.tables,
+          this.session.camp,
+          id,
+          true,
+          undefined,
+          (d) =>
+            d.args.target === this.session.camp.player &&
+            parleyRules.friendlyIntents.includes(d.intent),
+        ),
     );
   }
   close() {
+    this.closed = true;
+    this.parleyDirector.close();
     this.job?.close();
   }
 }
