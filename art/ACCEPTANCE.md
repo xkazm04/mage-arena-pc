@@ -1,3 +1,16 @@
+# Session 5 final boundary
+
+[Combined board](review/covenant/index.html), [contact sheet](review/covenant/contact-sheet.jpg),
+[handoff and backlog](SESSION-5-HANDOFF.md). Five wave deliveries remain owner-review.
+A2c adds sixteen identities and 112 neutral/mood crops. A3c remains a partial pose
+set with explicit camera/fidelity/animation backlog. Twelve rejected sources stay
+visible; no local grader or agent accepts art.
+
+Current integrity/export/browser checks and 59 tests pass. Portable rebuild: 266
+files identical with raw access forbidden. First 159 jobs and early UI contract
+unchanged. Final 223/240 charged, 17 remain; both provider stops clear. Historical
+A3 failures, game integration and unmeasured engine/sofa feel remain disclosed.
+
 # A4c session 5 update
 
 [Camp board](review/a4c/index.html), [loading notes](delivery/a4c/README.md):

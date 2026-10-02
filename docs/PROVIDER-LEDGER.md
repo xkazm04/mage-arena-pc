@@ -18,3 +18,26 @@
 ## Routing
 
 Grok and `agy` are interchangeable behind the pipeline's provider interface: each has its own budget guard and stop latch; a quota or rate-limit error latches that provider only and routes the remaining work to the other; a moderation refusal is a prompt finding for that provider and may be retried once on the other. Use `agy` first for: reference-guided style variations (palette and character variants from an accepted reference), concept art, textures, UI kit sheets. Use Grok for: pose sheets and effect sheets where it already proved itself, and whenever `agy` drifts from the style.
+
+
+## ART session 5 observations (2026-10-02)
+
+The real pipeline is `tools/art/providers.py`, exposed through
+`pipeline.py provider-generate`. `art/providers/budget.json` records the local
+150-image agy guard and four known external probe outputs; the project ledger
+retains its separate 240-image cumulative ceiling. Independent provider stops
+and events live in `art/providers/history.json`. No automatic latch reset or
+refund is allowed. CLI requests, reference hashes and stdout are archived under
+`art/providers/runs/`; actual internal agy image-tool prompts are not exposed and
+are explicitly unverified.
+
+Reference-guided palette changes retained major arena/camp landmarks but changed
+fine details. Camp generation once added labels despite a text-free brief; the
+correction removed them. Sheets can change cell count: a six-story request made
+nine cells, so only six explicitly reviewed crops were used. Magenta UI primitives
+keyed cleanly with a stricter matte threshold than pale-lilac battle sprites.
+Portrait output also used 900x1200 and six-cell 1264x848 layouts; do not promise an
+exact requested pixel size. Strong reference conditioning preserved cast faces
+but sometimes suppressed emotion changes; explicit chin/gaze/mouth direction was
+needed for corrections. Neutral versus proud and grief remain human-review gates.
+These are observed session findings, not general quality or quota guarantees.

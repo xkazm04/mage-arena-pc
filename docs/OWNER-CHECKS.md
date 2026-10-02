@@ -99,3 +99,17 @@ canvas captures. Inspect day/dusk/night continuity, eight landmark labels, open/
 closed state, the eight visits and two pages of Hollow Board stories. New frames
 come from the A5b kit. Initial labelled map stays rejected; six story crops were
 selected explicitly from nine cells. No owner acceptance is recorded.
+
+## A2c and session 5 combined review
+
+Open the [combined board](../art/review/covenant/index.html) and
+[full portrait gallery](../art/review/a2c/portraits.html). Sixteen new cast identities
+and six moods each follow the selected Moonchalk reference. Compare identity,
+acting, wardrobe and frame continuity; weaker mood pairs and cropped staffs are
+noted. Review the native conversation studies at both resolutions. Seven rejected
+portrait/expression sources stay visible. No acceptance is recorded.
+
+The [handoff](../art/SESSION-5-HANDOFF.md) gives loader entry points, measured checks,
+223/240 spend and remaining backlog. A3c pose/camera/animation continuity remains
+the main unfinished art work. Current integrity passes do not erase historical
+failures or establish game feel. No push.

@@ -193,7 +193,7 @@ Decisions:
 - **D17 Camera = the distance and angle of the art proposals** (A1b far/standard and the A6 scenes), not the current in-game near camera: more distance, a mostly **fixed camera that moves rarely, only when the player approaches the edge of the view** (a wide dead zone, soft edge follow, no constant tracking). The scale contract is rewritten for it (figures about 3 to 4.5 percent of screen height at 1080p, readable by silhouette, aura and effect, so the figure design must carry identity at that size).
 - **D18 The camp ("city") art and the HUD follow the new style.** The A4 camp map, backdrops, story cards and Hollow Board frames and the A5 icons and HUD are superseded; they are redone in the Covenant family (palette variants for the different times and places). The earlier "camp map is kept" decision is withdrawn.
 - **D19 UI is part of the art package and the game is a video game, not a web page.** Full-screen canvas game (no browser page look: no HTML panels floating over a screenshot, no dropdowns, scrollbars, default fonts or form controls); every screen (main menu, camp, season map, Hollow Board, journal, Parley, composition screen, arena HUD, pause, results, save and load) is built from an **art-directed UI kit**: frames and nine-slice panels, bars, spell slots, the collar rune clock, cursor, buttons, tabs, tooltips, iconography, typography with a game feel, animated feedback. Layout and type sizes are **TV-grade** (readable from a sofa distance, generous safe areas, large touch-free targets, full keyboard and gamepad navigation) while mouse and keyboard remain the first input. Quality bar: a player wants to interact with it.
-- **D20 Image providers: Grok and the Antigravity CLI (`agy`, Nano Banana 2) behind one provider interface, each with its own budget guard and stop latch (probed 2026-10-02: see docs/PROVIDER-LEDGER.md; the owner is signed in)** (was: Grok first, agy fallback) for concept art and textures when Grok's allowance ends. `agy` is installed at `C:\Users\kazda\AppData\Local\agy\bin\agy.exe` (not on PATH, version 1.2.15) but **not signed in** (the owner must log in once); its image-generation and **image-editing capabilities are unverified**, so the first fallback task is a measured capability probe (generation, reference-guided generation, editing an existing sprite, transparency, consistency across a set) recorded in a provider ledger. Providers sit behind one interface with a budget guard each; a refusal or an unavailable provider routes to the next (registry: `generative-provider-routing`).
+- **D20 Image providers: Grok and the Antigravity CLI (`agy`, Nano Banana 2) behind one provider interface, each with its own budget guard, stop latch and history.** The owner is signed in and the 2026-10-02 probe is complete; see `docs/PROVIDER-LEDGER.md`. `agy` performs generation and strong reference-guided regeneration, not localized pixel editing or real alpha output. Route style/palette variants, UI sheets and concepts to agy first; pose/effect sheets to Grok where proven. A quota/rate-limit latches only that provider and routes remaining work to the other. A moderation refusal permits one rewritten retry. Local agy guard: 150 images this week, real shared-account quota unknown. The prior unsigned/unverified wording is superseded by the host restart note.
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
@@ -201,7 +201,7 @@ Decisions:
 | Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | partial owner-review delivery: 12 identities, 38 keys; pose/style backlog |
 | Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | delivered owner-review: art/ui/kit.json, 90 regions, contract 06cd5e4 retained |
 | Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | delivered owner-review: three slots, eight places/backdrops, six stories, canvas proof |
-| Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | not started |
+| Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | delivered owner-review: 16 identities, 112 neutral/mood crops, 16 atlases |
 | Game | U1 | **Camera and UI overhaul**: far fixed camera with edge follow; full-screen canvas UI framework with the nine-slice kit loader (placeholder kit until A5b lands); rebuild the HUD, main menu, camp, Hollow Board, journal, Parley, composition, pause and results screens as in-game art-directed screens; TV-grade layout; keyboard, mouse and gamepad navigation; screenshots at 1080p and 1440p | D17, D19 | not started |
 | Art/Game | P1 | Provider probe (done 2026-10-02, see docs/PROVIDER-LEDGER.md) | owner login | done |
 
@@ -258,3 +258,26 @@ source/board and browser checks PASS; closed visit/slot/keyboard checks PASS at
 Owner acceptance, game integration, live state, performance and physical gamepad/
 sofa feel unmeasured. Individual backdrops have one authored light condition.
 Next A2c; no push.
+
+### ART session 5 - A2c and final handoff - 2026-10-02
+
+A4c committed as 5e79848. Delivered sixteen Moonchalk identities, neutral plus
+six moods each, 112 original crops, sixteen atlases, eight native canvas dialogue
+captures and combined all-wave contact sheet/board. Thirty agy calls in A2c;
+seven source rejects corrected and retained. Some mood/frame/crop variation is
+explicit owner-review, not acceptance. Final 223/240 charged, 17 remain; this
+session 64 images (62 agy, 2 Grok). Both provider stops clear, no live incident.
+Known provider week counts: agy 66 including four external probes, Grok 134;
+27 inherited project images came from the built-in provider. Corrected A3c's
+narrative provider split to 15 agy/2 Grok; ledger history remains immutable.
+
+Portrait/export/atlas/board/browser checks PASS; all 112 keys load/select at
+1080p/1440p. Combined board PASS in three viewports, 59 tests PASS. Portable
+rebuild forbidding art/raw access: 266 files identical, zero forbidden reads.
+Session audit PASS across all five waves; first 159 jobs and early UI contract
+unchanged. Historical A3 failures and twelve new rejected sources remain visible.
+D20 stale unsigned wording reconciled with host restart and measured provider
+ledger. No automatic acceptance, game performance or physical sofa/gamepad claim.
+Backlog and loading paths: art/SESSION-5-HANDOFF.md. Main backlog is A3c missing
+valid pose keys/facings, painterly/camera continuity, animation and motion tests;
+then owner identity/acting review and game integration. No push.

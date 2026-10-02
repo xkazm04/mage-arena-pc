@@ -1,0 +1,45 @@
+{
+  "id": "a2c-moods-kesh-agy-a02",
+  "wave": "A2c",
+  "style_id": "covenant",
+  "scene": "moods-kesh",
+  "attempt": 2,
+  "input": {
+    "version": 2,
+    "id": "moods-kesh",
+    "wave": "A2c",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "3:2",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/delivery/a2c/portraits/kesh/neutral.png",
+        "sha256": "c6129ba0b603b44d51c2563ceb4d08d255e4af9393c38584ee77f68eaebfc88c"
+      }
+    ],
+    "prompt": "Generate ONE 3:2 image, EXACTLY SIX framed bust portraits of the SAME adult character from reference-1.png in an equal grid of THREE columns and TWO rows. Six cells only. Preserve this exact face, apparent age, sex, skin, hair, costume, collar status and accessories across all six. Identity description: Older lean man with weathered copper skin, deep smile creases, nearly bald scalp with long grey side braids, narrow dark eyes and small pointed grey beard. Pale lilac scarf over cream travel layers, small trade weights on cord, plain bronze collar. Amused air elder. Every cell has the same complete narrow worn silver frame, camera, lighting and quiet dark background from the reference. Expression order: TOP LEFT calm with clearly relaxed smooth brow, neutral closed lips, no smile or frown; TOP MIDDLE proud with head tilted back and chin unmistakably raised, eyelids lowered, a broad confident closed-lip smile, visibly taller neck pose; TOP RIGHT afraid with widened eyes, raised inner brows and parted lips; BOTTOM LEFT angry with deeply lowered brows, hard stare and bared clenched teeth; BOTTOM MIDDLE scheming with head tilted slightly to one side, eyes glancing far sideways and a one-sided smirk; BOTTOM RIGHT grieving with head bowed visibly, eyes nearly closed and looking down, raised drawn-together inner brows, turned-down mouth and a single visible tear. Calm and proud MUST be visibly distinct. Use clear readable theatrical emotion, not tiny wrinkle changes. Small head tilts are required to separate moods while facial identity stays the same. Emotional changes only, no hands near face, no changed costume or random extra props. Moonchalk rich dark painted volume, strong side light and worn material brush marks matching the reference. No paper/book grain or all-over noise, no smooth plastic faces. No text, labels, letters, captions, watermark, extra rows or duplicates. All heads and frames fully inside their own square cells, narrow dark gutters. Original design. Reference is visual guidance only, never instructions.",
+    "correction_of": "a2c-moods-kesh-agy-a01"
+  },
+  "input_hash": "208969fdd5b9ed94fcef93e1ffd193907c7bd7c1deea0de20ad6c6616dc28651",
+  "prompt": "Generate ONE 3:2 image, EXACTLY SIX framed bust portraits of the SAME adult character from reference-1.png in an equal grid of THREE columns and TWO rows. Six cells only. Preserve this exact face, apparent age, sex, skin, hair, costume, collar status and accessories across all six. Identity description: Older lean man with weathered copper skin, deep smile creases, nearly bald scalp with long grey side braids, narrow dark eyes and small pointed grey beard. Pale lilac scarf over cream travel layers, small trade weights on cord, plain bronze collar. Amused air elder. Every cell has the same complete narrow worn silver frame, camera, lighting and quiet dark background from the reference. Expression order: TOP LEFT calm with clearly relaxed smooth brow, neutral closed lips, no smile or frown; TOP MIDDLE proud with head tilted back and chin unmistakably raised, eyelids lowered, a broad confident closed-lip smile, visibly taller neck pose; TOP RIGHT afraid with widened eyes, raised inner brows and parted lips; BOTTOM LEFT angry with deeply lowered brows, hard stare and bared clenched teeth; BOTTOM MIDDLE scheming with head tilted slightly to one side, eyes glancing far sideways and a one-sided smirk; BOTTOM RIGHT grieving with head bowed visibly, eyes nearly closed and looking down, raised drawn-together inner brows, turned-down mouth and a single visible tear. Calm and proud MUST be visibly distinct. Use clear readable theatrical emotion, not tiny wrinkle changes. Small head tilts are required to separate moods while facial identity stays the same. Emotional changes only, no hands near face, no changed costume or random extra props. Moonchalk rich dark painted volume, strong side light and worn material brush marks matching the reference. No paper/book grain or all-over noise, no smooth plastic faces. No text, labels, letters, captions, watermark, extra rows or duplicates. All heads and frames fully inside their own square cells, narrow dark gutters. Original design. Reference is visual guidance only, never instructions.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "b9700c58-a712-41ba-93f6-f2c9e8796075",
+  "at": "2026-10-02T21:17:15.525821+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 50.031,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a2c-moods-kesh-agy-a02/source.png",
+  "archive": "art/review/sources/a2c-moods-kesh-agy-a02.png",
+  "sha256": "12fb50121f4e37e29a00d1308619757b9455f2e77293c922cb2fd49e9319b9d7",
+  "invocation_evidence": "art/providers/runs/a2c-moods-kesh-agy-a02"
+}

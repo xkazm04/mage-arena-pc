@@ -1,0 +1,89 @@
+{
+  "status": "pass",
+  "errors": [],
+  "project_charged": 223,
+  "project_remaining": 17,
+  "session_charged": 64,
+  "session_by_provider": {
+    "agy": 62,
+    "grok": 2
+  },
+  "known_week_by_provider": {
+    "agy": 66,
+    "grok": 134
+  },
+  "provider_stops": {
+    "agy": null,
+    "grok": null
+  },
+  "legacy_159_unchanged": true,
+  "ui_contract_unchanged": true,
+  "waves": [
+    {
+      "wave": "A7",
+      "integrity": "pass",
+      "errors": [],
+      "rows": 3,
+      "semantic_rejects": [],
+      "owner_accepted": false,
+      "engine_motion_and_feel": "not measured"
+    },
+    {
+      "wave": "A3c",
+      "integrity": "pass",
+      "errors": [],
+      "rows": 25,
+      "semantic_rejects": [
+        "a3c-cassia-poses-grok-a01",
+        "a3c-cassia-poses-agy-a02",
+        "a3c-elemental-effects-grok-a01",
+        "a3c-four-mages-painted-cast-agy-a01"
+      ],
+      "owner_accepted": false,
+      "engine_motion_and_feel": "not measured"
+    },
+    {
+      "wave": "A5b",
+      "integrity": "pass",
+      "errors": [],
+      "rows": 24,
+      "semantic_rejects": [],
+      "owner_accepted": false,
+      "engine_motion_and_feel": "not measured"
+    },
+    {
+      "wave": "A4c",
+      "integrity": "pass",
+      "errors": [],
+      "rows": 31,
+      "semantic_rejects": [
+        "a4c-camp-day-agy-a01"
+      ],
+      "owner_accepted": false,
+      "engine_motion_and_feel": "not measured"
+    },
+    {
+      "wave": "A2c",
+      "integrity": "pass",
+      "errors": [],
+      "rows": 39,
+      "semantic_rejects": [
+        "a2c-portrait-garran-agy-a01",
+        "a2c-portrait-iskar-agy-a01",
+        "a2c-moods-cassia-agy-a01",
+        "a2c-moods-brennic-agy-a01",
+        "a2c-moods-garran-agy-a01",
+        "a2c-moods-sadruba-agy-a01",
+        "a2c-moods-kesh-agy-a01"
+      ],
+      "owner_accepted": false,
+      "engine_motion_and_feel": "not measured"
+    }
+  ],
+  "historical_global_failures": [
+    "A3 STOP_SNAPSHOT_DRIFT",
+    "UNRESOLVED_UI:ui-a3-poses.json"
+  ],
+  "owner_accepted": false,
+  "engine_motion_performance_feel": "not measured"
+}

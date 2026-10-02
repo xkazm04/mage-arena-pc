@@ -36,9 +36,9 @@ palette/resolution composites, a 3/3.75/4.5% strip and an enlarged key contact.
 Twenty native effects and twelve painted motifs; all 24 baseline Water CSV rows
 map to family motifs. Game owns exact spell rules and timing.
 
-Seventeen new image calls: fourteen agy, three Grok; project 179/240 charged,
+Seventeen new image calls: fifteen agy, two Grok; project 179/240 charged,
 61 remain. No quota/moderation/rate-limit incident. agy local known week count
-is 21 including four external probe images (account allowance unknown).
+is 22 including four external probe images (account allowance unknown).
 Four source rejects stay visible: two Water camera pilots, first effects sheet
 (tinted panels/physical rims), optional painterly four-mage sheet (front camera
 and clipping). No source was repaired by relabeling it accepted.
