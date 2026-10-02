@@ -1,3 +1,16 @@
+# A6 identity reset — current owner boundary
+
+D12–D15 discard the A2 portrait and A3 figure identities. They are historical
+rejection evidence, never references or production candidates for the reset.
+The near oblique camera and scale contract remain binding. The old choice below
+does not approve a new character or arena identity.
+
+[Eight A6 direction pairs](review/a6/index.html) contain six current arena
+candidates and two capped camera rejects. The current immutable comparison is
+`briefs/a6-v9.json`; exact corrections and earlier pilot revisions stay in the
+attempt archive. Only the owner chooses. A2b/A3b/A4b remain blocked.
+The camp is unchanged. The remainder of this document records the earlier work.
+
 # Tessera & Lime baseline and A1 comparison archive
 
 The owner chose Tessera & Lime (01-tessera) on 2026-10-02; see

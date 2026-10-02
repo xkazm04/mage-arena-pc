@@ -22,6 +22,13 @@ def brief(wave):
 
 def spec_for(wave, item, b=None):
     b = b or brief(wave)
+    if wave == 'A6':
+        style = next(s for s in b['directions'] if s['id'] == item['direction'])
+        return {'version': b['version'], 'wave': wave, 'style': style,
+                'scene': item['id'], 'aspect_ratio': '16:9', 'brief_hash': digest(b),
+                'prompt': b['skeletons'][item['kind']].replace('{DIRECTION}', style['style_block']),
+                **({'backend': b['backend']} if b.get('backend') else {}),
+                **({'reference': b['arena_reference']} if item['kind']=='arena' and b.get('arena_reference') else {})}
     parts = [get_style('01-tessera')['style_block'], b['common'], item['prompt']]
     if b.get('prompt_order') == 'camera-first':
         parts = [item['prompt'], b['common']]
@@ -36,9 +43,16 @@ def jobs(wave):
 
 def require_proof(spec):
     wave = spec['wave']
+    if wave in ('A2b', 'A3b', 'A4b'):
+        raise RuntimeError('A6_OWNER_CHOICE_REQUIRED: identity reset; old choice cannot unlock production')
     if wave == 'A3' and not (ART / 'CAMERA-OK.md').is_file():
         raise RuntimeError('OWNER_CAMERA_REQUIRED')
     b = brief(wave)
+    if wave == 'A6':
+        if (b['camera_sha256'] != sha(ART / 'CAMERA-OK.md')
+                or b['scale_sha256'] != sha(ART / 'scale-contract-v1.json')
+                or 'camera_ok: true' not in (ART / 'CAMERA-OK.md').read_text(encoding='utf-8')):
+            raise RuntimeError('STALE_A6_CAMERA_CONTRACT')
     if wave == 'A3':
         camera = (ART / 'CAMERA-OK.md').read_text(encoding='utf-8')
         if 'camera_ok: true' not in camera:
@@ -92,11 +106,27 @@ def gate(job):
         result['codes'].append('STALE_INPUT')
     calls = job.get('tool_calls', [])
     expected = job['input']['prompt']
-    if job.get('correction'):
+    if job.get('moderation_rewrite'):
+        expected = job['correction'].strip()
+    elif job.get('correction'):
         expected += '\n\nCORRECTION FROM DIRECT PIXEL REVIEW: ' + job['correction'].strip()
-    if (len(calls) != 1 or calls[0]['name'] != 'image_gen' or calls[0]['arguments'].get('prompt') != expected
+    reference = job['input'].get('reference')
+    if job.get('origin') == 'builtin-imagegen':
+        from a6_builtin import verify_call
+        if not verify_call(job): result['codes'].append('TOOL_CONTRACT')
+        result['verdict']='reject' if result['codes'] else 'technical-pass'
+        return result
+    if (len(calls) != 1 or calls[0]['name'] != ('image_edit' if reference else 'image_gen') or calls[0]['arguments'].get('prompt') != expected
             or calls[0]['arguments'].get('aspect_ratio') != '16:9' or not job['prompt_verbatim_verified']):
         result['codes'].append('TOOL_CONTRACT')
+    if reference:
+        rp=ROOT/reference['path']
+        actual=calls[0]['arguments'].get('image') if len(calls)==1 else None
+        actual=actual if isinstance(actual,list) else [actual]
+        if (not rp.is_file() or sha(rp)!=reference['sha256'] or len(actual)!=1
+                or not isinstance(actual[0],str)
+                or not Path(actual[0]).as_posix().lower().endswith('/'+reference['path'].lower())):
+            result['codes'].append('REFERENCE_CONTRACT')
     result['verdict'] = 'reject' if result['codes'] else 'technical-pass'
     return result
 
@@ -237,7 +267,8 @@ def main():
     if a.command=='generate':
         for item in brief(a.wave)['items']:
             if a.item and item['id']!=a.item: continue
-            result=generate('01-tessera',item['id'],a.correction,spec_for(a.wave,item))
+            spec = spec_for(a.wave,item)
+            result=generate(spec['style']['id'],item['id'],a.correction,spec)
             if result['status']!='generated': raise SystemExit(2)
     elif a.command=='grade':grade(a.wave,a.job)
     elif a.command=='review':review(a.wave,a.job,a.note,a.reject,a.proof)

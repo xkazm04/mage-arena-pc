@@ -12,11 +12,13 @@ def inspect(name, path, expectation):
     path=Path(path);cfg=config()['grader']
     tags=json.load(urllib.request.urlopen(cfg['host']+'/api/tags',timeout=10))
     model=next(m for m in tags['models'] if m['name']==cfg['model'])
+    style_check=('neutral dark comparison board with readable pale labels and named direction pairs' if name.startswith('a6-')
+                 else 'chalk-lime, umber, terracotta and mineral blue')
     prompt=('Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. '
             'The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. '
             'Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; '
             'overhead_view means requested UI framing/layout is present, not literally an overhead camera; '
-            'required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. '
+            'required_content checks the stated visible controls or icons; style_match checks '+style_check+'. '
             'Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. '
             'Describe overlap, text size, obscured controls and specific defects. EXPECTATION: '+expectation)
     inputs={'image_sha256':sha(path),'model':cfg['model'],'model_digest':model['digest'],'prompt':prompt,

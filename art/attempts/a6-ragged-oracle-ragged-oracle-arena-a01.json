@@ -1,0 +1,69 @@
+{
+  "id": "a6-ragged-oracle-ragged-oracle-arena-a01",
+  "style_id": "a6-ragged-oracle",
+  "scene": "ragged-oracle-arena",
+  "attempt": 1,
+  "input": {
+    "version": "a6-v8",
+    "wave": "A6",
+    "style": {
+      "id": "a6-ragged-oracle",
+      "name": "Ragged Oracle",
+      "line": "torn painted edges and charcoal seams",
+      "shading": "layered opaque pigment with coarse fibre",
+      "silhouette": "offset wrapped cowls and pennant-like split cloth",
+      "density": "medium patch clusters",
+      "mood": "resourceful wild magic",
+      "style_block": "Painted mixed media with torn pigment edges, charcoal seams, coarse fibre impressions and patched colour masses fused into a spatially convincing world. Asymmetric wrapped cowls and diagonal cloth silhouettes. Dirty indigo, clay, soot, faded cream, warm brass and restrained elemental accents. Frayed textile, crooked driftwood, laced shields, cracked wrapped wardstones. Resourceful wild magic, quiet rubbed ground."
+    },
+    "scene": "ragged-oracle-arena",
+    "aspect_ratio": "16:9",
+    "brief_hash": "3545dfb1cf6aa18e0dc1bfb35b855dd956fffdef35d4e76f5323051d6f8efd27",
+    "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nPainted mixed media with torn pigment edges, charcoal seams, coarse fibre impressions and patched colour masses fused into a spatially convincing world. Asymmetric wrapped cowls and diagonal cloth silhouettes. Dirty indigo, clay, soot, faded cream, warm brass and restrained elemental accents. Frayed textile, crooked driftwood, laced shields, cracked wrapped wardstones. Resourceful wild magic, quiet rubbed ground.",
+    "backend": "builtin-imagegen",
+    "reference": {
+      "path": "art/review/sources/01-tessera-open-oval-sparse-near-a01.jpg",
+      "sha256": "07ae1c4770324541dbc7f432b6621915a28446448f2e5e469c858b34dc936209",
+      "role": "camera, tiny upright blue caster scale and ground integration ONLY; replace old identity"
+    }
+  },
+  "input_hash": "f389df3d41748bf6947d3ab83766f883cd0821c0c948ba16986e8618dd5808d7",
+  "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nPainted mixed media with torn pigment edges, charcoal seams, coarse fibre impressions and patched colour masses fused into a spatially convincing world. Asymmetric wrapped cowls and diagonal cloth silhouettes. Dirty indigo, clay, soot, faded cream, warm brass and restrained elemental accents. Frayed textile, crooked driftwood, laced shields, cracked wrapped wardstones. Resourceful wild magic, quiet rubbed ground.",
+  "wave": "A6",
+  "origin": "builtin-imagegen",
+  "correction": null,
+  "tool_calls": [
+    {
+      "name": "image_gen__imagegen",
+      "arguments": {
+        "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nPainted mixed media with torn pigment edges, charcoal seams, coarse fibre impressions and patched colour masses fused into a spatially convincing world. Asymmetric wrapped cowls and diagonal cloth silhouettes. Dirty indigo, clay, soot, faded cream, warm brass and restrained elemental accents. Frayed textile, crooked driftwood, laced shields, cracked wrapped wardstones. Resourceful wild magic, quiet rubbed ground.",
+        "transparent_background": false,
+        "referenced_image_paths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\review\\sources\\01-tessera-open-oval-sparse-near-a01.jpg"
+        ]
+      }
+    }
+  ],
+  "requested_tool_call": {
+    "name": "image_gen__imagegen",
+    "arguments": {
+      "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nPainted mixed media with torn pigment edges, charcoal seams, coarse fibre impressions and patched colour masses fused into a spatially convincing world. Asymmetric wrapped cowls and diagonal cloth silhouettes. Dirty indigo, clay, soot, faded cream, warm brass and restrained elemental accents. Frayed textile, crooked driftwood, laced shields, cracked wrapped wardstones. Resourceful wild magic, quiet rubbed ground.",
+      "transparent_background": false,
+      "referenced_image_paths": [
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\review\\sources\\01-tessera-open-oval-sparse-near-a01.jpg"
+      ]
+    }
+  },
+  "at": "2026-10-02T14:03:22.869162+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "prompt_verbatim_verified": true,
+  "source": "art/raw/a6-ragged-oracle-ragged-oracle-arena-a01/source.png",
+  "sha256": "7843eb04fea001786f0af93523954218bc74f6afca0b612634134418d45cdbe6",
+  "tool_results": [
+    {
+      "saved_path": "C:\\Users\\kazda\\.codex\\generated_images\\01a0fcd2-1286-7600-a66f-aa18d8c2f6d9\\exec-986faf75-5218-496e-9fde-f6d162e907f4.png"
+    }
+  ]
+}

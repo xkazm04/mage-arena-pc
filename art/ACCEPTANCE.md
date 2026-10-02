@@ -1,4 +1,26 @@
-# Current owner boundary - session 3 / A3 partial
+# Current owner boundary — session 4 / A6 identity choice
+
+[Owner board](review/a6/index.html), [combined sheet](review/a6/contact-sheet.jpg),
+[attempt archive](review/a6/attempts.html), [design/results](../docs/waves/A6-identity-reset.md).
+Eight named arena/portrait pairs: six current arena candidates and two capped
+camera rejects. All portraits and surviving arena candidates route to the owner;
+none is accepted. No OWNER-CHOICE or owner approval file was written.
+
+33 live calls this wave; cumulative 159/240 charged, 81 remaining, 158 saved.
+No A6 moderation/quota/rate-limit incident; stop remains clear. Both transports
+share the same conservative project ledger. All failed historical charges remain.
+The earlier moderation latch was cleared by the owner/host before this session.
+
+`python tools/art/a6.py check` and `python tools/art/a6_audit.py` pass A6 delivery
+and portable evidence. Forty-five pipeline tests pass, and 35 actual local
+diagnostics may only reject or route to owner. Global historical failures remain
+visible: A3 `STOP_SNAPSHOT_DRIFT` and `UNRESOLVED_UI:ui-a3-poses.json`.
+No claim that every project gate is green. Current body scales are approximate,
+roughly 5–8%; individual defects and weaker material separation are on each card.
+Motion readability, exact generated camera angle, performance and owner feel
+remain unmeasured. A2b/A3b/A4b are blocked until a real new owner choice.
+
+# Historical owner boundary - session 3 / A3 partial
 
 [A3 owner board](review/a3/owner.html), [source archive](review/a3/index.html),
 [stop evidence](waves/A3/stop-report.json), [design note](../docs/waves/A3-figures-and-effects.md).

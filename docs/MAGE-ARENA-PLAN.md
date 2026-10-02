@@ -178,7 +178,7 @@ Decisions: **D12** all A2 portraits and all A3 figures and poses are **discarded
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Art | A6 | **Identity reset**: at least six raw-magical style directions for the arena mages, enemies and arena environment, each shown as (1) an arena scene at the confirmed near oblique camera and (2) a late-90s CRPG-style painted bust portrait of the Water mage; the owner chooses | D12-D15 | not started |
+| Art | A6 | **Identity reset**: at least six raw-magical style directions for the arena mages, enemies and arena environment, each shown as (1) an arena scene at the confirmed near oblique camera and (2) a late-90s CRPG-style painted bust portrait of the Water mage; the owner chooses | D12-D15 | delivered 2026-10-02: eight named pairs, six arena candidates and two capped camera rejects; owner choice pending; 33 new calls, 159/240 charged; `art/review/a6/index.html` |
 | Art | A2b | New portraits (16 cast, expressions) in the chosen direction | A6 owner choice | blocked |
 | Art | A3b | New oblique figures, poses, spell and aura effects in the chosen direction, enemies included, finishing the three missing creatures with moderation-safe prompts | A6 owner choice | blocked |
 | Art | A4b | Camp map and backdrops re-checked against the new identity (the camp map is kept unless the owner says otherwise) | A6 owner choice | blocked |
@@ -188,3 +188,42 @@ Decisions: **D12** all A2 portraits and all A3 figures and poses are **discarded
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
+
+### ART session 4 / A6, 2026-10-02 — identity comparison, owner choice pending
+
+Read the full plan/reset, camera/scale/choice/style/acceptance, prior A3 evidence
+and the sister project's method. One design/results note:
+`docs/waves/A6-identity-reset.md`. Studied the chosen blue caster directly; no
+discarded portrait or figure supplied a generation reference. Delivered eight
+named arena/Cassia pairs, a combined sheet and portable HTML owner board with
+all 33 attempts. Six current arena candidates; Coal & Salt and Cinder Veil remain
+capped camera rejects after three attempts each. Added Lacquer & Ash and Granite
+Psalm as distinct directions, without resetting failed slots. Final six candidates
+use one common base skeleton per image kind; targeted correction appendices,
+pilot versions and reference-conditioning limitations are all retained.
+
+Six guarded CLI calls failed to establish the required camera in the initial two
+directions; 27 subsequent built-in calls used the same charged ledger, proof,
+file/hash, prompt, local/direct-review and quota-stop boundaries. First accepted
+technical continuation preceded siblings; no owner acceptance was created.
+Explicit moderation permits one rewritten retry per slot; quota always wins and
+latches all spending. Those error cases were tested synthetically; no actual A6
+moderation/quota/rate-limit incident occurred. Earlier owner-cleared latch and all
+126 inherited charges/events are preserved. Spend: 33 new / 159 of 240 charged,
+81 remaining, 158 saved, zero videos; shared subscription remainder not measured.
+
+`python tools/art/a6.py check` passes all 33 source/evidence chains, 16 current
+images, links, filters, zoom and Chrome at 1080p/1440p/mobile.
+`python tools/art/a6_audit.py` reproduces A6 HTML/manifest/contact bytes without
+ignored raw files. Forty-five tests and Python/prompt compilation pass. Thirty-three
+local image observations plus two board diagnostics only reject or route to owner.
+Global historical A3 checks retain `STOP_SNAPSHOT_DRIFT` after the authorized
+ledger resume and `UNRESOLVED_UI:ui-a3-poses.json`; no threshold was waived and
+not every project gate is green. Current scene bodies are approximately 5–8%,
+with scale/material/extra-enemy defects disclosed per card. Exact painted camera,
+motion, runtime texture/draw/fill costs, frame-time delta and owner feel remain
+unmeasured; preview storage costs are measured. No game build/package changed.
+
+Owner entry: `art/review/a6/index.html`. Recommendation is an owner-only comparison
+order, not a choice. OWNER-CHOICE.md, CAMERA-OK.md and the scale contract are
+unchanged. A2b/A3b/A4b remain blocked. One local A6 commit; never pushed.

@@ -1,5 +1,19 @@
 # Owner checks
 
+## A6 — identity reset, owner choice pending
+
+Open [eight arena/portrait pairs](../art/review/a6/index.html) or the
+[combined sheet](../art/review/a6/contact-sheet.jpg). Six current arena candidates
+come first; the last two are capped camera failures. Inspect a scene at 1080p
+using the viewer, and compare body scale, ground contact, equipped cloth/staff
+silhouettes and the four elemental auras. Portraits test dark painted mood and
+character, with the same newly authored Cassia control face across directions.
+
+The [recommendation](../art/waves/A6/recommendation.json) is for the owner only.
+Scale drift, extra enemies, occasional detached wards and weaker material marks
+remain disclosed; no model score approves them. The old portraits/figures are
+discarded. No new choice or approval has been recorded. A2b/A3b/A4b remain blocked.
+
 ## A1 - choice recorded
 
 The owner chose Tessera & Lime on 2026-10-02; see
