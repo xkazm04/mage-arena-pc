@@ -46,6 +46,10 @@ export class GameShell {
     await this.ui.init(host);
     this.view = await request<SeasonView>("session");
     this.ui.onFrame = (dt) => this.arena?.frame(dt);
+    this.ui.onGamepad = (pad) => this.arena?.input.updateGamepad(pad);
+    this.ui.onGamepadLost = () => {
+      if (this.arena && !this.arena.paused) void this.pause();
+    };
     const signal = this.lifetime.signal;
     window.addEventListener(
       "keyup",
@@ -568,14 +572,12 @@ export class GameShell {
       colours.muted,
       1000,
     );
-    actions
-      .slice(this.visitPage * 4, this.visitPage * 4 + 4)
-      .forEach((a, i) =>
-        u.button(a.id, a.label, 704, 419 + i * 110, 1120, 94, a.run, {
-          subtitle: a.subtitle,
-          disabled: v.settling || v.parley.pending || v.nightFinished,
-        }),
-      );
+    actions.slice(this.visitPage * 4, this.visitPage * 4 + 4).forEach((a, i) =>
+      u.button(a.id, a.label, 704, 419 + i * 110, 1120, 94, a.run, {
+        subtitle: a.subtitle,
+        disabled: v.settling || v.parley.pending || v.nightFinished,
+      }),
+    );
     if (!actions.length)
       u.text(
         "Nothing calls for your time here.\nReturn to the map or let the slot pass.",
@@ -628,7 +630,7 @@ export class GameShell {
       for (let day = 0; day < 7; day++) {
         const date = week * 7 + day + 1,
           x = 315 + day * 132;
-        u.panel(x, y, 112, 58, date === v.day.day ? "button-focus" : "button");
+        u.panel(x, y, 112, 64, date === v.day.day ? "button-focus" : "button");
         u.text(
           String(date).padStart(2, "0"),
           x + 16,
@@ -973,6 +975,10 @@ export class GameShell {
       832,
       252,
       () => {
+        if (this.ui.modality === "gamepad") {
+          this.letterBoard();
+          return;
+        }
         this.typing = true;
         this.ui.focus = "parley-text";
         this.textDisplay!.text = this.parleyText || "Type your words…";
@@ -1086,7 +1092,8 @@ export class GameShell {
       ),
     );
     u.button("letter-space", "Space", 110, 764, 500, 80, () => {
-      this.parleyText += " ";
+      if (Array.from(this.parleyText).length < this.view.parley.maxTextChars)
+        this.parleyText += " ";
       this.textDisplay!.text = this.parleyText;
     });
     u.button("letter-delete", "Delete", 636, 764, 500, 80, () => {

@@ -89,6 +89,7 @@ export class ArenaGame {
       () => this.camera,
       () => !this.paused && ui.screen === "arena",
       () => ui.blocksPointer(),
+      () => this.training.player.pos,
     );
     if (season) {
       if (!season.bout.games) throw Error("Bout not started");
@@ -146,7 +147,8 @@ export class ArenaGame {
               },
               visualFixture: (kind: string, direction = 0) => {
                 this.restart();
-                this.pause(true);
+                this.bot = undefined;
+                this.pause(kind !== "aim");
                 const { state, player } = this.training;
                 state.actors = [player];
                 state.projectiles = [];
@@ -157,6 +159,7 @@ export class ArenaGame {
                 });
                 target.dummy = true;
                 this.training.dummy = target;
+                this.training.nextAttack = Number.MAX_SAFE_INTEGER;
                 if (kind === "scale") {
                   player.absorb = true;
                   for (const [id, x, y] of [
@@ -392,11 +395,40 @@ export class ArenaGame {
       tip = u.text("Alternate spells", 1604, 943, 24, colours.muted, 200);
     const clock = new Graphics();
     u.content.addChild(clock);
+    const artClock = u.kit.source !== "procedural";
+    const clockFace = artClock ? u.kit.sprite("clock.face") : undefined,
+      clockRim = artClock ? u.kit.sprite("clock.rim") : undefined,
+      clockHand = artClock ? u.kit.sprite("clock.hand") : undefined;
+    for (const part of [clockFace, clockRim, clockHand])
+      if (part) {
+        part.anchor.set(0.5);
+        part.position.set(993, 109);
+        part.width = 96;
+        part.height = 96;
+        u.content.addChild(part);
+      }
+    const pips = Array.from({ length: 4 }, (_, i) => {
+      const a = -Math.PI / 2 + (i * Math.PI) / 2;
+      const pair = [
+        artClock ? u.kit.sprite("clock.pip.off") : undefined,
+        artClock ? u.kit.sprite("clock.pip.on") : undefined,
+      ];
+      for (const part of pair)
+        if (part) {
+          part.anchor.set(0.5);
+          part.position.set(993 + Math.cos(a) * 43, 109 + Math.sin(a) * 43);
+          part.width = 16;
+          part.height = 16;
+          u.content.addChild(part);
+        }
+      return pair;
+    });
+    clock.visible = !artClock;
     const rune = u.text("", 1064, 64, 34, colours.gold, 400, true),
       next = u.text("", 1064, 109, 26, colours.muted, 420);
     const feedback = u.text("", 700, 220, 42, colours.water, 600, true);
     const hint = u.text(
-      "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1?4 spells",
+      "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
       524,
       824,
       24,
@@ -415,6 +447,12 @@ export class ArenaGame {
           : "Cassia of the Tide";
       for (let i = 0; i < 4; i++) {
         const s = spellFor(player, i)!;
+        const slot = u.buttons.find((b) => b.id === `slot-${i}`)!;
+        slot.selected = this.input.slot === i;
+        slot.tooltip =
+          player.tier < 4
+            ? `${s.name}. Next tier awakens with collar rune ${["", "I", "II", "III", "IV"][player.tier + 1]}.`
+            : `${s.name}. All tiers unlocked.`;
         labels[i]!.text = s.name;
         const remaining = Math.max(
           0,
@@ -489,7 +527,18 @@ export class ArenaGame {
           ])
           .fill(i < tier ? colours.water : colours.edge);
       }
-      const a = -Math.PI / 2 + Math.PI * 2 * (tier < 4 ? 1 - until / 15 : 1);
+      const interval =
+        tier < 4
+          ? combat.tierClock.unlockAtSeconds[nextTier] -
+            combat.tierClock.unlockAtSeconds[tier as 1 | 2 | 3 | 4]
+          : 1;
+      const a =
+        -Math.PI / 2 + Math.PI * 2 * (tier < 4 ? 1 - until / interval : 1);
+      if (clockHand) clockHand.rotation = a + Math.PI / 2;
+      pips.forEach(([off, on], i) => {
+        if (off) off.visible = i >= tier;
+        if (on) on.visible = i < tier;
+      });
       clock
         .moveTo(993, 109)
         .lineTo(993 + Math.cos(a) * 27, 109 + Math.sin(a) * 27)
@@ -504,7 +553,7 @@ export class ArenaGame {
       hint.text =
         u.modality === "gamepad"
           ? "Left stick move  /  Right stick aim  /  RT cast  /  LT absorb  /  A roll  /  LB RB spells"
-          : "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1?4 spells";
+          : "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells";
     };
     u.end();
     this.hudUpdate();

@@ -20,7 +20,8 @@
     "soak": "tsx packages/tools/src/soak.ts",
     "report": "tsx packages/tools/src/report.ts",
     "camp": "tsx node_modules/vite/bin/vite.js --config packages/game/vite.config.ts",
-    "build:game": "tsx node_modules/vite/bin/vite.js build --config packages/game/vite.config.ts"
+    "build:game": "tsx node_modules/vite/bin/vite.js build --config packages/game/vite.config.ts",
+    "smoke:u1": "npm run build:game && tsx packages/tools/src/u1-browser.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

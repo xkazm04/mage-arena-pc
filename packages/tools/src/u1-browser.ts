@@ -17,14 +17,25 @@ import { SeasonPolicy } from "./season-policy.ts";
 import type { SeasonView } from "../../game/src/season-api.ts";
 import type { CanvasUI } from "../../game/src/ui/ui.ts";
 import type { ArenaGame } from "../../game/src/arena-entry.ts";
+import { nextFocus } from "../../game/src/ui/layout.ts";
 
 type Snapshot = ReturnType<CanvasUI["snapshot"]>;
 type Win = Window & {
-  __ui: { snapshot(): Snapshot };
+  __pad: {
+    connected: boolean;
+    axes: number[];
+    buttons: { pressed: boolean; value: number }[];
+  };
+  __ui: {
+    snapshot(): Snapshot;
+    performance(): { frames: number[]; cpu: number[] };
+    resetPerformance(): void;
+  };
   __arena: {
     snapshot(): ReturnType<ArenaGame["snapshot"]>;
     project(p: { x: number; y: number }): { x: number; y: number };
     setBot(kind: string): void;
+    reset(kind: string): void;
     visualFixture(kind: string, direction: number): void;
     stepInput(count: number): void;
     panPlayer(pos: { x: number; y: number }): void;
@@ -57,7 +68,11 @@ const server = spawn(
     cwd: process.cwd(),
     windowsHide: true,
     stdio: "pipe",
-    env: { ...process.env, MAGE_SAVE_DIRECTORY: saveDirectory },
+    env: {
+      ...process.env,
+      CAMP_DIRECTOR: "offline",
+      MAGE_SAVE_DIRECTORY: saveDirectory,
+    },
   },
 );
 let serverLog = "";
@@ -112,6 +127,22 @@ async function shot(p: Page, name: string, height: number) {
   await p.waitForTimeout(90);
   const s = await snap(p);
   assert.deepEqual(s.overflow, [], `Button text overflow: ${name}`);
+  const enabled = s.buttons.filter((b) => !b.disabled),
+    seen = new Set<string>(enabled.length ? [enabled[0]!.id] : []),
+    queue = [...seen];
+  for (let i = 0; i < queue.length; i++)
+    for (const direction of ["left", "right", "up", "down"] as const) {
+      const id = nextFocus(s.buttons, queue[i]!, direction);
+      if (id && !seen.has(id)) {
+        seen.add(id);
+        queue.push(id);
+      }
+    }
+  assert.equal(
+    seen.size,
+    enabled.length,
+    `${name}: all controls reachable with D-pad`,
+  );
   assert.equal(await p.locator("canvas").count(), 1);
   assert.equal(
     await p.locator("button,select,input,textarea,dialog").count(),
@@ -148,6 +179,26 @@ async function shot(p: Page, name: string, height: number) {
     controls: s.buttons.length,
     texts: s.texts,
   });
+}
+async function pad(
+  p: Page,
+  buttons: number[] = [],
+  axes = [0, 0, 0, 0],
+  connected = true,
+) {
+  await p.evaluate(
+    ({ buttons, axes, connected }) => {
+      const pad = (window as unknown as Win).__pad;
+      pad.connected = connected;
+      pad.axes = axes;
+      pad.buttons = Array.from({ length: 17 }, (_, i) => ({
+        pressed: buttons.includes(i),
+        value: buttons.includes(i) ? 1 : 0,
+      }));
+    },
+    { buttons, axes, connected },
+  );
+  await p.waitForTimeout(100);
 }
 async function visit(p: Page, place: string) {
   if ((await snap(p)).screen !== "camp") await click(p, "nav-camp", "camp");
@@ -203,6 +254,9 @@ try {
       p = await context.newPage();
     current = p;
     p.on("pageerror", (e) => errors.push(e.message));
+    await p.addInitScript(
+      `const testPad={connected:false,index:0,mapping:'standard',id:'U1 test standard controller',axes:[0,0,0,0],buttons:Array.from({length:17},()=>({pressed:false,value:0,touched:false})),timestamp:0};window.__pad=testPad;Object.defineProperty(navigator,'getGamepads',{value:()=>testPad.connected?[testPad]:[]});`,
+    );
     await p.goto("http://127.0.0.1:4188/?harness=1");
     await screen(p, "menu");
     await shot(p, "main-menu", height);
@@ -211,7 +265,15 @@ try {
     assert.notEqual((await snap(p)).focus, initialFocus);
     await p.keyboard.press("Shift+Tab");
     assert.equal((await snap(p)).focus, initialFocus);
-    await click(p, "pick-character", "character");
+    await pad(p, [0]);
+    await screen(p, "character");
+    await p.waitForTimeout(200);
+    assert.equal(
+      (await snap(p)).screen,
+      "character",
+      "Held A does not auto-confirm the next screen",
+    );
+    await pad(p);
     assert.equal(
       (await snap(p)).buttons.filter(
         (b) => b.id.startsWith("choose-") && b.disabled,
@@ -219,7 +281,9 @@ try {
       3,
     );
     await shot(p, "character-pick", height);
-    await click(p, "choose-water", "camp");
+    await pad(p, [0]);
+    await screen(p, "camp");
+    await pad(p);
     await shot(p, "camp-map", height);
     await click(p, "nav-calendar", "calendar");
     await shot(p, "season-calendar", height);
@@ -289,11 +353,125 @@ try {
     );
     await shot(p, "arena-hud", height);
     await p.mouse.up({ button: "right" });
+    const padBefore = await p.evaluate(() =>
+      (window as unknown as Win).__arena.snapshot(),
+    );
+    await pad(p, [7, 5], [0.7, 0, 1, -1]);
+    await p.waitForTimeout(550);
+    await pad(p);
+    const padAfter = await p.evaluate(() =>
+      (window as unknown as Win).__arena.snapshot(),
+    );
+    assert(padAfter.player.pos.x > padBefore.player.pos.x);
+    assert.equal(padAfter.slot, (padBefore.slot + 1) % 4);
+    const projectedAim = await p.evaluate(() => {
+      const a = (window as unknown as Win).__arena,
+        s = a.snapshot();
+      return { a: a.project(s.aim), p: a.project(s.player.pos) };
+    });
+    assert(
+      Math.abs(
+        Math.abs(projectedAim.a.x - projectedAim.p.x) -
+          Math.abs(projectedAim.a.y - projectedAim.p.y),
+      ) < 0.1,
+      "Right stick diagonal inverts oblique projection",
+    );
+    await pad(p, [6], [0, 0, 1, 0]);
+    assert(
+      (await p.evaluate(() => (window as unknown as Win).__arena.snapshot()))
+        .player.absorb,
+    );
+    await pad(p);
+    await pad(p, [9]);
+    await screen(p, "pause");
+    await pad(p);
+    await pad(p, [0]);
+    await screen(p, "arena");
+    await pad(p);
+    await pad(p, [], [0, 0, 0, 0], false);
+    await screen(p, "pause");
+    await click(p, "resume", "arena");
     await p.evaluate(() =>
       (window as unknown as Win).__arena.setBot("perfect"),
     );
     await p.waitForTimeout(1800);
     await shot(p, "arena-absorb", height);
+    let pointerHits = 0;
+    for (let direction = 0; direction < 8; direction++) {
+      await p.evaluate(
+        (angle) =>
+          (window as unknown as Win).__arena.visualFixture("aim", angle),
+        (direction * Math.PI) / 4,
+      );
+      const aim = await p.evaluate(() => {
+        const a = (window as unknown as Win).__arena,
+          s = a.snapshot();
+        return a.project(s.state.actors[1]!.pos);
+      });
+      await p.mouse.move(aim.x, aim.y);
+      await p.mouse.down();
+      await p.waitForFunction(
+        () =>
+          (window as unknown as Win).__arena.snapshot().state.actors[1]!.metrics
+            .hits > 0,
+        undefined,
+        { timeout: 4000 },
+      );
+      await p.mouse.up();
+      pointerHits++;
+    }
+    await p.evaluate(() =>
+      (window as unknown as Win).__arena.visualFixture("scale", 0),
+    );
+    await shot(p, "camera-far-fixed", height);
+    const anchored = await p.evaluate(() =>
+      (window as unknown as Win).__arena.snapshot(),
+    );
+    assert.equal(anchored.cameraMetrics.figureHeightPx, height * 0.0375);
+    await p.evaluate(
+      (pos) => (window as unknown as Win).__arena.panPlayer(pos),
+      { x: anchored.player.pos.x + 40, y: anchored.player.pos.y },
+    );
+    await p.waitForTimeout(400);
+    const edged = await p.evaluate(() =>
+      (window as unknown as Win).__arena.snapshot(),
+    );
+    assert(
+      edged.camera.centre.x > anchored.camera.centre.x &&
+        edged.camera.centre.x < edged.player.pos.x,
+    );
+    await shot(p, "camera-edge-follow-fixture", height);
+    await p.evaluate(() =>
+      (window as unknown as Win).__arena.reset("performance"),
+    );
+    await p.waitForFunction(
+      () =>
+        (window as unknown as Win).__arena.snapshot().visibleProjectiles ===
+        100,
+    );
+    await p.waitForTimeout(500);
+    await p.evaluate(() => (window as unknown as Win).__ui.resetPerformance());
+    const counts: number[] = [];
+    for (let i = 0; i < 60; i++) {
+      counts.push(
+        await p.evaluate(
+          () =>
+            (window as unknown as Win).__arena.snapshot().visibleProjectiles,
+        ),
+      );
+      await p.waitForTimeout(100);
+    }
+    const perf = await p.evaluate(() =>
+      (window as unknown as Win).__ui.performance(),
+    );
+    const sorted = perf.cpu.toSorted((a, b) => a - b),
+      cpuP95 = sorted[Math.floor(sorted.length * 0.95)]!,
+      fps =
+        1000 / (perf.frames.reduce((a, b) => a + b, 0) / perf.frames.length);
+    assert(counts.every((n) => n === 100));
+    assert(cpuP95 < 8, `HUD and 100 projectiles CPU p95 ${cpuP95}`);
+    assert(fps >= 50, `Frame rate ${fps}`);
+    await shot(p, "arena-projectile-field", height);
     await p.keyboard.press("Escape");
     await screen(p, "pause");
     await click(p, "main-menu", "menu");
@@ -420,6 +598,15 @@ try {
     await saveLoad(p);
     runs.push({
       height,
+      pointerHits,
+      performance: {
+        fps,
+        cpuP95,
+        frames: perf.frames.length,
+        visibleProjectileSamples: counts,
+      },
+      gamepad:
+        "standard browser API emulation; not a physical controller measurement",
       checkpoints,
       receipts: (await view(p)).season.receipts,
       day: (await view(p)).day.day,

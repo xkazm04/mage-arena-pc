@@ -46,35 +46,55 @@ Sonnet 5.5 medium CLI provider. The latter shares W7's durable run identity and
 session. CLI absence, slow replies or an exhausted cap fall back to the planner;
 typed Parley has authored fallback. Provider details stay outside game assets/UI.
 
-The camera stays at 55 degrees, near zoom 1.2 (range 0.8-1.2), on the accepted
-192x144 m open oval, with upright figures, ground aiming and a 140-degree ward.
-A4/A5 camp assets are accepted. A1b supplies the camera/ground reference, not a
-clean extractable floor texture; the floor remains procedural. All figures use
-the validated loader's procedural fallback. Discarded A2 portraits were removed
-from the current tree; A3 is never a runtime dependency. No new figure art is approved.
+U1 presents the entire game in one fullscreen canvas, with no document panels,
+select dropdowns or default form controls. Choose Fullscreen from the main menu
+or settings; Escape still follows browser fullscreen behavior before returning
+control to the game. The app always fills the viewport, even without fullscreen.
 
-W7 checks, from the root (browser scripts must run sequentially):
+The camera uses the art v2 nominal scale: 55 degrees, 3.75% body height (40.5px
+at 1080p and 54px at 1440p). It stays fixed inside a wide dead zone and softly
+follows at the edges. The 192x144 m oval and combat geometry are unchanged.
+Runtime numbers live in `data/camera.json`, cross-referencing the art contract.
+D18 supersedes A4/A5: the current camp and UI have original procedural Covenant
+fallbacks. No discarded portraits or figures are loaded.
+
+Keyboard menus: arrows or Tab/Shift+Tab move visible focus; Enter chooses;
+Escape backs out or pauses. Mouse targets use the same actions. Standard gamepad:
+D-pad/left stick navigates, A chooses/holds, B goes back, Start pauses/resumes.
+In combat, left stick moves, right stick aims, RT casts, LT absorbs, A rolls,
+left-stick press sprints, and LB/RB change slots. The Parley letter board supports
+controller-only writing. Pause settings include sound and reduced UI motion.
+
+UI art integration: place the art stream's unchanged `art/ui/` delivery in this
+worktree. The dev server serves it and the production build copies it automatically.
+The entry point is `/art/ui/kit.json`. The loader checks the published schema,
+required region IDs, SHA-256 page hashes, atlas bounds, anchors and nine-slice
+borders. Invalid/missing kits retain procedural components and report diagnostics.
+No code edits are needed for a contract-conforming atlas. Typography is bundled
+Cinzel and Alegreya Sans, drawn as bitmap atlases; full OFL licences ship in
+`public/fonts/`. See `docs/waves/U1-evidence/art-ui-contract.md` for the contract
+snapshot, and the live art stream's README for subsequent delivery changes.
+
+Current checks, from the root (run browser checks sequentially):
 
 ```powershell
 npm run gate
-npm run build:game
-npm --prefix packages/core run report:w2 -- W7-evidence/controls
-npm --prefix packages/core run report:w3 -- W7-evidence/water
-npm --prefix packages/core run report:w4 -- --evidence W7-evidence --tag integrated-census
-npm --prefix packages/core run report:w4:ladder -- W7-evidence
-npm --prefix packages/game run smoke -- W7-evidence/controls
-npm --prefix packages/game run smoke:w3 -- W7-evidence/water
-npm --prefix packages/game run smoke:w4 -- W7-evidence/games
-npm --prefix packages/game run smoke:w4b -- W7-evidence/camera
-npx tsx packages/tools/src/w7-replay.ts
-# Against the production preview above:
-$env:CAMP_URL = 'http://127.0.0.1:4173'
-npx tsx packages/tools/src/season-browser.ts
-npx tsx packages/tools/src/w7-soak.ts 30
+npm run smoke:u1
+npx tsx packages/tools/src/u1-kit-browser.ts
+npx tsx packages/tools/src/u1-replay.ts
+npm --prefix packages/core run report:w4 -- --evidence U1-evidence --tag census
 ```
 
-The soak writes its fixture seasons into the local save slot: preserve an owner's
-save before running that test. Full gate details and measured limitations are in
-[W7 execution](../../docs/waves/W7-execution.md). [Owner checks](../../docs/OWNER-CHECKS.md)
-keep G1 open until the owner plays the first two weeks. Headless frame timing is
-not physical input latency or a human assessment of camera, pacing or enjoyment.
+`smoke:u1` builds and boots its own production preview, walks every screen at
+1080p and 1440p, drives mouse/keyboard plus an emulated standard Gamepad API,
+plays both weeks and tests camp/combat save-load. It uses a temporary save
+folder (`MAGE_SAVE_DIRECTORY`), preserving the owner's local slot. It never
+makes provider calls. Screenshots and machine-readable evidence are in
+`docs/waves/U1-evidence`; the gallery is `index.html`. Harness mutations only
+exist with `?harness=1`; ordinary play exposes read-only diagnostics.
+
+The old W2-W7 DOM-selector smoke scripts and reports are historical. U1's browser
+route supersedes their page navigation; pure core, save, injection and census
+gates remain active. Automated controller emulation is not physical controller
+latency, and screenshots do not certify sofa readability or desire to continue.
+[Owner checks](../../docs/OWNER-CHECKS.md) keep G1 open for the owner.

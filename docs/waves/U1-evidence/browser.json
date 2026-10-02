@@ -5,6 +5,75 @@
   "runs": [
     {
       "height": 1080,
+      "pointerHits": 8,
+      "performance": {
+        "fps": 60.00100001666697,
+        "cpuP95": 1.7000000029802322,
+        "frames": 360,
+        "visibleProjectileSamples": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "gamepad": "standard browser API emulation; not a physical controller measurement",
       "checkpoints": [
         {
           "day": 7,
@@ -16,7 +85,7 @@
             "finalReached": true,
             "finalWon": true
           },
-          "tick": 7509
+          "tick": 8122
         },
         {
           "day": 14,
@@ -60,7 +129,232 @@
             "finalReached": true,
             "finalWon": true
           },
-          "hash": "complete:3:4:ea2c381a",
+          "hash": "complete:3:4:36863c14",
+          "trace": [
+            {
+              "path": "characters/cassia/gold",
+              "before": 10,
+              "after": 110,
+              "rule": "arena/arena-tiers/tiro/gold"
+            },
+            {
+              "path": "characters/cassia/renown",
+              "before": 5,
+              "after": 30,
+              "rule": "arena/arena-tiers/tiro/renown"
+            },
+            {
+              "path": "trust/brennic>cassia",
+              "before": 15,
+              "after": 18,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/garran>cassia",
+              "before": 33,
+              "after": 36,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/iskar>cassia",
+              "before": 10,
+              "after": 13,
+              "rule": "season-bridge/aftermath"
+            }
+          ]
+        },
+        {
+          "id": "trial:73:13",
+          "day": 13,
+          "kind": "trial",
+          "entrant": "cassia",
+          "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[74,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[30,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[44,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6200000000000001,0.28300000000000003],\"entrant\":\"cassia\"}",
+          "trace": [
+            {
+              "path": "trust/nysa>cassia",
+              "before": -13,
+              "after": -10,
+              "rule": "season-bridge/trial/respectTrust"
+            }
+          ]
+        },
+        {
+          "id": "games:73:14",
+          "day": 14,
+          "kind": "games",
+          "entrant": "cassia",
+          "result": {
+            "kind": "missio",
+            "wavesCleared": 0,
+            "gold": 0,
+            "renown": 0,
+            "finalReached": false,
+            "finalWon": false
+          },
+          "hash": "lost:0:0:4c772b6b",
+          "trace": [
+            {
+              "path": "characters/cassia/gold",
+              "before": 110,
+              "after": 110,
+              "rule": "arena/arena-tiers/tiro/gold"
+            },
+            {
+              "path": "characters/cassia/renown",
+              "before": 30,
+              "after": 30,
+              "rule": "arena/arena-tiers/tiro/renown"
+            },
+            {
+              "path": "trust/brennic>cassia",
+              "before": 18,
+              "after": 19,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/garran>cassia",
+              "before": 48,
+              "after": 49,
+              "rule": "season-bridge/aftermath"
+            },
+            {
+              "path": "trust/iskar>cassia",
+              "before": 13,
+              "after": 14,
+              "rule": "season-bridge/aftermath"
+            }
+          ]
+        }
+      ],
+      "day": 15
+    },
+    {
+      "height": 1440,
+      "pointerHits": 8,
+      "performance": {
+        "fps": 60.00200006666889,
+        "cpuP95": 1.9000000059604645,
+        "frames": 360,
+        "visibleProjectileSamples": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "gamepad": "standard browser API emulation; not a physical controller measurement",
+      "checkpoints": [
+        {
+          "day": 7,
+          "result": {
+            "kind": "champion",
+            "wavesCleared": 4,
+            "gold": 100,
+            "renown": 25,
+            "finalReached": true,
+            "finalWon": true
+          },
+          "tick": 8138
+        },
+        {
+          "day": 14,
+          "result": {
+            "kind": "missio",
+            "wavesCleared": 0,
+            "gold": 0,
+            "renown": 0,
+            "finalReached": false,
+            "finalWon": false
+          },
+          "tick": 435
+        }
+      ],
+      "receipts": [
+        {
+          "id": "trial:73:6",
+          "day": 6,
+          "kind": "trial",
+          "entrant": "cassia",
+          "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.157],\"entrant\":\"cassia\"}",
+          "trace": [
+            {
+              "path": "trust/nysa>cassia",
+              "before": -9,
+              "after": -6,
+              "rule": "season-bridge/trial/respectTrust"
+            }
+          ]
+        },
+        {
+          "id": "games:73:7",
+          "day": 7,
+          "kind": "games",
+          "entrant": "cassia",
+          "result": {
+            "kind": "champion",
+            "wavesCleared": 4,
+            "gold": 100,
+            "renown": 25,
+            "finalReached": true,
+            "finalWon": true
+          },
+          "hash": "complete:3:4:1035c913",
           "trace": [
             {
               "path": "characters/cassia/gold",
@@ -2638,10 +2932,10 @@
           "size": 42
         },
         {
-          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1?4 spells",
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
           "x": 524,
           "y": 824,
-          "w": 704.9758586883545,
+          "w": 704.3998603820801,
           "h": 29.28,
           "size": 24
         }
@@ -2649,6 +2943,207 @@
     },
     {
       "filename": "1080-arena-absorb.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  81 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 147.719970703125,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  85 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 128.51997184753418,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 10.1s",
+          "x": 1064,
+          "y": 109,
+          "w": 174.43395948410034,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "",
+          "x": 700,
+          "y": 220,
+          "w": 0,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1080-camera-far-fixed.png",
       "screen": "arena",
       "focus": "pause",
       "kit": "procedural",
@@ -2799,10 +3294,10 @@
           "size": 24
         },
         {
-          "text": "FLOW  1 / 5",
+          "text": "FLOW  0 / 5",
           "x": 1604,
           "y": 895,
-          "w": 113.00797367095949,
+          "w": 118.15997409820558,
           "h": 34.160000000000004,
           "size": 28
         },
@@ -2823,10 +3318,412 @@
           "size": 34
         },
         {
-          "text": "Next rune in 9.3s",
+          "text": "Next rune in 15.0s",
           "x": 1064,
           "y": 109,
-          "w": 165.74996280670166,
+          "w": 176.3579626083374,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "WARD RAISED",
+          "x": 700,
+          "y": 220,
+          "w": 286.8179497718811,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1080-camera-edge-follow-fixture.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 149.39996910095215,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  95 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 128.4239673614502,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 15.0s",
+          "x": 1064,
+          "y": 109,
+          "w": 176.3579626083374,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "WARD RAISED",
+          "x": 700,
+          "y": 220,
+          "w": 286.8179497718811,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1080-arena-projectile-field.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 149.39996910095215,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  95 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 128.4239673614502,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 7.9s",
+          "x": 1064,
+          "y": 109,
+          "w": 165.87995958328247,
           "h": 31.720000000000002,
           "size": 26
         },
@@ -2839,10 +3736,10 @@
           "size": 42
         },
         {
-          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1?4 spells",
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
           "x": 524,
           "y": 824,
-          "w": 704.9758586883545,
+          "w": 704.3998603820801,
           "h": 29.28,
           "size": 24
         }
@@ -4544,6 +5441,5054 @@
     },
     {
       "filename": "1080-chapter-results.png",
+      "screen": "chapter",
+      "focus": "chapter-board",
+      "kit": "procedural",
+      "controls": 3,
+      "texts": [
+        {
+          "text": "THE FIRST CHAPTER",
+          "x": 96,
+          "y": 57,
+          "w": 190.46397399902344,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Two weeks survived",
+          "x": 96,
+          "y": 99,
+          "w": 610.4499225616455,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "The Tide has a place in the camp.\nYour board and journal remember the path here.",
+          "x": 120,
+          "y": 320,
+          "w": 860.1539068222046,
+          "h": 112.24,
+          "size": 46
+        },
+        {
+          "text": "4 recorded Trials and Games\n110 gold  /  30 renown",
+          "x": 120,
+          "y": 511,
+          "w": 389.6639356613159,
+          "h": 87.84,
+          "size": 36
+        },
+        {
+          "text": "Read the Hollow Board",
+          "x": 146,
+          "y": 755.48,
+          "w": 283.4239807128906,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Open your journal",
+          "x": 146,
+          "y": 867.48,
+          "w": 222.71996307373047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Save / settings",
+          "x": 1356,
+          "y": 960.48,
+          "w": 174.55996704101562,
+          "h": 39.04,
+          "size": 32
+        }
+      ]
+    },
+    {
+      "filename": "1440-main-menu.png",
+      "screen": "menu",
+      "focus": "pick-character",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "A COVENANT IN CHAINS",
+          "x": 112,
+          "y": 168,
+          "w": 255.2159562110901,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "MAGE\nARENA",
+          "x": 96,
+          "y": 220,
+          "w": 384.60792160034185,
+          "h": 273.28000000000003,
+          "size": 112
+        },
+        {
+          "text": "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
+          "x": 112,
+          "y": 538,
+          "w": 489.56593275070196,
+          "h": 82.96000000000001,
+          "size": 34
+        },
+        {
+          "text": "Begin your story",
+          "x": 196,
+          "y": 675,
+          "w": 197.91997528076172,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Choose your mage",
+          "x": 196,
+          "y": 716.04,
+          "w": 170.0639820098877,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Continue season",
+          "x": 138,
+          "y": 787.48,
+          "w": 203.45596313476562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Load season",
+          "x": 432,
+          "y": 787.48,
+          "w": 150.0479736328125,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "The proving ground",
+          "x": 138,
+          "y": 879.48,
+          "w": 241.05596923828125,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Fullscreen",
+          "x": 1600,
+          "y": 960.48,
+          "w": 126.49597930908203,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "WATER  /  THE FIRST TWO WEEKS",
+          "x": 112,
+          "y": 976,
+          "w": 314.0639419555664,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-character-pick.png",
+      "screen": "character",
+      "focus": "choose-water",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "CHOOSE YOUR MAGE",
+          "x": 96,
+          "y": 57,
+          "w": 202.7519702911377,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "The four bound together",
+          "x": 96,
+          "y": 99,
+          "w": 803.1838507652283,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Cassia of the Lighthouse",
+          "x": 124,
+          "y": 652,
+          "w": 250.3079595565796,
+          "h": 87.84,
+          "size": 36
+        },
+        {
+          "text": "WATER",
+          "x": 124,
+          "y": 752,
+          "w": 75.94598150253296,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Walk as Cassia",
+          "x": 146,
+          "y": 800.48,
+          "w": 178.8799591064453,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Brennic the Red",
+          "x": 564,
+          "y": 652,
+          "w": 310.1759548187256,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "FIRE",
+          "x": 564,
+          "y": 752,
+          "w": 45.2139835357666,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Camp ally",
+          "x": 586,
+          "y": 800.48,
+          "w": 121.75997924804688,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Garran Stonehand",
+          "x": 1004,
+          "y": 652,
+          "w": 217.799955368042,
+          "h": 87.84,
+          "size": 36
+        },
+        {
+          "text": "EARTH",
+          "x": 1004,
+          "y": 752,
+          "w": 71.18799161911011,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Camp ally",
+          "x": 1026,
+          "y": 800.48,
+          "w": 121.75997924804688,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Iskar Windborn",
+          "x": 1444,
+          "y": 652,
+          "w": 304.95592975616455,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "AIR",
+          "x": 1444,
+          "y": 752,
+          "w": 36.42598819732666,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Camp ally",
+          "x": 1466,
+          "y": 800.48,
+          "w": 121.75997924804688,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Back",
+          "x": 122,
+          "y": 960.48,
+          "w": 58.079986572265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Water is playable. The other three share your camp, bonds and rivalries.",
+          "x": 370,
+          "y": 966,
+          "w": 653.8558902740479,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-camp-map.png",
+      "screen": "camp",
+      "focus": "place-tent",
+      "kit": "procedural",
+      "controls": 15,
+      "texts": [
+        {
+          "text": "CASTRA CLAUSA  /  WEEK 1  /  DAY 1",
+          "x": 96,
+          "y": 57,
+          "w": 322.4399299621582,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Within the wards",
+          "x": 96,
+          "y": 99,
+          "w": 544.7939105033875,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 219.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Season",
+          "x": 422,
+          "y": 219.48,
+          "w": 87.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Hollow Board",
+          "x": 722,
+          "y": 219.48,
+          "w": 168.44799041748047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Journal",
+          "x": 1022,
+          "y": 219.48,
+          "w": 89.18399047851562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 219.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "the Yard",
+          "x": 146,
+          "y": 354.84000000000003,
+          "w": 103.29598999023438,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "2 time to reach",
+          "x": 146,
+          "y": 395.88000000000005,
+          "w": 136.9679889678955,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "the Cistern",
+          "x": 538,
+          "y": 329.84000000000003,
+          "w": 134.1119842529297,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "1 time to reach",
+          "x": 538,
+          "y": 370.88000000000005,
+          "w": 134.30398750305176,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "the Pit",
+          "x": 944,
+          "y": 374.84000000000003,
+          "w": 81.47199249267578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Opens dusk",
+          "x": 944,
+          "y": 415.88000000000005,
+          "w": 108.21597862243652,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "the Exchange",
+          "x": 122,
+          "y": 577.84,
+          "w": 165.66397857666016,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "1 time to reach",
+          "x": 122,
+          "y": 618.88,
+          "w": 134.30398750305176,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "the Commons",
+          "x": 526,
+          "y": 569.84,
+          "w": 172.57598114013672,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "1 time to reach",
+          "x": 526,
+          "y": 610.88,
+          "w": 134.30398750305176,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "the Door",
+          "x": 952,
+          "y": 590.84,
+          "w": 108.6399917602539,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "2 time to reach",
+          "x": 952,
+          "y": 631.88,
+          "w": 136.9679889678955,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "your tent",
+          "x": 351,
+          "y": 778.84,
+          "w": 111.74398803710938,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "You are here",
+          "x": 351,
+          "y": 819.88,
+          "w": 115.00799560546875,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "the Edge",
+          "x": 932,
+          "y": 784.84,
+          "w": 108.0639877319336,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Opens night",
+          "x": 932,
+          "y": 825.88,
+          "w": 113.75997734069824,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "A PLACE IN THE CAMP",
+          "x": 1420,
+          "y": 340,
+          "w": 209.03996658325195,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "your tent",
+          "x": 1352,
+          "y": 403,
+          "w": 205.35195636749268,
+          "h": 46.36000000000001,
+          "size": 38
+        },
+        {
+          "text": "Canvas offers little privacy. Rest, confide, or listen at the flap.",
+          "x": 1352,
+          "y": 467,
+          "w": 364.55992698669434,
+          "h": 73.2,
+          "size": 30
+        },
+        {
+          "text": "3 time remains\nAn activity uses 1 time",
+          "x": 1352,
+          "y": 610,
+          "w": 235.59195423126224,
+          "h": 68.32000000000001,
+          "size": 28
+        },
+        {
+          "text": "Enter this place",
+          "x": 1436,
+          "y": 748.48,
+          "w": 188.83197021484375,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Cassia of the Lighthouse   /   10 gold   /   5 renown   /   0 fatigue",
+          "x": 120,
+          "y": 908,
+          "w": 595.7639079093933,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "◆  DAY",
+          "x": 120,
+          "y": 960,
+          "w": 68.99198627471924,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "○  DUSK",
+          "x": 340,
+          "y": 960,
+          "w": 90.30009746551515,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "○  NIGHT",
+          "x": 560,
+          "y": 960,
+          "w": 101.10810184478761,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 TIME LEFT",
+          "x": 940,
+          "y": 960,
+          "w": 128.88397121429443,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Let day pass",
+          "x": 1526,
+          "y": 923.84,
+          "w": 146.62397003173828,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Spend this time slot",
+          "x": 1526,
+          "y": 964.88,
+          "w": 183.7679672241211,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-season-calendar.png",
+      "screen": "calendar",
+      "focus": "nav-calendar",
+      "kit": "procedural",
+      "controls": 6,
+      "texts": [
+        {
+          "text": "CASTRA CLAUSA  /  WEEK 1  /  DAY 1",
+          "x": 96,
+          "y": 57,
+          "w": 322.4399299621582,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "One season. Six Games.",
+          "x": 96,
+          "y": 99,
+          "w": 678.6578879356384,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 219.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Season",
+          "x": 422,
+          "y": 219.48,
+          "w": 87.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Hollow Board",
+          "x": 722,
+          "y": 219.48,
+          "w": 168.44799041748047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Journal",
+          "x": 1022,
+          "y": 219.48,
+          "w": 89.18399047851562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 219.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "THE ROAD THROUGH THE COLLAR",
+          "x": 132,
+          "y": 336,
+          "w": 354.5619649887085,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "WEEK 1",
+          "x": 132,
+          "y": 408,
+          "w": 75.73798418045044,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "01",
+          "x": 331,
+          "y": 402,
+          "w": 24.41599273681641,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "02",
+          "x": 463,
+          "y": 402,
+          "w": 27.523994445800785,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "03",
+          "x": 595,
+          "y": 402,
+          "w": 26.31999492645264,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "04",
+          "x": 727,
+          "y": 402,
+          "w": 28.251995086669925,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "05",
+          "x": 859,
+          "y": 402,
+          "w": 26.487996101379398,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "06",
+          "x": 991,
+          "y": 402,
+          "w": 27.943990707397464,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "07",
+          "x": 1123,
+          "y": 402,
+          "w": 26.45999145507813,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "WEEK 2",
+          "x": 132,
+          "y": 478,
+          "w": 78.6239857673645,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "08",
+          "x": 331,
+          "y": 472,
+          "w": 28.055995941162113,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "09",
+          "x": 463,
+          "y": 472,
+          "w": 27.943990707397464,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10",
+          "x": 595,
+          "y": 472,
+          "w": 24.41599273681641,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "11",
+          "x": 727,
+          "y": 472,
+          "w": 19.263992309570316,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "12",
+          "x": 859,
+          "y": 472,
+          "w": 22.37199401855469,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "13",
+          "x": 991,
+          "y": 472,
+          "w": 21.167994499206547,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "14",
+          "x": 1123,
+          "y": 472,
+          "w": 23.09999465942383,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "WEEK 3",
+          "x": 132,
+          "y": 548,
+          "w": 77.50598621368408,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "15",
+          "x": 331,
+          "y": 542,
+          "w": 21.335995674133304,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "16",
+          "x": 463,
+          "y": 542,
+          "w": 22.79199028015137,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "17",
+          "x": 595,
+          "y": 542,
+          "w": 21.307991027832035,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "18",
+          "x": 727,
+          "y": 542,
+          "w": 22.90399551391602,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "19",
+          "x": 859,
+          "y": 542,
+          "w": 22.79199028015137,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "20",
+          "x": 991,
+          "y": 542,
+          "w": 27.523994445800785,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "21",
+          "x": 1123,
+          "y": 542,
+          "w": 22.37199401855469,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "WEEK 4",
+          "x": 132,
+          "y": 618,
+          "w": 79.29998636245728,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "22",
+          "x": 331,
+          "y": 612,
+          "w": 25.479995727539066,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "23",
+          "x": 463,
+          "y": 612,
+          "w": 24.27599620819092,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "24",
+          "x": 595,
+          "y": 612,
+          "w": 26.207996368408207,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "25",
+          "x": 727,
+          "y": 612,
+          "w": 24.44399738311768,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "26",
+          "x": 859,
+          "y": 612,
+          "w": 25.899991989135746,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "27",
+          "x": 991,
+          "y": 612,
+          "w": 24.41599273681641,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "28",
+          "x": 1123,
+          "y": 612,
+          "w": 26.011997222900394,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "WEEK 5",
+          "x": 132,
+          "y": 688,
+          "w": 77.6619873046875,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "29",
+          "x": 331,
+          "y": 682,
+          "w": 25.899991989135746,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "30",
+          "x": 463,
+          "y": 682,
+          "w": 26.31999492645264,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "31",
+          "x": 595,
+          "y": 682,
+          "w": 21.167994499206547,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "32",
+          "x": 727,
+          "y": 682,
+          "w": 24.27599620819092,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "33",
+          "x": 859,
+          "y": 682,
+          "w": 23.071996688842777,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "34",
+          "x": 991,
+          "y": 682,
+          "w": 25.003996849060062,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "35",
+          "x": 1123,
+          "y": 682,
+          "w": 23.239997863769535,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "WEEK 6",
+          "x": 132,
+          "y": 758,
+          "w": 79.01398229598999,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "36",
+          "x": 331,
+          "y": 752,
+          "w": 24.6959924697876,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "37",
+          "x": 463,
+          "y": 752,
+          "w": 23.211993217468265,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "38",
+          "x": 595,
+          "y": 752,
+          "w": 24.80799770355225,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "39",
+          "x": 727,
+          "y": 752,
+          "w": 24.6959924697876,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "40",
+          "x": 859,
+          "y": 752,
+          "w": 28.251995086669925,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "41",
+          "x": 991,
+          "y": 752,
+          "w": 23.09999465942383,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "42",
+          "x": 1123,
+          "y": 752,
+          "w": 26.207996368408207,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "THE NEXT SUMMONS",
+          "x": 1382,
+          "y": 347,
+          "w": 225.08196449279785,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Tent Trial",
+          "x": 1382,
+          "y": 406,
+          "w": 219.8399543762207,
+          "h": 48.800000000000004,
+          "size": 40
+        },
+        {
+          "text": "On the eve of the Games, earn the right to carry your tent into the arena.",
+          "x": 1382,
+          "y": 470,
+          "w": 376.63995361328125,
+          "h": 117.12,
+          "size": 32
+        },
+        {
+          "text": "Games on days 7 and 14",
+          "x": 1382,
+          "y": 644,
+          "w": 269.39993619918823,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "Later weeks await the next chapter.",
+          "x": 1382,
+          "y": 716,
+          "w": 403.04994106292725,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "Cassia of the Lighthouse   /   10 gold   /   5 renown   /   0 fatigue",
+          "x": 120,
+          "y": 908,
+          "w": 595.7639079093933,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "◆  DAY",
+          "x": 120,
+          "y": 960,
+          "w": 68.99198627471924,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "○  DUSK",
+          "x": 340,
+          "y": 960,
+          "w": 90.30009746551515,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "○  NIGHT",
+          "x": 560,
+          "y": 960,
+          "w": 101.10810184478761,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 TIME LEFT",
+          "x": 940,
+          "y": 960,
+          "w": 128.88397121429443,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Let day pass",
+          "x": 1526,
+          "y": 923.84,
+          "w": 146.62397003173828,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Spend this time slot",
+          "x": 1526,
+          "y": 964.88,
+          "w": 183.7679672241211,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-hollow-board-first-night.png",
+      "screen": "board",
+      "focus": "nav-camp",
+      "kit": "procedural",
+      "controls": 8,
+      "texts": [
+        {
+          "text": "CASTRA CLAUSA  /  WEEK 1  /  DAY 1",
+          "x": 96,
+          "y": 57,
+          "w": 322.4399299621582,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "The Hollow Board",
+          "x": 96,
+          "y": 99,
+          "w": 580.4639248847961,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 219.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Season",
+          "x": 422,
+          "y": 219.48,
+          "w": 87.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Hollow Board",
+          "x": 722,
+          "y": 219.48,
+          "w": 168.44799041748047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Journal",
+          "x": 1022,
+          "y": 219.48,
+          "w": 89.18399047851562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 219.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "DEEDS, WHISPERS AND WITNESSES",
+          "x": 96,
+          "y": 307,
+          "w": 343.10393142700195,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "A THREAD IN THE CAMP",
+          "x": 1020,
+          "y": 355,
+          "w": 250.40596389770508,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "The board waits for the first morning. Tonight’s choices will leave their marks here.",
+          "x": 940,
+          "y": 447,
+          "w": 797.1638793945312,
+          "h": 92.72000000000001,
+          "size": 38
+        },
+        {
+          "text": "Public words carry farther than their authors.",
+          "x": 940,
+          "y": 752,
+          "w": 482.9999399185181,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Previous",
+          "x": 122,
+          "y": 884.48,
+          "w": 106.0159912109375,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Next",
+          "x": 378,
+          "y": 884.48,
+          "w": 59.23199462890625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "1 / 1",
+          "x": 630,
+          "y": 887,
+          "w": 33.92998933792114,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A rumour remains a rumour. Choose a card to read it.",
+          "x": 370,
+          "y": 966,
+          "w": 483.07193756103516,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-journal-first-night.png",
+      "screen": "journal",
+      "focus": "card-0",
+      "kit": "procedural",
+      "controls": 9,
+      "texts": [
+        {
+          "text": "CASTRA CLAUSA  /  WEEK 1  /  DAY 1",
+          "x": 96,
+          "y": 57,
+          "w": 322.4399299621582,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "What you carry",
+          "x": 96,
+          "y": 99,
+          "w": 500.94589424133295,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 219.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Season",
+          "x": 422,
+          "y": 219.48,
+          "w": 87.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Hollow Board",
+          "x": 722,
+          "y": 219.48,
+          "w": 168.44799041748047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Journal",
+          "x": 1022,
+          "y": 219.48,
+          "w": 89.18399047851562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 219.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "PRIVATE KNOWINGS",
+          "x": 96,
+          "y": 307,
+          "w": 197.80796241760254,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "The legion collared its own allies after the ford.",
+          "x": 122,
+          "y": 390.42,
+          "w": 499.127932548523,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "A THREAD IN THE CAMP",
+          "x": 1020,
+          "y": 355,
+          "w": 250.40596389770508,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "The legion collared its own allies after the ford.",
+          "x": 940,
+          "y": 447,
+          "w": 677.3879084587097,
+          "h": 46.36000000000001,
+          "size": 38
+        },
+        {
+          "text": "Knowing opens a Parley when the right person is present.",
+          "x": 940,
+          "y": 752,
+          "w": 613.1998891830445,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Previous",
+          "x": 122,
+          "y": 884.48,
+          "w": 106.0159912109375,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Next",
+          "x": 378,
+          "y": 884.48,
+          "w": 59.23199462890625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "1 / 1",
+          "x": 630,
+          "y": 887,
+          "w": 33.92998933792114,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Private knowledge stays with you across the season.",
+          "x": 370,
+          "y": 966,
+          "w": 475.5839309692383,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-camp-place.png",
+      "screen": "visit",
+      "focus": "nav-camp",
+      "kit": "procedural",
+      "controls": 7,
+      "texts": [
+        {
+          "text": "CASTRA CLAUSA  /  WEEK 1  /  DAY 1",
+          "x": 96,
+          "y": 57,
+          "w": 322.4399299621582,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "the Yard",
+          "x": 96,
+          "y": 99,
+          "w": 271.20795154571533,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 219.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Season",
+          "x": 422,
+          "y": 219.48,
+          "w": 87.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Hollow Board",
+          "x": 722,
+          "y": 219.48,
+          "w": 168.44799041748047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Journal",
+          "x": 1022,
+          "y": 219.48,
+          "w": 89.18399047851562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 219.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Dust, worn posts and room to make the body stronger.",
+          "x": 128,
+          "y": 545,
+          "w": 481.47193145751953,
+          "h": 78.08,
+          "size": 32
+        },
+        {
+          "text": "HERE WITH YOU",
+          "x": 128,
+          "y": 686,
+          "w": 157.87198448181152,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Brennic the Red  /  Elder Sadruba  /  Corvo",
+          "x": 128,
+          "y": 731,
+          "w": 469.0199375152588,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "CHOOSE A MOMENT",
+          "x": 712,
+          "y": 314,
+          "w": 212.05597257614136,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "An activity ends this time slot.",
+          "x": 712,
+          "y": 354,
+          "w": 343.5299348831177,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "train · vigor",
+          "x": 730,
+          "y": 430.84000000000003,
+          "w": 139.99996948242188,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "+3 vigor practice",
+          "x": 730,
+          "y": 471.88000000000005,
+          "w": 149.4719753265381,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Lighthouse   /   10 gold   /   5 renown   /   0 fatigue",
+          "x": 120,
+          "y": 908,
+          "w": 595.7639079093933,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "◆  DAY",
+          "x": 120,
+          "y": 960,
+          "w": 68.99198627471924,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "○  DUSK",
+          "x": 340,
+          "y": 960,
+          "w": 90.30009746551515,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "○  NIGHT",
+          "x": 560,
+          "y": 960,
+          "w": 101.10810184478761,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "1 TIME LEFT",
+          "x": 940,
+          "y": 960,
+          "w": 126.97996902465822,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Let day pass",
+          "x": 1526,
+          "y": 923.84,
+          "w": 146.62397003173828,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Spend this time slot",
+          "x": 1526,
+          "y": 964.88,
+          "w": 183.7679672241211,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-pause.png",
+      "screen": "pause",
+      "focus": "resume",
+      "kit": "procedural",
+      "controls": 4,
+      "texts": [
+        {
+          "text": "PAUSED",
+          "x": 96,
+          "y": 57,
+          "w": 78.16798782348633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "The world can wait",
+          "x": 96,
+          "y": 99,
+          "w": 618.9179172515869,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Return to the moment",
+          "x": 664,
+          "y": 319.48,
+          "w": 274.46397399902344,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Settings & controls",
+          "x": 606,
+          "y": 437.48,
+          "w": 233.82396697998047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Save & load",
+          "x": 606,
+          "y": 555.48,
+          "w": 144.2559814453125,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Main menu",
+          "x": 606,
+          "y": 673.48,
+          "w": 142.11196899414062,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "The collar and the camp are still.",
+          "x": 580,
+          "y": 790,
+          "w": 368.9999485015869,
+          "h": 36.6,
+          "size": 30
+        }
+      ]
+    },
+    {
+      "filename": "1440-settings.png",
+      "screen": "settings",
+      "focus": "sound",
+      "kit": "procedural",
+      "controls": 4,
+      "texts": [
+        {
+          "text": "PAUSED  /  SETTINGS",
+          "x": 96,
+          "y": 57,
+          "w": 195.11996841430664,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Your hands. Your magic.",
+          "x": 96,
+          "y": 99,
+          "w": 759.2198705673218,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "MOVE",
+          "x": 132,
+          "y": 273,
+          "w": 58.89598846435547,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "W A S D  /  Left stick",
+          "x": 132,
+          "y": 307,
+          "w": 237.11995697021484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "AIM & CAST",
+          "x": 132,
+          "y": 367,
+          "w": 112.53598022460938,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Mouse + left button  /  Right stick + RT",
+          "x": 132,
+          "y": 401,
+          "w": 459.1679229736328,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ABSORB",
+          "x": 132,
+          "y": 461,
+          "w": 79.29598617553711,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Right button held  /  LT held",
+          "x": 132,
+          "y": 495,
+          "w": 337.88795471191406,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ROLL & SPRINT",
+          "x": 132,
+          "y": 555,
+          "w": 143.39997482299805,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Space + Shift  /  A + left stick press",
+          "x": 132,
+          "y": 589,
+          "w": 406.9119110107422,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "SPELL SLOTS",
+          "x": 132,
+          "y": 649,
+          "w": 116.75997734069824,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1–4 or wheel  /  LB and RB",
+          "x": 132,
+          "y": 683,
+          "w": 307.0719451904297,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "MENUS",
+          "x": 132,
+          "y": 743,
+          "w": 73.24798393249512,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Arrows + Enter  /  D-pad + A, B back",
+          "x": 132,
+          "y": 777,
+          "w": 423.5839157104492,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Absorb bell: On",
+          "x": 1266,
+          "y": 271.48,
+          "w": 190.43196868896484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Toggle fullscreen",
+          "x": 1266,
+          "y": 395.48,
+          "w": 210.3359832763672,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Motion: Full",
+          "x": 1266,
+          "y": 519.48,
+          "w": 148.38396453857422,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Aim at the feet. The camera stays fixed until you approach an edge.\n\nMagic can be absorbed. Steel and unblockable marks must be escaped.",
+          "x": 1256,
+          "y": 643,
+          "w": 534.6239242553711,
+          "h": 195.20000000000002,
+          "size": 32
+        },
+        {
+          "text": "Back",
+          "x": 122,
+          "y": 960.48,
+          "w": 58.079986572265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-save-load.png",
+      "screen": "saves",
+      "focus": "save-season",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "PAUSED  /  SAVE & LOAD",
+          "x": 96,
+          "y": 57,
+          "w": 228.33595848083496,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "A thread held in time",
+          "x": 96,
+          "y": 99,
+          "w": 672.2199258804321,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Day 1  /  Day",
+          "x": 365,
+          "y": 306,
+          "w": 286.5599555969238,
+          "h": 58.56,
+          "size": 48
+        },
+        {
+          "text": "Cassia of the Lighthouse  /  10 gold  /  5 renown",
+          "x": 365,
+          "y": 387,
+          "w": 560.3519134521484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "The season, Knowings and camp bonds will be held together.",
+          "x": 365,
+          "y": 459,
+          "w": 742.5278854370117,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Save season",
+          "x": 228,
+          "y": 643.48,
+          "w": 146.9439697265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Load season",
+          "x": 732,
+          "y": 643.48,
+          "w": 150.0479736328125,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Recover previous",
+          "x": 1294,
+          "y": 643.48,
+          "w": 208.19197845458984,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Loading returns you here, paused, before the world moves again.",
+          "x": 144,
+          "y": 761,
+          "w": 790.3678970336914,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Back",
+          "x": 122,
+          "y": 960.48,
+          "w": 58.079986572265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Resume",
+          "x": 1470,
+          "y": 960.48,
+          "w": 99.71199035644531,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-training.png",
+      "screen": "training",
+      "focus": "training-magic",
+      "kit": "procedural",
+      "controls": 9,
+      "texts": [
+        {
+          "text": "PRACTICE  /  NO SEASON STAKES",
+          "x": 96,
+          "y": 57,
+          "w": 304.41594886779785,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "The proving ground",
+          "x": 96,
+          "y": 99,
+          "w": 644.2638640403748,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Magic thrower",
+          "x": 180,
+          "y": 311.84000000000003,
+          "w": 178.84798431396484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Face the light. Time the ward.",
+          "x": 180,
+          "y": 352.88000000000005,
+          "w": 270.7679672241211,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Steel from the side",
+          "x": 1060,
+          "y": 311.84000000000003,
+          "w": 231.61597442626953,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Steel cannot be absorbed. Roll clear.",
+          "x": 1060,
+          "y": 352.88000000000005,
+          "w": 329.9519462585449,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Alternating flanks",
+          "x": 180,
+          "y": 497.84000000000003,
+          "w": 222.81594848632812,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Turn to meet the next spell.",
+          "x": 180,
+          "y": 538.88,
+          "w": 250.31996726989746,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Unblockable lane",
+          "x": 1060,
+          "y": 497.84000000000003,
+          "w": 214.2079620361328,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Leave the mark before it resolves.",
+          "x": 1060,
+          "y": 538.88,
+          "w": 305.39996337890625,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Three-bolt stream",
+          "x": 180,
+          "y": 683.84,
+          "w": 222.5599822998047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Keep the ward up through a volley.",
+          "x": 180,
+          "y": 724.88,
+          "w": 318.33596420288086,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tiro Games",
+          "x": 1060,
+          "y": 683.84,
+          "w": 139.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Four bouts. The collar begins anew.",
+          "x": 1060,
+          "y": 724.88,
+          "w": 320.30395317077637,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Previous",
+          "x": 122,
+          "y": 862.48,
+          "w": 106.0159912109375,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "More opponents",
+          "x": 426,
+          "y": 862.48,
+          "w": 204.12796020507812,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Main menu",
+          "x": 122,
+          "y": 960.48,
+          "w": 142.11196899414062,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Choose a lesson, compose your spells, and enter.",
+          "x": 370,
+          "y": 966,
+          "w": 443.27991485595703,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-composition.png",
+      "screen": "composition",
+      "focus": "preset-0",
+      "kit": "procedural",
+      "controls": 12,
+      "texts": [
+        {
+          "text": "BEFORE THE COLLAR OPENS",
+          "x": 96,
+          "y": 57,
+          "w": 267.0479564666748,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Compose your Water",
+          "x": 96,
+          "y": 99,
+          "w": 644.4379343986511,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Rain Needle is always yours. Bring three lines; each grows as the collar unlocks.",
+          "x": 96,
+          "y": 209,
+          "w": 962.5918273925781,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Undertow",
+          "x": 122,
+          "y": 288.48,
+          "w": 124.12799072265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Mirror tide",
+          "x": 536,
+          "y": 288.48,
+          "w": 134.20797729492188,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Rotation",
+          "x": 950,
+          "y": 288.48,
+          "w": 107.23197937011719,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "SLOT 2",
+          "x": 202,
+          "y": 401,
+          "w": 61.391990661621094,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Lash",
+          "x": 146,
+          "y": 494.48,
+          "w": 56.60798645019531,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Inspect",
+          "x": 512,
+          "y": 498.14,
+          "w": 72.64398527145386,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "SLOT 3",
+          "x": 782,
+          "y": 401,
+          "w": 60.3599910736084,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide orb",
+          "x": 726,
+          "y": 494.48,
+          "w": 102.07998657226562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Inspect",
+          "x": 1092,
+          "y": 498.14,
+          "w": 72.64398527145386,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "SLOT 4",
+          "x": 1362,
+          "y": 401,
+          "w": 62.0159912109375,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Mire",
+          "x": 1306,
+          "y": 494.48,
+          "w": 58.04798889160156,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Inspect",
+          "x": 1672,
+          "y": 498.14,
+          "w": 72.64398527145386,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Lash  /  TIER EVOLUTION",
+          "x": 96,
+          "y": 613,
+          "w": 262.163950920105,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Branch A",
+          "x": 1526,
+          "y": 615.48,
+          "w": 110.3039779663086,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "I  /  0s",
+          "x": 120,
+          "y": 713,
+          "w": 50.71198654174805,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 120,
+          "y": 754,
+          "w": 116.19197845458984,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "8 mana  /  2s cooldown",
+          "x": 120,
+          "y": 829,
+          "w": 205.58396530151367,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "II  /  15s",
+          "x": 560,
+          "y": 713,
+          "w": 62.75998306274414,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Undertow",
+          "x": 560,
+          "y": 754,
+          "w": 124.12799072265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "14 mana  /  5s cooldown",
+          "x": 560,
+          "y": 829,
+          "w": 213.11996269226074,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "III  /  30s",
+          "x": 1000,
+          "y": 713,
+          "w": 73.46397972106934,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Maelstrom Lash",
+          "x": 1000,
+          "y": 754,
+          "w": 197.5679702758789,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "22 mana  /  8s cooldown",
+          "x": 1000,
+          "y": 829,
+          "w": 216.50396347045898,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "IV  /  45s",
+          "x": 1440,
+          "y": 713,
+          "w": 72.74398612976074,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Drown Coil",
+          "x": 1440,
+          "y": 754,
+          "w": 136.031982421875,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "40 mana  /  16s cooldown",
+          "x": 1440,
+          "y": 829,
+          "w": 227.03995513916016,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Back",
+          "x": 122,
+          "y": 960.48,
+          "w": 58.079986572265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Alternate lines to build Flow. A full Flow makes the next cast a free Crest.",
+          "x": 370,
+          "y": 966,
+          "w": 660.6959095001221,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Enter the arena",
+          "x": 1470,
+          "y": 960.48,
+          "w": 188.76797485351562,
+          "h": 39.04,
+          "size": 32
+        }
+      ]
+    },
+    {
+      "filename": "1440-arena-hud.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 149.39996910095215,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  82 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 129.4079704284668,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 13.3s",
+          "x": 1064,
+          "y": 109,
+          "w": 173.1859631538391,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "WARD RAISED",
+          "x": 700,
+          "y": 220,
+          "w": 286.8179497718811,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-arena-absorb.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  81 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 147.719970703125,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  85 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 128.51997184753418,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 10.0s",
+          "x": 1064,
+          "y": 109,
+          "w": 179.21795988082886,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "",
+          "x": 700,
+          "y": 220,
+          "w": 0,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-camera-far-fixed.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 149.39996910095215,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  95 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 128.4239673614502,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 15.0s",
+          "x": 1064,
+          "y": 109,
+          "w": 176.3579626083374,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "WARD RAISED",
+          "x": 700,
+          "y": 220,
+          "w": 286.8179497718811,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-camera-edge-follow-fixture.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 149.39996910095215,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  95 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 128.4239673614502,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 15.0s",
+          "x": 1064,
+          "y": 109,
+          "w": 176.3579626083374,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "WARD RAISED",
+          "x": 700,
+          "y": 220,
+          "w": 286.8179497718811,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-arena-projectile-field.png",
+      "screen": "arena",
+      "focus": "pause",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "THE PROVING GROUND",
+          "x": 96,
+          "y": 58,
+          "w": 227.08796882629395,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cassia of the Tide",
+          "x": 96,
+          "y": 94,
+          "w": 339.76794719696045,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 68.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 118,
+          "y": 840,
+          "w": 149.39996910095215,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  95 / 95",
+          "x": 118,
+          "y": 898,
+          "w": 128.4239673614502,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 118,
+          "y": 956,
+          "w": 158.97595596313477,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "1",
+          "x": 550,
+          "y": 935.36,
+          "w": 8.255996704101562,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 604,
+          "y": 894,
+          "w": 132.747971534729,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 544,
+          "y": 977,
+          "w": 137.85597610473633,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "2",
+          "x": 810,
+          "y": 935.36,
+          "w": 10.919998168945312,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 864,
+          "y": 894,
+          "w": 132.3559865951538,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 804,
+          "y": 977,
+          "w": 148.89597129821777,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3",
+          "x": 1070,
+          "y": 935.36,
+          "w": 9.887998580932617,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1124,
+          "y": 894,
+          "w": 101.66798114776613,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1064,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "4",
+          "x": 1330,
+          "y": 935.36,
+          "w": 11.543998718261719,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1384,
+          "y": 894,
+          "w": 67.75998878479004,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1324,
+          "y": 977,
+          "w": 139.3439769744873,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1604,
+          "y": 895,
+          "w": 118.15997409820558,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1604,
+          "y": 943,
+          "w": 144.14397811889648,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 166.05596160888672,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 7.9s",
+          "x": 1064,
+          "y": 109,
+          "w": 165.87995958328247,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "",
+          "x": 700,
+          "y": 220,
+          "w": 0,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 704.3998603820801,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-listening.png",
+      "screen": "listen",
+      "focus": "listen-hold",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "NIGHT  /  FOLLOW THE VOICES",
+          "x": 96,
+          "y": 57,
+          "w": 283.51195907592773,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Beyond the tent flap",
+          "x": 96,
+          "y": 99,
+          "w": 656.3858981132507,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Move to the voices. Hold Listen to gather a fragment.\nRelease it when the patrol reaches your cover.",
+          "x": 96,
+          "y": 222,
+          "w": 685.4399056434631,
+          "h": 82.96000000000001,
+          "size": 34
+        },
+        {
+          "text": "0 / 3 fragments heard",
+          "x": 96,
+          "y": 806,
+          "w": 278.01796102523804,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "0 moments exposed to the Vigil",
+          "x": 96,
+          "y": 858,
+          "w": 341.03994846344,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Cover 1",
+          "x": 216,
+          "y": 668,
+          "w": 85.69599151611328,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A / D or 1–3 changes cover",
+          "x": 216,
+          "y": 709.04,
+          "w": 234.74396324157715,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cover 2",
+          "x": 746,
+          "y": 668,
+          "w": 89.24799346923828,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A / D or 1–3 changes cover",
+          "x": 746,
+          "y": 709.04,
+          "w": 234.74396324157715,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cover 3",
+          "x": 1276,
+          "y": 668,
+          "w": 87.87199401855469,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A / D or 1–3 changes cover",
+          "x": 1276,
+          "y": 709.04,
+          "w": 234.74396324157715,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Hold Listen",
+          "x": 1386,
+          "y": 960.48,
+          "w": 140.63997650146484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "SPACE held  Listen     A / D  Move     Release SPACE  Hide",
+          "x": 370,
+          "y": 966,
+          "w": 500.5679168701172,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-listening-complete.png",
+      "screen": "listen",
+      "focus": "listen-hold",
+      "kit": "procedural",
+      "controls": 5,
+      "texts": [
+        {
+          "text": "NIGHT  /  FOLLOW THE VOICES",
+          "x": 96,
+          "y": 57,
+          "w": 283.51195907592773,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Beyond the tent flap",
+          "x": 96,
+          "y": 99,
+          "w": 656.3858981132507,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Move to the voices. Hold Listen to gather a fragment.\nRelease it when the patrol reaches your cover.",
+          "x": 96,
+          "y": 222,
+          "w": 685.4399056434631,
+          "h": 82.96000000000001,
+          "size": 34
+        },
+        {
+          "text": "A Knowing is yours. It waits in your journal.",
+          "x": 96,
+          "y": 806,
+          "w": 554.8798923492432,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "0 moments exposed to the Vigil  /  The night is complete",
+          "x": 96,
+          "y": 858,
+          "w": 597.7439146041871,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Cover 1",
+          "x": 216,
+          "y": 668,
+          "w": 85.69599151611328,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A / D or 1–3 changes cover",
+          "x": 216,
+          "y": 709.04,
+          "w": 234.74396324157715,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cover 2",
+          "x": 746,
+          "y": 668,
+          "w": 89.24799346923828,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A / D or 1–3 changes cover",
+          "x": 746,
+          "y": 709.04,
+          "w": 234.74396324157715,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Cover 3",
+          "x": 1276,
+          "y": 668,
+          "w": 87.87199401855469,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A / D or 1–3 changes cover",
+          "x": 1276,
+          "y": 709.04,
+          "w": 234.74396324157715,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "SPACE held  Listen     A / D  Move     Release SPACE  Hide",
+          "x": 370,
+          "y": 966,
+          "w": 500.5679168701172,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Meet the morning",
+          "x": 1386,
+          "y": 960.48,
+          "w": 223.35997009277344,
+          "h": 39.04,
+          "size": 32
+        }
+      ]
+    },
+    {
+      "filename": "1440-hollow-board.png",
+      "screen": "board",
+      "focus": "card-0",
+      "kit": "procedural",
+      "controls": 12,
+      "texts": [
+        {
+          "text": "CASTRA CLAUSA  /  WEEK 1  /  DAY 2",
+          "x": 96,
+          "y": 57,
+          "w": 325.10393142700195,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "The Hollow Board",
+          "x": 96,
+          "y": 99,
+          "w": 580.4639248847961,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 219.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Season",
+          "x": 422,
+          "y": 219.48,
+          "w": 87.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Hollow Board",
+          "x": 722,
+          "y": 219.48,
+          "w": 168.44799041748047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Journal",
+          "x": 1022,
+          "y": 219.48,
+          "w": 89.18399047851562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 219.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "DEEDS, WHISPERS AND WITNESSES",
+          "x": 96,
+          "y": 307,
+          "w": 343.10393142700195,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Brennic the Red shared a quiet moment with Elder Sadruba.",
+          "x": 122,
+          "y": 390.42,
+          "w": 643.635919570923,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Fenna shared a quiet moment with Garran Stonehand.",
+          "x": 122,
+          "y": 515.42,
+          "w": 582.7359075546265,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Nysa shared a quiet moment with Elder Ophel.",
+          "x": 122,
+          "y": 640.42,
+          "w": 501.4239397048951,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Senna shared a quiet moment with Elder Ruadh.",
+          "x": 122,
+          "y": 765.42,
+          "w": 520.155930519104,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "A THREAD IN THE CAMP",
+          "x": 1020,
+          "y": 355,
+          "w": 250.40596389770508,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Brennic the Red shared a quiet moment with Elder Sadruba.",
+          "x": 940,
+          "y": 447,
+          "w": 735.8319125175476,
+          "h": 92.72000000000001,
+          "size": 38
+        },
+        {
+          "text": "Public words carry farther than their authors.",
+          "x": 940,
+          "y": 752,
+          "w": 482.9999399185181,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Previous",
+          "x": 122,
+          "y": 884.48,
+          "w": 106.0159912109375,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Next",
+          "x": 378,
+          "y": 884.48,
+          "w": 59.23199462890625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "1 / 2",
+          "x": 630,
+          "y": 887,
+          "w": 36.815990924835205,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "A rumour remains a rumour. Choose a card to read it.",
+          "x": 370,
+          "y": 966,
+          "w": 483.07193756103516,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-journal.png",
+      "screen": "journal",
+      "focus": "card-0",
+      "kit": "procedural",
+      "controls": 12,
+      "texts": [
+        {
+          "text": "CASTRA CLAUSA  /  WEEK 1  /  DAY 2",
+          "x": 96,
+          "y": 57,
+          "w": 325.10393142700195,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "What you carry",
+          "x": 96,
+          "y": 99,
+          "w": 500.94589424133295,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 219.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Season",
+          "x": 422,
+          "y": 219.48,
+          "w": 87.71198272705078,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Hollow Board",
+          "x": 722,
+          "y": 219.48,
+          "w": 168.44799041748047,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Journal",
+          "x": 1022,
+          "y": 219.48,
+          "w": 89.18399047851562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Pause",
+          "x": 1670,
+          "y": 219.48,
+          "w": 74.36798858642578,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "PRIVATE KNOWINGS",
+          "x": 96,
+          "y": 307,
+          "w": 197.80796241760254,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "The legion collared its own allies after the ford.",
+          "x": 122,
+          "y": 390.42,
+          "w": 499.127932548523,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Nysa leaves bread beside the southern tent rope after dusk.",
+          "x": 122,
+          "y": 515.42,
+          "w": 635.7399110794069,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Brennic the Red shared a quiet moment with Elder Sadruba.",
+          "x": 122,
+          "y": 640.42,
+          "w": 643.635919570923,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Fenna shared a quiet moment with Garran Stonehand.",
+          "x": 122,
+          "y": 765.42,
+          "w": 582.7359075546265,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "A THREAD IN THE CAMP",
+          "x": 1020,
+          "y": 355,
+          "w": 250.40596389770508,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "The legion collared its own allies after the ford.",
+          "x": 940,
+          "y": 447,
+          "w": 677.3879084587097,
+          "h": 46.36000000000001,
+          "size": 38
+        },
+        {
+          "text": "Knowing opens a Parley when the right person is present.",
+          "x": 940,
+          "y": 752,
+          "w": 613.1998891830445,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Previous",
+          "x": 122,
+          "y": 884.48,
+          "w": 106.0159912109375,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Next",
+          "x": 378,
+          "y": 884.48,
+          "w": 59.23199462890625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "1 / 2",
+          "x": 630,
+          "y": 887,
+          "w": 36.815990924835205,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Private knowledge stays with you across the season.",
+          "x": 370,
+          "y": 966,
+          "w": 475.5839309692383,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-parley.png",
+      "screen": "parley",
+      "focus": "parley-card-0",
+      "kit": "procedural",
+      "controls": 8,
+      "texts": [
+        {
+          "text": "A KNOWING MOMENT",
+          "x": 96,
+          "y": 57,
+          "w": 216.0959644317627,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Speak with Nysa",
+          "x": 96,
+          "y": 99,
+          "w": 493.92791891098017,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "WHAT YOU KNOW",
+          "x": 128,
+          "y": 255,
+          "w": 191.95797872543335,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Nysa leaves bread beside the southern tent rope after dusk.",
+          "x": 128,
+          "y": 308,
+          "w": 655.9679107666016,
+          "h": 78.08,
+          "size": 32
+        },
+        {
+          "text": "Reveal what you know",
+          "x": 154,
+          "y": 452.42,
+          "w": 255.77997207641602,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "I know this: Nysa leaves bread beside the southern tent rope after dusk. Stand with me when the camp falls quiet.",
+          "x": 154,
+          "y": 491.02000000000004,
+          "w": 654.2639007568359,
+          "h": 58.56,
+          "size": 24
+        },
+        {
+          "text": "Bargain with it",
+          "x": 154,
+          "y": 597.42,
+          "w": 169.55996990203857,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "I can keep this close: Nysa leaves bread beside the southern tent rope after dusk. Let us find some common ground.",
+          "x": 154,
+          "y": 636.02,
+          "w": 634.1758975982666,
+          "h": 58.56,
+          "size": 24
+        },
+        {
+          "text": "Keep it and ask a question",
+          "x": 154,
+          "y": 742.42,
+          "w": 299.279944896698,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "I have heard this: Nysa leaves bread beside the southern tent rope after dusk. What else should I understand?",
+          "x": 154,
+          "y": 781.02,
+          "w": 653.1599063873291,
+          "h": 58.56,
+          "size": 24
+        },
+        {
+          "text": "SPEAK IN YOUR OWN WORDS",
+          "x": 956,
+          "y": 257,
+          "w": 308.1519503593445,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Approach: Reveal what you know",
+          "x": 978,
+          "y": 328.48,
+          "w": 405.0239486694336,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "",
+          "x": 978,
+          "y": 518.48,
+          "w": 0,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Choose here to write your appeal…",
+          "x": 976,
+          "y": 436,
+          "w": 421.407958984375,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Speaking ends this slot. Your approach carries the reply\nwhen words cannot reach the camp.",
+          "x": 956,
+          "y": 693,
+          "w": 589.6239023208618,
+          "h": 68.32000000000001,
+          "size": 28
+        },
+        {
+          "text": "Speak",
+          "x": 1036,
+          "y": 804.48,
+          "w": 74.84798431396484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Letter board",
+          "x": 1402,
+          "y": 804.48,
+          "w": 150.39999389648438,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Back",
+          "x": 122,
+          "y": 960.48,
+          "w": 58.079986572265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Once each day, a Knowing gives your words weight.",
+          "x": 370,
+          "y": 966,
+          "w": 468.11993980407715,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-letter-board.png",
+      "screen": "keyboard",
+      "focus": "letter-A",
+      "kit": "procedural",
+      "controls": 34,
+      "texts": [
+        {
+          "text": "PARLEY  /  LETTER BOARD",
+          "x": 96,
+          "y": 57,
+          "w": 239.8319549560547,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Choose your words",
+          "x": 96,
+          "y": 99,
+          "w": 618.395899772644,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Your words begin here.",
+          "x": 128,
+          "y": 253,
+          "w": 299.301974773407,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "A",
+          "x": 136,
+          "y": 452.04,
+          "w": 20.80799388885498,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "B",
+          "x": 308,
+          "y": 452.04,
+          "w": 19.331997871398926,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "C",
+          "x": 480,
+          "y": 452.04,
+          "w": 18.719999313354492,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "D",
+          "x": 652,
+          "y": 452.04,
+          "w": 23.255996704101562,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "E",
+          "x": 824,
+          "y": 452.04,
+          "w": 17.35199546813965,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "F",
+          "x": 996,
+          "y": 452.04,
+          "w": 15.623991966247559,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "G",
+          "x": 1168,
+          "y": 452.04,
+          "w": 21.59999656677246,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "H",
+          "x": 1340,
+          "y": 452.04,
+          "w": 24.624000549316406,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "I",
+          "x": 1512,
+          "y": 452.04,
+          "w": 9.647995948791504,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "J",
+          "x": 1684,
+          "y": 452.04,
+          "w": 11.159997940063477,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "K",
+          "x": 136,
+          "y": 556.04,
+          "w": 19.691997528076172,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "L",
+          "x": 308,
+          "y": 556.04,
+          "w": 14.975996017456055,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "M",
+          "x": 480,
+          "y": 556.04,
+          "w": 28.403992652893066,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "N",
+          "x": 652,
+          "y": 556.04,
+          "w": 24.58799457550049,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "O",
+          "x": 824,
+          "y": 556.04,
+          "w": 22.859999656677246,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "P",
+          "x": 996,
+          "y": 556.04,
+          "w": 18.719999313354492,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Q",
+          "x": 1168,
+          "y": 556.04,
+          "w": 23.003997802734375,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "R",
+          "x": 1340,
+          "y": 556.04,
+          "w": 19.97999382019043,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "S",
+          "x": 1512,
+          "y": 556.04,
+          "w": 16.991995811462402,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "T",
+          "x": 1684,
+          "y": 556.04,
+          "w": 17.640000343322754,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "U",
+          "x": 136,
+          "y": 660.04,
+          "w": 22.53599739074707,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "V",
+          "x": 308,
+          "y": 660.04,
+          "w": 20.303996086120605,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "W",
+          "x": 480,
+          "y": 660.04,
+          "w": 32.147995948791504,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "X",
+          "x": 652,
+          "y": 660.04,
+          "w": 21.383995056152344,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Y",
+          "x": 824,
+          "y": 660.04,
+          "w": 19.00799560546875,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Z",
+          "x": 996,
+          "y": 660.04,
+          "w": 19.00799560546875,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": ".",
+          "x": 1168,
+          "y": 660.04,
+          "w": 8.24399471282959,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": ",",
+          "x": 1340,
+          "y": 660.04,
+          "w": 8.24399471282959,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "?",
+          "x": 1512,
+          "y": 660.04,
+          "w": 11.915994644165039,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "!",
+          "x": 1684,
+          "y": 660.04,
+          "w": 9.21599292755127,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Space",
+          "x": 136,
+          "y": 784.48,
+          "w": 72.92798614501953,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Delete",
+          "x": 662,
+          "y": 784.48,
+          "w": 81.1520004272461,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Done",
+          "x": 1188,
+          "y": 784.48,
+          "w": 66.68798828125,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Back",
+          "x": 122,
+          "y": 960.48,
+          "w": 58.079986572265625,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-parley-result.png",
+      "screen": "parley-result",
+      "focus": "back",
+      "kit": "procedural",
+      "controls": 1,
+      "texts": [
+        {
+          "text": "A MOMENT BETWEEN YOU",
+          "x": 96,
+          "y": 57,
+          "w": 257.54395866394043,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Nysa answers",
+          "x": 96,
+          "y": 99,
+          "w": 422.47192621231073,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "“Keep your voice down. I will hear you out.”",
+          "x": 488,
+          "y": 335,
+          "w": 682.5839138031006,
+          "h": 51.239999999999995,
+          "size": 42
+        },
+        {
+          "text": "They will attempt a friendly act toward you tonight.",
+          "x": 366,
+          "y": 632,
+          "w": 626.0799255371094,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "The moment has passed. The camp remembers.",
+          "x": 366,
+          "y": 755,
+          "w": 546.9299268722534,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "Return to camp",
+          "x": 122,
+          "y": 960.48,
+          "w": 187.87197875976562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-tent-trial.png",
+      "screen": "trial",
+      "focus": "trial-press",
+      "kit": "procedural",
+      "controls": 4,
+      "texts": [
+        {
+          "text": "GAMES EVE  /  TENT TRIAL",
+          "x": 96,
+          "y": 57,
+          "w": 243.07194900512695,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Who carries the Tide?",
+          "x": 96,
+          "y": 99,
+          "w": 676.0478835105896,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Nysa",
+          "x": 140,
+          "y": 734,
+          "w": 99.02797985076904,
+          "h": 46.36000000000001,
+          "size": 38
+        },
+        {
+          "text": "Best of three exchanges. Each stance costs stamina.\nBrace beats press. Feint beats brace. Press beats feint.",
+          "x": 886,
+          "y": 242,
+          "w": 693.1578893661499,
+          "h": 82.96000000000001,
+          "size": 34
+        },
+        {
+          "text": "EXCHANGES  0 : 0\nSTAMINA  90 / 70",
+          "x": 886,
+          "y": 377,
+          "w": 209.03995513916016,
+          "h": 73.2,
+          "size": 30
+        },
+        {
+          "text": "Their stance: press",
+          "x": 886,
+          "y": 508,
+          "w": 432.51992321014404,
+          "h": 53.68000000000001,
+          "size": 44
+        },
+        {
+          "text": "Press",
+          "x": 912,
+          "y": 683.84,
+          "w": 65.05599212646484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "18 stamina",
+          "x": 912,
+          "y": 724.88,
+          "w": 99.21597862243652,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Brace",
+          "x": 1224,
+          "y": 683.84,
+          "w": 68.4159927368164,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "8 stamina",
+          "x": 1224,
+          "y": 724.88,
+          "w": 90.95998191833496,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Feint",
+          "x": 1536,
+          "y": 683.84,
+          "w": 62.11198425292969,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "12 stamina",
+          "x": 1536,
+          "y": 724.88,
+          "w": 98.75997734069824,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-trial-result.png",
+      "screen": "trial",
+      "focus": "receive-trial",
+      "kit": "procedural",
+      "controls": 2,
+      "texts": [
+        {
+          "text": "GAMES EVE  /  TENT TRIAL",
+          "x": 96,
+          "y": 57,
+          "w": 243.07194900512695,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Who carries the Tide?",
+          "x": 96,
+          "y": 99,
+          "w": 676.0478835105896,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Nysa",
+          "x": 140,
+          "y": 734,
+          "w": 99.02797985076904,
+          "h": 46.36000000000001,
+          "size": 38
+        },
+        {
+          "text": "Best of three exchanges. Each stance costs stamina.\nBrace beats press. Feint beats brace. Press beats feint.",
+          "x": 886,
+          "y": 242,
+          "w": 693.1578893661499,
+          "h": 82.96000000000001,
+          "size": 34
+        },
+        {
+          "text": "EXCHANGES  2 : 0\nSTAMINA  64 / 40",
+          "x": 886,
+          "y": 377,
+          "w": 206.84995651245117,
+          "h": 73.2,
+          "size": 30
+        },
+        {
+          "text": "Cassia of the Lighthouse is selected.",
+          "x": 886,
+          "y": 528,
+          "w": 632.2798690795898,
+          "h": 107.36000000000001,
+          "size": 44
+        },
+        {
+          "text": "Accept the Trial",
+          "x": 912,
+          "y": 751.48,
+          "w": 189.72797393798828,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-bout-results.png",
+      "screen": "results",
+      "focus": "next-bout",
+      "kit": "procedural",
+      "controls": 2,
+      "texts": [
+        {
+          "text": "THE NEXT GATE WAITS",
+          "x": 420,
+          "y": 290,
+          "w": 237.06795740127563,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Bout won",
+          "x": 420,
+          "y": 353,
+          "w": 402.19193172454834,
+          "h": 92.72000000000001,
+          "size": 76
+        },
+        {
+          "text": "Recover, then take your place beyond the next grille.",
+          "x": 420,
+          "y": 482,
+          "w": 715.3558902740479,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "The next bout resets mana, stamina and the collar.",
+          "x": 420,
+          "y": 590,
+          "w": 576.8399047851562,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "Enter the next bout",
+          "x": 446,
+          "y": 734.48,
+          "w": 237.08797454833984,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Save / settings",
+          "x": 1076,
+          "y": 734.48,
+          "w": 174.55996704101562,
+          "h": 39.04,
+          "size": 32
+        }
+      ]
+    },
+    {
+      "filename": "1440-games-victor.png",
+      "screen": "results",
+      "focus": "return-camp",
+      "kit": "procedural",
+      "controls": 2,
+      "texts": [
+        {
+          "text": "THE TIRO GAMES ARE YOURS",
+          "x": 420,
+          "y": 290,
+          "w": 299.6499466896057,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Tiro victor",
+          "x": 420,
+          "y": 353,
+          "w": 466.8679008483887,
+          "h": 92.72000000000001,
+          "size": 76
+        },
+        {
+          "text": "4 bouts won  /  100 gold  /  25 renown",
+          "x": 420,
+          "y": 482,
+          "w": 498.5279245376587,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Your life is spared. The camp will hear of this.",
+          "x": 420,
+          "y": 590,
+          "w": 511.9799280166626,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "Return to camp",
+          "x": 446,
+          "y": 734.48,
+          "w": 187.87197875976562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Save / settings",
+          "x": 1076,
+          "y": 734.48,
+          "w": 174.55996704101562,
+          "h": 39.04,
+          "size": 32
+        }
+      ]
+    },
+    {
+      "filename": "1440-tent-trial.png",
+      "screen": "trial",
+      "focus": "trial-press",
+      "kit": "procedural",
+      "controls": 4,
+      "texts": [
+        {
+          "text": "GAMES EVE  /  TENT TRIAL",
+          "x": 96,
+          "y": 57,
+          "w": 243.07194900512695,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Who carries the Tide?",
+          "x": 96,
+          "y": 99,
+          "w": 676.0478835105896,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Nysa",
+          "x": 140,
+          "y": 734,
+          "w": 99.02797985076904,
+          "h": 46.36000000000001,
+          "size": 38
+        },
+        {
+          "text": "Best of three exchanges. Each stance costs stamina.\nBrace beats press. Feint beats brace. Press beats feint.",
+          "x": 886,
+          "y": 242,
+          "w": 693.1578893661499,
+          "h": 82.96000000000001,
+          "size": 34
+        },
+        {
+          "text": "EXCHANGES  0 : 0\nSTAMINA  100 / 70",
+          "x": 886,
+          "y": 377,
+          "w": 212.3699426651001,
+          "h": 73.2,
+          "size": 30
+        },
+        {
+          "text": "Their stance: press",
+          "x": 886,
+          "y": 508,
+          "w": 432.51992321014404,
+          "h": 53.68000000000001,
+          "size": 44
+        },
+        {
+          "text": "Press",
+          "x": 912,
+          "y": 683.84,
+          "w": 65.05599212646484,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "18 stamina",
+          "x": 912,
+          "y": 724.88,
+          "w": 99.21597862243652,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Brace",
+          "x": 1224,
+          "y": 683.84,
+          "w": 68.4159927368164,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "8 stamina",
+          "x": 1224,
+          "y": 724.88,
+          "w": 90.95998191833496,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Feint",
+          "x": 1536,
+          "y": 683.84,
+          "w": 62.11198425292969,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "12 stamina",
+          "x": 1536,
+          "y": 724.88,
+          "w": 98.75997734069824,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-trial-result.png",
+      "screen": "trial",
+      "focus": "receive-trial",
+      "kit": "procedural",
+      "controls": 2,
+      "texts": [
+        {
+          "text": "GAMES EVE  /  TENT TRIAL",
+          "x": 96,
+          "y": 57,
+          "w": 243.07194900512695,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Who carries the Tide?",
+          "x": 96,
+          "y": 99,
+          "w": 676.0478835105896,
+          "h": 70.75999999999999,
+          "size": 58
+        },
+        {
+          "text": "Nysa",
+          "x": 140,
+          "y": 734,
+          "w": 99.02797985076904,
+          "h": 46.36000000000001,
+          "size": 38
+        },
+        {
+          "text": "Best of three exchanges. Each stance costs stamina.\nBrace beats press. Feint beats brace. Press beats feint.",
+          "x": 886,
+          "y": 242,
+          "w": 693.1578893661499,
+          "h": 82.96000000000001,
+          "size": 34
+        },
+        {
+          "text": "EXCHANGES  2 : 0\nSTAMINA  74 / 40",
+          "x": 886,
+          "y": 377,
+          "w": 206.84995651245117,
+          "h": 73.2,
+          "size": 30
+        },
+        {
+          "text": "Cassia of the Lighthouse is selected.",
+          "x": 886,
+          "y": 528,
+          "w": 632.2798690795898,
+          "h": 107.36000000000001,
+          "size": 44
+        },
+        {
+          "text": "Accept the Trial",
+          "x": 912,
+          "y": 751.48,
+          "w": 189.72797393798828,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Camp map",
+          "x": 122,
+          "y": 960.48,
+          "w": 133.88797760009766,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+          "x": 370,
+          "y": 966,
+          "w": 498.47990226745605,
+          "h": 29.28,
+          "size": 24
+        }
+      ]
+    },
+    {
+      "filename": "1440-games-missio.png",
+      "screen": "results",
+      "focus": "return-camp",
+      "kit": "procedural",
+      "controls": 2,
+      "texts": [
+        {
+          "text": "THE CROWD GRANTS YOUR LIFE",
+          "x": 420,
+          "y": 290,
+          "w": 330.9019441604614,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Missio",
+          "x": 420,
+          "y": 353,
+          "w": 249.73596477508545,
+          "h": 92.72000000000001,
+          "size": 76
+        },
+        {
+          "text": "0 bouts won  /  0 gold  /  0 renown",
+          "x": 420,
+          "y": 482,
+          "w": 456.4079303741455,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Your life is spared. The camp will hear of this.",
+          "x": 420,
+          "y": 590,
+          "w": 511.9799280166626,
+          "h": 36.6,
+          "size": 30
+        },
+        {
+          "text": "Return to camp",
+          "x": 446,
+          "y": 734.48,
+          "w": 187.87197875976562,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "Save / settings",
+          "x": 1076,
+          "y": 734.48,
+          "w": 174.55996704101562,
+          "h": 39.04,
+          "size": 32
+        }
+      ]
+    },
+    {
+      "filename": "1440-chapter-results.png",
       "screen": "chapter",
       "focus": "chapter-board",
       "kit": "procedural",

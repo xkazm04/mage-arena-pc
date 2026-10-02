@@ -15,6 +15,7 @@
     "smoke:w3": "node scripts/smoke-water.mjs",
     "smoke:w4": "node scripts/smoke-games.mjs",
     "test": "vitest run",
-    "smoke:w4b": "node scripts/smoke-camera.mjs"
+    "smoke:w4b": "node scripts/smoke-camera.mjs",
+    "smoke:u1": "npm --prefix ../.. run smoke:u1"
   }
 }

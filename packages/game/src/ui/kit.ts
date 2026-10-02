@@ -67,6 +67,8 @@ export function validateAtlas(value: unknown): UiAtlas {
     throw Error("Unsupported UI atlas");
   for (const id of requiredRegions)
     if (!m.regions[id]) throw Error(`Missing required UI region: ${id}`);
+  if (new Set(m.pages.map((p) => p.id)).size !== m.pages.length)
+    throw Error("Duplicate UI page");
   for (const p of m.pages)
     if (
       !p.id ||
@@ -92,7 +94,9 @@ export function validateAtlas(value: unknown): UiAtlas {
       !page ||
       r[0] + r[2] > page.size[0] ||
       r[1] + r[3] > page.size[1] ||
-      !f.anchor?.every((n) => Number.isFinite(n) && n >= 0 && n <= 1)
+      !Array.isArray(f.anchor) ||
+      f.anchor.length !== 2 ||
+      !f.anchor.every((n) => Number.isFinite(n) && n >= 0 && n <= 1)
     )
       throw Error(`Invalid UI frame: ${id}`);
     const b = f.nineSlice;
@@ -105,6 +109,22 @@ export function validateAtlas(value: unknown): UiAtlas {
         b[1] + b[3] > r[3])
     )
       throw Error(`Invalid nine-slice: ${id}`);
+    if (
+      f.minSize &&
+      (!Array.isArray(f.minSize) ||
+        f.minSize.length !== 2 ||
+        !f.minSize.every((n) => Number.isFinite(n) && n > 0))
+    )
+      throw Error(`Invalid minimum size: ${id}`);
+    if (
+      f.contentInsets &&
+      (!Array.isArray(f.contentInsets) ||
+        f.contentInsets.length !== 4 ||
+        !f.contentInsets.every((n) => Number.isFinite(n) && n >= 0) ||
+        f.contentInsets[0] + f.contentInsets[2] > r[2] ||
+        f.contentInsets[1] + f.contentInsets[3] > r[3])
+    )
+      throw Error(`Invalid content insets: ${id}`);
   }
   return m;
 }
@@ -138,6 +158,10 @@ export class UiKit {
         );
         return;
       }
+      if (!response.headers.get("content-type")?.includes("json")) {
+        this.diagnostics.push("UI kit not supplied; procedural kit active");
+        return;
+      }
       const manifest = validateAtlas(await response.json());
       const pages = new Map<string, Texture>();
       for (const page of manifest.pages) {
@@ -149,10 +173,14 @@ export class UiKit {
             (b) => b.toString(16).padStart(2, "0"),
           ).join("");
         if (digest !== page.sha256) throw Error(`UI hash mismatch: ${page.id}`);
-        const bitmap = await createImageBitmap(new Blob([bytes]));
+        const bitmap = await createImageBitmap(new Blob([bytes]), {
+          premultiplyAlpha: "premultiply",
+        });
         if (bitmap.width !== page.size[0] || bitmap.height !== page.size[1])
           throw Error(`UI page dimensions: ${page.id}`);
-        pages.set(page.id, Texture.from(bitmap));
+        const pageTexture = Texture.from(bitmap);
+        pageTexture.source.alphaMode = "premultiplied-alpha";
+        pages.set(page.id, pageTexture);
       }
       const staged = new Map<
         string,
@@ -210,11 +238,37 @@ export class UiKit {
     return s;
   }
   sprite(id: string): Sprite | undefined {
-    const f = this.textures.get(id);
+    const alternate = id.startsWith("icon.")
+      ? [...this.textures.keys()].find(
+          (key) =>
+            key.startsWith("icon.") &&
+            (key.endsWith("." + id.slice(5)) ||
+              key.endsWith("." + id.slice(5).replaceAll("_", "-"))),
+        )
+      : undefined;
+    const f =
+      this.textures.get(id) ??
+      (alternate ? this.textures.get(alternate) : undefined);
     if (!f) return;
     const s = new Sprite(f.texture);
     s.anchor.set(f.anchor?.[0] ?? 0, f.anchor?.[1] ?? 0);
     return s;
+  }
+  skin(sprite: NineSliceSprite, id: string, w: number, h: number) {
+    const f = this.textures.get(id);
+    if (!f || sprite.texture === f.texture) return;
+    if (f.minSize && (w < f.minSize[0]! || h < f.minSize[1]!))
+      throw Error(`UI size below contract: ${id}`);
+    sprite.texture = f.texture;
+    sprite.leftWidth = f.borders[0]!;
+    sprite.topHeight = f.borders[1]!;
+    sprite.rightWidth = f.borders[2]!;
+    sprite.bottomHeight = f.borders[3]!;
+    sprite.width = w;
+    sprite.height = h;
+  }
+  cursor(id: string) {
+    return this.source === "procedural" ? undefined : this.sprite(id);
   }
   private generate(kind: string): Texture {
     const canvas = document.createElement("canvas");

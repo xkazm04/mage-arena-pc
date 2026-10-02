@@ -56,5 +56,21 @@ describe("canvas UI contracts", () => {
     expect(() => validateAtlas({ ...valid, regions: {} })).toThrow(
       "Missing required",
     );
+    for (const bad of [
+      { anchor: [] },
+      { anchor: [0] },
+      { minSize: [NaN, 64] },
+      { contentInsets: [60, 0, 60, 0] },
+      { contentInsets: [-1, 0, 0, 0] },
+    ])
+      expect(() =>
+        validateAtlas({
+          ...valid,
+          regions: { ...valid.regions, "panel.body": { ...frame, ...bad } },
+        }),
+      ).toThrow();
+    expect(() =>
+      validateAtlas({ ...valid, pages: [...valid.pages, ...valid.pages] }),
+    ).toThrow("Duplicate UI page");
   });
 });

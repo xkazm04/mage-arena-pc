@@ -42,7 +42,7 @@ Principle: **order is heavily guarded**, so a death in the camp is a conspiracy 
   2. *The Vigil*: a guardian looked away: a bribe, a distraction or a defector, which requires gold, a Knowing of the guard rota, and a rank-contested roll.
   3. *The window*: only the dusk of a Games eve, with the target isolated (no ally within sight) and no witness.
   4. *Cover*: a believable cause (an arena injury, a poisoned ration blamed on the camp's hunger). Without it the Vigil investigates the next day and the plotter is **executed** (a real death).
-- **Odds are low even for a perfect plan** (authored target ≤ 35% success; each failed stage raises the Vigil's attention for everyone). NPC plots against NPCs are possible but rare (authored target ≤ 0.15 NPC deaths per season with no player involvement; checked by 2,000 seeded seasons).
+- **Odds are low even for a perfect plan** (authored target â‰¤ 35% success; each failed stage raises the Vigil's attention for everyone). NPC plots against NPCs are possible but rare (authored target â‰¤ 0.15 NPC deaths per season with no player involvement; checked by 2,000 seeded seasons).
 - **Arena:** fights are not lethal by default (the Roman crowd grants missio). Lethal bouts (sine missione) can be decreed from a high tier by the Vigil's politics, as a story beat, rarely.
 - **The player character:** can be the target of a Plot. A warned player (a friend who knows) can foil it; an isolated, unwarned player can die; a death ends the run with a chronicle and the ending "martyr". Open question for the owner with that default.
 - **Consequences:** crackdown (the Vigil's patrols raise everyone's caps), trust shocks, quest chains, ending states. All numbers in data; a death-frequency census is a gate.
@@ -83,10 +83,11 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | implemented; compact-court gate passed; W4b reopened soldier/creature pacing | 4b21c57 | 2026-10-02 |
 | Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | engineering PASS: Pixi camp, accepted art loader, deterministic slots/listening, 1080p/1440p browser gates; owner feel pending | d18ef80 | 2026-10-02 |
 | Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | engineering PASS for bounded effects: 100-case suite, offline cards, typed browser play; four bounded semantic false positives and timeout fallbacks disclosed; owner feel pending | c464f16 | 2026-10-02 |
-| Integration | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | automated gates PASS, including original pacing bands and 30-minute soak; independent rerun and owner G1 open | 53b49b5..6ddc5f3 + soak handoff | 2026-10-02 |
-| Game | U1-camera | D17 far fixed camera and projection | W7 | gate PASS: 147 tests; edge follow, no balance changes | this sub-wave commit | 2026-10-02 |
-| Game | U1-framework | Canvas primitives, bitmap fonts, art kit loader | U1-camera | gate PASS: 150 tests; art contract v1 aligned | this sub-wave commit | 2026-10-02 |
-| Game | U1-screens | Every production screen in one canvas | U1-framework | gate PASS; 29 captures, two-week 1080p route PASS | this sub-wave commit | 2026-10-02 |
+| Integration | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | automated gates PASS; owner played and rejected presentation, prompting U1; G1 remains open | 53b49b5..ffe3ad9 | 2026-10-02 |
+| Game | U1-camera | D17 far fixed camera and projection | W7 | gate PASS: 147 tests; edge follow, no balance changes | f62dd89 | 2026-10-02 |
+| Game | U1-framework | Canvas primitives, bitmap fonts, art kit loader | U1-camera | gate PASS: 150 tests; art contract v1 aligned | ac95883 | 2026-10-02 |
+| Game | U1-screens | Every production screen in one canvas | U1-framework | gate PASS; 29 captures, two-week 1080p route PASS | f99c302 | 2026-10-02 |
+| Game | U1-TV | TV layout, keyboard/mouse/gamepad, both-resolution evidence | U1-screens | gate PASS: 153 tests + 10 reference; 64 captures, atlas/fullscreen, replay and census PASS; G1 open | commit containing U1-report.md | 2026-10-02 |
 | Arena | W8 | Fire, Earth, Air schools | G1 | not planned | | |
 | Arena | W9 | Tiers II-IV, Summa, the mage semifinal, lethal-bout hooks | W8 | not planned | | |
 | Core | W10 | Deaths and the Vigil: Plot objects, crackdown, executions, death census | G1 | not planned | | |
@@ -175,11 +176,11 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
-### CORE W0 review closure — 2026-10-02, second session
+### CORE W0 review closure â€” 2026-10-02, second session
 
 - Read baseline report/data, W1 report, Fable review and full plan; section m was
   absent on core and read from the main worktree, then carried into this plan.
-- Closed review items 1–14 with fixes and explicit naming/scope dispositions.
+- Closed review items 1â€“14 with fixes and explicit naming/scope dispositions.
   `docs/waves/W0-review-fixes.md` was written before edits. No arena or art edits.
 - `npm run gate`: build/lint green, 18 Director plus ten replayer tests pass;
   checker zero contradictions in its stated scope, three golden nights / 216
@@ -195,7 +196,7 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 - Authored numbers remain authored. Owner feel and live model quality not measured. Fable review is pending orchestrator dispatch, as assigned by the card. Deferred arcs/arena/Parley integrations explicitly listed in `docs/design/reconciled/defects.json`.
 - Next: W1; verify local Claude flags before any subscription calls, local bulk soak, capped Sonnet run.
 
-### CORE W1 — 2026-10-02 (stopped; wave incomplete)
+### CORE W1 â€” 2026-10-02 (stopped; wave incomplete)
 
 - Design note first: `docs/waves/W1-director-harness.md`. Strict TypeScript/npm workspaces, pure camp core, utility planner, schema/domain validation, camp caps, content-hash cache, durable call budgets and three providers implemented. Game and art untouched.
 - CLI flags verified before calls; subscription-compatible minimal settings recorded. Sonnet measurement finished at exactly 30 nights / 150 calls, including the initial probe. No more Sonnet calls are scheduled.
@@ -203,7 +204,7 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 - Local bulk stopped at 155/300 nights on `qwen3.8:27b-64k`: 110/2325 intents rejected (4.73%), one recorded timeout. The 15% kill threshold was not exceeded in this partial sample; the required full-sample gate is not passed. Sonnet completed 30 nights, 150 calls, zero rejected intents; subscription cap preserved. Line repairs and raw latency/token measurements remain visible in `docs/waves/W1-report.md` and evidence.
 - Interruption: a requested 55-second wait reported 25926.6283 seconds elapsed. Execution resumed at 06:34 UTC, past the roughly five-hour work window. Cause is not established. The local runner was stopped; the queued judge exited at its deadline and made no calls. The last recorded local night includes the elapsed interruption and timeout; it was retained. Ledger shows 776 local-soak reservations for 775 recorded calls: one stopped in-flight reservation remains charged. No retries or reset were used.
 - Partial evidence preserved with `npx tsx packages/tools/src/archive.ts --partial`; hashes and expected/actual row counts in the archive manifest. `npx tsx packages/tools/src/blind.ts local-soak` generated three blind morning comparisons from the saved sample. Owner read remains pending.
-- Remaining before W1 acceptance: the other 145 local nights; local-model character judgments for both providers; regenerate the complete report/archive; address Fable’s six residual design-package fixes. Resume must preserve checkpoint/evidence and the cost ledger, explicitly account for the charged in-flight local call, and make no additional Sonnet calls. Do not begin W5 on a claim that W1 passed.
+- Remaining before W1 acceptance: the other 145 local nights; local-model character judgments for both providers; regenerate the complete report/archive; address Fableâ€™s six residual design-package fixes. Resume must preserve checkpoint/evidence and the cost ledger, explicitly account for the charged in-flight local call, and make no additional Sonnet calls. Do not begin W5 on a claim that W1 passed.
 - Fable review arrived during the interruption: accepted W0 for handover with six fixes owed. `docs/judging/fable-w0-review.md` is preserved as supplied; open fixes and observations are recorded in `docs/design/reconciled/defects.json`. This later review supersedes the earlier W0-session pending-review status.
 - Labels: rules authored, camp outcomes simulated, timings/rejections/tokens measured. Character quality and owner feel remain not measured. No game/art modifications and no push.
 
@@ -322,13 +323,13 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
-### ARENA session 2 — W4b and W4c, 2026-10-02
+### ARENA session 2 â€” W4b and W4c, 2026-10-02
 
-Read the complete plan, confirmed camera/scale contract, A1b board/manifest and chosen full-size source, W2–W4 notes and game README. Implemented a full-viewport player-following 55° camera, near 1.2 baseline and 0.8–1.2 zoom, foreshortened ground, foot-depth-sorted upright procedural billboards, the 192×144 m playable open oval, sparse 6 m opening formations, exact forward 140° visual ward, readable warnings/projectile minimums, debug contract overlay and validated sprite-manifest loading with fallback. The old 32×20 m bounds and fixed canvas scale are superseded by the imported art contract. W4c implements cursor-to-ground inversion, refreshing under follow/zoom/resize, and tests ground hit/ward geometry separately from billboard pixels. No director or camp package was touched; no push.
+Read the complete plan, confirmed camera/scale contract, A1b board/manifest and chosen full-size source, W2â€“W4 notes and game README. Implemented a full-viewport player-following 55Â° camera, near 1.2 baseline and 0.8â€“1.2 zoom, foreshortened ground, foot-depth-sorted upright procedural billboards, the 192Ă—144 m playable open oval, sparse 6 m opening formations, exact forward 140Â° visual ward, readable warnings/projectile minimums, debug contract overlay and validated sprite-manifest loading with fallback. The old 32Ă—20 m bounds and fixed canvas scale are superseded by the imported art contract. W4c implements cursor-to-ground inversion, refreshing under follow/zoom/resize, and tests ground hit/ward geometry separately from billboard pixels. No director or camp package was touched; no push.
 
-`npm --prefix packages/core run build`, `npm --prefix packages/game run build`, core tests (51) and game tests (13) pass. `smoke:w4b` passes at native 1920×1080 and 2560×1440 with near/far screenshots, overlapping upright figures, live warnings, 32 real-pointer hit cases and sprite success/failure probes. Its uncontended 360-frame samples sustain approximately 60 fps with **100 visible moving projectiles in every sampled frame**, below the 8 ms CPU p95 budget on the recorded Windows/D3D11 machine. Exact final measurements and commands: `docs/waves/W4b-evidence/browser.json`. Prior controls, composition and Tiro lifecycle smoke commands pass into separate subfolders. The new selected completion fixture is seed 30, 159.05 simulated seconds, with normal resources and explicit between-bout recovery.
+`npm --prefix packages/core run build`, `npm --prefix packages/game run build`, core tests (51) and game tests (13) pass. `smoke:w4b` passes at native 1920Ă—1080 and 2560Ă—1440 with near/far screenshots, overlapping upright figures, live warnings, 32 real-pointer hit cases and sprite success/failure probes. Its uncontended 360-frame samples sustain approximately 60 fps with **100 visible moving projectiles in every sampled frame**, below the 8 ms CPU p95 budget on the recorded Windows/D3D11 machine. Exact final measurements and commands: `docs/waves/W4b-evidence/browser.json`. Prior controls, composition and Tiro lifecycle smoke commands pass into separate subfolders. The new selected completion fixture is seed 30, 159.05 simulated seconds, with normal resources and explicit between-bout recovery.
 
-Revalidation beyond the camera gate: `npm --prefix packages/core run report:w4 -- --evidence W4b-evidence --tag oval-census` runs 2,000 fights per wave and deliberately returns **FAIL/exit 1** for soldier/creature pacing on the enlarged layout. Medians are **44.3833 / 45.55 / 45.4833 / 58 s** against bands 25–40 / 30–45 / 45–70 / 45–80. No timeouts, early Downs, invalid states or sampled replay mismatches. The old W4 pass is historical, not a pass for the new arena. Initial row-layout and final sparse-grid measurements are retained; no HP, spell damage, resource, competence or duration-band tuning was performed. Stop balance tuning here and queue a dedicated opening-encounter rework before G1, preserving the confirmed camera and 6 m separation. See `docs/waves/W4b-camera-scale.md` for a concrete proposal.
+Revalidation beyond the camera gate: `npm --prefix packages/core run report:w4 -- --evidence W4b-evidence --tag oval-census` runs 2,000 fights per wave and deliberately returns **FAIL/exit 1** for soldier/creature pacing on the enlarged layout. Medians are **44.3833 / 45.55 / 45.4833 / 58 s** against bands 25â€“40 / 30â€“45 / 45â€“70 / 45â€“80. No timeouts, early Downs, invalid states or sampled replay mismatches. The old W4 pass is historical, not a pass for the new arena. Initial row-layout and final sparse-grid measurements are retained; no HP, spell damage, resource, competence or duration-band tuning was performed. Stop balance tuning here and queue a dedicated opening-encounter rework before G1, preserving the confirmed camera and 6 m separation. See `docs/waves/W4b-camera-scale.md` for a concrete proposal.
 
 Still **not measured/felt**: owner motion readability, camera comfort, naturalness of foot-plane aiming, physical input-to-photon latency. `OWNER-CHECKS.md` supplies the trial. A3 animation/pose delivery and W8 schools remain their own waves. Next arena work: resolve the disclosed Tiro pacing regression and owner feedback; integrate accepted A3 assets through the loader boundary. G1 remains open.
 
@@ -376,18 +377,44 @@ Decisions:
 | Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | not started |
 | Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | not started |
 | Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | not started |
-| Game | U1 | **Camera and UI overhaul**: far fixed camera with edge follow; full-screen canvas UI framework with the nine-slice kit loader (placeholder kit until A5b lands); rebuild the HUD, main menu, camp, Hollow Board, journal, Parley, composition, pause and results screens as in-game art-directed screens; TV-grade layout; keyboard, mouse and gamepad navigation; screenshots at 1080p and 1440p | D17, D19 | not started |
+| Game | U1 | **Camera and UI overhaul**: far fixed camera with edge follow; full-screen canvas UI framework with the nine-slice kit loader (placeholder kit until A5b lands); rebuild the HUD, main menu, camp, Hollow Board, journal, Parley, composition, pause and results screens as in-game art-directed screens; TV-grade layout; keyboard, mouse and gamepad navigation; screenshots at 1080p and 1440p | D17, D19 | implemented and automated gates PASS; procedural kit pending A5b, owner feel/G1 open; see U1-report.md |
 | Art/Game | P1 | **Provider probe**: `agy` and Nano Banana 2 capability probe and ledger once the owner has signed in | owner login | blocked |
 
 
-### GAME U1 camera ? 2026-10-02
+### GAME U1 camera - 2026-10-02
 
-Read the full integration plan and imported missing section o from main read-only. D17 supersedes near tracking. Design note U1-camera.md; game camera data fixes figures at 4% with a 3?4.5% range, 55-degree oblique ground, wide fixed zone and exponential edge follow. Art UI contract was absent at session start; no art worktree writes. `npm run gate` PASS: 147 TypeScript plus ten reference tests, zero contradictions. Projection, stationary-pointer inversion and ground hits preserved; new immobility/convergence/frame-rate tests pass. Census started for final evidence; no arena size, spacing, core or balance edits. Camera feel and sofa readability not measured. Next: U1 framework. No push.
+Read the full integration plan and imported missing section o from main read-only. D17 supersedes near tracking. Design note U1-camera.md; game camera data initially fixes figures at 4% with a 3-4.5% range (later aligned to art v2 at 3.75%), 55-degree oblique ground, wide fixed zone and exponential edge follow. Art UI contract was absent at session start; no art worktree writes. `npm run gate` PASS: 147 TypeScript plus ten reference tests, zero contradictions. Projection, stationary-pointer inversion and ground hits preserved; new immobility/convergence/frame-rate tests pass. Census started for final evidence; no arena size, spacing, core or balance edits. Camera feel and sofa readability not measured. Next: U1 framework. No push.
 
-### GAME U1 framework ? 2026-10-02
+### GAME U1 framework - 2026-10-02
 
 Design note U1-framework.md. Shared Pixi canvas toolkit, procedural nine-slice kit, bars, slots, buttons, tabs, tooltips, focus and cursor; bitmap Cinzel/Alegreya Sans with bundled OFL notices. Read art/ui/README.md from art worktree after it appeared and aligned schema/required IDs, SHA-256 pages, region bounds, anchors and slice insets. No art edits. `npm run gate` PASS: 150 TypeScript plus ten reference tests; production build PASS. The unchanged 2,000-fight census per wave passes with W7-identical digests and medians 38.233/44.633/45.483/58.000 s. Report destination allowlist extended for U1; first attempt rejected the directory before any fights, then rerun succeeded. Screen migration and physical sofa/controller feel remain pending. Next U1 screens; no push.
 
 ### GAME U1 screens - 2026-10-02
 
 Design note U1-screens.md. Replaced all production DOM screens with one Pixi canvas: menu/pick, camp/places/calendar, Board/journal, listening, Parley with typing/letter board, composition, Trial, arena HUD, results/chapter, pause/settings/save/load. Old DOM modules removed; D18 old camp textures are no longer loaded. Original procedural Covenant environment and silhouettes remain placeholders. Art v2 arrived read-only: nominal camera now 3.75%, asymmetric edge zone and .35-second follow. `npm run gate` PASS: 150 TypeScript plus ten reference tests; production build PASS. `u1-browser.ts --quick` PASS: 29 1080p captures, zero page errors/text overflow, all screen types, native controls, two-week route with four receipts, victory/missio and camp/combat save-load. `u1-replay.ts` exact 1,296,151-byte envelope PASS. Test saves isolated from owner files. Next TV/controller navigation and both-resolution final evidence; human feel pending. No push.
+
+### GAME U1 TV navigation - 2026-10-02
+
+Design note U1-tv.md. Completed standard gamepad menus/combat, held-button edges,
+repeat, letter-board input, disconnect pause, selected/focus/disabled kit states,
+reduced motion, art serving/build copying and lifecycle cleanup. `npm run gate`
+PASS: 153 TypeScript plus ten reference tests, zero contradictions; production
+build PASS. `npm run smoke:u1` PASS: both full two-week routes, 64 capture events /
+60 distinct 1080p/1440p PNGs, all screen focus graphs/targets/safe bounds, sixteen
+native mouse aim hits, emulated controller aim/cast/ward/slots/pause/disconnect,
+exact camp/combat save-load. Both 100-moving-projectile samples: 60.00 fps,
+1.70/1.90 ms render CPU p95 (1080p/1440p) / 360 frames. `u1-kit-browser.ts` PASS: six synthetic atlas
+cases, playable fallbacks and native fullscreen round trip. Final source review
+hardened loader validation and preserved rumour-card art after focus leaves;
+gate and both-resolution production route rerun. Original bootstrap failure
+is archived.
+
+`u1-replay.ts` preserves exact 1,296,151-byte saves. Fresh 2,000-fight-per-wave
+census remains PASS, W7-identical digests, medians 38.233/44.633/45.483/58.000 s.
+No geometry, spacing, kernel or balance changes. Art UI v1 and camera v2 read-only
+snapshots retained; kit absent, procedural delivery active. Report and native
+gallery: docs/waves/U1-report.md and U1-evidence/index.html. Authored UI,
+simulated season/census, measured tests/screens; physical controller/latency,
+sofa readability, camera comfort and G1 are not measured/felt. No new 30-minute
+soak. Next: owner U1 play and contract-conforming A5b art integration. No art
+worktree writes, pushes or model/provider calls.

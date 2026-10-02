@@ -4,9 +4,11 @@ import {
   Container,
   Graphics,
   type NineSliceSprite,
+  type Sprite,
 } from "pixi.js";
 import { colours, UiKit } from "./kit.ts";
 import { installFonts } from "./fonts.ts";
+import { PadNavigation } from "./gamepad.ts";
 import {
   contains,
   metrics,
@@ -35,6 +37,8 @@ export interface Button extends Rect {
   background: NineSliceSprite;
   activate: () => void;
   hold?: (held: boolean) => void;
+  selected: boolean;
+  kind: string;
 }
 export class CanvasUI {
   readonly app = new Application();
@@ -53,7 +57,12 @@ export class CanvasUI {
   onBack: () => void = () => {};
   onKey: ((event: KeyboardEvent) => boolean) | undefined;
   onFrame: ((seconds: number, now: number) => void) | undefined;
-  onGamepad: ((pad: Gamepad) => void) | undefined;
+  onGamepad: ((pad: Gamepad | undefined) => void) | undefined;
+  onGamepadLost: (() => void) | undefined;
+  private padNavigation = new PadNavigation();
+  private padHeld?: Button;
+  private hadPad = false;
+  private artCursor?: Sprite;
   private pointer = { x: 960, y: 540 };
   private hover = "";
   private hoverSince = 0;
@@ -65,6 +74,8 @@ export class CanvasUI {
   private previous = 0;
   private ready = false;
   private focusedBefore = "";
+  private frameTimes: number[] = [];
+  private cpuTimes: number[] = [];
   layout = viewportLayout(1920, 1080);
   async init(host: HTMLElement) {
     await Promise.all([
@@ -81,6 +92,7 @@ export class CanvasUI {
       }),
     ]);
     await this.kit.load();
+    this.artCursor = this.kit.cursor("cursor.pointer");
     host.replaceChildren(this.app.canvas);
     this.app.canvas.tabIndex = 0;
     this.app.canvas.setAttribute(
@@ -89,6 +101,7 @@ export class CanvasUI {
     );
     this.app.stage.addChild(this.world, this.root);
     this.root.addChild(this.content, this.feedback, this.cursor);
+    if (this.artCursor) this.root.addChild(this.artCursor);
     const signal = this.lifetime.signal;
     window.addEventListener("resize", () => this.resize(), { signal });
     this.resize();
@@ -149,7 +162,19 @@ export class CanvasUI {
     this.ready = true;
     this.previous = performance.now();
     this.raf = requestAnimationFrame((now) => this.frame(now));
-    Object.assign(window, { __ui: { snapshot: () => this.snapshot() } });
+    Object.assign(window, {
+      __ui: {
+        snapshot: () => this.snapshot(),
+        performance: () => ({
+          frames: [...this.frameTimes],
+          cpu: [...this.cpuTimes],
+        }),
+        resetPerformance: () => {
+          this.frameTimes = [];
+          this.cpuTimes = [];
+        },
+      },
+    });
   }
   private point(e: PointerEvent) {
     const r = this.app.canvas.getBoundingClientRect();
@@ -168,7 +193,12 @@ export class CanvasUI {
   }
   private key(e: KeyboardEvent) {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (this.busy) {
+      if (["Enter", "Space", "Escape"].includes(e.code)) e.preventDefault();
+      return;
+    }
     if (this.onKey?.(e)) {
+      this.modality = "keyboard";
       e.preventDefault();
       return;
     }
@@ -195,6 +225,9 @@ export class CanvasUI {
             : "next"
           : directions[e.code]!,
       );
+      this.hoverSince = performance.now();
+      this.tooltip?.destroy({ children: true });
+      this.tooltip = undefined;
     }
     if (
       (e.code === "Enter" || (e.code === "Space" && this.screen !== "arena")) &&
@@ -216,8 +249,11 @@ export class CanvasUI {
   release() {
     this.pressed?.hold?.(false);
     this.pressed = undefined;
+    this.padHeld?.hold?.(false);
+    this.padHeld = undefined;
   }
   begin(screen: string) {
+    this.release();
     this.focusedBefore = this.focus;
     this.screen = screen;
     this.buttons = [];
@@ -226,6 +262,8 @@ export class CanvasUI {
       child.destroy({ children: true });
     this.tooltip?.destroy({ children: true });
     this.tooltip = undefined;
+    this.hover = "";
+    this.hoverSince = performance.now();
   }
   end(preferred?: string) {
     this.focus =
@@ -351,6 +389,8 @@ export class CanvasUI {
       ring,
       activate,
       hold: options.hold,
+      selected: !!options.selected,
+      kind: options.kind ?? "button",
     };
     root.alpha = b.disabled ? 0.45 : 1;
     this.buttons.push(b);
@@ -464,6 +504,23 @@ export class CanvasUI {
     );
     this.panel(x, y + 34, w, 22, "bar-track", parent);
     const fill = new Graphics();
+    const art =
+      this.kit.source !== "procedural"
+        ? this.kit.sprite(
+            label === "VITALITY"
+              ? "bar.hp"
+              : label === "MANA"
+                ? "bar.mana"
+                : "bar.stamina",
+          )
+        : undefined;
+    if (art) {
+      art.position.set(x + 4, y + 38);
+      art.width = w - 8;
+      art.height = 14;
+      parent.addChild(art);
+      art.mask = fill;
+    }
     parent.addChild(fill);
     const update = (v: number, m = max) => {
       text.text = `${label}  ${Math.ceil(v)} / ${m}`;
@@ -502,18 +559,103 @@ export class CanvasUI {
     this.root.scale.set(this.layout.scale);
     this.root.position.set(this.layout.x, this.layout.y);
   }
+  private pollPad(now: number) {
+    const pad = Array.from(navigator.getGamepads?.() ?? []).find(
+      (p): p is Gamepad => !!p && p.connected && p.mapping === "standard",
+    );
+    if (this.hadPad && !pad) {
+      this.release();
+      this.onGamepadLost?.();
+    }
+    this.hadPad = !!pad;
+    const e = this.padNavigation.poll(pad, now);
+    if (e.active) this.modality = "gamepad";
+    this.onGamepad?.(pad);
+    if (e.release) {
+      this.padHeld?.hold?.(false);
+      this.padHeld = undefined;
+    }
+    if (this.busy) return;
+    if (e.pause) {
+      this.onBack();
+      return;
+    }
+    if (this.screen === "arena") return;
+    if (e.back) {
+      this.release();
+      this.onBack();
+      return;
+    }
+    if (e.direction) {
+      this.release();
+      this.focus = nextFocus(this.buttons, this.focus, e.direction);
+      this.hoverSince = now;
+      this.tooltip?.destroy({ children: true });
+      this.tooltip = undefined;
+    }
+    if (e.accept) {
+      const b = this.buttons.find((b) => b.id === this.focus && !b.disabled);
+      if (b?.hold) {
+        this.padHeld = b;
+        b.hold(true);
+      } else this.activate(this.focus);
+    }
+  }
   private frame(now: number) {
     if (!this.ready) return;
+    const cpuStart = performance.now(),
+      actualElapsed = now - this.previous;
     const dt = Math.min(0.05, (now - this.previous) / 1000);
     this.previous = now;
+    this.pollPad(now);
     this.onFrame?.(dt, now);
     for (const b of this.buttons) {
       b.ring.clear();
+      const base =
+        b.kind === "slot"
+          ? "slot"
+          : b.kind === "tab"
+            ? "tab"
+            : b.kind.startsWith("card.")
+              ? "card"
+              : "button";
+      const state = b.disabled
+        ? base === "slot"
+          ? "locked"
+          : "disabled"
+        : this.pressed?.id === b.id
+          ? "pressed"
+          : b.selected
+            ? "selected"
+            : b.id === this.focus
+              ? "focus"
+              : b.id === this.hover
+                ? "hover"
+                : "normal";
+      this.kit.skin(
+        b.background,
+        base === "card" && state === "normal"
+          ? b.kind
+          : `${base}.${state === "selected" && base === "button" ? "focus" : state}`,
+        b.w,
+        b.h,
+      );
+      if (b.disabled)
+        b.ring
+          .moveTo(b.x + b.w - 25, b.y + 14)
+          .lineTo(b.x + b.w - 14, b.y + 25)
+          .moveTo(b.x + b.w - 14, b.y + 14)
+          .lineTo(b.x + b.w - 25, b.y + 25)
+          .stroke({ color: colours.muted, width: 2 });
       if (b.id === this.focus && !b.disabled) {
         const a =
-          0.65 +
-          0.3 *
-            Math.sin(((now / 1000) * Math.PI * 2) / metrics.focusPulseSeconds);
+          localStorage.getItem("mage-motion") === "reduced"
+            ? 1
+            : 0.65 +
+              0.3 *
+                Math.sin(
+                  ((now / 1000) * Math.PI * 2) / metrics.focusPulseSeconds,
+                );
         b.ring
           .roundRect(b.x - 4, b.y - 4, b.w + 8, b.h + 8, 5)
           .stroke({ color: colours.water, width: 3, alpha: a });
@@ -567,7 +709,11 @@ export class CanvasUI {
       this.toast = undefined;
     }
     this.cursor.clear();
-    if (this.modality === "mouse") {
+    if (this.artCursor) {
+      this.artCursor.visible = this.modality === "mouse";
+      this.artCursor.position.set(this.pointer.x, this.pointer.y);
+    }
+    if (this.modality === "mouse" && !this.artCursor) {
       const { x, y } = this.pointer;
       this.cursor
         .poly([x, y, x + 4, y + 25, x + 11, y + 17, x + 23, y + 15])
@@ -576,6 +722,12 @@ export class CanvasUI {
       this.cursor.circle(x + 10, y + 11, 2).fill(colours.water);
     }
     this.app.renderer.render(this.app.stage);
+    this.frameTimes.push(actualElapsed);
+    this.cpuTimes.push(performance.now() - cpuStart);
+    if (this.frameTimes.length > 360) {
+      this.frameTimes.shift();
+      this.cpuTimes.shift();
+    }
     this.raf = requestAnimationFrame((t) => this.frame(t));
   }
   snapshot() {

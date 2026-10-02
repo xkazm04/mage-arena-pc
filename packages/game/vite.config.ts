@@ -1,17 +1,20 @@
 import { defineConfig, type Plugin } from "vite";
-import { cpSync, readFileSync } from "node:fs";
+import { cpSync, existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve, extname } from "node:path";
 import { campApi } from "./server/api.ts";
 const root = fileURLToPath(new URL(".", import.meta.url));
 const assets = resolve(root, "../../assets");
+const uiKit = resolve(root, "../../art/ui");
 function campServer(): Plugin {
   return {
     name: "camp-sidecar",
     configurePreviewServer(server) {
       const api = campApi();
-      server.httpServer.on('close', () => api.close());
-      server.middlewares.use((req, res, next) => { void api.handle(req, res, next); });
+      server.httpServer.on("close", () => api.close());
+      server.middlewares.use((req, res, next) => {
+        void api.handle(req, res, next);
+      });
     },
     configureServer(server) {
       const api = campApi();
@@ -20,6 +23,32 @@ function campServer(): Plugin {
         void api.handle(req, res, next);
       });
       server.middlewares.use((req, res, next) => {
+        if (req.url?.startsWith("/art/ui/")) {
+          const name = req.url.slice("/art/ui/".length).split("?")[0]!;
+          if (
+            !/^[a-zA-Z0-9_/-]+\.(json|png|ttf|woff2)$/.test(name) ||
+            name.split("/").some((p) => p === "..")
+          ) {
+            res.statusCode = 404;
+            res.end();
+            return;
+          }
+          try {
+            res.setHeader(
+              "content-type",
+              name.endsWith(".json")
+                ? "application/json"
+                : name.endsWith(".png")
+                  ? "image/png"
+                  : "application/octet-stream",
+            );
+            res.end(readFileSync(resolve(uiKit, name)));
+          } catch {
+            res.statusCode = 404;
+            res.end();
+          }
+          return;
+        }
         if (!req.url?.startsWith("/assets/accepted/camp/")) return next();
         const filename = req.url.slice("/assets/".length);
         if (!/^accepted\/camp\/[a-z0-9.-]+$/.test(filename)) {
@@ -49,6 +78,10 @@ function campServer(): Plugin {
       cpSync(assets, resolve(root, "../../dist/game/assets"), {
         recursive: true,
       });
+      if (existsSync(uiKit))
+        cpSync(uiKit, resolve(root, "../../dist/game/art/ui"), {
+          recursive: true,
+        });
     },
   };
 }

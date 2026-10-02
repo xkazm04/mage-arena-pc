@@ -1,6 +1,52 @@
 # Owner checks
 
-## W7 / G1 - owner plays weeks 1-2 (pending; not felt)
+## U1 TV navigation / current G1 build - pending owner judgment
+
+The owner rejected W7's browser-page presentation and near tracking camera.
+U1 now uses one viewport-filling game canvas and the D17 far fixed camera.
+This section supersedes the historical near-camera and A4/A5 checks below.
+
+From `C:\Users\kazda\kiro\mage-arena-int` in Windows PowerShell:
+
+```powershell
+npm ci
+npm run gate
+npm run build:game
+node --import tsx node_modules/vite/bin/vite.js preview --config packages/game/vite.config.ts --host 127.0.0.1 --port 4173 --strictPort
+```
+
+Open **http://127.0.0.1:4173**, choose **Fullscreen**, then **Begin your story**
+and Water / Cassia. Use 1080p or 1440p, browser zoom 100%, and normal sofa distance.
+The Director defaults offline. The camp, frames and figures are procedural while
+the Covenant art delivery is pending; no discarded art is loaded.
+
+- Judge the main menu, camp map, Season, Hollow Board, Journal, place visits,
+  Parley, composition, arena HUD, pause/settings, results and save/load as one
+  game. Record hierarchy, text comfort, focus visibility and desire to interact.
+- Keyboard: arrows/Tab choose focus, Enter selects, Escape backs out/pauses.
+  Mouse targets share the same actions. Try reduced motion and sound in settings.
+- Standard controller: D-pad/left stick navigates; A selects/holds, B backs out,
+  Start pauses/resumes. Try controller-only camp travel, listening and the Parley
+  letter board. Unplug during combat: the game should pause.
+- Arena: WASD moves, mouse aims at feet, LMB casts, RMB absorbs, Space rolls,
+  Shift sprints, 1-4/wheel selects slots. Controller: left stick moves, right
+  stick aims, RT casts, LT absorbs, A rolls, L3 sprints, LB/RB selects slots.
+  Check health/mana/stamina, cooldowns, collar tier timing and absorb feedback.
+- The nominal figure is 3.75% of screen height. Move centrally: the view should
+  stay fixed. Approach each edge: it should ease only then. Judge silhouette,
+  telegraph and ground-aim readability, especially while the camera moves.
+- Follow the two-week route below: listen at night, learn the bread Knowing,
+  speak to Nysa, enter the dusk Trials on days 6/13 and Games on 7/14. Save in
+  camp and combat, change state, load and resume; restart the server and load.
+
+Automated gates pass: 153 TypeScript plus ten reference tests, both resolution
+routes, native aiming, exact saves and unchanged 8,000-fight census. Standard
+Gamepad API emulation is measured, physical controllers and television latency
+are not. The gallery is evidence, not a human quality verdict. **G1 remains open.**
+See [U1 report](waves/U1-report.md), [gallery](waves/U1-evidence/index.html) and
+[TV design note](waves/U1-tv.md). The atlas loader awaits the real art kit.
+
+## W7 / G1 - historical route; presentation rejected, replaced by U1
 
 From `C:\Users\kazda\kiro\mage-arena-int` in Windows PowerShell:
 
@@ -148,11 +194,11 @@ Fire reference spell names retain their reference status; W8's missing Fire line
 migration and Earth/Air line catalogues are explicitly deferred. Native symbols
 are candidates for integration review, not automatically accepted production art.
 
-## U1 camera ? pending owner feel
+## U1 camera - pending owner feel
 
-D17 supersedes the historical near-view checks above. Default figures are now 4% of viewport height. Move in the central view: the camera should remain fixed. Sprint toward each edge, reverse direction and aim at feet while the view eases. Judge distant silhouette/telegraph readability and whether movement occurs rarely enough. Both resolutions are required. Combat geometry and pacing remain unchanged. See [camera note](waves/U1-camera.md).
+D17 supersedes the historical near-view checks above. Default figures are now 3.75% of viewport height, aligned to art v2 during the screens sub-wave. Move in the central view: the camera should remain fixed. Sprint toward each edge, reverse direction and aim at feet while the view eases. Judge distant silhouette/telegraph readability and whether movement occurs rarely enough. Both resolutions are required. Combat geometry and pacing remain unchanged. See [camera note](waves/U1-camera.md).
 
-## U1 framework ? pending visual judgment
+## U1 framework - pending visual judgment
 
 Shared dark stone, verdigris and moonchalk canvas primitives replace browser controls in the following screen sub-wave. Assess texture restraint, luminous focus, bitmap type and mouse cursor against the Covenant direction. Art kit is a replaceable delivery; placeholder quality is not approval of final art. See [framework note](waves/U1-framework.md).
 
@@ -164,5 +210,5 @@ visit places, then try the proving ground and compose Water. Escape pauses;
 settings and save/load are canvas screens. Fullscreen is a menu/settings action.
 D18 supersedes historical A4/A5 acceptance: camp scenery is now procedural until
 the Covenant delivery. Judge hierarchy, typography, texture, magical identity
-and whether you want to interact. The first 1080p two-week automated route passed;
-controller/1440p final checks follow. See [screens note](waves/U1-screens.md).
+and whether you want to interact. Both two-week automated resolution routes and
+emulated-controller checks now pass. See [screens note](waves/U1-screens.md).
