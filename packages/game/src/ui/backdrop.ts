@@ -1,6 +1,7 @@
 import { Sprite, Texture, Container, Graphics } from "pixi.js";
 import { colours } from "./kit.ts";
 import type { CanvasUI } from "./ui.ts";
+import { art } from "../art.ts";
 
 const cache = new Map<string, Texture>();
 const locations = [
@@ -218,8 +219,31 @@ function texture(kind: string) {
   return t;
 }
 export function backdrop(ui: CanvasUI, kind = "gate") {
-  const s = new Sprite(texture(kind));
+  const key = kind.startsWith("camp-")
+    ? `camp.${kind.slice(5)}.${ui.app.screen.height > 1080 ? 2560 : 1920}`
+    : kind.startsWith("place-")
+      ? `place.${kind.slice(6)}`
+      : kind === "gate"
+        ? "place.door"
+        : "arena-moonlit-2560";
+  const loaded = art.get(key);
+  const s = new Sprite(loaded ?? Texture.EMPTY);
+  const apply = (t?: Texture) => {
+    if (s.destroyed) return;
+    s.texture = t ?? texture(kind);
+    s.width = 1920;
+    s.height = 1080;
+  };
+  if (loaded) apply(loaded);
+  else void art.load(key).then(apply);
   ui.content.addChild(s);
+  const shade = new Graphics();
+  // Calm bands preserve text contrast while the centre remains an unobscured scene.
+  shade.rect(0, 0, 1920, 192).fill({ color: colours.ink, alpha: 0.72 });
+  shade.rect(0, 928, 1920, 152).fill({ color: colours.ink, alpha: 0.75 });
+  if (!kind.startsWith("camp-"))
+    shade.rect(0, 192, 1920, 736).fill({ color: colours.ink, alpha: 0.32 });
+  ui.content.addChild(shade);
   return s;
 }
 

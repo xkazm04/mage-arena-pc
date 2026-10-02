@@ -14,7 +14,9 @@ import {
 import { ArenaGame } from "./arena-entry.ts";
 import { request, seasonCommand, type SeasonView } from "./season-api.ts";
 import { CanvasUI } from "./ui/ui.ts";
-import { backdrop, mage } from "./ui/backdrop.ts";
+import { backdrop } from "./ui/backdrop.ts";
+import { picture, portrait, storyFor } from "./ui/artwork.ts";
+import { art } from "./art.ts";
 import { colours } from "./ui/kit.ts";
 
 type Moment = SeasonView["parley"]["moments"][number];
@@ -31,6 +33,7 @@ export class GameShell {
   private selected = "tent";
   private cardPage = 0;
   private cardSelected = 0;
+  private castPage = 0;
   private visitPage = 0;
   private returnScreen = "camp";
   private held = false;
@@ -44,6 +47,7 @@ export class GameShell {
   private disposed = false;
   async init(host: HTMLElement) {
     await this.ui.init(host);
+    await art.preload(["place.door", "portrait.cassia.neutral"]);
     this.view = await request<SeasonView>("session");
     this.ui.onFrame = (dt) => this.arena?.frame(dt);
     this.ui.onGamepad = (pad) => this.arena?.input.updateGamepad(pad);
@@ -167,8 +171,7 @@ export class GameShell {
       colours.muted,
       710,
     );
-    mage(this.ui, 1370, 846, 3.2);
-    this.ui.icon("water", 1370, 283, 50);
+    portrait(this.ui, "cassia", "neutral", 1040, 200, 650, 680);
     this.ui.button(
       "pick-character",
       "Begin your story",
@@ -229,7 +232,7 @@ export class GameShell {
       const x = 96 + i * 440;
       this.ui.panel(x, 248, 408, 626);
       this.ui.icon(ally.school, x + 204, 315, 40);
-      mage(this.ui, x + 204, 635, 1.3, ally.school);
+      portrait(this.ui, ally.id, "neutral", x + 64, 366, 280, 280);
       this.ui.text(ally.name, x + 28, 652, 36, colours.text, 352, true);
       this.ui.text(ally.school.toUpperCase(), x + 28, 752, 26, colours.gold);
       this.ui.button(
@@ -298,7 +301,7 @@ export class GameShell {
       id,
       title,
       `CASTRA CLAUSA  /  WEEK ${this.view.day.week}  /  DAY ${this.view.day.day}`,
-      `camp-${this.view.slot}`,
+      id === "visit" ? `place-${this.view.location}` : `camp-${this.view.slot}`,
     );
     const names = [
       ["camp", "Camp map"],
@@ -343,25 +346,35 @@ export class GameShell {
     this.campHeader("camp", "Within the wards");
     const u = this.ui,
       v = this.view;
-    const positions: Record<string, [number, number]> = {
-      yard: [120, 343],
-      cistern: [512, 318],
-      pit: [918, 363],
-      exchange: [96, 566],
-      commons: [500, 558],
-      door: [926, 579],
-      tent: [325, 767],
-      edge: [906, 773],
+    const fallbackAnchors: Record<string, [number, number]> = {
+      yard: [0.23, 0.2],
+      cistern: [0.62, 0.2],
+      pit: [0.87, 0.24],
+      exchange: [0.24, 0.5],
+      commons: [0.52, 0.5],
+      door: [0.77, 0.59],
+      tent: [0.195, 0.8],
+      edge: [0.89, 0.8],
     };
     for (const p of v.places) {
-      const [x, y] = positions[p.id] ?? [96, 320];
+      const anchor = art.manifest?.places.find((a) => a.id === p.id)?.anchor ??
+        fallbackAnchors[p.id] ?? [0.5, 0.5];
+      const px = anchor[0]! * 1920,
+        py = anchor[1]! * 1080;
+      const x = Math.max(96, Math.min(1552, px - 136)),
+        y = Math.max(306, Math.min(710, py));
+      const link = new Graphics()
+        .moveTo(px, Math.max(286, py))
+        .lineTo(x + 136, y + 38)
+        .stroke({ color: colours.gold, width: 2, alpha: 0.65 });
+      u.content.addChild(link);
       u.button(
         `place-${p.id}`,
         p.name,
         x,
         y,
-        302,
-        94,
+        272,
+        80,
         () => {
           this.selected = p.id;
           this.camp();
@@ -379,19 +392,9 @@ export class GameShell {
       );
     }
     const p = v.places.find((p) => p.id === this.selected) ?? v.places[0]!;
-    u.panel(1320, 306, 504, 556);
-    u.icon("mirror", 1372, 355, 25);
-    u.text("A PLACE IN THE CAMP", 1420, 340, 24, colours.gold, 360);
-    u.text(p.name, 1352, 403, 38, colours.text, 436, true);
-    u.text(p.description, 1352, 467, 30, colours.muted, 436);
-    u.text(
-      `${v.budget} time remains\nAn activity uses ${v.actionCost} time`,
-      1352,
-      610,
-      28,
-      colours.text,
-      430,
-    );
+    u.panel(96, 806, 1728, 72, "button.normal");
+    u.text(p.name, 134, 825, 28, colours.gold, 265);
+    u.text(p.description, 430, 818, 24, colours.text, 940);
     const allowed =
       !v.listening &&
       !v.nightFinished &&
@@ -401,16 +404,16 @@ export class GameShell {
     u.button(
       "visit-place",
       p.id === v.location ? "Enter this place" : `Travel  /  ${p.cost} time`,
-      1352,
-      728,
-      440,
-      80,
+      1440,
+      808,
+      350,
+      68,
       () => {
         this.visitPage = 0;
         if (p.id === v.location) this.visit();
         else void this.command({ type: "travel", place: p.id });
       },
-      { disabled: p.id !== v.location && !allowed, icon: "mirror" },
+      { disabled: p.id !== v.location && !allowed },
     );
     this.timeFooter();
     u.end(`place-${this.selected}`);
@@ -510,12 +513,7 @@ export class GameShell {
       p = v.places.find((p) => p.id === v.location)!;
     this.campHeader("visit", p.name);
     u.panel(96, 312, 558, 548);
-    u.icon(
-      p.id === "cistern" ? "water" : p.id === "pit" ? "earth" : "mirror",
-      375,
-      430,
-      74,
-    );
+    picture(u, `place.${p.id}`, 146, 352, 458, 175);
     u.text(p.description, 128, 545, 32, colours.text, 494);
     u.text(
       v.presence.length ? "HERE WITH YOU" : "A QUIET MOMENT",
@@ -524,15 +522,11 @@ export class GameShell {
       24,
       colours.gold,
     );
-    u.text(
-      v.presence.map((p) => p.name).join("  /  ") ||
-        "Only the wardstones listen.",
-      128,
-      731,
-      30,
-      colours.muted,
-      490,
-    );
+    v.presence.slice(0, 4).forEach((person, i) => {
+      portrait(u, person.id, "neutral", 134 + i * 112, 727, 88, 106);
+    });
+    if (!v.presence.length)
+      u.text("Only the wardstones listen.", 128, 731, 30, colours.muted, 490);
     const actions: {
       id: string;
       label: string;
@@ -726,10 +720,17 @@ export class GameShell {
     });
     const card = cards[this.cardSelected];
     u.panel(900, 307, 924, 554, "panel.story");
-    u.icon(kind === "board" ? "mirror" : "water", 964, 370, 32);
+    const subject = art.manifest?.characters.find(
+      (c) =>
+        card?.text.includes(c.name) ||
+        card?.text.includes(c.name.split(" ")[0]!),
+    );
+    if (kind === "journal" && subject)
+      portrait(u, subject.id, "neutral", 946, 410, 205, 256);
+    else picture(u, `story.${storyFor(card?.text ?? "")}`, 946, 410, 270, 176);
     u.text(
       card?.rumour ? "A RUMOUR" : "A THREAD IN THE CAMP",
-      1020,
+      950,
       355,
       26,
       card?.rumour ? colours.danger : colours.gold,
@@ -740,11 +741,11 @@ export class GameShell {
         (kind === "board"
           ? "The board waits for the first morning. Tonight’s choices will leave their marks here."
           : "Some truths arrive softly. Listen at the tent flap, build trust, and keep what you learn."),
-      940,
-      447,
-      38,
+      1246,
+      416,
+      30,
       colours.text,
-      840,
+      526,
     );
     u.text(
       kind === "board"
@@ -789,6 +790,10 @@ export class GameShell {
       26,
       colours.muted,
     );
+    if (kind === "journal")
+      u.button("journal-cast", "People of the camp", 900, 870, 500, 68, () =>
+        this.castJournal(),
+      );
     this.back(() => this.camp(), "Camp map");
     this.footer(
       kind === "board"
@@ -797,13 +802,99 @@ export class GameShell {
     );
     u.end(`card-${this.cardSelected}`);
   }
+  private castJournal() {
+    this.campHeader("cast", "Those beneath the collar");
+    const u = this.ui,
+      cast = art.manifest?.characters ?? [];
+    u.text("FACES IN YOUR JOURNAL", 96, 300, 24, colours.gold);
+    cast.slice(this.castPage * 8, this.castPage * 8 + 8).forEach((c, i) => {
+      const x = 96 + (i % 4) * 440,
+        y = 354 + Math.floor(i / 4) * 238;
+      u.button(
+        `cast-${c.id}`,
+        "",
+        x,
+        y,
+        408,
+        214,
+        () => this.castDetails(c.id),
+        { kind: "card.normal", tooltip: c.name },
+      );
+      portrait(u, c.id, "neutral", x + 26, y + 29, 118, 148);
+      u.text(c.name, x + 164, y + 39, 28, colours.text, 212);
+      u.text(friendly(c.school), x + 164, y + 143, 24, colours.gold, 212);
+    });
+    u.button(
+      "cast-previous",
+      "Previous",
+      96,
+      846,
+      236,
+      68,
+      () => {
+        this.castPage--;
+        this.castJournal();
+      },
+      { disabled: this.castPage === 0 },
+    );
+    u.button(
+      "cast-next",
+      "More people",
+      352,
+      846,
+      280,
+      68,
+      () => {
+        this.castPage++;
+        this.castJournal();
+      },
+      { disabled: (this.castPage + 1) * 8 >= cast.length },
+    );
+    this.back(() => this.cards("journal"), "Journal");
+    this.footer();
+    u.end();
+  }
+  private castDetails(id: string) {
+    const c = art.manifest?.characters.find((c) => c.id === id);
+    if (!c) return;
+    this.scene("cast-detail", c.name, "YOUR JOURNAL");
+    portrait(this.ui, c.id, "neutral", 140, 268, 476, 596);
+    this.ui.panel(720, 270, 1104, 594, "panel.story");
+    this.ui.text(friendly(c.school), 774, 320, 40, colours.gold, 990, true);
+    const known = this.view.journal.filter(
+      (f) => f.text.includes(c.name) || f.text.includes(c.name.split(" ")[0]!),
+    );
+    const presence = this.view.presence.find((p) => p.id === id);
+    this.ui.text(
+      presence
+        ? `Here with you at ${this.view.places.find((p) => p.id === this.view.location)?.name}.`
+        : "Another life within the wards.",
+      774,
+      406,
+      30,
+      colours.muted,
+      990,
+    );
+    this.ui.text(
+      known[0]?.text ??
+        "No private Knowing recorded. Listen, visit, and let the camp reveal its people.",
+      774,
+      499,
+      34,
+      colours.text,
+      990,
+    );
+    this.back(() => this.castJournal(), "People");
+    this.footer();
+    this.ui.end();
+  }
   private listen() {
     const u = this.ui;
     this.scene(
       "listen",
       "Beyond the tent flap",
       "NIGHT  /  FOLLOW THE VOICES",
-      "camp-night",
+      "place-tent",
     );
     this.lane = this.view.listening?.lane ?? 0;
     u.text(
@@ -939,8 +1030,9 @@ export class GameShell {
     const u = this.ui;
     this.scene("parley", `Speak with ${moment.name}`, "A KNOWING MOMENT");
     u.panel(96, 226, 790, 658);
-    u.text("WHAT YOU KNOW", 128, 255, 26, colours.gold);
-    u.text(moment.cards[0]!.knowing, 128, 308, 32, colours.text, 726);
+    portrait(u, moment.target, "neutral", 136, 252, 140, 175);
+    u.text("WHAT YOU KNOW", 308, 255, 26, colours.gold);
+    u.text(moment.cards[0]!.knowing, 308, 300, 28, colours.text, 526);
     moment.cards.forEach((card, i) =>
       u.button(
         `parley-card-${i}`,
@@ -1126,8 +1218,16 @@ export class GameShell {
       const r = this.view.parley.last!;
       this.scene("parley-result", `${r.name} answers`, "A MOMENT BETWEEN YOU");
       this.ui.panel(300, 276, 1320, 574, "panel.story");
-      this.ui.icon("water", 398, 370, 46);
-      this.ui.text(`“${r.reply}”`, 488, 335, 42, colours.text, 1030);
+      portrait(
+        this.ui,
+        input.target,
+        r.trustDelta > 0 ? "calm" : r.trustDelta < 0 ? "angry" : "neutral",
+        354,
+        328,
+        240,
+        300,
+      );
+      this.ui.text(`“${r.reply}”`, 640, 335, 40, colours.text, 900);
       this.ui.text(
         r.trustDelta
           ? `${r.trustDelta > 0 ? "+" : ""}${r.trustDelta} trust toward you.`
@@ -1166,7 +1266,7 @@ export class GameShell {
       `camp-${v.slot}`,
     );
     u.panel(96, 238, 720, 642);
-    mage(u, 450, 694, 1.75);
+    portrait(u, "cassia", "proud", 310, 340, 280, 350);
     u.text(
       t?.rivalName ?? "Your tent rival",
       140,
@@ -1866,7 +1966,7 @@ export class GameShell {
   }
   private chapter() {
     this.scene("chapter", "Two weeks survived", "THE FIRST CHAPTER");
-    mage(this.ui, 1420, 837, 2.7);
+    portrait(this.ui, "cassia", "calm", 1150, 262, 540, 610);
     this.ui.text(
       "The Tide has a place in the camp.\nYour board and journal remember the path here.",
       120,
