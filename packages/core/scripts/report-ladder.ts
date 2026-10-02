@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { advanceGames, attachMageAI, competence, createGames, gamesResult, presets, runtime, seconds, stateHash, stepGames, ticks } from '../src/arena/index';
-const destination = new URL('../../../docs/waves/W4-evidence/', import.meta.url); mkdirSync(destination, { recursive: true });
+const evidence = process.argv[2] ?? 'W4-evidence';
+if (!/^W(?:4|4b)-evidence$/.test(evidence)) throw Error('Invalid evidence directory');
+const destination = new URL(`../../../docs/waves/${evidence}/`, import.meta.url); mkdirSync(destination, { recursive: true });
 const rows = [];
 for (const level of [1,2,3,4]) {
   let wins = 0, losses = 0, timeouts = 0, perfects = 0, hits = 0, reactionMin = Infinity, violations = 0, durations = 0;
@@ -26,7 +28,7 @@ for (let seed = 1; seed <= 100 && !completion; seed++) {
   }
   if (g.phase === 'complete') completion = { seed, label: 'simulated selected winning integration fixture; not an unbiased win-rate sample', checkpoints, result: gamesResult(g), durationS: seconds(g.state.tick), hash: stateHash(g.state) };
 }
-const report = { label: 'simulated', command: 'npm --prefix packages/core run report:w4:ladder', rows, completion,
+const report = { label: 'simulated', command: `npm --prefix packages/core run report:w4:ladder -- ${evidence}`, rows, completion,
   note: 'Same starting stats and Water composition at all four competence levels. Perfect probability is a decision probability conditional on observation/reaction; actual impacts may miss the timing or arc. The reference policy is unchanged. Completion seed search is explicitly separate from the 2,000-seed-per-wave census.' };
 writeFileSync(new URL('competence-ladder.json', destination), JSON.stringify(report, null, 2) + '\n'); console.table(rows.map(({competence,referenceWins,referenceLosses,timeouts,actualOpponentPerfectRate,minimumReactionTicks}) => ({competence,referenceWins,referenceLosses,timeouts,actualOpponentPerfectRate,minimumReactionTicks})));
 if (rows.some(r => r.reactionViolations || r.startingStats.length !== 1) || !completion) throw Error('Ladder/integration gate failed');

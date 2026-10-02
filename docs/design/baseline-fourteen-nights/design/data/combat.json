@@ -1,7 +1,7 @@
 {
   "_about": "Variant 2 arena constants. Single source for the kernel. Authored; confirmed by headless simulation; feel is owner-only.",
   "simStepHz": 60,
-  "arena": { "widthM": 32, "heightM": 20 },
+  "arena": { "geometryAuthority": "art/scale-contract-v1.json" },
   "movement": { "walkMps": 4.5, "sprintMps": 6.5, "sprintStaminaPerSecond": 15 },
   "roll": { "distanceM": 4.0, "durationS": 0.35, "iFramesS": 0.25, "staminaCost": 25, "recoveryS": 0.15 },
   "staffStrike": { "rangeM": 1.6, "windupS": 0.25, "recoveryS": 0.30, "staminaCost": 12, "damage": 6, "interruptsCasts": true },

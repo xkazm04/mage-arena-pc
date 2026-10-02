@@ -1,11 +1,13 @@
 import { idleInput, type InputFrame, type Vec } from '@mage-arena/core/arena';
+import { clientToGround, type Camera } from './camera';
 export class ArenaInput {
   readonly keys = new Set<string>();
   aim: Vec = { x: 23, y: 10 };
   cast = false; absorb = false; slot = 0;
+  private pointer?: Vec;
   private rollQueued = false;
   private castQueued = false;
-  constructor(private canvas: HTMLCanvasElement, private worldSize: Vec) {
+  constructor(private canvas: HTMLCanvasElement, private camera: () => Camera) {
     window.addEventListener('keydown', e => {
       if ((e.target as HTMLElement).matches('input,select,textarea,button')) return;
       if (['Space', 'ArrowUp', 'ArrowDown'].includes(e.code)) e.preventDefault();
@@ -26,11 +28,14 @@ export class ArenaInput {
     document.addEventListener('visibilitychange', () => { if (document.hidden) this.clear(); });
   }
   private point(e: PointerEvent): void {
-    const box = this.canvas.getBoundingClientRect();
-    this.aim = { x: (e.clientX - box.left) / box.width * this.worldSize.x, y: (e.clientY - box.top) / box.height * this.worldSize.y };
+    this.pointer = { x: e.clientX, y: e.clientY }; this.refreshAim();
+  }
+  refreshAim(): void {
+    if (this.pointer) this.aim = clientToGround(this.pointer, this.canvas.getBoundingClientRect(), this.camera());
   }
   clear(): void { this.keys.clear(); this.cast = false; this.absorb = false; this.rollQueued = false; this.castQueued = false; }
   frame(): InputFrame {
+    this.refreshAim();
     const frame = { ...idleInput(this.aim), slot: this.slot, cast: this.cast || this.castQueued, absorb: this.absorb,
       move: { x: Number(this.keys.has('KeyD')) - Number(this.keys.has('KeyA')), y: Number(this.keys.has('KeyS')) - Number(this.keys.has('KeyW')) },
       roll: this.keys.has('Space') || this.rollQueued, sprint: this.keys.has('ShiftLeft') || this.keys.has('ShiftRight') };

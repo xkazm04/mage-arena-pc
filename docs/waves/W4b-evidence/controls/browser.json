@@ -1,0 +1,38 @@
+{
+  "label": "measured",
+  "command": "npm --prefix packages/game run smoke -- W4b-evidence/controls",
+  "machine": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor           ",
+    "node": "v24.14.0",
+    "browser": "153.0.8010.12",
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4090 (0x00002684) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "browserArgs": [
+      "--use-angle=d3d11"
+    ]
+  },
+  "checks": [
+    "WASD movement",
+    "sprint stamina",
+    "Space roll",
+    "mouse aim and cast",
+    "number/wheel selection",
+    "right-button ward",
+    "perfect feedback and collar advance",
+    "unblockable telegraph",
+    "pause"
+  ],
+  "errors": [],
+  "performance": {
+    "projectileCount": 100,
+    "samples": 360,
+    "fpsFromMeanFrame": 60.003000150007495,
+    "frameP50Ms": 16.69999999999891,
+    "frameP95Ms": 16.700000000000728,
+    "cpuP50Ms": 1.300000011920929,
+    "cpuP95Ms": 2.1000000089406967,
+    "cpuBudgetMs": 8,
+    "scope": "Chromium headless requestAnimationFrame on this PC; CPU includes fixed steps, shape building, HUD updates and renderer submission. GPU completion and physical input-to-photon latency not measured."
+  }
+}

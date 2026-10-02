@@ -1,0 +1,65 @@
+{
+  "label": "measured",
+  "command": "npm --prefix packages/game run smoke:w4 -- W4b-evidence/games",
+  "browser": "153.0.8010.12",
+  "errors": [],
+  "checks": [
+    "real keyboard/mouse in Tiro",
+    "exact soldier roster",
+    "loadout lock",
+    "four reference-policy bouts",
+    "explicit next-bout recovery",
+    "tier reset",
+    "one final payout",
+    "ordinary damage missio",
+    "all eight roster entries",
+    "charge telegraph and moth pack"
+  ],
+  "completionFixture": {
+    "seed": 30,
+    "policy": "same reference input controller as census; fast-forward ticks, no actor buffs",
+    "checkpoints": [
+      {
+        "wave": 1,
+        "phase": "intermission",
+        "hp": 95,
+        "mana": 7.25,
+        "tier": 3
+      },
+      {
+        "wave": 2,
+        "phase": "intermission",
+        "hp": 90,
+        "mana": 11.625,
+        "tier": 3
+      },
+      {
+        "wave": 3,
+        "phase": "intermission",
+        "hp": 25.57300000000003,
+        "mana": 6.124999999999972,
+        "tier": 3
+      },
+      {
+        "wave": 4,
+        "phase": "complete",
+        "hp": 4.909100000000018,
+        "mana": 11.875,
+        "tier": 3
+      }
+    ],
+    "result": {
+      "kind": "champion",
+      "wavesCleared": 4,
+      "gold": 100,
+      "renown": 25,
+      "finalReached": true,
+      "finalWon": true
+    }
+  },
+  "limitations": [
+    "Completion seed was selected explicitly and is not a win-rate sample.",
+    "Other schools remain Water proxies.",
+    "Feel remains owner-only."
+  ]
+}

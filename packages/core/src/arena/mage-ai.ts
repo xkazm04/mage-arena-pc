@@ -1,3 +1,4 @@
+import { arenaContains, arenaGeometry } from './geometry';
 import { enemyData } from './data.generated';
 import { spellFor, spells } from './catalog';
 import { bolt, combat, random, runtime, ticks } from './kernel';
@@ -81,7 +82,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         const preferred = runtime.games.magePreferredDistanceM;
         input.move = d > preferred[1]! ? direction : d < preferred[0]! ? { x: -direction.x, y: -direction.y } : { x: -direction.y * strafe, y: direction.x * strafe };
         // Turn inward at the arena edge instead of getting pinned by the clamp.
-        if (a.pos.x < runtime.games.spawnMarginM || a.pos.x > combat.arena.widthM - runtime.games.spawnMarginM || a.pos.y < runtime.games.spawnMarginM || a.pos.y > combat.arena.heightM - runtime.games.spawnMarginM) input.move = unit(sub({ x: combat.arena.widthM / 2, y: combat.arena.heightM / 2 }, a.pos));
+        if (!arenaContains(a.pos, runtime.games.spawnMarginM)) input.move = unit(sub(arenaGeometry.centre, a.pos));
         const aimPoint = target.water.decoy?.pos ?? target.pos;
         const velocity = sub(target.pos, target.previousPos), lead = d / bolt.speedMps * combat.simStepHz * runtime.games.mageAimLeadFraction;
         const prediction = target.water.decoy ? aimPoint : { x: aimPoint.x + velocity.x * lead, y: aimPoint.y + velocity.y * lead };

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import assert from 'node:assert/strict';
 const evidence = process.argv[2] ?? 'W2-evidence';
-if (!/^W[234]-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
+if (!/^W(?:[234]|4b)-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
 const directory = new URL(`../../../docs/waves/${evidence}/`, import.meta.url);
 mkdirSync(directory, { recursive: true });
 const runtime = JSON.parse(readFileSync(new URL('../../core/src/arena/data/runtime.json', import.meta.url), 'utf8'));
@@ -25,8 +25,7 @@ try {
   const snap = () => page.evaluate(() => window.__arena.snapshot());
   const reset = async kind => { await page.evaluate(kind => window.__arena.reset(kind), kind); await page.locator('canvas').focus(); };
   const canvas = page.locator('canvas'), bounds = await canvas.boundingBox();
-  const point = (x, y) => ({ x: bounds.x + x / 32 * bounds.width, y: bounds.y + y / 20 * bounds.height });
-  const target = point(23, 10); await page.mouse.move(target.x, target.y);
+  const target = await page.evaluate(() => window.__arena.project(window.__arena.snapshot().state.actors[1].pos)); await page.mouse.move(target.x, target.y);
   await reset('magic'); const initial = await snap();
   await page.keyboard.down('KeyD'); await page.waitForTimeout(350); await page.keyboard.up('KeyD');
   assert((await snap()).player.pos.x > initial.player.pos.x + 1, 'WASD movement');

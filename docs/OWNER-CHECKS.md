@@ -41,16 +41,30 @@ The owner chose Tessera & Lime on 2026-10-02; see
 [OWNER-CHOICE.md](../art/OWNER-CHOICE.md). The [A1 board](../art/review/index.html)
 is historical. Its large arena figures are superseded by the distant camera brief.
 
-## A1b - camera confirmation pending
+## W4b / W4c — oblique camera, scale and aim (pending; not felt)
+
+Run the game using `packages/game/README.md`; use a 1920×1080 or 2560×1440 browser viewport. Start at **View = 1.2**, then compare 0.8. Toggle **Scale overlay** to inspect the contract and rulers, then turn it off for play. The [evidence gallery](waves/W4b-evidence/index.html) includes both resolutions, live charge warnings, overlap and projectile-field views. The comparison images are explicitly paused fixtures, not evidence of motion feel.
+
+- **Camera distance:** at near, the mage is 6% of viewport height, the ground is viewed at 55°, and the arena continues for several screens. Is that enough space to read incoming threats while retaining an identifiable upright figure? Compare far at 4%; do not judge placeholder drawing quality as accepted A3 art.
+- **Readability:** face incoming magic and rotate the 140° ward through all directions. Is its open rear obvious? Distinguish steel diamonds, magic cores and unblockable marks while moving. Solid warning outlines are the actual footprint; separated outer ticks are locators for small threats. Do those cues remain understandable at both distances?
+- **Aim accuracy:** aim at enemies' foot rings, first stationary and then while strafing/sprinting. Shoot diagonally and vertically as well as horizontally. Leave the mouse still while the camera follows. Record any apparent offset or need to aim at the head instead. There is no hidden body-snapping assist; whether ground aiming feels natural needs your judgment.
+- **Depth and coverage:** pass behind/in front of other figures; check that the feet and targeting rings explain overlap. Check enemies indicated beyond the view/behind the HUD and whether the HUD masks a warning you needed.
+- Record resolution, zoom, scenario, and any miss/readability problem. Judge camera distance as too close / right / too far, and oblique aiming as clear / learnable / misleading.
+
+Automated projection/ground-hit tests, 32 real-pointer hit cases, both resolution screenshots and sustained 100-visible-projectile measurements are available; these do not certify human aim comfort, motion readability or physical input latency. The enlarged arena reopened W4 pacing: soldiers/creatures have simulated medians 44.38/45.55 s outside their old bands. Record actual bout times, but do not treat the selected full-Games browser fixture as balance approval. G1 remains open.
+
+## A1b - camera confirmation recorded
 
 Open the [camera board](../art/review/a1b/index.html) or
 [contact sheet](../art/review/a1b/contact-sheet.jpg). Inspect full-size sources,
 observed character heights, spacing, warnings and the stated absorb defects.
 The [scale contract](../art/SCALE-CONTRACT.md) is an authored proposal.
 
-The recommendation is input for owner judgment only. No agent or local grader
-can approve the camera. Owner confirmation belongs in `art/CAMERA-OK.md`;
-A3 figures, poses and spell effects stay blocked until it exists.
+The owner confirmed **open-oval-sparse-near-a01**, near distance, on 2026-10-02
+in [CAMERA-OK.md](../art/CAMERA-OK.md). That confirmation supersedes the board's
+agent recommendation and unblocks A3. W4b implements the numeric contract and
+the final 55° oblique-view instruction; the proof's rear arc and approximate
+figure measurement do not override those numbers.
 Static images do not establish motion readability, timing, aim feel or performance.
 
 

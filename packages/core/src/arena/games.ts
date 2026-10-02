@@ -1,3 +1,4 @@
+import { openingPosition } from './geometry';
 import { arenaTiers } from './data.generated';
 import { newWaterState, presets } from './catalog';
 import { addEnemy, enemyInputs, queueDeathEffects } from './enemies';
@@ -16,13 +17,12 @@ export function createGames(seed: number, composition: Composition = presets[0]!
 }
 function spawnWave(g: Games): void {
   const wave = tiro.waves[g.wave]!; let index = 0;
+  const total = wave.spawns.reduce((n, spawn) => n + ('count' in spawn ? spawn.count : 1), 0);
   for (const spawn of wave.spawns) {
     const count = 'count' in spawn ? spawn.count : 1;
     for (let i = 0; i < count; i++) {
-      const pos = { x: runtime.games.enemySpawn.x + (random(g.state, `wave ${g.wave} spawn x`) * 2 - 1) * runtime.games.spawnJitterM,
-        y: runtime.games.enemySpawn.y + (index - (('enemy' in spawn ? count : 1) - 1) / 2) * runtime.games.spawnRowSpacingM + (random(g.state, `wave ${g.wave} spawn y`) * 2 - 1) * runtime.games.spawnJitterM };
-      // Rows cycle within the arena; deterministic jitter never places actors outside bounds.
-      pos.y = Math.max(runtime.games.spawnMarginM, Math.min(combat.arena.heightM - runtime.games.spawnMarginM, pos.y));
+      const pos = openingPosition(index, total, { x: (random(g.state, `wave ${g.wave} spawn x`) * 2 - 1) * runtime.games.spawnJitterM,
+        y: (random(g.state, `wave ${g.wave} spawn y`) * 2 - 1) * runtime.games.spawnJitterM });
       let actor: Actor;
       if ('enemy' in spawn) actor = addEnemy(g.state, spawn.enemy, pos);
       else {

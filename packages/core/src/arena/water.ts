@@ -1,6 +1,7 @@
 import { combat } from './data.generated';
 import { newWaterState, spellFor, spells, type Spell } from './catalog';
-import { clamp, distance, inArc, rotate, segmentHit, sub, unit, type Vec } from './math';
+import { constrainToArena } from './geometry';
+import { distance, inArc, rotate, segmentHit, sub, unit, type Vec } from './math';
 import { emit, interrupt, resolveHit, runtime, spawnProjectile, ticks, DT } from './kernel';
 import type { Actor, ArenaState, Hit, InputFrame, Projectile } from './types';
 
@@ -35,8 +36,7 @@ function applyControl(state: ArenaState, a: Actor, target: Actor, s: Spell): voi
   if (s.effect === 'pull' || s.effect === 'push') {
     const direction = unit(sub(target.pos, a.pos));
     const amount = s.effect === 'pull' ? -Math.min(s.amount, Math.max(0, distance(a.pos, target.pos) - a.radius - target.radius)) : s.amount;
-    target.pos.x = clamp(target.pos.x + direction.x * amount, target.radius, combat.arena.widthM - target.radius);
-    target.pos.y = clamp(target.pos.y + direction.y * amount, target.radius, combat.arena.heightM - target.radius);
+    target.pos = constrainToArena({ x: target.pos.x + direction.x * amount, y: target.pos.y + direction.y * amount }, target.radius);
     a.water.controlTicks++;
   }
   if (s.effect === 'root') { target.water.rootUntil = Math.max(target.water.rootUntil, state.tick + ticks(s.durationS)); a.water.controlTicks += ticks(s.durationS); }

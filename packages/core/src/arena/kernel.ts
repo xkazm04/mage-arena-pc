@@ -1,6 +1,7 @@
 import { combat, statRules, bolt } from './data.generated';
 import runtime from './data/runtime.json';
-import { clamp, distance, inArc, length, segmentHit, sub, unit, type Vec } from './math';
+import { constrainToArena } from './geometry';
+import { distance, inArc, length, segmentHit, sub, unit, type Vec } from './math';
 import { idleInput, type Actor, type ArenaState, type Hit, type InputFrame, type Projectile, type Ranks } from './types';
 import { newWaterState } from './catalog';
 import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, updateWater, wardDrainMult, waterAbsorbed } from './water';
@@ -117,8 +118,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
     if (state.tick < a.water.slowUntil) speed *= a.water.slowMult;
     velocity = { x: move.x * speed, y: move.y * speed };
   }
-  a.pos.x = clamp(a.pos.x + velocity.x * DT, a.radius, combat.arena.widthM - a.radius);
-  a.pos.y = clamp(a.pos.y + velocity.y * DT, a.radius, combat.arena.heightM - a.radius);
+  a.pos = constrainToArena({ x: a.pos.x + velocity.x * DT, y: a.pos.y + velocity.y * DT }, a.radius);
 }
 function releaseCast(state: ArenaState, a: Actor): void {
   const pending = a.pending; if (!pending || state.tick < pending.releaseTick) return;
@@ -172,13 +172,12 @@ function updateTelegraphs(state: ArenaState): void {
           if (t.rootS) target.water.rootUntil = Math.max(target.water.rootUntil, state.tick + ticks(t.rootS));
           if (t.pullM) {
             const direction = unit(sub(owner.pos, target.pos)), amount = Math.min(t.pullM, Math.max(0, distance(owner.pos, target.pos) - owner.radius - target.radius));
-            target.pos.x = clamp(target.pos.x + direction.x * amount, target.radius, combat.arena.widthM - target.radius);
-            target.pos.y = clamp(target.pos.y + direction.y * amount, target.radius, combat.arena.heightM - target.radius);
+            target.pos = constrainToArena({ x: target.pos.x + direction.x * amount, y: target.pos.y + direction.y * amount }, target.radius);
           }
         }
       }
       if (t.kind === 'charge') {
-        const x = clamp(end.x, owner.radius, combat.arena.widthM - owner.radius), y = clamp(end.y, owner.radius, combat.arena.heightM - owner.radius);
+        const { x, y } = constrainToArena(end, owner.radius);
         owner.pos = { x, y };
         if ((x !== end.x || y !== end.y) && owner.enemy) owner.enemy.stunnedUntil = state.tick + ticks(t.wallStunS ?? 0);
       }

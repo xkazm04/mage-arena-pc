@@ -78,9 +78,11 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 |---|---|---|---|---|---|---|
 | Core [`core`] | W0 | Design reconcile, season data, replayer-generated fixtures | - | not started | | |
 | Core | W1 | Scaffold + Director harness (headless): state, intents, planner, validator, caps, cache, providers, soak and fuzz report | W0 | not started | | |
-| Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | not started | | |
-| Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | not started | | |
-| Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | not started | | |
+| Arena [`arena`] | W2 | Arena kernel on mouse and keyboard: fixed step, movement, aim, one spell, directional absorb and perfect window, collar clock, dummies, bots, screenshots | - | implemented; owner feel pending | 2494ab9 | 2026-10-02 |
+| Arena | W3 | Water: five spell lines and branches, composition screen, collar tier clock in play | W2 | implemented; owner feel pending | 2126f57 | 2026-10-02 |
+| Arena | W4 | Enemies, AI mage on the same kernel, Tiro Games waves, 2,000 seeded fights per wave | W3 | implemented; compact-court gate passed; W4b reopened soldier/creature pacing | 4b21c57 | 2026-10-02 |
+| Arena | W4b | Confirmed 55° oblique camera, near scale, large open oval, billboard/asset boundary, screenshots and performance | W4, A1b | camera/scale gates passed; owner motion check and Tiro pacing follow-up open | this wave's commit | 2026-10-02 |
+| Arena | W4c | Cursor inverse, ground-space hit and absorb correctness under camera follow/zoom/resize | W4b | tests and real-pointer browser matrix passed; owner aim feel pending | with W4b | 2026-10-02 |
 | Core | W5 | Camp screens: season map, time slots, eight places, Hollow Board, night act that hides model latency | W1 | not started | | |
 | Core | W6 | Parley (typed role-play at Knowing moments) with injection suite and offline cards | W5 | not started | | |
 | Core | W7 | Season integration: weeks 1-2 playable end to end, save/load, **Gate G1 (owner plays)** | W4, W6 | not started | | |
@@ -165,10 +167,20 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | not started |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
 | Art | A3 | Oblique-view figures (upright, about 55 degrees elevation, NOT straight 90-degree top-down), poses, spell effects at the confirmed scale | owner confirmed the camera 2026-10-02 (`art/CAMERA-OK.md`: open-oval-sparse-near-a01, near distance) | not started |
-| Arena | W4b | (camera confirmed: near distance, open oval) Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
+| Arena | W4b | (camera confirmed: near distance, open oval) Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | implemented; automated camera/scale/performance passed; owner motion review pending; Tiro pacing follow-up open |
 
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
+
+### ARENA session 2 — W4b and W4c, 2026-10-02
+
+Read the complete plan, confirmed camera/scale contract, A1b board/manifest and chosen full-size source, W2–W4 notes and game README. Implemented a full-viewport player-following 55° camera, near 1.2 baseline and 0.8–1.2 zoom, foreshortened ground, foot-depth-sorted upright procedural billboards, the 192×144 m playable open oval, sparse 6 m opening formations, exact forward 140° visual ward, readable warnings/projectile minimums, debug contract overlay and validated sprite-manifest loading with fallback. The old 32×20 m bounds and fixed canvas scale are superseded by the imported art contract. W4c implements cursor-to-ground inversion, refreshing under follow/zoom/resize, and tests ground hit/ward geometry separately from billboard pixels. No director or camp package was touched; no push.
+
+`npm --prefix packages/core run build`, `npm --prefix packages/game run build`, core tests (51) and game tests (13) pass. `smoke:w4b` passes at native 1920×1080 and 2560×1440 with near/far screenshots, overlapping upright figures, live warnings, 32 real-pointer hit cases and sprite success/failure probes. Its uncontended 360-frame samples sustain approximately 60 fps with **100 visible moving projectiles in every sampled frame**, below the 8 ms CPU p95 budget on the recorded Windows/D3D11 machine. Exact final measurements and commands: `docs/waves/W4b-evidence/browser.json`. Prior controls, composition and Tiro lifecycle smoke commands pass into separate subfolders. The new selected completion fixture is seed 30, 159.05 simulated seconds, with normal resources and explicit between-bout recovery.
+
+Revalidation beyond the camera gate: `npm --prefix packages/core run report:w4 -- --evidence W4b-evidence --tag oval-census` runs 2,000 fights per wave and deliberately returns **FAIL/exit 1** for soldier/creature pacing on the enlarged layout. Medians are **44.3833 / 45.55 / 45.4833 / 58 s** against bands 25–40 / 30–45 / 45–70 / 45–80. No timeouts, early Downs, invalid states or sampled replay mismatches. The old W4 pass is historical, not a pass for the new arena. Initial row-layout and final sparse-grid measurements are retained; no HP, spell damage, resource, competence or duration-band tuning was performed. Stop balance tuning here and queue a dedicated opening-encounter rework before G1, preserving the confirmed camera and 6 m separation. See `docs/waves/W4b-camera-scale.md` for a concrete proposal.
+
+Still **not measured/felt**: owner motion readability, camera comfort, naturalness of foot-plane aiming, physical input-to-photon latency. `OWNER-CHECKS.md` supplies the trial. A3 animation/pose delivery and W8 schools remain their own waves. Next arena work: resolve the disclosed Tiro pacing regression and owner feedback; integrate accepted A3 assets through the loader boundary. G1 remains open.

@@ -15,15 +15,16 @@ export function scheduleTraining(t: Training): void {
   const { state, dummy, player } = t;
   if (dummy.down || player.down) return;
   if (t.kind === 'performance') {
+    const field = runtime.training.performanceField;
     while (state.projectiles.length < runtime.training.performanceProjectiles) {
-      const origin = { x: random(state, 'performance x') * combat.arena.widthM, y: 1 };
-      spawnProjectile(state, { ownerId: dummy.id, activationId: state.nextId++, damage: 0, family: 'magic', tier: 0, source: origin }, origin, { x: 1, y: 0 }, 1, combat.arena.widthM);
+      const origin = { x: player.pos.x + (random(state, 'performance x') - 0.5) * field.widthM, y: player.pos.y + (random(state, 'performance y') - 0.5) * field.heightM };
+      spawnProjectile(state, { ownerId: dummy.id, activationId: state.nextId++, damage: 0, family: 'magic', tier: 0, source: origin }, origin, { x: 1, y: 0 }, field.speedMps, field.rangeM);
     }
     return;
   }
   if (state.tick + 1 < t.nextAttack) return;
   t.nextAttack += ticks(runtime.training.attackIntervalS); t.attacks++;
-  if (t.kind === 'flanker') dummy.pos = { x: t.attacks % 2 ? runtime.training.front.x : combat.arena.widthM - runtime.training.front.x, y: runtime.training.front.y };
+  if (t.kind === 'flanker') dummy.pos = { x: t.attacks % 2 ? runtime.training.front.x : 2 * runtime.training.player.x - runtime.training.front.x, y: runtime.training.front.y };
   const spec = t.kind === 'physical' ? runtime.training.physical : runtime.training.magic;
   const count = t.kind === 'stream' ? runtime.training.streamCount : 1;
   for (let i = 0; i < count; i++) {
@@ -57,7 +58,11 @@ export function timingBot(t: Training, kind: BotKind, leadTicks?: number): Input
   }
   return input;
 }
-export function stepTraining(t: Training, input: InputFrame): void { scheduleTraining(t); stepArena(t.state, { [t.player.id]: input }); }
+export function stepTraining(t: Training, input: InputFrame): void {
+  scheduleTraining(t); stepArena(t.state, { [t.player.id]: input });
+  // Replenish expired/hit field particles before presenting the completed tick.
+  if (t.kind === 'performance') scheduleTraining(t);
+}
 export function runTimingBot(kind: BotKind, durationS = runtime.training.reportDurationS, leadTicks?: number) {
   const t = createTraining('magic');
   // The report resets HP only on Down to continue observation; resources are never refilled.

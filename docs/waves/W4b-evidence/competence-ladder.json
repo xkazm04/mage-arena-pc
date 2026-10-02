@@ -1,0 +1,162 @@
+{
+  "label": "simulated",
+  "command": "npm --prefix packages/core run report:w4:ladder -- W4b-evidence",
+  "rows": [
+    {
+      "competence": 1,
+      "profile": {
+        "level": 1,
+        "reactionDelayS": 0.55,
+        "absorbChance": 0.4,
+        "perfectChance": 0.05,
+        "aimErrorDeg": 12,
+        "decisionCadenceS": 0.5
+      },
+      "trials": 500,
+      "referenceWins": 453,
+      "referenceLosses": 47,
+      "timeouts": 0,
+      "meanDurationS": 45.42839999999987,
+      "actualOpponentPerfectRate": 0.007885971786833855,
+      "minimumReactionTicks": 33,
+      "reactionViolations": 0,
+      "startingStats": [
+        {
+          "hp": 95,
+          "mana": 95,
+          "stamina": 70,
+          "ranks": {
+            "vigor": 1,
+            "focus": 1,
+            "nerve": 1
+          }
+        }
+      ]
+    },
+    {
+      "competence": 2,
+      "profile": {
+        "level": 2,
+        "reactionDelayS": 0.45,
+        "absorbChance": 0.6,
+        "perfectChance": 0.15,
+        "aimErrorDeg": 8,
+        "decisionCadenceS": 0.4
+      },
+      "trials": 500,
+      "referenceWins": 287,
+      "referenceLosses": 213,
+      "timeouts": 0,
+      "meanDurationS": 34.73746666666666,
+      "actualOpponentPerfectRate": 0.010893598662568085,
+      "minimumReactionTicks": 27,
+      "reactionViolations": 0,
+      "startingStats": [
+        {
+          "hp": 95,
+          "mana": 95,
+          "stamina": 70,
+          "ranks": {
+            "vigor": 1,
+            "focus": 1,
+            "nerve": 1
+          }
+        }
+      ]
+    },
+    {
+      "competence": 3,
+      "profile": {
+        "level": 3,
+        "reactionDelayS": 0.35,
+        "absorbChance": 0.75,
+        "perfectChance": 0.3,
+        "aimErrorDeg": 5,
+        "decisionCadenceS": 0.35
+      },
+      "trials": 500,
+      "referenceWins": 103,
+      "referenceLosses": 397,
+      "timeouts": 0,
+      "meanDurationS": 63.67963333333333,
+      "actualOpponentPerfectRate": 0.016602878551021508,
+      "minimumReactionTicks": 21,
+      "reactionViolations": 0,
+      "startingStats": [
+        {
+          "hp": 95,
+          "mana": 95,
+          "stamina": 70,
+          "ranks": {
+            "vigor": 1,
+            "focus": 1,
+            "nerve": 1
+          }
+        }
+      ]
+    },
+    {
+      "competence": 4,
+      "profile": {
+        "level": 4,
+        "reactionDelayS": 0.3,
+        "absorbChance": 0.85,
+        "perfectChance": 0.4,
+        "aimErrorDeg": 3,
+        "decisionCadenceS": 0.3
+      },
+      "trials": 500,
+      "referenceWins": 193,
+      "referenceLosses": 307,
+      "timeouts": 0,
+      "meanDurationS": 71.97393333333335,
+      "actualOpponentPerfectRate": 0.07326141600335148,
+      "minimumReactionTicks": 18,
+      "reactionViolations": 0,
+      "startingStats": [
+        {
+          "hp": 95,
+          "mana": 95,
+          "stamina": 70,
+          "ranks": {
+            "vigor": 1,
+            "focus": 1,
+            "nerve": 1
+          }
+        }
+      ]
+    }
+  ],
+  "completion": {
+    "seed": 30,
+    "label": "simulated selected winning integration fixture; not an unbiased win-rate sample",
+    "checkpoints": [
+      {
+        "wave": 1,
+        "hpBeforeRecovery": 95,
+        "tick": 2523
+      },
+      {
+        "wave": 2,
+        "hpBeforeRecovery": 90,
+        "tick": 5073
+      },
+      {
+        "wave": 3,
+        "hpBeforeRecovery": 25.57300000000003,
+        "tick": 7135
+      }
+    ],
+    "result": {
+      "kind": "champion",
+      "wavesCleared": 4,
+      "gold": 100,
+      "renown": 25,
+      "finalReached": true,
+      "finalWon": true
+    },
+    "durationS": 159.05,
+    "hash": "dcd37238"
+  },
+  "note": "Same starting stats and Water composition at all four competence levels. Perfect probability is a decision probability conditional on observation/reaction; actual impacts may miss the timing or arc. The reference policy is unchanged. Completion seed search is explicitly separate from the 2,000-seed-per-wave census."
+}

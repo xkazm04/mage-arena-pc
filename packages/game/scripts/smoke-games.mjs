@@ -3,8 +3,10 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
-const destination = new URL('../../../docs/waves/W4-evidence/', import.meta.url); mkdirSync(destination, { recursive: true });
-const fixture = JSON.parse(readFileSync(new URL('competence-ladder.json', destination), 'utf8')).completion;
+const evidence = process.argv[2] ?? 'W4-evidence';
+if (!/^W(?:4|4b)-evidence(?:\/[a-z-]+)?$/.test(evidence)) throw Error('Invalid evidence directory');
+const destination = new URL(`../../../docs/waves/${evidence}/`, import.meta.url); mkdirSync(destination, { recursive: true });
+const fixture = JSON.parse(readFileSync(new URL('../../../docs/waves/W4b-evidence/competence-ladder.json', import.meta.url), 'utf8')).completion;
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4177', '--strictPort'], { cwd: fileURLToPath(new URL('..', import.meta.url)), windowsHide: true, stdio: 'ignore' });
 let browser;
 try {
@@ -49,7 +51,7 @@ try {
     if (id === 'hush_moth') { assert.equal(s.state.actors.length, 7); await page.screenshot({ path: fileURLToPath(new URL('07-moth-pack.png', destination)) }); }
   }
   assert.deepEqual(errors, []);
-  const report = { label: 'measured', command: 'npm --prefix packages/game run smoke:w4', browser: browser.version(), errors,
+  const report = { label: 'measured', command: `npm --prefix packages/game run smoke:w4 -- ${evidence}`, browser: browser.version(), errors,
     checks: ['real keyboard/mouse in Tiro', 'exact soldier roster', 'loadout lock', 'four reference-policy bouts', 'explicit next-bout recovery', 'tier reset', 'one final payout', 'ordinary damage missio', 'all eight roster entries', 'charge telegraph and moth pack'],
     completionFixture: { seed: fixture.seed, policy: 'same reference input controller as census; fast-forward ticks, no actor buffs', checkpoints, result },
     limitations: ['Completion seed was selected explicitly and is not a win-rate sample.', 'Other schools remain Water proxies.', 'Feel remains owner-only.'] };

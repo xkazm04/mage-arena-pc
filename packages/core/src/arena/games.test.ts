@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addEnemy, addMage, advanceGames, attachMageAI, combat, competence, createArena, createGames, enemyInputs, enemyRoster, gamesResult, idleInput, mageInput, newWaterState, presets, queueDeathEffects, resolveHit, runFight, runtime, spawnProjectile, stateHash, stepArena, stepGames, ticks, tiro } from './index';
+import { addEnemy, addMage, advanceGames, attachMageAI, arenaGeometry, constrainToArena, combat, competence, createArena, createGames, enemyInputs, enemyRoster, gamesResult, idleInput, mageInput, newWaterState, presets, queueDeathEffects, resolveHit, runFight, runtime, spawnProjectile, stateHash, stepArena, stepGames, ticks, tiro } from './index';
 const simulateEnemies = (state: ReturnType<typeof createArena>, count: number) => { for (let i = 0; i < count; i++) { stepArena(state, enemyInputs(state)); queueDeathEffects(state); } };
 describe('the full roster on common damage and movement rules', () => {
   it('spawns all eight distinct data-defined enemies and attacks', () => {
@@ -48,8 +48,8 @@ describe('the full roster on common damage and movement rules', () => {
     enemyInputs(state); expect(state.telegraphs[0]!.family).toBe('magic'); state.telegraphs = []; maw.enemy!.readyTick = 0;
     enemyInputs(state); expect(state.telegraphs[0]!.pullM).toBe(4);
     for (let i = 0; i < ticks(1) + 1; i++) stepArena(state); expect(player.pos.x).toBeCloseTo(8);
-    const s = createArena(), p = addMage(s, 0, { x: 31, y: 10 }), thorn = addEnemy(s, 'thornback', { x: 25, y: 10 });
-    simulateEnemies(s, ticks(1) + 1); expect(p.hp).toBe(p.maxHp - 22); expect(thorn.enemy!.stunnedUntil).toBeGreaterThan(s.tick); expect(thorn.pos.x).toBe(combat.arena.widthM - thorn.radius);
+    const s = createArena(), edge = arenaGeometry.centre.x + arenaGeometry.widthM / 2, y = arenaGeometry.centre.y, p = addMage(s, 0, { x: edge - 1, y }), thorn = addEnemy(s, 'thornback', { x: edge - 7, y });
+    simulateEnemies(s, ticks(1) + 1); expect(p.hp).toBe(p.maxHp - 22); expect(thorn.enemy!.stunnedUntil).toBeGreaterThan(s.tick); expect(thorn.pos).toEqual(constrainToArena({ x: edge + 10, y }, thorn.radius));
   });
   it('moths drain mana in contact without HP damage; Fog prevents ranged acquisition', () => {
     const state = createArena(), player = addMage(state, 0, { x: 10, y: 10 });
