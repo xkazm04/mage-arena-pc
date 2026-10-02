@@ -1,0 +1,4458 @@
+{
+  "version": "a3-effects-v1",
+  "recipes": [
+    {
+      "id": "water-bolt",
+      "kind": "bolt",
+      "school": "water",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "water-line",
+      "kind": "line",
+      "school": "water",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "fire-bolt",
+      "kind": "bolt",
+      "school": "fire",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "fire-line",
+      "kind": "line",
+      "school": "fire",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "earth-bolt",
+      "kind": "bolt",
+      "school": "earth",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "earth-line",
+      "kind": "line",
+      "school": "earth",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "air-bolt",
+      "kind": "bolt",
+      "school": "air",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "air-line",
+      "kind": "line",
+      "school": "air",
+      "scope": "generic school motif; no invented spell line"
+    },
+    {
+      "id": "water-tide-orb",
+      "kind": "tide-orb",
+      "school": "water",
+      "scope": "Water line family motif; tier shape/branch must follow CSV, not this motif alone"
+    },
+    {
+      "id": "water-lash",
+      "kind": "lash",
+      "school": "water",
+      "scope": "Water line family motif; tier shape/branch must follow CSV, not this motif alone"
+    },
+    {
+      "id": "water-mire",
+      "kind": "mire",
+      "school": "water",
+      "scope": "Water line family motif; tier shape/branch must follow CSV, not this motif alone"
+    },
+    {
+      "id": "water-mend",
+      "kind": "mend",
+      "school": "water",
+      "scope": "Water line family motif; tier shape/branch must follow CSV, not this motif alone"
+    },
+    {
+      "id": "water-mirror",
+      "kind": "mirror",
+      "school": "water",
+      "scope": "Water line family motif; tier shape/branch must follow CSV, not this motif alone"
+    },
+    {
+      "id": "water-absorb",
+      "kind": "absorb",
+      "school": "water",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "water-perfect-absorb",
+      "kind": "perfect-absorb",
+      "school": "water",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "water-telegraph-ring",
+      "kind": "telegraph-ring",
+      "school": "water",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "physical-telegraph-ring",
+      "kind": "telegraph-ring",
+      "school": "physical",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "unblockable-telegraph-ring",
+      "kind": "telegraph-ring",
+      "school": "unblockable",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "unblockable-unblockable-mark",
+      "kind": "unblockable-mark",
+      "school": "unblockable",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "unblockable-charge-lane",
+      "kind": "charge-lane",
+      "school": "unblockable",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "physical-net-ring",
+      "kind": "net-ring",
+      "school": "physical",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "physical-tongue-line",
+      "kind": "tongue-line",
+      "school": "physical",
+      "scope": "authored visual; collision and timing remain engine data"
+    },
+    {
+      "id": "fire-ember-burst",
+      "kind": "ember-burst",
+      "school": "fire",
+      "scope": "authored visual; collision and timing remain engine data"
+    }
+  ],
+  "exports": [
+    {
+      "id": "water-bolt",
+      "file": "art/delivery/a3/effects/1080/standard/water-bolt.png",
+      "sha256": "39c714a6147f66b5fef14043873849cc40d0d4e6c68c23b78f3808f05005f00c",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-line",
+      "file": "art/delivery/a3/effects/1080/standard/water-line.png",
+      "sha256": "99b8d3df417f2a7b9cb1931882f9aca4fd3b0f9c906682a19b96d9b58601a6da",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-bolt",
+      "file": "art/delivery/a3/effects/1080/standard/fire-bolt.png",
+      "sha256": "388a54d55373fe064493df5b6db75eac5f2cb833bacc759d8f5dc4a63088385d",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-line",
+      "file": "art/delivery/a3/effects/1080/standard/fire-line.png",
+      "sha256": "a2de0d79779cd7c2406c8d4747e797e314e8f95aa4c2fdfb6f406807f815654e",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-bolt",
+      "file": "art/delivery/a3/effects/1080/standard/earth-bolt.png",
+      "sha256": "6cb1cca0d7dba2a2c45c7fdd8e0bc6647b3112d5004b4afd3baf1fd667a411b5",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-line",
+      "file": "art/delivery/a3/effects/1080/standard/earth-line.png",
+      "sha256": "c171629b453d50791b88a1a69142a2f202e24acba0d3d083afd69a3271587b21",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-bolt",
+      "file": "art/delivery/a3/effects/1080/standard/air-bolt.png",
+      "sha256": "d03d01540888898905dfa16033d342cd250b2fb45892dbb4726537737886ed32",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-line",
+      "file": "art/delivery/a3/effects/1080/standard/air-line.png",
+      "sha256": "5cf1cb515b3879f56284142a86255c015bff739a38a415fcaa92ac5658030d26",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-tide-orb",
+      "file": "art/delivery/a3/effects/1080/standard/water-tide-orb.png",
+      "sha256": "7e321f83f3d767b431f91edac5a53d8a87d354d01b06986237bc5535d911fc57",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-lash",
+      "file": "art/delivery/a3/effects/1080/standard/water-lash.png",
+      "sha256": "239305143687662106f6b9df1d71d399639598754401de5b8adee32b46209abc",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mire",
+      "file": "art/delivery/a3/effects/1080/standard/water-mire.png",
+      "sha256": "7613d1bd753342d4baa80d501b6385dda1639a44e95f5759e86b57be475bb2b1",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mend",
+      "file": "art/delivery/a3/effects/1080/standard/water-mend.png",
+      "sha256": "8544c9a57db73c70ea9d597b63f7df28eae0039d859eebb04aaebbe241c94ad4",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mirror",
+      "file": "art/delivery/a3/effects/1080/standard/water-mirror.png",
+      "sha256": "ddbc0fd261eef05296b267aee2f42c9e8df06bb62c74a2f4996cad32d409c363",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-absorb",
+      "file": "art/delivery/a3/effects/1080/standard/water-absorb.png",
+      "sha256": "47fea6f58d3b960a57719a8e1fc65b4573b2633c216e4fb6df84c9f3b62d5fec",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-perfect-absorb",
+      "file": "art/delivery/a3/effects/1080/standard/water-perfect-absorb.png",
+      "sha256": "679ae8292a3bb8091db76252c52ea0c543c90fdc45a82358508575484375d273",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/standard/water-telegraph-ring.png",
+      "sha256": "9557804cfeca0df9c5273d1e28ea6cc8a4875d7dbc2cc8669dd0d96b18955989",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/standard/physical-telegraph-ring.png",
+      "sha256": "27181526b1df3163db3be970350a7ffb6377ea182a2ad67dc9ffd175984d1a28",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/standard/unblockable-telegraph-ring.png",
+      "sha256": "e9b0c3b2f3c58d00138b9a9959638bc988b4b51ac8d3fe5af52177ae8c1a11a3",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-unblockable-mark",
+      "file": "art/delivery/a3/effects/1080/standard/unblockable-unblockable-mark.png",
+      "sha256": "01b27721fbdf7d86e9d38038101fe32bd0b1ae1b5ee9f97b556cbe18548cd984",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-charge-lane",
+      "file": "art/delivery/a3/effects/1080/standard/unblockable-charge-lane.png",
+      "sha256": "4e5019e09a03a2d01153241eec296505f4d7494ba6b75a581e683f72b9e5148a",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-net-ring",
+      "file": "art/delivery/a3/effects/1080/standard/physical-net-ring.png",
+      "sha256": "a64b8789bb0c15d7cb2b567d0fa9fc51fe553f096bc06b0f3995d9a8571ecdb0",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 2.5,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "physical-tongue-line",
+      "file": "art/delivery/a3/effects/1080/standard/physical-tongue-line.png",
+      "sha256": "b56d72a9f24795f8ab64df23c638857013ed051a7320c2161c9b0ef2e806eee0",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-ember-burst",
+      "file": "art/delivery/a3/effects/1080/standard/fire-ember-burst.png",
+      "sha256": "6a4c1deef1e7f8cde3a6a3a7911f27b49fc9fe9d14a31278ad92c708610b81b1",
+      "viewport_height": 1080,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 3,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "water-bolt",
+      "file": "art/delivery/a3/effects/1080/near/water-bolt.png",
+      "sha256": "8cea4de099e98f93847ead75fa62c86769680f95bf0cc7fe49c2076511874a49",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-line",
+      "file": "art/delivery/a3/effects/1080/near/water-line.png",
+      "sha256": "a5c2f91465da56dd4710dee8c1c334bbd2b732e2a983cb0f6b5df7a0264d5678",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-bolt",
+      "file": "art/delivery/a3/effects/1080/near/fire-bolt.png",
+      "sha256": "f3b3c0ded3b2a27d65ceb3a8efb9c36aab0c12e153344aa039e8dfe1cfcc2be2",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-line",
+      "file": "art/delivery/a3/effects/1080/near/fire-line.png",
+      "sha256": "ee0d21c495eec7558b84440ebb487ecf638b253e0df21d7c3fe3f5352f9ac96d",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-bolt",
+      "file": "art/delivery/a3/effects/1080/near/earth-bolt.png",
+      "sha256": "3ba13ab5de8683a17c522a8a2cf3a660467747d79db9e985e5c324e7a72edf01",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-line",
+      "file": "art/delivery/a3/effects/1080/near/earth-line.png",
+      "sha256": "75d9b01b720c76b068f2dc7880c89c94b7d9a02a3d28a390556e328f95b495ca",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-bolt",
+      "file": "art/delivery/a3/effects/1080/near/air-bolt.png",
+      "sha256": "17c4bd2cb834a8d127d7bde581379fa471c07c51072490b40dafbcac6d50b387",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-line",
+      "file": "art/delivery/a3/effects/1080/near/air-line.png",
+      "sha256": "e518d46542cede31ad6f05531026da1a6ccd87247652e44eeec99a1c506de973",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-tide-orb",
+      "file": "art/delivery/a3/effects/1080/near/water-tide-orb.png",
+      "sha256": "4cd1aad37aed2e549351fc01c226a1aaa236c45760df91590722c8495bdcba0d",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-lash",
+      "file": "art/delivery/a3/effects/1080/near/water-lash.png",
+      "sha256": "f5c76c52b7945a34c22187f0cd282c52515aebeb3c58256af050f658472008c6",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mire",
+      "file": "art/delivery/a3/effects/1080/near/water-mire.png",
+      "sha256": "5a874a61b1da098ab6d25bb9f0572e85cfe455c446a6bd1d02ce003739b19085",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mend",
+      "file": "art/delivery/a3/effects/1080/near/water-mend.png",
+      "sha256": "8c11f84ebce58f00a15ac2a2c796a047ae7470a059c6a4afd90517f1ab8cfc67",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mirror",
+      "file": "art/delivery/a3/effects/1080/near/water-mirror.png",
+      "sha256": "be55085b4f11efa85aa4d90d42402f5c17494dc97341f5d5a070dbf7cf327cc0",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-absorb",
+      "file": "art/delivery/a3/effects/1080/near/water-absorb.png",
+      "sha256": "784f451494e19db9b39a196f2cb264b5414cc099e2223713d412aac1dcb63a94",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-perfect-absorb",
+      "file": "art/delivery/a3/effects/1080/near/water-perfect-absorb.png",
+      "sha256": "f32e26c4f46b133f6938439c2dc7a94f4ef3681ea3dd4d7ffa6ec7f93a7a86d0",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/near/water-telegraph-ring.png",
+      "sha256": "c378bbf34e5ccea4b27312a9b9e1145dda3c56bb79461627a8d9228bae0a92a5",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/near/physical-telegraph-ring.png",
+      "sha256": "e6845af7f019e4c5ac7fa7a7358644738a713a75f7ed74fb1f08f1b39042a75a",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/near/unblockable-telegraph-ring.png",
+      "sha256": "3164f88144471690bc7e78d748e522709e05e50aba47556b7e77b2fd2eff1605",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-unblockable-mark",
+      "file": "art/delivery/a3/effects/1080/near/unblockable-unblockable-mark.png",
+      "sha256": "0daea4f01117c2c71da6d04c60ac1c14e2b48092f1791941c87919480e4b5f7f",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-charge-lane",
+      "file": "art/delivery/a3/effects/1080/near/unblockable-charge-lane.png",
+      "sha256": "cd6f2281d206d7b3974a97e9cb432fe090b87ef8582b6920028374bced507589",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-net-ring",
+      "file": "art/delivery/a3/effects/1080/near/physical-net-ring.png",
+      "sha256": "148c76c975eb5e8040518940c3c90810e32df2c17149048cf670067ed8105c24",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 2.5,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "physical-tongue-line",
+      "file": "art/delivery/a3/effects/1080/near/physical-tongue-line.png",
+      "sha256": "a3965eb9972698a41cea43f02401f47d96e9eff535c5b471ceb868496077356c",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-ember-burst",
+      "file": "art/delivery/a3/effects/1080/near/fire-ember-burst.png",
+      "sha256": "a94d7b46fd76db0096c7ee55eadc8d0e620c8050f175a646aaf2cb48836c492e",
+      "viewport_height": 1080,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 3,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "water-bolt",
+      "file": "art/delivery/a3/effects/1080/far/water-bolt.png",
+      "sha256": "c1a6628ac1a68c47e6239a349ec0cfbb6ecb95cbc790f82d1641200e84d520b5",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-line",
+      "file": "art/delivery/a3/effects/1080/far/water-line.png",
+      "sha256": "2f37b989dc8fca32ad04e7541afe7fddd239c3def568297b09606116c4662a06",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-bolt",
+      "file": "art/delivery/a3/effects/1080/far/fire-bolt.png",
+      "sha256": "e4b94b08ef7e2d14cb33b0d37dde8853fedeb0d54435da96fc44159a8afea059",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-line",
+      "file": "art/delivery/a3/effects/1080/far/fire-line.png",
+      "sha256": "28da545d30ee15c90188aeb36f5d9ecc0cf8ef8c0cfd412df41beeffea6d52ac",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-bolt",
+      "file": "art/delivery/a3/effects/1080/far/earth-bolt.png",
+      "sha256": "f7679ae7a2dc10962d8dffbb3d69e58ef25d897c993922e21a42f66315556ff5",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-line",
+      "file": "art/delivery/a3/effects/1080/far/earth-line.png",
+      "sha256": "da829d7bf9f00d4e20d6a489ff919459e28c5879735a21327733ab10d6ba28b9",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-bolt",
+      "file": "art/delivery/a3/effects/1080/far/air-bolt.png",
+      "sha256": "c3bc0d454b65808c3081e24a772e28aaa874426e6d6be655edd32c583412a48c",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-line",
+      "file": "art/delivery/a3/effects/1080/far/air-line.png",
+      "sha256": "f4ddef9be79a95f2d1bc62be1494411fb6ffa6c748975f3a26829c6c4f2a5d97",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-tide-orb",
+      "file": "art/delivery/a3/effects/1080/far/water-tide-orb.png",
+      "sha256": "7ea2bab0c689565960f91dd47c4fa98f647508efef6c79aecf25e7738e309bb7",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-lash",
+      "file": "art/delivery/a3/effects/1080/far/water-lash.png",
+      "sha256": "5d4010fdfa0936ab1f47636af08805ebccdbbc75c8299c2588279bfce3b04b8e",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mire",
+      "file": "art/delivery/a3/effects/1080/far/water-mire.png",
+      "sha256": "ecf3e22c0ea898a8f7290006959d1f066e626fa583e47f2cba00c196b3d03387",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mend",
+      "file": "art/delivery/a3/effects/1080/far/water-mend.png",
+      "sha256": "f06a7539fae62f331fd307226134f3a2dce7762ec3eb44742cd5aadc71e6d017",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mirror",
+      "file": "art/delivery/a3/effects/1080/far/water-mirror.png",
+      "sha256": "e651fdaf7a56838d4841bd4cfa825dfe0d9f12a9e4a39915fe479dd3ef71d4f2",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-absorb",
+      "file": "art/delivery/a3/effects/1080/far/water-absorb.png",
+      "sha256": "4383ee026b4ae6aab86fc2f1fdb2f94fdfa7e859c2ad27e190dfe4c15592df40",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-perfect-absorb",
+      "file": "art/delivery/a3/effects/1080/far/water-perfect-absorb.png",
+      "sha256": "f983af70a5765fdac4b85949e0d611b872f55248ee81cff6a7779011a9a64c92",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/far/water-telegraph-ring.png",
+      "sha256": "60892cc6560becc09df0dc9f1d216077783886440e2cbc6b7d240a03ff900145",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/far/physical-telegraph-ring.png",
+      "sha256": "d268a1d9a85c07fadb850af9687c8ea6108c7118f1de8cc2333560fc646a4ca0",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-telegraph-ring",
+      "file": "art/delivery/a3/effects/1080/far/unblockable-telegraph-ring.png",
+      "sha256": "e49e82f6f5366c983c9cc27e58e98f57282322f410ca730e01a06ec9bc446075",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-unblockable-mark",
+      "file": "art/delivery/a3/effects/1080/far/unblockable-unblockable-mark.png",
+      "sha256": "68460bb3a1ee226fbcf49ff542307855f434cc05a492dec981f5691d400a54c7",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-charge-lane",
+      "file": "art/delivery/a3/effects/1080/far/unblockable-charge-lane.png",
+      "sha256": "b8c594b09fe9c7666185bd907aba4ab1818722bff2da991cbfa2ba5585233485",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-net-ring",
+      "file": "art/delivery/a3/effects/1080/far/physical-net-ring.png",
+      "sha256": "9970cfee7483592e0a60ff4abfcf2cee391783b38679e4eec9d8e64072d3a682",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 2.5,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "physical-tongue-line",
+      "file": "art/delivery/a3/effects/1080/far/physical-tongue-line.png",
+      "sha256": "16a5a22f5a5a757acf54b434b41279381967feff4064adf6159818b7a6a692a4",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-ember-burst",
+      "file": "art/delivery/a3/effects/1080/far/fire-ember-burst.png",
+      "sha256": "57e192eb0a39f15907785f855015533b781bb51c0388a4fbcb17bfb8d7eb8c43",
+      "viewport_height": 1080,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        640,
+        400
+      ],
+      "frames": 4,
+      "anchor": [
+        320.0,
+        200.0
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 3.0,
+      "min_projectile_core_px": 4.0,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 3,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "water-bolt",
+      "file": "art/delivery/a3/effects/1440/standard/water-bolt.png",
+      "sha256": "eb39e9f41e186d8a06fce20184b4b1d74d8692112b392e5328b8334f8650bb61",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-line",
+      "file": "art/delivery/a3/effects/1440/standard/water-line.png",
+      "sha256": "99d51316a6f9e6d3b327accc5b1e776f02adb1e31e35d36d3e67398622b1e5b0",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-bolt",
+      "file": "art/delivery/a3/effects/1440/standard/fire-bolt.png",
+      "sha256": "cb97ee3a4645aef0ec070f258578334e6101e3945dc3e2edfbe430d4fb58b703",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-line",
+      "file": "art/delivery/a3/effects/1440/standard/fire-line.png",
+      "sha256": "a61221934fcdd8d083db56e35485d71b0247b9ad01be6017cd8bcc6b4d5c7aea",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-bolt",
+      "file": "art/delivery/a3/effects/1440/standard/earth-bolt.png",
+      "sha256": "e79c1151bfb2e5876dda24ec77b058cd7f2394138fa5bf943aadaafe5ea0a1f4",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-line",
+      "file": "art/delivery/a3/effects/1440/standard/earth-line.png",
+      "sha256": "d09903993f271f838785eb08767a7f2058bfd68fd5207fe5fa53cc99f0b6dd45",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-bolt",
+      "file": "art/delivery/a3/effects/1440/standard/air-bolt.png",
+      "sha256": "9a4e1cbbb9edf12249aafa4a608251a12be30747708dff9ee5ecfa21225c162a",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-line",
+      "file": "art/delivery/a3/effects/1440/standard/air-line.png",
+      "sha256": "927b8bf84d97f18b42a987e5bfd4e292fb63610ce2e9a353a2a2c42879dcf46a",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-tide-orb",
+      "file": "art/delivery/a3/effects/1440/standard/water-tide-orb.png",
+      "sha256": "fc127e2d03ee8b463cef37efead5a717ad1de909b5ccae48c9b77ee16b5ac5ff",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-lash",
+      "file": "art/delivery/a3/effects/1440/standard/water-lash.png",
+      "sha256": "c50b452d0dc0c9093d207fbb9e39ec6f85868836f34695b0e9a18de3ff475f45",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mire",
+      "file": "art/delivery/a3/effects/1440/standard/water-mire.png",
+      "sha256": "bfebac0b04865ceca970d8110774ea3a4d8f0ee415d0c9242a4c7f4da5d187a6",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mend",
+      "file": "art/delivery/a3/effects/1440/standard/water-mend.png",
+      "sha256": "b257e19921a76f35aea733fa09c8616a43b90773ebec6b86ab9af199343be589",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mirror",
+      "file": "art/delivery/a3/effects/1440/standard/water-mirror.png",
+      "sha256": "9e228b9113386cfb037d19660ee6de79d341611d27c4ace5ed52bb302d2d1bfe",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-absorb",
+      "file": "art/delivery/a3/effects/1440/standard/water-absorb.png",
+      "sha256": "87cf304010666efd218a8ac3934c1f315e27a924f2c907784aa641a9973cd933",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-perfect-absorb",
+      "file": "art/delivery/a3/effects/1440/standard/water-perfect-absorb.png",
+      "sha256": "717d025bc942baa50a40ad5c46f2038f98d0315fcbdab79c6c07be6f7200c529",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/standard/water-telegraph-ring.png",
+      "sha256": "3692b50dd1127f44454c80ccabb8753797d18f5d7037b529fb41fc468a48f205",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/standard/physical-telegraph-ring.png",
+      "sha256": "ec7980abf0ae1ecbce5d5a3468884c6fd1378500e9de837a5a46239dfc6870e4",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/standard/unblockable-telegraph-ring.png",
+      "sha256": "fa29451fe6478c09ec313d8a202adc9fdbabcfe0b27d7821a7bf68711838626b",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-unblockable-mark",
+      "file": "art/delivery/a3/effects/1440/standard/unblockable-unblockable-mark.png",
+      "sha256": "8dcdf441b8f35562785556a13f74a9eb43d9060b7bc87dc9bca1daf8b95a42eb",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-charge-lane",
+      "file": "art/delivery/a3/effects/1440/standard/unblockable-charge-lane.png",
+      "sha256": "542e3e8aa8b0790acbcd8161cbc10dc09c436c62938b689652a39712186edc94",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-net-ring",
+      "file": "art/delivery/a3/effects/1440/standard/physical-net-ring.png",
+      "sha256": "94e6c0c140e535a63faa1cdb9bddbd39d5bb8c302a8446d403913064ab3d0224",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 2.5,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "physical-tongue-line",
+      "file": "art/delivery/a3/effects/1440/standard/physical-tongue-line.png",
+      "sha256": "fea5dfbea720e8ceb2ec9e154d6cd506ebf2d0899f0c08c28a08cca8d3c27cb0",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-ember-burst",
+      "file": "art/delivery/a3/effects/1440/standard/fire-ember-burst.png",
+      "sha256": "1266aecbecfb42a8fff4379a532af550b04d1f9fff07c255af0e477c12edf140",
+      "viewport_height": 1440,
+      "distance": "standard",
+      "zoom": 1,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 3,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "water-bolt",
+      "file": "art/delivery/a3/effects/1440/near/water-bolt.png",
+      "sha256": "6b6b1be67eeaa9d3ce6694042443331a7775b45cf8e4b760e57b3f000900923e",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-line",
+      "file": "art/delivery/a3/effects/1440/near/water-line.png",
+      "sha256": "7aefbcc223cbb59c00737c626367fab4ddae16bf2d759d48f81c2e90647510c1",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-bolt",
+      "file": "art/delivery/a3/effects/1440/near/fire-bolt.png",
+      "sha256": "f425dc7096dc5e4551f56b2473c9a0f7fbc8e9b4bdaaab309fa1f5c0c47f7040",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-line",
+      "file": "art/delivery/a3/effects/1440/near/fire-line.png",
+      "sha256": "66d03fc715aafe1cdf0dee4609d1dab590af1ec2f2a08608691839fcf7b15ae4",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-bolt",
+      "file": "art/delivery/a3/effects/1440/near/earth-bolt.png",
+      "sha256": "aa74022d5581cdce832ae75b042a7e798ea56ee64e68d3cd5fb5453091cd59ea",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-line",
+      "file": "art/delivery/a3/effects/1440/near/earth-line.png",
+      "sha256": "ab72dde2294e639de17c9b55a071112f6f0fb5d907212814a92f1b3b240deaf9",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-bolt",
+      "file": "art/delivery/a3/effects/1440/near/air-bolt.png",
+      "sha256": "7deb0489091c9c446638d166fa2720bbbf636ce493289aaeb212113cf2040024",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-line",
+      "file": "art/delivery/a3/effects/1440/near/air-line.png",
+      "sha256": "74530e183722b26fb99d4967d090b9ec7fa1047e1a7196c6677d48074f0a5fbb",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-tide-orb",
+      "file": "art/delivery/a3/effects/1440/near/water-tide-orb.png",
+      "sha256": "2342ea681fa2513aa2852478768a6a638a7d8cd49ba33410f71bcf8b6dd4b9fa",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-lash",
+      "file": "art/delivery/a3/effects/1440/near/water-lash.png",
+      "sha256": "9e6dd34895b752c30b4600def973ddf30ccd660d5ea2dd23bf742f7ee5e9b5fd",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mire",
+      "file": "art/delivery/a3/effects/1440/near/water-mire.png",
+      "sha256": "e00607510724ea288ceb3f7c834ef26b28d3a39a1c915206d89c2a4df4d07ebf",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mend",
+      "file": "art/delivery/a3/effects/1440/near/water-mend.png",
+      "sha256": "6a3c4a88ca03db31caa1a468966347099c9cf6b1a49b1ec2baacd4b83c02f53a",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mirror",
+      "file": "art/delivery/a3/effects/1440/near/water-mirror.png",
+      "sha256": "12e1a91d9d2d3292a6cbb016ca95ee478e1422c2a6cd963beca2dae409ae83d6",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-absorb",
+      "file": "art/delivery/a3/effects/1440/near/water-absorb.png",
+      "sha256": "b9b9043d0ffc35d434f1832497a44b9b238364a25e8f373555aa86b0ea3f28aa",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-perfect-absorb",
+      "file": "art/delivery/a3/effects/1440/near/water-perfect-absorb.png",
+      "sha256": "9ccb620c35a4615b2d1f23a2ba76dca90b4589609489dc19286d5f09c5868124",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/near/water-telegraph-ring.png",
+      "sha256": "e66bc18bb86ae8c87b8d449e50185f192ce82b28d0e48c6fd93827d36f11094e",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/near/physical-telegraph-ring.png",
+      "sha256": "d92e41b864e2b3072e3e085b8c0e98417b1a79089637ef465d29bde07636537c",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/near/unblockable-telegraph-ring.png",
+      "sha256": "fb0e78b913b46de3842b44875e0b2d512f3fe29a2299b875b7d0994867b5548f",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-unblockable-mark",
+      "file": "art/delivery/a3/effects/1440/near/unblockable-unblockable-mark.png",
+      "sha256": "c7de1a5f3656c44eb93327d5bf7558fdfab85455be914495b27c5a27d98bff6b",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-charge-lane",
+      "file": "art/delivery/a3/effects/1440/near/unblockable-charge-lane.png",
+      "sha256": "fb4676e51860d94c3e92c53a55478dadfe485f9fb1fb1dbb9086cff1a989e8e0",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-net-ring",
+      "file": "art/delivery/a3/effects/1440/near/physical-net-ring.png",
+      "sha256": "20e0eaec5d0428f28a1b99645066672720ddf016c9c9a3eecad85ba47e1f4910",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 2.5,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "physical-tongue-line",
+      "file": "art/delivery/a3/effects/1440/near/physical-tongue-line.png",
+      "sha256": "29f9fd79fb5a2f5a8a52a7971f012e811c30b42a6d30a2a7f588f4f7f0a2b4dc",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-ember-burst",
+      "file": "art/delivery/a3/effects/1440/near/fire-ember-burst.png",
+      "sha256": "a51b87e27a0950760b0ad8defc79b0af27ad5669cee017f898c18bb25ef1e98b",
+      "viewport_height": 1440,
+      "distance": "near",
+      "zoom": 1.2,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 3,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "water-bolt",
+      "file": "art/delivery/a3/effects/1440/far/water-bolt.png",
+      "sha256": "c3fead95e03cb4a6f6380f885af5534a89614ea31d0b3b6c4d1f00a473a41aac",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-line",
+      "file": "art/delivery/a3/effects/1440/far/water-line.png",
+      "sha256": "b154beaa761fc188703004c12b611b7df6141060c34ad4cdbde6c6a580bebf8b",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-bolt",
+      "file": "art/delivery/a3/effects/1440/far/fire-bolt.png",
+      "sha256": "23f00e8be6494bd8bf9c20a52eec993b3f8e9506d3b432e430cf6ee6ac7b89cf",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-line",
+      "file": "art/delivery/a3/effects/1440/far/fire-line.png",
+      "sha256": "aca17d0931d6a104dba8bac0c3100d4d74d3fe38b04e3ae44cf851d53b9c5016",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-bolt",
+      "file": "art/delivery/a3/effects/1440/far/earth-bolt.png",
+      "sha256": "ecbc529153b647ebe4866476279dccc3b77161cd0011f413e71db2d33bfce19e",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "earth-line",
+      "file": "art/delivery/a3/effects/1440/far/earth-line.png",
+      "sha256": "34a4d718101d957df0948d56ba346270660e7081500cca6856de21c18ed629ea",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-bolt",
+      "file": "art/delivery/a3/effects/1440/far/air-bolt.png",
+      "sha256": "53417d9dc3585e6c7332d31048f64d19b06fd591f91a2cde5a679179d7bb14f8",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "air-line",
+      "file": "art/delivery/a3/effects/1440/far/air-line.png",
+      "sha256": "99345ba5cd5459df5e58a0b98b7e3494f36295e5d85de8a0d168f5412128300d",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-tide-orb",
+      "file": "art/delivery/a3/effects/1440/far/water-tide-orb.png",
+      "sha256": "a8b913e912e03491fc8325cb635f8c689d4490e553bd4dea8098f169a6aee8c7",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-lash",
+      "file": "art/delivery/a3/effects/1440/far/water-lash.png",
+      "sha256": "59d2240815c26e574d5c2e04bb6cb6fd018ba434cea35f8dbaa798d796f5edd0",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mire",
+      "file": "art/delivery/a3/effects/1440/far/water-mire.png",
+      "sha256": "f185c441f854828b92511a762ffa694f8263298ec3e86ee6d5d106dbffbba701",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mend",
+      "file": "art/delivery/a3/effects/1440/far/water-mend.png",
+      "sha256": "20b93aca916d97eeec3390a4deb91ed28c3559ad0cc241233376ae4a1b11c81c",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-mirror",
+      "file": "art/delivery/a3/effects/1440/far/water-mirror.png",
+      "sha256": "9c178240afb1b74683da252ae476cb27da9fcd9c2c9ed0a781a6a7a39b00c9dd",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-absorb",
+      "file": "art/delivery/a3/effects/1440/far/water-absorb.png",
+      "sha256": "e34bd12cd13017d40b7805424bd4a508f1b8c7ad7394bc226a362d0a5a0b000d",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-perfect-absorb",
+      "file": "art/delivery/a3/effects/1440/far/water-perfect-absorb.png",
+      "sha256": "efea1f1e9ffbf902315f1dc9ba0dd129eb4a6fb5ddd4b1974a55b3be5c099d26",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "water-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/far/water-telegraph-ring.png",
+      "sha256": "3241cc7f04b91c454e42c0324ce8e557d64b525d0981d96bbc5cb3dbee4a788c",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/far/physical-telegraph-ring.png",
+      "sha256": "b1eacbb4cb976e4c85c0c1edbf4e41005d7831fff9439cf1663babb3c9bbe0c6",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-telegraph-ring",
+      "file": "art/delivery/a3/effects/1440/far/unblockable-telegraph-ring.png",
+      "sha256": "29da415888ec08e9ca83621336de13d0e2890345454b6c668b0223895ce5e482",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-unblockable-mark",
+      "file": "art/delivery/a3/effects/1440/far/unblockable-unblockable-mark.png",
+      "sha256": "27e241ceb3fdd64e7b5a325610b21845623e180d54a8f025bd9cf2fca8157270",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "unblockable-charge-lane",
+      "file": "art/delivery/a3/effects/1440/far/unblockable-charge-lane.png",
+      "sha256": "5cf176378efa897c678ce6a530047bec1807cd31fef7a42f5d9caed3fae2ec65",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "physical-net-ring",
+      "file": "art/delivery/a3/effects/1440/far/physical-net-ring.png",
+      "sha256": "83b62a561fb32aa3a5ab3bdd0f604ed8c517e7fb0f835e53f5f4b31f87d32773",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 2.5,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    },
+    {
+      "id": "physical-tongue-line",
+      "file": "art/delivery/a3/effects/1440/far/physical-tongue-line.png",
+      "sha256": "42401ed9444e19931431faef785d937a5d8bee623f616cb6e36d0cc5997a1d92",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls"
+    },
+    {
+      "id": "fire-ember-burst",
+      "file": "art/delivery/a3/effects/1440/far/fire-ember-burst.png",
+      "sha256": "4efa2a89a364c72e268001947b1c099c07503499e45e18f211799541dc82b877",
+      "viewport_height": 1440,
+      "distance": "far",
+      "zoom": 0.8,
+      "frame_size": [
+        853,
+        533
+      ],
+      "frames": 4,
+      "anchor": [
+        426.5,
+        266.5
+      ],
+      "preview_frame_ms": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "timing_authority": "presentation only; engine must use data",
+      "facing_degrees": 0,
+      "rotation": "rotate world geometry before projection; do not rotate this raster for a different heading",
+      "min_outline_px": 4.0,
+      "min_projectile_core_px": 5.333333333333333,
+      "provenance": "authored procedural geometry; zero image calls",
+      "solid_footprint_diameter_m": 3,
+      "dashed_advisory_diameter_m": 4,
+      "advisory_scope": "readability only; never use outer dashed ring as collision footprint"
+    }
+  ],
+  "water_mappings": [
+    {
+      "line": "bolt",
+      "tier": "0",
+      "branch": "",
+      "name": "Rain Needle",
+      "shape_authority": "projectile 20 m/s",
+      "family_motif": "water-bolt",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "1",
+      "branch": "",
+      "name": "Bubble Shot",
+      "shape_authority": "projectile 12 m/s",
+      "family_motif": "water-tide-orb",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "2",
+      "branch": "",
+      "name": "Crash Orb",
+      "shape_authority": "projectile 12 m/s; bursts r 2 m",
+      "family_motif": "water-tide-orb",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "3",
+      "branch": "",
+      "name": "Twin Tides",
+      "shape_authority": "two projectiles 12 m/s at +-10 deg",
+      "family_motif": "water-tide-orb",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "4",
+      "branch": "A",
+      "name": "Leviathan Orb",
+      "shape_authority": "slow projectile 6 m/s r 1.5 m",
+      "family_motif": "water-tide-orb",
+      "blockable": "UNBLOCKABLE",
+      "warning_motif": "unblockable-unblockable-mark",
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "4",
+      "branch": "B",
+      "name": "Rain of Orbs",
+      "shape_authority": "5-orb fan 50 deg",
+      "family_motif": "water-tide-orb",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "lash",
+      "tier": "1",
+      "branch": "",
+      "name": "Tide Lash",
+      "shape_authority": "cone 90 deg x 3 m",
+      "family_motif": "water-lash",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "lash",
+      "tier": "2",
+      "branch": "A",
+      "name": "Undertow",
+      "shape_authority": "cone 3 m + pull 3 m",
+      "family_motif": "water-lash",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "lash",
+      "tier": "2",
+      "branch": "B",
+      "name": "Riptide",
+      "shape_authority": "cone 3 m + push 3 m",
+      "family_motif": "water-lash",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "lash",
+      "tier": "3",
+      "branch": "",
+      "name": "Maelstrom Lash",
+      "shape_authority": "ring 360 deg r 3 m",
+      "family_motif": "water-lash",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "lash",
+      "tier": "4",
+      "branch": "",
+      "name": "Drown Coil",
+      "shape_authority": "grab 2.5 m; root 1.5 s",
+      "family_motif": "water-lash",
+      "blockable": "UNBLOCKABLE",
+      "warning_motif": "unblockable-unblockable-mark",
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mire",
+      "tier": "1",
+      "branch": "",
+      "name": "Puddle",
+      "shape_authority": "ground r 2.5 m; slow 30% for 4 s",
+      "family_motif": "water-mire",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mire",
+      "tier": "2",
+      "branch": "",
+      "name": "Fog Bank",
+      "shape_authority": "ground r 3 m for 5 s; blocks line of sight; breaks soft-lock",
+      "family_motif": "water-mire",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mire",
+      "tier": "3",
+      "branch": "",
+      "name": "Freeze Field",
+      "shape_authority": "ground r 3 m; root 1.0 s",
+      "family_motif": "water-mire",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mire",
+      "tier": "4",
+      "branch": "",
+      "name": "Glacier Tomb",
+      "shape_authority": "encase one target 2 s (immune and silenced)",
+      "family_motif": "water-mire",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mend",
+      "tier": "1",
+      "branch": "",
+      "name": "Cool Draught",
+      "shape_authority": "self heal",
+      "family_motif": "water-mend",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mend",
+      "tier": "2",
+      "branch": "",
+      "name": "Tide Ward",
+      "shape_authority": "self: absorb drain -50% for 4 s",
+      "family_motif": "water-mend",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mend",
+      "tier": "3",
+      "branch": "",
+      "name": "Spring",
+      "shape_authority": "self heal over time",
+      "family_motif": "water-mend",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mend",
+      "tier": "4",
+      "branch": "",
+      "name": "Font",
+      "shape_authority": "self: restore 60 mana",
+      "family_motif": "water-mend",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mirror",
+      "tier": "1",
+      "branch": "",
+      "name": "Sheen",
+      "shape_authority": "self 3 s: absorbed magic refunds +50% mana",
+      "family_motif": "water-mirror",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mirror",
+      "tier": "2",
+      "branch": "A",
+      "name": "Reflection",
+      "shape_authority": "passive while slotted: a perfect absorb reflects the projectile",
+      "family_motif": "water-mirror",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mirror",
+      "tier": "2",
+      "branch": "B",
+      "name": "Ripple",
+      "shape_authority": "passive while slotted: a perfect absorb releases a ring r 3 m",
+      "family_motif": "water-mirror",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mirror",
+      "tier": "3",
+      "branch": "",
+      "name": "Mirage",
+      "shape_authority": "decoy for 3 s draws soft-lock",
+      "family_motif": "water-mirror",
+      "blockable": "n/a",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    },
+    {
+      "line": "mirror",
+      "tier": "4",
+      "branch": "",
+      "name": "Return Tide",
+      "shape_authority": "release stored absorbed damage as a wave (max 80)",
+      "family_motif": "water-mirror",
+      "blockable": "absorbable",
+      "warning_motif": null,
+      "scope": "family look only; branches, fans, decoys, grabs and footprints require engine composition from CSV"
+    }
+  ],
+  "source_sha256": "ec50dfd7692df883f0a0d9adf975023ac47f23f4904bcea95706dcee0286d9ab",
+  "scale_sha256": "be3dec34686cec131f521f276bef1c0e108c4d54197ac4f0907926f2dcd921d9",
+  "owner_accepted": false,
+  "limitations": [
+    "Water family motifs are not 24 complete spell animations",
+    "Fire/Earth/Air generic only pending W8 catalogues",
+    "net 2.5m baseline telegraph is ambiguous; review assumes diameter, integration must resolve",
+    "net and ember solid footprint cues remain baseline-sized; outer dashed 4m cue is advisory only, never an enlarged hitbox"
+  ]
+}

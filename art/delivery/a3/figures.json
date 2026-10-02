@@ -1,0 +1,4138 @@
+{
+  "version": "a3-figures-v1",
+  "roster_sha256": "3171e0163ad3afa4e488a34e4c30ed6872b536105c1af407d61358ad657ddc5c",
+  "camera_sha256": "758ae8151c4869b1b03f7dc02b483d5e7b51ce96aa1d901378e3b8b5d8eef1b7",
+  "scale_sha256": "be3dec34686cec131f521f276bef1c0e108c4d54197ac4f0907926f2dcd921d9",
+  "frames": [
+    {
+      "entity": "cassia",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/cassia-idle.png",
+      "sha256": "fe6ccc3c6b54573b71103d4efe9e582239abc6b65194b7494b4fff9409fa0889",
+      "source_job": "01-tessera-figure-cassia-stance-a02",
+      "source_sha256": "1eb30355a155de2c44e60e7dee25234598f9533ded08cf393d41adb31b0c58a2",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        223,
+        52,
+        536,
+        678
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 626,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.30670926517571884,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          246.0,
+          32.0,
+          142.0
+        ],
+        "opaque_fraction": 0.2390625
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "absorb",
+      "file": "art/delivery/a3/frames/cassia-absorb.png",
+      "sha256": "0fc21921d5a7fca9f9a574509a38071eed03adab5613f4099cc31d9e1086fb2c",
+      "source_job": "01-tessera-figure-cassia-stance-a02",
+      "source_sha256": "1eb30355a155de2c44e60e7dee25234598f9533ded08cf393d41adb31b0c58a2",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        92,
+        55,
+        500,
+        674
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 619,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.31017770597738287,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          246.0,
+          32.0,
+          142.0
+        ],
+        "opaque_fraction": 0.26674913194444444
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/cassia-run-a.png",
+      "sha256": "71be4892f3f963887925611775362d8c609ba74b76f0ada99b09ce8534296ab0",
+      "source_job": "01-tessera-figure-cassia-run-a01",
+      "source_sha256": "491fbb49c9e1cccec5335ea801318dbb365f441b2f7cdceac3e8b3b5ff6dc524",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        112,
+        51,
+        609,
+        670
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 619,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.31017770597738287,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          36.0,
+          142.0
+        ],
+        "opaque_fraction": 0.21777777777777776
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/cassia-run-b.png",
+      "sha256": "7510d0cb9ed070893e1b741551728fbbf67b091c9340d713394bf37f235b860a",
+      "source_job": "01-tessera-figure-cassia-run-a01",
+      "source_sha256": "491fbb49c9e1cccec5335ea801318dbb365f441b2f7cdceac3e8b3b5ff6dc524",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        63,
+        51,
+        559,
+        670
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 619,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.31017770597738287,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          35.0,
+          142.0
+        ],
+        "opaque_fraction": 0.21777994791666666
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "cast-windup",
+      "file": "art/delivery/a3/frames/cassia-cast-windup.png",
+      "sha256": "cc991ef0295957e736355cd828b92a4152c29e9d28ed0e654c752805ca18883a",
+      "source_job": "01-tessera-figure-cassia-action-a01",
+      "source_sha256": "8595b9cd10e2b62bdde255744c6e5a84255c1a47e9d8d248663e4fe2c3a5818d",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        164,
+        72,
+        626,
+        668
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 582,
+      "body_span_basis": "approximate direct source measurement: crown to sole, excluding raised fist",
+      "scale_to_master": 0.32989690721649484,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          244.0,
+          47.0,
+          135.0
+        ],
+        "opaque_fraction": 0.22233940972222221
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "cast-release",
+      "file": "art/delivery/a3/frames/cassia-cast-release.png",
+      "sha256": "0c99d831028a0ea4574b1aa93833524f4225a0f6c23954da4c614f43f2ac2fe2",
+      "source_job": "01-tessera-figure-cassia-action-a01",
+      "source_sha256": "8595b9cd10e2b62bdde255744c6e5a84255c1a47e9d8d248663e4fe2c3a5818d",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        80,
+        63,
+        606,
+        668
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 605,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.31735537190082647,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          244.0,
+          47.0,
+          136.0
+        ],
+        "opaque_fraction": 0.22584418402777778
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/cassia-hit.png",
+      "sha256": "6aa926ffe73b190835a105f1c14831db3ee2af12593226d1657b65cf9af4e9d1",
+      "source_job": "01-tessera-figure-cassia-injury-a01",
+      "source_sha256": "15634b2174f8236b18a2b8dcd7007a5cc893bed56c683b0477a66c7c250954f3",
+      "source_crop": [
+        0,
+        0,
+        565,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        141,
+        55,
+        549,
+        675
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 620,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3096774193548387,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          56.0,
+          151.0
+        ],
+        "opaque_fraction": 0.2278613569321534
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "death",
+      "file": "art/delivery/a3/frames/cassia-death.png",
+      "sha256": "d53e29ee1f0b0caedcd03e7f58c241e9684f4a792aeea3dde31b1fe10e0a750d",
+      "source_job": "01-tessera-figure-cassia-injury-a01",
+      "source_sha256": "15634b2174f8236b18a2b8dcd7007a5cc893bed56c683b0477a66c7c250954f3",
+      "source_crop": [
+        565,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        11,
+        305,
+        689,
+        595
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 678,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.2831858407079646,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          56.0,
+          151.0
+        ],
+        "opaque_fraction": 0.16822649572649573
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/brennic-idle.png",
+      "sha256": "7a6e3a3f44a1d1f779171933692ce8f2a84b317eca3855abd09107113c562cf3",
+      "source_job": "01-tessera-figure-brennic-stance-a01",
+      "source_sha256": "a65fdd0bec93a26dc16bfc5707606bd54aadd3d47f5686aad65af760ff585f26",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        275,
+        48,
+        623,
+        672
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 624,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3076923076923077,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          36.0,
+          135.0
+        ],
+        "opaque_fraction": 0.22846788194444445
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": {
+        "job": "01-tessera-figure-brennic-stance-a01",
+        "crop": [
+          0,
+          0,
+          640,
+          720
+        ],
+        "note": "Left idle body is valid; only the absent right absorb gesture caused sheet rejection. Rust tunic, red hair and planted feet visible."
+      },
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/brennic-run-a.png",
+      "sha256": "3916493d7ad270584f374325f0520c0f7ad4365bda48d76164f8da71546dac48",
+      "source_job": "01-tessera-figure-brennic-run-a01",
+      "source_sha256": "87a39087b6c3a1f46f1fd7f272abcd51276affe69e8c5ec8191eca7f341165d7",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        85,
+        51,
+        620,
+        669
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 618,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3106796116504854,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          46.0,
+          127.0
+        ],
+        "opaque_fraction": 0.26162109375
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/brennic-run-b.png",
+      "sha256": "ddc50247dfd42881869770c824b942403c804bea3166488e2c010f3aa61b5f15",
+      "source_job": "01-tessera-figure-brennic-run-a01",
+      "source_sha256": "87a39087b6c3a1f46f1fd7f272abcd51276affe69e8c5ec8191eca7f341165d7",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        42,
+        51,
+        576,
+        669
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 618,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3106796116504854,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          46.0,
+          127.0
+        ],
+        "opaque_fraction": 0.2616840277777778
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "cast-windup",
+      "file": "art/delivery/a3/frames/brennic-cast-windup.png",
+      "sha256": "3a2d825400ec49ab85387ee72bfdf2f9a9d844f20d631930ce14769f40791092",
+      "source_job": "01-tessera-figure-brennic-action-a01",
+      "source_sha256": "cd8edeb19436363c8543411b8b76fc41cfc5b4cb8b49be8c734324782fae91b3",
+      "source_crop": [
+        0,
+        0,
+        670,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        162,
+        64,
+        653,
+        657
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 586,
+      "body_span_basis": "approximate direct source measurement: crown to sole, excluding fist",
+      "scale_to_master": 0.32764505119453924,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          239.0,
+          42.0,
+          130.0
+        ],
+        "opaque_fraction": 0.22838308457711443
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "cast-release",
+      "file": "art/delivery/a3/frames/brennic-cast-release.png",
+      "sha256": "865401695bb2668c103cfc3e7561a05e633bc3c8d626902b2eece83c62b36612",
+      "source_job": "01-tessera-figure-brennic-action-a01",
+      "source_sha256": "cd8edeb19436363c8543411b8b76fc41cfc5b4cb8b49be8c734324782fae91b3",
+      "source_crop": [
+        670,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        20,
+        70,
+        458,
+        657
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 587,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3270868824531516,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          239.0,
+          42.0,
+          130.0
+        ],
+        "opaque_fraction": 0.2417691256830601
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/brennic-hit.png",
+      "sha256": "855829bb37f707147c0e51c1eccc7535304fd0c9b8145c41443c285e0e3aa50a",
+      "source_job": "01-tessera-figure-brennic-injury-a01",
+      "source_sha256": "0ec10c3f04d82ef3c382abe97376e4bc4f226501d20efe6dde46e139bb523b7b",
+      "source_crop": [
+        0,
+        0,
+        350,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        93,
+        76,
+        326,
+        643
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 567,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3386243386243386,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          238.0,
+          17.0,
+          128.0
+        ],
+        "opaque_fraction": 0.3104126984126984
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": {
+        "job": "01-tessera-figure-brennic-injury-a01",
+        "crop": [
+          0,
+          0,
+          350,
+          720
+        ],
+        "note": "Explicit narrow crop contains only the first recoil body. Duplicated second recoil excluded. Pale tunic colour drift remains owner-review limitation."
+      },
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "death",
+      "file": "art/delivery/a3/frames/brennic-death.png",
+      "sha256": "f667937e45cacfa219ea434f3d45e1ff98ec89a9734b848744cf4d3e3102147f",
+      "source_job": "01-tessera-figure-brennic-injury-a01",
+      "source_sha256": "0ec10c3f04d82ef3c382abe97376e4bc4f226501d20efe6dde46e139bb523b7b",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        12,
+        228,
+        599,
+        516
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 587,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3270868824531516,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          238.0,
+          17.0,
+          128.0
+        ],
+        "opaque_fraction": 0.18303168402777778
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": {
+        "job": "01-tessera-figure-brennic-injury-a01",
+        "crop": [
+          640,
+          0,
+          1280,
+          720
+        ],
+        "note": "Right half contains exactly one fallen body. Extra left figures excluded. Pale tunic drift retained, not corrected by repainting."
+      },
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "brennic",
+      "state": "absorb",
+      "file": "art/delivery/a3/frames/brennic-absorb.png",
+      "sha256": "865401695bb2668c103cfc3e7561a05e633bc3c8d626902b2eece83c62b36612",
+      "source_job": "01-tessera-figure-brennic-action-a01",
+      "source_sha256": "cd8edeb19436363c8543411b8b76fc41cfc5b4cb8b49be8c734324782fae91b3",
+      "source_crop": [
+        670,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        20,
+        70,
+        458,
+        657
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 587,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3270868824531516,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          239.0,
+          42.0,
+          130.0
+        ],
+        "opaque_fraction": 0.2417691256830601
+      },
+      "provenance": "composited state: reused generated cast body + separate procedural arc",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "derivation": {
+        "entity": "brennic",
+        "state": "absorb",
+        "from_state": "cast-release",
+        "note": "Reused generated open-palm casting body with separate procedural 140-degree absorb arc. Not an independently generated two-palm absorb pose."
+      },
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/garran-idle.png",
+      "sha256": "9ee90f5a0de0f17c336ae9f0ae4474777322c5b96a97c29513c01512f24528ad",
+      "source_job": "01-tessera-figure-garran-stance-a01",
+      "source_sha256": "13cde923d937df1c6f622bf7b28e75a0727115d3d34b32a2998051d588a28049",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        265,
+        42,
+        598,
+        677
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 635,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.30236220472440944,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          54.0,
+          146.0
+        ],
+        "opaque_fraction": 0.226015625
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": {
+        "job": "01-tessera-figure-garran-stance-a01",
+        "crop": [
+          0,
+          0,
+          640,
+          720
+        ],
+        "note": "Left bearded idle body is valid; right failed raised-palms pose remains excluded."
+      },
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/garran-run-a.png",
+      "sha256": "99487e856db8ebd00c3d54aaf875f06dcb4c40b7df877c4e3cb7fdd8c140e85e",
+      "source_job": "01-tessera-figure-garran-run-a01",
+      "source_sha256": "12a7144d89798a259364236d1474cc56d5f1b5a38543b3708ea598d6376477d0",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        88,
+        62,
+        628,
+        659
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 597,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32160804020100503,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          238.0,
+          55.0,
+          147.0
+        ],
+        "opaque_fraction": 0.26063585069444445
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/garran-run-b.png",
+      "sha256": "22d9833a1bc69dadf7c5467f4a542cce8e49e6e7f516cfa38dcecf9b6bbdd842",
+      "source_job": "01-tessera-figure-garran-run-a01",
+      "source_sha256": "12a7144d89798a259364236d1474cc56d5f1b5a38543b3708ea598d6376477d0",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        40,
+        62,
+        580,
+        659
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 597,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32160804020100503,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          238.0,
+          55.0,
+          147.0
+        ],
+        "opaque_fraction": 0.26068576388888887
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "cast-windup",
+      "file": "art/delivery/a3/frames/garran-cast-windup.png",
+      "sha256": "117a03794af7d51f6f9c0712249c4b4fc2eb1cba080ae380f8c7b1c2d2d829ab",
+      "source_job": "01-tessera-figure-garran-action-a01",
+      "source_sha256": "2fc63b0153036dc93c01287b5885dba9ef58bedcb54ee6bf8f9b1715615cad29",
+      "source_crop": [
+        0,
+        0,
+        670,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        105,
+        57,
+        638,
+        668
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 590,
+      "body_span_basis": "approximate direct source measurement: crown to sole, excluding fist",
+      "scale_to_master": 0.3254237288135593,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          198.5,
+          59.0,
+          141.0
+        ],
+        "opaque_fraction": 0.29425580431177445
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "cast-release",
+      "file": "art/delivery/a3/frames/garran-cast-release.png",
+      "sha256": "de8ac17525fe7a5a7738f744666dd5d783d0da6d38011080ed73379cbf8eddd1",
+      "source_job": "01-tessera-figure-garran-action-a01",
+      "source_sha256": "2fc63b0153036dc93c01287b5885dba9ef58bedcb54ee6bf8f9b1715615cad29",
+      "source_crop": [
+        670,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        21,
+        54,
+        505,
+        667
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 613,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3132137030995106,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          196.0,
+          57.0,
+          139.0
+        ],
+        "opaque_fraction": 0.3176571038251366
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/garran-hit.png",
+      "sha256": "0b2fee805cedc6a4fe775816ecb9e3c552fa4dd8425af000f1bb929e7c7eb001",
+      "source_job": "01-tessera-figure-garran-injury-a01",
+      "source_sha256": "5a686405b7c9b917591540e2721261d11971f10a409cf1485e2e4f2f34ac5714",
+      "source_crop": [
+        0,
+        0,
+        568,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        106,
+        60,
+        552,
+        666
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 606,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.31683168316831684,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          237.0,
+          50.0,
+          137.0
+        ],
+        "opaque_fraction": 0.27287265258215965
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "death",
+      "file": "art/delivery/a3/frames/garran-death.png",
+      "sha256": "e362e5e4a9d17cf9c85bc504ab21aba9505032076be084229f4944afedeaf7bf",
+      "source_job": "01-tessera-figure-garran-injury-a01",
+      "source_sha256": "5a686405b7c9b917591540e2721261d11971f10a409cf1485e2e4f2f34ac5714",
+      "source_crop": [
+        568,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        16,
+        268,
+        678,
+        576
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 662,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.29003021148036257,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          237.0,
+          50.0,
+          137.0
+        ],
+        "opaque_fraction": 0.21125936329588016
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "absorb",
+      "file": "art/delivery/a3/frames/garran-absorb.png",
+      "sha256": "de8ac17525fe7a5a7738f744666dd5d783d0da6d38011080ed73379cbf8eddd1",
+      "source_job": "01-tessera-figure-garran-action-a01",
+      "source_sha256": "2fc63b0153036dc93c01287b5885dba9ef58bedcb54ee6bf8f9b1715615cad29",
+      "source_crop": [
+        670,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        21,
+        54,
+        505,
+        667
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 613,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3132137030995106,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          196.0,
+          57.0,
+          139.0
+        ],
+        "opaque_fraction": 0.3176571038251366
+      },
+      "provenance": "composited state: reused generated cast body + separate procedural arc",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "derivation": {
+        "entity": "garran",
+        "state": "absorb",
+        "from_state": "cast-release",
+        "note": "Reused generated low open-palm casting body with separate procedural 140-degree absorb arc. Weak blocking gesture; owner review and later replacement needed."
+      },
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/iskar-idle.png",
+      "sha256": "0b8f9e8f708aa9fcd2990a906aa0ac633c943ac94b963025483f848b6a9fe1c5",
+      "source_job": "01-tessera-figure-iskar-stance-a01",
+      "source_sha256": "b37c88d750444a948de731989768bcbfff15b875ef0c543591946b629062c065",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        207,
+        29,
+        589,
+        692
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 663,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.2895927601809955,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          28.0,
+          143.0
+        ],
+        "opaque_fraction": 0.26055989583333333
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": {
+        "job": "01-tessera-figure-iskar-stance-a01",
+        "crop": [
+          0,
+          0,
+          640,
+          720
+        ],
+        "note": "Left idle has moustache, knot and sage wrap; right low-palmed body is not exported as absorb."
+      },
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/iskar-run-a.png",
+      "sha256": "5c3d624c54526964faa08818a50e4c14cd38d12348eba29ad3f6b75b76aac8b6",
+      "source_job": "01-tessera-figure-iskar-run-a01",
+      "source_sha256": "001249122ea6581e33eefcf6a9c0aa76883a8bb8d7dfef43158782e4008397ce",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        120,
+        74,
+        640,
+        658
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 584,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3287671232876712,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          240.0,
+          45.0,
+          129.0
+        ],
+        "opaque_fraction": 0.24796875
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/iskar-run-b.png",
+      "sha256": "0652c132a144dc8988c0dba76f8aee9b59e714f76c5b3954a508c6b41c19ecbd",
+      "source_job": "01-tessera-figure-iskar-run-a01",
+      "source_sha256": "001249122ea6581e33eefcf6a9c0aa76883a8bb8d7dfef43158782e4008397ce",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        0,
+        74,
+        567,
+        658
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 584,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3287671232876712,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          240.0,
+          45.0,
+          129.0
+        ],
+        "opaque_fraction": 0.2490625
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "cast-windup",
+      "file": "art/delivery/a3/frames/iskar-cast-windup.png",
+      "sha256": "c054d35536ae0ad66927b1f14efc0e0c0b1cf28fffe98d5e24a6f7e0b2e73157",
+      "source_job": "01-tessera-figure-iskar-action-a01",
+      "source_sha256": "3d9fe34c860a6358e3cb1c4f3bfdde72cb08f110e2c7af20ff33755b743d5998",
+      "source_crop": [
+        0,
+        0,
+        695,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        148,
+        68,
+        677,
+        666
+      ],
+      "exclude_source_rects": [
+        [
+          640,
+          450,
+          695,
+          720
+        ]
+      ],
+      "body_span_source_px": 580,
+      "body_span_basis": "approximate direct source measurement: crown to sole, excluding raised fist",
+      "scale_to_master": 0.3310344827586207,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          185.0,
+          59.0,
+          140.0
+        ],
+        "opaque_fraction": 0.26417066346922463
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "cast-release",
+      "file": "art/delivery/a3/frames/iskar-cast-release.png",
+      "sha256": "262f360432018517b2dd23ade84b233f804698646465dd66bb7f27ce3d050e85",
+      "source_job": "01-tessera-figure-iskar-action-a01",
+      "source_sha256": "3d9fe34c860a6358e3cb1c4f3bfdde72cb08f110e2c7af20ff33755b743d5998",
+      "source_crop": [
+        655,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        13,
+        67,
+        591,
+        666
+      ],
+      "exclude_source_rects": [
+        [
+          655,
+          0,
+          715,
+          450
+        ]
+      ],
+      "body_span_source_px": 599,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32053422370617696,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          255,
+          0,
+          255
+        ],
+        "opaque_fraction": 0.27710666666666667
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/iskar-hit.png",
+      "sha256": "1001f7b47fee07a5b84cb2c6445aaf632372946626539d2854086b67d72966ec",
+      "source_job": "01-tessera-figure-iskar-injury-a01",
+      "source_sha256": "79ed390273effd605d1771efa01a2dcaf111ad25cf093945381ba5a253254a94",
+      "source_crop": [
+        0,
+        0,
+        540,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        196,
+        62,
+        528,
+        675
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 613,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3132137030995106,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          50.0,
+          133.0
+        ],
+        "opaque_fraction": 0.2607844650205761
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "death",
+      "file": "art/delivery/a3/frames/iskar-death.png",
+      "sha256": "f63d3cbcff860e174d17287a31eff661e53d55c9c61d63acc7ea67e9cb706c75",
+      "source_job": "01-tessera-figure-iskar-injury-a01",
+      "source_sha256": "79ed390273effd605d1771efa01a2dcaf111ad25cf093945381ba5a253254a94",
+      "source_crop": [
+        540,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        14,
+        241,
+        675,
+        536
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 661,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.29046898638426627,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          50.0,
+          133.0
+        ],
+        "opaque_fraction": 0.18620683183183184
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "absorb",
+      "file": "art/delivery/a3/frames/iskar-absorb.png",
+      "sha256": "262f360432018517b2dd23ade84b233f804698646465dd66bb7f27ce3d050e85",
+      "source_job": "01-tessera-figure-iskar-action-a01",
+      "source_sha256": "3d9fe34c860a6358e3cb1c4f3bfdde72cb08f110e2c7af20ff33755b743d5998",
+      "source_crop": [
+        655,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        13,
+        67,
+        591,
+        666
+      ],
+      "exclude_source_rects": [
+        [
+          655,
+          0,
+          715,
+          450
+        ]
+      ],
+      "body_span_source_px": 599,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32053422370617696,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192.0,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          255,
+          0,
+          255
+        ],
+        "opaque_fraction": 0.27710666666666667
+      },
+      "provenance": "composited state: reused generated cast body + separate procedural arc",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "derivation": {
+        "entity": "iskar",
+        "state": "absorb",
+        "from_state": "cast-release",
+        "note": "Reused generated forward open-palm casting body with separate procedural 140-degree absorb arc. Not an independently generated two-palm absorb pose."
+      },
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/conscript-idle.png",
+      "sha256": "cfb332f912e05d1ee75a8b3324b390e065ce0efbda463993b56cf326df1cbaca",
+      "source_job": "01-tessera-figure-conscript-stance-a01",
+      "source_sha256": "fc5d55b31a2d432b25b8bf99add80be23e5210d0865d556e67d4fb38b5a2f282",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        138,
+        55,
+        586,
+        666
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 592,
+      "body_span_basis": "approximate direct source measurement: helmet crown to sole, excluding spear point",
+      "scale_to_master": 0.32432432432432434,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          243.0,
+          31.0,
+          138.0
+        ],
+        "opaque_fraction": 0.29051649305555555
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "alert",
+      "file": "art/delivery/a3/frames/conscript-alert.png",
+      "sha256": "5ce6781550e97dbcbbe25a5ca724ed836d5ac0c8b2be0bce9258ae9984cc6f15",
+      "source_job": "01-tessera-figure-conscript-stance-a01",
+      "source_sha256": "fc5d55b31a2d432b25b8bf99add80be23e5210d0865d556e67d4fb38b5a2f282",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        51,
+        75,
+        536,
+        660
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 585,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3282051282051282,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          243.0,
+          30.0,
+          138.0
+        ],
+        "opaque_fraction": 0.2923263888888889
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/conscript-run-a.png",
+      "sha256": "e88c644f5466b0f57cc814ba6d73a7433736dfe3de073b5f455f24d68f1bb3d2",
+      "source_job": "01-tessera-figure-conscript-run-a01",
+      "source_sha256": "90f82b5ca63e7aa1a308084939928c77ada6748c906415df2e5891707c34b00d",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        104,
+        75,
+        620,
+        644
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 569,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3374340949033392,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          244.0,
+          18.0,
+          130.0
+        ],
+        "opaque_fraction": 0.27776258680555554
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/conscript-run-b.png",
+      "sha256": "55df8a63b158cbefe3ca43236b89a2bdc7e305556219d05faf69a1d33e84fd65",
+      "source_job": "01-tessera-figure-conscript-run-a01",
+      "source_sha256": "90f82b5ca63e7aa1a308084939928c77ada6748c906415df2e5891707c34b00d",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        44,
+        75,
+        561,
+        644
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 569,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3374340949033392,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          18.0,
+          130.0
+        ],
+        "opaque_fraction": 0.2775347222222222
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "attack-windup",
+      "file": "art/delivery/a3/frames/conscript-attack-windup.png",
+      "sha256": "68254b43824a996f55c8aafa1f3663ef3c2c84c71c23b5156dcaef724976ca2a",
+      "source_job": "01-tessera-figure-conscript-action-a01",
+      "source_sha256": "0726dfbd48baebe8bf810b2325031f6933d71e2f442e08fea5e8c4728b6d3a30",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        70,
+        74,
+        606,
+        660
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 586,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32764505119453924,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          248.0,
+          75.0,
+          164.0
+        ],
+        "opaque_fraction": 0.2547026909722222
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "attack-release",
+      "file": "art/delivery/a3/frames/conscript-attack-release.png",
+      "sha256": "52f9b3112135b86ae1e92aae595788306ba6290125e5925881dd74ba2c692b5b",
+      "source_job": "01-tessera-figure-conscript-action-a01",
+      "source_sha256": "0726dfbd48baebe8bf810b2325031f6933d71e2f442e08fea5e8c4728b6d3a30",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        29,
+        80,
+        592,
+        652
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 572,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3356643356643357,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          248.0,
+          75.0,
+          164.0
+        ],
+        "opaque_fraction": 0.2521462673611111
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/conscript-hit.png",
+      "sha256": "307f3307d403aef9f575fda89d953aec136dfbd81f31e234ee02298ec456fc11",
+      "source_job": "01-tessera-figure-conscript-injury-a01",
+      "source_sha256": "2887f810f71f847995823c4b23595a2514c9f154e305e9cf85d8fd66da739a28",
+      "source_crop": [
+        0,
+        0,
+        565,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        149,
+        82,
+        518,
+        637
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 555,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.34594594594594597,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          241.0,
+          36.0,
+          127.0
+        ],
+        "opaque_fraction": 0.220523598820059
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "death",
+      "file": "art/delivery/a3/frames/conscript-death.png",
+      "sha256": "407635f2f3f09d7b022ebd31eabd4510aa9e0b9043002f57c0703b0eb3713464",
+      "source_job": "01-tessera-figure-conscript-injury-a01",
+      "source_sha256": "2887f810f71f847995823c4b23595a2514c9f154e305e9cf85d8fd66da739a28",
+      "source_crop": [
+        565,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        41,
+        203,
+        618,
+        565
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 570,
+      "body_span_basis": "approximate direct source measurement: helmet to toe, excluding dropped spear",
+      "scale_to_master": 0.3368421052631579,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          36.0,
+          127.0
+        ],
+        "opaque_fraction": 0.18714646464646464
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/shieldman-idle.png",
+      "sha256": "a1b12797743f88cf2aaa935f873f79dfa798ea9791848d0fdbcd984a36af7741",
+      "source_job": "01-tessera-figure-shieldman-stance-a01",
+      "source_sha256": "1c49d628ff78268de4b7b10eec24b3140dad6a50112fce65114d246a35638964",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        204,
+        49,
+        564,
+        670
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 621,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.30917874396135264,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          248.0,
+          30.0,
+          131.0
+        ],
+        "opaque_fraction": 0.28024739583333336
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "alert",
+      "file": "art/delivery/a3/frames/shieldman-alert.png",
+      "sha256": "01b7c30038bda4cc3f554c19787d09a297f6600cc430429573aab91b521227d4",
+      "source_job": "01-tessera-figure-shieldman-stance-a01",
+      "source_sha256": "1c49d628ff78268de4b7b10eec24b3140dad6a50112fce65114d246a35638964",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        69,
+        88,
+        481,
+        650
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 562,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3416370106761566,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          248.0,
+          30.0,
+          131.0
+        ],
+        "opaque_fraction": 0.2899761284722222
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/shieldman-run-a.png",
+      "sha256": "93f1bbf5b4c4011ce2ebe86d13fb80932f9922494002f089115fb712cad7e763",
+      "source_job": "01-tessera-figure-shieldman-run-a01",
+      "source_sha256": "b068324208c479b1f7822947d5276f6fa0157640c7360a533ac153ae5735b1d7",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        140,
+        76,
+        584,
+        644
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 568,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3380281690140845,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          244.0,
+          15.0,
+          137.0
+        ],
+        "opaque_fraction": 0.2867838541666667
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/shieldman-run-b.png",
+      "sha256": "444d8a9f77b21ba4daedacdcff196addb69f0848086b2d494709fe3b77081159",
+      "source_job": "01-tessera-figure-shieldman-run-a01",
+      "source_sha256": "b068324208c479b1f7822947d5276f6fa0157640c7360a533ac153ae5735b1d7",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        82,
+        74,
+        528,
+        638
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 564,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3404255319148936,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          244.0,
+          15.0,
+          137.0
+        ],
+        "opaque_fraction": 0.2895746527777778
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "attack-windup",
+      "file": "art/delivery/a3/frames/shieldman-attack-windup.png",
+      "sha256": "cadf34af5754c6e73fd014d5a1d0157612652dc7aade24bd7ab25b28170d729e",
+      "source_job": "01-tessera-figure-shieldman-action-a01",
+      "source_sha256": "073d502f3ad2f48604880051add89f24b9f4b089ca14f2a57b7c953426ce117d",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        179,
+        70,
+        582,
+        656
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 586,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32764505119453924,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          244.0,
+          22.0,
+          125.0
+        ],
+        "opaque_fraction": 0.3104709201388889
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "attack-release",
+      "file": "art/delivery/a3/frames/shieldman-attack-release.png",
+      "sha256": "165caae583a89845c9e1547aaa39eb22d71067a09f6f6d39c197ec2e7c38c02e",
+      "source_job": "01-tessera-figure-shieldman-action-a01",
+      "source_sha256": "073d502f3ad2f48604880051add89f24b9f4b089ca14f2a57b7c953426ce117d",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        69,
+        65,
+        518,
+        656
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 591,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3248730964467005,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          244.0,
+          22.0,
+          125.0
+        ],
+        "opaque_fraction": 0.31303602430555555
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/shieldman-hit.png",
+      "sha256": "8ee06fdc58949bb696a2d57b02af0f3b38c17b6033a816935dcb1b957df9414f",
+      "source_job": "01-tessera-figure-shieldman-injury-a01",
+      "source_sha256": "1cb82c62ebb565ea1c0dbb15c240321660998e5f01ce54e8f6609aa6da9f7c13",
+      "source_crop": [
+        0,
+        0,
+        575,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        106,
+        88,
+        529,
+        632
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 544,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.35294117647058826,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          246.0,
+          46.0,
+          151.0
+        ],
+        "opaque_fraction": 0.2962125603864734
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "death",
+      "file": "art/delivery/a3/frames/shieldman-death.png",
+      "sha256": "53ca45b6435552954c795efe5dc2f970c46d820a3b3648986a7b36681b0149cb",
+      "source_job": "01-tessera-figure-shieldman-injury-a01",
+      "source_sha256": "1cb82c62ebb565ea1c0dbb15c240321660998e5f01ce54e8f6609aa6da9f7c13",
+      "source_crop": [
+        575,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        42,
+        257,
+        649,
+        610
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 607,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3163097199341021,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          46.0,
+          151.0
+        ],
+        "opaque_fraction": 0.23455279747832938
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/slinger-idle.png",
+      "sha256": "cc0c3838b31de5ceacda3f9037373ad417fcf12551262066c116a657bc37b1c8",
+      "source_job": "01-tessera-figure-slinger-stance-a01",
+      "source_sha256": "105997be505f82e4e665c0258b3b0a973b977b95811ad42b955b73028115ec50",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        243,
+        32,
+        572,
+        688
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 656,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.2926829268292683,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          38.0,
+          150.0
+        ],
+        "opaque_fraction": 0.23250217013888888
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "alert",
+      "file": "art/delivery/a3/frames/slinger-alert.png",
+      "sha256": "35c81aeeb233b2fc2ba1a81840fba2f76ace5c736243c6428e84d1ef747d1d74",
+      "source_job": "01-tessera-figure-slinger-stance-a01",
+      "source_sha256": "105997be505f82e4e665c0258b3b0a973b977b95811ad42b955b73028115ec50",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        96,
+        68,
+        433,
+        649
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 581,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3304647160068847,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          38.0,
+          150.0
+        ],
+        "opaque_fraction": 0.21980251736111112
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/slinger-run-a.png",
+      "sha256": "cb0e9b112a7f7edb35ce8448bdfd2bc5917651bd7e1c7b96329f2280b315e595",
+      "source_job": "01-tessera-figure-slinger-run-a01",
+      "source_sha256": "965a9229ee22b80c92cedb44f1dbfd6009a6d320f263e7330c5d780f0b091855",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        102,
+        62,
+        606,
+        658
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 596,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3221476510067114,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          241.0,
+          26.0,
+          143.0
+        ],
+        "opaque_fraction": 0.21702473958333332
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/slinger-run-b.png",
+      "sha256": "f7de5c37abfe16404ee5fd09dd38ca3122b267380c047962242b6e62a174bfd6",
+      "source_job": "01-tessera-figure-slinger-run-a01",
+      "source_sha256": "965a9229ee22b80c92cedb44f1dbfd6009a6d320f263e7330c5d780f0b091855",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        80,
+        62,
+        584,
+        658
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 596,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3221476510067114,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          241.0,
+          26.0,
+          143.0
+        ],
+        "opaque_fraction": 0.21686631944444446
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "attack-windup",
+      "file": "art/delivery/a3/frames/slinger-attack-windup.png",
+      "sha256": "230fe30a2c7658151cfcbab77c55bed66d18fe4dc0dbc486f67cddec5f8edfe3",
+      "source_job": "01-tessera-figure-slinger-action-a01",
+      "source_sha256": "8a3ddbdad7f1999a28f0a4e3bf59f14b185fd8a4b15712f09f01b21c6b99451c",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        172,
+        54,
+        590,
+        666
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 530,
+      "body_span_basis": "approximate direct source measurement: crown to sole, excluding overhead sling/arm",
+      "scale_to_master": 0.3622641509433962,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          240.0,
+          27.0,
+          131.0
+        ],
+        "opaque_fraction": 0.19342447916666666
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "attack-release",
+      "file": "art/delivery/a3/frames/slinger-attack-release.png",
+      "sha256": "903f57b2a0493390e6c4f8faf8e10a4c26ce2e46ee909e675f195b2d35849369",
+      "source_job": "01-tessera-figure-slinger-action-a01",
+      "source_sha256": "8a3ddbdad7f1999a28f0a4e3bf59f14b185fd8a4b15712f09f01b21c6b99451c",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        60,
+        62,
+        515,
+        664
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 550,
+      "body_span_basis": "approximate direct source measurement: crown to sole, excluding sling loop",
+      "scale_to_master": 0.3490909090909091,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          240.0,
+          26.0,
+          130.0
+        ],
+        "opaque_fraction": 0.1976953125
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/slinger-hit.png",
+      "sha256": "f59ac8b6ba1fc728c2c5750a89c3775f93ab8309ee8b4cede956a45ba5f9e992",
+      "source_job": "01-tessera-figure-slinger-injury-a01",
+      "source_sha256": "cff69f52dcf92e94a99707a3f017c5727f0122a93ba7af6fb83646919f67196c",
+      "source_crop": [
+        0,
+        0,
+        520,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        174,
+        55,
+        457,
+        666
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 611,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3142389525368249,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          55.0,
+          140.0
+        ],
+        "opaque_fraction": 0.2406517094017094
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "death",
+      "file": "art/delivery/a3/frames/slinger-death.png",
+      "sha256": "9a1a2c1568b6e73b6e8b36e16cbcaf282511af037b0fb42fa2abdeec14f4702d",
+      "source_job": "01-tessera-figure-slinger-injury-a01",
+      "source_sha256": "cff69f52dcf92e94a99707a3f017c5727f0122a93ba7af6fb83646919f67196c",
+      "source_crop": [
+        520,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        65,
+        312,
+        703,
+        566
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 638,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.30094043887147337,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          55.0,
+          140.0
+        ],
+        "opaque_fraction": 0.17145833333333332
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/netter-idle.png",
+      "sha256": "41f7b4933ccea981db1f203e5583c9c9b7c8e381f9e4b67d9961490f7db9a0b2",
+      "source_job": "01-tessera-figure-netter-stance-a01",
+      "source_sha256": "67f5f8e899ec077ac264124366b2a2db60a469c147794f6c47713b363047ecc6",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        252,
+        28,
+        578,
+        692
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 664,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.2891566265060241,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          48.0,
+          145.0
+        ],
+        "opaque_fraction": 0.2571744791666667
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "alert",
+      "file": "art/delivery/a3/frames/netter-alert.png",
+      "sha256": "8109a2144e30f8683b5a3e4a0d1e34eb1f138014f13ebef6d6240bff18bba8e8",
+      "source_job": "01-tessera-figure-netter-stance-a01",
+      "source_sha256": "67f5f8e899ec077ac264124366b2a2db60a469c147794f6c47713b363047ecc6",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        90,
+        80,
+        450,
+        671
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 591,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3248730964467005,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          48.0,
+          145.0
+        ],
+        "opaque_fraction": 0.24485243055555556
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/netter-run-a.png",
+      "sha256": "d111acc82782ee86a82d4bcb107a219ca7d27562bef01173482b39f7e524c5b2",
+      "source_job": "01-tessera-figure-netter-run-a01",
+      "source_sha256": "ec3495899e074a6486cc87f1dbcf8482d3380065ca31a075d8e8395665767730",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        105,
+        74,
+        616,
+        646
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 572,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3356643356643357,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          59.0,
+          143.0
+        ],
+        "opaque_fraction": 0.2740256076388889
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/netter-run-b.png",
+      "sha256": "b7e57d3b9787ff24c24faf1c009864644dbc5a14e799d64650050bfae59a73c1",
+      "source_job": "01-tessera-figure-netter-run-a01",
+      "source_sha256": "ec3495899e074a6486cc87f1dbcf8482d3380065ca31a075d8e8395665767730",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        58,
+        74,
+        569,
+        646
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 572,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.3356643356643357,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          59.0,
+          143.0
+        ],
+        "opaque_fraction": 0.27366102430555556
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "attack-windup",
+      "file": "art/delivery/a3/frames/netter-attack-windup.png",
+      "sha256": "dda0dbed6877a43dda60d44760cd9cc8085d32b44d88101455e8f1894f336bd7",
+      "source_job": "01-tessera-figure-netter-action-a01",
+      "source_sha256": "ee3adc5a69d33600c17ae3831cd703662dc45eaa577e893379082f924f40ae34",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        139,
+        60,
+        588,
+        657
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 570,
+      "body_span_basis": "approximate direct source measurement: crown to sole, excluding raised cord hand",
+      "scale_to_master": 0.3368421052631579,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          255,
+          0,
+          255
+        ],
+        "opaque_fraction": 0.2604839409722222
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "attack-release",
+      "file": "art/delivery/a3/frames/netter-attack-release.png",
+      "sha256": "809abb4f2e3b9de077e7e70d010408acedcddb86fed81f3f97f042c622183172",
+      "source_job": "01-tessera-figure-netter-action-a01",
+      "source_sha256": "ee3adc5a69d33600c17ae3831cd703662dc45eaa577e893379082f924f40ae34",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        10,
+        64,
+        596,
+        657
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 593,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32377740303541314,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          241.0,
+          55.0,
+          136.0
+        ],
+        "opaque_fraction": 0.3103103298611111
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "hit",
+      "file": "art/delivery/a3/frames/netter-hit.png",
+      "sha256": "c0512c45454e3a3fceff1b8943645d959a43fe0048d0132656823209b674560e",
+      "source_job": "01-tessera-figure-netter-injury-a01",
+      "source_sha256": "ffa0d45e70b64dd055666ca846009d6d247734e3d2890269aeaacb8ffaf32c87",
+      "source_crop": [
+        0,
+        0,
+        560,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        146,
+        66,
+        517,
+        655
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 589,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.32597623089983024,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          50.0,
+          136.0
+        ],
+        "opaque_fraction": 0.26071428571428573
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "netter",
+      "state": "death",
+      "file": "art/delivery/a3/frames/netter-death.png",
+      "sha256": "fe857e9ca603f474fc53a0d6231cdedffd0b1bdcc1ad17e6c74210bbeb350577",
+      "source_job": "01-tessera-figure-netter-injury-a01",
+      "source_sha256": "ffa0d45e70b64dd055666ca846009d6d247734e3d2890269aeaacb8ffaf32c87",
+      "source_crop": [
+        560,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        42,
+        204,
+        661,
+        567
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 619,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.31017770597738287,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 192,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          242.0,
+          50.0,
+          136.0
+        ],
+        "opaque_fraction": 0.20394483024691357
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "idle",
+      "file": "art/delivery/a3/frames/cinder_hound-idle.png",
+      "sha256": "78d62a3055b60a7c429c491d76edac4dbb104989fd914e5ebe51ae972077d032",
+      "source_job": "01-tessera-figure-cinder_hound-stance-a01",
+      "source_sha256": "14d533ea5351f419e37cebbb6269ba0ab7e87f8cef9b09383c7bbdfa94b6a72a",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        118,
+        98,
+        618,
+        629
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 531,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.22418079096045196,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 119.03999999999999,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          31.0,
+          142.0
+        ],
+        "opaque_fraction": 0.24674696180555555
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "alert",
+      "file": "art/delivery/a3/frames/cinder_hound-alert.png",
+      "sha256": "df681eb4380deb149474204cbf32a798e524c3e0906a96f36dad9a3e54440d07",
+      "source_job": "01-tessera-figure-cinder_hound-stance-a01",
+      "source_sha256": "14d533ea5351f419e37cebbb6269ba0ab7e87f8cef9b09383c7bbdfa94b6a72a",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        48,
+        145,
+        567,
+        635
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 519,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.22936416184971098,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 119.03999999999999,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          247.0,
+          31.0,
+          142.0
+        ],
+        "opaque_fraction": 0.23518663194444445
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "run-a",
+      "file": "art/delivery/a3/frames/cinder_hound-run-a.png",
+      "sha256": "4ed84529a8af95c4cb7a05681aeaab236d889c19a54aa101a0f1a12131cd824f",
+      "source_job": "01-tessera-figure-cinder_hound-run-a01",
+      "source_sha256": "7b72359ac4ef9cd7e7949b131931ec95d1735e3366c146726d59f9f80861a08a",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        96,
+        126,
+        639,
+        601
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 543,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.21922651933701656,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 119.03999999999999,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          56.0,
+          150.0
+        ],
+        "opaque_fraction": 0.22825086805555556
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "run-b",
+      "file": "art/delivery/a3/frames/cinder_hound-run-b.png",
+      "sha256": "92698e79b8d25e07d285ce4b6bcf57972a3ce30c4f0bca42e50a9d0096161a1c",
+      "source_job": "01-tessera-figure-cinder_hound-run-a01",
+      "source_sha256": "7b72359ac4ef9cd7e7949b131931ec95d1735e3366c146726d59f9f80861a08a",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        73,
+        126,
+        578,
+        601
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 505,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.2357227722772277,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 119.03999999999999,
+      "horizontal_flip": true,
+      "flip_limit": "handedness and asymmetric costume also flip; not a new generated direction",
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          56.0,
+          150.0
+        ],
+        "opaque_fraction": 0.22495008680555556
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        1536,
+        0,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "attack-windup",
+      "file": "art/delivery/a3/frames/cinder_hound-attack-windup.png",
+      "sha256": "2c55f82701c2927fb3a6258458b991b3666b1ec4ed26f6ccdebeedc9e07071dc",
+      "source_job": "01-tessera-figure-cinder_hound-action-a01",
+      "source_sha256": "06ea5ef6252309306f47b7b7a58064eeffadebfccc090c603c41ffddea2e63fd",
+      "source_crop": [
+        0,
+        0,
+        640,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        94,
+        114,
+        612,
+        592
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 518,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.2298069498069498,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 119.03999999999999,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          47.0,
+          144.0
+        ],
+        "opaque_fraction": 0.22369140625
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        0,
+        384,
+        512,
+        384
+      ]
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "attack-release",
+      "file": "art/delivery/a3/frames/cinder_hound-attack-release.png",
+      "sha256": "249e5251406ab55402fcb61a75c062c8dd313cef6d3267ceae3cde8603766166",
+      "source_job": "01-tessera-figure-cinder_hound-action-a01",
+      "source_sha256": "06ea5ef6252309306f47b7b7a58064eeffadebfccc090c603c41ffddea2e63fd",
+      "source_crop": [
+        640,
+        0,
+        1280,
+        720
+      ],
+      "alpha_bounds_in_crop": [
+        30,
+        139,
+        580,
+        621
+      ],
+      "exclude_source_rects": [],
+      "body_span_source_px": 550,
+      "body_span_basis": "alpha bounds; no separate anatomical calibration",
+      "scale_to_master": 0.21643636363636362,
+      "cell": [
+        512,
+        384
+      ],
+      "anchor": [
+        256,
+        320
+      ],
+      "master_body_px": 119.03999999999999,
+      "horizontal_flip": false,
+      "flip_limit": null,
+      "matte": {
+        "method": "magenta chroma threshold 20..55; measured-matte edge decontamination",
+        "background_rgb": [
+          245.0,
+          47.0,
+          144.0
+        ],
+        "opaque_fraction": 0.21651475694444444
+      },
+      "provenance": "generated key pose; deterministic matte/crop/uniform scale; no painted in-betweens",
+      "salvage_from_rejected_sheet": null,
+      "facing": "southeast target; original head/body variation retained; horizontal flips explicit",
+      "owner_accepted": false,
+      "atlas_rect": [
+        512,
+        384,
+        512,
+        384
+      ]
+    }
+  ],
+  "atlases": [
+    {
+      "entity": "cassia",
+      "file": "art/delivery/a3/atlases/cassia.png",
+      "sha256": "a82597fc7d16991720872716158cf5b7aab517c7674f9a79339baf874f120788",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": [
+          "cast-windup",
+          "cast-release"
+        ],
+        "attack": null,
+        "absorb": [
+          "absorb"
+        ],
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings and generated in-betweens"
+    },
+    {
+      "entity": "brennic",
+      "file": "art/delivery/a3/atlases/brennic.png",
+      "sha256": "a5f0cfa50fe2c2edd6fde1255731fa83b0a4cd8b6faddad1617100bc4771a8d7",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": [
+          "cast-windup",
+          "cast-release"
+        ],
+        "attack": null,
+        "absorb": [
+          "absorb"
+        ],
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings and generated in-betweens"
+    },
+    {
+      "entity": "garran",
+      "file": "art/delivery/a3/atlases/garran.png",
+      "sha256": "a90bbf9ece6b441181f437d56eb5daa6c73de8ed1780b5a5151d63cd93c2855b",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": [
+          "cast-windup",
+          "cast-release"
+        ],
+        "attack": null,
+        "absorb": [
+          "absorb"
+        ],
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings and generated in-betweens"
+    },
+    {
+      "entity": "iskar",
+      "file": "art/delivery/a3/atlases/iskar.png",
+      "sha256": "e84b2e6d9e6f8f59d5a1be1678328b1df89eb49197cafa99b0cb452db2f9b563",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": [
+          "cast-windup",
+          "cast-release"
+        ],
+        "attack": null,
+        "absorb": [
+          "absorb"
+        ],
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings and generated in-betweens"
+    },
+    {
+      "entity": "conscript",
+      "file": "art/delivery/a3/atlases/conscript.png",
+      "sha256": "90f6e3316903b7d26366552b517a674de30ef43dbee4b2a607f421180cbba62b",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": null,
+        "attack": [
+          "attack-windup",
+          "attack-release"
+        ],
+        "absorb": null,
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings, generated in-betweens; enemy cast/absorb not in baseline"
+    },
+    {
+      "entity": "shieldman",
+      "file": "art/delivery/a3/atlases/shieldman.png",
+      "sha256": "9fdf4ece26a015cbddb810cfc8708d862bff22f3b916c2f7639e39019e4ecdb7",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": null,
+        "attack": [
+          "attack-windup",
+          "attack-release"
+        ],
+        "absorb": null,
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings, generated in-betweens; enemy cast/absorb not in baseline"
+    },
+    {
+      "entity": "slinger",
+      "file": "art/delivery/a3/atlases/slinger.png",
+      "sha256": "ad9b3a231b0e7723c5f0a3674d68f14a5f4de359dd54d37a29bff30fe2cb9e8d",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": null,
+        "attack": [
+          "attack-windup",
+          "attack-release"
+        ],
+        "absorb": null,
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings, generated in-betweens; enemy cast/absorb not in baseline"
+    },
+    {
+      "entity": "netter",
+      "file": "art/delivery/a3/atlases/netter.png",
+      "sha256": "01afd0a9039bc09e821a0357a1661c86c2f1f58b4c045026f7b546a60eda4eed",
+      "frames": 8,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": null,
+        "attack": [
+          "attack-windup",
+          "attack-release"
+        ],
+        "absorb": null,
+        "hit": [
+          "hit"
+        ],
+        "death": [
+          "death"
+        ]
+      },
+      "unsupported": "other facings, generated in-betweens; enemy cast/absorb not in baseline"
+    },
+    {
+      "entity": "cinder_hound",
+      "file": "art/delivery/a3/atlases/cinder_hound.png",
+      "sha256": "f701d078d232dfe1475c119b0be93f2ba66e57f49144f6f6ac383c123e1cd149",
+      "frames": 6,
+      "state_map": {
+        "idle": [
+          "idle"
+        ],
+        "run": [
+          "run-a",
+          "run-b"
+        ],
+        "cast": null,
+        "attack": [
+          "attack-windup",
+          "attack-release"
+        ],
+        "absorb": null,
+        "hit": null,
+        "death": null
+      },
+      "unsupported": "other facings, generated in-betweens; enemy cast/absorb not in baseline"
+    }
+  ],
+  "owner_accepted": false,
+  "not_measured": [
+    "motion readability",
+    "owner feel",
+    "engine integration",
+    "precise generated elevation",
+    "cross-sheet identity stability"
+  ]
+}

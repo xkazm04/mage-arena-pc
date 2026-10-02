@@ -6,16 +6,16 @@ The owner chose Tessera & Lime on 2026-10-02; see
 [OWNER-CHOICE.md](../art/OWNER-CHOICE.md). The [A1 board](../art/review/index.html)
 is historical. Its large arena figures are superseded by the distant camera brief.
 
-## A1b - camera confirmation pending
+## A1b - camera confirmed by owner
 
 Open the [camera board](../art/review/a1b/index.html) or
 [contact sheet](../art/review/a1b/contact-sheet.jpg). Inspect full-size sources,
 observed character heights, spacing, warnings and the stated absorb defects.
 The [scale contract](../art/SCALE-CONTRACT.md) is an authored proposal.
 
-The recommendation is input for owner judgment only. No agent or local grader
-can approve the camera. Owner confirmation belongs in `art/CAMERA-OK.md`;
-A3 figures, poses and spell effects stay blocked until it exists.
+The owner chose open-oval-sparse-near-a01, near distance and an oblique angle
+around 55 degrees, explicitly not straight top-down. Confirmation is recorded
+in `art/CAMERA-OK.md`; it unlocked A3. The earlier plinth recommendation was not chosen.
 Static images do not establish motion readability, timing, aim feel or performance.
 
 
@@ -49,3 +49,25 @@ Readability in motion remains an engine/owner check, not a static-art result.
 Fire reference spell names retain their reference status; W8's missing Fire line
 migration and Earth/Air line catalogues are explicitly deferred. Native symbols
 are candidates for integration review, not automatically accepted production art.
+
+## A3 - partial handoff; spending latch intact
+
+Open the [owner board](../art/review/a3/owner.html),
+[pose contact](../art/review/a3/key-pose-contact.png), and native
+[1080p](../art/delivery/a3/proofs/open-oval-1920x1080.png) /
+[1440p](../art/delivery/a3/proofs/open-oval-2560x1440.png) composites at 100%.
+All generated attempts, including five semantic rejects, remain in the
+[source archive](../art/review/a3/index.html).
+
+Review Cassia's pale clothing at 4%, four-school separation at 6%, head/costume
+drift across states, single-key procedural run previews, and reused casting
+bodies for Brennic/Garran/Iskar absorb. The local pose-contact diagnostic rejects
+its framing field despite positive layout prose; this remains unresolved and is
+not overridden by the executing agent. Engine motion and owner feel are not measured.
+
+Missing: all Mire maw, Thornback and Hush moth sheets; cinder-hound hit/death;
+planned corrections for three dedicated mage absorb poses, four gait pairs and
+Brennic's injury sheet. Some individually reviewed crops from rejected sheets
+are salvaged with explicit bounds; the sheets stay rejected. The generator
+returned HTTP 400 content-moderated/no file. No retry, provider switch or latch
+reset followed. No new generation is authorized by remaining allowance alone.

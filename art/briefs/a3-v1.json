@@ -1,0 +1,491 @@
+{
+  "version": "a3-v1",
+  "wave": "A3",
+  "description": "Oblique 55-degree paired key poses. Text-conditioned originals; extracted alpha and procedural effects are separately disclosed. Owner review only.",
+  "proof_item": "figure-cassia-stance",
+  "common": "Use case: stylized-concept. Asset: TWO key-pose sprites of the SAME original character side by side in one horizontal sheet. Camera is an elevated OBLIQUE game view, 55 degrees above ground, looking down at upright bodies: visible top of head and shoulders AND face, shortened legs. Never a straight-down 90-degree plan view, never eye-level front portrait. Both subjects face diagonally toward the viewer and screen RIGHT (southeast). Exactly two separate full bodies, LEFT body centred at 25% width and RIGHT body at 75% width, standing at the same scale, approximately 65% of image height, with generous clear margins on every side. The image will be cropped into equal left and right halves. Each body and every prop must fit entirely inside its own half. Pure flat solid vivid MAGENTA #ff00ff background ONLY, with no paper texture, ground, shadow, horizon, border or divider. Magenta is a removable technical matte, never part of the design. Apply Tessera & Lime paint ONLY inside the character: flat chalk-lime, umber contours, terracotta, mineral blue or ochre planes, sparse chipped pigment at cloth edges. Strong simple silhouette and dark umber boundary for readability when body is 43 to 65 pixels high; broad costume colour blocks, no minute ornament. No text, labels, numerals, logo, watermark, realistic 3D shading, scenery, magic halo, arc or projectiles. No duplicated limbs. No other figures. Original designs only.",
+  "camera_sha256": "758ae8151c4869b1b03f7dc02b483d5e7b51ce96aa1d901378e3b8b5d8eef1b7",
+  "scale_sha256": "be3dec34686cec131f521f276bef1c0e108c4d54197ac4f0907926f2dcd921d9",
+  "items": [
+    {
+      "id": "figure-cassia-stance",
+      "entity": "cassia",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "absorb"
+      ],
+      "prompt": "IDENTITY: Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: relaxed upright idle, hands apart at waist, feet planted. RIGHT: active directional absorb stance, knees flexed, both open palms held forward at chest height, elbows clearly separated from torso. No drawn magic shield or arc."
+    },
+    {
+      "id": "figure-cassia-run",
+      "entity": "cassia",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-cassia-action",
+      "entity": "cassia",
+      "pair": "action",
+      "frames": [
+        "cast-windup",
+        "cast-release"
+      ],
+      "prompt": "IDENTITY: Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: cast anticipation, knees bent, right hand drawn back to shoulder, left hand aimed ahead. RIGHT: cast release, right open palm thrust forward to screen right, torso follows through, left hand withdrawn. No generated spell effects."
+    },
+    {
+      "id": "figure-cassia-injury",
+      "entity": "cassia",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-brennic-stance",
+      "entity": "brennic",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "absorb"
+      ],
+      "prompt": "IDENTITY: Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: relaxed upright idle, hands apart at waist, feet planted. RIGHT: active directional absorb stance, knees flexed, both open palms held forward at chest height, elbows clearly separated from torso. No drawn magic shield or arc."
+    },
+    {
+      "id": "figure-brennic-run",
+      "entity": "brennic",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-brennic-action",
+      "entity": "brennic",
+      "pair": "action",
+      "frames": [
+        "cast-windup",
+        "cast-release"
+      ],
+      "prompt": "IDENTITY: Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: cast anticipation, knees bent, right hand drawn back to shoulder, left hand aimed ahead. RIGHT: cast release, right open palm thrust forward to screen right, torso follows through, left hand withdrawn. No generated spell effects."
+    },
+    {
+      "id": "figure-brennic-injury",
+      "entity": "brennic",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-garran-stance",
+      "entity": "garran",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "absorb"
+      ],
+      "prompt": "IDENTITY: Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: relaxed upright idle, hands apart at waist, feet planted. RIGHT: active directional absorb stance, knees flexed, both open palms held forward at chest height, elbows clearly separated from torso. No drawn magic shield or arc."
+    },
+    {
+      "id": "figure-garran-run",
+      "entity": "garran",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-garran-action",
+      "entity": "garran",
+      "pair": "action",
+      "frames": [
+        "cast-windup",
+        "cast-release"
+      ],
+      "prompt": "IDENTITY: Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: cast anticipation, knees bent, right hand drawn back to shoulder, left hand aimed ahead. RIGHT: cast release, right open palm thrust forward to screen right, torso follows through, left hand withdrawn. No generated spell effects."
+    },
+    {
+      "id": "figure-garran-injury",
+      "entity": "garran",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-iskar-stance",
+      "entity": "iskar",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "absorb"
+      ],
+      "prompt": "IDENTITY: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: relaxed upright idle, hands apart at waist, feet planted. RIGHT: active directional absorb stance, knees flexed, both open palms held forward at chest height, elbows clearly separated from torso. No drawn magic shield or arc."
+    },
+    {
+      "id": "figure-iskar-run",
+      "entity": "iskar",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-iskar-action",
+      "entity": "iskar",
+      "pair": "action",
+      "frames": [
+        "cast-windup",
+        "cast-release"
+      ],
+      "prompt": "IDENTITY: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: cast anticipation, knees bent, right hand drawn back to shoulder, left hand aimed ahead. RIGHT: cast release, right open palm thrust forward to screen right, torso follows through, left hand withdrawn. No generated spell effects."
+    },
+    {
+      "id": "figure-iskar-injury",
+      "entity": "iskar",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-conscript-stance",
+      "entity": "conscript",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Adult Roman conscript, compact iron cap without crest, russet short tunic, small round bronze shield on left arm, a single long ash spear in right hand, bare calves and brown sandals. Strong narrow spear silhouette. No prisoner collar.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-conscript-run",
+      "entity": "conscript",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Adult Roman conscript, compact iron cap without crest, russet short tunic, small round bronze shield on left arm, a single long ash spear in right hand, bare calves and brown sandals. Strong narrow spear silhouette. No prisoner collar.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-conscript-action",
+      "entity": "conscript",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Adult Roman conscript, compact iron cap without crest, russet short tunic, small round bronze shield on left arm, a single long ash spear in right hand, bare calves and brown sandals. Strong narrow spear silhouette. No prisoner collar.\nPOSES: LEFT: spear lunge anticipation, spear drawn back. RIGHT: spear lunge release, spear extended low toward screen right; shield stays on left arm."
+    },
+    {
+      "id": "figure-conscript-injury",
+      "entity": "conscript",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Adult Roman conscript, compact iron cap without crest, russet short tunic, small round bronze shield on left arm, a single long ash spear in right hand, bare calves and brown sandals. Strong narrow spear silhouette. No prisoner collar.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-shieldman-stance",
+      "entity": "shieldman",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Stocky adult Roman scutum bearer, plain low iron helmet without crest, dark ochre short tunic, broad rectangular oxblood-red scutum shield with one plain bronze central boss, short sword, bare calves and brown sandals. Shield dominates silhouette. No lettering or borrowed insignia.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-shieldman-run",
+      "entity": "shieldman",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Stocky adult Roman scutum bearer, plain low iron helmet without crest, dark ochre short tunic, broad rectangular oxblood-red scutum shield with one plain bronze central boss, short sword, bare calves and brown sandals. Shield dominates silhouette. No lettering or borrowed insignia.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-shieldman-action",
+      "entity": "shieldman",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Stocky adult Roman scutum bearer, plain low iron helmet without crest, dark ochre short tunic, broad rectangular oxblood-red scutum shield with one plain bronze central boss, short sword, bare calves and brown sandals. Shield dominates silhouette. No lettering or borrowed insignia.\nPOSES: LEFT: shield bash anticipation, rectangular shield drawn close. RIGHT: bash release, broad shield thrust forward to screen right, feet planted."
+    },
+    {
+      "id": "figure-shieldman-injury",
+      "entity": "shieldman",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Stocky adult Roman scutum bearer, plain low iron helmet without crest, dark ochre short tunic, broad rectangular oxblood-red scutum shield with one plain bronze central boss, short sword, bare calves and brown sandals. Shield dominates silhouette. No lettering or borrowed insignia.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-slinger-stance",
+      "entity": "slinger",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Lean adult Roman funditor with olive skin, curly cropped dark hair, no helmet, short faded ochre tunic with diagonal dark belt and small hip pouch, brown sandals. One simple cord sling with stone cradle, no bow, no spear, no shield.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-slinger-run",
+      "entity": "slinger",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Lean adult Roman funditor with olive skin, curly cropped dark hair, no helmet, short faded ochre tunic with diagonal dark belt and small hip pouch, brown sandals. One simple cord sling with stone cradle, no bow, no spear, no shield.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-slinger-action",
+      "entity": "slinger",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Lean adult Roman funditor with olive skin, curly cropped dark hair, no helmet, short faded ochre tunic with diagonal dark belt and small hip pouch, brown sandals. One simple cord sling with stone cradle, no bow, no spear, no shield.\nPOSES: LEFT: sling windup with cord extended beside head. RIGHT: sling release follow-through with right arm extended, empty sling trailing; no projectile."
+    },
+    {
+      "id": "figure-slinger-injury",
+      "entity": "slinger",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Lean adult Roman funditor with olive skin, curly cropped dark hair, no helmet, short faded ochre tunic with diagonal dark belt and small hip pouch, brown sandals. One simple cord sling with stone cradle, no bow, no spear, no shield.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-netter-stance",
+      "entity": "netter",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Adult arena net thrower with deep brown skin, short black hair, short desaturated brick linen tunic, bare arms and calves, brown sandals. One loosely folded ochre cord fishing net with broad coarse diamond mesh over left forearm, right hand grips its cord; no trident, no armour.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-netter-run",
+      "entity": "netter",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Adult arena net thrower with deep brown skin, short black hair, short desaturated brick linen tunic, bare arms and calves, brown sandals. One loosely folded ochre cord fishing net with broad coarse diamond mesh over left forearm, right hand grips its cord; no trident, no armour.\nPOSES: LEFT: running with left leg forward and right leg back, opposite arms counter-swing. RIGHT: running with right leg forward and left leg back, opposite arms counter-swing. Torso leans forward, feet clearly separated; identical scale and camera."
+    },
+    {
+      "id": "figure-netter-action",
+      "entity": "netter",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Adult arena net thrower with deep brown skin, short black hair, short desaturated brick linen tunic, bare arms and calves, brown sandals. One loosely folded ochre cord fishing net with broad coarse diamond mesh over left forearm, right hand grips its cord; no trident, no armour.\nPOSES: LEFT: net throw windup with bundled net drawn beside body. RIGHT: release with net fanning ahead but still inside the right half, broad diamond mesh readable."
+    },
+    {
+      "id": "figure-netter-injury",
+      "entity": "netter",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Adult arena net thrower with deep brown skin, short black hair, short desaturated brick linen tunic, bare arms and calves, brown sandals. One loosely folded ochre cord fishing net with broad coarse diamond mesh over left forearm, right hand grips its cord; no trident, no armour.\nPOSES: LEFT: hit reaction recoiling, torso tilted back, arms close, feet retain ground contact. RIGHT: fallen defeated body lying sideways on ground, head at left and feet at right, relaxed limbs and closed eyes, SAME body length as upright body height. Non-gory, no blood, no disappearance."
+    },
+    {
+      "id": "figure-cinder_hound-stance",
+      "entity": "cinder_hound",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Original compact lean dog-like quadruped, charcoal-umber angular body, blunt canine snout, two pointed ears, four sturdy legs, short upward curling tail. Small flat terracotta ember cracks at shoulder and flank, no flames, no glow cloud, no armour. Dog anatomy, not a dragon.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-cinder_hound-run",
+      "entity": "cinder_hound",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Original compact lean dog-like quadruped, charcoal-umber angular body, blunt canine snout, two pointed ears, four sturdy legs, short upward curling tail. Small flat terracotta ember cracks at shoulder and flank, no flames, no glow cloud, no armour. Dog anatomy, not a dragon.\nPOSES: LEFT: moving forward with forelegs extended and rear legs tucked. RIGHT: moving with forelegs tucked and rear legs extended. Keep the same four-legged anatomy and body scale."
+    },
+    {
+      "id": "figure-cinder_hound-action",
+      "entity": "cinder_hound",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Original compact lean dog-like quadruped, charcoal-umber angular body, blunt canine snout, two pointed ears, four sturdy legs, short upward curling tail. Small flat terracotta ember cracks at shoulder and flank, no flames, no glow cloud, no armour. Dog anatomy, not a dragon.\nPOSES: LEFT: bite anticipation crouched low. RIGHT: short lunging bite with mouth open, four canine limbs only; no flame effect."
+    },
+    {
+      "id": "figure-cinder_hound-injury",
+      "entity": "cinder_hound",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Original compact lean dog-like quadruped, charcoal-umber angular body, blunt canine snout, two pointed ears, four sturdy legs, short upward curling tail. Small flat terracotta ember cracks at shoulder and flank, no flames, no glow cloud, no armour. Dog anatomy, not a dragon.\nPOSES: LEFT: hit reaction recoiling with body hunched and legs tucked. RIGHT: fallen body lying on its side, limbs relaxed, same body length, no blood, no gore, no particle effects."
+    },
+    {
+      "id": "figure-mire_maw-stance",
+      "entity": "mire_maw",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Original broad squat amphibious quadruped, dull olive-ochre leathery body, very broad horizontal dark mouth, two small mineral-blue eyes atop head, four short splayed limbs and no tail. Sparse dark mud plates on back. Bulky low wedge silhouette; no horns or copied monster.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-mire_maw-run",
+      "entity": "mire_maw",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Original broad squat amphibious quadruped, dull olive-ochre leathery body, very broad horizontal dark mouth, two small mineral-blue eyes atop head, four short splayed limbs and no tail. Sparse dark mud plates on back. Bulky low wedge silhouette; no horns or copied monster.\nPOSES: LEFT: moving forward with forelegs extended and rear legs tucked. RIGHT: moving with forelegs tucked and rear legs extended. Keep the same four-legged anatomy and body scale."
+    },
+    {
+      "id": "figure-mire_maw-action",
+      "entity": "mire_maw",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Original broad squat amphibious quadruped, dull olive-ochre leathery body, very broad horizontal dark mouth, two small mineral-blue eyes atop head, four short splayed limbs and no tail. Sparse dark mud plates on back. Bulky low wedge silhouette; no horns or copied monster.\nPOSES: LEFT: bog glob anticipation with mouth swollen shut. RIGHT: bog glob release with very broad mouth open, head raised; no projectile. Tongue attack reuses this open-mouth pose with a separate procedural line."
+    },
+    {
+      "id": "figure-mire_maw-injury",
+      "entity": "mire_maw",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Original broad squat amphibious quadruped, dull olive-ochre leathery body, very broad horizontal dark mouth, two small mineral-blue eyes atop head, four short splayed limbs and no tail. Sparse dark mud plates on back. Bulky low wedge silhouette; no horns or copied monster.\nPOSES: LEFT: hit reaction recoiling with body hunched and legs tucked. RIGHT: fallen body lying on its side, limbs relaxed, same body length, no blood, no gore, no particle effects."
+    },
+    {
+      "id": "figure-thornback-stance",
+      "entity": "thornback",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Original heavy boar-like quadruped, umber body with ochre angular back plates, three large blunt triangular thorn ridges along spine, short wedge snout with two small tusks, four short powerful legs, tiny tail. Clearly distinct large ridged silhouette; no rhinoceros horn.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-thornback-run",
+      "entity": "thornback",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Original heavy boar-like quadruped, umber body with ochre angular back plates, three large blunt triangular thorn ridges along spine, short wedge snout with two small tusks, four short powerful legs, tiny tail. Clearly distinct large ridged silhouette; no rhinoceros horn.\nPOSES: LEFT: moving forward with forelegs extended and rear legs tucked. RIGHT: moving with forelegs tucked and rear legs extended. Keep the same four-legged anatomy and body scale."
+    },
+    {
+      "id": "figure-thornback-action",
+      "entity": "thornback",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Original heavy boar-like quadruped, umber body with ochre angular back plates, three large blunt triangular thorn ridges along spine, short wedge snout with two small tusks, four short powerful legs, tiny tail. Clearly distinct large ridged silhouette; no rhinoceros horn.\nPOSES: LEFT: charge anticipation with head low and feet braced. RIGHT: charge release leaning forward, ridge plates unchanged, forelegs reaching."
+    },
+    {
+      "id": "figure-thornback-injury",
+      "entity": "thornback",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Original heavy boar-like quadruped, umber body with ochre angular back plates, three large blunt triangular thorn ridges along spine, short wedge snout with two small tusks, four short powerful legs, tiny tail. Clearly distinct large ridged silhouette; no rhinoceros horn.\nPOSES: LEFT: hit reaction recoiling with body hunched and legs tucked. RIGHT: fallen body lying on its side, limbs relaxed, same body length, no blood, no gore, no particle effects."
+    },
+    {
+      "id": "figure-hush_moth-stance",
+      "entity": "hush_moth",
+      "pair": "stance",
+      "frames": [
+        "idle",
+        "alert"
+      ],
+      "prompt": "IDENTITY: Original small moth creature, two broad paired dusty-chalk wings with dark umber margins and one muted sage oval on each upper wing, narrow charcoal body, two short antennae and tiny legs. Four wings total, broad simple silhouette, matte pigment, no glow or decorative symbols.\nPOSES: LEFT: neutral idle stance. RIGHT: alert guarded stance with lowered centre of gravity, ready to move, keeping all equipment visible. This enemy has no magical absorb ability; draw no magic."
+    },
+    {
+      "id": "figure-hush_moth-run",
+      "entity": "hush_moth",
+      "pair": "run",
+      "frames": [
+        "run-a",
+        "run-b"
+      ],
+      "prompt": "IDENTITY: Original small moth creature, two broad paired dusty-chalk wings with dark umber margins and one muted sage oval on each upper wing, narrow charcoal body, two short antennae and tiny legs. Four wings total, broad simple silhouette, matte pigment, no glow or decorative symbols.\nPOSES: LEFT: flying with four wings spread wide. RIGHT: flying with wings raised and foreshortened, same body centre and same anatomy."
+    },
+    {
+      "id": "figure-hush_moth-action",
+      "entity": "hush_moth",
+      "pair": "action",
+      "frames": [
+        "attack-windup",
+        "attack-release"
+      ],
+      "prompt": "IDENTITY: Original small moth creature, two broad paired dusty-chalk wings with dark umber margins and one muted sage oval on each upper wing, narrow charcoal body, two short antennae and tiny legs. Four wings total, broad simple silhouette, matte pigment, no glow or decorative symbols.\nPOSES: LEFT: contact approach with wings swept back. RIGHT: contact cling with wings partly folded and legs extended; no magic spell."
+    },
+    {
+      "id": "figure-hush_moth-injury",
+      "entity": "hush_moth",
+      "pair": "injury",
+      "frames": [
+        "hit",
+        "death"
+      ],
+      "prompt": "IDENTITY: Original small moth creature, two broad paired dusty-chalk wings with dark umber margins and one muted sage oval on each upper wing, narrow charcoal body, two short antennae and tiny legs. Four wings total, broad simple silhouette, matte pigment, no glow or decorative symbols.\nPOSES: LEFT: hit reaction recoiling with body hunched and legs tucked. RIGHT: fallen body lying on its side, limbs relaxed, same body length, no blood, no gore, no particle effects."
+    }
+  ]
+}

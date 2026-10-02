@@ -95,7 +95,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | delivered; owner chose Tessera & Lime; camera superseded | A1 (this commit) | 2026-10-02 |
 | Art | A1b | Scale contract, distant camera proofs, camp re-check | A1 owner choice | delivered for owner review; 27 attempts, 18 rejects retained | A1b (this commit) | 2026-10-02 |
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered; 16 characters / 96 expression exports | A2 (this commit) | 2026-10-02 |
-| Art | A3 | Top-down figures, poses, spell effects | art/CAMERA-OK.md | blocked; owner camera file absent | | 2026-10-02 |
+| Art | A3 | Oblique figures, poses, spell effects | art/CAMERA-OK.md | partial; spend latch after provider no-file error; 70 pose exports, 3 creatures missing | A3 (this commit) | 2026-10-02 |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | delivered for owner review | A4 (this commit) | 2026-10-02 |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | delivered; 46 SVGs / 184 PNGs and HUD; W8 mappings pending | A5 (this commit) | 2026-10-02 |
 
@@ -165,7 +165,7 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered for owner review |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | delivered for owner review |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | delivered for owner review; Fire line migration and Earth/Air lines await W8 |
-| Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | **owner confirms the arena camera** (`art/CAMERA-OK.md`) | blocked |
+| Art | A3 | Oblique figures, poses, spell effects at the confirmed scale | **owner camera confirmed** (`art/CAMERA-OK.md`) | partial; spending latched, missing roster and pose corrections logged |
 | Arena | W4b | Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
 
 ## l. Session log
@@ -314,3 +314,42 @@ pose or spell-effect production began. Remaining handoff: owner camera decision,
 owner review of delivered art, W8's missing spell-line catalogues, and W13 engine
 integration. All authorized independent art work is delivered as review candidates;
 unused time and subscription allowance are not instructions to spend more.
+
+### A3 - 2026-10-02 - ART / art - third session, stopped partial handoff
+
+Read the owner-confirmed open-oval-sparse-near-a01 camera and oblique-angle note;
+authored for near 6% human scale and approximately 55-degree elevation, never a
+90-degree plan view. Water pilot first: initial duplicate pose rejected, corrected
+idle/raised-palms proof reviewed and composited at both resolutions before siblings.
+Retained full Tessera style block and existing cast identities, with text-only
+conditioning and visible costume/facing drift disclosed.
+
+37 calls charged, 36 source images saved. The cinder-hound injury call returned
+HTTP 400 content-moderated/no file; the existing uncertain-result latch stopped
+all spending. No retry, provider switch, refund or latch reset. No actual quota
+or rate-limit error. Cumulative 126 charged / 125 saved, 54 remaining under 180;
+shared-account remainder not measured. All 89 historical jobs/events unchanged.
+
+Offline delivery: 70 pose exports / nine atlases, 23 procedural effect recipes /
+138 sheets, four 1080p/1440p composites, owner board and complete source evidence.
+Five rejected sheets remain rejected; five isolated reviewed subframes salvaged.
+Three mage absorb bodies reuse casting keys with separate exact arcs. Run samples
+are mostly repeated/mirrored keys; preview bob is procedural, not a finished gait.
+All Water CSV rows map to family motifs, not complete branch animations.
+
+Commands: `python tools/art/check_a3.py` PASS for explicitly incomplete artifact
+integrity and desktop/mobile controls; `python tools/art/waves.py check A3` FAIL
+`DELIVERY_INCOMPLETE`. `python tools/art/check.py`: 37 tests and compile/rebuild/
+validation PASS, overall FAIL at retained pose-contact local framing rejection.
+`python tools/art/portable_check.py`: all 224 A3 PNGs and prior-wave hashes
+reproduce without raw files; overall FAIL at that same unresolved UI boundary.
+Prior A1 browser gate PASS separately. No engine build, performance, motion
+readability, exact generated elevation or owner feel measured. Local grades can
+only reject or route to owner; none accept art.
+
+Missing: Mire maw, Thornback, Hush moth, hound hit/death, dedicated corrected mage
+absorbs, actual alternating strides and costume corrections. Owner board:
+`art/review/a3/owner.html`; design note: `docs/waves/A3-figures-and-effects.md`;
+stop evidence: `art/waves/A3/stop-report.json`. One A3 commit, no push. Resolve
+its hash with `git log -1 --format=%h -- docs/waves/A3-figures-and-effects.md`.
+Generation remains stopped; remaining budget/time does not authorize clearing it.

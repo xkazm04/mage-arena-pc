@@ -48,3 +48,19 @@ observed player height are distinct evidence. Failed scenes remain visible.
 The camp source remains useful and its original data-driven labels are rechecked.
 A2 portraits, A4 camp/story art and A5 interface assets remain owner-review
 candidates until reviewed. A3 requires the separate owner camera file.
+
+## Session 3: A3 construction
+
+The owner camera file now confirms open oval / near / oblique about 55 degrees.
+A3 uses the full Tessera style block and existing cast descriptions, with directly
+inspected portrait references. The guarded transport is text-only: no claim of
+image-conditioned portrait identity. Garment, facing and precise elevation drift
+are visible limitations. The magenta sheet background is a technical matte,
+removed by deterministic chroma extraction; it is not the game's palette.
+
+Generated bodies are separate from native effect geometry. Exact arcs and threat
+marks use the contract projection and palette, not guessed generated geometry.
+Individual source crops, optional horizontal flips (including handedness),
+salvage from rejected sheets, and cast-body reuse are named in A3 manifests.
+No full-direction or finished run animation is claimed. A3 remains incomplete
+after the preserved spending latch; see the owner board and stop report.

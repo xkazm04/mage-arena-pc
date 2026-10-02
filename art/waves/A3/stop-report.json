@@ -1,0 +1,40 @@
+{
+  "status": "partial-spend-latched",
+  "failed_job": "01-tessera-figure-cinder_hound-injury-a01",
+  "provider_evidence": [
+    "Tool `image_gen` failed: Image generation failed with HTTP 400 Bad Request: {\"code\":\"imagine:content-moderated\",\"error\":\"Generated image rejected by content moderation.\",\"usage\":{\"cost_in_usd_ticks\":500000000}}"
+  ],
+  "latch": {
+    "at": "2026-10-02T11:21:51.279862+00:00",
+    "reason": "01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry"
+  },
+  "new_calls_charged": 37,
+  "saved_images": 36,
+  "missing_items": [
+    "figure-cinder_hound-injury",
+    "figure-mire_maw-stance",
+    "figure-mire_maw-run",
+    "figure-mire_maw-action",
+    "figure-mire_maw-injury",
+    "figure-thornback-stance",
+    "figure-thornback-run",
+    "figure-thornback-action",
+    "figure-thornback-injury",
+    "figure-hush_moth-stance",
+    "figure-hush_moth-run",
+    "figure-hush_moth-action",
+    "figure-hush_moth-injury"
+  ],
+  "corrections_not_generated": [
+    "01-tessera-figure-cassia-run-a01",
+    "01-tessera-figure-brennic-stance-a01",
+    "01-tessera-figure-brennic-run-a01",
+    "01-tessera-figure-brennic-injury-a01",
+    "01-tessera-figure-garran-stance-a01",
+    "01-tessera-figure-garran-run-a01",
+    "01-tessera-figure-iskar-stance-a01",
+    "01-tessera-figure-iskar-run-a01"
+  ],
+  "action": "No retry, no provider switch, no latch reset; offline salvage and derived exports only.",
+  "owner_accepted": false
+}

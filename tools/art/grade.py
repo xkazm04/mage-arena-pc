@@ -101,15 +101,27 @@ def prompt_for(job):
             'and any concrete missing content in a short paragraph. Never approve or select a style.\nEXACT GENERATION BRIEF:\n' + job['prompt'])
 
 
-def grade_job(job, model_digest):
+def grade_job(job, model_digest, diagnostic_retry=0):
     cfg = config()['grader']
     path = source_path(job)
     if sha(path) != job['sha256']:
         raise ValueError('SOURCE_CHANGED_BEFORE_GRADING')
+    current_path = ART / 'grades' / (job['id'] + '.json')
+    current = read(current_path) if current_path.exists() else {}
+    if diagnostic_retry and (diagnostic_retry != 1 or current.get('status') != 'ungraded'):
+        raise ValueError('DIAGNOSTIC_RETRY_ONLY_ONCE_FOR_INVALID_LOCAL_RESPONSE')
+    if (not diagnostic_retry and current.get('diagnostic_retry') == 1 and current.get('status') == 'graded'
+            and current.get('image_sha256') == job['sha256'] and current.get('model_digest') == model_digest):
+        print(json.dumps({'job':job['id'],'status':'graded','verdict':current['verdict'],'cached_valid_diagnostic_retry':True}),flush=True)
+        return current
     prompt = prompt_for(job)
+    if diagnostic_retry:
+        prompt += '\nKeep observation under 100 words. Complete the JSON object; do not repeat prose.'
     inputs = {'image_sha256': sha(path), 'model': cfg['model'], 'model_digest': model_digest,
               'prompt': prompt, 'schema': schema(), 'encoding_max_edge': cfg['image_max_edge'],
               'options': {k: cfg[k] for k in ('temperature', 'seed', 'num_ctx', 'num_predict')}}
+    if diagnostic_retry:
+        inputs['diagnostic_retry'] = diagnostic_retry
     key = digest(inputs)
     cache = ART / 'grades/cache' / (key + '.json')
     if cache.exists():

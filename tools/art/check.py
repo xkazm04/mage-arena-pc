@@ -21,6 +21,8 @@ def main():
     ]
     if not args.skip_browser:
         commands.append([sys.executable, 'tools/art/browser_check.py'])
+    if (ART / 'delivery/a3/figures.json').exists():
+        commands.insert(5, [sys.executable, 'tools/art/check_a3.py'] + (['--skip-browser'] if args.skip_browser else []))
     results = []
     for command in commands:
         start = time.monotonic()

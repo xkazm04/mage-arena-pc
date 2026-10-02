@@ -1,0 +1,17 @@
+{
+  "version": "a3-derivations-v1",
+  "reason": "Spending latched after a no-file provider error. Rejected source sheets stay rejected. Only these explicitly reviewed subframes are salvaged; no missing creature design is invented.",
+  "salvage": {
+    "brennic:idle": {"job":"01-tessera-figure-brennic-stance-a01","crop":[0,0,640,720],"note":"Left idle body is valid; only the absent right absorb gesture caused sheet rejection. Rust tunic, red hair and planted feet visible."},
+    "garran:idle": {"job":"01-tessera-figure-garran-stance-a01","crop":[0,0,640,720],"note":"Left bearded idle body is valid; right failed raised-palms pose remains excluded."},
+    "iskar:idle": {"job":"01-tessera-figure-iskar-stance-a01","crop":[0,0,640,720],"note":"Left idle has moustache, knot and sage wrap; right low-palmed body is not exported as absorb."},
+    "brennic:hit": {"job":"01-tessera-figure-brennic-injury-a01","crop":[0,0,350,720],"note":"Explicit narrow crop contains only the first recoil body. Duplicated second recoil excluded. Pale tunic colour drift remains owner-review limitation."},
+    "brennic:death": {"job":"01-tessera-figure-brennic-injury-a01","crop":[640,0,1280,720],"note":"Right half contains exactly one fallen body. Extra left figures excluded. Pale tunic drift retained, not corrected by repainting."}
+  },
+  "reuse": [
+    {"entity":"brennic","state":"absorb","from_state":"cast-release","note":"Reused generated open-palm casting body with separate procedural 140-degree absorb arc. Not an independently generated two-palm absorb pose."},
+    {"entity":"garran","state":"absorb","from_state":"cast-release","note":"Reused generated low open-palm casting body with separate procedural 140-degree absorb arc. Weak blocking gesture; owner review and later replacement needed."},
+    {"entity":"iskar","state":"absorb","from_state":"cast-release","note":"Reused generated forward open-palm casting body with separate procedural 140-degree absorb arc. Not an independently generated two-palm absorb pose."}
+  ],
+  "owner_accepted": false
+}

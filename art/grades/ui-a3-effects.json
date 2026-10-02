@@ -1,0 +1,103 @@
+{
+  "artifact": "a3-effects",
+  "at": "2026-10-02T11:58:20.844439+00:00",
+  "input_hash": "b6bf6045b0352c611fbcf0b4134ff8bc4edbb8bc9d2eb694b4d6836b1dc352ca",
+  "source": "art/delivery/a3/effects-contact.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "68a6a98e41c0fa325f1c523b7f31b5f77c87dc3296af16df178c4a8b9ed0d3aa",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Authored effect family contact sheet with intentional labels. Four school bolts and lines, Water motifs, open-rear absorb arc, contact flash, physical double ticks and unblockable crossed marks. Net and ember have a separate dashed 4m advisory ring around smaller solid footprint; dashed ring is not collision. Contact fits large shapes, native exports retain stroke widths. Inspect distinguishable shapes and legibility; no owner acceptance or implemented gameplay claim.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The image is a clean, authored contact sheet on a solid beige background. It displays a grid of vector-style icons representing various game effects (bolts, lines, rings, marks). The color palette strictly adheres to the expected mineral blue, umber/brown, and terracotta/orange tones. All labels are legible, sans-serif, and positioned consistently below their respective icons. The specific shapes mentioned in the expectation are present: four school bolts/lines (water, fire, earth, air), water motifs (tide-orb, lash, mire, mend, mirror, absorb, perfect-absorb, telegraph-ring), physical telegraph/net/tongue elements, and unblockable marks (crossed mark, charge lane). The 'fire-ember-burst' and 'physical-net-ring' correctly show a smaller solid footprint surrounded by a larger dashed advisory ring. There are no watermarks, logos, or photographic inserts. No text is obscured, and there are no rendering artifacts or overlaps. The layout is orderly and professional, consistent with an authored HTML/SVG asset sheet rather than a generated screenshot.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The image is a clean, authored contact sheet on a solid beige background. It displays a grid of vector-style icons representing various game effects (bolts, lines, rings, marks). The color palette strictly adheres to the expected mineral blue, umber/brown, and terracotta/orange tones. All labels are legible, sans-serif, and positioned consistently below their respective icons. The specific shapes mentioned in the expectation are present: four school bolts/lines (water, fire, earth, air), water motifs (tide-orb, lash, mire, mend, mirror, absorb, perfect-absorb, telegraph-ring), physical telegraph/net/tongue elements, and unblockable marks (crossed mark, charge lane). The 'fire-ember-burst' and 'physical-net-ring' correctly show a smaller solid footprint surrounded by a larger dashed advisory ring. There are no watermarks, logos, or photographic inserts. No text is obscured, and there are no rendering artifacts or overlaps. The layout is orderly and professional, consistent with an authored HTML/SVG asset sheet rather than a generated screenshot."
+  },
+  "eval_count": 294,
+  "elapsed_seconds": 13.359,
+  "verdict": "owner-review",
+  "codes": [
+    "OWNER_CHOICE_PENDING"
+  ],
+  "owner_accepted": false
+}

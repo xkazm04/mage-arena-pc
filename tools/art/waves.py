@@ -39,6 +39,12 @@ def require_proof(spec):
     if wave == 'A3' and not (ART / 'CAMERA-OK.md').is_file():
         raise RuntimeError('OWNER_CAMERA_REQUIRED')
     b = brief(wave)
+    if wave == 'A3':
+        camera = (ART / 'CAMERA-OK.md').read_text(encoding='utf-8')
+        if 'camera_ok: true' not in camera:
+            raise RuntimeError('OWNER_CAMERA_REQUIRED')
+        if b.get('camera_sha256') != sha(ART / 'CAMERA-OK.md') or b.get('scale_sha256') != sha(ART / 'scale-contract-v1.json'):
+            raise RuntimeError('STALE_A3_CAMERA_CONTRACT')
     if spec['brief_hash'] != digest(b):
         raise RuntimeError('STALE_WAVE_BRIEF')
     if wave != 'A1b':
@@ -51,6 +57,16 @@ def require_proof(spec):
     if not p.exists():
         raise RuntimeError('ONE_IMAGE_PROOF_REQUIRED')
     proof = read(p)
+    if wave == 'A3':
+        composite = proof.get('composite_review', {})
+        files = composite.get('files', {})
+        if len(files) != 2 or composite.get('owner_accepted') is not False or not composite.get('note'):
+            raise RuntimeError('A3_COMPOSITE_PROOF_REQUIRED')
+        if any(not (ROOT / path).exists() or sha(ROOT / path) != value for path, value in files.items()):
+            raise RuntimeError('STALE_A3_COMPOSITE')
+        cg = read(ROOT / composite['grade'])
+        if cg.get('status') != 'graded' or route(cg)[0] == 'reject' or cg.get('image_sha256') not in files.values():
+            raise RuntimeError('A3_COMPOSITE_REJECTED_OR_UNGRADED')
     job = next((j for j in jobs(wave) if j['id'] == proof['job']), None)
     if (not job or job['status'] != 'generated' or job['scene'] != b['proof_item'] or proof['brief_hash'] != digest(b)
             or proof['sha256'] != sha(source_path(job)) or proof['verdict'] != 'technical-continuation'

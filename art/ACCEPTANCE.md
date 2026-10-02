@@ -1,4 +1,34 @@
-# Current owner boundary - session 2
+# Current owner boundary - session 3 / A3 partial
+
+[A3 owner board](review/a3/owner.html), [source archive](review/a3/index.html),
+[stop evidence](waves/A3/stop-report.json), [design note](../docs/waves/A3-figures-and-effects.md).
+Owner camera confirmation exists: open oval / near / about 55-degree oblique.
+37 A3 calls charged, 36 images saved; project 126 charged / 125 saved,
+54 remaining under 180. HTTP 400 content-moderated/no file triggered the
+existing uncertain-result stop latch. No quota/rate-limit error was observed;
+no further generation, provider switch, refund or latch reset occurred.
+
+70 transparent pose exports / nine atlases cover four mages, four soldiers and
+six hound keys. Three mage absorb bodies are reused casting keys, not generated
+blocking gestures. Five rejected source sheets stay rejected; five explicitly
+reviewed individual subframes are salvage candidates. 23 authored effect recipes
+produce 138 transparent four-phase sheets across three distances and two
+resolutions. Four native-size composites preserve the chosen arena source.
+All 24 Water CSV rows map to family motifs, not complete spell animations.
+
+Full A3 gate is **FAIL: DELIVERY_INCOMPLETE**, with 13 missing source items.
+The separate stopped-handoff integrity gate passes available file/provenance,
+alpha, atlas, geometry, and browser checks; it explicitly sets `a3_complete: false`.
+The pose-contact local grade has an unresolved framing rejection. The existing
+global UI gate retains that failure; neither the agent nor a model accepts art.
+See final command reports for portable reproduction and exact failure boundaries.
+
+Remaining: Mire maw, Thornback, Hush moth, hound hit/death, dedicated corrected
+mage absorb bodies, genuine alternating strides, costume continuity, other
+facings, engine animation/integration and owner readability/feel. No game
+packages or accepted production assets were changed.
+
+# Historical owner boundary - session 2
 
 Style choice: Tessera & Lime, explicitly recorded by the owner. A1 evidence below
 is historical and retains its original snapshot. A1b camera evidence will live in
