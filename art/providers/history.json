@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "providers": {
+    "agy": {
+      "stop": null,
+      "events": [
+        {
+          "at": "2026-10-02T18:54:18.844923+00:00",
+          "event": "reserved",
+          "job": "a7-arena-verdigris-agy-a01"
+        },
+        {
+          "at": "2026-10-02T18:55:00.949264+00:00",
+          "event": "generated",
+          "job": "a7-arena-verdigris-agy-a01"
+        },
+        {
+          "at": "2026-10-02T18:58:10.077289+00:00",
+          "event": "reserved",
+          "job": "a7-arena-rust-sand-agy-a01"
+        },
+        {
+          "at": "2026-10-02T18:59:03.423981+00:00",
+          "event": "generated",
+          "job": "a7-arena-rust-sand-agy-a01"
+        },
+        {
+          "at": "2026-10-02T18:59:35.589991+00:00",
+          "event": "reserved",
+          "job": "a7-arena-moonlit-agy-a01"
+        },
+        {
+          "at": "2026-10-02T19:00:49.714316+00:00",
+          "event": "generated",
+          "job": "a7-arena-moonlit-agy-a01"
+        }
+      ]
+    },
+    "grok": {
+      "stop": null,
+      "events": []
+    }
+  }
+}

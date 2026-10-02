@@ -1,3 +1,28 @@
+# Active scale contract v2
+
+[scale-contract-v2.json](scale-contract-v2.json) is authoritative under D17.
+Fixed distant 55-degree oblique view; nominal head-to-sole height 3.75% of viewport
+height. Range 3?4.5% = 32.4?48.6 px at 1080p and 43.2?64.8 px at 1440p.
+Staff, shadow and aura do not count as body height. Ground projection and upright
+billboard height are distinct. World art scale is 22.5 px/metre at 1080p on x;
+y is foreshortened by sin(55 degrees). Metres per pixel is the reciprocal.
+
+The camera is stationary inside a wide dead zone; only its soft edge follow moves.
+The dead zone and damping in data are authored proposals for engine testing.
+No runtime zoom is proposed. Arena world extent remains 192 by 144 metres; a
+single plate depicts one viewport, not the entire physical arena or a tileable map.
+
+Keep projectile cores at least 4 px and threat outlines at least 3 px at 1080p.
+Advisory readability outlines never enlarge the game's true hitbox. The absorb
+has a 140-degree forward sector and an open 220-degree rear. Render geometry in
+code; a painted source cannot certify exact gameplay angles.
+
+Owner-selected camera direction is established by D17. Generated elevation,
+engine following, combat motion readability and owner feel remain unmeasured.
+
+---
+Historical v1 follows; its near camera is superseded.
+
 # Arena scale contract v1
 
 Data authority: [scale-contract-v1.json](scale-contract-v1.json). Authored proposal;

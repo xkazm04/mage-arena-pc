@@ -1,3 +1,15 @@
+# Current boundary ? Covenant session 5
+
+Owner chose the Covenant family and Moonchalk portrait style under D16?D20.
+Individual new assets remain owner-review. [A7 board](review/a7/index.html): three
+empty grain-free palette plates, v2 far fixed scale contract. Source/board checks
+and 50 tests pass. Project 162/240 charged after A7, both provider stops clear.
+Local grades may only reject or route to the owner. Engine motion, performance
+and feel are not measured. Historical failures below are not erased.
+
+---
+Historical delivery records follow; their active-style claims are superseded.
+
 # Current owner boundary — session 4 / A6 identity choice
 
 [Owner board](review/a6/index.html), [combined sheet](review/a6/contact-sheet.jpg),

@@ -197,7 +197,7 @@ Decisions:
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | not started |
+| Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | delivered for owner review; see docs/waves/A7-covenant-bible.md |
 | Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | not started |
 | Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | not started |
 | Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | not started |
@@ -210,3 +210,15 @@ Decisions:
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
+
+### ART session 5 restart ? A7 ? 2026-10-02
+
+Read full plan, owner v3, provider ledger, prior wave/session evidence and six
+02/03/04 raw/portable references. Kept early UI contract commit 06cd5e4 unchanged.
+Delivered Covenant data bible, STYLE, far fixed scale v2, three empty arena
+palettes and six 1080p/1440p plates. Real agy/Grok provider interface with separate
+150/240 local weekly guards/stops/history and shared project ceiling. Three new
+images; 162/240 project charges, 78 remain, no live incident. Check A7 + browser
+PASS; 50 tests PASS. Exact agy internal tool prompt unverified; CLI request and
+outputs archived. Owner acceptance, engine motion/performance not measured.
+Inherited historical A3 failures remain. Next A3c; no push.

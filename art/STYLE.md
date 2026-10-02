@@ -1,3 +1,42 @@
+# Covenant family ? active style bible
+
+Data authority: [style-covenant.json](style-covenant.json). Owner-selected family:
+02 Verdigris Covenant, 03 Ragged Oracle and 04 Moonchalk Tempest. Portrait bar:
+04 Moonchalk Tempest. D16?D20 supersede all near-camera and prior-style notes below.
+
+One painting language: sculpted volumes, broken confident contours, pale layered
+cloth, dark lower silhouettes, worn metal, selected cool highlights and localized
+magic. Keep wear on physical edges. No paper, book, canvas grain, stippling or
+full-screen noise. Quiet broad floors leave room for moving spell silhouettes.
+Roman masonry and ordinary legion equipment ground the world; battle mages and
+creatures have their own raw magical identity. No discarded A2/A3 art is reused.
+
+Three environments share this treatment: dark verdigris stone; rust and sand;
+moonlit blue-black. Element identity never changes with the arena palette: flame
+forks and embers, water crescents and droplets, angular stone and dust, branching
+wind/lightning. Shape and value carry identity as well as colour.
+
+Battle mages carry staffs, belt tools, charms and light coloured layered cloth.
+At 3?4.5% screen height detail collapses: emphasize hood/shoulder wedge, staff head,
+split hem and compact aura. Do not add noisy full-body glow. Upright oblique
+billboards show shoulders, some face and foreshortened legs; never rotate a body
+as a flat ground sprite. All share upper-left light and a separate contact shadow.
+
+UI: dark enamel, aged silver, restrained verdigris and pale type. Borders contain
+the ornament; panel centres stay quiet. Text is engine-rendered. Navigation,
+selection and disabled states use shape cues. [UI contract](ui/README.md) is fixed.
+Camp and portraits use the same material language, with the portrait's richer
+painted facial modelling and strong dark-to-light separation.
+
+[Scale v2](scale-contract-v2.json) owns camera numbers. All delivered art remains
+owner-review. A technical proof permits siblings only. Local grades may reject
+or route to the owner, never approve. Reference-guided variants are regenerated
+paintings; they are not pixel-preserving edits.
+
+---
+
+The following is historical evidence, superseded by the active bible above.
+
 # A6 identity reset — current owner boundary
 
 D12–D15 discard the A2 portrait and A3 figure identities. They are historical

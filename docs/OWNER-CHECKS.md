@@ -85,3 +85,5 @@ Brennic's injury sheet. Some individually reviewed crops from rejected sheets
 are salvaged with explicit bounds; the sheets stay rejected. The generator
 returned HTTP 400 content-moderated/no file. No retry, provider switch or latch
 reset followed. No new generation is authorized by remaining allowance alone.
+
+- A7 Covenant: [three arena palettes](../art/review/a7/index.html). Judge quiet floor versus material richness, palette identity, and far-camera direction. Individual exports are not accepted.
