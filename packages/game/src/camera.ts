@@ -1,12 +1,25 @@
-import contract from '../../../art/scale-contract-v1.json' with { type: 'json' };
+import contract from '../data/camera.json' with { type: 'json' };
 export { contract };
 export interface Point { x: number; y: number }
 export interface Viewport { width: number; height: number }
 export interface Camera extends Viewport { centre: Point; zoom: number; elevation: number }
-const near = contract.distances.find(d => d.id === 'near')!;
-export function makeCamera(viewport: Viewport, centre: Point, zoom = near.zoom, elevation = contract.camera.elevation_above_ground_degrees): Camera {
+const standard = contract.distances.find(d => d.id === 'standard')!;
+export function makeCamera(viewport: Viewport, centre: Point, zoom = standard.zoom, elevation = contract.camera.elevation_above_ground_degrees): Camera {
   if (![viewport.width, viewport.height, centre.x, centre.y, zoom, elevation].every(Number.isFinite) || viewport.width <= 0 || viewport.height <= 0 || elevation < contract.camera.elevation_range_degrees[0]! || elevation > contract.camera.elevation_range_degrees[1]!) throw Error('Invalid camera');
   return { ...viewport, centre: { ...centre }, zoom: Math.max(contract.camera.zoom_range[0]!, Math.min(contract.camera.zoom_range[1]!, zoom)), elevation };
+}
+/** Presentation only: stay fixed until the feet leave the wide safe rectangle. */
+export function followCamera(c: Camera, player: Point, deltaSeconds: number): Camera {
+  if (![player.x, player.y, deltaSeconds].every(Number.isFinite) || deltaSeconds < 0) throw Error('Invalid camera follow');
+  const m = cameraMetrics(c), f = contract.follow;
+  const halfX = c.width * f.dead_zone_half_width / m.pxPerMetreX;
+  const halfY = c.height * f.dead_zone_half_height / m.pxPerMetreY;
+  const excess = (d: number, half: number) => Math.sign(d) * Math.max(0, Math.abs(d) - half);
+  const blend = -Math.expm1(-f.response_per_second * Math.min(deltaSeconds, f.max_delta_seconds));
+  return makeCamera(c, {
+    x: c.centre.x + excess(player.x - c.centre.x, halfX) * blend,
+    y: c.centre.y + excess(player.y - c.centre.y, halfY) * blend,
+  }, c.zoom, c.elevation);
 }
 export function cameraMetrics(c: Camera) {
   const resolutionScale = c.height / contract.reference_viewport_px[1]!;

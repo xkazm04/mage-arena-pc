@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { arcPoints, cameraMetrics, clientToGround, contract, depthOrder, groundToScreen, makeCamera, screenToGround } from './camera.ts';
+import { arcPoints, cameraMetrics, clientToGround, contract, depthOrder, groundToScreen, followCamera, makeCamera, screenToGround } from './camera.ts';
 import { addMage, createArena, createGames, idleInput, inArc, resolveHit, segmentHit, stateHash, stepArena } from '@mage/core/arena';
 
 describe('the confirmed camera contract', () => {
@@ -15,20 +15,20 @@ describe('the confirmed camera contract', () => {
       expect(m.outlinePx).toBe(height / 1080 * 3); expect(m.projectileCorePx).toBe(height / 1080 * 4);
     }
     const m = cameraMetrics(makeCamera({ width: 1920, height: 1080 }, { x: 0, y: 0 }));
-    expect(m.figureHeightPx).toBeCloseTo(64.8); expect(m.visibleGroundM.x).toBeCloseTo(53.33333333);
-    expect(m.visibleGroundM.y).toBeCloseTo(36.62323766); expect(m.pxPerMetreY).toBeCloseTo(29.48947359);
-    expect(m.metresPerPixelX).toBeCloseTo(1 / 36); expect(m.metresPerPixelY).toBeCloseTo(1 / 29.48947359);
-    expect(cameraMetrics(makeCamera({ width: 2560, height: 1440 }, { x: 0, y: 0 })).figureHeightPx).toBeCloseTo(86.4);
+    expect(m.figureHeightPx).toBeCloseTo(43.2); expect(m.visibleGroundM.x).toBeCloseTo(80);
+    expect(m.visibleGroundM.y).toBeCloseTo(54.93485649); expect(m.pxPerMetreY).toBeCloseTo(19.65964906);
+    expect(m.metresPerPixelX).toBeCloseTo(1 / 24); expect(m.metresPerPixelY).toBeCloseTo(1 / 19.65964906);
+    expect(cameraMetrics(makeCamera({ width: 2560, height: 1440 }, { x: 0, y: 0 })).figureHeightPx).toBeCloseTo(57.6);
   });
   it('clamps zoom, rejects invalid cameras and does not flatten upright figure height', () => {
     const viewport = { width: 1920, height: 1080 }, centre = { x: 0, y: 0 };
-    expect(makeCamera(viewport, centre, 4).zoom).toBe(1.2); expect(makeCamera(viewport, centre, 0).zoom).toBe(0.8);
+    expect(makeCamera(viewport, centre, 4).zoom).toBe(0.9); expect(makeCamera(viewport, centre, 0).zoom).toBe(0.6);
     expect(() => makeCamera(viewport, centre, NaN)).toThrow(); expect(() => makeCamera({ width: 0, height: 1080 }, centre)).toThrow();
     expect(() => makeCamera(viewport, centre, 1.2, 0)).toThrow();
     expect(() => makeCamera(viewport, centre, 1.2, 90)).toThrow();
     expect(cameraMetrics(makeCamera(viewport, centre, 1.2, 45)).figureHeightPx).toBe(cameraMetrics(makeCamera(viewport, centre, 1.2, 60)).figureHeightPx);
   });
-  it('frames all sparse Tiro opening opponents outside the HUD at the approved near distance', () => {
+  it('frames all sparse Tiro opening opponents outside the HUD at the D17 far distance', () => {
     for (let seed = 0; seed < 100; seed++) for (let wave = 0; wave < 4; wave++) {
       const g = createGames(seed, undefined, wave), camera = makeCamera({ width: 1920, height: 1080 }, g.player.pos);
       for (const actor of g.state.actors) {
@@ -58,7 +58,7 @@ describe('the confirmed camera contract', () => {
     expect(arc[0]!.x).toBeCloseTo(2.4 * Math.cos(70 * Math.PI / 180)); expect(arc[0]!.y).toBeCloseTo(-2.4 * Math.sin(70 * Math.PI / 180));
     expect(inArc({ x: 1, y: 0 }, arc[0]!, 140)).toBe(true); expect(inArc({ x: 1, y: 0 }, { x: -1, y: 0 }, 140)).toBe(false);
     const c = makeCamera({ width: 1920, height: 1080 }, { x: 0, y: 0 });
-    const projected = groundToScreen(arc[0]!, c); expect(projected.x - c.width / 2).toBeCloseTo(arc[0]!.x * 36); expect(projected.y - c.height / 2).toBeCloseTo(arc[0]!.y * 36 * Math.sin(55 * Math.PI / 180));
+    const projected = groundToScreen(arc[0]!, c); expect(projected.x - c.width / 2).toBeCloseTo(arc[0]!.x * 24); expect(projected.y - c.height / 2).toBeCloseTo(arc[0]!.y * 24 * Math.sin(55 * Math.PI / 180));
     expect([{ id: 3, foot: { x: 0, y: 8 } }, { id: 2, foot: { x: 0, y: 4 } }, { id: 1, foot: { x: 8, y: 4 } }].sort(depthOrder).map(v => v.id)).toEqual([1, 2, 3]);
   });
 });
@@ -103,5 +103,33 @@ describe('W4c: ground-plane aim and hits', () => {
     expect(headGround.y).toBeLessThan(target.pos.y - 2); expect(stateHash(state)).toBe(before);
     stepArena(state, { [player.id]: { ...idleInput(headGround), cast: true } }); for (let i = 0; i < 120; i++) stepArena(state);
     expect(target.metrics.hits).toBe(0);
+  });
+});
+
+ describe('U1 fixed camera', () => {
+  it('does not track movement inside the wide dead zone', () => {
+    const c = makeCamera({width: 1920, height: 1080}, {x: 0, y: 0});
+    for (let t = 0; t < 600; t++) expect(followCamera(c, {x: Math.sin(t) * 20, y: Math.cos(t) * 12}, 1/60)).toEqual(c);
+  });
+  it('follows only excess beyond an edge, converges softly and preserves aim under motion', () => {
+    for (const height of [1080, 1440]) {
+      let c = makeCamera({width: height * 16/9, height}, {x: 0, y: 0});
+      const first = followCamera(c, {x: 40, y: 0}, 1/60);
+      expect(first.centre.x).toBeGreaterThan(0); expect(first.centre.x).toBeLessThan(1); expect(first.centre.y).toBe(0);
+      for (let t=0;t<600;t++) c = followCamera(c, {x:40,y:0},1/60);
+      expect(c.centre.x).toBeCloseTo(14.4, 5);
+      const aim = {x: 22, y: -13};
+      expect(screenToGround(groundToScreen(aim,c),c)).toEqual(aim);
+      expect(followCamera(c, c.centre, 1/60)).toEqual(c);
+    }
+  });
+  it('has frame-rate independent easing, rejects invalid deltas and bounds resume jumps', () => {
+    const c = makeCamera({width:1920,height:1080},{x:0,y:0});
+    let a=c,b=c;
+    for(let t=0;t<60;t++) a=followCamera(a,{x:40,y:0},1/60);
+    for(let t=0;t<120;t++) b=followCamera(b,{x:40,y:0},1/120);
+    expect(a.centre.x).toBeCloseTo(b.centre.x,10);
+    expect(followCamera(c,{x:40,y:0},100)).toEqual(followCamera(c,{x:40,y:0},0.05));
+    expect(()=>followCamera(c,{x:40,y:0},NaN)).toThrow();
   });
 });

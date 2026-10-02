@@ -3,7 +3,7 @@ import { combat, createTraining, FixedStepper, runtime, seconds, stepTraining, t
 import { ArenaInput } from './input.ts';
 import { addEnemy, advanceGames, attachMageAI, createGames, enemyInputs, enemyRoster, queueDeathEffects, stepArena, stepGames, tiro, type Games } from '@mage/core/arena';
 import { compositionScreen } from './composition.ts';
-import { cameraMetrics, contract, groundToScreen, interpolate, makeCamera, type Camera } from './camera.ts';
+import { cameraMetrics, contract, groundToScreen, followCamera, interpolate, makeCamera, type Camera } from './camera.ts';
 import { ArenaScene } from './arena-scene.ts';
 import { openingPosition, openingSeparationM, spawnProjectile, addMage } from '@mage/core/arena';
 import './arena-style.css';
@@ -55,6 +55,7 @@ function restart(kind = training.kind): void {
   mode = 'training'; games = undefined; referencePlayer = false;
   training = createTraining(kind); clock = new FixedStepper(); input.clear(); lastPerfect = -1e9; lastEventIndex = 0; paused = false;
   training.player.water = newWaterState(composition);
+  camera = makeCamera(camera, training.player.pos, camera.zoom);
   root.querySelector('#pause')!.textContent = 'Pause';
   app.canvas.focus();
 }
@@ -103,9 +104,9 @@ root.querySelector('#scale-debug')!.addEventListener('click', () => { debugScale
 window.addEventListener('resize', () => { app.renderer.resize(window.innerWidth, window.innerHeight); camera = makeCamera({ width: window.innerWidth, height: window.innerHeight }, camera.centre, camera.zoom); }, { signal: lifetime.signal });
 // Empty shipping manifest uses original procedural figures until accepted A3 frames arrive.
 void scene.library.load(new URL((!season && params.get('sprites')) || '/arena-sprites.json', location.href).href);
-function render(alpha: number): void {
+function render(alpha: number, deltaSeconds = 1 / 60): void {
   const { state, player } = training;
-  camera = makeCamera({ width: app.screen.width, height: app.screen.height }, interpolate(player.previousPos, player.pos, alpha), camera.zoom);
+  camera = followCamera(camera, interpolate(player.previousPos, player.pos, alpha), deltaSeconds);
   input.refreshAim();
   scene.render(state, player, camera, alpha, input.aim, lastPerfect, debugScale);
   const overlay = root.querySelector<HTMLElement>('#scale-overlay')!; overlay.hidden = !debugScale;
@@ -165,7 +166,7 @@ function frame(now: number): void {
     lastEventIndex = training.state.events.length;
   });
   if (season && !pending && queued.length && (queued.length >= combat.simStepHz || games?.phase !== 'active')) void flush().catch(() => {});
-  render(alpha);
+  render(alpha, elapsed);
   if (frameCount++ >= runtime.presentation.performanceWarmupFrames) {
     frames.push(elapsed * 1000); cpu.push(performance.now() - start); projectileSamples.push(training.state.projectiles.length); visibleProjectileSamples.push(scene.visibleProjectiles);
     if (frames.length > runtime.presentation.performanceFrames) { frames.shift(); cpu.shift(); projectileSamples.shift(); visibleProjectileSamples.shift(); }
