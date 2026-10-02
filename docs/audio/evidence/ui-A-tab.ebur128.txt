@@ -1,0 +1,36 @@
+Input #0, mp3, from 'C:\Users\kazda\kiro\mage-arena-audio\docs\audio\audition\r2\ui-A-tab.mp3':
+  Metadata:
+    encoder         : Lavf60.16.101
+  Duration: 00:00:00.52, start: 0.025057, bitrate: 135 kb/s
+  Stream #0:0: Audio: mp3 (mp3float), 44100 Hz, stereo, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavf
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+[Parsed_ebur128 @ ADDRESS] t: 0.0999773  TARGET:-23 LUFS    M:-120.7 S:-120.7     I: -70.0 LUFS       LRA:   0.0 LU  FTPK:  -4.5  -2.6 dBFS  TPK:  -4.5  -2.6 dBFS
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf61.9.107
+  Stream #0:0: Audio: pcm_s16le, 44100 Hz, stereo, s16, 1411 kb/s
+    Metadata:
+      encoder         : Lavc61.33.102 pcm_s16le
+[Parsed_ebur128 @ ADDRESS] t: 0.199977   TARGET:-23 LUFS    M:-120.7 S:-120.7     I: -70.0 LUFS       LRA:   0.0 LU  FTPK:  -5.4  -5.5 dBFS  TPK:  -4.5  -2.6 dBFS
+[Parsed_ebur128 @ ADDRESS] t: 0.299977   TARGET:-23 LUFS    M:-120.7 S:-120.7     I: -70.0 LUFS       LRA:   0.0 LU  FTPK: -10.0  -9.8 dBFS  TPK:  -4.5  -2.6 dBFS
+[Parsed_ebur128 @ ADDRESS] t: 0.399977   TARGET:-23 LUFS    M: -13.8 S:-120.7     I: -13.9 LUFS       LRA:   0.0 LU  FTPK: -26.8 -26.9 dBFS  TPK:  -4.5  -2.6 dBFS
+[Parsed_ebur128 @ ADDRESS] Summary:
+
+  Integrated loudness:
+    I:         -13.9 LUFS
+    Threshold: -23.8 LUFS
+
+  Loudness range:
+    LRA:         0.0 LU
+    Threshold:   0.0 LUFS
+    LRA low:     0.0 LUFS
+    LRA high:    0.0 LUFS
+
+  True peak:
+    Peak:       -2.6 dBFS
+[out#0/null @ 000001681accf700] video:0KiB audio:83KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:00.48 bitrate=N/A speed=86.4x

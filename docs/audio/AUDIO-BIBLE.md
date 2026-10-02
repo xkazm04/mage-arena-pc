@@ -2,6 +2,8 @@
 
 2026-10-02. **Everything below is proposed unless explicitly attributed to an owner decision or source mechanic.** No sample is accepted production audio. [CHOICES.md](CHOICES.md) is the owner authority and overrides this document. [Round 1](audition/r1/index.html) tests directions; [the proof report](PROOF-REPORT.html) records cost and limitations.
 
+**AU2 owner amendment, 2026-10-03:** retain arena A's dramatic hide-and-iron entrance and melody, fire A, mysterious magical water B, earth B and George. The family deliberately mixes the old A/B palettes. New arena alternatives need a real melodic instrument. AIR is a subtle but present turbine-like wind sustained throughout two seconds. Normal absorb must have a clear magical tone and a gentler satisfying catch; perfect must add an audible reward. These choices supersede any older transient-only AIR or aggressive/atonal absorb language below. [Round 2](audition/r2/index.html) tests the refinements and previously unheard categories. It is still an audition, not production approval.
+
 ## World and pillars
 
 Owner D14–D19 establish a raw, brutal, magical world on a Roman baseline, the Covenant family of verdigris, rust/sand and moonlit blue-black palettes, and a distant mostly fixed arena camera. Sound should make tiny figures physically present without filling every gap. Roman material culture supplies worn bronze, hide drums, leather, linen, sandals, stone and breath; it does not demand archaeological reconstruction. The mages' energy is dangerous and personal.
@@ -17,14 +19,14 @@ The Wardstones drink magic spilled in the Games (reference story); the collar's 
 
 ## Element palette and event grammar
 
-Audition A = **Wounded matter** (physical, dry, raw). Audition B = **Bound radiance** (impossible harmonic energy over the same material). Neither is selected. Identifiable midrange should survive small speakers; bass is support.
+Round-1 A = **Wounded matter** (physical, dry, raw); B = **Bound radiance** (impossible harmonic energy over the same material). The owner selected fire A, water B and earth B, and rejected both AIR takes. No blanket A/B family was selected. Identifiable midrange should survive small speakers; bass is support.
 
 | Element / source identity | Cast | Travel | Impact | Absorb tint / perfect tint |
 |---|---|---|---|---|
 | Fire / Heat, aggressive, tension-fed | resin snap, furnace exhale, ember grit | tearing flame ribbon, irregular crackle | compact pressure thud and cinder spit | flame sucked through a narrow throat / ember resonance opens upward |
 | Water / Flow, intelligent rotation | taut liquid whip, bead click, compressed spray | narrow hiss, droplets orbiting a clear core | dense splash slap, short ice-like overtone | water curls inward / two lucid droplet partials and a returning pulse |
 | Earth / Footing, protective mass | slate shear, gravel crush, low wooden staff knock | coarse stone grind, sparse motes | stone body with crisp chipped edge, little sub tail | sand cinches into stone / brief mineral ring, grounded body |
-| Air / Momentum, restless motion | cloth-pressure flick, compressed breath, sparse electric filament | focused hiss with moving narrow whistle | air clap, short crackling arc | air folds inward / open airy harmonic and a directional return flick |
+| Air / Momentum, restless motion | sustained turbine-like rotating wind, subtle but present for two seconds, magical pitched edge | focused hiss with moving narrow whistle | air clap, short crackling arc | air folds inward with a clear tone / open airy harmonic and a rounded returning answer |
 
 Shared event shapes prevent element identity from hiding outcome:
 
@@ -34,8 +36,8 @@ Shared event shapes prevent element identity from hiding outcome:
 | Travel | tied to a live projectile, low gain; stop on despawn, no tail queue; prioritize closest threats |
 | Impact | hard physical onset plus material debris; distinguish world collision from successful player damage |
 | Absorb raise/hold/release | one inward onset, quiet tension while held, short closed release; ongoing mana drain does not beep |
-| Normal absorb contact | muffled inward catch, never the perfect ring; physical mitigation has dull cloth/metal contact |
-| Perfect absorb | immediate crisp return pulse and opening harmonic; one shared recognizable core with school tint; only confirmed magic perfects, never physical or unblockable hits |
+| Normal absorb contact | rounded inward catch with a clearly audible magical note, gentle satisfying closure; no perfect rising answer; physical mitigation has dull cloth/metal contact |
+| Perfect absorb | immediate rounded return and consonant opening harmonic answer that feels rewarding, without aggressive attack; shared recognizable core with school tint; only confirmed magic perfects, never physical or unblockable hits |
 | Hit / impact pair | hit on a body = cloth/leather weight; world impact = hard stone and chips; separate cues, no pain speech in AU1 |
 | Roll | linen/leather sweep into grit scuff; no magical teleport; follows actual roll start, not every Space press |
 | Collar rune tick | restrained bronze pin release plus one resonant rune; actual unlock only, distinct from slot selection |

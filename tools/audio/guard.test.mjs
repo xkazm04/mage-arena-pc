@@ -8,10 +8,10 @@ import { pathToFileURL } from 'node:url';
 import { checkFunds, estimate, accountCost } from './elevenlabs.mjs';
 const b = JSON.parse(fs.readFileSync(new URL('./budget.json', import.meta.url)));
 test('cap and reserve boundaries, invalid counters and pending reservations', () => {
-  assert.doesNotThrow(() => checkFunds(b, 3900, 0, 8100, 100));
-  assert.throws(() => checkFunds(b, 3901, 0, 90000, 100), /cap refusal/);
+  assert.doesNotThrow(() => checkFunds(b, 4900, 0, 14100, 100));
+  assert.throws(() => checkFunds(b, 4901, 0, 90000, 100), /cap refusal/);
   assert.throws(() => checkFunds(b, 0, 0, 8099, 100), /reserve refusal/);
-  assert.throws(() => checkFunds(b, 3800, 101, 90000, 100), /cap refusal/);
+  assert.throws(() => checkFunds(b, 4800, 101, 90000, 100), /cap refusal/);
   for (const bad of [NaN, Infinity, -1]) assert.throws(() => checkFunds(b, bad, 0, 90000, 100));
   assert.equal(estimate('sfx', 2, 0, b), 40);
   assert.equal(estimate('music', 20, 0, b), 600);
@@ -30,17 +30,17 @@ function fixture(t, scenario) {
   const mock = `import fs from 'node:fs';
 const nativeTimer=globalThis.setTimeout;
 globalThis.setTimeout=(fn,ms,...args)=>nativeTimer(fn,ms>=2000?0:ms,...args);
-let gets=0;
+let gets=0; let balanceGets=0;
 globalThis.fetch = async (url, init) => {
  fs.appendFileSync(${JSON.stringify(path.join(dir, 'calls.txt'))}, init.method+' '+new URL(url).pathname+'\\n');
  ${scenario === 'get429' ? "if(init.method==='GET' && gets++===0) return Response.json({detail:{status:'rate_limit_exceeded'}},{status:429});" : ''}
- ${scenario === 'postGet429' ? "if(init.method==='GET' && gets++===1) return Response.json({detail:{status:'rate_limited'}},{status:429});" : ''}
- if(new URL(url).pathname==='/v1/user/subscription') return Response.json({tier:'starter',character_count:1000,character_limit:90000,next_character_count_reset_unix:1791142301});
- if(init.method!=='POST'||!new URL(url).pathname.includes('sound-generation')) throw Error('Unexpected request blocked');
- ${scenario === '429' ? "return Response.json({detail:{status:'rate_limit_exceeded'}},{status:429});" : scenario === 'quota' ? "return Response.json({detail:{status:'quota_exceeded'}},{status:401});" : scenario === 'missing-header' ? "return new Response(new Uint8Array([73,68,51,0]));" : "return new Response(new Uint8Array([73,68,51,0]),{headers:{'character-cost':'20'}});"}
+ ${scenario === 'postGet429' ? "if(init.method==='GET' && gets++>=1) return Response.json({detail:{status:'rate_limited'}},{status:429});" : ''}
+ if(new URL(url).pathname==='/v1/user/subscription') return Response.json({tier:'starter',character_count:${scenario === 'musicLag' ? '(balanceGets++>=2?1600:1000)' : scenario === 'floorBefore' ? '76001' : scenario === 'floorAfter' ? '(balanceGets++===0?75950:76010)' : '1000'},character_limit:90000,next_character_count_reset_unix:1791142301});
+ if(init.method!=='POST'||!['/v1/sound-generation','/v1/music'].includes(new URL(url).pathname)) throw Error('Unexpected request blocked');
+ ${scenario === '429' ? "return Response.json({detail:{status:'rate_limit_exceeded'}},{status:429});" : scenario === 'quota' ? "return Response.json({detail:{status:'quota_exceeded'}},{status:401});" : ['missing-header','musicLag'].includes(scenario) ? "return new Response(new Uint8Array([73,68,51,0]));" : "return new Response(new Uint8Array([73,68,51,0]),{headers:{'character-cost':'20'}});"}
 };`;
   fs.writeFileSync(path.join(dir, 'mock.mjs'), mock);
-  const run = (file = 'test', seconds = '2') => spawnSync(process.execPath, ['--import', pathToFileURL(path.join(dir, 'mock.mjs')).href, path.join(dir, 'tools/audio/elevenlabs.mjs'), 'sfx', '--text', 'Test', '--seconds', seconds, '--out', `docs/audio/audition/r1/${file}.mp3`], { cwd: dir, encoding: 'utf8', env: { ...process.env, ELEVENLABS_API_KEY: 'fake-test-key-never-sent' } });
+  const run = (file = 'test', seconds = '2', text = 'Test', kind = 'sfx') => spawnSync(process.execPath, ['--import', pathToFileURL(path.join(dir, 'mock.mjs')).href, path.join(dir, 'tools/audio/elevenlabs.mjs'), kind, kind === 'music' ? '--prompt' : '--text', text, '--seconds', seconds, '--out', `docs/audio/audition/r2/${file}.mp3`], { cwd: dir, encoding: 'utf8', env: { ...process.env, ELEVENLABS_API_KEY: 'fake-test-key-never-sent' } });
   return { dir, run, calls: () => fs.existsSync(path.join(dir, 'calls.txt')) ? fs.readFileSync(path.join(dir, 'calls.txt'), 'utf8') : '' };
 }
 for (const scenario of ['429', 'quota']) test(`first ${scenario} permanently latches; POST is not retried`, t => {
@@ -52,12 +52,13 @@ for (const scenario of ['429', 'quota']) test(`first ${scenario} permanently lat
   assert.equal(f.run('second').status, 1);
   assert.equal(f.calls(), old);
 });
-test('read-only 429 backs off but recovered lookup never proceeds to POST', t => {
+test('first read-only 429 recovers after backoff and continues under AU2 authorization', t => {
   const f = fixture(t, 'get429');
-  assert.equal(f.run().status, 1);
-  assert.equal((f.calls().match(/GET/g)||[]).length, 2);
-  assert.equal((f.calls().match(/POST/g)||[]).length, 0);
-  assert.ok(fs.existsSync(path.join(f.dir, 'tools/audio/STOP.json')));
+  assert.equal(f.run().status, 0);
+  assert.equal((f.calls().match(/GET/g)||[]).length, 3);
+  assert.equal((f.calls().match(/POST/g)||[]).length, 1);
+  assert.equal(fs.existsSync(path.join(f.dir, 'tools/audio/STOP.json')), false);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/pacing.json'))).gapMs,15000);
 });
 test('missing billing header settles by estimate and allows another call', t => {
   const f = fixture(t, 'missing-header');
@@ -76,7 +77,7 @@ test('successful stale-balance response retains conservative estimate alongside 
   const first = f.run();
   assert.equal(first.status, 0, first.stderr);
   const entry = JSON.parse(fs.readFileSync(path.join(f.dir, 'tools/audio/ledger.jsonl'), 'utf8'));
-  const side = JSON.parse(fs.readFileSync(path.join(f.dir, 'docs/audio/audition/r1/test.mp3.json')));
+  const side = JSON.parse(fs.readFileSync(path.join(f.dir, 'docs/audio/audition/r2/test.mp3.json')));
   assert.deepEqual(entry, side);
   assert.equal(entry.accountDelta, 0);
   assert.equal(entry.chargedCredits, 40);
@@ -109,7 +110,7 @@ test('shared billing anomalies are flagged, not fatal, and always debited conser
 test('cap cannot be raised and exhaustion refuses before POST with a funds latch', t => {
  const f=fixture(t,'ok');
  const budgetPath=path.join(f.dir,'tools/audio/budget.json');
- fs.writeFileSync(budgetPath,JSON.stringify({...b,status:'proofs',capCredits:4001}));
+ fs.writeFileSync(budgetPath,JSON.stringify({...b,status:'proofs',capCredits:5001}));
  assert.equal(f.run().status,1);assert.equal(f.calls(),'');
  fs.writeFileSync(budgetPath,JSON.stringify({...b,status:'proofs',capCredits:20}));
  assert.equal(f.run().status,1);
@@ -117,16 +118,59 @@ test('cap cannot be raised and exhaustion refuses before POST with a funds latch
  assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/STOP.json'))).reason,'cap_or_reserve_refusal');
 });
 
-test('postflight subscription 429 saves successful audio, settles balance and latches all further generation', t => {
+test('second paced subscription 429 saves audio and latches all further generation', t => {
  const f=fixture(t,'postGet429');
  assert.equal(f.run().status,0);
  assert.equal((f.calls().match(/POST/g)||[]).length,1);
  assert.equal((f.calls().match(/GET/g)||[]).length,3);
  const entry=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/ledger.jsonl'),'utf8'));
  assert.equal(entry.chargedCredits,40);
- assert.ok(entry.accountAfter);
+ assert.equal(entry.accountAfter,null);
  const stop=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/STOP.json')));
  assert.equal(stop.status,429);assert.equal(stop.method,'GET');
  assert.equal(stop.endpoint,'/v1/user/subscription');
  const old=f.calls();assert.equal(f.run('second').status,1);assert.equal(f.calls(),old);
+});
+
+
+test('14000 floor blocks even while the 8000 reserve is safe', () => {
+ assert.throws(() => checkFunds(b,0,0,14039,40), /floor refusal/);
+ assert.doesNotThrow(() => checkFunds(b,0,0,14040,40));
+});
+test('all commands share the same lock, including balance reads', t => {
+ const f=fixture(t,'ok');
+ fs.writeFileSync(path.join(f.dir,'tools/audio/.generation.lock'),'test');
+ assert.equal(f.run().status,1);assert.equal(f.calls(),'');
+});
+test('AU1 debit is preserved but does not spend AU2 cap', t => {
+ const f=fixture(t,'ok');
+ fs.writeFileSync(path.join(f.dir,'tools/audio/ledger.jsonl'),JSON.stringify({wave:'AU1',chargedCredits:4990})+'\n');
+ const result=f.run();assert.equal(result.status,0,result.stderr);
+ assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/state.json'))).spentCredits,40);
+});
+
+
+test('oversized SFX is refused locally without spending or reserving', t => {
+ const f=fixture(t,'ok');
+ assert.equal(f.run('long','2','x'.repeat(451)).status,1);
+ assert.equal(f.calls(),'');
+ assert.equal(fs.existsSync(path.join(f.dir,'tools/audio/state.json')),false);
+});
+test('music records immediate zero and delayed charge before allowing the next request', t => {
+ const f=fixture(t,'musicLag');const r=f.run('music','20','Original melody','music');
+ assert.equal(r.status,0,r.stderr);
+ const entry=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/ledger.jsonl'),'utf8'));
+ assert.equal(entry.accountDelta,0);assert.equal(entry.settledDelta,600);
+ assert.equal(entry.chargedCredits,600);assert.equal(entry.settlementReads.length,1);
+ assert.ok(entry.flags.includes('charge_visible_only_after_settlement_wait'));
+ assert.equal((f.calls().match(/POST/g)||[]).length,1);
+ assert.equal((f.calls().match(/GET/g)||[]).length,3);
+});
+for(const scenario of ['floorBefore','floorAfter']) test(`account floor latches on ${scenario}`, t => {
+ const f=fixture(t,scenario);const r=f.run();
+ assert.equal(r.status,scenario==='floorBefore'?1:0,r.stderr);
+ const stop=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/STOP.json')));
+ assert.equal(stop.reason,'account_floor_reached');assert.ok(stop.remaining<14000);
+ assert.equal((f.calls().match(/POST/g)||[]).length,scenario==='floorBefore'?0:1);
+ const prior=f.calls();assert.equal(f.run('later').status,1);assert.equal(f.calls(),prior);
 });

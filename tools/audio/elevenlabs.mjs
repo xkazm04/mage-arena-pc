@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Adapted from garden-vr/tools/audio/elevenlabs.mjs, read-only source 2026-10-02.
-// AU1: shared balance upper bounds, durable reservations, quota latch; no POST retries.
+// AU2: serialized/paced reads AND writes, round-scoped debit, durable reservations.
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -17,7 +17,7 @@ const stopPath = path.join(here, 'STOP.json');
 const statePath = path.join(here, 'state.json');
 const budget = () => {
   const b = json(path.join(here, 'budget.json'));
-  if (!Number.isFinite(b.capCredits) || b.capCredits > 4000 || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < 8000) throw Error('Invalid AU1 cap/reserve');
+  if (b.wave !== 'AU2' || !Number.isFinite(b.capCredits) || b.capCredits > 5000 || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < 8000 || b.stopBelowCredits !== 14000 || !Number.isFinite(b.minRequestGapMs) || b.minRequestGapMs < 8000 || !Number.isFinite(b.musicSettlementMs) || b.musicSettlementMs < 30000) throw Error('Invalid AU2 cap/reserve/floor/pacing');
   return b;
 };
 function latch(reason, extra = {}) {
@@ -32,22 +32,50 @@ function apiKey() {
   }
   throw Error('ELEVENLABS_API_KEY unavailable');
 }
-// Never log init, authorization headers, raw provider bodies, or environment values.
+const pacingPath = path.join(here, 'pacing.json');
+const safeHeaders = r => Object.fromEntries([...r.headers].filter(([k]) => /^(date|retry-after|request-id|x-request-id|character-cost|x-character-cost|history-item-id|song-id|[a-z-]*(?:ratelimit|rate-limit|concurren)[a-z-]*)$/.test(k)));
+// Only selected diagnostic body fields and headers are stored; never credentials.
 async function request(endpoint, body) {
-  for (let attempt = 0; attempt < 4; attempt++) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const b = budget();
+    const pace = fs.existsSync(pacingPath) ? json(pacingPath) : {};
+    await sleep(Math.max(0, (pace.completedAtMs || 0) + Math.max(b.minRequestGapMs, pace.gapMs || 0) - Date.now()));
+    const startedAt = new Date().toISOString();
     const r = await fetch(API + endpoint, { method: body ? 'POST' : 'GET', headers: { 'xi-api-key': apiKey(), ...(body ? { 'content-type': 'application/json', accept: 'audio/mpeg' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(240000) });
-    if (r.ok) return r;
+    const bytes = await r.arrayBuffer(); // Hold the process lock until the whole response finishes.
+    const completedAtMs = Date.now();
+    write(pacingPath, { ...pace, completedAtMs });
+    const event = { event: 'http', wave: b.wave, endpoint: endpoint.split('?')[0], method: body ? 'POST' : 'GET', startedAt, completedAt: new Date(completedAtMs).toISOString(), status: r.status, headers: safeHeaders(r) };
+    if (r.ok) { append('http.jsonl', event); return new Response(bytes, { status: r.status, headers: r.headers }); }
     let code = 'http_error';
-    try { const d = await r.json(); if (typeof d.detail?.status === 'string' && /^[a-z_]+$/i.test(d.detail.status)) code = d.detail.status; } catch {}
-    if (r.status === 429 || r.status === 402 || /quota|rate_limit|credit|payment/.test(code)) latch('provider_quota_or_rate_limit', { status: r.status, code, endpoint: endpoint.split('?')[0], method: body ? 'POST' : 'GET' });
-    if (!body && r.status === 429 && attempt < 3) { await sleep(4000 * 2 ** attempt); continue; }
+    try {
+      const d = JSON.parse(Buffer.from(bytes).toString('utf8'));
+      if (typeof d.detail?.status === 'string' && /^[a-z_]+$/i.test(d.detail.status)) code = d.detail.status;
+      const message = d.detail?.message;
+      if (typeof message === 'string') event.body = { detail: { status: code, message: message.replaceAll(apiKey(), '[REDACTED]').replace(/sk_[a-zA-Z0-9_-]+/g, '[REDACTED]').slice(0, 2000) } };
+    } catch {}
+    event.code = code;
+    append('http.jsonl', event);
+    if (r.status === 429) {
+      const count = (pace.rateLimitCount || 0) + 1;
+      const retry = r.headers.get('retry-after');
+      const waitMs = Math.max(60000, Number(retry) * 1000 || Date.parse(retry) - Date.now() || 0);
+      write(pacingPath, { completedAtMs, rateLimitCount: count, gapMs: Math.max(15000, pace.gapMs || 0), nextRetryWaitMs: waitMs });
+      // One read-only recovery after at least 60 s; a second 429 latches.
+      // Never repeat a paid POST whose billing outcome might be ambiguous.
+      if (!body && count === 1 && attempt === 0) { await sleep(waitMs); continue; }
+      latch('provider_quota_or_rate_limit', { ...event, rateLimitCount: count });
+    } else if (r.status === 402 || /quota|rate_limit|credit|payment/.test(code)) latch('provider_quota_or_rate_limit', event);
     throw Error(`Provider request failed: HTTP ${r.status}, ${code}; no generation retry`);
   }
 }
 async function credits() {
   const d = await (await request('/v1/user/subscription')).json();
   if (![d.character_count, d.character_limit].every(Number.isFinite)) throw Error('Invalid subscription counters');
-  return { observedAt: new Date().toISOString(), tier: d.tier, used: d.character_count, limit: d.character_limit, remaining: d.character_limit - d.character_count, resetsAt: new Date(d.next_character_count_reset_unix * 1000).toISOString() };
+  const result = { observedAt: new Date().toISOString(), tier: d.tier, used: d.character_count, limit: d.character_limit, remaining: d.character_limit - d.character_count, resetsAt: new Date(d.next_character_count_reset_unix * 1000).toISOString() };
+  append('balances.jsonl', { wave: budget().wave, ...result });
+  if (result.remaining < budget().stopBelowCredits) latch('account_floor_reached', { remaining: result.remaining, floor: budget().stopBelowCredits });
+  return result;
 }
 export function estimate(kind, seconds, chars, b) {
   const n = kind === 'sfx' ? Math.max(b.bounds.sfxMinimum, Math.ceil(seconds * b.bounds.sfxPerSecond)) : kind === 'music' ? Math.ceil(seconds * b.bounds.musicPerSecond) : Math.ceil(chars * b.bounds.ttsPerCharacter);
@@ -66,6 +94,7 @@ export function checkFunds(b, spent, reserved, remaining, upper) {
   if (![spent, reserved, remaining, upper].every(Number.isFinite) || spent < 0 || reserved < 0 || upper <= 0) throw Error('Invalid guard inputs');
   if (spent + reserved + upper > b.capCredits) throw Error(`Project cap refusal: ${spent}+${reserved}+${upper} > ${b.capCredits}`);
   if (remaining - reserved - upper < b.reserveCredits) throw Error(`Shared reserve refusal: ${remaining}-${reserved}-${upper} < ${b.reserveCredits}`);
+  if (remaining - reserved - upper < b.stopBelowCredits) throw Error(`Account floor refusal: ${remaining}-${reserved}-${upper} < ${b.stopBelowCredits}`);
 }
 function args(argv) {
   const a = { _: [] };
@@ -83,12 +112,13 @@ async function generate(kind, a) {
   if (previous.pending) throw Error('Unresolved billable reservation: reconcile before more generation');
   const need = k => { if (typeof a[k] !== 'string' || !a[k]) throw Error(`--${k} required`); return a[k]; };
   const text = a['text-file'] ? fs.readFileSync(path.resolve(root, a['text-file']), 'utf8') : need(kind === 'music' ? 'prompt' : 'text');
+  if (kind === 'sfx' && text.length > 450) throw Error('SFX prompt exceeds provider 450-character limit; no call made');
   const seconds = kind === 'tts' ? null : Number(need('seconds'));
   if (kind === 'sfx' && (!Number.isFinite(seconds) || seconds < 0.5 || seconds > 30)) throw Error('SFX duration must be 0.5–30 s');
-  if (kind === 'music' && (!Number.isFinite(seconds) || seconds < 20 || seconds > 30)) throw Error('AU1 music duration must be 20–30 s');
+  if (kind === 'music' && (!Number.isFinite(seconds) || seconds < 10 || seconds > 20)) throw Error('AU2 music duration must be 10–20 s');
   const out = path.resolve(root, need('out'));
-  const relative = path.relative(path.join(root, 'docs/audio/audition/r1'), out);
-  if (relative.startsWith('..') || path.isAbsolute(relative) || !out.endsWith('.mp3')) throw Error('AU1 outputs must be MP3s inside audition/r1');
+  const relative = path.relative(path.join(root, 'docs/audio/audition/r2'), out);
+  if (relative.startsWith('..') || path.isAbsolute(relative) || !out.endsWith('.mp3')) throw Error('AU2 outputs must be MP3s inside audition/r2');
   if (fs.existsSync(out) || fs.existsSync(out + '.json')) throw Error('Output already exists; no paid overwrite');
   const model = kind === 'sfx' ? 'eleven_text_to_sound_v2' : kind === 'music' ? 'music_v1' : 'eleven_multilingual_v2';
   const voice = kind === 'tts' ? need('voice') : null;
@@ -96,19 +126,18 @@ async function generate(kind, a) {
   const body = kind === 'sfx' ? { text, duration_seconds: seconds, prompt_influence: 0.5, model_id: model, loop: !!a.loop }
     : kind === 'music' ? { prompt: text, music_length_ms: Math.round(seconds * 1000), force_instrumental: !a.vocals, model_id: model }
     : { text, model_id: model, voice_settings: { stability: 0.65, similarity_boost: 0.75, style: 0.1, use_speaker_boost: true } };
-  const spent = rows('ledger.jsonl').reduce((sum, e) => sum + e.chargedCredits, 0);
+  const spent = rows('ledger.jsonl').filter(e => e.wave === b.wave).reduce((sum, e) => sum + e.chargedCredits, 0);
   const upper = estimate(kind, seconds, text.length, b);
   const before = await credits();
   if (fs.existsSync(stopPath)) throw Error('Read-only lookup tripped stop latch; no POST');
   const initial = previous.initial || before;
-  if (initial.resetsAt !== before.resetsAt) throw Error('Account reset changed; AU1 requires reconciliation');
+  if (initial.resetsAt !== before.resetsAt) throw Error('Account reset changed; AU2 requires reconciliation');
   // Account counters may lag. Never spend the same unreflected balance twice.
-  // Retain the entire local debit as lag allowance against the latest shared read.
-  // This can double-count settled local charges, deliberately favouring the reserve.
-  const conservativeRemaining = Math.min(before.remaining, initial.remaining) - spent;
+  // Compare the actual counter with the round baseline less every local debit.
+  const conservativeRemaining = Math.min(before.remaining, initial.remaining - spent);
   try { checkFunds(b, spent, 0, conservativeRemaining, upper); }
   catch (e) { latch('cap_or_reserve_refusal', { spentCredits: spent, estimatedCredits: upper }); throw e; }
-  const pending = { id: crypto.randomUUID(), kind, out: path.relative(root, out).replaceAll('\\', '/'), reservedCredits: upper, before, body, startedAt: new Date().toISOString() };
+  const pending = { id: crypto.randomUUID(), wave: b.wave, kind, out: path.relative(root, out).replaceAll('\\', '/'), reservedCredits: upper, before, body, startedAt: new Date().toISOString() };
   write(statePath, { initial, pending });
   append('requests.jsonl', { event: 'reserved', ...pending });
   const endpoint = kind === 'sfx' ? '/v1/sound-generation' : kind === 'music' ? '/v1/music' : `/v1/text-to-speech/${voice}`;
@@ -116,13 +145,13 @@ async function generate(kind, a) {
   try { r = await request(endpoint + '?output_format=mp3_44100_128', body); }
   catch (e) { throw e; } // Durable pending reservation protects an unknown outcome; no billing-fault latch.
   const billingHeaders = {};
-  for (const name of ['character-cost', 'x-character-cost', 'request-id', 'x-request-id', 'history-item-id']) if (r.headers.has(name)) billingHeaders[name] = r.headers.get(name);
+  for (const name of ['character-cost', 'x-character-cost', 'request-id', 'x-request-id', 'history-item-id', 'song-id']) if (r.headers.has(name)) billingHeaders[name] = r.headers.get(name);
   const buf = Buffer.from(await r.arrayBuffer());
   if (!buf.length) throw Error('Empty response; reservation retained');
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, buf, { flag: 'wx' });
   // Save provenance immediately, even if later billing lookup fails.
-  const entry = { id: pending.id, ts: pending.startedAt, kind, model, voice, text, seconds, chars: kind === 'tts' ? text.length : null, out: pending.out, request: body, billingHeaders, bytes: buf.length, sha256: crypto.createHash('sha256').update(buf).digest('hex'), accountBefore: before, reservedCredits: upper, estimatedCredits: upper, documentedEstimateCredits: estimate(kind, seconds, text.length, { bounds: b.documentedBounds }), chargedCredits: upper, measuredCredits: null, costBasis: 'max-shared-delta-estimate-header' };
+  const entry = { id: pending.id, wave: b.wave, ts: pending.startedAt, kind, model, voice, text, seconds, chars: kind === 'tts' ? text.length : null, out: pending.out, request: body, billingHeaders, bytes: buf.length, sha256: crypto.createHash('sha256').update(buf).digest('hex'), accountBefore: before, reservedCredits: upper, estimatedCredits: upper, documentedEstimateCredits: estimate(kind, seconds, text.length, { bounds: b.documentedBounds }), chargedCredits: upper, measuredCredits: null, costBasis: 'max-shared-delta-estimate-header' };
   write(out + '.json', entry);
   const costHeader = billingHeaders['character-cost'] ?? billingHeaders['x-character-cost'];
   const measured = costHeader !== undefined && /^\d+(\.\d+)?$/.test(costHeader) ? Number(costHeader) : null;
@@ -132,18 +161,33 @@ async function generate(kind, a) {
   } catch { /* Fall back to reserved estimate, flag missing snapshot, never zero cost. */ }
   entry.accountAfter = after;
   entry.accountDelta = after ? before.remaining - after.remaining : null;
+  if (kind === 'music' && after && !fs.existsSync(stopPath)) {
+    // No other local call is allowed in this window. Preserve the immediate read
+    // separately from a settling read; neither attributes sister-project usage.
+    entry.settlementReads = [];
+    for (let attempt = 0; attempt < 3 && !fs.existsSync(stopPath); attempt++) {
+      await sleep(b.musicSettlementMs);
+      try { entry.accountSettled = await credits(); } catch { entry.accountSettled = null; break; }
+      entry.settlementReads.push(entry.accountSettled);
+      entry.settledDelta = Math.max(...entry.settlementReads.map(s => before.remaining - s.remaining));
+      if (entry.settledDelta >= upper) break;
+    }
+  }
   entry.measuredCredits = measured;
-  Object.assign(entry, accountCost(entry.accountDelta, upper, measured));
+  const observedDelta = entry.settledDelta != null ? Math.max(entry.accountDelta ?? entry.settledDelta, entry.settledDelta) : entry.accountDelta;
+  Object.assign(entry, accountCost(observedDelta, upper, measured));
+  if (entry.accountDelta === 0 && entry.settledDelta > 0) entry.flags.push('charge_visible_only_after_settlement_wait');
+  if (!after) { if (!entry.flags.includes('balance_unavailable')) entry.flags.push('balance_unavailable'); latch('postflight_balance_unavailable'); }
   entry.deltaBasis = 'shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges';
   write(out + '.json', entry);
   append('ledger.jsonl', entry);
   append('requests.jsonl', { event: 'completed', id: pending.id, chargedCredits: entry.chargedCredits, costBasis: entry.costBasis });
   write(statePath, { initial, pending: null, spentCredits: spent + entry.chargedCredits });
   if (spent + entry.chargedCredits >= b.capCredits) latch('project_cap_reached', { spentCredits: spent + entry.chargedCredits });
-  if (after && after.remaining < b.reserveCredits) latch('shared_reserve_reached', { remaining: after.remaining });
-  console.log(JSON.stringify({ ok: true, out: pending.out, measuredCredits: measured, chargedCredits: entry.chargedCredits, accountRemaining: after?.remaining, billingHeaders, totalSpent: spent + entry.chargedCredits, latched: fs.existsSync(stopPath) }));
+  if (after && after.remaining < b.stopBelowCredits) latch('account_floor_reached', { remaining: after.remaining });
+  console.log(JSON.stringify({ ok: true, out: pending.out, measuredCredits: measured, chargedCredits: entry.chargedCredits, accountRemaining: entry.accountSettled?.remaining ?? after?.remaining, billingHeaders, totalSpent: spent + entry.chargedCredits, latched: fs.existsSync(stopPath) }));
 }
-async function main() {
+async function command() {
   const a = args(process.argv.slice(2)), cmd = a._[0];
   if (cmd === 'credits') { console.log(JSON.stringify(await credits(), null, 2)); return; }
   if (cmd === 'usage') {
@@ -160,9 +204,12 @@ async function main() {
     console.log(JSON.stringify((d.voices || []).filter(v => !a.filter || (v.name + ' ' + JSON.stringify(v.labels)).toLowerCase().includes(String(a.filter).toLowerCase())).map(v => ({ id: v.voice_id, name: v.name, category: v.category, labels: v.labels })), null, 2)); return;
   }
   if (!['sfx', 'tts', 'music'].includes(cmd)) throw Error('usage: credits | voices [--filter] | sfx --text --seconds --out [--loop] | music --prompt --seconds --out | tts --text --voice --out');
+  await generate(cmd, a);
+}
+async function main() {
   const lock = path.join(here, '.generation.lock');
   let fd;
   try { fd = fs.openSync(lock, 'wx'); } catch { throw Error('Another generation or stale lock exists; no call made'); }
-  try { await generate(cmd, a); } finally { fs.closeSync(fd); fs.unlinkSync(lock); }
+  try { await command(); } finally { fs.closeSync(fd); fs.unlinkSync(lock); }
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(e => { console.error(JSON.stringify({ ok: false, error: e.message })); process.exitCode = 1; });

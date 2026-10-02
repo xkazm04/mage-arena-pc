@@ -1,0 +1,51 @@
+{
+  "id": "0ab04eba-a599-48bd-9485-d8b99f376100",
+  "wave": "AU2",
+  "ts": "2026-10-02T22:56:46.009Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "Two-second magical air cast: continuous turbine-like rotating wind, subtle but PRESENT from the first instant through the entire two seconds. Steady airy body and pitched magical edge until the last 50 ms. No one-shot, silence, impact, voice or music. Silky high-speed airflow with a soft stable midrange harmonic slowly bending upward. Smooth and fine-grained, no machine rattle.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r2/air-A-silk-rotor.mp3",
+  "request": {
+    "text": "Two-second magical air cast: continuous turbine-like rotating wind, subtle but PRESENT from the first instant through the entire two seconds. Steady airy body and pitched magical edge until the last 50 ms. No one-shot, silence, impact, voice or music. Silky high-speed airflow with a soft stable midrange harmonic slowly bending upward. Smooth and fine-grained, no machine rattle.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 33062,
+  "sha256": "a0e56dcbb9dc18e1ad3e7d161fe873d96bafba865d9ab5e3699895ab208aa4b3",
+  "accountBefore": {
+    "observedAt": "2026-10-02T22:56:46.008Z",
+    "tier": "starter",
+    "used": 68287,
+    "limit": 90000,
+    "remaining": 21713,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 40,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T22:57:05.592Z",
+    "tier": "starter",
+    "used": 68287,
+    "limit": 90000,
+    "remaining": 21713,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

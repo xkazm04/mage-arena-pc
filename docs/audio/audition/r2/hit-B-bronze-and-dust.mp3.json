@@ -1,0 +1,51 @@
+{
+  "id": "16bcd63a-e65f-44e7-97ae-1d91abf877cf",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:13:58.951Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A close wrapped-armour body hit, muted bronze under thick cloth, short downward pitch and a soft breathless thump, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.5,
+  "chars": null,
+  "out": "docs/audio/audition/r2/hit-B-bronze-and-dust.mp3",
+  "request": {
+    "text": "A close wrapped-armour body hit, muted bronze under thick cloth, short downward pitch and a soft breathless thump, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "15"
+  },
+  "bytes": 24703,
+  "sha256": "36461a864d8c2021b7fa1a53bbc57603f89e23002d2951c5019ba613d7d5fd56",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:13:58.950Z",
+    "tier": "starter",
+    "used": 71282,
+    "limit": 90000,
+    "remaining": 18718,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 30,
+  "estimatedCredits": 30,
+  "documentedEstimateCredits": 30,
+  "chargedCredits": 30,
+  "measuredCredits": 15,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:14:18.070Z",
+    "tier": "starter",
+    "used": 71282,
+    "limit": 90000,
+    "remaining": 18718,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

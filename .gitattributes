@@ -1,3 +1,5 @@
+# Preserve the explicitly archived stop evidence byte-for-byte on every host.
+docs/audio/evidence/r1-final/STOP.json -text
 *.png filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.jpeg filter=lfs diff=lfs merge=lfs -text

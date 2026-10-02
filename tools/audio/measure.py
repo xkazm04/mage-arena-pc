@@ -16,7 +16,10 @@ for entry in ledger:
     rate, channels = int(stream['sample_rate']), int(stream['channels'])
     cmd = ['ffmpeg', '-hide_banner', '-i', str(source), '-af', 'ebur128=peak=true', '-f', 'null', '-']
     measured = subprocess.run(cmd, capture_output=True, text=True, check=True).stderr
-    (EVIDENCE / (source.stem + '.ebur128.txt')).write_text('\n'.join(line.rstrip() for line in measured.splitlines())+'\n', encoding='utf-8')
+    meter_log = EVIDENCE / (source.stem + '.ebur128.txt')
+    if entry.get('wave')=='AU2' or not meter_log.exists():
+        stable_log = re.sub(r'\[Parsed_ebur128_\d+ @ [0-9a-fA-F]+\]', '[Parsed_ebur128 @ ADDRESS]', measured)
+        meter_log.write_text('\n'.join(line.rstrip() for line in stable_log.splitlines())+'\n', encoding='utf-8')
     summary = measured.rsplit('Summary:', 1)[1]
     lufs = float(re.search(r'I:\s+([-\d.]+) LUFS', summary)[1])
     peak = float(re.search(r'Peak:\s+([-\d.]+) dBFS', summary)[1])
@@ -52,7 +55,7 @@ for entry in ledger:
     seam['jointJumpsDbFS'] = [db(np.max(np.abs(repeated[j*len(pcm)]-repeated[j*len(pcm)-1]))) for j in (1, 2)]
     gain = min(0, (-26 if entry['kind'] == 'sfx' else -24) - lufs, -3 - peak)
     result = {
-        'id': source.stem, 'source': entry['out'], 'sourceSha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+        'id': source.stem, 'wave': entry.get('wave','AU1'), 'source': entry['out'], 'sourceSha256': hashlib.sha256(source.read_bytes()).hexdigest(),
         'codec': stream['codec_name'], 'sampleRate': rate, 'channels': channels,
         'requestedSeconds': entry['seconds'], 'containerSeconds': float(probe['format']['duration']),
         'decodedSeconds': round(len(pcm)/rate, 6), 'decodedSamplesPerChannel': len(pcm),
@@ -66,9 +69,29 @@ for entry in ledger:
         'command': 'ffmpeg -hide_banner -i <source> -af ebur128=peak=true -f null -',
         'status': 'measured raw provider output; owner listening pending'
     }
+    continuity_pcm = pcm[:2*rate] if entry.get('wave')=='AU2' and source.stem.startswith('air-') else pcm
+    quarter_levels = [db(np.sqrt(np.mean(q**2))) for q in np.array_split(continuity_pcm,4)]
+    result['quarterRmsDbFS'] = quarter_levels
+    result['quarterWindowSeconds'] = len(continuity_pcm)/rate/4
+    result['quarterLevelRangeDb'] = round(max(quarter_levels)-min(quarter_levels),2)
+    result['wholeClipRmsDbFS'] = db(np.sqrt(np.mean(pcm**2)))
+    if entry.get('wave')=='AU2' and source.stem.startswith('air-'):
+        result['sustainScreen'] = {
+            'criterion':'All four half-second quarters within 12 dB, activity through >=1.95 s, onset <=0.05 s; envelope only, not turbine timbre or listening.',
+            'pass': bool(max(quarter_levels)-min(quarter_levels)<=12 and result['lastActiveSeconds']>=1.95 and result['headActiveSeconds']<=0.05)
+        }
     results.append(result)
+# Keep normal/perfect comparisons level-matched even when one raw take is too
+# quiet to reach the usual target with browser attenuation alone.
+for family in ['absorb-A-warm-rune','absorb-B-liquid-prism','absorb-C-hushed-orbit']:
+    pair=[r for r in results if r['wave']=='AU2' and r['id'].startswith(family+'-')]
+    if len(pair)==2:
+        target=min(-26,*(r['integratedLufs'] for r in pair))
+        for r in pair:
+            r['auditionTargetLufs']=target
+            r['auditionGainDb']=round(min(0,target-r['integratedLufs'],-3-r['truePeakDbTP']),2)
 (EVIDENCE / 'measurements.json').write_text(json.dumps(results, indent=2)+'\n', encoding='utf-8')
-lines = ['# AU1 raw audio measurements', '', 'Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not a quality score. Audition trim is browser gain; raw files are unchanged.', '', '| Sample | Decoded seconds | LUFS-I | dBTP | LRA LU | Audition trim dB |', '|---|---:|---:|---:|---:|---:|']
+lines = ['# AU1 + AU2 raw audio measurements', '', 'Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not a quality score. Audition trim is browser gain; raw files are unchanged.', '', '| Sample | Decoded seconds | LUFS-I | dBTP | LRA LU | Audition trim dB |', '|---|---:|---:|---:|---:|---:|']
 for m in results: lines.append(f"| {m['id']} | {m['decodedSeconds']} | {m['integratedLufs']} | {m['truePeakDbTP']} | {m['loudnessRangeLu']} | {m['auditionGainDb']} |")
 (EVIDENCE / 'LOUDNESS.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
 print(json.dumps({'measuredSamples':len(results),'output':'docs/audio/evidence/measurements.json'}))

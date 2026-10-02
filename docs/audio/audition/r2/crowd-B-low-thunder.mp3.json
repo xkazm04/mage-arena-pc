@@ -1,0 +1,51 @@
+{
+  "id": "7b831b37-96cb-4e61-9097-cbdb33b96af0",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:17:27.101Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A distant Roman arena crowd reacts with a compact collective breath of astonishment opening into a low warm cheering roar, layered across a wide space. Human nonverbal mass, not angry shouting. Three seconds, no sports chant, whistle, announcer, applause rhythm, music or modern stadium horn.",
+  "seconds": 3,
+  "chars": null,
+  "out": "docs/audio/audition/r2/crowd-B-low-thunder.mp3",
+  "request": {
+    "text": "A distant Roman arena crowd reacts with a compact collective breath of astonishment opening into a low warm cheering roar, layered across a wide space. Human nonverbal mass, not angry shouting. Three seconds, no sports chant, whistle, announcer, applause rhythm, music or modern stadium horn.",
+    "duration_seconds": 3,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "30"
+  },
+  "bytes": 48945,
+  "sha256": "8e2e94c795402ecc5330e3e228de86a9bf716173d8aefa7b43388b20385a5079",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:17:27.099Z",
+    "tier": "starter",
+    "used": 71407,
+    "limit": 90000,
+    "remaining": 18593,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 60,
+  "estimatedCredits": 60,
+  "documentedEstimateCredits": 60,
+  "chargedCredits": 60,
+  "measuredCredits": 30,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:17:46.652Z",
+    "tier": "starter",
+    "used": 71407,
+    "limit": 90000,
+    "remaining": 18593,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}
