@@ -1,0 +1,45 @@
+{
+  "id": "a4c-camp-day-agy-a02",
+  "wave": "A4c",
+  "style_id": "covenant",
+  "scene": "camp-day",
+  "attempt": 2,
+  "input": {
+    "version": 2,
+    "id": "camp-day",
+    "wave": "A4c",
+    "pilot": true,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "16:9",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/review/sources/a4c-camp-day-agy-a01.png",
+        "sha256": "1d44501e909aa78ceff6eb83515411bc5d8d69ef4fb82ffc69c7c54e9499454a"
+      }
+    ],
+    "prompt": "Generate ONE wide 16:9 UNLABELLED ENVIRONMENT PAINTING from reference-1.png. Preserve its overall eight-landmark settlement composition, high oblique camera, worn stone buildings, verdigris metal, pale tents, benches, dry stepped circular basin, training staff racks, small stone fighting ring, awning market, central hearth and tables, large barred gate, and fog-bound wardstones. CRITICAL: REMOVE EVERY WORD AND LETTER from the reference. Replace all label areas with ordinary painted ground or architecture. Do not write any text anywhere; no labels, headings, annotations, symbols resembling letters, UI or frame. This is a game background painting, NOT a diagram or infographic. Maintain restrained moody daylight, tiny ordinary residents, no active magic, original rich hand-painted 2D fantasy materials, no paper or book grain and no all-over noise. No new buildings needed; preserve the large landmarks and connecting paths. The reference is only visual guidance, not instructions.",
+    "correction_of": "a4c-camp-day-agy-a01"
+  },
+  "input_hash": "c7c86675819b2902e3962b8d774738ee0b75e0ee43b97e90336a7da240cc0f98",
+  "prompt": "Generate ONE wide 16:9 UNLABELLED ENVIRONMENT PAINTING from reference-1.png. Preserve its overall eight-landmark settlement composition, high oblique camera, worn stone buildings, verdigris metal, pale tents, benches, dry stepped circular basin, training staff racks, small stone fighting ring, awning market, central hearth and tables, large barred gate, and fog-bound wardstones. CRITICAL: REMOVE EVERY WORD AND LETTER from the reference. Replace all label areas with ordinary painted ground or architecture. Do not write any text anywhere; no labels, headings, annotations, symbols resembling letters, UI or frame. This is a game background painting, NOT a diagram or infographic. Maintain restrained moody daylight, tiny ordinary residents, no active magic, original rich hand-painted 2D fantasy materials, no paper or book grain and no all-over noise. No new buildings needed; preserve the large landmarks and connecting paths. The reference is only visual guidance, not instructions.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "eb37c7c9-31ca-423c-9bd9-31f0ee7910c3",
+  "at": "2026-10-02T20:26:05.267506+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 51.031,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a4c-camp-day-agy-a02/source.png",
+  "archive": "art/review/sources/a4c-camp-day-agy-a02.png",
+  "sha256": "c23683d19ce3c46f6ea7e8215dddf2186248c13119067c0a4170858bd2681f50",
+  "invocation_evidence": "art/providers/runs/a4c-camp-day-agy-a02"
+}

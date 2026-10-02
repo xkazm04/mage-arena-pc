@@ -200,7 +200,7 @@ Decisions:
 | Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | delivered for owner review; see docs/waves/A7-covenant-bible.md |
 | Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | partial owner-review delivery: 12 identities, 38 keys; pose/style backlog |
 | Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | delivered owner-review: art/ui/kit.json, 90 regions, contract 06cd5e4 retained |
-| Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | not started |
+| Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | delivered owner-review: three slots, eight places/backdrops, six stories, canvas proof |
 | Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | not started |
 | Game | U1 | **Camera and UI overhaul**: far fixed camera with edge follow; full-screen canvas UI framework with the nine-slice kit loader (placeholder kit until A5b lands); rebuild the HUD, main menu, camp, Hollow Board, journal, Parley, composition, pause and results screens as in-game art-directed screens; TV-grade layout; keyboard, mouse and gamepad navigation; screenshots at 1080p and 1440p | D17, D19 | not started |
 | Art/Game | P1 | Provider probe (done 2026-10-02, see docs/PROVIDER-LEDGER.md) | owner login | done |
@@ -245,3 +245,16 @@ no provider incident. Kit/board checks PASS, 22 canvas captures across eleven
 layouts and two resolutions PASS; 59 tests PASS including negative loader cases.
 Owner taste, game integration, gamepad/sofa feel and performance unmeasured.
 Next A4c; no push.
+
+### ART session 5 - A4c - 2026-10-02
+
+A5b committed as 9d291b3. Delivered three time/palette maps at two resolutions,
+eight location backdrops, six reviewed story crops, Hollow Board using A5b frames
+and a canvas camp consumer. Thirteen agy calls; cumulative 193/240, 47 remain,
+no live provider incident. Initial labelled map rejected and corrected. Nine-cell
+story source retained with six explicit crops, three duplicates excluded. Export,
+source/board and browser checks PASS; closed visit/slot/keyboard checks PASS at
+1080p/1440p. 59 tests PASS. First 159 jobs and 06cd5e4 contract unchanged.
+Owner acceptance, game integration, live state, performance and physical gamepad/
+sofa feel unmeasured. Individual backdrops have one authored light condition.
+Next A2c; no push.

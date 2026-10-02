@@ -91,3 +91,11 @@ reset followed. No new generation is authorized by remaining allowance alone.
 - A3c: [native combat proofs and source findings](../art/review/a3c/index.html). Judge 3?4.5% scale, school silhouettes, painted fidelity versus strong contours, and enemy separation across three floors. Pose set remains partial.
 
 - A5b: [canvas kit board](../art/review/a5b/index.html). Judge frame material, focus/selection distinction, typography and sofa-distance readability. Loader contract is in art/ui/README.md; package is art/ui/kit.json.
+
+## A4c - Covenant camp candidates
+
+[Camp board](../art/review/a4c/index.html) includes all sources and eighteen actual
+canvas captures. Inspect day/dusk/night continuity, eight landmark labels, open/
+closed state, the eight visits and two pages of Hollow Board stories. New frames
+come from the A5b kit. Initial labelled map stays rejected; six story crops were
+selected explicitly from nine cells. No owner acceptance is recorded.

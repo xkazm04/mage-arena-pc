@@ -1,3 +1,11 @@
+# A4c session 5 update
+
+[Camp board](review/a4c/index.html), [loading notes](delivery/a4c/README.md):
+three map slots, eight backdrops, six story crops and new Hollow Board frames.
+Export/slot/browser checks pass at 1080p/1440p; 59 tests pass. One rejected source
+and explicit partial-sheet selection remain visible. 193/240 charged, 47 remain;
+both provider stops clear. Owner acceptance and game integration unmeasured.
+
 # A5b session 5 update
 
 [UI board](review/a5b/index.html), [loading notes](ui/DELIVERY.md): 90 regions,
