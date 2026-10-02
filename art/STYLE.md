@@ -1,3 +1,55 @@
+# Covenant family ? active style bible
+
+Data authority: [style-covenant.json](style-covenant.json). Owner-selected family:
+02 Verdigris Covenant, 03 Ragged Oracle and 04 Moonchalk Tempest. Portrait bar:
+04 Moonchalk Tempest. D16?D20 supersede all near-camera and prior-style notes below.
+
+One painting language: sculpted volumes, broken confident contours, pale layered
+cloth, dark lower silhouettes, worn metal, selected cool highlights and localized
+magic. Keep wear on physical edges. No paper, book, canvas grain, stippling or
+full-screen noise. Quiet broad floors leave room for moving spell silhouettes.
+Roman masonry and ordinary legion equipment ground the world; battle mages and
+creatures have their own raw magical identity. No discarded A2/A3 art is reused.
+
+Three environments share this treatment: dark verdigris stone; rust and sand;
+moonlit blue-black. Element identity never changes with the arena palette: flame
+forks and embers, water crescents and droplets, angular stone and dust, branching
+wind/lightning. Shape and value carry identity as well as colour.
+
+Battle mages carry staffs, belt tools, charms and light coloured layered cloth.
+At 3?4.5% screen height detail collapses: emphasize hood/shoulder wedge, staff head,
+split hem and compact aura. Do not add noisy full-body glow. Upright oblique
+billboards show shoulders, some face and foreshortened legs; never rotate a body
+as a flat ground sprite. All share upper-left light and a separate contact shadow.
+
+UI: dark enamel, aged silver, restrained verdigris and pale type. Borders contain
+the ornament; panel centres stay quiet. Text is engine-rendered. Navigation,
+selection and disabled states use shape cues. [UI contract](ui/README.md) is fixed.
+Camp and portraits use the same material language, with the portrait's richer
+painted facial modelling and strong dark-to-light separation.
+
+[Scale v2](scale-contract-v2.json) owns camera numbers. All delivered art remains
+owner-review. A technical proof permits siblings only. Local grades may reject
+or route to the owner, never approve. Reference-guided variants are regenerated
+paintings; they are not pixel-preserving edits.
+
+---
+
+The following is historical evidence, superseded by the active bible above.
+
+# A6 identity reset — current owner boundary
+
+D12–D15 discard the A2 portrait and A3 figure identities. They are historical
+rejection evidence, never references or production candidates for the reset.
+The near oblique camera and scale contract remain binding. The old choice below
+does not approve a new character or arena identity.
+
+[Eight A6 direction pairs](review/a6/index.html) contain six current arena
+candidates and two capped camera rejects. The current immutable comparison is
+`briefs/a6-v9.json`; exact corrections and earlier pilot revisions stay in the
+attempt archive. Only the owner chooses. A2b/A3b/A4b remain blocked.
+The camp is unchanged. The remainder of this document records the earlier work.
+
 # Tessera & Lime baseline and A1 comparison archive
 
 The owner chose Tessera & Lime (01-tessera) on 2026-10-02; see
@@ -48,3 +100,19 @@ observed player height are distinct evidence. Failed scenes remain visible.
 The camp source remains useful and its original data-driven labels are rechecked.
 A2 portraits, A4 camp/story art and A5 interface assets remain owner-review
 candidates until reviewed. A3 requires the separate owner camera file.
+
+## Session 3: A3 construction
+
+The owner camera file now confirms open oval / near / oblique about 55 degrees.
+A3 uses the full Tessera style block and existing cast descriptions, with directly
+inspected portrait references. The guarded transport is text-only: no claim of
+image-conditioned portrait identity. Garment, facing and precise elevation drift
+are visible limitations. The magenta sheet background is a technical matte,
+removed by deterministic chroma extraction; it is not the game's palette.
+
+Generated bodies are separate from native effect geometry. Exact arcs and threat
+marks use the contract projection and palette, not guessed generated geometry.
+Individual source crops, optional horizontal flips (including handedness),
+salvage from rejected sheets, and cast-body reuse are named in A3 manifests.
+No full-direction or finished run animation is claimed. A3 remains incomplete
+after the preserved spending latch; see the owner board and stop report.

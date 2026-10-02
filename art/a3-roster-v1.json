@@ -1,0 +1,187 @@
+{
+  "version": "a3-roster-v1",
+  "entities": [
+    {
+      "id": "cassia",
+      "name": "Cassia of the Lighthouse",
+      "kind": "mage",
+      "school": "water",
+      "design": "Adult woman about 28, warm brown skin, long angular face, dark almond eyes, black hair braided in a low coiled bun, single loose temple curl. Chalk linen tunic with narrow mineral-blue shoulder stripe and small plain bronze collar. Precise, observant lamp-keeper; no jewellery except a small plain blue cloth tie. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.",
+      "portrait": "art/delivery/a2/portraits/cassia-calm.png",
+      "height_ratio": 1.0
+    },
+    {
+      "id": "brennic",
+      "name": "Brennic the Red",
+      "kind": "mage",
+      "school": "fire",
+      "design": "Adult man about 32, pale freckled skin, broad square face, thick straight reddish brows, short rough red hair and short red stubble. Muscular neck, weathered terracotta tunic with a dark red shoulder patch, plain bronze collar. Proud former auxiliary, forceful but human. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.",
+      "portrait": "art/delivery/a2/portraits/brennic-calm.png",
+      "height_ratio": 1.0
+    },
+    {
+      "id": "garran",
+      "name": "Garran Stonehand",
+      "kind": "mage",
+      "school": "earth",
+      "design": "Adult man about 44, weathered medium tan skin, broad rounded face, large nose, deep-set kind brown eyes, thick dark-brown beard with a grey streak at chin, cropped wavy brown hair. Heavy flax tunic with dull ochre shoulder seam and plain bronze collar. Patient farmer and father, strong neck, no armour. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.",
+      "portrait": "art/delivery/a2/portraits/garran-calm.png",
+      "height_ratio": 1.0
+    },
+    {
+      "id": "iskar",
+      "name": "Iskar Windborn",
+      "kind": "mage",
+      "school": "air",
+      "design": "Adult man about 27, warm tawny skin, high wide cheekbones, narrow dark eyes, long black hair tied in a short low knot with shaved temples, thin moustache. Pale flax tunic with muted sage shoulder wrap and plain bronze collar. Restless defiant steppe rider; no hat. Full body: knee-length belted linen tunic, bare calves, plain brown leather sandals. No staff, no weapon, no hat. Keep the same garment and plain bronze neck collar in every pose.",
+      "portrait": "art/delivery/a2/portraits/iskar-calm.png",
+      "height_ratio": 1.0
+    },
+    {
+      "id": "conscript",
+      "name": "Hastatus conscript",
+      "kind": "soldiers",
+      "design": "Adult Roman conscript, compact iron cap without crest, russet short tunic, small round bronze shield on left arm, a single long ash spear in right hand, bare calves and brown sandals. Strong narrow spear silhouette. No prisoner collar.",
+      "height_ratio": 1,
+      "attacks": [
+        {
+          "id": "spear_lunge",
+          "family": "physical",
+          "damage": 10,
+          "windupS": 0.6,
+          "recoveryS": 0.5,
+          "rangeM": 2.0
+        }
+      ]
+    },
+    {
+      "id": "shieldman",
+      "name": "Scutum bearer",
+      "kind": "soldiers",
+      "design": "Stocky adult Roman scutum bearer, plain low iron helmet without crest, dark ochre short tunic, broad rectangular oxblood-red scutum shield with one plain bronze central boss, short sword, bare calves and brown sandals. Shield dominates silhouette. No lettering or borrowed insignia.",
+      "height_ratio": 1,
+      "attacks": [
+        {
+          "id": "shield_bash",
+          "family": "physical",
+          "damage": 8,
+          "windupS": 0.7,
+          "recoveryS": 0.6,
+          "rangeM": 1.5
+        }
+      ]
+    },
+    {
+      "id": "slinger",
+      "name": "Funditor",
+      "kind": "soldiers",
+      "design": "Lean adult Roman funditor with olive skin, curly cropped dark hair, no helmet, short faded ochre tunic with diagonal dark belt and small hip pouch, brown sandals. One simple cord sling with stone cradle, no bow, no spear, no shield.",
+      "height_ratio": 1,
+      "attacks": [
+        {
+          "id": "sling_stone",
+          "family": "physical",
+          "damage": 7,
+          "windupS": 0.5,
+          "cooldownS": 2.2,
+          "projectileMps": 14
+        }
+      ]
+    },
+    {
+      "id": "netter",
+      "name": "Net-thrower",
+      "kind": "soldiers",
+      "design": "Adult arena net thrower with deep brown skin, short black hair, short desaturated brick linen tunic, bare arms and calves, brown sandals. One loosely folded ochre cord fishing net with broad coarse diamond mesh over left forearm, right hand grips its cord; no trident, no armour.",
+      "height_ratio": 1,
+      "attacks": [
+        {
+          "id": "net_cast",
+          "family": "physical",
+          "effect": "root 1.0 s",
+          "damage": 0,
+          "windupS": 0.8,
+          "cooldownS": 6.0,
+          "telegraph": "ring on the ground 2.5 m"
+        }
+      ]
+    },
+    {
+      "id": "cinder_hound",
+      "name": "Cinder hound",
+      "kind": "creatures",
+      "design": "Original compact lean dog-like quadruped, charcoal-umber angular body, blunt canine snout, two pointed ears, four sturdy legs, short upward curling tail. Small flat terracotta ember cracks at shoulder and flank, no flames, no glow cloud, no armour. Dog anatomy, not a dragon.",
+      "height_ratio": 0.62,
+      "attacks": [
+        {
+          "id": "bite",
+          "family": "physical",
+          "damage": 6,
+          "windupS": 0.35,
+          "recoveryS": 0.4
+        }
+      ]
+    },
+    {
+      "id": "mire_maw",
+      "name": "Mire maw",
+      "kind": "creatures",
+      "design": "Original broad squat amphibious quadruped, dull olive-ochre leathery body, very broad horizontal dark mouth, two small mineral-blue eyes atop head, four short splayed limbs and no tail. Sparse dark mud plates on back. Bulky low wedge silhouette; no horns or copied monster.",
+      "height_ratio": 0.85,
+      "attacks": [
+        {
+          "id": "bog_glob",
+          "family": "magic",
+          "tier": 1,
+          "damage": 14,
+          "windupS": 0.7,
+          "projectileMps": 9
+        },
+        {
+          "id": "tongue_pull",
+          "family": "physical",
+          "damage": 4,
+          "effect": "pull 4 m",
+          "windupS": 1.0,
+          "telegraph": "line"
+        }
+      ]
+    },
+    {
+      "id": "thornback",
+      "name": "Thornback",
+      "kind": "creatures",
+      "design": "Original heavy boar-like quadruped, umber body with ochre angular back plates, three large blunt triangular thorn ridges along spine, short wedge snout with two small tusks, four short powerful legs, tiny tail. Clearly distinct large ridged silhouette; no rhinoceros horn.",
+      "height_ratio": 0.95,
+      "attacks": [
+        {
+          "id": "thorn_charge",
+          "family": "unblockable",
+          "damage": 22,
+          "windupS": 1.0,
+          "telegraph": "lane 2 m wide x 12 m",
+          "onWallHit": "self-stun 1.5 s"
+        }
+      ]
+    },
+    {
+      "id": "hush_moth",
+      "name": "Hush moth",
+      "kind": "creatures",
+      "design": "Original small moth creature, two broad paired dusty-chalk wings with dark umber margins and one muted sage oval on each upper wing, narrow charcoal body, two short antennae and tiny legs. Four wings total, broad simple silhouette, matte pigment, no glow or decorative symbols.",
+      "height_ratio": 0.48,
+      "attacks": [
+        {
+          "id": "mana_sip",
+          "family": "physical",
+          "effect": "drain 6 mana per second on contact",
+          "damage": 0,
+          "windupS": 0.0
+        }
+      ]
+    }
+  ],
+  "enemy_source_sha256": "e6b55f3e0925c6ac2c609dcdb5d3baae7490cc41f9e1647e3174e1ec2296aba9",
+  "ai_mages": "reuse four school atlases; competence does not change appearance",
+  "echo": "excluded: season plan removes Echo; baseline prescribes player shadow tint, no image"
+}

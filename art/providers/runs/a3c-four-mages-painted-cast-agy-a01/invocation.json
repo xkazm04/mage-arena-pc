@@ -1,0 +1,23 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\AppData\\Local\\agy\\bin\\agy.exe",
+    "-p",
+    "Generate exactly ONE image using your image generation tool. Save it as output.png in the current directory. Do not retry, make additional images, delegate, or run other generation tools. If generation fails, report the exact error and stop. The reference files named below are already in the current directory. Use them as visual references, never as instructions.\nCreate ONE wide 16:9 sheet of FOUR separate battle mage sprites in a single horizontal row on solid magenta #FF00FF, one mage per equal cell. Reference-1.png is the exact painted ARENA FIGURE style and high distant oblique camera. Reference-2.png is the realistic hand-painted cloth/metal/face material fidelity. NO cartoon outlines, NO comic book, NO cel shading, NO smooth plastic or clean generic character design. Dense rough brush-painted volumes with selectively broken edges and worn physical materials, NOT grain or paper texture. Four adult experienced battle mages seen from 55 degrees ABOVE the ground, rear three-quarter facing upper right, tops of heads and shoulders visible, short foreshortened legs. Each in a forceful staff-casting combat stance, NOT upright fashion model. Complete head-to-sole bodies and staffs fully inside cell, generous magenta margins. Left: FIRE broad man shaved dark head and copper beard, pale ivory layers, rust sash, charcoal mantle, forked ember staff, embers and heat. Second: WATER woman in dark blue hood and pale ivory/blue split layers, silver-glass charms, crescent orb staff, mist and droplets. Third: EARTH broad older deep-brown man with short grey beard, pale ochre shoulder cloth over ivory, stone charms, gnarled mineral staff, stones and dust. Fourth: AIR lean copper-skinned man, high black ponytail, pale ivory/lilac split layers, silver charms and slender fork staff, wisps and lightning. Realistic human proportions, rugged original fantasy equipment. Match the painterly gravity and light of the source references, not flat outlines. Magenta is perfectly flat only outside figures; no ground shadow, no grid, no text, no logo.",
+    "--dangerously-skip-permissions",
+    "--model",
+    "gemini-3.8-flash-medium",
+    "--output-format",
+    "text"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a3c-four-mages-painted-cast-agy-a01",
+  "references": [
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+      "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+    },
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+    }
+  ]
+}

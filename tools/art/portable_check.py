@@ -30,7 +30,7 @@ def main():
         rebuilt = {p.name: sha(p) for p in (target / 'art/review/screens').glob('*.png')}
         validation = read(target / 'art/reports/validation.json')
         later = []
-        for wave in ('A1b', 'A2', 'A4', 'A5'):
+        for wave in ('A1b', 'A2', 'A3', 'A4', 'A5'):
             manifest = ART / 'review' / wave.lower() / 'manifest.json'
             if not manifest.exists():
                 continue
@@ -71,6 +71,20 @@ def main():
             later.append({'wave':'A5 native icons and HUD', 'exit_code':result.returncode,
                           'sources':len(copied['exports']), 'hashes_identical':original == copied,
                           'stderr':result.stderr})
+        figure_manifest = ART / 'delivery/a3/figures.json'
+        if figure_manifest.exists():
+            before = {p.relative_to(ART/'delivery/a3').as_posix():sha(p) for p in (ART/'delivery/a3').rglob('*.png')}
+            a3results=[]
+            for command in ([sys.executable,'tools/art/figures.py','build'],
+                            [sys.executable,'tools/art/effects.py'],
+                            [sys.executable,'tools/art/a3_board.py'],
+                            [sys.executable,'tools/art/check_a3.py','--skip-browser']):
+                result=subprocess.run(command,cwd=target,capture_output=True,text=True,encoding='utf-8',errors='replace')
+                a3results.append({'command':command[1:],'exit_code':result.returncode,'stdout':result.stdout,'stderr':result.stderr})
+            after = {p.relative_to(target/'art/delivery/a3').as_posix():sha(p) for p in (target/'art/delivery/a3').rglob('*.png')}
+            later.append({'wave':'A3 incomplete stopped handoff', 'exit_code':max(r['exit_code'] for r in a3results),
+                          'sources':len(after), 'hashes_identical':before==after and read(figure_manifest)==read(target/'art/delivery/a3/figures.json'),
+                          'commands':a3results,'a3_complete':False})
         start = time.monotonic()
         result = subprocess.run([sys.executable,'tools/art/verify_ui.py'],cwd=target,
                                 capture_output=True,text=True,encoding='utf-8',errors='replace')

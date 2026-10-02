@@ -1,0 +1,98 @@
+{
+  "artifact": "a3-effects",
+  "at": "2026-10-02T11:38:17.180695+00:00",
+  "input_hash": "1c681f4fc2a950080a17f1cdaf9564f9235ab1d85c06eaf675d650303fd78dd2",
+  "source": "art/delivery/a3/effects-contact.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "62408db490459a3994e5c4f45e916566773aa51cbceeab4675d1f698ae26accf",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Authored effect family contact sheet. Intentional code labels and simple geometric silhouettes. Water absorb open-rear arc, perfect flash, four school bolts and lines, five Water family motifs, telegraph rings and crossed unblockable marks. This is geometry-native interface/game effects, not an attempt to look like generated anatomy. Inspect visible separation and distinguishable threat shapes. No gameplay timing or full spell implementation claim.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.5,\n  \"observation\": \"The image displays a clean, grid-based contact sheet of vector-style game effects on a solid beige background. The visual style is consistent with the 'chalk-lime, umber, terracotta, and mineral blue' palette, utilizing flat colors and simple geometric strokes without gradients or photographic elements. All expected content is present and clearly labeled: the four elemental bolts and lines (water, fire, earth, air) are distinct in shape and color; the Water family motifs (tide-orb, lash, mire, mend, mirror, absorb, perfect-absorb, telegraph-ring) are visually differentiated; and the threat indicators (physical/unblockable telegraph rings, unblockable marks, charge lane, net ring, tongue line, ember burst) are legible. The 'water-absorb' icon correctly shows an open-rear arc, and the 'water-perfect-absorb' shows a starburst flash. Text labels are small but sharp and unobstructed, with no overlap between icons or text. There are no watermarks, logos, or unintended photographic inserts. The layout is orderly, with consistent spacing and alignment, making each effect easily distinguishable. No defects, obscured controls, or readability issues were observed.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.5,
+    "observation": "The image displays a clean, grid-based contact sheet of vector-style game effects on a solid beige background. The visual style is consistent with the 'chalk-lime, umber, terracotta, and mineral blue' palette, utilizing flat colors and simple geometric strokes without gradients or photographic elements. All expected content is present and clearly labeled: the four elemental bolts and lines (water, fire, earth, air) are distinct in shape and color; the Water family motifs (tide-orb, lash, mire, mend, mirror, absorb, perfect-absorb, telegraph-ring) are visually differentiated; and the threat indicators (physical/unblockable telegraph rings, unblockable marks, charge lane, net ring, tongue line, ember burst) are legible. The 'water-absorb' icon correctly shows an open-rear arc, and the 'water-perfect-absorb' shows a starburst flash. Text labels are small but sharp and unobstructed, with no overlap between icons or text. There are no watermarks, logos, or unintended photographic inserts. The layout is orderly, with consistent spacing and alignment, making each effect easily distinguishable. No defects, obscured controls, or readability issues were observed."
+  },
+  "eval_count": 315,
+  "elapsed_seconds": 13.156
+}

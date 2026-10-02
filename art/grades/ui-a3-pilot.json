@@ -1,0 +1,103 @@
+{
+  "artifact": "a3-pilot",
+  "at": "2026-10-02T11:08:54.942199+00:00",
+  "input_hash": "7e40807521e02496dd5d0dd78d8f92976721dec5bbd73db1ee6d4343b663ccb3",
+  "source": "art/delivery/a3/pilot/open-oval-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "d8d1bad583831708fdb94e9e60be195140f747eea4d3df72c2b1b2d24335e68c",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Static oblique figure-over-arena proof. Added Cassia figures at 4, 5 and 6 percent height; raised-palms absorb with exact open-rear arc at right. Existing painted figures and effects are part of unchanged chosen background. Check alpha fringes and silhouette separation at native scale; labels are authored. No motion or owner acceptance claim.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The image displays a static oblique view of an arena with several figures. The added figures (Cassia) are present at the specified scales (4%, 5%, 6%) with clear labels. The 'open-rear arc' is visible on the right side, associated with a figure, and another arc is visible near the center. The existing painted figures and effects (red circles, lines) are part of the background. The style matches the description: chalk-lime ground, umber/terracotta markings, and mineral blue for the arcs and some figure details. The text labels are clear and legible, with no significant overlap or obscuring of controls (though no interactive controls are visible, which is expected for a static proof). The alpha fringes on the added figures appear clean, with good silhouette separation from the background. There are no unintended watermarks, logos, or photographic inserts. The composition is static, as expected. The 'raised-palms' pose is visible on the figure at 6% scale and the one with the arc on the right. The 'exact open-rear arc' is present. The overall presentation is a clean, authored UI capture over project art, meeting the stated expectations for a static proof. The readability is high (3) as all text is clear and unobstructed. The confidence is moderate (0.75) because while the visual elements match the description, the 'exact' nature of the arc and the 'absorb' quality of the raised palms are subjective and cannot be fully verified without the original source or more specific metrics. However, based on the visual evidence, it appears to meet the requirements.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The image displays a static oblique view of an arena with several figures. The added figures (Cassia) are present at the specified scales (4%, 5%, 6%) with clear labels. The 'open-rear arc' is visible on the right side, associated with a figure, and another arc is visible near the center. The existing painted figures and effects (red circles, lines) are part of the background. The style matches the description: chalk-lime ground, umber/terracotta markings, and mineral blue for the arcs and some figure details. The text labels are clear and legible, with no significant overlap or obscuring of controls (though no interactive controls are visible, which is expected for a static proof). The alpha fringes on the added figures appear clean, with good silhouette separation from the background. There are no unintended watermarks, logos, or photographic inserts. The composition is static, as expected. The 'raised-palms' pose is visible on the figure at 6% scale and the one with the arc on the right. The 'exact open-rear arc' is present. The overall presentation is a clean, authored UI capture over project art, meeting the stated expectations for a static proof. The readability is high (3) as all text is clear and unobstructed. The confidence is moderate (0.75) because while the visual elements match the description, the 'exact' nature of the arc and the 'absorb' quality of the raised palms are subjective and cannot be fully verified without the original source or more specific metrics. However, based on the visual evidence, it appears to meet the requirements."
+  },
+  "eval_count": 409,
+  "elapsed_seconds": 11.5,
+  "verdict": "owner-review",
+  "codes": [
+    "OWNER_CHOICE_PENDING"
+  ],
+  "owner_accepted": false
+}

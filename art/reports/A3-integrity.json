@@ -1,0 +1,221 @@
+{
+  "status": "pass",
+  "scope": "integrity of explicitly incomplete stopped handoff, NOT A3 completion",
+  "a3_complete": false,
+  "missing_items": [
+    "figure-cinder_hound-injury",
+    "figure-hush_moth-action",
+    "figure-hush_moth-injury",
+    "figure-hush_moth-run",
+    "figure-hush_moth-stance",
+    "figure-mire_maw-action",
+    "figure-mire_maw-injury",
+    "figure-mire_maw-run",
+    "figure-mire_maw-stance",
+    "figure-thornback-action",
+    "figure-thornback-injury",
+    "figure-thornback-run",
+    "figure-thornback-stance"
+  ],
+  "errors": [],
+  "frames": 70,
+  "atlases": 9,
+  "effect_sheets": 138,
+  "projectile_measurements": [
+    {
+      "id": "water-bolt",
+      "height": 1080,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 4
+    },
+    {
+      "id": "fire-bolt",
+      "height": 1080,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 9
+    },
+    {
+      "id": "earth-bolt",
+      "height": 1080,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 13
+    },
+    {
+      "id": "air-bolt",
+      "height": 1080,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 8
+    },
+    {
+      "id": "water-bolt",
+      "height": 1080,
+      "distance": "near",
+      "opaque_centre_thickness_px": 4
+    },
+    {
+      "id": "fire-bolt",
+      "height": 1080,
+      "distance": "near",
+      "opaque_centre_thickness_px": 11
+    },
+    {
+      "id": "earth-bolt",
+      "height": 1080,
+      "distance": "near",
+      "opaque_centre_thickness_px": 15
+    },
+    {
+      "id": "air-bolt",
+      "height": 1080,
+      "distance": "near",
+      "opaque_centre_thickness_px": 10
+    },
+    {
+      "id": "water-bolt",
+      "height": 1080,
+      "distance": "far",
+      "opaque_centre_thickness_px": 4
+    },
+    {
+      "id": "fire-bolt",
+      "height": 1080,
+      "distance": "far",
+      "opaque_centre_thickness_px": 8
+    },
+    {
+      "id": "earth-bolt",
+      "height": 1080,
+      "distance": "far",
+      "opaque_centre_thickness_px": 10
+    },
+    {
+      "id": "air-bolt",
+      "height": 1080,
+      "distance": "far",
+      "opaque_centre_thickness_px": 8
+    },
+    {
+      "id": "water-bolt",
+      "height": 1440,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 5
+    },
+    {
+      "id": "fire-bolt",
+      "height": 1440,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 13
+    },
+    {
+      "id": "earth-bolt",
+      "height": 1440,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 16
+    },
+    {
+      "id": "air-bolt",
+      "height": 1440,
+      "distance": "standard",
+      "opaque_centre_thickness_px": 11
+    },
+    {
+      "id": "water-bolt",
+      "height": 1440,
+      "distance": "near",
+      "opaque_centre_thickness_px": 7
+    },
+    {
+      "id": "fire-bolt",
+      "height": 1440,
+      "distance": "near",
+      "opaque_centre_thickness_px": 15
+    },
+    {
+      "id": "earth-bolt",
+      "height": 1440,
+      "distance": "near",
+      "opaque_centre_thickness_px": 20
+    },
+    {
+      "id": "air-bolt",
+      "height": 1440,
+      "distance": "near",
+      "opaque_centre_thickness_px": 13
+    },
+    {
+      "id": "water-bolt",
+      "height": 1440,
+      "distance": "far",
+      "opaque_centre_thickness_px": 5
+    },
+    {
+      "id": "fire-bolt",
+      "height": 1440,
+      "distance": "far",
+      "opaque_centre_thickness_px": 10
+    },
+    {
+      "id": "earth-bolt",
+      "height": 1440,
+      "distance": "far",
+      "opaque_centre_thickness_px": 13
+    },
+    {
+      "id": "air-bolt",
+      "height": 1440,
+      "distance": "far",
+      "opaque_centre_thickness_px": 9
+    }
+  ],
+  "browser": [
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "loaded": true,
+      "overflow": false,
+      "errors": [],
+      "capture": "art\\review\\a3\\owner-1920.png",
+      "sha256": "e6be72536d71830fcc62232347230e01a5fe327ba32117fd6101baccf56ada20"
+    },
+    {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "loaded": true,
+      "overflow": false,
+      "errors": [],
+      "capture": "art\\review\\a3\\owner-2560.png",
+      "sha256": "116d5790d7fa93d9a831096859d8532b6e5fad63a11389550d2aefb39d98dedd"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "loaded": true,
+      "overflow": false,
+      "errors": [],
+      "capture": "art\\review\\a3\\owner-390.png",
+      "sha256": "d0e43f24cb018ef5b7d9531b15d446bcd69aac2a354d7de376a6080617e71f91"
+    }
+  ],
+  "budget": {
+    "week": "2026-W40",
+    "wave_reserved": 126,
+    "weekly_reserved": 126,
+    "target_remaining": 23,
+    "hard_remaining": 54,
+    "generated": 125,
+    "observed_image_tool_calls": 126,
+    "videos": 0,
+    "stop": {
+      "at": "2026-10-02T11:21:51.279862+00:00",
+      "reason": "01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry"
+    },
+    "shared_account_remaining": "not measured"
+  },
+  "owner_accepted": false
+}

@@ -14,6 +14,8 @@ def main():
     sub.add_parser('build')
     sub.add_parser('validate')
     sub.add_parser('rank')
+    provider = sub.add_parser('provider-generate', help='D20 guarded generation from an immutable Covenant brief')
+    provider.add_argument('brief')
     g = sub.add_parser('generate')
     g.add_argument('--style', required=True, choices=[s['id'] for s in styles()])
     g.add_argument('--scene', required=True, choices=['arena', 'camp'])
@@ -30,6 +32,10 @@ def main():
     a = p.parse_args()
     if a.command == 'status':
         print(json.dumps(Budget().summary(), indent=2))
+    elif a.command == 'provider-generate':
+        from providers import generate as provider_generate
+        if provider_generate(read(a.brief))['status'] != 'generated':
+            raise SystemExit(2)
     elif a.command == 'generate':
         result = generate(a.style, a.scene, a.correction)
         if result['status'] != 'generated':

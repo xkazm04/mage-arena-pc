@@ -29,7 +29,12 @@ class CameraDataTests(unittest.TestCase):
         self.assertEqual(len(b['items']), 24)
         self.assertEqual(len({(i['layout'], i['density'], i['distance']) for i in b['items']}), 24)
         self.assertEqual({i['target_fraction'] for i in b['items']}, {.04, .05, .06})
-        self.assertEqual(b['scale_contract_sha256'], sha(ART / 'scale-contract-v1.json'))
+        self.assertEqual(b['scale_contract_sha256'], sha(ART / 'waves/A1b/scale-contract-at-generation.json'))
+        historical = read(ART / 'waves/A1b/scale-contract-at-generation.json')
+        current = read(ART / 'scale-contract-v1.json')
+        # Owner confirmation changed status prose, not any numeric scale authority.
+        for key in ('camera', 'character', 'distances', 'telegraph', 'absorb', 'formulas'):
+            self.assertEqual(historical[key], current[key])
 
     def test_history_is_immutable_and_prompt_drift_fails(self):
         ledger = read(ART / 'usage.json')

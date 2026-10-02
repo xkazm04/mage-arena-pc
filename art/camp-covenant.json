@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "source_locations": "docs/design/baseline-fourteen-nights/design/data/locations.csv",
+  "source_sha256": "a0761406c89343f3c5af52ae119a132397cf8b377f5c1c54a0e0df52e3492a92",
+  "slots": [
+    "day",
+    "dusk",
+    "night"
+  ],
+  "places": [
+    {
+      "id": "yard",
+      "name": "the Yard",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.23,
+        0.2
+      ]
+    },
+    {
+      "id": "cistern",
+      "name": "the Cistern",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.62,
+        0.2
+      ]
+    },
+    {
+      "id": "pit",
+      "name": "the Pit",
+      "open": [
+        "dusk"
+      ],
+      "anchor": [
+        0.87,
+        0.24
+      ]
+    },
+    {
+      "id": "exchange",
+      "name": "the Exchange",
+      "open": [
+        "day"
+      ],
+      "anchor": [
+        0.24,
+        0.5
+      ]
+    },
+    {
+      "id": "commons",
+      "name": "the Commons",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.52,
+        0.5
+      ]
+    },
+    {
+      "id": "door",
+      "name": "the Door",
+      "open": [
+        "day"
+      ],
+      "anchor": [
+        0.77,
+        0.59
+      ]
+    },
+    {
+      "id": "tent",
+      "name": "your tent",
+      "open": [
+        "day",
+        "dusk",
+        "night"
+      ],
+      "anchor": [
+        0.195,
+        0.8
+      ]
+    },
+    {
+      "id": "edge",
+      "name": "the Edge",
+      "open": [
+        "night"
+      ],
+      "anchor": [
+        0.89,
+        0.8
+      ]
+    }
+  ],
+  "owner_accepted": false,
+  "notes": "Code-owned labels/open slots. Map anchors are authored and adjusted after visual inspection; no gains or gameplay rules.",
+  "story_crops": [
+    [
+      8,
+      8,
+      448,
+      245
+    ],
+    [
+      468,
+      8,
+      907,
+      245
+    ],
+    [
+      928,
+      8,
+      1368,
+      245
+    ],
+    [
+      8,
+      265,
+      448,
+      503
+    ],
+    [
+      468,
+      523,
+      907,
+      760
+    ],
+    [
+      928,
+      523,
+      1368,
+      760
+    ]
+  ],
+  "story_crop_note": "Source is 1376x768, nine cells instead of six. Three redundant variants excluded; each delivered crop inspected."
+}

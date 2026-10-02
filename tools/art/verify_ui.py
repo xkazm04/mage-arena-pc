@@ -20,6 +20,12 @@ def main():
     if icons.exists():
         from icons import review_check
         review_check()
+    a3=ART/'waves/A3/direct-review.json'
+    if a3.exists():
+        direct=read(a3)
+        for name,expected in direct['sources'].items():
+            if not (ROOT/name).exists() or sha(ROOT/name)!=expected:errors.append('STALE_A3_DIRECT:'+name)
+        if direct['owner_accepted'] is not False or direct['a3_complete'] is not False:errors.append('A3_OWNER_OR_COMPLETION_BOUNDARY')
     report={'status':'fail' if errors else 'pass','errors':errors,'current_ui_grades':count,
             'owner_accepted':False,'model_calls':0,'image_generation_calls':0}
     write(ART/'reports/ui-integrity.json',report);print(json.dumps(report,indent=2))

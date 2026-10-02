@@ -13,6 +13,11 @@ from common import ART, ROOT, config, digest, get_style, input_matches_current, 
 QUOTA = re.compile(r'(?i)(rate[ _-]?limit(?:ed| exceeded| reached| error)|quota.{0,60}(?:exceed|exhaust|reach|deplet)|too many requests|(?:HTTP(?:/\d(?:\.\d)?)?\s*|status(?:_code| code)?["\s:=]*|error["\s:=]*)429\b|\b429\s+(?:too many|rate limit)|usage limit.{0,40}(?:exceed|reach)|insufficient.{0,15}credits|resource_exhausted)')
 
 
+def moderation_evidence(results):
+    """Only explicit provider refusal; never infer moderation from generic HTTP 400."""
+    return bool(re.search(r'(?i)(imagine:content-moderated|content[_ -]moderated|content policy violation|safety system.{0,30}reject)', json.dumps(results)))
+
+
 def quota_evidence(value, error_context=False):
     if isinstance(value, dict):
         context = error_context or value.get('type') == 'error'
@@ -169,6 +174,15 @@ def generate(style_id, scene, correction=None, spec=None):
     style = get_style(style_id) if spec is None else spec['style']
     cfg = config()
     source_input = input_record(style, scene) if spec is None else spec
+    if source_input.get('backend') == 'builtin-imagegen':
+        raise RuntimeError('BUILTIN_TOOL_REQUIRED: reserve with a6_builtin.py; do not switch transport implicitly')
+    reference = source_input.get('reference')
+    tool_name = 'image_edit' if reference else 'image_gen'
+    reference_path = None
+    if reference:
+        reference_path = (ROOT / reference['path']).resolve()
+        if not reference_path.is_file() or sha(reference_path) != reference['sha256']:
+            raise RuntimeError('REFERENCE_HASH_MISMATCH_BEFORE_SPEND')
     with lock(ART / '.run.lock'):
         budget = Budget()
         old = [j for j in budget.load()['jobs'] if j['style_id'] == style_id and j['scene'] == scene]
@@ -181,10 +195,14 @@ def generate(style_id, scene, correction=None, spec=None):
             print(json.dumps({'resume': record['id'], 'status': record['status'], 'new_calls': 0}), flush=True)
             return record
         if old and correction:
-            if old[-1]['status'] != 'generated':
+            moderation_retry = spec is not None and spec['wave'] == 'A6' and old[-1]['status'] == 'moderation-refused'
+            if moderation_retry and any(j.get('moderation_rewrite') for j in old):
+                raise RuntimeError('MODERATION_RETRY_EXHAUSTED')
+            if old[-1]['status'] != 'generated' and not moderation_retry:
                 raise RuntimeError('NO_TRANSPORT_RETRY')
             rejection = read(ART / 'rejections' / (old[-1]['id'] + '.json'))
-            if rejection['sha256'] != old[-1]['sha256'] or rejection['correction'] != correction:
+            expected_hash = old[-1].get('sha256', old[-1]['input_hash'])
+            if rejection['sha256'] != expected_hash or rejection['correction'] != correction:
                 raise RuntimeError('HASH_BOUND_REJECTION_REQUIRED')
         elif correction:
             raise RuntimeError('CORRECTION_NEEDS_EXISTING_IMAGE')
@@ -202,23 +220,28 @@ def generate(style_id, scene, correction=None, spec=None):
         if folder.exists():
             raise RuntimeError('EXISTING_ATTEMPT_FOLDER')
         prompt = source_input['prompt']
-        if correction:
+        moderation_retry = bool(old and correction and old[-1]['status'] == 'moderation-refused')
+        if moderation_retry:
+            prompt = correction.strip()
+        elif correction:
             prompt += '\n\nCORRECTION FROM DIRECT PIXEL REVIEW: ' + correction.strip()
         session_id = str(uuid.uuid4())
         record = budget.reserve({'id': job_id, 'style_id': style_id, 'scene': scene,
                                  'attempt': attempt, 'input_hash': digest(source_input),
                                  'input': source_input, 'prompt': prompt, 'session_id': session_id,
                                  'origin': 'grok-cli', 'model': cfg['cli_model'], 'seed': None,
-                                 'correction': correction, **({'wave': spec['wave']} if spec else {})})
+                                 'correction': correction, **({'moderation_rewrite': True} if moderation_retry else {}),
+                                 **({'wave': spec['wave']} if spec else {})})
         folder.mkdir(parents=True)
-        request = ('Call image_gen exactly ONCE, using aspect_ratio ' + cfg['aspect_ratio'] + '. '
+        request = ('Call ' + tool_name + ' exactly ONCE, using aspect_ratio ' + cfg['aspect_ratio'] + '. '
+                   + ('Set image to the single absolute source path ' + str(reference_path) + '. ' if reference else '') +
                    'Use the image prompt below verbatim, without changing any words. '
                    'Generate only one image. Do not retry if any error occurs. Do not call any other tool, '
                    'make variants, edit, use video or delegate. After the tool returns, finish with its saved file path.\n\nIMAGE PROMPT:\n' + prompt)
         (folder / 'request.txt').write_text(request, encoding='utf-8')
         command = [exe, '-m', cfg['cli_model'], '--effort', cfg['cli_effort'], '--always-approve',
                    '--permission-mode', 'bypassPermissions', '--no-subagents', '--disable-web-search',
-                   '--tools', 'image_gen', '--max-turns', '2', '--session-id', session_id,
+                   '--tools', tool_name, '--max-turns', '2', '--session-id', session_id,
                    '--prompt-file', str((folder / 'request.txt').resolve()), '--output-format', 'streaming-json']
         record = budget.update(job_id, {'status': 'running', 'command': command})
         write(folder / 'sidecar.json', record)
@@ -239,7 +262,7 @@ def generate(style_id, scene, correction=None, spec=None):
                         budget.stop(job_id + ': ' + quota)
                         kill_tree(process)
                         break
-                    if len(calls) > 1 or any(c['name'] != 'image_gen' for c in calls):
+                    if len(calls) > 1 or any(c['name'] != tool_name for c in calls):
                         violation = 'CLI_ONE_IMAGE_CONTRACT_VIOLATION'
                         budget.stop(job_id + ': ' + violation)
                         kill_tree(process)
@@ -253,7 +276,11 @@ def generate(style_id, scene, correction=None, spec=None):
             quota = quota or output_quota(log, results)
             if quota:
                 budget.stop(job_id + ': ' + quota)
-            exact = len(calls) == 1 and calls[0]['name'] == 'image_gen' and calls[0]['arguments'].get('prompt') == prompt and calls[0]['arguments'].get('aspect_ratio') == cfg['aspect_ratio']
+            exact = len(calls) == 1 and calls[0]['name'] == tool_name and calls[0]['arguments'].get('prompt') == prompt and calls[0]['arguments'].get('aspect_ratio') == cfg['aspect_ratio']
+            if reference and exact:
+                actual = calls[0]['arguments'].get('image')
+                actual = actual if isinstance(actual, list) else [actual]
+                exact = len(actual) == 1 and isinstance(actual[0], str) and Path(actual[0]).resolve() == reference_path
             fields.update(tool_calls=calls, tool_results=results, prompt_verbatim_verified=exact,
                           charged_images=max(1, len(calls)), returncode=process.returncode)
             for history in histories:
@@ -270,6 +297,10 @@ def generate(style_id, scene, correction=None, spec=None):
                 with Image.open(target) as im:
                     im.verify()
                 fields.update(status='generated', source=relative(target), sha256=sha(target))
+            elif (spec is not None and spec['wave'] == 'A6' and len(files) == 0
+                  and exact and moderation_evidence(results)):
+                fields.update(status='moderation-refused', error='Explicit moderation refusal; charged; rewrite once for this slot',
+                              moderation_retry_available=not moderation_retry)
             else:
                 budget.stop(job_id + ': UNCERTAIN_RESULT; inspect evidence, no automatic retry')
                 fields.update(status='error-unknown-spend', error=f'exit={process.returncode}; files={len(files)}; verbatim={exact}')

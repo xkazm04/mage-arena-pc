@@ -111,3 +111,26 @@ lines. W8 must supply Fire's line migration and Earth/Air's line catalogues befo
 their missing line-specific icons can be authored. A3 still needs owner CAMERA-OK.
 `verify_ui.py` runs offline in both the main gate and disposable rebuild, rejecting
 stale screenshot/local-grade/direct-review hashes and any automated acceptance.
+
+## A3 stopped handoff
+
+Owner camera is now confirmed, oblique at about 55 degrees. A3 generation used
+the same serial guard and stopped at a no-file provider moderation result.
+The latch remains set; do not regenerate or reset it. `stop-report.json` records
+the missing work and exact error. Immutable prompts: `art/briefs/a3-v1.json`.
+
+Offline rebuild: `python tools/art/figures.py build`, then
+`python tools/art/effects.py`, `python tools/art/a3_board.py`, and
+`python tools/art/waves.py build A3`. Sources are portable; raw is not required.
+`python tools/art/check_a3.py` verifies the explicitly incomplete handoff.
+`python tools/art/waves.py check A3` must still fail full-wave completeness.
+The global UI gate must retain the current pose-contact framing rejection.
+No gate pass here means owner acceptance or a finished animation package.
+
+`a3-crops-v1.json` binds authored crop/flip/mask choices; `a3-derivations-v1.json`
+names five salvaged subframes from still-rejected sheets and three reused cast
+bodies. No generator output is silently repainted. Masks exclude neighbouring
+poses that crossed the requested panel divider. `figures.json` stores source
+hashes, bounds, master body scale and ground anchors for every export.
+Effects are authored geometry; rotate world points before ground projection,
+not already-projected raster strips. Preview durations are not gameplay numbers.

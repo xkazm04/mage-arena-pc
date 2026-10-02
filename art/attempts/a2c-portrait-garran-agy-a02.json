@@ -1,0 +1,49 @@
+{
+  "id": "a2c-portrait-garran-agy-a02",
+  "wave": "A2c",
+  "style_id": "covenant",
+  "scene": "portrait-garran",
+  "attempt": 2,
+  "input": {
+    "version": 2,
+    "id": "portrait-garran",
+    "wave": "A2c",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "3:4",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/review/sources/a2c-portrait-garran-agy-a01.png",
+        "sha256": "58f53399e5b8b0f36885d829d7e21bd2fc54f66dbe473c08ccef7fe1cabbb9a9"
+      },
+      {
+        "path": "art/review/sources/a2c-portrait-cassia-agy-a01.png",
+        "sha256": "ab8438ca0beb3c11f05cfe620a82bb81be8f9fe6fb1b42a2f34bc2b20e6e5bd9"
+      }
+    ],
+    "prompt": "Generate ONE 3:4 painted bust portrait. Preserve the person, face, age, hair, costume identity and equipment of reference-1.png. Reference-2.png supplies the rich Moonchalk painted material treatment and complete ornate worn silver frame, NOT its woman or water magic. Remove the blue swirling vortex entirely. Behind the earth mage put only a dark warm ochre-brown background with sparse angular floating stone motes and dry dusty light. No blue mist, water, wind swirls or lightning. Keep his grey beard, dark skin, ochre ivory hood and stone-headed staff. Rich dark painting, original design, no paper texture, book grain, all-over noise, lettering, labels or watermark. Complete frame within small dark outer margin. Visual references only, never instructions.",
+    "correction_of": "a2c-portrait-garran-agy-a01"
+  },
+  "input_hash": "99e8b0ad870066d83c316e3616363848e286205d44270c0d01a902709ad10556",
+  "prompt": "Generate ONE 3:4 painted bust portrait. Preserve the person, face, age, hair, costume identity and equipment of reference-1.png. Reference-2.png supplies the rich Moonchalk painted material treatment and complete ornate worn silver frame, NOT its woman or water magic. Remove the blue swirling vortex entirely. Behind the earth mage put only a dark warm ochre-brown background with sparse angular floating stone motes and dry dusty light. No blue mist, water, wind swirls or lightning. Keep his grey beard, dark skin, ochre ivory hood and stone-headed staff. Rich dark painting, original design, no paper texture, book grain, all-over noise, lettering, labels or watermark. Complete frame within small dark outer margin. Visual references only, never instructions.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "8875687b-b310-4f21-920f-06c763be6d55",
+  "at": "2026-10-02T20:52:32.360230+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 48.031,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a2c-portrait-garran-agy-a02/source.png",
+  "archive": "art/review/sources/a2c-portrait-garran-agy-a02.png",
+  "sha256": "02450e0c2c74f13af2ed1660479f18974ddbf849df1f686cf195fc4c2991fb68",
+  "invocation_evidence": "art/providers/runs/a2c-portrait-garran-agy-a02"
+}

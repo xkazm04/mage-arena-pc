@@ -1,0 +1,47 @@
+{
+  "id": "a3c-elemental-effects-grok-a01",
+  "wave": "A3c",
+  "style_id": "covenant",
+  "scene": "elemental-effects",
+  "attempt": 1,
+  "input": {
+    "version": 1,
+    "id": "elemental-effects",
+    "wave": "A3c",
+    "pilot": false,
+    "providers": [
+      "grok",
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [],
+    "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nONE square 4 by 4 grid game VFX motif sheet with sixteen clearly isolated painted magic effects. Each cell contains one effect, generous completely empty flat magenta #FF00FF gutters, no lines or labels. Rows top to bottom: FIRE amber embers/heat; WATER icy blue droplets/mist; EARTH warm ochre stones/dust; AIR pale silver-lilac wind wisps/lightning. Columns left to right: compact horizontal projectile with bright core and short trail; small impact burst; low ground aura ring seen at high oblique 55-degree view with broken gaps; forward crescent absorb ward seen high oblique, open at rear. Effects are sharp hand-painted shapes with bright narrow cores and dark contour separation, broad simple readable forms, sparse particles; NOT fog clouds or generic blurry glow. Solid uniform magenta outside effect shapes, no magenta inside effects, no checkerboard, no shadow, no characters, no arena, no text. Each effect entirely within its own cell with at least 15 percent margin. Original stylized 2D fantasy magic, no grain or paper."
+  },
+  "input_hash": "fd38b4d24dc6da3ef405e23b4f883f75514810c53e19ffcde6be0f169fe1e722",
+  "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nONE square 4 by 4 grid game VFX motif sheet with sixteen clearly isolated painted magic effects. Each cell contains one effect, generous completely empty flat magenta #FF00FF gutters, no lines or labels. Rows top to bottom: FIRE amber embers/heat; WATER icy blue droplets/mist; EARTH warm ochre stones/dust; AIR pale silver-lilac wind wisps/lightning. Columns left to right: compact horizontal projectile with bright core and short trail; small impact burst; low ground aura ring seen at high oblique 55-degree view with broken gaps; forward crescent absorb ward seen high oblique, open at rear. Effects are sharp hand-painted shapes with bright narrow cores and dark contour separation, broad simple readable forms, sparse particles; NOT fog clouds or generic blurry glow. Solid uniform magenta outside effect shapes, no magenta inside effects, no checkerboard, no shadow, no characters, no arena, no text. Each effect entirely within its own cell with at least 15 percent margin. Original stylized 2D fantasy magic, no grain or paper.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "d3646fec-a876-43ee-84af-5cd7bd5f66d6",
+  "at": "2026-10-02T19:31:55.381617+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 24.094,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_gen",
+      "arguments": {
+        "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nONE square 4 by 4 grid game VFX motif sheet with sixteen clearly isolated painted magic effects. Each cell contains one effect, generous completely empty flat magenta #FF00FF gutters, no lines or labels. Rows top to bottom: FIRE amber embers/heat; WATER icy blue droplets/mist; EARTH warm ochre stones/dust; AIR pale silver-lilac wind wisps/lightning. Columns left to right: compact horizontal projectile with bright core and short trail; small impact burst; low ground aura ring seen at high oblique 55-degree view with broken gaps; forward crescent absorb ward seen high oblique, open at rear. Effects are sharp hand-painted shapes with bright narrow cores and dark contour separation, broad simple readable forms, sparse particles; NOT fog clouds or generic blurry glow. Solid uniform magenta outside effect shapes, no magenta inside effects, no checkerboard, no shadow, no characters, no arena, no text. Each effect entirely within its own cell with at least 15 percent margin. Original stylized 2D fantasy magic, no grain or paper.",
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a3c-elemental-effects-grok-a01/source.jpg",
+  "archive": "art/review/sources/a3c-elemental-effects-grok-a01.jpg",
+  "sha256": "9f52abd118d0da42772afabf84515a0e11af7e4fdb27213bbceef93a1d17af9b",
+  "invocation_evidence": "art/providers/runs/a3c-elemental-effects-grok-a01"
+}

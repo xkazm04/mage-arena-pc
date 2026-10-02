@@ -1,0 +1,69 @@
+{
+  "id": "a6-flint-litany-flint-litany-arena-a01",
+  "style_id": "a6-flint-litany",
+  "scene": "flint-litany-arena",
+  "attempt": 1,
+  "input": {
+    "version": "a6-v7",
+    "wave": "A6",
+    "style": {
+      "id": "a6-flint-litany",
+      "name": "Flint Litany",
+      "line": "broken knife-cut angled edges",
+      "shading": "opaque faceted gouache planes",
+      "silhouette": "sawtooth shoulder wraps and triangular hems",
+      "density": "low",
+      "mood": "hard mineral noon",
+      "style_block": "Opaque gouache, palette-knife chips, angular broken edges, three interlocking value planes. Sharp diagonal cloth and triangular silhouettes. Basalt grey, dirty ochre, dusty violet, warm ivory and restrained elemental accents. Split mineral staffs, dented angular shields, wedge wardstones and jagged rune cuts. Hard mineral light, broad matte low-detail ground."
+    },
+    "scene": "flint-litany-arena",
+    "aspect_ratio": "16:9",
+    "brief_hash": "d5b02806072a05452c4df87fe824b04d602d9548715309c76423ed4fbb3770d9",
+    "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nOpaque gouache, palette-knife chips, angular broken edges, three interlocking value planes. Sharp diagonal cloth and triangular silhouettes. Basalt grey, dirty ochre, dusty violet, warm ivory and restrained elemental accents. Split mineral staffs, dented angular shields, wedge wardstones and jagged rune cuts. Hard mineral light, broad matte low-detail ground.",
+    "backend": "builtin-imagegen",
+    "reference": {
+      "path": "art/review/sources/01-tessera-open-oval-sparse-near-a01.jpg",
+      "sha256": "07ae1c4770324541dbc7f432b6621915a28446448f2e5e469c858b34dc936209",
+      "role": "camera, tiny upright blue caster scale and ground integration ONLY; replace old identity"
+    }
+  },
+  "input_hash": "4bd90bfa921d6cf6035212ba004fcf079c4553f4f21afeab2e4ea5acbaaf9497",
+  "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nOpaque gouache, palette-knife chips, angular broken edges, three interlocking value planes. Sharp diagonal cloth and triangular silhouettes. Basalt grey, dirty ochre, dusty violet, warm ivory and restrained elemental accents. Split mineral staffs, dented angular shields, wedge wardstones and jagged rune cuts. Hard mineral light, broad matte low-detail ground.",
+  "wave": "A6",
+  "origin": "builtin-imagegen",
+  "correction": null,
+  "tool_calls": [
+    {
+      "name": "image_gen__imagegen",
+      "arguments": {
+        "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nOpaque gouache, palette-knife chips, angular broken edges, three interlocking value planes. Sharp diagonal cloth and triangular silhouettes. Basalt grey, dirty ochre, dusty violet, warm ivory and restrained elemental accents. Split mineral staffs, dented angular shields, wedge wardstones and jagged rune cuts. Hard mineral light, broad matte low-detail ground.",
+        "transparent_background": false,
+        "referenced_image_paths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\review\\sources\\01-tessera-open-oval-sparse-near-a01.jpg"
+        ]
+      }
+    }
+  ],
+  "requested_tool_call": {
+    "name": "image_gen__imagegen",
+    "arguments": {
+      "prompt": "Restyle this original arena proof into the direction below. Preserve its high 55-degree oblique camera, immense open ground, tiny upright figure scale and contact-shadow integration. This is a camera reference, not a costume reference. Keep human bodies around 6% of picture height, roughly the blue hooded caster size. Never zoom or add large foreground figures. Replace the combatants with FOUR tiny equipped battle mages in worn light layered cloth, staffs and accessories: pale-warm Fire with embers and heat shimmer, blue-hooded pale-blue/ivory Water Cassia with mist and droplets, pale-ochre Earth with stone motes and dust, pale-lilac Air with wind wisps and lightning arcs. Local sparkles and energy around each. Show them braced casting in separate lanes against three small enemy types: two legion shield soldiers, two ember hounds and one squat thorn-backed stone creature. All intact; no gore or injury. Keep a thin cyan bolt and forward open crescent at Cassia. Repaint the arena too: rough cracked sand, five wardstone pylons, invented rune glyphs, localized scorch and elemental residue. Quiet ground, pale bodies with dark lower edges. Original hand-painted digital 2D artwork, no 3D/photo, text, UI, logos or decorative frame. Do not retain the old fresco identity. All subjects share the new mark language.\nDIRECTION BLOCK:\nOpaque gouache, palette-knife chips, angular broken edges, three interlocking value planes. Sharp diagonal cloth and triangular silhouettes. Basalt grey, dirty ochre, dusty violet, warm ivory and restrained elemental accents. Split mineral staffs, dented angular shields, wedge wardstones and jagged rune cuts. Hard mineral light, broad matte low-detail ground.",
+      "transparent_background": false,
+      "referenced_image_paths": [
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\review\\sources\\01-tessera-open-oval-sparse-near-a01.jpg"
+      ]
+    }
+  },
+  "at": "2026-10-02T13:56:01.967694+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "prompt_verbatim_verified": true,
+  "source": "art/raw/a6-flint-litany-flint-litany-arena-a01/source.png",
+  "sha256": "b5cf7e8dc8c3b02b44c3fc7b678a2a7e415eaa496983e8a8ebe183a29450f170",
+  "tool_results": [
+    {
+      "saved_path": "C:\\Users\\kazda\\.codex\\generated_images\\01a0fcd2-1286-7600-a66f-aa18d8c2f6d9\\exec-fa52d785-8fa2-42f7-8859-2c4fa41ecd58.png"
+    }
+  ]
+}

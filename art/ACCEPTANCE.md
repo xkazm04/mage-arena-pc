@@ -1,4 +1,104 @@
-# Current owner boundary - session 2
+# Session 5 final boundary
+
+[Combined board](review/covenant/index.html), [contact sheet](review/covenant/contact-sheet.jpg),
+[handoff and backlog](SESSION-5-HANDOFF.md). Five wave deliveries remain owner-review.
+A2c adds sixteen identities and 112 neutral/mood crops. A3c remains a partial pose
+set with explicit camera/fidelity/animation backlog. Twelve rejected sources stay
+visible; no local grader or agent accepts art.
+
+Current integrity/export/browser checks and 59 tests pass. Portable rebuild: 266
+files identical with raw access forbidden. First 159 jobs and early UI contract
+unchanged. Final 223/240 charged, 17 remain; both provider stops clear. Historical
+A3 failures, game integration and unmeasured engine/sofa feel remain disclosed.
+
+# A4c session 5 update
+
+[Camp board](review/a4c/index.html), [loading notes](delivery/a4c/README.md):
+three map slots, eight backdrops, six story crops and new Hollow Board frames.
+Export/slot/browser checks pass at 1080p/1440p; 59 tests pass. One rejected source
+and explicit partial-sheet selection remain visible. 193/240 charged, 47 remain;
+both provider stops clear. Owner acceptance and game integration unmeasured.
+
+# A5b session 5 update
+
+[UI board](review/a5b/index.html), [loading notes](ui/DELIVERY.md): 90 regions,
+two RGBA pages, bundled fonts, 22 actual canvas captures. Kit and browser checks
+pass; 59 tests pass. All assets owner-review, no game integration/performance
+claim. 180/240 charged, 60 remain, both provider stops clear.
+
+# A3c session 5 update
+
+[Battle board](review/a3c/index.html): 12 identities, 38 reviewed keys, 12 atlases,
+32 effect sprites, six native composites. Integrity passes; four source rejects
+and excluded subframes remain visible. Pose/camera/style continuity is partial;
+no full animation or owner acceptance. 179/240 project charges, 61 remain.
+See [wave note](../docs/waves/A3c-covenant-battle.md) for actual tests and backlog.
+
+# Current boundary ? Covenant session 5
+
+Owner chose the Covenant family and Moonchalk portrait style under D16?D20.
+Individual new assets remain owner-review. [A7 board](review/a7/index.html): three
+empty grain-free palette plates, v2 far fixed scale contract. Source/board checks
+and 50 tests pass. Project 162/240 charged after A7, both provider stops clear.
+Local grades may only reject or route to the owner. Engine motion, performance
+and feel are not measured. Historical failures below are not erased.
+
+---
+Historical delivery records follow; their active-style claims are superseded.
+
+# Current owner boundary — session 4 / A6 identity choice
+
+[Owner board](review/a6/index.html), [combined sheet](review/a6/contact-sheet.jpg),
+[attempt archive](review/a6/attempts.html), [design/results](../docs/waves/A6-identity-reset.md).
+Eight named arena/portrait pairs: six current arena candidates and two capped
+camera rejects. All portraits and surviving arena candidates route to the owner;
+none is accepted. No OWNER-CHOICE or owner approval file was written.
+
+33 live calls this wave; cumulative 159/240 charged, 81 remaining, 158 saved.
+No A6 moderation/quota/rate-limit incident; stop remains clear. Both transports
+share the same conservative project ledger. All failed historical charges remain.
+The earlier moderation latch was cleared by the owner/host before this session.
+
+`python tools/art/a6.py check` and `python tools/art/a6_audit.py` pass A6 delivery
+and portable evidence. Forty-five pipeline tests pass, and 35 actual local
+diagnostics may only reject or route to owner. Global historical failures remain
+visible: A3 `STOP_SNAPSHOT_DRIFT` and `UNRESOLVED_UI:ui-a3-poses.json`.
+No claim that every project gate is green. Current body scales are approximate,
+roughly 5–8%; individual defects and weaker material separation are on each card.
+Motion readability, exact generated camera angle, performance and owner feel
+remain unmeasured. A2b/A3b/A4b are blocked until a real new owner choice.
+
+# Historical owner boundary - session 3 / A3 partial
+
+[A3 owner board](review/a3/owner.html), [source archive](review/a3/index.html),
+[stop evidence](waves/A3/stop-report.json), [design note](../docs/waves/A3-figures-and-effects.md).
+Owner camera confirmation exists: open oval / near / about 55-degree oblique.
+37 A3 calls charged, 36 images saved; project 126 charged / 125 saved,
+54 remaining under 180. HTTP 400 content-moderated/no file triggered the
+existing uncertain-result stop latch. No quota/rate-limit error was observed;
+no further generation, provider switch, refund or latch reset occurred.
+
+70 transparent pose exports / nine atlases cover four mages, four soldiers and
+six hound keys. Three mage absorb bodies are reused casting keys, not generated
+blocking gestures. Five rejected source sheets stay rejected; five explicitly
+reviewed individual subframes are salvage candidates. 23 authored effect recipes
+produce 138 transparent four-phase sheets across three distances and two
+resolutions. Four native-size composites preserve the chosen arena source.
+All 24 Water CSV rows map to family motifs, not complete spell animations.
+
+Full A3 gate is **FAIL: DELIVERY_INCOMPLETE**, with 13 missing source items.
+The separate stopped-handoff integrity gate passes available file/provenance,
+alpha, atlas, geometry, and browser checks; it explicitly sets `a3_complete: false`.
+The pose-contact local grade has an unresolved framing rejection. The existing
+global UI gate retains that failure; neither the agent nor a model accepts art.
+See final command reports for portable reproduction and exact failure boundaries.
+
+Remaining: Mire maw, Thornback, Hush moth, hound hit/death, dedicated corrected
+mage absorb bodies, genuine alternating strides, costume continuity, other
+facings, engine animation/integration and owner readability/feel. No game
+packages or accepted production assets were changed.
+
+# Historical owner boundary - session 2
 
 Style choice: Tessera & Lime, explicitly recorded by the owner. A1 evidence below
 is historical and retains its original snapshot. A1b camera evidence will live in

@@ -5,7 +5,7 @@ import { resolve, extname } from "node:path";
 import { campApi } from "./server/api.ts";
 const root = fileURLToPath(new URL(".", import.meta.url));
 const assets = resolve(root, "../../assets");
-const uiKit = resolve(root, "../../art/ui");
+const uiKit = resolve(assets, "accepted/covenant/ui");
 function campServer(): Plugin {
   return {
     name: "camp-sidecar",
@@ -49,9 +49,12 @@ function campServer(): Plugin {
           }
           return;
         }
-        if (!req.url?.startsWith("/assets/accepted/camp/")) return next();
-        const filename = req.url.slice("/assets/".length);
-        if (!/^accepted\/camp\/[a-z0-9.-]+$/.test(filename)) {
+        if (!req.url?.startsWith("/assets/accepted/")) return next();
+        const filename = req.url.slice("/assets/".length).split("?")[0]!;
+        if (
+          !/^accepted\/(camp|covenant)\/[a-zA-Z0-9/_.-]+$/.test(filename) ||
+          filename.includes("..")
+        ) {
           res.statusCode = 404;
           res.end();
           return;
