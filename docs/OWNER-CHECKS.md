@@ -89,3 +89,5 @@ reset followed. No new generation is authorized by remaining allowance alone.
 - A7 Covenant: [three arena palettes](../art/review/a7/index.html). Judge quiet floor versus material richness, palette identity, and far-camera direction. Individual exports are not accepted.
 
 - A3c: [native combat proofs and source findings](../art/review/a3c/index.html). Judge 3?4.5% scale, school silhouettes, painted fidelity versus strong contours, and enemy separation across three floors. Pose set remains partial.
+
+- A5b: [canvas kit board](../art/review/a5b/index.html). Judge frame material, focus/selection distinction, typography and sofa-distance readability. Loader contract is in art/ui/README.md; package is art/ui/kit.json.

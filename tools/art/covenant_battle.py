@@ -10,13 +10,14 @@ from covenant import board, font, jobs
 OUT=ART/'delivery/a3c'
 
 
-def key_magenta(im):
+def key_magenta(im, thresholds=(80,150)):
     rgb=np.asarray(im.convert('RGB')).astype(np.float32)
     chroma=np.minimum(rgb[:,:,0]-rgb[:,:,1],rgb[:,:,2]-rgb[:,:,1])
     # Preserve pale lilac and blue pigment. The old 20..55 cutoff erased Air
     # highlights and decontamination turned them green. Only strongly saturated
     # magenta is key material; conservative edges are reviewed on real floors.
-    alpha=np.clip((150-chroma)/70,0,1)
+    low,high=thresholds
+    alpha=np.clip((high-chroma)/(high-low),0,1)
     if not np.any(chroma>180):raise ValueError('NO_KEY_BACKGROUND')
     matte=np.median(rgb[chroma>180],axis=0)
     clean=np.clip((rgb-(1-alpha[:,:,None])*matte)/np.maximum(alpha[:,:,None],.05),0,255)

@@ -1,3 +1,10 @@
+# A5b session 5 update
+
+[UI board](review/a5b/index.html), [loading notes](ui/DELIVERY.md): 90 regions,
+two RGBA pages, bundled fonts, 22 actual canvas captures. Kit and browser checks
+pass; 59 tests pass. All assets owner-review, no game integration/performance
+claim. 180/240 charged, 60 remain, both provider stops clear.
+
 # A3c session 5 update
 
 [Battle board](review/a3c/index.html): 12 identities, 38 reviewed keys, 12 atlases,

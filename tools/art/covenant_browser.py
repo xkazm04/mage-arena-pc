@@ -19,7 +19,8 @@ def check(wave):
             assert count==len(read(folder/'manifest.json')['rows'])
             assert not page.evaluate('document.documentElement.scrollWidth>innerWidth')
             assert not errors
-            page.screenshot(path=str(folder/f'board-{w}.png'))
+            # Do not overwrite a native Hollow Board capture named board-1920.
+            page.screenshot(path=str(folder/f'owner-board-{w}.png'))
             rows.append({'size':[w,h],'loaded_images':count,'page_errors':errors,'horizontal_overflow':False})
             page.close()
         browser.close()

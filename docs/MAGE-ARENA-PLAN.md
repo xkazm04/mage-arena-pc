@@ -199,7 +199,7 @@ Decisions:
 |---|---|---|---|---|
 | Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | delivered for owner review; see docs/waves/A7-covenant-bible.md |
 | Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | partial owner-review delivery: 12 identities, 38 keys; pose/style backlog |
-| Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | not started |
+| Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | delivered owner-review: art/ui/kit.json, 90 regions, contract 06cd5e4 retained |
 | Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | not started |
 | Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | not started |
 | Game | U1 | **Camera and UI overhaul**: far fixed camera with edge follow; full-screen canvas UI framework with the nine-slice kit loader (placeholder kit until A5b lands); rebuild the HUD, main menu, camp, Hollow Board, journal, Parley, composition, pause and results screens as in-game art-directed screens; TV-grade layout; keyboard, mouse and gamepad navigation; screenshots at 1080p and 1440p | D17, D19 | not started |
@@ -234,3 +234,14 @@ are explicit backlog, not acceptance. Seventeen images charged; cumulative
 54 tests PASS. First 159 ledger jobs unchanged. Local source/composite diagnostics
 reject or route owner only. Engine motion, performance, owner feel not measured.
 Next A5b; contract 06cd5e4 unchanged; no push.
+
+### ART session 5 ? A5b ? 2026-10-02
+
+A3c committed as 67837da. Kept early loading contract 06cd5e4 byte-identical;
+populated art/ui/kit.json with 90 regions/two RGBA pages, nine-slice/state/anchor
+metadata, 49 icon IDs, licensed bundled typography and motion tokens. One agy
+source proof plus deterministic derivation; 180/240 project charges, 60 remain,
+no provider incident. Kit/board checks PASS, 22 canvas captures across eleven
+layouts and two resolutions PASS; 59 tests PASS including negative loader cases.
+Owner taste, game integration, gamepad/sofa feel and performance unmeasured.
+Next A4c; no push.

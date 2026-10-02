@@ -13003,6 +13003,54 @@
       "archive": "art/review/sources/a3c-elemental-effects-agy-a02.png",
       "sha256": "3d29c31f02ea1514aac38fa80ec9bc84420d171c4517a53b531b57fc18c4e8c2",
       "invocation_evidence": "art/providers/runs/a3c-elemental-effects-agy-a02"
+    },
+    {
+      "id": "a5b-ui-ornament-proof-agy-a01",
+      "wave": "A5b",
+      "style_id": "covenant",
+      "scene": "ui-ornament-proof",
+      "attempt": 1,
+      "input": {
+        "version": 1,
+        "id": "ui-ornament-proof",
+        "wave": "A5b",
+        "pilot": true,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "1:1",
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+            "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+          },
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-portrait-a02.png",
+            "sha256": "0e1d5ccd3e40f01b065123379a548d723f1e395233b8324dadb0309f7e398b37"
+          }
+        ],
+        "prompt": "Generate ONE square UI texture source sheet, four ISOLATED interface ornaments in a clean 2 by 2 arrangement, uniform pure magenta #FF00FF background outside ornaments. Reference-1.png supplies worn silver frame craftsmanship and dark enamel, reference-2.png supplies subtle verdigris metal patina. Do NOT draw any face or person from references. Top left: large SQUARE dark obsidian-enamel panel with a straight clean quiet dark interior and a thin engraved silver border, ornate worn corner caps, restrained verdigris inlay. Top right: SQUARE spell-slot frame with beveled aged silver edges and dark empty centre, four small broken-seal corner marks. Bottom left: WIDE horizontal 3:1 button frame with engraved metal ends, quiet dark centre, straight top/bottom edges. Bottom right: CIRCULAR collar rune clock rim, worn silver segmented ring, four small unlettered rune notches, EMPTY MAGENTA centre so a separate face/hand can be layered later. Every ornament fully within its quadrant with generous magenta gutters, no overlap. Rich original painterly dark fantasy metal craftsmanship, crisp readable edges at game UI scale, no thick comic outline. Ornament stays at corners/edges; no grain, paper or noisy panel fill. No letters, words, numbers, labels, logos, interface screenshot or human figures. Straight frontal orthographic UI view, not tilted objects. The circles/squares are texture primitives, not an assembled screen."
+      },
+      "input_hash": "8753b6eb6e9840cddb8ec5d27b0c9bf47bda6a5be2b96b10cebe985ef5490a70",
+      "prompt": "Generate ONE square UI texture source sheet, four ISOLATED interface ornaments in a clean 2 by 2 arrangement, uniform pure magenta #FF00FF background outside ornaments. Reference-1.png supplies worn silver frame craftsmanship and dark enamel, reference-2.png supplies subtle verdigris metal patina. Do NOT draw any face or person from references. Top left: large SQUARE dark obsidian-enamel panel with a straight clean quiet dark interior and a thin engraved silver border, ornate worn corner caps, restrained verdigris inlay. Top right: SQUARE spell-slot frame with beveled aged silver edges and dark empty centre, four small broken-seal corner marks. Bottom left: WIDE horizontal 3:1 button frame with engraved metal ends, quiet dark centre, straight top/bottom edges. Bottom right: CIRCULAR collar rune clock rim, worn silver segmented ring, four small unlettered rune notches, EMPTY MAGENTA centre so a separate face/hand can be layered later. Every ornament fully within its quadrant with generous magenta gutters, no overlap. Rich original painterly dark fantasy metal craftsmanship, crisp readable edges at game UI scale, no thick comic outline. Ornament stays at corners/edges; no grain, paper or noisy panel fill. No letters, words, numbers, labels, logos, interface screenshot or human figures. Straight frontal orthographic UI view, not tilted objects. The circles/squares are texture primitives, not an assembled screen.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "036ff14b-638b-40df-8999-2950665c0a93",
+      "at": "2026-10-02T19:52:46.698467+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 68.625,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a5b-ui-ornament-proof-agy-a01/source.png",
+      "archive": "art/review/sources/a5b-ui-ornament-proof-agy-a01.png",
+      "sha256": "7de5261ff29be05e74c01c6d42d904045d99ccfb1bc74afde116bea132186396",
+      "invocation_evidence": "art/providers/runs/a5b-ui-ornament-proof-agy-a01"
     }
   ],
   "events": [
@@ -15560,6 +15608,21 @@
       "event": "generated",
       "id": "a3c-elemental-effects-agy-a02",
       "at": "2026-10-02T19:38:20.988699+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a5b-ui-ornament-proof-agy-a01",
+      "at": "2026-10-02T19:52:46.698467+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a5b-ui-ornament-proof-agy-a01",
+      "at": "2026-10-02T19:52:46.726915+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a5b-ui-ornament-proof-agy-a01",
+      "at": "2026-10-02T19:53:55.391866+00:00"
     }
   ],
   "stop_cleared": {
