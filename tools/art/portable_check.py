@@ -51,6 +51,17 @@ def main():
             later.append({'wave':'A2 portrait crops', 'exit_code':result.returncode,
                           'sources':len(copied['portraits']), 'hashes_identical':original == copied,
                           'stderr':result.stderr})
+        camp_manifest = ART / 'delivery/a4/manifest.json'
+        if camp_manifest.exists():
+            original = read(camp_manifest)
+            result = subprocess.run([sys.executable, 'tools/art/camp.py', 'build'], cwd=target,
+                                    capture_output=True, text=True, encoding='utf-8', errors='replace')
+            copied = read(target / 'art/delivery/a4/manifest.json')
+            html_identical = all(sha(ART / 'delivery/a4' / name) == sha(target / 'art/delivery/a4' / name)
+                                 for name in ('camp.html','hollow-board.html'))
+            later.append({'wave':'A4 camp and frames', 'exit_code':result.returncode,
+                          'sources':len(copied['exports']), 'hashes_identical':original == copied and html_identical,
+                          'stderr':result.stderr})
     passed = (len(results) == 2 and all(r['exit_code'] == 0 for r in results) and originals == rebuilt
               and all(r['exit_code'] == 0 and r['hashes_identical'] for r in later))
     report = {'at': now(), 'label': 'measured disposable copy; ignored raw evidence absent',

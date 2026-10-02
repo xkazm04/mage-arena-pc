@@ -96,7 +96,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Art | A1b | Scale contract, distant camera proofs, camp re-check | A1 owner choice | delivered for owner review; 27 attempts, 18 rejects retained | A1b (this commit) | 2026-10-02 |
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered; 16 characters / 96 expression exports | A2 (this commit) | 2026-10-02 |
 | Art | A3 | Top-down figures, poses, spell effects | art/CAMERA-OK.md | blocked; owner camera file absent | | 2026-10-02 |
-| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | queued after A2 | | |
+| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | delivered for owner review | A4 (this commit) | 2026-10-02 |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | queued after A2 | | |
 
 ## h. Wave cards
@@ -163,7 +163,7 @@ The arena kernel (W2-W4) and every arena sprite must be authored for this camera
 |---|---|---|---|---|
 | Art | A1b | Tessera & Lime baseline: scale contract and **arena camera proofs** (Diablo/PoE framing, three camera distances, several arena layouts), camp map re-check | A1 owner choice (done) | delivered for owner review; 27 attempts |
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | delivered for owner review |
-| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | not started |
+| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | delivered for owner review |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
 | Art | A3 | Top-down figures, poses, spell effects at the confirmed scale | **owner confirms the arena camera** (`art/CAMERA-OK.md`) | blocked |
 | Arena | W4b | Camera and scale pass: PixiJS camera, scale contract, arena layout wide enough, readability of telegraphs and the absorb arc at distance, screenshots at 1080p and 1440p | A1b, W4 | not started |
@@ -249,3 +249,28 @@ Spend: A2 18; cumulative 75 charged / 75 observed image calls, 105 remaining und
 180. No quota/rate-limit errors, no videos; shared-account remainder not measured.
 A3 remains blocked: owner CAMERA-OK.md absent; no figures, poses or effects started.
 Design note: `docs/waves/A2-portraits.md`; one A2 commit, no push. Next: A4.
+
+
+### A4 - 2026-10-02 - ART / art
+
+Delivered the final camp-map candidate using the unchanged chosen A1 source,
+corrected Door/Edge and other landmark anchors, data-driven Day/Dusk/Night slots,
+1080p and 1440p captures, eight visit backdrops, six original illustrated story
+cards and four native SVG Hollow Board frame states with nine-slice metadata.
+Interactive map and Hollow Board: `art/delivery/a4/`. Source review and contact
+sheet: `art/review/a4/`. Native UI is authored, not a generated game screenshot;
+night tint is a presentation layer over static inhabitants, not a night simulation.
+
+Commands: `python tools/art/waves.py check A4` PASS (14 sources, zero semantic
+rejects); `python tools/art/camp.py check` PASS (8 place IDs, 3 slots, disabled
+closed places, all open-place previews, desktop/mobile, six map captures and one
+full-page Hollow Board capture with exact dimensions recorded). Four actual local
+UI grades route to owner, never approve. Offline and portable gate reports retain
+commands/results. Owner feel, final production acceptance and game integration
+remain not measured; minor source prop and rendering deviations are recorded.
+
+Spend: A4 14 new images; cumulative 89 charged / 89 observed calls; 91 remaining
+under 180. Reused map and native SVG frames consume zero image calls. No quota
+errors or videos; shared-account remainder unknown. A3 remains BLOCKED because
+owner `art/CAMERA-OK.md` is absent. Design note: `docs/waves/A4-camp-and-story.md`.
+One A4 commit, no push. Next: A5.

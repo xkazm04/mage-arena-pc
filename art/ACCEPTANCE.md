@@ -100,3 +100,15 @@ observations; local models can only reject or route to the owner. Spend snapshot
 their corrected replacements. Exact crop and browser gates pass; identities,
 mood recognition and costume details still route to owner judgment. No A3 work.
 Spend snapshot: 75 cumulative; 105 local-cap remaining, shared allowance unknown.
+
+
+# A4 delivery
+
+[Camp map](delivery/a4/camp.html), [Hollow Board](delivery/a4/hollow-board.html),
+[source board](review/a4/index.html), [delivery manifest](delivery/a4/manifest.json).
+Eight backdrops, six story illustrations, four scalable frame states, six map
+captures at 1080p/1440p and one full-page Hollow Board capture. Data-driven slots,
+closed-place controls, previews and mobile layout pass browser checks. Four local
+UI diagnostics route to owner only. Night tint preserves static source residents;
+these screens are art presentation, not game-state or engine evidence.
+Spend snapshot: 89 cumulative / 91 local-cap remaining. A3 remains blocked.
