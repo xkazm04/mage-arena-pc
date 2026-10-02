@@ -1,6 +1,15 @@
-# A1 delivery evidence
+# Current owner boundary - session 2
 
-Delivery is ready for owner review; no production style is accepted.
+Style choice: Tessera & Lime, explicitly recorded by the owner. A1 evidence below
+is historical and retains its original snapshot. A1b camera evidence will live in
+`review/a1b/`. A2, A4 and A5 follow A1b delivery; A3 is blocked until the owner
+supplies `art/CAMERA-OK.md`. No agent or model may create that approval.
+Current spend authority: `usage.json` under the 180-image weekly project cap in
+`budget.json`; A1 spent 30. Shared-account remainder is not measured.
+
+# Historical A1 delivery evidence (snapshot before owner choice)
+
+At A1 delivery, style choice was pending. The owner subsequently chose Tessera & Lime; the evidence below preserves that earlier snapshot.
 Open [the combined board](review/index.html), [paired contact sheet](review/contact-sheets/combined.png),
 [arena sheet](review/contact-sheets/arena.png), or [camp sheet](review/contact-sheets/camp.png).
 The board includes exact current images, direct observations, local diagnostics and
@@ -57,9 +66,26 @@ extra lines or clash effects, the flat-print cistern's shallow appearance, and v
 confinement/contrast in the lighter camps. Static pictures cannot establish absorb
 timing, the gameplay arc's exact angle, motion readability or performance.
 
-## Owner boundary
+## Historical A1 owner boundary
 
 Felt quality and style preference are **not measured**. Owner review remains pending
 in [OWNER-CHOICE.md](OWNER-CHOICE.md) and [the owner checklist](../docs/OWNER-CHECKS.md).
 No A2–A5 work begins until the owner supplies a choice. A1 generation is finished;
 unused working allowance is not an instruction to spend it.
+
+
+# A1b delivery
+
+[Camera board](review/a1b/index.html), [contact sheet](review/a1b/contact-sheet.jpg),
+[scale contract](SCALE-CONTRACT.md), [recommendation](waves/A1b/recommendation.json).
+27 generated attempts cover all 24 requested comparison cells; 18 semantic rejects
+are retained and 9 route to owner review. The two pre-restart images are included
+in spend, never regenerated as recovery. Recommend the second sparse-near plinth
+attempt for framing only; no candidate demonstrates every gameplay requirement.
+The exact absorb angle, motion, world extent and owner camera acceptance are not
+measured. `CAMERA-OK.md` remains absent and A3 is blocked.
+
+`python tools/art/waves.py check A1b` passes delivery integrity and Chrome viewport
+checks at 1080p, 1440p and mobile. All 27 sources have local diagnostics and direct
+observations; local models can only reject or route to the owner. Spend snapshot:
+57 cumulative, 123 local-cap remaining; shared-account remainder not measured.

@@ -159,7 +159,7 @@ def build():
     REVIEW.mkdir(parents=True, exist_ok=True)
     cfg = config()
     budget = Budget()
-    jobs = budget.load()['jobs']
+    jobs = [j for j in budget.load()['jobs'] if j.get('wave', 'A1') == 'A1']
     manual_path = ART / 'direct-reviews.json'
     manual = read(manual_path) if manual_path.exists() else {}
     archive = []

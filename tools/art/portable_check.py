@@ -29,11 +29,26 @@ def main():
                 break
         rebuilt = {p.name: sha(p) for p in (target / 'art/review/screens').glob('*.png')}
         validation = read(target / 'art/reports/validation.json')
-    passed = len(results) == 2 and all(r['exit_code'] == 0 for r in results) and originals == rebuilt
+        later = []
+        for wave in ('A1b', 'A2', 'A4', 'A5'):
+            manifest = ART / 'review' / wave.lower() / 'manifest.json'
+            if not manifest.exists():
+                continue
+            original = read(manifest)
+            result = subprocess.run([sys.executable, 'tools/art/waves.py', 'build', wave], cwd=target,
+                                    capture_output=True, text=True, encoding='utf-8', errors='replace')
+            copied = read(target / 'art/review' / wave.lower() / 'manifest.json')
+            identical = ([r['sha256'] for r in original['rows']] == [r['sha256'] for r in copied['rows']]
+                         and all(r['gate']['verdict'] == 'technical-pass' for r in copied['rows']))
+            later.append({'wave': wave, 'exit_code': result.returncode, 'sources': len(copied['rows']),
+                          'hashes_identical': identical, 'stderr': result.stderr})
+    passed = (len(results) == 2 and all(r['exit_code'] == 0 for r in results) and originals == rebuilt
+              and all(r['exit_code'] == 0 and r['hashes_identical'] for r in later))
     report = {'at': now(), 'label': 'measured disposable copy; ignored raw evidence absent',
               'status': 'pass' if passed else 'fail', 'commands': results,
               'screen_hashes_identical': originals == rebuilt, 'screens': len(rebuilt),
               'validation': validation, 'image_generation_calls': 0}
+    report['later_waves'] = later
     write(ART / 'reports/portable-check.json', report)
     print(json.dumps({k: v for k, v in report.items() if k != 'commands'}, indent=2))
     if not passed:

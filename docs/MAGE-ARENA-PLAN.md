@@ -92,11 +92,12 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Core | W13 | Art integration | A2-A5 | not planned | | |
 | Core | W14 | Cache pre-warm, hosted-API provider, cost guard | W11 | not planned | | |
 | Core | W15 | Release candidate, balance report, **Gate G2** | all | not planned | | |
-| Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | delivered for owner review; style choice pending | A1 (this commit) | 2026-10-02 |
-| Art | A2 | 16 portraits and expressions in the chosen style | A1 owner choice | not planned | | |
-| Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
-| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
-| Art | A5 | Icons, HUD, spell-line icons | A1 owner choice | not planned | | |
+| Art [`art`] | A1 | Style exploration: at least eight directions, **two images each (Arena fight, Camp map with time slots)**, a combined board | - | delivered; owner chose Tessera & Lime; camera superseded | A1 (this commit) | 2026-10-02 |
+| Art | A1b | Scale contract, distant camera proofs, camp re-check | A1 owner choice | delivered for owner review; 27 attempts, 18 rejects retained | A1b (this commit) | 2026-10-02 |
+| Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | next | | |
+| Art | A3 | Top-down figures, poses, spell effects | art/CAMERA-OK.md | blocked; owner camera file absent | | 2026-10-02 |
+| Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | queued after A2 | | |
+| Art | A5 | Icons, HUD, spell-line icons | A1b | queued after A2 | | |
 
 ## h. Wave cards
 
@@ -155,12 +156,12 @@ Worktrees: `C:\Users\kazda\kiro\mage-arena` (main), `...\mage-arena-core`, `...\
 > "Looking at the styles, in terms of feasibility of arena battles many can be a problem to achieve. The arena camera angle is too close and characters too large then to be playable or fit to decide. Lets go with Tessera & Lime as the baseline. For arena and camera imagine Diablo or Path of Exile to set up camera, distance, larger spacing. Attempts like 02-salt-ink-arena-a01, 08-rain-wash-arena-a01 are one step towards the idea."
 
 Decisions: **D10** the visual baseline is **Tessera & Lime** (style id `01-tessera` in `art/styles/a1-v1.json`); **D11** the arena camera follows the **Diablo / Path of Exile framing**: a high, distant, near-top-down camera (roughly 45-60 degrees of tilt), the whole fight readable at a glance,
-a character about 4-6% of the screen height (a mage about 60-90 px tall at 1080p), enemies and projectiles clearly separated, wide spacing between combatants, an arena that is several screens of fight space wide, spell effects and the 140-degree absorb arc readable at that scale, telegraphs bigger than the figures. The A1 arena images were too close and too large; attempts 02 and 08 are the nearest framing.
+a character about 4-6% of the screen height (a mage about 43-65 px tall at 1080p; corrected arithmetic, with 4-6% authoritative), enemies and projectiles clearly separated, wide spacing between combatants, an arena that is several screens of fight space wide, spell effects and the 140-degree absorb arc readable at that scale, telegraphs bigger than the figures. The A1 arena images were too close and too large; attempts 02 and 08 are the nearest framing.
 The arena kernel (W2-W4) and every arena sprite must be authored for this camera and scale: a **scale contract** (metres per pixel, mage height in px, arena size, camera zoom range, minimum readable telegraph size) is the first deliverable of W4b and of A1b.
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Art | A1b | Tessera & Lime baseline: scale contract and **arena camera proofs** (Diablo/PoE framing, three camera distances, several arena layouts), camp map re-check | A1 owner choice (done) | not started |
+| Art | A1b | Tessera & Lime baseline: scale contract and **arena camera proofs** (Diablo/PoE framing, three camera distances, several arena layouts), camp map re-check | A1 owner choice (done) | delivered for owner review; 27 attempts |
 | Art | A2 | 16 portraits and expressions in Tessera & Lime | A1b | not started |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1b | not started |
 | Art | A5 | Icons, HUD, spell-line icons | A1b | not started |
@@ -196,3 +197,33 @@ One A1 commit contains this row, log, design note and artifacts; resolve its has
 `git log -1 --format=%h -- docs/waves/A1-style-exploration.md`. No push. Remaining:
 owner review in `docs/OWNER-CHECKS.md`, actual choice in `art/OWNER-CHOICE.md` (pending).
 Stop after A1 delivery; A2–A5 require that choice and are not started.
+
+
+### A1b - 2026-10-02 - ART / art - resumed session
+
+Reviewed and retained all interrupted-session changes, with two already charged
+pilots recovered without duplicate spend. Added scale data and documentation,
+versioned camera-first prompting after three failed mural-like pilots, a 24-cell
+camera/layout/density matrix with 27 total attempts, and a camp re-check using
+existing bytes. Delivered `art/review/a1b/index.html`, its contact sheet, all source
+hashes, direct observations, local grades, and recommendation data. Eighteen
+semantic rejects stay visible; a delivery pass is not semantic acceptance.
+
+Recommend `01-tessera-staggered-plinths-sparse-near-a02` to the owner only: mage
+approximately 6% of source height, comparable nearby foes, high distant view,
+forward open-rear absorb. Exact 140-degree angle, arena metres, camera calibration,
+motion readability, engine performance and owner feel are not measured. Arc size,
+extra distant figure and bounded court remain explicit defects. A3 is BLOCKED:
+`art/CAMERA-OK.md` is absent; no production figures, poses or effects were started.
+
+Spend: A1b 27 generated images, including 2 before restart and 25 in this run;
+project 57 charged / 57 observed calls, 123 remaining under the 180 cap. Zero
+videos, no quota/rate-limit incident. Shared-account allowance is not measured.
+The first-error stop latch and all reservations remain intact.
+
+Gate commands: `python tools/art/waves.py check A1b` PASS (27 sources, hashes,
+proof gate, direct/local review and Chrome 1080p/1440p/mobile loading). Offline
+pipeline gate and portable rebuild results are in `art/reports/checks.json` and
+`portable-check.json`. Initial A1 validation during live generation correctly
+reported STALE_BUDGET; rerun after the ledger stopped changing. Design note:
+`docs/waves/A1b-camera-proofs.md`. One A1b commit; never pushed. Next: A2.

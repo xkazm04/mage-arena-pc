@@ -164,15 +164,16 @@ def proof_valid(style):
             and source.is_file() and sha(source) == p['sha256'])
 
 
-def generate(style_id, scene, correction=None):
-    style = get_style(style_id)
+def generate(style_id, scene, correction=None, spec=None):
+    # Later waves supply an immutable, proof-gated input; transport and budget stay shared.
+    style = get_style(style_id) if spec is None else spec['style']
     cfg = config()
-    source_input = input_record(style, scene)
+    source_input = input_record(style, scene) if spec is None else spec
     with lock(ART / '.run.lock'):
         budget = Budget()
         old = [j for j in budget.load()['jobs'] if j['style_id'] == style_id and j['scene'] == scene]
         if old and not correction:
-            if not input_matches_current(old[-1]):
+            if not (input_matches_current(old[-1]) if spec is None else old[-1]['input_hash'] == digest(spec)):
                 raise RuntimeError('BRIEF_CHANGED: mint a version before spending')
             record = old[-1]
             if record['status'] == 'generated' and (not source_path(record).is_file() or sha(source_path(record)) != record['sha256']):
@@ -187,7 +188,10 @@ def generate(style_id, scene, correction=None):
                 raise RuntimeError('HASH_BOUND_REJECTION_REQUIRED')
         elif correction:
             raise RuntimeError('CORRECTION_NEEDS_EXISTING_IMAGE')
-        if scene == 'camp' and not proof_valid(style):
+        if spec is not None:
+            from waves import require_proof
+            require_proof(spec)
+        if spec is None and scene == 'camp' and not proof_valid(style):
             raise RuntimeError('ARENA_PROOF_REVIEW_REQUIRED')
         exe = shutil.which('grok')
         if not exe:
@@ -205,7 +209,7 @@ def generate(style_id, scene, correction=None):
                                  'attempt': attempt, 'input_hash': digest(source_input),
                                  'input': source_input, 'prompt': prompt, 'session_id': session_id,
                                  'origin': 'grok-cli', 'model': cfg['cli_model'], 'seed': None,
-                                 'correction': correction})
+                                 'correction': correction, **({'wave': spec['wave']} if spec else {})})
         folder.mkdir(parents=True)
         request = ('Call image_gen exactly ONCE, using aspect_ratio ' + cfg['aspect_ratio'] + '. '
                    'Use the image prompt below verbatim, without changing any words. '

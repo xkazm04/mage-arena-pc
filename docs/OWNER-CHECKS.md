@@ -1,19 +1,19 @@
 # Owner checks
 
-## A1 — style choice pending
+## A1 - choice recorded
 
-Open [the paired board](../art/review/index.html) and compare each direction's arena
-and camp together. Full-size images, contact sheets and the attempt archive are
-linked from the board. The optional local ranking is advisory only.
+The owner chose Tessera & Lime on 2026-10-02; see
+[OWNER-CHOICE.md](../art/OWNER-CHOICE.md). The [A1 board](../art/review/index.html)
+is historical. Its large arena figures are superseded by the distant camera brief.
 
-- Judge the drawing language and mood across both scenes.
-- Check player/threat separation, forward absorb and outgoing spell readability.
-- Check camp landmarks, place-label contrast and Day / Dusk / Night navigation.
-- Consider the visible residual defects in each direction's evidence notes.
-- Record the chosen style ID and actual owner evidence in
-  [art/OWNER-CHOICE.md](../art/OWNER-CHOICE.md). A hybrid requires a new style card
-  and reviewed pair before production work.
+## A1b - camera confirmation pending
 
-Status: pending. No owner preference or felt quality has been recorded. These static
-concepts provide no claim about aiming, absorb timing or gameplay performance.
-A2–A5 remain dependent on the owner choice.
+Open the [camera board](../art/review/a1b/index.html) or
+[contact sheet](../art/review/a1b/contact-sheet.jpg). Inspect full-size sources,
+observed character heights, spacing, warnings and the stated absorb defects.
+The [scale contract](../art/SCALE-CONTRACT.md) is an authored proposal.
+
+The recommendation is input for owner judgment only. No agent or local grader
+can approve the camera. Owner confirmation belongs in `art/CAMERA-OK.md`;
+A3 figures, poses and spell effects stay blocked until it exists.
+Static images do not establish motion readability, timing, aim feel or performance.

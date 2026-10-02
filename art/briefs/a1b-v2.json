@@ -1,0 +1,203 @@
+{
+  "version": "a1b-v2",
+  "wave": "A1b",
+  "description": "Camera comparison: near 6%, standard 5%, far 4%; four layouts and two encounter densities. Version 1 failed its three-image open-oval pilot; version 2 moves camera instructions first and pilots staggered plinths before any batch. All failures retained.",
+  "proof_item": "staggered-plinths-sparse-standard",
+  "common": "Use case: stylized-concept. Original Roman-era elemental-mage arena, Tessera & Lime palette: chalk sand, terracotta, mineral blue, umber contour. Hand-painted digital overhead map with small edge tesserae and matte pigment. Do not depict an ancient wall mural: depict a playable arena seen from high above. No text, UI, letters, logos or photorealism.",
+  "scale_contract_sha256": "8b7c48c8da3b1539a6d2c655a220a5b37bf4c6f63f72ca19ecd1b59627376eb9",
+  "items": [
+    {
+      "id": "open-oval-sparse-standard",
+      "layout": "open-oval",
+      "density": "sparse",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. An enormous open sand-and-lime oval. Only a fragment of its distant boundary at the very top; floor continues outside the other three edges. No enclosing postcard frame. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "open-oval-sparse-near",
+      "layout": "open-oval",
+      "density": "sparse",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. An enormous open sand-and-lime oval. Only a fragment of its distant boundary at the very top; floor continues outside the other three edges. No enclosing postcard frame. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "open-oval-sparse-far",
+      "layout": "open-oval",
+      "density": "sparse",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. An enormous open sand-and-lime oval. Only a fragment of its distant boundary at the very top; floor continues outside the other three edges. No enclosing postcard frame. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "staggered-plinths-sparse-standard",
+      "layout": "staggered-plinths",
+      "density": "sparse",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A huge training court with four low square plinths staggered near the outer thirds, leaving a very broad clear centre and bypass lanes. Floor extends beyond the frame. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "staggered-plinths-sparse-near",
+      "layout": "staggered-plinths",
+      "density": "sparse",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A huge training court with four low square plinths staggered near the outer thirds, leaving a very broad clear centre and bypass lanes. Floor extends beyond the frame. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "staggered-plinths-sparse-far",
+      "layout": "staggered-plinths",
+      "density": "sparse",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A huge training court with four low square plinths staggered near the outer thirds, leaving a very broad clear centre and bypass lanes. Floor extends beyond the frame. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "split-lanes-sparse-standard",
+      "layout": "split-lanes",
+      "density": "sparse",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "split-lanes-sparse-near",
+      "layout": "split-lanes",
+      "density": "sparse",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "split-lanes-sparse-far",
+      "layout": "split-lanes",
+      "density": "sparse",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "broken-ring-sparse-standard",
+      "layout": "broken-ring",
+      "density": "sparse",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A gigantic broken circular tile band on open sand, with three widely spaced ruined pillar stumps near the outer thirds. Fight across the band; ground continues beyond the picture. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "broken-ring-sparse-near",
+      "layout": "broken-ring",
+      "density": "sparse",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A gigantic broken circular tile band on open sand, with three widely spaced ruined pillar stumps near the outer thirds. Fight across the band; ground continues beyond the picture. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "broken-ring-sparse-far",
+      "layout": "broken-ring",
+      "density": "sparse",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A gigantic broken circular tile band on open sand, with three widely spaced ruined pillar stumps near the outer thirds. Fight across the band; ground continues beyond the picture. One tiny blue mage near centre and four tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "open-oval-busy-standard",
+      "layout": "open-oval",
+      "density": "busy",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. An enormous open sand-and-lime oval. Only a fragment of its distant boundary at the very top; floor continues outside the other three edges. No enclosing postcard frame. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "open-oval-busy-near",
+      "layout": "open-oval",
+      "density": "busy",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. An enormous open sand-and-lime oval. Only a fragment of its distant boundary at the very top; floor continues outside the other three edges. No enclosing postcard frame. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "open-oval-busy-far",
+      "layout": "open-oval",
+      "density": "busy",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. An enormous open sand-and-lime oval. Only a fragment of its distant boundary at the very top; floor continues outside the other three edges. No enclosing postcard frame. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "staggered-plinths-busy-standard",
+      "layout": "staggered-plinths",
+      "density": "busy",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A huge training court with four low square plinths staggered near the outer thirds, leaving a very broad clear centre and bypass lanes. Floor extends beyond the frame. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "staggered-plinths-busy-near",
+      "layout": "staggered-plinths",
+      "density": "busy",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A huge training court with four low square plinths staggered near the outer thirds, leaving a very broad clear centre and bypass lanes. Floor extends beyond the frame. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "staggered-plinths-busy-far",
+      "layout": "staggered-plinths",
+      "density": "busy",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A huge training court with four low square plinths staggered near the outer thirds, leaving a very broad clear centre and bypass lanes. Floor extends beyond the frame. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "split-lanes-busy-standard",
+      "layout": "split-lanes",
+      "density": "busy",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "split-lanes-busy-near",
+      "layout": "split-lanes",
+      "density": "busy",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "split-lanes-busy-far",
+      "layout": "split-lanes",
+      "density": "busy",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "broken-ring-busy-standard",
+      "layout": "broken-ring",
+      "density": "busy",
+      "distance": "standard",
+      "target_fraction": 0.05,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A gigantic broken circular tile band on open sand, with three widely spaced ruined pillar stumps near the outer thirds. Fight across the band; ground continues beyond the picture. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "broken-ring-busy-near",
+      "layout": "broken-ring",
+      "density": "busy",
+      "distance": "near",
+      "target_fraction": 0.06,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 6% of image height (43 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A gigantic broken circular tile band on open sand, with three widely spaced ruined pillar stumps near the outer thirds. Fight across the band; ground continues beyond the picture. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    },
+    {
+      "id": "broken-ring-busy-far",
+      "layout": "broken-ring",
+      "density": "busy",
+      "distance": "far",
+      "target_fraction": 0.04,
+      "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 4% of image height (29 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A gigantic broken circular tile band on open sand, with three widely spaced ruined pillar stumps near the outer thirds. Fight across the band; ground continues beyond the picture. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents."
+    }
+  ],
+  "prompt_order": "camera-first"
+}

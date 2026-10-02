@@ -1,0 +1,19 @@
+{
+  "job": "01-tessera-split-lanes-sparse-near-a01",
+  "sha256": "2d8d575e719509f000045d108cd2497d49f255ae4e9dec5a9c8c3756de253c44",
+  "note": "Reject: player about 3.6% tall despite near target, duplicated blue player above centre and two disjoint cyan crescents. Large open cross is readable, low walls do not occlude, but identity and directional absorb are confused.",
+  "at": "2026-10-02T07:06:49.034733+00:00",
+  "verdict": "reject",
+  "owner_accepted": false,
+  "reviewer": "executing-agent",
+  "label": "direct pixel observation; not owner feel",
+  "measurement": {
+    "player_y_bounds_px": [
+      343,
+      369
+    ],
+    "source_height_px": 720,
+    "fraction": 0.0361,
+    "method": "manual visual bounds, approximate; excludes spell and shadow"
+  }
+}

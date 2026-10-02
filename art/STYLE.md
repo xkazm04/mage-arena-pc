@@ -1,9 +1,11 @@
-# A1 comparison contract
+# Tessera & Lime baseline and A1 comparison archive
 
-No production style has been chosen. The owner reviews
-[`review/index.html`](review/index.html) and records the actual decision in
-[`OWNER-CHOICE.md`](OWNER-CHOICE.md). Model rankings and agent observations cannot
-approve a style.
+The owner chose Tessera & Lime (01-tessera) on 2026-10-02; see
+[OWNER-CHOICE.md](OWNER-CHOICE.md). Its palette, broken umber contours and fresco
+rendering are the baseline. Its A1 arena framing is superseded by the owner's
+distant camera instruction and [SCALE-CONTRACT.md](SCALE-CONTRACT.md).
+The original [A1 board](review/index.html) remains a historical comparison.
+Model rankings and agent observations cannot approve a camera or production asset.
 
 The immutable direction definitions are in `styles/a1-v1.json`. They distinguish
 line, palette, shading, density and mood: Tessera & Lime; Salt & Scribe; Hearth
@@ -11,7 +13,7 @@ Under Guard; The Vigil Cut; Ash & Bronze; Forum in Four Inks; Ember After Dark;
 Rain on Travertine. These are original hand-drawn digital **look studies**, generated
 from authored prompts, not claims of manual painting or production readiness.
 
-Every current direction uses the same arena base action and the same camp base
+Every archived A1 direction uses the same arena base action and the same camp base
 action, selected by `config-v1.json`; only the full style block changes. An explicit
 correction appendix is allowed only against a hash-bound content rejection, is kept
 in the attempt record, and is visible in the evidence manifest. The shared forward
@@ -37,3 +39,12 @@ All rejected and superseded plates remain in `review/sources/` and the attempt
 gallery. Current comparisons contain one arena and one camp per direction. Their
 screens are derivatives with code-drawn UI; their untouched sources have independent
 hashes. No material enters `assets/` or code packages in A1.
+
+## Session 2 deliverables
+
+A1b uses immutable versioned briefs with the same shared style baseline, but camera
+framing takes precedence over mural-like character detail. Prompt targets and
+observed player height are distinct evidence. Failed scenes remain visible.
+The camp source remains useful and its original data-driven labels are rechecked.
+A2 portraits, A4 camp/story art and A5 interface assets remain owner-review
+candidates until reviewed. A3 requires the separate owner camera file.
