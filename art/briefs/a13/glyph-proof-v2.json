@@ -1,0 +1,30 @@
+{
+  "wave": "A13",
+  "id": "glyph-proof",
+  "pilot": true,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "agy",
+    "grok"
+  ],
+  "aspect_ratio": "4:3",
+  "references": [
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+      "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+      "role": "Covenant style reference"
+    },
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+      "role": "Covenant style reference"
+    },
+    {
+      "path": "art/ui/sources/clock.png",
+      "sha256": "bc9610ae67e74a17a00bcd06505831693d2d01f4b7d5c4834d8fb452432c30d5",
+      "role": "Covenant style reference"
+    }
+  ],
+  "prompt": "Use case: stylized-concept. Create ONE original game-asset GLYPH MASTER SHEET, exactly FOUR columns by THREE rows, twelve isolated glyphs, black background. Input reference-1.png supplies weathered luminous wardstone incisions and magical atmosphere; reference-2.png supplies hand-painted silver/collar craftsmanship; reference-3.png supplies worn UI metal. These are visual style references only, not layouts to copy. Paint luminous ivory-silver calligraphic rune strokes with very faint cool bloom, dark worn inner edges, thick-to-thin pressure, chipped physical stroke ends, confident uneven hand. The twelve abstract magical radicals share hooked cut ends and one deliberate break in every curve. Original symbols, NOT existing alphabets, letters, numerals, mathematical notation, religious symbols, vector icons, clean geometric clip art or circles drawn with a compass. Row 1 left to right: FIRE a crooked three-tongued ember split from one hooked root; WATER a cupped breaking wave with a hanging tear; EARTH an uneven cleft stone-tooth with two short root cuts; AIR an unfurling forked wisp with a detached breath nick. Row 2: BIND a flattened seed husk with two short offset roots and a torn opening across its belly; OPEN a broken bowl with an escaping tip; GATHER three short swept splinters leaning into a hollow; RELEASE a long curling stroke ending in two outward sparks. Row 3: WITNESS a watchful broken eye with an offset short scar; DANGER two uneven downward tooth strokes pierced by a short sideways nick; SEVER a split seed husk torn diagonally into two jagged shell shards with a small falling chip between them; ENDURE a low knotted root mass with a single upward crooked shoot and two short downward fibres. The glyphs should feel carved by a battle mage and awakened by light, each boldly legible at 24 pixels, with rich painterly edge variation at larger sizes. All twelve upright and centred in equal grid cells. Exactly one glyph per cell. Every glyph INCLUDING its soft glow fits within the middle 60 percent of its cell. Wide EMPTY black gutters and outer margins; NO grid lines, panels, labels, decorative border, floor, objects or people. Neutral ivory with subtle silver-blue shading, no colored background. No grain, paper or noise. Flat orthographic front view for clean extraction, no perspective. Aim for 1536x1152 or larger 4:3 sheet. No text or watermark. Critical correction: abstract botanical or mineral incisions, NEVER shapes resembling Latin letters (especially S, E, M, B), digits or paired repeated letterforms. Deepen irregular chipped pigment, brushed highlights and uneven scarred edges. Avoid uniformly beveled polished icon styling. Inspect the design mentally before the SINGLE generation call; no extra generation or retry.",
+  "correction_of": "a13-glyph-proof-agy-a01"
+}

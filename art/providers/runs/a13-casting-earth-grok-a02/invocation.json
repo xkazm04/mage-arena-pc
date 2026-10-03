@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "92cebe79-635c-4b44-8544-c908e2a3776b",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-casting-earth-grok-a02\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-casting-earth-grok-a02",
+  "references": [
+    {
+      "path": "art/waves/A13/references/painted-ring-key.png",
+      "sha256": "c2815d56e2d12404971b80e63999ae43f1a7af2874d1696a9b5cfa299310c038",
+      "role": "ONE painted cracked brush circle; keep pigment texture, transform element"
+    }
+  ]
+}

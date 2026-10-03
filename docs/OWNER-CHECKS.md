@@ -141,3 +141,18 @@ Owner feel and approval remain unmeasured; the local grader may only reject or r
 [A12 owner board](../art/review/a12/index.html) · [contact sheet](../art/review/a12/contact-sheet.jpg) · [camera/occlusion consumer](../art/review/a12/canvas-demo.html). Three coherent A6-guided arena paintings replace the assembled A9 method for this candidate; seven foreground pylon overlays are cut from the same painting. The board includes equal-size concept/plate views, 1:1 floor and structure crops at 1080p/1440p, and actual A10/A8 composites at the v2 camera scale. The native sources are 1376×768; the 3072×1728 masters use disclosed local upscaling. Fine cracks, runes and some pylon modelling remain below or different from the references, and overscan architecture is inferred. Only owner review can accept cohesion and atmosphere. The proposed compact 94×62m arena requires game boundary/spawn migration; gameplay integration and performance are unmeasured. Provider audit/repair, 11 new images and one historical reconciliation are documented at 297/345; both original latch files are preserved. Camp and portraits remain unchanged.
 
 Owner feel and approval remain unmeasured; the local grader may only reject or route.
+
+## Session 8 / A13
+
+[Owner board](../art/review/a13/index.html),
+[motion and charge progress](../art/review/a13/motion.html),
+[combined contact sheet](../art/review/a13/contact-sheet.jpg).
+The review candidate replaces geometric visible sigils with painted contours
+and twelve canonical radicals. Inspect the three native arena comparisons at
+1.5-size figures: magical character, school identity, charging time, common
+warning versus UNBLOCKABLE, forward-only ward and bright inner perfect window.
+Also inspect tiny status distinctions and the quieter new floor inscriptions.
+Generated paint and authored animation/masks are labelled. Hold motion is
+subtle; shared construction, small modifiers and floor cleanup softness remain
+explicit findings. Technical gates and the local grader do not accept art.
+Owner acceptance, gameplay integration and actual combat/performance remain open.

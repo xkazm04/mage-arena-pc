@@ -1,0 +1,25 @@
+{
+  "wave": "A13",
+  "id": "threat-cone",
+  "pilot": false,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "agy",
+    "grok"
+  ],
+  "aspect_ratio": "4:3",
+  "references": [
+    {
+      "path": "art/waves/A13/references/painted-ring-key.png",
+      "sha256": "c2815d56e2d12404971b80e63999ae43f1a7af2874d1696a9b5cfa299310c038",
+      "role": "generated painted pigment; arc has explicitly authored half-mask"
+    }
+  ],
+  "sheet": {
+    "columns": 3,
+    "rows": 2,
+    "kind": "threat"
+  },
+  "prompt": "Original painted dark-fantasy game decal animation sheet. Reference-1.png is the ONLY style/composition guide. Exactly THREE columns by TWO rows, SIX distinct keys of ONE fan-shaped magical attack mark pointing RIGHT. Transform the reference circle into a QUARTER-DISC wedge: apex at the far LEFT centre of cell, TWO roughly horizontal diagonal brush sides diverge to the RIGHT, a curved convex edge closes the wide RIGHT end. Like a fan opening to the right, NEVER an upward equilateral triangle or rounded triangular frame. All six point RIGHT with fixed shape. Neutral silver-ivory cracked brush strokes, no solid metal; dark pigment fissures and small selected glow. Empty dark middle. The full boundary remains visible in every key while small light and stroke tips vary.  Flat TOP view before game projection. Pure black background with no panels, grid lines, text, symbols or glyphs; canonical glyphs are added separately. Each whole shape including glow must fit the middle 60 percent of its cell. Very large empty gutters and margins. Exactly 3x2. Rich uneven painterly strokes and localized wear, not vectors, neon tubes, photorealism, 3D render or paper noise.",
+  "correction_of": "a13-threat-cone-grok-a01"
+}

@@ -1,0 +1,71 @@
+{
+  "id": "a13-floor-wreaths-grok-a02",
+  "wave": "A13",
+  "style_id": "covenant",
+  "scene": "floor-wreaths",
+  "attempt": 2,
+  "input": {
+    "wave": "A13",
+    "id": "floor-wreaths",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "4:3",
+    "references": [
+      {
+        "path": "art/waves/A13/references/painted-ring-key.png",
+        "sha256": "c2815d56e2d12404971b80e63999ae43f1a7af2874d1696a9b5cfa299310c038",
+        "role": "painted broken contour only; no writing"
+      }
+    ],
+    "sheet": {
+      "columns": 3,
+      "rows": 1,
+      "kind": "floor"
+    },
+    "prompt": "ONE game decal asset sheet: THREE columns in ONE row, three large isolated circular worn paint inscriptions on PURE BLACK. Use reference-1.png brush texture and cracked pigment, but make each wreath much more fragmentary, thin, quiet and weathered, old pigment scratches sunk into stone rather than a physical stone or metal object. Left grey-green verdigris pigment; middle warm ochre-bronze pigment; right cold blue-grey moon-silver pigment. Each wreath has two broken curling brush paths, uneven pressure and deeply eroded edges with many gaps. Open black centre occupies 70 percent of diameter. ABSOLUTELY NO GLYPHS, RUNES, LETTERS, SYMBOLS, GEOMETRIC MARKS, NUMBERS OR WRITING ANYWHERE. Canonical rune cutouts will be added in a separate art assembly step. Low glow, painterly uneven incisions, no thick polished ring, no masonry blocks, no uniform annulus. Flat top view, circular before projection. Exactly three isolated decals, one per equal square cell, whole mark within middle 70 percent of cell, generous pure black gutters. No panels, borders, floor surface, paper grain or noise. Landscape 3:1. Original work.",
+    "correction_of": "a13-floor-wreaths-grok-a01"
+  },
+  "input_hash": "afbff580682f53b5c80c44804de08bfae9a7eccea1ccc8c57f2f865cc872ed71",
+  "prompt": "ONE game decal asset sheet: THREE columns in ONE row, three large isolated circular worn paint inscriptions on PURE BLACK. Use reference-1.png brush texture and cracked pigment, but make each wreath much more fragmentary, thin, quiet and weathered, old pigment scratches sunk into stone rather than a physical stone or metal object. Left grey-green verdigris pigment; middle warm ochre-bronze pigment; right cold blue-grey moon-silver pigment. Each wreath has two broken curling brush paths, uneven pressure and deeply eroded edges with many gaps. Open black centre occupies 70 percent of diameter. ABSOLUTELY NO GLYPHS, RUNES, LETTERS, SYMBOLS, GEOMETRIC MARKS, NUMBERS OR WRITING ANYWHERE. Canonical rune cutouts will be added in a separate art assembly step. Low glow, painterly uneven incisions, no thick polished ring, no masonry blocks, no uniform annulus. Flat top view, circular before projection. Exactly three isolated decals, one per equal square cell, whole mark within middle 70 percent of cell, generous pure black gutters. No panels, borders, floor surface, paper grain or noise. Landscape 3:1. Original work.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "a0a0d853-a627-4ac7-8b2c-c13b1f4a62ea",
+  "at": "2026-10-03T21:53:26.808036+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 23.64,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-floor-wreaths-grok-a02\\reference-1.png"
+        ],
+        "prompt": "ONE game decal asset sheet: THREE columns in ONE row, three large isolated circular worn paint inscriptions on PURE BLACK. Use reference-1.png brush texture and cracked pigment, but make each wreath much more fragmentary, thin, quiet and weathered, old pigment scratches sunk into stone rather than a physical stone or metal object. Left grey-green verdigris pigment; middle warm ochre-bronze pigment; right cold blue-grey moon-silver pigment. Each wreath has two broken curling brush paths, uneven pressure and deeply eroded edges with many gaps. Open black centre occupies 70 percent of diameter. ABSOLUTELY NO GLYPHS, RUNES, LETTERS, SYMBOLS, GEOMETRIC MARKS, NUMBERS OR WRITING ANYWHERE. Canonical rune cutouts will be added in a separate art assembly step. Low glow, painterly uneven incisions, no thick polished ring, no masonry blocks, no uniform annulus. Flat top view, circular before projection. Exactly three isolated decals, one per equal square cell, whole mark within middle 70 percent of cell, generous pure black gutters. No panels, borders, floor surface, paper grain or noise. Landscape 3:1. Original work.",
+        "aspect_ratio": "4:3"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "7e9dddd7904b7f59d30a31ecd27785bc524c51a5412a62b31890c9cfc5932c81",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca13-floor-wreaths-grok-a02\\a0a0d853-a627-4ac7-8b2c-c13b1f4a62ea\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a13-floor-wreaths-grok-a02/_driver/source.jpg",
+  "archive": "art/review/sources/a13-floor-wreaths-grok-a02.jpg",
+  "sha256": "7e9dddd7904b7f59d30a31ecd27785bc524c51a5412a62b31890c9cfc5932c81",
+  "invocation_evidence": "art/providers/runs/a13-floor-wreaths-grok-a02"
+}

@@ -254,7 +254,7 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 | Game | U5 | Wire the A12 plates (compact layout, occluders, palette per tier) and figures 50% larger (scale contract v3, camera and layout re-check) | D31, D32 | not started |
 | Game | CF1 | **Combat Feel Lab**: training mode with a dummy and one selectable opponent, live tuning, reset, metrics, replay of the last bout; the owner's start guide | U5 | not started |
 | Game | CF2 | Combat feel improvements from the Lab findings: hit feedback (hit stop, flash, shake, knockback, numbers), cast and animation timing, movement feel, absorb and perfect-absorb feel, telegraph readability, enemy behaviour; data-driven; census bands re-set where gameplay changes | CF1 | not started |
-| Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | not started |
+| Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | delivery candidate complete: 44 clips / 305 frame references; [board](../art/review/a13/index.html), [contract](../art/delivery/a13/README.md); owner review and game integration open |
 
 ## l. Session log
 
@@ -263,3 +263,27 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
+
+### ART session 8 / A13 / 2026-10-03 to 2026-10-04
+
+Delivered [painted sigils and telegraphs](../art/review/a13/index.html): twelve
+canonical radicals, 44 clips / 305 frame references, four schools with casting
+phases and progress threats, common and UNBLOCKABLE warnings, ward and separate
+perfect-window/success cues, floor inscriptions, selection/target and five
+statuses. Generated paint versus authored glyph assembly, timing, UV warp,
+progress masks and floor reconstruction are explicit. Before/after witnesses on
+three A12 plates use A10 figures at 1.5 size, 60.75px at 1080p; old asset bytes
+are unchanged. Ten selected generated sources; nineteen archived images from
+twenty jobs, 21 charges. Project 318/345; agy latched on EXTRA_TOOL_CALL, Grok
+clear; no resets, refunds or push. Provider transcript evidence is scoped to
+these exact requests and checked for late extra calls.
+
+Commands: `a13_build.py`, `a13_floor.py`, `check_a13.py`, `a13_audit.py`,
+`a13_board.py` and `a13_browser.py` pass (five viewport cases, sixteen native
+captures). `a13_portable.py`: 74 products byte-identical with raw/provider access
+and network blocked. `python -m unittest discover -s tools/art -p "test_*.py"`:
+81 pass. The installed SciPy/NumPy compatibility warning is disclosed. Owner
+acceptance, game integration, GPU performance and combat/controller feel are
+not measured. Shared hold construction, subtle motion, small modifiers and
+floor reconstruction softness remain review findings. Next: owner visual review
+and game-side integration per [handoff](../art/SESSION-8-HANDOFF.md).

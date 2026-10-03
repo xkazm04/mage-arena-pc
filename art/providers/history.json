@@ -2,7 +2,12 @@
   "schema": 1,
   "providers": {
     "agy": {
-      "stop": null,
+      "stop": {
+        "at": "2026-10-03T21:42:56.595941+00:00",
+        "event": "stop",
+        "job": "a13-casting-fire-agy-a01",
+        "reason": "EXTRA_TOOL_CALL"
+      },
       "events": [
         {
           "at": "2026-10-02T18:54:18.844923+00:00",
@@ -812,6 +817,43 @@
           "at": "2026-10-03T15:52:06.894733+00:00",
           "event": "generated",
           "job": "a12-rust-sand-wide-agy-a01"
+        },
+        {
+          "at": "2026-10-03T21:31:16.438790+00:00",
+          "event": "reserved",
+          "job": "a13-glyph-proof-agy-a01"
+        },
+        {
+          "at": "2026-10-03T21:34:03.033772+00:00",
+          "event": "generated",
+          "job": "a13-glyph-proof-agy-a01"
+        },
+        {
+          "at": "2026-10-03T21:34:45.386117+00:00",
+          "event": "reserved",
+          "job": "a13-glyph-proof-agy-a02"
+        },
+        {
+          "at": "2026-10-03T21:36:50.679667+00:00",
+          "event": "generated",
+          "job": "a13-glyph-proof-agy-a02"
+        },
+        {
+          "at": "2026-10-03T21:41:17.185310+00:00",
+          "event": "reserved",
+          "job": "a13-casting-fire-agy-a01"
+        },
+        {
+          "at": "2026-10-03T21:42:56.590772+00:00",
+          "event": "error-unknown-spend",
+          "job": "a13-casting-fire-agy-a01",
+          "reason": "EXTRA_TOOL_CALL"
+        },
+        {
+          "at": "2026-10-03T21:42:56.595941+00:00",
+          "event": "stop",
+          "job": "a13-casting-fire-agy-a01",
+          "reason": "EXTRA_TOOL_CALL"
         }
       ]
     },
@@ -1406,6 +1448,176 @@
           "at": "2026-10-03T15:28:01.734409+00:00",
           "event": "generated",
           "job": "a12-rust-sand-clean-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:42:56.701672+00:00",
+          "event": "reserved",
+          "job": "a13-casting-fire-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:43:23.367290+00:00",
+          "event": "generated",
+          "job": "a13-casting-fire-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:43:23.482314+00:00",
+          "event": "reserved",
+          "job": "a13-casting-water-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:43:54.821205+00:00",
+          "event": "generated",
+          "job": "a13-casting-water-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:43:54.931051+00:00",
+          "event": "reserved",
+          "job": "a13-casting-earth-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:44:26.263387+00:00",
+          "event": "generated",
+          "job": "a13-casting-earth-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:44:26.373170+00:00",
+          "event": "reserved",
+          "job": "a13-casting-air-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:44:54.411037+00:00",
+          "event": "generated",
+          "job": "a13-casting-air-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:44:54.513073+00:00",
+          "event": "reserved",
+          "job": "a13-threat-ring-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:45:54.708857+00:00",
+          "event": "generated",
+          "job": "a13-threat-ring-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:45:54.820643+00:00",
+          "event": "reserved",
+          "job": "a13-threat-cone-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:46:19.658262+00:00",
+          "event": "generated",
+          "job": "a13-threat-cone-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:46:19.776134+00:00",
+          "event": "reserved",
+          "job": "a13-threat-line-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:46:45.643315+00:00",
+          "event": "generated",
+          "job": "a13-threat-line-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:46:45.745305+00:00",
+          "event": "reserved",
+          "job": "a13-ward-arc-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:47:08.368005+00:00",
+          "event": "generated",
+          "job": "a13-ward-arc-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:47:08.476285+00:00",
+          "event": "reserved",
+          "job": "a13-perfect-ring-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:47:30.063637+00:00",
+          "event": "generated",
+          "job": "a13-perfect-ring-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:47:30.171107+00:00",
+          "event": "reserved",
+          "job": "a13-floor-wreaths-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:47:51.731255+00:00",
+          "event": "generated",
+          "job": "a13-floor-wreaths-grok-a01"
+        },
+        {
+          "at": "2026-10-03T21:49:13.250882+00:00",
+          "event": "reserved",
+          "job": "a13-casting-fire-grok-a03"
+        },
+        {
+          "at": "2026-10-03T21:49:42.316897+00:00",
+          "event": "generated",
+          "job": "a13-casting-fire-grok-a03"
+        },
+        {
+          "at": "2026-10-03T21:49:42.418651+00:00",
+          "event": "reserved",
+          "job": "a13-casting-water-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:50:08.313735+00:00",
+          "event": "generated",
+          "job": "a13-casting-water-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:50:08.422371+00:00",
+          "event": "reserved",
+          "job": "a13-casting-earth-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:50:31.123249+00:00",
+          "event": "generated",
+          "job": "a13-casting-earth-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:50:31.224067+00:00",
+          "event": "reserved",
+          "job": "a13-casting-air-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:51:03.507800+00:00",
+          "event": "generated",
+          "job": "a13-casting-air-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:51:03.628496+00:00",
+          "event": "reserved",
+          "job": "a13-ward-arc-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:51:26.308558+00:00",
+          "event": "generated",
+          "job": "a13-ward-arc-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:51:26.416043+00:00",
+          "event": "reserved",
+          "job": "a13-threat-cone-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:51:51.239228+00:00",
+          "event": "generated",
+          "job": "a13-threat-cone-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:53:26.836745+00:00",
+          "event": "reserved",
+          "job": "a13-floor-wreaths-grok-a02"
+        },
+        {
+          "at": "2026-10-03T21:53:50.579893+00:00",
+          "event": "generated",
+          "job": "a13-floor-wreaths-grok-a02"
         }
       ]
     }

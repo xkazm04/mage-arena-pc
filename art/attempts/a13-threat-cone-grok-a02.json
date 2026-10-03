@@ -1,0 +1,71 @@
+{
+  "id": "a13-threat-cone-grok-a02",
+  "wave": "A13",
+  "style_id": "covenant",
+  "scene": "threat-cone",
+  "attempt": 2,
+  "input": {
+    "wave": "A13",
+    "id": "threat-cone",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "4:3",
+    "references": [
+      {
+        "path": "art/waves/A13/references/painted-ring-key.png",
+        "sha256": "c2815d56e2d12404971b80e63999ae43f1a7af2874d1696a9b5cfa299310c038",
+        "role": "generated painted pigment; arc has explicitly authored half-mask"
+      }
+    ],
+    "sheet": {
+      "columns": 3,
+      "rows": 2,
+      "kind": "threat"
+    },
+    "prompt": "Original painted dark-fantasy game decal animation sheet. Reference-1.png is the ONLY style/composition guide. Exactly THREE columns by TWO rows, SIX distinct keys of ONE fan-shaped magical attack mark pointing RIGHT. Transform the reference circle into a QUARTER-DISC wedge: apex at the far LEFT centre of cell, TWO roughly horizontal diagonal brush sides diverge to the RIGHT, a curved convex edge closes the wide RIGHT end. Like a fan opening to the right, NEVER an upward equilateral triangle or rounded triangular frame. All six point RIGHT with fixed shape. Neutral silver-ivory cracked brush strokes, no solid metal; dark pigment fissures and small selected glow. Empty dark middle. The full boundary remains visible in every key while small light and stroke tips vary.  Flat TOP view before game projection. Pure black background with no panels, grid lines, text, symbols or glyphs; canonical glyphs are added separately. Each whole shape including glow must fit the middle 60 percent of its cell. Very large empty gutters and margins. Exactly 3x2. Rich uneven painterly strokes and localized wear, not vectors, neon tubes, photorealism, 3D render or paper noise.",
+    "correction_of": "a13-threat-cone-grok-a01"
+  },
+  "input_hash": "f51d6d31cd5a8ac7dbf8331b6c609f871c06ac3033a8bc6120e4083552bc9f7c",
+  "prompt": "Original painted dark-fantasy game decal animation sheet. Reference-1.png is the ONLY style/composition guide. Exactly THREE columns by TWO rows, SIX distinct keys of ONE fan-shaped magical attack mark pointing RIGHT. Transform the reference circle into a QUARTER-DISC wedge: apex at the far LEFT centre of cell, TWO roughly horizontal diagonal brush sides diverge to the RIGHT, a curved convex edge closes the wide RIGHT end. Like a fan opening to the right, NEVER an upward equilateral triangle or rounded triangular frame. All six point RIGHT with fixed shape. Neutral silver-ivory cracked brush strokes, no solid metal; dark pigment fissures and small selected glow. Empty dark middle. The full boundary remains visible in every key while small light and stroke tips vary.  Flat TOP view before game projection. Pure black background with no panels, grid lines, text, symbols or glyphs; canonical glyphs are added separately. Each whole shape including glow must fit the middle 60 percent of its cell. Very large empty gutters and margins. Exactly 3x2. Rich uneven painterly strokes and localized wear, not vectors, neon tubes, photorealism, 3D render or paper noise.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "0076e805-e8d2-4756-a259-8aa0ff3a7a0c",
+  "at": "2026-10-03T21:51:26.379345+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 24.719,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-threat-cone-grok-a02\\reference-1.png"
+        ],
+        "prompt": "Original painted dark-fantasy game decal animation sheet. Reference-1.png is the ONLY style/composition guide. Exactly THREE columns by TWO rows, SIX distinct keys of ONE fan-shaped magical attack mark pointing RIGHT. Transform the reference circle into a QUARTER-DISC wedge: apex at the far LEFT centre of cell, TWO roughly horizontal diagonal brush sides diverge to the RIGHT, a curved convex edge closes the wide RIGHT end. Like a fan opening to the right, NEVER an upward equilateral triangle or rounded triangular frame. All six point RIGHT with fixed shape. Neutral silver-ivory cracked brush strokes, no solid metal; dark pigment fissures and small selected glow. Empty dark middle. The full boundary remains visible in every key while small light and stroke tips vary.  Flat TOP view before game projection. Pure black background with no panels, grid lines, text, symbols or glyphs; canonical glyphs are added separately. Each whole shape including glow must fit the middle 60 percent of its cell. Very large empty gutters and margins. Exactly 3x2. Rich uneven painterly strokes and localized wear, not vectors, neon tubes, photorealism, 3D render or paper noise.",
+        "aspect_ratio": "4:3"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "6f6cc3f3046d208c96eb715b925dd8b993333963feebe55dfe9bfa78fc1da02c",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca13-threat-cone-grok-a02\\0076e805-e8d2-4756-a259-8aa0ff3a7a0c\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a13-threat-cone-grok-a02/_driver/source.jpg",
+  "archive": "art/review/sources/a13-threat-cone-grok-a02.jpg",
+  "sha256": "6f6cc3f3046d208c96eb715b925dd8b993333963feebe55dfe9bfa78fc1da02c",
+  "invocation_evidence": "art/providers/runs/a13-threat-cone-grok-a02"
+}

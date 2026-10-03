@@ -1,3 +1,21 @@
+# Session 8 / A13 current candidate
+
+[Owner board](review/a13/index.html), [contact sheet](review/a13/contact-sheet.jpg),
+[handoff](SESSION-8-HANDOFF.md). A13 replaces the visible geometric sigil approach
+with generated painted pigment and twelve shared canonical radicals: 44 clips,
+305 frame references, four-school casting phases and progress telegraphs,
+distinct UNBLOCKABLE, ward/window/perfect cues, floor, selection/target and five
+statuses. Generated keys versus authored assembly, masking, UV mapping and
+floor reconstruction are labelled. Three arena comparisons use 1.5-size A10
+figures at native 1080p/1440p. Integrity, browser, 74-product offline rebuild
+and 81 tests pass. The local grader may reject or route only.
+
+Shared hold construction, subtle motion, small status modifiers and softened
+floor-cleanup patches remain owner-review findings. Engine integration, runtime
+performance and combat/sofa feel remain unmeasured. Prior A8/A10/A12, camp,
+portraits and UI bytes are preserved. Twenty jobs / 21 charges / nineteen source
+images; total 318/345. agy latched on an extra-call anomaly; Grok clear; no reset.
+
 # Session 6 / A11 partial design
 
 A11 PARTIAL / generation blocked: Tideglass daily clock with four light states and independent water, meniscus, rim, glass, marks, mist and rotating bead; gold/reputation/fatigue design symbols at header and large sizes. Eighteen new UI regions on one separate page preserve all 90 A5b regions and both original pages. Zero new generated images: A5b rim/A8 mist reused, other geometry and shading authored. Local review flags the regular icon bevels and geometric sky below the painted Covenant bar. Prepared briefs remain unsubmitted. Both provider latches retained at 285/300; 15 local reservations do not establish provider availability. Owner board and session-6 combined contact sheet delivered; new painting, owner acceptance and game integration remain open.

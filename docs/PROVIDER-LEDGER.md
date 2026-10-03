@@ -98,3 +98,30 @@ One Grok clean-plate proof succeeded in about 28 seconds. The prior “temporari
 **11 new images: agy 6, Grok 5; plus 1 historical reconciliation. Project total 297/345.** Current provider project charges: agy 81, Grok 189; agy's 4 known external probes additionally count against its guard. Local guard remainders: agy 315, Grok 141; combined project remainder 48. Both latches are clear. Actual account balance and image monetary cost remain unknown; CLI token cost is not image-generation spend.
 
 No other paid image provider was used. Three local RealESRGAN_x4plus passes use the existing CUDA/Comfy runtime. No upscale weights were installed before this wave; the official release URL and BSD-3-Clause licence were recorded **before** downloading the 67,040,989-byte weight, SHA-256 `4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1`. Source/licence/hash and learned-versus-Lanczos comparisons are under `art/waves/A12`; the ignored model is not committed. Existing EasyOCR weights were reused with downloads disabled. Local Qwen/OCR observations remain advice only.
+
+### Session 8 / A13 / 2026-10-03 to 2026-10-04
+
+agy was used first for a reference-guided single rune proof. Its first sheet
+introduced letter-like forms and was rejected; the corrected sheet supplies
+canonical cutouts, excluding its H-like warning cell. Technical proof permits
+siblings only; local grades never accept art. The next agy casting job initiated
+two internal image calls despite a one-image request. The live monitor detected
+`EXTRA_TOOL_CALL`, terminated it and latched agy. Both started calls remain
+charged. A final exact-request-linked parent/worker audit found no additional
+late calls. No latch was cleared. Grok then ran serially under its independent
+clear latch. Its sheets frequently missed phase or shape constraints: icon-like
+start/release, pseudowriting, an invalid cone, closed ward and geometric floor
+runes were rejected and remain visible in the attempt archive. Corrected hold
+sheets supply painted keys; start/release are honestly authored from these.
+
+Twenty jobs, nineteen archived generated images, **21 session charges** (agy 4,
+Grok 17). Ten selected paintings feed the delivery. No moderation refusal or
+quota/rate error this wave; no refund, third provider or guard increase. Total
+**318/345**, conservative project remainder **27**. Recorded provider guards:
+agy 400, Grok 330. Provider project charges: agy 85 plus 4 known external,
+Grok 206; guard remainders 311 and 124 are subordinate to the combined ceiling.
+Actual shared-account allowance and monetary image cost remain unmeasured.
+The history of 296 earlier job rows and 280 protected asset files is unchanged.
+[Final audit](../art/waves/A13/provider-final-audit.json),
+[spend](../art/delivery/a13/spend.json),
+[all attempts](../art/review/a13/attempts.html).

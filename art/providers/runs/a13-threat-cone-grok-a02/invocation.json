@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "0076e805-e8d2-4756-a259-8aa0ff3a7a0c",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-threat-cone-grok-a02\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-threat-cone-grok-a02",
+  "references": [
+    {
+      "path": "art/waves/A13/references/painted-ring-key.png",
+      "sha256": "c2815d56e2d12404971b80e63999ae43f1a7af2874d1696a9b5cfa299310c038",
+      "role": "generated painted pigment; arc has explicitly authored half-mask"
+    }
+  ]
+}

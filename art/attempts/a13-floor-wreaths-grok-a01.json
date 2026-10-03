@@ -1,0 +1,70 @@
+{
+  "id": "a13-floor-wreaths-grok-a01",
+  "wave": "A13",
+  "style_id": "covenant",
+  "scene": "floor-wreaths",
+  "attempt": 1,
+  "input": {
+    "wave": "A13",
+    "id": "floor-wreaths",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "4:3",
+    "references": [
+      {
+        "path": "art/review/sources/a13-glyph-proof-agy-a02.png",
+        "sha256": "5810c7f0ecb581c6d9e5467e46305d8c2fea42e020cd6dae0edb8fbc8bc594bd",
+        "role": "canonical glyph grammar and painting treatment"
+      }
+    ],
+    "sheet": {
+      "columns": 3,
+      "rows": 1,
+      "kind": "floor"
+    },
+    "prompt": "Use case: stylized-concept. ONE production decal sprite sheet, on absolutely pure black. Reference-1.png is the canonical original rune alphabet: use its crooked hooked cut ends, pressure-varied strokes, weathered luminous silver and deliberately broken curves. Painted dark fantasy with sculpted luminous paint, rich worn edges, controlled glow; NOT vectors, uniform outlines, geometric clip art, diagrams, neon tubing or mathematical symbols. No text, labels, grid lines, borders, floor, objects, people, paper texture or all-over noise. Flat orthographic TOP VIEW of ground artwork, circular forms circular before game projection. Keep the identical centre, scale and facing in EVERY cell. Each whole effect INCLUDING bloom stays in the middle 65 percent of its cell; large empty black gutters. Do NOT put a bright point or emblem at the exact centre: that area stays empty under the actor. The game will place the EXACT canonical glyph cutouts into reserved gaps: concentrate on beautiful elemental painted connecting strokes and small fragments, no new pseudo-writing. Exactly THREE columns by ONE row, THREE distinct quiet FLOOR RUNE WREATH underpaintings, no background surface. Left: verdigris-tinged aged silver; middle: worn warm bronze and ash; right: pale moon-silver. One loose irregular circular incised wreath per cell, TWO broken surrounding brush paths, faded chipped edges, branch-like radial cuts and quiet open spaces for canonical runes. These are old enchantments sunk into stone: dim paint, restrained pale inner cuts, practically NO bloom. Keep centre empty and no invented writing. Use the entire landscape 3:1 canvas, each wreath round in top view, widest possible EMPTY gutters. Aim for 2048x768 or larger."
+  },
+  "input_hash": "d71f6764865965c7be7a781ead04d4f26e1f0bf70be7eebcd188649f2107af66",
+  "prompt": "Use case: stylized-concept. ONE production decal sprite sheet, on absolutely pure black. Reference-1.png is the canonical original rune alphabet: use its crooked hooked cut ends, pressure-varied strokes, weathered luminous silver and deliberately broken curves. Painted dark fantasy with sculpted luminous paint, rich worn edges, controlled glow; NOT vectors, uniform outlines, geometric clip art, diagrams, neon tubing or mathematical symbols. No text, labels, grid lines, borders, floor, objects, people, paper texture or all-over noise. Flat orthographic TOP VIEW of ground artwork, circular forms circular before game projection. Keep the identical centre, scale and facing in EVERY cell. Each whole effect INCLUDING bloom stays in the middle 65 percent of its cell; large empty black gutters. Do NOT put a bright point or emblem at the exact centre: that area stays empty under the actor. The game will place the EXACT canonical glyph cutouts into reserved gaps: concentrate on beautiful elemental painted connecting strokes and small fragments, no new pseudo-writing. Exactly THREE columns by ONE row, THREE distinct quiet FLOOR RUNE WREATH underpaintings, no background surface. Left: verdigris-tinged aged silver; middle: worn warm bronze and ash; right: pale moon-silver. One loose irregular circular incised wreath per cell, TWO broken surrounding brush paths, faded chipped edges, branch-like radial cuts and quiet open spaces for canonical runes. These are old enchantments sunk into stone: dim paint, restrained pale inner cuts, practically NO bloom. Keep centre empty and no invented writing. Use the entire landscape 3:1 canvas, each wreath round in top view, widest possible EMPTY gutters. Aim for 2048x768 or larger.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "94f78d7c-952f-4ced-8cdb-68ed4a827803",
+  "at": "2026-10-03T21:47:30.133214+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 21.453,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Use case: stylized-concept. ONE production decal sprite sheet, on absolutely pure black. Reference-1.png is the canonical original rune alphabet: use its crooked hooked cut ends, pressure-varied strokes, weathered luminous silver and deliberately broken curves. Painted dark fantasy with sculpted luminous paint, rich worn edges, controlled glow; NOT vectors, uniform outlines, geometric clip art, diagrams, neon tubing or mathematical symbols. No text, labels, grid lines, borders, floor, objects, people, paper texture or all-over noise. Flat orthographic TOP VIEW of ground artwork, circular forms circular before game projection. Keep the identical centre, scale and facing in EVERY cell. Each whole effect INCLUDING bloom stays in the middle 65 percent of its cell; large empty black gutters. Do NOT put a bright point or emblem at the exact centre: that area stays empty under the actor. The game will place the EXACT canonical glyph cutouts into reserved gaps: concentrate on beautiful elemental painted connecting strokes and small fragments, no new pseudo-writing. Exactly THREE columns by ONE row, THREE distinct quiet FLOOR RUNE WREATH underpaintings, no background surface. Left: verdigris-tinged aged silver; middle: worn warm bronze and ash; right: pale moon-silver. One loose irregular circular incised wreath per cell, TWO broken surrounding brush paths, faded chipped edges, branch-like radial cuts and quiet open spaces for canonical runes. These are old enchantments sunk into stone: dim paint, restrained pale inner cuts, practically NO bloom. Keep centre empty and no invented writing. Use the entire landscape 3:1 canvas, each wreath round in top view, widest possible EMPTY gutters. Aim for 2048x768 or larger.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-floor-wreaths-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "4:3"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "63fdd9bda4e209cab23323938de16370856bcd63a27cf56622ce9470f0843463",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca13-floor-wreaths-grok-a01\\94f78d7c-952f-4ced-8cdb-68ed4a827803\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a13-floor-wreaths-grok-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a13-floor-wreaths-grok-a01.jpg",
+  "sha256": "63fdd9bda4e209cab23323938de16370856bcd63a27cf56622ce9470f0843463",
+  "invocation_evidence": "art/providers/runs/a13-floor-wreaths-grok-a01"
+}

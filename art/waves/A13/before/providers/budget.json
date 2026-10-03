@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "project_budget": "../budget.json",
+  "providers": {
+    "agy": {
+      "weekly_image_cap": 400,
+      "external_known_charges": {
+        "2026-W40": 4
+      },
+      "note": "Four known probe outputs from provider ledger, outside project charges. Total account spend and actual quota unknown; local guard only."
+    },
+    "grok": {
+      "weekly_image_cap": 330,
+      "note": "Includes inherited grok-cli jobs; shared subscription allowance unknown."
+    }
+  },
+  "max_parallel_images": 1,
+  "automatic_stop_reset": false,
+  "host_raise_2026_10_03": "host raised agy to 400 and Grok to 330 for A12 arena round after the owner confirmed effects and characters and asked for the arena to reach reference quality; latches are cleared by the executing agent after diagnosis; real allowances unknown"
+}

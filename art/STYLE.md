@@ -28,7 +28,11 @@ selection and disabled states use shape cues. [UI contract](ui/README.md) is fix
 Camp and portraits use the same material language, with the portrait's richer
 painted facial modelling and strong dark-to-light separation.
 
-[Scale v2](scale-contract-v2.json) owns camera numbers. All delivered art remains
+[Scale v3](scale-contract-v3.json) retains the far-camera numbers and applies
+D32's 1.5 figure multiplier: nominal bodies are 60.75px at 1080p (5.625% height).
+Earlier 3–4.5% body guidance above is superseded for this delivery. D34's
+[painted rune language](delivery/a13/RUNIC-LANGUAGE.md) owns new combat and floor
+inscriptions; gameplay shapes remain data. All delivered art remains
 owner-review. A technical proof permits siblings only. Local grades may reject
 or route to the owner, never approve. Reference-guided variants are regenerated
 paintings; they are not pixel-preserving edits.

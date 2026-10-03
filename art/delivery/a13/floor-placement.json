@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "palettes": {
+    "moonlit": {
+      "overlay": {
+        "file": "art/delivery/a13/floor-cleanup/moonlit.png",
+        "sha256": "ad3e10247ffbe3db09d685e007245ff1d19314add97f279f1db37a44f78a9109",
+        "size": [
+          3072,
+          1728
+        ]
+      },
+      "mask": {
+        "file": "art/delivery/a13/floor-cleanup/moonlit-mask.png",
+        "sha256": "699ed0ad4e3adeb2c22c0cf4cb327ae6f3ce67024955ca2935d60b62a6eebd57",
+        "size": [
+          3072,
+          1728
+        ]
+      },
+      "plateSource": "art/delivery/a12/plates/moonlit.png",
+      "plateSha256": "7fd50f289e694e52db017fa99ac158f27b0ea2c634fbc626f13a65a9a8fef33c",
+      "maskCoverage": 0.007554,
+      "registration": "full A12 plate UV, preprojected; draw before new floor decals and all actors",
+      "origin": "authored region and stroke masks; local Telea inpainting; inferred floor texture; NOT new generated painting",
+      "preserved": "all pixels outside overlay alpha, all protected pylon rectangles; A12 source files byte unchanged",
+      "limitations": "some faint original scratches remain; local reconstruction can soften mineral microtexture; no claim of perfect inpainting",
+      "decals": [
+        {
+          "clip": "floor.moonlit",
+          "centreUV": [
+            0.2914285714285714,
+            0.23604060913705585
+          ],
+          "frameSizeMasterPx": [
+            579.5164835164835,
+            298.00859039437717
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.moonlit",
+          "centreUV": [
+            0.71,
+            0.2296954314720812
+          ],
+          "frameSizeMasterPx": [
+            557.010989010989,
+            269.8945724326435
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.moonlit",
+          "centreUV": [
+            0.13214285714285715,
+            0.49111675126903553
+          ],
+          "frameSizeMasterPx": [
+            731.4285714285714,
+            359.8594299101913
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.moonlit",
+          "centreUV": [
+            0.8614285714285714,
+            0.48984771573604063
+          ],
+          "frameSizeMasterPx": [
+            703.2967032967032,
+            337.36821554080433
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.moonlit",
+          "centreUV": [
+            0.5185714285714286,
+            0.8870558375634517
+          ],
+          "frameSizeMasterPx": [
+            866.4615384615385,
+            444.20148379539245
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        }
+      ]
+    },
+    "rust-sand": {
+      "overlay": {
+        "file": "art/delivery/a13/floor-cleanup/rust-sand.png",
+        "sha256": "65683020e7e06f3300442ed065b6303946c2fb1ad22ac3d8479238333b76d611",
+        "size": [
+          3072,
+          1728
+        ]
+      },
+      "mask": {
+        "file": "art/delivery/a13/floor-cleanup/rust-sand-mask.png",
+        "sha256": "2e5fba59cf974d58c21bfd8367db8ec079f44b6fc96ae2d3cc1342c7e9a5855c",
+        "size": [
+          3072,
+          1728
+        ]
+      },
+      "plateSource": "art/delivery/a12/plates/rust-sand.png",
+      "plateSha256": "9f73f5b60ec9ab14166efcf115de7d8bfc0ad99c90e4c9fd4ecf859d9ced2cac",
+      "maskCoverage": 0.016234,
+      "registration": "full A12 plate UV, preprojected; draw before new floor decals and all actors",
+      "origin": "authored region and stroke masks; local Telea inpainting; inferred floor texture; NOT new generated painting",
+      "preserved": "all pixels outside overlay alpha, all protected pylon rectangles; A12 source files byte unchanged",
+      "limitations": "some faint original scratches remain; local reconstruction can soften mineral microtexture; no claim of perfect inpainting",
+      "decals": [
+        {
+          "clip": "floor.rust-sand",
+          "centreUV": [
+            0.24142857142857144,
+            0.22208121827411167
+          ],
+          "frameSizeMasterPx": [
+            675.1648351648352,
+            359.8594299101913
+          ],
+          "preprojected": true,
+          "opacity": 0.46
+        },
+        {
+          "clip": "floor.rust-sand",
+          "centreUV": [
+            0.6807142857142857,
+            0.25
+          ],
+          "frameSizeMasterPx": [
+            602.021978021978,
+            326.12260835611085
+          ],
+          "preprojected": true,
+          "opacity": 0.46
+        },
+        {
+          "clip": "floor.rust-sand",
+          "centreUV": [
+            0.1442857142857143,
+            0.5685279187817259
+          ],
+          "frameSizeMasterPx": [
+            573.8901098901099,
+            326.12260835611085
+          ],
+          "preprojected": true,
+          "opacity": 0.46
+        },
+        {
+          "clip": "floor.rust-sand",
+          "centreUV": [
+            0.4442857142857143,
+            0.7576142131979695
+          ],
+          "frameSizeMasterPx": [
+            759.5604395604395,
+            382.35064427957826
+          ],
+          "preprojected": true,
+          "opacity": 0.46
+        },
+        {
+          "clip": "floor.rust-sand",
+          "centreUV": [
+            0.7585714285714286,
+            0.8236040609137056
+          ],
+          "frameSizeMasterPx": [
+            748.3076923076923,
+            371.10503709488484
+          ],
+          "preprojected": true,
+          "opacity": 0.46
+        }
+      ]
+    },
+    "verdigris": {
+      "overlay": {
+        "file": "art/delivery/a13/floor-cleanup/verdigris.png",
+        "sha256": "e2f200b7a28a74b3de94a5854194a8684a84cfd82b7e9521428439b3073bf25b",
+        "size": [
+          3072,
+          1728
+        ]
+      },
+      "mask": {
+        "file": "art/delivery/a13/floor-cleanup/verdigris-mask.png",
+        "sha256": "58cdff878570e5a77fcd64d42ffd93e263dc4e2dffe926e3bdee4f0ae988466c",
+        "size": [
+          3072,
+          1728
+        ]
+      },
+      "plateSource": "art/delivery/a12/plates/verdigris.png",
+      "plateSha256": "131f18264e43c555c88283f4b70ed00bc40c5de837c6c749007f54d61e8546e6",
+      "maskCoverage": 0.037608,
+      "registration": "full A12 plate UV, preprojected; draw before new floor decals and all actors",
+      "origin": "authored region and stroke masks; local Telea inpainting; inferred floor texture; NOT new generated painting",
+      "preserved": "all pixels outside overlay alpha, all protected pylon rectangles; A12 source files byte unchanged",
+      "limitations": "some faint original scratches remain; local reconstruction can soften mineral microtexture; no claim of perfect inpainting",
+      "decals": [
+        {
+          "clip": "floor.verdigris",
+          "centreUV": [
+            0.49642857142857144,
+            0.5304568527918782
+          ],
+          "frameSizeMasterPx": [
+            1631.6483516483515,
+            871.5345568137446
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.verdigris",
+          "centreUV": [
+            0.1707142857142857,
+            0.24238578680203046
+          ],
+          "frameSizeMasterPx": [
+            590.7692307692307,
+            292.3857868020305
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.verdigris",
+          "centreUV": [
+            0.5,
+            0.18908629441624367
+          ],
+          "frameSizeMasterPx": [
+            506.37362637362645,
+            247.40335806325655
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.verdigris",
+          "centreUV": [
+            0.8335714285714285,
+            0.2512690355329949
+          ],
+          "frameSizeMasterPx": [
+            534.5054945054944,
+            269.8945724326435
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.verdigris",
+          "centreUV": [
+            0.155,
+            0.8743654822335025
+          ],
+          "frameSizeMasterPx": [
+            647.032967032967,
+            326.12260835611085
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        },
+        {
+          "clip": "floor.verdigris",
+          "centreUV": [
+            0.8471428571428572,
+            0.8756345177664975
+          ],
+          "frameSizeMasterPx": [
+            596.3956043956043,
+            303.63139398672394
+          ],
+          "preprojected": true,
+          "opacity": 0.6
+        }
+      ]
+    }
+  },
+  "ownerAccepted": false
+}
