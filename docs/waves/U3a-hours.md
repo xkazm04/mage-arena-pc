@@ -11,7 +11,8 @@ and occupy four hours regardless of real-time combat duration.
 NPC choices remain one main daily activity, resolved at night: their durations
 must fit an opening interval, and the Director sees that schedule in hours.
 Scarce-activity caps remain per day, shared with the player's activities.
-Repeated player activities use distinct hour namespaces for facts and rolls.
+Repeated player activities use distinct hour namespaces for facts. Contests retain
+one seeded actor/action/day draw, so spending more hours does not reroll a contest.
 The stored phase is derived from the hour, verified on load. Save version 2
 explicitly rejects old slot saves. Arena simulation and census inputs stay fixed.
 

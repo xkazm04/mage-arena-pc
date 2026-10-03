@@ -238,7 +238,7 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 | Art | A9 | **Arena restoration**: ground, rim, structures, banners, props and surface at proper resolution, matching the approved arena concept, in the three palettes, with tiling or tiled-by-design ground where needed | D27 | not started |
 | Art | A10 | **Character fidelity and direction**: four mages and the enemy roster with real multi-direction animation sets and a consistency pipeline | A8 | not started |
 | Art | A11 | **Stat icons (gold, reputation, fatigue) and the daily clock art** | D26 | not started |
-| Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: core data and tests, replayer fixtures regenerated, Director inputs in hours, place buttons by name only, header with the stat icons (placeholder until A11) and the rendered clock | D25, D26 | not started |
+| Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: hour tables/fixtures, free travel, header stats and rendered dial | D25, D26 | done: U3a `a7a0351`, U3b this commit; owner hour pacing pending |
 | Game | AU4 | **Audio engine** with buses, priority, concurrency and cooldown limits, ducking, the app-side calming of effects (D30), music playback with crossfades and the collar-tier adaptive layers, UI sounds, volume settings; uses the kept samples through a manifest | D28, D30 | not started |
 | Audio | AU2b | Regenerate the rejected categories: absorb as an energy barrier stopping and slowing an energy source (elemental, natural, not a notification, not cartoonish), the title theme (melodic like the arena music, calm), roll (single sand step), crowd (raw, bloodlust colosseum), collar rune alternative if needed | D28 | not started |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks in the kept directions, after the credit reset; camp music re-direction | account reset | blocked |
@@ -265,3 +265,19 @@ Commands: `npm run gate` (162 TS + 11 reference tests, zero contradictions),
 `npx tsx packages/tools/src/u3-replay.ts` (exact double replay and load round trip).
 Historical paid provider evidence retained byte-for-byte. Arena census code/data
 untouched. Hour-model balance/feel not measured. Next: U3b camp clock/header/map.
+
+
+| Stream | Id | Wave | Depends on | Status | Commit | Date |
+|---|---|---|---|---|---|---|
+| Game | U3b | Name-only places, header stats, daily rune dial | U3a / D26 | done; gate and both browser routes green | this U3b commit | 2026-10-03 |
+
+**U3b session ? 2026-10-03 (GAME/integration).** Name-only places with disabled
+hatch state for closure; header icons for gold/reputation/fatigue; animated rune
+dial, low-hours warning and reduced-motion handling. Hour costs/context on
+facility actions, Board, journal, Parley, calendar and saves. Read art worktree
+A5b contract, left A11 optional swap-in keys. `npm run gate`: 162 TS + 11 reference
+tests, zero contradictions. `npm run smoke:u3`: both full two-week routes pass,
+26 retained 1080p/1440p screenshots, zero errors/overflow, exact saves.
+`npx tsx packages/tools/src/u3-gallery.ts`: review gallery. Fixed and retained
+clock origin-line defect evidence. Human animation comfort/hour pacing not felt.
+No arena/census changes. Next: AU4 using owner-kept sources only.

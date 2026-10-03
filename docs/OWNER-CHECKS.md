@@ -252,3 +252,16 @@ night at 20:00. Trials remain at 18:00 on days 6/13; Games begin at 08:00 on 7/1
 Judge the number of meaningful choices per day and the night act's placement.
 Old slot saves are explicitly incompatible; begin a new story. Deterministic
 replay is measured, hour-model pacing is not yet felt. See [U3a note](waves/U3a-hours.md).
+
+
+## U3b ? revised camp clock and header
+
+The owner accepted U2's camp and portraits as production quality. Review the
+[U3 gallery](waves/U3-evidence/index.html), then use `npm run camp` for motion.
+Place buttons now show only names; closed places fade and hatch. Travel is free.
+Read gold, reputation and fatigue in the top right. Spend two hours training:
+the rune dial drains, and refills at dawn. The header always shows the core hour;
+the dial's count eases during the brief spending animation. At night, check the
+low-hours warning. Try reduced motion and both resolutions from sofa distance.
+Activity costs stay inside facilities. Assess daily pacing and clock clarity;
+screenshots/emulated controls cannot certify those. See [U3b note](waves/U3b-camp-ui.md).

@@ -458,7 +458,19 @@ export class CanvasUI {
     const g = new Graphics();
     parent.addChild(g);
     g.circle(x, y, r * 1.12).stroke({ color: colour, width: 1, alpha: 0.25 });
-    if (kind === "water" || kind === "tide_orb" || kind === "mend") {
+    if (kind === "gold") {
+      g.circle(x,y,r*0.8).stroke({color:colour,width:3}).circle(x,y,r*0.55).stroke({color:colour,width:2});
+      g.moveTo(x,y-r*0.35).lineTo(x,y+r*0.35).moveTo(x-r*0.22,y).lineTo(x+r*0.22,y).stroke({color:colour,width:3});
+    } else if (kind === "reputation") {
+      for (const direction of [-1,1]) for(let i=0;i<4;i++) {
+        const a=(i/4)*1.8-0.4;
+        g.ellipse(x+direction*Math.cos(a)*r*0.65,y+Math.sin(a)*r*0.7,r*0.17,r*0.3).fill({color:colour,alpha:0.85});
+      }
+      g.poly([x,y-r*0.55,x+r*0.22,y,x,y+r*0.3,x-r*0.22,y]).fill(colour);
+    } else if (kind === "fatigue") {
+      g.moveTo(x-r*0.6,y-r*0.75).lineTo(x+r*0.6,y-r*0.75).lineTo(x-r*0.6,y+r*0.75).lineTo(x+r*0.6,y+r*0.75).stroke({color:colour,width:3});
+      g.moveTo(x-r*0.6,y-r*0.75).lineTo(x+r*0.6,y+r*0.75).stroke({color:colour,width:2});
+    } else if (kind === "water" || kind === "tide_orb" || kind === "mend") {
       g.moveTo(x, y - r)
         .bezierCurveTo(x - r * 1.3, y + r * 0.5, x - r * 0.4, y + r, x, y + r)
         .bezierCurveTo(x + r * 0.7, y + r, x + r, y + r * 0.1, x, y - r)

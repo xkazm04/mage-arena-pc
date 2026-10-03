@@ -1,3 +1,4 @@
+import { DailyClock } from "./ui/daily-clock.ts";
 import { Graphics, type BitmapText } from "pixi.js";
 import { bridgeRules, linkBout, type SeasonBout } from "@mage/core";
 import type { CampCommand, ParleyInput, SeasonCommand } from "@mage/director";
@@ -46,6 +47,9 @@ export class GameShell {
   private textDisplay?: BitmapText;
   private currentMoment?: Moment;
   private disposed = false;
+  private dailyDial?: DailyClock;
+  private shownHours?: number;
+  private clockDay = 0;
   async init(host: HTMLElement) {
     await this.ui.init(host);
     await art.preload(["place.door", "portrait.cassia.neutral"]);
@@ -136,7 +140,15 @@ export class GameShell {
         },
       });
     this.view = await request<SeasonView>("session");
-    this.ui.onFrame = (dt) => this.arena?.frame(dt);
+    this.ui.onFrame = (dt, now) => {
+      this.arena?.frame(dt);
+      if (this.dailyDial) {
+        const target=this.view.hoursRemaining;
+        this.shownHours = localStorage.getItem("mage-motion")==="reduced" ? target : (this.shownHours ?? target)+(target-(this.shownHours ?? target))*Math.min(1,dt*5);
+        if (Math.abs(this.shownHours-target)<0.005) this.shownHours=target;
+        this.dailyDial.draw(this.shownHours,now);
+      }
+    };
     this.ui.onGamepad = (pad) => this.arena?.input.updateGamepad(pad);
     this.ui.onGamepadLost = () => {
       if (this.arena && !this.arena.paused) void this.pause();
@@ -221,6 +233,7 @@ export class GameShell {
     }
   }
   private scene(id: string, title: string, kicker: string, kind = "gate") {
+    this.dailyDial=undefined;
     this.ui.begin(id);
     backdrop(this.ui, kind);
     this.ui.text(kicker, 96, 57, 24, colours.gold);
@@ -390,6 +403,19 @@ export class GameShell {
       `CASTRA CLAUSA  /  WEEK ${this.view.day.week}  /  DAY ${this.view.day.day}`,
       id === "visit" ? `place-${this.view.location}` : `camp-${this.view.slot}`,
     );
+    const v=this.view;
+    for (const [i, stat] of [
+      {icon:"gold",value:v.player.gold,label:"GOLD",colour:colours.gold},
+      {icon:"reputation",value:v.player.reputation,label:"REPUTATION",colour:colours.water},
+      {icon:"fatigue",value:v.player.fatigue,label:"FATIGUE",colour:colours.muted},
+    ].entries()) {
+      const x=1284+i*186;
+      this.ui.icon(stat.icon,x,111,23,this.ui.content,stat.colour);
+      this.ui.text(String(stat.value),x+36,87,34,colours.text,120);
+      this.ui.text(stat.label,x-24,147,24,stat.colour,178);
+    }
+    this.ui.text(`${String(v.hour).padStart(2,"0")}:00 / ${friendly(v.slot)}`,1320,207,24,colours.gold,310);
+    this.ui.text(`${v.hoursRemaining} hours remain`,1320,241,24,colours.muted,310);
     const names = [
       ["camp", "Camp map"],
       ["calendar", "Season"],
@@ -468,12 +494,7 @@ export class GameShell {
         },
         {
           selected: this.selected === p.id,
-          subtitle:
-            p.id === v.location
-              ? "You are here"
-              : p.isOpen
-                ? `${p.cost} time to reach`
-                : `Opens ${`${p.openHour}:00`}`,
+          disabled: !p.isOpen,
           tooltip: p.description,
         },
       );
@@ -486,11 +507,10 @@ export class GameShell {
       !v.listening &&
       !v.nightFinished &&
       p.isOpen &&
-      p.cost <= v.hoursRemaining &&
       !v.player.stocks;
     u.button(
       "visit-place",
-      p.id === v.location ? "Enter this place" : `Travel  /  ${p.cost} time`,
+      p.name,
       1440,
       808,
       350,
@@ -500,7 +520,7 @@ export class GameShell {
         if (p.id === v.location) this.visit();
         else void this.command({ type: "travel", place: p.id });
       },
-      { disabled: p.id !== v.location && !allowed },
+      { disabled: !allowed },
     );
     this.timeFooter();
     u.end(`place-${this.selected}`);
@@ -509,24 +529,13 @@ export class GameShell {
     const u = this.ui,
       v = this.view;
     u.panel(96, 892, 1380, 134);
-    u.text(
-      `${v.player.name}   /   ${v.player.gold} gold   /   ${v.season.renown} renown   /   ${v.player.fatigue} fatigue`,
-      120,
-      908,
-      26,
-      colours.text,
-      1200,
-    );
-    for (const [i, slot] of ["day", "dusk", "night"].entries()) {
-      u.text(
-        `${slot === v.slot ? "◆  " : "○  "}${slot.toUpperCase()}`,
-        120 + i * 220,
-        960,
-        28,
-        slot === v.slot ? colours.water : colours.muted,
-      );
-    }
-    u.text(`${v.hoursRemaining} TIME LEFT`, 940, 960, 28, colours.gold, 450);
+    if(this.clockDay!==v.day.day) { if (!this.clockDay) this.shownHours=v.hoursRemaining; this.clockDay=v.day.day; }
+    this.dailyDial=new DailyClock(u,v.wakingHours,184,959);
+    this.dailyDial.draw(this.shownHours ?? v.hoursRemaining,performance.now());
+    u.text(`${String(v.hour).padStart(2,"0")}:00  /  ${friendly(v.slot)}`,286,911,34,colours.text,500);
+    u.text(v.hoursRemaining===0 ? "The day is spent ? dawn awaits" : v.hoursRemaining<=2 ? "Keep watch in the final hours" : `${v.hoursRemaining} waking hours remain`,286,965,26,v.hoursRemaining<=2?colours.danger:colours.water,600);
+    u.text(v.day.eve ? `Trial at ${v.day.trialHour}:00` : v.day.games ? `Games at ${String(v.day.gamesHour).padStart(2,"0")}:00` : "The hours are yours to spend",946,914,26,colours.gold,480);
+    u.text("Travel freely between places",946,963,24,colours.muted,480);
     if (v.season.due === "trial")
       u.button(
         "trial-summons",
@@ -572,7 +581,7 @@ export class GameShell {
         {
           subtitle: v.nightFinished
             ? "Read the Hollow Board"
-            : "Spend this time slot",
+            : "Wait until the next phase",
           disabled: v.settling || v.parley.pending,
         },
       );
@@ -625,20 +634,20 @@ export class GameShell {
       v.location === "tent" &&
       !v.listening &&
       !v.nightFinished &&
-      v.hoursRemaining >= v.parleyHours &&
+      v.hoursRemaining >= v.listeningHours &&
       !v.player.stocks
     )
       actions.push({
         id: "listen",
         label: "Listen at the tent flap",
-        subtitle: "Follow the voices. Hide from the Vigil.",
+        subtitle: `${v.listeningHours} hours ? Follow the voices. Hide from the Vigil.`,
         run: () => void this.command({ type: "listen" }),
       });
     for (const m of v.parley.moments)
       actions.push({
         id: `parley-${m.target}`,
         label: `Speak with ${m.name}`,
-        subtitle: "A Knowing gives your words weight.",
+        subtitle: `${v.parleyHours} hours ? A Knowing gives your words weight.`,
         run: () => {
           this.parleyText = "";
           this.parleyApproach = 0;
@@ -649,12 +658,12 @@ export class GameShell {
       actions.push({
         id: `action-${a.id}`,
         label: a.label,
-        subtitle: a.gains,
+        subtitle: `${a.hours} ${a.hours === 1 ? "hour" : "hours"} ? ${a.gains}`,
         run: () => void this.command({ type: "act", action: a.id }),
       });
     u.text("CHOOSE A MOMENT", 712, 314, 26, colours.gold);
     u.text(
-      "An activity ends this time slot.",
+      "Choose how to spend your remaining hours.",
       712,
       354,
       30,
@@ -669,7 +678,7 @@ export class GameShell {
     );
     if (!actions.length)
       u.text(
-        "Nothing calls for your time here.\nReturn to the map or let the slot pass.",
+        "Nothing calls for your time here.\nReturn to the map or let the hours pass.",
         720,
         464,
         34,
@@ -737,7 +746,7 @@ export class GameShell {
     }
     u.panel(1350, 307, 474, 554);
     u.text("THE NEXT SUMMONS", 1382, 347, 26, colours.gold);
-    u.text("Tent Trial", 1382, 406, 40, colours.text, 400, true);
+    u.text(`Tent Trial ? ${v.day.trialHour}:00`, 1382, 406, 40, colours.text, 400, true);
     u.text(
       "On the eve of the Games, earn the right to carry your tent into the arena.",
       1382,
@@ -746,7 +755,7 @@ export class GameShell {
       colours.muted,
       405,
     );
-    u.text("Games on days 7 and 14", 1382, 644, 30, colours.water, 405);
+    u.text(`Games at ${String(v.day.gamesHour).padStart(2,"0")}:00 ? days 7 / 14`, 1382, 644, 30, colours.water, 405);
     u.text(
       "Later weeks await the next chapter.",
       1382,
@@ -1110,7 +1119,7 @@ export class GameShell {
     this.scene(
       "parley",
       `Speak with ${moment.name}`,
-      "A KNOWING MOMENT",
+      `A KNOWING MOMENT  /  ${this.view.hour}:00  /  ${this.view.hoursRemaining} HOURS REMAIN`,
       `place-${this.view.location}`,
     );
     u.panel(96, 226, 790, 658);
@@ -1178,7 +1187,7 @@ export class GameShell {
       784,
     );
     u.text(
-      "Speaking ends this slot. Your approach carries the reply\nwhen words cannot reach the camp.",
+      `Speaking takes ${this.view.parleyHours} hours. Your approach carries the reply\nwhen words cannot reach the camp.`,
       956,
       693,
       28,
@@ -1942,7 +1951,7 @@ export class GameShell {
     u.panel(96, 252, 1728, 596);
     u.icon("mirror", 228, 395, 70);
     u.text(
-      `Day ${this.view.day.day}  /  ${friendly(this.view.slot)}`,
+      `Day ${this.view.day.day}  /  ${this.view.hour}:00  /  ${this.view.hoursRemaining} hours remain`,
       365,
       306,
       48,
