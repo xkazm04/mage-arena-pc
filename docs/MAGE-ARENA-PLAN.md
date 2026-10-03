@@ -193,17 +193,55 @@ Decisions:
 - **D17 Camera = the distance and angle of the art proposals** (A1b far/standard and the A6 scenes), not the current in-game near camera: more distance, a mostly **fixed camera that moves rarely, only when the player approaches the edge of the view** (a wide dead zone, soft edge follow, no constant tracking). The scale contract is rewritten for it (figures about 3 to 4.5 percent of screen height at 1080p, readable by silhouette, aura and effect, so the figure design must carry identity at that size).
 - **D18 The camp ("city") art and the HUD follow the new style.** The A4 camp map, backdrops, story cards and Hollow Board frames and the A5 icons and HUD are superseded; they are redone in the Covenant family (palette variants for the different times and places). The earlier "camp map is kept" decision is withdrawn.
 - **D19 UI is part of the art package and the game is a video game, not a web page.** Full-screen canvas game (no browser page look: no HTML panels floating over a screenshot, no dropdowns, scrollbars, default fonts or form controls); every screen (main menu, camp, season map, Hollow Board, journal, Parley, composition screen, arena HUD, pause, results, save and load) is built from an **art-directed UI kit**: frames and nine-slice panels, bars, spell slots, the collar rune clock, cursor, buttons, tabs, tooltips, iconography, typography with a game feel, animated feedback. Layout and type sizes are **TV-grade** (readable from a sofa distance, generous safe areas, large touch-free targets, full keyboard and gamepad navigation) while mouse and keyboard remain the first input. Quality bar: a player wants to interact with it.
-- **D20 Image providers: Grok and the Antigravity CLI (`agy`, Nano Banana 2) behind one provider interface, each with its own budget guard, stop latch and history.** The owner is signed in and the 2026-10-02 probe is complete; see `docs/PROVIDER-LEDGER.md`. `agy` performs generation and strong reference-guided regeneration, not localized pixel editing or real alpha output. Route style/palette variants, UI sheets and concepts to agy first; pose/effect sheets to Grok where proven. A quota/rate-limit latches only that provider and routes remaining work to the other. A moderation refusal permits one rewritten retry. Local agy guard: 150 images this week, real shared-account quota unknown. The prior unsigned/unverified wording is superseded by the host restart note.
+- **D20 Image providers: Grok and the Antigravity CLI (`agy`, Nano Banana 2) behind one provider interface, each with its own budget guard and stop latch (probed 2026-10-02: see docs/PROVIDER-LEDGER.md; the owner is signed in)** (was: Grok first, agy fallback) for concept art and textures when Grok's allowance ends. `agy` is installed at `C:\Users\kazda\AppData\Local\agy\bin\agy.exe` (not on PATH, version 1.2.15) but **not signed in** (the owner must log in once); its image-generation and **image-editing capabilities are unverified**, so the first fallback task is a measured capability probe (generation, reference-guided generation, editing an existing sprite, transparency, consistency across a set) recorded in a provider ledger. Providers sit behind one interface with a budget guard each; a refusal or an unavailable provider routes to the next (registry: `generative-provider-routing`).
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | delivered for owner review; see docs/waves/A7-covenant-bible.md |
-| Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | partial owner-review delivery: 12 identities, 38 keys; pose/style backlog |
-| Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | delivered owner-review: art/ui/kit.json, 90 regions, contract 06cd5e4 retained |
-| Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | delivered owner-review: three slots, eight places/backdrops, six stories, canvas proof |
-| Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | delivered owner-review: 16 identities, 112 neutral/mood crops, 16 atlases |
+| Art | A7 | **Covenant bible**: merge 02/03/04 into one style bible and three arena palette variants, rewrite the scale contract for the far fixed camera, remove the grain, keep the Moonchalk portrait as the portrait bar | D16, D17 | not started |
+| Art | A3c | Figures at the new camera: four mages with staff, accessories, light coloured cloth and elemental energy; the enemy roster; spell and aura effects; designed to read at 3 to 4.5 percent height | A7 | not started |
+| Art | A5b | **UI kit**: full HUD and menu kit in the Covenant style (nine-slice frames, bars, spell slots, collar rune clock, cursor, buttons, tabs, typography, icons) as engine-ready atlases | A7 | not started |
+| Art | A4c | Camp ("city") map, backdrops, Hollow Board frames and story cards in the Covenant style | A7 | not started |
+| Art | A2c | Cast portraits in the Moonchalk Tempest style (the four mains first, then the rest) | A7 | not started |
 | Game | U1 | **Camera and UI overhaul**: far fixed camera with edge follow; full-screen canvas UI framework with the nine-slice kit loader (placeholder kit until A5b lands); rebuild the HUD, main menu, camp, Hollow Board, journal, Parley, composition, pause and results screens as in-game art-directed screens; TV-grade layout; keyboard, mouse and gamepad navigation; screenshots at 1080p and 1440p | D17, D19 | not started |
 | Art/Game | P1 | Provider probe (done 2026-10-02, see docs/PROVIDER-LEDGER.md) | owner login | done |
+
+## p. Audio direction (owner, 2026-10-02): philosophy first, then ElevenLabs for the game effects
+
+> "We created in another project with ElevenLabs couple of samples and via report like C:\Users\kazda\kiro\garden-vr\docs\audio\audition\r2\index.html I can triage directions and themes to pick, I suggest to do similarly here so we establish the philosophy and then use ElevenLabs to cover the game effects."
+
+Pattern to follow (read-only): `C:\Users\kazda\kiro\garden-vr\docs\audio\` (`AUDIO-BIBLE.md`, `CHOICES.md`, `audition/r2`, `audition/r3`) and the generation tool `C:\Users\kazda\kiro\garden-vr\tools\audio\elevenlabs.mjs` (credit guard with a reserve, a committed ledger, sidecar JSON per asset, retry on 429, API key read from an `.env`, never printed or copied).
+
+**Decisions.** **D21** audio is established as a **philosophy first** (an audio bible), then a **blind-ish audition report** (an HTML page with a player per sample, grouped by direction and theme, like the garden-vr report) from which the owner triages; the owner's choices are recorded in `docs/audio/CHOICES.md` and **outrank** the bible where they differ. **D22** ElevenLabs is the generator for SFX, music and any voice; every call goes through the project copy of the guarded tool. **D23** **the ElevenLabs account is shared with the garden-vr project**: on 2026-10-02 it is the starter tier with **43,319 of 90,000 credits remaining, resetting 2026-10-04**; the tool's reserve of 8,000 stays; **Mage Arena's audition budget is at most 12,000 credits** (cost model from the garden-vr ledger: SFX about 40 credits per second with a minimum of 100; measure music and voice per call with a proof first), and the production budget is set after the owner's choices and the reset. **D24** audio philosophy inputs: the collar tier clock (a new spell tier every 15 s) is the spine of the **adaptive arena music** (layers or intensity tiers that follow the collar, a mana and absorb accent on perfect absorbs); the camp is a **place with time** (day, dusk and night beds, per-place ambience, the Hollow Board and Parley voices); **UI sounds are part of the UI kit** (menu, confirm, deny, slot select, tab, tooltip, save); SFX identity per element (fire, water, earth, air) and per event (cast, travel, impact, absorb, perfect absorb, hit, roll, collar rune tick, crowd). Registry notes to read (read-only): `ai-registry\knowledge\game-production\asset-production\motion-and-audio\adaptive-music-authoring` and `spatial-audio-scene-authoring` (priority, concurrency and cooldown table, transition quantisation, voice budget, loudness targets) and `ai-registry\knowledge\media-generation\audio-generation`.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Audio [`audio`] | AU1 | **Philosophy and audition round 1**: audio bible (pillars, palette of sound, mix and priority rules, adaptive music design tied to the collar clock, loudness targets); the project ElevenLabs tool with ledger and credit guard; about 30 to 40 samples across directions and themes; the audition report; stop for the owner | D21-D24 | not started |
+| Audio | AU2 | Round 2 refinement of the chosen directions (variants inside the chosen family), narration or bark voice if wanted | AU1 owner choice | blocked |
+| Audio | AU3 | Production set: the full effect list per element and event, the music set (title, camp day/dusk/night, arena per palette, win and loss stingers, adaptive layers), UI sounds, ambiences; loudness-normalised, loop-checked, sidecars and ledger | AU2 | blocked |
+| Game | AU4 | In-game audio engine: WebAudio mixer with buses, priority, cooldown and concurrency limits, ducking, adaptive music following the collar tiers and absorb events, UI sounds from the UI kit, volume and mute settings, tests for the priority table | AU3 or placeholders | not started |
+
+## q. Owner review of the U2 gallery and audio round 2 (2026-10-03)
+
+**A. Evidence gallery (owner's notes, condensed; full text in the chat record).**
+- The strongest parts are the non-combat art outputs: the city (camp) and the characters (portraits) are **production quality**; most choices there are liked.
+- **City map:** buttons must not show function or time to reach. **Time is measured in hours; only actions inside a facility are charged against the day** (travel is free). A more creative, rendered **daily clock** that increases and decreases from there. **Icons for stats (gold, reputation, fatigue) in the top-right header**, generated art.
+- **Spells and effects art** is one of the key gaps: inconsistent with what the approved concept art tried to achieve.
+- **The arena is the weakest part**: it degraded painfully from the approved concept; the quality of the arena structure, objects and surface is the first visible change. Most painful is the **design of the characters and their one-axis movement**: the design and execution fit the art style, but **high fidelity of their assets and spells** is key to the game looking and playing well.
+
+**B. Audio round 2 (owner triage).** Kept: arena C "Reed oath", arena D "Lyre under iron", air B "Hollow Vortex" (air C maybe: `air-C-spiral-filament` usable for a different air spell, `air-C2` not clear enough), camp A "Thread and Reed" (day, dusk, night), hit and impact A "Hide and Slate", collar rune B "Stone Waking", UI B "Rune Ceramic" (all five), the kept fire A and water B variations. Rejected: absorb A, B and C (A "sounds like a notification, we need to mirror the feel of an energy barrier stopping and slowing down another energy source"; C "like a cartoon effect, no elemental or natural element in the sound"), camp B, title A and B ("the style is the same as the camp menu; lean into the melodicity of the arena music but keep the calm tone"), hit B, collar A, roll A and B (A: "the first sound in the track is great, it sounds like a step in sand, the second one breaks it"), crowd A and B (A "sounds like soccer fans, we need more raw and bloodlust fans of a colosseum arena"), UI A. Overall: **the arena background tracks are of high quality; we need to escape the loop and create full 2 to 3 minute tracks; the camp tracks do not share that quality and capability to become long tracks. Effects vary in quality and execution: calm them on the app side, not in the audio generation tool.**
+
+Decisions: **D25** the camp time model becomes **hours**: a day has a number of waking hours (data), actions inside a facility cost hours, **travel between places is free**, places open and close at hours, the phases (day, dusk, night) are derived from the hour, the night act stays at the end of the day; the Director's inputs state time in hours; all fixtures regenerate from the replayer. **D26** camp UI: place buttons show **only the place name** (no cost or time text); a header with generated **icons for gold, reputation and fatigue** at the top right; a **creatively rendered daily clock** that advances and decreases with the hours spent (design left to the art and game streams: for example a collar-rune dial, an hourglass or a water clock in the Covenant style). **D27** art priorities, in order: (1) **spell and effect art** matching the approved concept (per element, cast, travel, impact, the absorb as an energy barrier, auras), (2) **the arena restored to the approved concept quality** (ground, rim and structures, objects, surface, three palettes) at proper resolution, (3) **characters at high fidelity with real directional movement** (multi-direction idle, run, cast, absorb, hit, death for the four mages and the enemy roster), (4) the stat icons and the clock art. **D28** audio picks as above; they outrank the bible. **D29** produce **full-length arena tracks (2 to 3 minutes, not loops)** in the kept directions (arena A, C, D) when the shared ElevenLabs account resets (2026-10-04 19:31 UTC; music costs about 30 credits per second, so a 150 s track is about 4,500 credits); the camp tracks need a different approach (re-direct, or the Google audio services) because the kept camp direction does not extend well. **D30** **effects are calmed on the app side**: per-sound gain trims, a high-cut filter, compression and limiting, randomised pitch and volume variation, concurrency and cooldown limits, ducking under music and voice; the audio engine owns this, not the generator.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Art | A8 | **Spell and effect art** in the Covenant style matching the approved concept: per element cast, travel, impact, the absorb as an energy barrier arc and its perfect-absorb flare, auras, telegraphs, hit sparks; sheets and loops that read at the far camera | D27 | not started |
+| Art | A9 | **Arena restoration**: ground, rim, structures, banners, props and surface at proper resolution, matching the approved arena concept, in the three palettes, with tiling or tiled-by-design ground where needed | D27 | not started |
+| Art | A10 | **Character fidelity and direction**: four mages and the enemy roster with real multi-direction animation sets and a consistency pipeline | A8 | not started |
+| Art | A11 | **Stat icons (gold, reputation, fatigue) and the daily clock art** | D26 | not started |
+| Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: core data and tests, replayer fixtures regenerated, Director inputs in hours, place buttons by name only, header with the stat icons (placeholder until A11) and the rendered clock | D25, D26 | not started |
+| Game | AU4 | **Audio engine** with buses, priority, concurrency and cooldown limits, ducking, the app-side calming of effects (D30), music playback with crossfades and the collar-tier adaptive layers, UI sounds, volume settings; uses the kept samples through a manifest | D28, D30 | not started |
+| Audio | AU2b | Regenerate the rejected categories: absorb as an energy barrier stopping and slowing an energy source (elemental, natural, not a notification, not cartoonish), the title theme (melodic like the arena music, calm), roll (single sand step), crowd (raw, bloodlust colosseum), collar rune alternative if needed | D28 | not started |
+| Audio | AU3 | Full-length 2 to 3 minute arena tracks in the kept directions, after the credit reset; camp music re-direction | account reset | blocked |
 
 ## l. Session log
 
@@ -211,73 +249,4 @@ Decisions:
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
-### ART session 5 restart ? A7 ? 2026-10-02
-
-Read full plan, owner v3, provider ledger, prior wave/session evidence and six
-02/03/04 raw/portable references. Kept early UI contract commit 06cd5e4 unchanged.
-Delivered Covenant data bible, STYLE, far fixed scale v2, three empty arena
-palettes and six 1080p/1440p plates. Real agy/Grok provider interface with separate
-150/240 local weekly guards/stops/history and shared project ceiling. Three new
-images; 162/240 project charges, 78 remain, no live incident. Check A7 + browser
-PASS; 50 tests PASS. Exact agy internal tool prompt unverified; CLI request and
-outputs archived. Owner acceptance, engine motion/performance not measured.
-Inherited historical A3 failures remain. Next A3c; no push.
-
-### ART session 5 ? A3c ? 2026-10-02
-
-A7 committed as 67edc02. Delivered 12 identity candidates, 38 reviewed pose keys,
-12 RGBA atlases, 20 native effects, 12 keyed painted motifs, six native palette/
-resolution composites and scale strip. Kept four source rejects and excluded
-incorrect/clipped subframes. Partial pose set and stronger-than-reference outlines
-are explicit backlog, not acceptance. Seventeen images charged; cumulative
-179/240, 61 remain, both stops clear. Battle/board/browser integrity PASS;
-54 tests PASS. First 159 ledger jobs unchanged. Local source/composite diagnostics
-reject or route owner only. Engine motion, performance, owner feel not measured.
-Next A5b; contract 06cd5e4 unchanged; no push.
-
-### ART session 5 ? A5b ? 2026-10-02
-
-A3c committed as 67837da. Kept early loading contract 06cd5e4 byte-identical;
-populated art/ui/kit.json with 90 regions/two RGBA pages, nine-slice/state/anchor
-metadata, 49 icon IDs, licensed bundled typography and motion tokens. One agy
-source proof plus deterministic derivation; 180/240 project charges, 60 remain,
-no provider incident. Kit/board checks PASS, 22 canvas captures across eleven
-layouts and two resolutions PASS; 59 tests PASS including negative loader cases.
-Owner taste, game integration, gamepad/sofa feel and performance unmeasured.
-Next A4c; no push.
-
-### ART session 5 - A4c - 2026-10-02
-
-A5b committed as 9d291b3. Delivered three time/palette maps at two resolutions,
-eight location backdrops, six reviewed story crops, Hollow Board using A5b frames
-and a canvas camp consumer. Thirteen agy calls; cumulative 193/240, 47 remain,
-no live provider incident. Initial labelled map rejected and corrected. Nine-cell
-story source retained with six explicit crops, three duplicates excluded. Export,
-source/board and browser checks PASS; closed visit/slot/keyboard checks PASS at
-1080p/1440p. 59 tests PASS. First 159 jobs and 06cd5e4 contract unchanged.
-Owner acceptance, game integration, live state, performance and physical gamepad/
-sofa feel unmeasured. Individual backdrops have one authored light condition.
-Next A2c; no push.
-
-### ART session 5 - A2c and final handoff - 2026-10-02
-
-A4c committed as 5e79848. Delivered sixteen Moonchalk identities, neutral plus
-six moods each, 112 original crops, sixteen atlases, eight native canvas dialogue
-captures and combined all-wave contact sheet/board. Thirty agy calls in A2c;
-seven source rejects corrected and retained. Some mood/frame/crop variation is
-explicit owner-review, not acceptance. Final 223/240 charged, 17 remain; this
-session 64 images (62 agy, 2 Grok). Both provider stops clear, no live incident.
-Known provider week counts: agy 66 including four external probes, Grok 134;
-27 inherited project images came from the built-in provider. Corrected A3c's
-narrative provider split to 15 agy/2 Grok; ledger history remains immutable.
-
-Portrait/export/atlas/board/browser checks PASS; all 112 keys load/select at
-1080p/1440p. Combined board PASS in three viewports, 59 tests PASS. Portable
-rebuild forbidding art/raw access: 266 files identical, zero forbidden reads.
-Session audit PASS across all five waves; first 159 jobs and early UI contract
-unchanged. Historical A3 failures and twelve new rejected sources remain visible.
-D20 stale unsigned wording reconciled with host restart and measured provider
-ledger. No automatic acceptance, game performance or physical sofa/gamepad claim.
-Backlog and loading paths: art/SESSION-5-HANDOFF.md. Main backlog is A3c missing
-valid pose keys/facings, painterly/camera continuity, animation and motion tests;
-then owner identity/acting review and game integration. No push.
+**Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
