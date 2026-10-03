@@ -30,6 +30,7 @@ export function campMornings() {
         decision(t, s.camp, s.camp.player, "BEFRIEND", { target: "fenna" }),
       );
       s = moveCamp(t, s, "tent");
+      while (s.slot !== "night") s = passSlot(s);
       s = beginListening(s);
       for (let tick = 0; tick < campPlay.listening.durationTicks; tick++) {
         const n = listeningScene(s.listening!);
@@ -51,7 +52,7 @@ export function campMornings() {
           day === 2 ? {} : { stat: "vigor" },
         ),
       );
-      s = passSlot(passSlot(s));
+      while (!s.nightFinished) s = passSlot(s);
     }
     const beforeHash = hash(s.camp);
     s = settleCamp(t, s, [], (id) => plan(t, s.camp, id, true));

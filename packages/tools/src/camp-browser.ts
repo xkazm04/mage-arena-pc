@@ -36,7 +36,7 @@ try {
     await page.locator("[data-visit]").click();
     await page.waitForSelector('[data-action="0"]');
     assert.equal((await state(page)).location, "yard");
-    assert.equal((await state(page)).budget, 1);
+    assert.equal((await state(page)).hoursRemaining, 14);
     await shot(page, `${height}-yard-visit`);
     await page.locator('[data-action="0"]').click();
     await page.waitForFunction(

@@ -60,8 +60,20 @@ export function check(t, fixtures, prose, template, schema = itemSchema(t)) {
   }
   for (const rel of t.relationships) if (!ids.includes(rel.from) || !ids.includes(rel.to)) errors.push('relationship outside cast');
   if (!places.includes(t.season.trialLocation) || !places.includes(t.season.fourthWatchLocation)) errors.push('unknown calendar place');
-  if (t.locations.find(p => p.id === t.season.trialLocation)?.open.includes(t.season.trialSlot) !== true) errors.push('trial place closed');
-  if (t.locations.find(p => p.id === t.season.fourthWatchLocation)?.open.includes(t.season.fourthWatchSlot) !== true) errors.push('watch place closed');
+  const time = t.season, end = time.wakeHour + time.wakingHours;
+  const positive = n => Number.isInteger(n) && n > 0;
+  if (!positive(time.wakingHours) || time.wakeHour < 0 || end > 24 || time.phases.day !== time.wakeHour || !(time.phases.day < time.phases.dusk && time.phases.dusk < time.phases.night && time.phases.night < end)) errors.push('invalid waking hours or phases');
+  if (time.travelHours !== 0) errors.push('travel must be free');
+  for (const verb of [...verbs, 'PARLEY', 'LISTEN']) if (!positive(time.activityHours[verb]) || time.activityHours[verb] > time.wakingHours) errors.push(`invalid activity hours ${verb}`);
+  for (const place of t.locations) {
+    if (!Number.isInteger(place.openHour) || !Number.isInteger(place.closeHour) || place.openHour < time.wakeHour || place.closeHour > end || place.openHour >= place.closeHour) errors.push(`invalid opening hours ${place.id}`);
+    for (const token of place.activities) if (time.activityHours[token.split(':')[0]] > place.closeHour - place.openHour) errors.push(`activity exceeds opening ${place.id}:${token}`);
+  }
+  const trial = t.locations.find(p => p.id === time.trialLocation), watch = t.locations.find(p => p.id === time.fourthWatchLocation);
+  if (!trial || time.trialHour < trial.openHour || time.trialHour + time.trialHours > trial.closeHour) errors.push('trial place closed');
+  if (!watch || time.fourthWatchHour < watch.openHour || time.fourthWatchHour >= watch.closeHour) errors.push('watch place closed');
+  if (!positive(time.trialHours) || time.trialHour !== time.phases.dusk || time.trialHour + time.trialHours > time.phases.night || !positive(time.gamesHours) || time.gamesHour !== time.wakeHour || time.gamesHour + time.gamesHours > time.phases.dusk) errors.push('invalid fixed appointments');
+  if (time.activityHours.LISTEN !== end - time.phases.night) errors.push('night act must fill final hours');
   if (/remembersLoops|loopChronicle|echoStats|resetsAtRingTurn|\bwell\b/i.test(JSON.stringify(t))) errors.push('obsolete active data');
   if (t['death-reservation'].enabled || verbs.includes('KILL') || verbs.includes('ASSASSINATE')) errors.push('death gameplay enabled');
   const expected = goldenNights(t);

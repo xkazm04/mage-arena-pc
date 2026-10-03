@@ -14,12 +14,13 @@ export function fixtureService(seed = 73) {
   return service;
 }
 export async function campDay(service: SeasonService) {
-  // Ordinary slot actions. Training at the Pit improves the Trial skill; travel is paid.
+  // One daytime training, then wait for dusk; travel is free.
   if (service.session.slot === 'day') {
     if (service.session.location !== 'yard') await service.command({ type: 'travel', place: 'yard' }, service.session.revision);
     const train = service.view().actions.find(a => a.intent === 'TRAIN');
     await service.command(train ? { type: 'act', action: train.id } : { type: 'wait' }, service.session.revision);
   }
+  if (service.session.slot === 'day') await service.command({ type: 'wait' }, service.session.revision);
   if (service.session.slot === 'dusk') {
     await service.command({ type: 'travel', place: 'pit' }, service.session.revision);
     const train = service.view().actions.find(a => a.intent === 'TRAIN');
@@ -60,6 +61,7 @@ export async function fourteenDays(seed = 73) {
       if (service.session.location !== 'yard') await service.command({ type: 'travel', place: 'yard' }, service.session.revision);
       const train = service.view().actions.find(a => a.intent === 'TRAIN');
       await service.command(train ? { type: 'act', action: train.id } : { type: 'wait' }, service.session.revision);
+      if (service.session.slot === 'day') await service.command({ type: 'wait' }, service.session.revision);
       await service.command({ type: 'travel', place: 'pit' }, service.session.revision);
       trialPolicy(service);
     } else if (view.day.games) playBout(service, view.day.day === 14);

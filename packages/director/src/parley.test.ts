@@ -68,7 +68,9 @@ describe("Parley Director boundary", () => {
         if (value && typeof value === "object")
           for (const child of Object.values(value)) walk(child);
       };
-      walk(req.input);
+      const { hour, ...qualitative } = req.input as Record<string, unknown>;
+      expect(hour).toBe(s.hour);
+      walk(qualitative);
       return result(current.output);
     });
     const director = new ParleyDirector(options(p));
@@ -229,7 +231,7 @@ describe("conversation lifecycle", () => {
     finish(result(authoredParley(s, "nysa", "bargain")));
     await first;
     expect(camp.session.parleys).toHaveLength(1);
-    expect(camp.session.slot).toBe("dusk");
+    expect(camp.session.hour).toBe(s.hour + t.season.activityHours.PARLEY);
     expect(camp.view().parley.pending).toBe(false);
     expect(JSON.stringify(camp.view())).not.toContain(input.text);
     camp.close();

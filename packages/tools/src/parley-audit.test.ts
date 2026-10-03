@@ -69,8 +69,11 @@ for (const name of ["local-effect-meaning", "local-injections"])
         row.request.model,
         row.request.options,
       );
-      expect(hash(req)).toBe(row.key);
-      expect(req).toEqual(row.request);
+      // W6 transport evidence is immutable. Reconstruct only its old time projection.
+      const { phase, hour: _hour, timeUnit: _unit, ...input } = req.input as Record<string, unknown>;
+      const historical = { ...req, input: { ...input, slot: phase } };
+      expect(hash(historical)).toBe(row.key);
+      expect(historical).toEqual(row.request);
       expect(row.beforeHash).toBe(hash(s.camp));
       let proposal: ParleyProposal | null;
       if (row.source === "live-card") {

@@ -1,3 +1,4 @@
+import { historicalSystemPrompt } from "./historical-prompt.ts";
 import {
   reconcile,
   resolve,
@@ -33,7 +34,12 @@ export function auditNight(t: Tables, state: CampState, row: NightEvidence) {
       row.model,
       g.request.options,
     );
-    if (hash(actual) !== g.key || hash(g.request) !== g.key)
+    // Frozen W1 evidence predates hour facts. Verify its complete original
+    // envelope using the pinned prompt, while current requests keep their time facts.
+    const historical = !Object.hasOwn(g.request.input, "time");
+    const { time: _time, ...oldInput } = actual.input;
+    const comparable = historical ? { ...actual, system: historicalSystemPrompt, input: oldInput } : actual;
+    if (hash(comparable) !== g.key || hash(g.request) !== g.key)
       throw new Error("Provider request mismatch");
     const valid = validateGroup(
       t,

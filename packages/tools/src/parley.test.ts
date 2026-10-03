@@ -7,7 +7,6 @@ import {
   createState,
   decision,
   knowingsAbout,
-  moveCamp,
   parleyCards,
   parleyMoments,
   parleyProblem,
@@ -55,7 +54,7 @@ describe("Knowing-gated Parley", () => {
         c.camp.ended = true;
       },
       (c: typeof s) => {
-        c.budget = 0;
+        c.hour = 22;
       },
     ]) {
       const invalid = structuredClone(s);
@@ -80,8 +79,8 @@ describe("Knowing-gated Parley", () => {
       npcReply: "I will listen.",
     });
     expect(a.parleys[0].roll).toEqual(b.parleys[0].roll);
-    expect(a.slot).toBe("dusk");
-    const atTent = moveCamp(t, a, "tent");
+    expect(a.hour).toBe(s.hour + t.season.activityHours.PARLEY);
+    const atTent = a;
     expect(() =>
       applyParley(t, atTent, "nysa", authoredParley(s, "nysa", "bargain")),
     ).toThrow(/already/);
@@ -155,7 +154,7 @@ describe("Knowing-gated Parley", () => {
     s.camp.characters.cassia.stats.guile = 5;
     s = applyParley(t, s, "nysa", authoredParley(s, "nysa", "reveal"));
     expect(s.intentPromises).toEqual([{ target: "nysa", day: 2 }]);
-    s = passSlot(passSlot(s));
+    while (!s.nightFinished) s = passSlot(s);
     const next = settleCamp(
       t,
       s,

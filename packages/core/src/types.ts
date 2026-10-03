@@ -136,7 +136,8 @@ export interface Tables {
   locations: {
     id: string;
     name: string;
-    open: string[];
+    openHour: number;
+    closeHour: number;
     activities: string[];
   }[];
   scenarios: {

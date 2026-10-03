@@ -250,3 +250,18 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
+
+
+| Stream | Id | Wave | Depends on | Status | Commit | Date |
+|---|---|---|---|---|---|---|
+| Game | U3a | Camp time in hours, tables/replayer/Director/save v2 | D25 | done; gate green | this U3a commit | 2026-10-03 |
+
+**U3a session ? 2026-10-03 (GAME/integration).** Implemented the 14-hour waking day,
+free travel, facility duration/opening tables, hour-derived phases, fixed Trial/Games
+appointments, hour facts for Director and Parley, deterministic repeated activities,
+version-2 saves with explicit old-save rejection. Design: `docs/waves/U3a-hours.md`.
+Commands: `npm run gate` (162 TS + 11 reference tests, zero contradictions),
+`node packages/tools/replay/cli.mjs generate`, `npx tsx packages/tools/src/camp-fixtures-write.ts`,
+`npx tsx packages/tools/src/u3-replay.ts` (exact double replay and load round trip).
+Historical paid provider evidence retained byte-for-byte. Arena census code/data
+untouched. Hour-model balance/feel not measured. Next: U3b camp clock/header/map.

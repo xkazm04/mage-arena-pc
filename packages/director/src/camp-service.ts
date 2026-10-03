@@ -173,7 +173,7 @@ export class CampService {
       default:
         throw new Error("Unknown camp action.");
     }
-    if (beforeSlot === "dusk" && this.session.slot === "night")
+    if (beforeSlot !== "night" && this.session.slot === "night")
       this.startNight();
     return this.view();
   }
@@ -227,7 +227,7 @@ export class CampService {
       key: result.key,
       replyReplaced: result.replyReplaced,
     });
-    if (beforeSlot === "dusk" && this.session.slot === "night")
+    if (beforeSlot !== "night" && this.session.slot === "night")
       this.startNight();
   }
   private async finish() {
@@ -273,7 +273,7 @@ export class CampService {
       const pending = checkpoint.pendingParley, oldSlot = this.session.slot;
       this.session = applyParley(this.tables, this.session, pending.input.target, authoredParley(this.session, pending.input.target, pending.input.cardId));
       this.parleyAudit.push({ day: this.session.camp.day, source: 'checkpoint-card', problem: 'unfinished-at-checkpoint', key: pending.key, replyReplaced: null });
-      if (oldSlot === 'dusk' && this.session.slot === 'night' && !this.job) {
+      if (oldSlot !== 'night' && this.session.slot === 'night' && !this.job) {
         // The fallback crosses dusk. A restored checkpoint never initiates inference.
         const tables = remainingCaps(this.tables, this.session), state = structuredClone(this.session.camp);
         this.job = new CampNight(tables, state, this.options, { state, caps: tables.rules.caps, completed: [], audit: [], requests: [] });

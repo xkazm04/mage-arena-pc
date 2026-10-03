@@ -15,9 +15,12 @@ Ending resolution belongs to the later ending wave.
 
 - Season weeks: {{season/weeks}}; days per week: {{season/daysPerWeek}}.
 - Games weekday: {{season/gamesWeekday}}; Trial offset before Games: {{season/trialOffsetBeforeGames}}.
-- Slots: {{season/daySlots}}. Trial: {{season/trialLocation}} at {{season/trialSlot}}.
+- Waking hours: {{season/wakingHours}}, starting at {{season/wakeHour}}:00. Phases begin at hours {{season/phases}}.
+- Travel costs {{season/travelHours}} hours. Activity durations in hours: {{season/activityHours}}.
+- Trial: {{season/trialLocation}} at {{season/trialHour}}:00, lasting {{season/trialHours}} hours. Games: {{season/gamesHour}}:00, lasting {{season/gamesHours}} hours.
+- Opening intervals are [openHour, closeHour); activities must finish by closing. Wait advances to the next phase. Night occupies the final hours and settles once.
 - Schemes open on weekday {{season/schemeOpensWeekday}} through Games.
-- Fourth Watch: {{season/fourthWatchLocation}} at {{season/fourthWatchSlot}}.
+- Fourth Watch: {{season/fourthWatchLocation}} at {{season/fourthWatchHour}}:00.
 - Closed intents: {{@keys/intents}}. Count: {{@count/intents}}.
 - Places: {{@count/locations}}; cast: {{@count/characters/characters}}.
 - Befriend base: {{rules/effects/BEFRIEND/trust}}; cross-tent peer multiplier: {{rules/effects/BEFRIEND/peerMultiplier}}.
@@ -60,7 +63,7 @@ admission to tents, every eligible rivalry decay, and available bond transitions
 Each changed value records its source rule. Every random draw has a seed, day,
 actor, action and result. The player is excluded from Director-controlled actions.
 
-The model sees qualitative facts, never numeric sheets, rolls, deltas or numeric
+The model sees time in hours and qualitative character facts, never numeric character sheets, rolls, deltas or numeric
 caps. Its choices contain only the closed vocabulary. Private facts stay attached
 to their knowing character, rather than entering a shared group fact dictionary.
 Shared group context can still influence a model implicitly; citation checks prove

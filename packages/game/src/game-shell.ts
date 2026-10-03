@@ -473,7 +473,7 @@ export class GameShell {
               ? "You are here"
               : p.isOpen
                 ? `${p.cost} time to reach`
-                : `Opens ${p.open.join(" / ")}`,
+                : `Opens ${`${p.openHour}:00`}`,
           tooltip: p.description,
         },
       );
@@ -486,7 +486,7 @@ export class GameShell {
       !v.listening &&
       !v.nightFinished &&
       p.isOpen &&
-      p.cost <= v.budget &&
+      p.cost <= v.hoursRemaining &&
       !v.player.stocks;
     u.button(
       "visit-place",
@@ -526,7 +526,7 @@ export class GameShell {
         slot === v.slot ? colours.water : colours.muted,
       );
     }
-    u.text(`${v.budget} TIME LEFT`, 940, 960, 28, colours.gold, 450);
+    u.text(`${v.hoursRemaining} TIME LEFT`, 940, 960, 28, colours.gold, 450);
     if (v.season.due === "trial")
       u.button(
         "trial-summons",
@@ -625,7 +625,7 @@ export class GameShell {
       v.location === "tent" &&
       !v.listening &&
       !v.nightFinished &&
-      v.budget >= v.actionCost &&
+      v.hoursRemaining >= v.parleyHours &&
       !v.player.stocks
     )
       actions.push({

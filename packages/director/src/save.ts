@@ -1,7 +1,7 @@
 import { closeSync, copyFileSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { bridgeRules, boutHash, linkBout, prepareBout, replayBout, type SeasonBout, type SeasonProgress, type Tables } from '@mage/core';
+import { phaseAt, endHour, bridgeRules, boutHash, linkBout, prepareBout, replayBout, type SeasonBout, type SeasonProgress, type Tables } from '@mage/core';
 import { gamesResult, validateComposition, type Games } from '@mage/core/arena';
 import { hash } from './cache.ts';
 import { groups, request } from './input.ts';
@@ -15,7 +15,7 @@ export interface SavePayload { camp: CampCheckpoint; progress: SeasonProgress }
 type SavedGames = Omit<Games, 'player'> & { playerId: number };
 type SavedProgress = Omit<SeasonProgress, 'bout'> & { bout: (Omit<SeasonBout, 'games'> & { games: SavedGames | null }) | null };
 interface FilePayload { camp: CampCheckpoint; progress: SavedProgress }
-export interface SaveEnvelope { version: 1; sources: string; checkpoint: string; checksum: string; payload: FilePayload }
+export interface SaveEnvelope { version: 2; sources: string; checkpoint: string; checksum: string; payload: FilePayload }
 const json = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 export function sourceHash() {
@@ -28,6 +28,7 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
   const validate = saveValidator(t);
   if (!validate(value)) throw Error(`Save schema rejected: ${validate.errors?.[0]?.instancePath} ${validate.errors?.[0]?.message}`);
   const p = value as SavePayload, s = p.camp.session, camp = s.camp;
+  if (s.slot !== phaseAt(s.hour, t.season) || s.nightFinished !== (s.hour === endHour(t.season))) throw Error('Saved hour, phase or night completion is inconsistent.');
   const ids = new Set(camp.facts.map(f=>f.id));
   if (ids.size !== camp.facts.length || camp.board.some(b=>!ids.has(b.factId))) throw Error('Save fact references are corrupt.');
   for (const [id,c] of Object.entries(camp.characters)) {
@@ -81,12 +82,12 @@ export function encodeSave(service: SeasonService): SaveEnvelope {
     const { player, ...state } = games;
     payload.progress.bout!.games = { ...state, playerId: player.id };
   }
-  return { version:1,sources,checkpoint,checksum:hash({version:1,sources,checkpoint,payload}),payload };
+  return { version:2,sources,checkpoint,checksum:hash({version:2,sources,checkpoint,payload}),payload };
 }
 export function decodeSave(t: Tables, text: string, expectedSources = sourceHash()): SavePayload {
   if (Buffer.byteLength(text)>bridgeRules.limits.saveBytes) throw Error('Save is too large.');
   const e = JSON.parse(text) as SaveEnvelope;
-  if (!e || Object.keys(e).sort().join() !== 'checkpoint,checksum,payload,sources,version' || e.version!==1 || e.sources!==expectedSources) throw Error('Save version or source data is incompatible.');
+  if (!e || Object.keys(e).sort().join() !== 'checkpoint,checksum,payload,sources,version' || e.version!==2 || e.sources!==expectedSources) throw Error('Save version or source data is incompatible.');
   if (e.checksum !== hash({version:e.version,sources:e.sources,checkpoint:e.checkpoint,payload:e.payload})) throw Error('Save checksum is corrupt.');
   const saved=e.payload?.progress?.bout?.games;
   if (saved) {

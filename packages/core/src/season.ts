@@ -1,7 +1,7 @@
 import data from '../../../docs/design/reconciled/data/season-bridge.json' with { type: 'json' };
 import { trialWeights } from './arena/data.generated.ts';
 import { calendar, seededUnit } from './camp.ts';
-import { passSlot, type CampSession } from './camp-session.ts';
+import { spendHours, type CampSession } from './camp-session.ts';
 import type { Tables, Trace } from './types.ts';
 import { advanceGames, attachMageAI, createGames, gamesResult, stateHash, stepGames, presets, validateComposition, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame } from './arena/index.ts';
 
@@ -23,8 +23,8 @@ export function createSeason(): SeasonProgress { return { composition: structure
 export function seasonDue(t: Tables, s: CampSession, p: SeasonProgress): 'trial' | 'games' | null {
   if (s.camp.day > t.season.daysPerWeek * data.weeksPlayable) return null;
   const day = calendar(t, s.camp.day);
-  if (day.eve && s.slot === t.season.trialSlot && !p.receipts.some(r => r.kind === 'trial' && r.day === s.camp.day)) return 'trial';
-  if (day.games && !p.receipts.some(r => r.kind === 'games' && r.day === s.camp.day)) return 'games';
+  if (day.eve && s.hour >= t.season.trialHour && !p.receipts.some(r => r.kind === 'trial' && r.day === s.camp.day)) return 'trial';
+  if (day.games && s.hour >= t.season.gamesHour && !p.receipts.some(r => r.kind === 'games' && r.day === s.camp.day)) return 'games';
   return null;
 }
 export function campPlayerSnapshot(t: Tables, s: CampSession, id = s.camp.player): GamesPlayer {
@@ -35,7 +35,7 @@ export function campPlayerSnapshot(t: Tables, s: CampSession, id = s.camp.player
     staminaPenalty: c.fatigue * data.fatigueStaminaPerPoint + (c.sick ? -t.rules.schemes.poison.nextGamesStamina : 0) };
 }
 export function beginTrial(t: Tables, s: CampSession, p: SeasonProgress): Trial {
-  if (seasonDue(t, s, p) !== 'trial' || s.location !== t.season.trialLocation || p.bout || p.trial?.day === s.camp.day) throw Error('The Tent Trial belongs at the Pit on Games eve, at dusk, once per day.');
+  if (s.hour !== t.season.trialHour || seasonDue(t, s, p) !== 'trial' || s.location !== t.season.trialLocation || p.bout || p.trial?.day === s.camp.day) throw Error('The Tent Trial belongs at the Pit on Games eve, at dusk, once per day.');
   const player = s.camp.characters[s.camp.player];
   const rival = Object.values(s.camp.characters).find(c => c.id !== player.id && c.school === player.school && c.rank === player.rank && c.role !== 'elder');
   const elder = Object.values(s.camp.characters).find(c => c.tent === player.tent && c.role === 'elder');
@@ -84,14 +84,14 @@ function fact(s: CampSession, id: string, text: string, truth = true) {
 export function receiveTrial(t: Tables, before: CampSession, p: SeasonProgress): CampSession {
   const trial = p.trial;
   if (!trial || trial.phase !== 'complete' || !trial.entrant || p.receipts.some(r => r.id === trial.id)) throw Error('Trial receipt is unavailable or already applied.');
-  const s = passSlot(before), trace: Trace[] = [];
+  const s = spendHours(before, t.season.trialHours), trace: Trace[] = [];
   social(t, s, trace, trial.rival, data.trial.respectTrust, 'season-bridge/trial/respectTrust');
   fact(s, `${trial.id}:result`, `${s.camp.characters[trial.entrant].name} carries the Tide into tomorrow's Tiro Games.`);
   p.receipts.push({ id: trial.id, day: trial.day, kind: 'trial', entrant: trial.entrant, hash: JSON.stringify(trial), trace });
   return s;
 }
 export function prepareBout(t: Tables, s: CampSession, p: SeasonProgress, composition: Composition): SeasonBout {
-  if (seasonDue(t, s, p) !== 'games' || p.bout || validateComposition(composition).length) throw Error('The Games cannot open now.');
+  if (s.hour !== t.season.gamesHour || seasonDue(t, s, p) !== 'games' || p.bout || validateComposition(composition).length) throw Error('The Games cannot open now.');
   const qualification = p.receipts.find(r => r.kind === 'trial' && r.day === s.camp.day - t.season.trialOffsetBeforeGames);
   if (!qualification) throw Error('The Tent Trial must settle before the Games.');
   const entrant = campPlayerSnapshot(t, s, qualification.entrant);
@@ -140,7 +140,7 @@ export function receiveBout(t: Tables, before: CampSession, p: SeasonProgress): 
   if (!bout || bout.phase !== 'terminal' || p.receipts.some(r => r.id === bout.id)) throw Error('The bout is not ready for settlement.');
   const replay = replayBout(bout);
   if (boutHash(replay) !== boutHash(bout)) throw Error('Bout replay mismatch.');
-  const result = gamesResult(replay.games!), s = passSlot(before), trace: Trace[] = [], player = s.camp.characters[s.camp.player];
+  const result = gamesResult(replay.games!), s = spendHours(before, t.season.gamesHours), trace: Trace[] = [], player = s.camp.characters[s.camp.player];
   if (!bout.spectator) {
     for (const key of ['gold', 'renown'] as const) {
       const [min, max] = t.rules.ranges[key];

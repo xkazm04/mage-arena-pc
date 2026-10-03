@@ -1,8 +1,9 @@
+import { campTime, placeOpen } from "./camp-time.ts";
 import data from "../../../docs/design/reconciled/data/parley.json" with { type: "json" };
 import { legalProblem, decision, lineProblem, seededUnit } from "./camp.ts";
 import {
-  campPlay,
-  passSlot,
+  spendHours,
+  timeProblem,
   present,
   type CampSession,
 } from "./camp-session.ts";
@@ -66,11 +67,12 @@ export function parleyProblem(
   )
     return "They cannot speak with you now.";
   if (
-    !t.locations.find((p) => p.id === s.location)?.open.includes(s.slot) ||
+    !t.locations.some((p) => p.id === s.location && placeOpen(p, s.hour)) ||
     !present(s).includes(target)
   )
     return "They are not here.";
-  if (s.budget < campPlay.actionCost) return "There is no time to speak.";
+  const timing = timeProblem(t, s, t.season.activityHours.PARLEY);
+  if (timing) return timing;
   if (s.parleys.filter((p) => p.day === s.camp.day).length >= data.perDay)
     return "You have already made your appeal today.";
   if (!knowingsAbout(s, target).length)
@@ -187,7 +189,7 @@ export function applyParley(
         npcReply: data.replies.refuse,
       }
     : structuredClone(raw as ParleyProposal);
-  const s = passSlot(before),
+  const s = spendHours(before, campTime.activityHours.PARLEY),
     player = s.camp.characters[s.camp.player],
     npc = s.camp.characters[target];
   const large = !["refuse", "shift_trust_small"].includes(p.effect);

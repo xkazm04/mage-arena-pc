@@ -15,15 +15,15 @@ describe('W7 season authority', () => {
   });
   it('requires the actual Trial location/date and locks rerolls and receipt duplication', () => {
     const service = fixtureService(); expect(() => beginTrial(t, service.session, service.progress)).toThrow();
-    service.session.camp.day = 6; service.session.slot = 'dusk'; service.session.location = 'pit';
+    service.session.camp.day = 6; service.session.slot = 'dusk'; service.session.hour = t.season.trialHour; service.session.location = 'pit';
     service.seasonCommand({ type: 'trial' }, service.session.revision);
     expect(() => service.seasonCommand({ type: 'trial' }, service.session.revision)).toThrow();
     expect(trialTell(service.session, service.progress.trial!)).toBe(trialTell(structuredClone(service.session), structuredClone(service.progress.trial!)));
     service.close();
   });
   it('rejects fabricated checkpoints, duplicate/dropped ticks and wrong bout IDs atomically', () => {
-    const service = fixtureService(); service.session.camp.day = 6; service.session.slot = 'dusk'; service.session.location = 'pit'; trialPolicy(service);
-    service.session.camp.day = 7; service.session.slot = 'day'; service.session.nightFinished = false;
+    const service = fixtureService(); service.session.camp.day = 6; service.session.slot = 'dusk'; service.session.hour = t.season.trialHour; service.session.location = 'pit'; trialPolicy(service);
+    service.session.camp.day = 7; service.session.slot = 'day'; service.session.hour = t.season.gamesHour; service.session.nightFinished = false;
     service.progress.bout = prepareBout(t, service.session, service.progress, presets[2]!); startBout(service.progress.bout);
     const wire = linkBout(JSON.parse(JSON.stringify(service.progress.bout)));
     expect(wire.games!.player).toBe(wire.games!.state.actors[0]);

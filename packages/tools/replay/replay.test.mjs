@@ -126,3 +126,22 @@ test('identical visible request has one key; changed fact, model or prompt has a
   assert.equal(requestKey(a),requestKey(b));
   for (const changed of [{...a,model:'new'}, {...a,system:'new prompt'}, {...a,facts:{...a.facts,trust:'hostile'}}]) assert.notEqual(requestKey(a),requestKey(changed));
 });
+
+
+test('hour-rule planted faults are rejected directly', () => {
+  const a = readArtifacts();
+  for (const [mutate, expected] of [
+    [t => t.season.travelHours = 1, 'travel must be free'],
+    [t => t.season.wakingHours = 25, 'invalid waking hours or phases'],
+    [t => t.season.phases.dusk = 7, 'invalid waking hours or phases'],
+    [t => t.season.activityHours.TRAIN = 0, 'invalid activity hours TRAIN'],
+    [t => t.season.activityHours.TRAIN = 12, 'activity exceeds opening'],
+    [t => t.locations[0].closeHour = 7, 'invalid opening hours yard'],
+    [t => t.season.trialHour = 8, 'trial place closed'],
+    [t => t.season.gamesHour = 20, 'invalid fixed appointments'],
+    [t => t.season.activityHours.LISTEN = 1, 'night act must fill final hours'],
+  ]) {
+    const t = loadTables(); mutate(t);
+    assert.ok(check(t,a.fixtures,a.prose,a.template).some(e => e.startsWith(expected)), expected);
+  }
+});

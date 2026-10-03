@@ -1,4 +1,5 @@
-﻿// Pure season reference extracted from W0. No IO, clock, model, or unseeded RNG.
+import { activityFitsDay } from "./camp-time.ts";
+// Pure season reference extracted from W0. No IO, clock, model, or unseeded RNG.
 import type {
   Tables,
   CampState,
@@ -104,6 +105,8 @@ export function calendar(t: Tables, day: number) {
   const weekday = ((day - 1) % t.season.daysPerWeek) + 1;
   return {
     day,
+    trialHour: t.season.trialHour,
+    gamesHour: t.season.gamesHour,
     week: Math.floor((day - 1) / t.season.daysPerWeek) + 1,
     weekday,
     games: weekday === t.season.gamesWeekday,
@@ -213,6 +216,7 @@ export function legalProblem(
     return "stat";
   if (item.intent === "PROTECT" && c.gold < t.rules.effects.PROTECT.costGold)
     return "resources";
+  if (!activityFitsDay(t, item)) return "activity-hours";
   if (item.intent === "CONFIDE" && !c.knowledge.includes(item.args.factId))
     return "fact";
   if (item.intent === "SCHEME") {

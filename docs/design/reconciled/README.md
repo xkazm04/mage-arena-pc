@@ -15,9 +15,12 @@ Ending resolution belongs to the later ending wave.
 
 - Season weeks: 6; days per week: 7.
 - Games weekday: 7; Trial offset before Games: 1.
-- Slots: ["day","dusk","night"]. Trial: pit at dusk.
+- Waking hours: 14, starting at 8:00. Phases begin at hours {"day":8,"dusk":18,"night":20}.
+- Travel costs 0 hours. Activity durations in hours: {"TRAIN":2,"WORK":4,"BEFRIEND":2,"CONFIDE":1,"PROTECT":1,"WATCH":2,"SCHEME":2,"RECRUIT":2,"DEFECT":2,"REPORT":1,"PLOT":2,"REST":2,"OFFER":1,"PARLEY":2,"LISTEN":2}.
+- Trial: pit at 18:00, lasting 2 hours. Games: 8:00, lasting 4 hours.
+- Opening intervals are [openHour, closeHour); activities must finish by closing. Wait advances to the next phase. Night occupies the final hours and settles once.
 - Schemes open on weekday 4 through Games.
-- Fourth Watch: edge at night.
+- Fourth Watch: edge at 20:00.
 - Closed intents: ["TRAIN","WORK","BEFRIEND","CONFIDE","PROTECT","WATCH","SCHEME","RECRUIT","DEFECT","REPORT","PLOT","REST","OFFER"]. Count: 13.
 - Places: 8; cast: 16.
 - Befriend base: 6; cross-tent peer multiplier: 1.5.
@@ -60,7 +63,7 @@ admission to tents, every eligible rivalry decay, and available bond transitions
 Each changed value records its source rule. Every random draw has a seed, day,
 actor, action and result. The player is excluded from Director-controlled actions.
 
-The model sees qualitative facts, never numeric sheets, rolls, deltas or numeric
+The model sees time in hours and qualitative character facts, never numeric character sheets, rolls, deltas or numeric
 caps. Its choices contain only the closed vocabulary. Private facts stay attached
 to their knowing character, rather than entering a shared group fact dictionary.
 Shared group context can still influence a model implicitly; citation checks prove

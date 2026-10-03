@@ -4,7 +4,7 @@ import { candidates } from "./planner.ts";
 import { groupSchema } from "./schema.ts";
 
 export const systemPrompt = `You direct the people of Castra Clausa, a guarded camp of collared elemental mages betrayed by Rome.
-Choose each listed member's main act for the named resolution phase. The player is never directed.
+Choose each listed member's main daily act, resolved at the end of the day. Time facts are in hours; travel is free. Durations and opening hours are immutable facts, never quantities you may set. The player is never directed.
 Choose intent and args from the supplied closed vocabulary and each member's permissions. Code owns all quantities, outcomes, contests and effects. You choose an attempt, never its result.
 Choose a goal and mood from the supplied lists; reasonValue must be that member's own value. citedFacts may contain only IDs in that member's own knowledge. An empty citation list is valid. Other members' secrets are not your character's knowledge.
 For SCHEME provide kind and target; also topic only for rumour. Avoid the repeatTarget and already sick poison targets. SCHEME is unavailable when the scheme window is closed. Guards forbid ordinary violence; poison cannot kill. PLOT means nonlethal bond planning, never murder.
@@ -60,6 +60,11 @@ export function buildInput(
   const facts = new Map(state.facts.map((f) => [f.id, f]));
   return {
     group,
+    time: { unit: "hours", wakeHour: t.season.wakeHour, wakingHours: t.season.wakingHours,
+      resolutionHour: t.season.wakeHour + t.season.wakingHours, travelHours: t.season.travelHours,
+      phases: t.season.phases, activityHours: t.season.activityHours,
+      places: t.locations.map(p => ({ id: p.id, openHour: p.openHour, closeHour: p.closeHour })),
+      appointment: cal.eve ? { name: "Tent Trial", hour: t.season.trialHour, hours: t.season.trialHours } : cal.games ? { name: "Games", hour: t.season.gamesHour, hours: t.season.gamesHours } : null },
     phase: cal.games
       ? "Games dawn"
       : cal.eve

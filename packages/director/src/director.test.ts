@@ -269,7 +269,9 @@ describe("request and budget boundaries", () => {
           : x && typeof x === "object"
             ? Object.values(x).reduce<number>((n, v) => n + numerics(v), 0)
             : 0;
-    expect(numerics(req.input)).toBe(0);
+    expect(numerics({ ...req.input, time: undefined })).toBe(0);
+    expect(req.input.time.unit).toBe("hours");
+    expect(req.input.time.wakingHours).toBe(t.season.wakingHours);
     expect(
       req.input.members
         .find((m) => m.id === "fenna")!

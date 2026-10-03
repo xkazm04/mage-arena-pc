@@ -64,7 +64,9 @@ export function parleyRequest(
         goal: npc.goal.id,
       },
       place: s.location,
-      slot: s.slot,
+      phase: s.slot,
+      hour: s.hour,
+      timeUnit: "hours",
       player: { name: s.camp.characters[s.camp.player].name },
       heldKnowings: knowingsAbout(s, target).map((f) => ({
         id: f.id,

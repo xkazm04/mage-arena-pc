@@ -242,3 +242,13 @@ exact saves and the 8,000-fight census pass. Both measured 100-projectile sample
 reach 60 fps; screenshots/emulated controls do not establish physical latency,
 sofa readability or visual acceptance. No owner feel result or G1 closure is
 claimed by U2.
+
+
+## U3a ? hour pacing, pending owner play
+
+D25 supersedes the old slot/travel instructions. The waking day is 08:00?22:00;
+travel is free, activities spend their displayed hours. Dusk begins at 18:00,
+night at 20:00. Trials remain at 18:00 on days 6/13; Games begin at 08:00 on 7/14.
+Judge the number of meaningful choices per day and the night act's placement.
+Old slot saves are explicitly incompatible; begin a new story. Deterministic
+replay is measured, hour-model pacing is not yet felt. See [U3a note](waves/U3a-hours.md).

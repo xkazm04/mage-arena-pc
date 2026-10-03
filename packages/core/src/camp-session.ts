@@ -1,3 +1,4 @@
+import { campTime, endHour, phaseAt, placeOpen, activityHours } from "./camp-time.ts";
 import data from "../../../docs/design/reconciled/data/camp-play.json" with { type: "json" };
 import parleyData from "../../../docs/design/reconciled/data/parley.json" with { type: "json" };
 import type { ParleyRecord } from "./parley.ts";
@@ -38,7 +39,7 @@ export interface CampSession {
   camp: CampState;
   slot: Slot;
   location: string;
-  budget: number;
+  hour: number;
   revision: number;
   carry: DayCarry;
   dayActs: Decision[];
@@ -72,7 +73,7 @@ export function createCampSession(
     camp,
     slot: "day",
     location: data.startLocation,
-    budget: data.travelBudget.day,
+    hour: campTime.wakeHour,
     revision: 0,
     carry: emptyCarry(),
     dayActs: [],
@@ -97,19 +98,24 @@ export function present(s: CampSession, place = s.location): string[] {
     .map((c) => c.id);
 }
 export function travelCost(from: string, to: string): number {
-  const distances: Record<string, number> = Object.fromEntries(
-    Object.keys(data.map.nodes).map((id) => [id, Infinity]),
-  );
-  if (!Object.hasOwn(distances, from) || !Object.hasOwn(distances, to))
-    return Infinity;
-  distances[from] = 0;
-  for (let i = 0; i < Object.keys(distances).length; i++)
-    for (const route of data.map.routes) {
-      const [a, b, cost] = route as [string, string, number];
-      distances[b] = Math.min(distances[b], distances[a] + cost);
-      distances[a] = Math.min(distances[a], distances[b] + cost);
-    }
-  return distances[to];
+  return Object.hasOwn(data.map.nodes, from) && Object.hasOwn(data.map.nodes, to) ? campTime.travelHours : Infinity;
+}
+/** Phase is cached for transport; hour is authoritative. */
+export function spendHours(before: CampSession, hours: number): CampSession {
+  if (!Number.isInteger(hours) || hours <= 0 || before.hour + hours > endHour()) throw Error("Not enough hours remain.");
+  const s = structuredClone(before);
+  s.hour += hours; s.slot = phaseAt(s.hour); s.revision++;
+  s.nightFinished = s.hour === endHour();
+  return s;
+}
+export function timeProblem(t: Tables, s: CampSession, hours: number): string | null {
+  const place = t.locations.find(p => p.id === s.location);
+  if (!place || !placeOpen(place, s.hour) || s.hour + hours > place.closeHour) return "This activity would finish after closing.";
+  if (s.hour + hours > endHour(t.season)) return "Not enough hours remain.";
+  if (calendar(t, s.camp.day).eve && s.hour < t.season.trialHour && s.hour + hours > t.season.trialHour) return "The Tent Trial begins before this activity would finish.";
+  // The last two hours belong to the night act, keeping its Director snapshot stable.
+  if (s.hour < t.season.phases.night && s.hour + hours > t.season.phases.night) return "This activity would run into the night act.";
+  return null;
 }
 function available(s: CampSession) {
   if (s.camp.ended || s.camp.characters[s.camp.player].life !== "Alive")
@@ -124,17 +130,16 @@ export function moveCamp(
 ): CampSession {
   available(before);
   const location = t.locations.find((p) => p.id === place);
-  if (!location?.open.includes(before.slot))
-    throw new Error("That place is closed in this slot.");
+  if (!location || !placeOpen(location, before.hour))
+    throw new Error("That place is closed at this hour.");
   if (before.camp.characters[before.camp.player].stocks)
     throw new Error("The Vigil keeps you in the stocks.");
   const cost = travelCost(before.location, place);
-  if (!Number.isFinite(cost) || cost > before.budget)
+  if (!Number.isFinite(cost))
     throw new Error("Not enough time to travel there.");
   return {
     ...before,
     location: place,
-    budget: before.budget - cost,
     revision: before.revision + 1,
   };
 }
@@ -159,19 +164,20 @@ export function playerProblem(
   const basic = legalProblem(t, s.camp, d, true);
   if (basic) return basic;
   const place = t.locations.find((p) => p.id === s.location);
-  if (!place?.open.includes(s.slot)) return "This place is closed.";
+  if (!place || !placeOpen(place, s.hour)) return "This place is closed.";
   if (
     !place.activities.includes(
       d.intent === "TRAIN" ? `TRAIN:${d.args.stat}` : d.intent,
     )
   )
     return "That activity belongs elsewhere.";
-  if (s.budget < data.actionCost) return "Not enough time for an activity.";
+  const timing = timeProblem(t, s, activityHours(d, t.season));
+  if (timing) return timing;
   if (
     ["BEFRIEND", "PROTECT", "CONFIDE", "WATCH", "RECRUIT"].includes(d.intent) &&
     !present(s).includes(d.args.target)
   )
-    return "They are not here in this slot.";
+    return "They are not here at this hour.";
   const cap =
     d.intent === "SCHEME" && calendar(t, s.camp.day).eve
       ? t.rules.caps.SCHEME_eve
@@ -185,14 +191,8 @@ export function playerProblem(
 }
 export function passSlot(before: CampSession): CampSession {
   available(before);
-  const s = structuredClone(before);
-  s.revision++;
-  if (s.slot === "night") s.nightFinished = true;
-  else {
-    s.slot = s.slot === "day" ? "dusk" : "night";
-    s.budget = data.travelBudget[s.slot];
-  }
-  return s;
+  const next = [campTime.phases.dusk, campTime.phases.night, endHour()].find(h => h > before.hour)!;
+  return spendHours(before, next - before.hour);
 }
 export function actCamp(
   t: Tables,
@@ -204,10 +204,10 @@ export function actCamp(
   if (problem) throw new Error(problem);
   const result = resolve(t, before.camp, [d], {
     settleNight: false,
-    namespace: before.slot,
+    namespace: `hour-${before.hour}`,
     carry: before.carry,
   });
-  const s = passSlot(before);
+  const s = spendHours(before, activityHours(d, t.season));
   s.camp = result.state;
   s.carry = result.carry!;
   s.dayActs.push(structuredClone(d));
@@ -218,17 +218,16 @@ export function actCamp(
 export function beginListening(before: CampSession): CampSession {
   available(before);
   if (
-    before.slot !== "night" ||
+    before.hour !== campTime.phases.night ||
     before.location !== "tent" ||
-    before.budget < data.actionCost
+    before.hour + campTime.activityHours.LISTEN > endHour()
   )
-    throw new Error("Listen at your tent during the night slot.");
+    throw new Error("Listen at your tent at the start of night.");
   if (before.camp.characters[before.camp.player].stocks)
     throw new Error("The Vigil keeps you in the stocks.");
   return {
     ...before,
     revision: before.revision + 1,
-    budget: before.budget - data.actionCost,
     listening: {
       tick: 0,
       lane: 0,
@@ -288,6 +287,7 @@ export function stepListening(
   if (n.tick >= d.durationTicks) {
     n.done = true;
     s.nightFinished = true;
+    s.hour = endHour();
     if (n.clues >= d.requiredClues) {
       const player = s.camp.characters[s.camp.player];
       const eligible = s.camp.facts.filter(
@@ -321,7 +321,7 @@ export function settleCamp(
   fallback: (id: string) => Decision,
   friendly?: (id: string) => Decision,
 ): CampSession {
-  if (before.slot !== "night" || !before.nightFinished)
+  if (before.hour !== endHour() || !before.nightFinished)
     throw new Error("The night act has not ended.");
   const limited = remainingCaps(t, before);
   const replaced = [...proposals];
@@ -367,7 +367,7 @@ export function settleCamp(
     camp: result.state,
     slot: "day",
     location: data.startLocation,
-    budget: data.travelBudget.day,
+    hour: campTime.wakeHour,
     revision: before.revision + 1,
     carry: emptyCarry(),
     dayActs: [],
@@ -444,12 +444,17 @@ export function campView(t: Tables, s: CampSession) {
     day,
     slot: s.slot,
     location: s.location,
-    budget: s.budget,
+    hour: s.hour,
+    hoursRemaining: endHour(t.season) - s.hour,
+    wakingHours: t.season.wakingHours,
+    wakeHour: t.season.wakeHour,
+    endHour: endHour(t.season),
     ended: s.camp.ended,
     player: {
       name: player.name,
       school: player.school,
       gold: player.gold,
+      reputation: player.renown,
       hunger: player.hunger,
       fatigue: player.fatigue,
       stats: player.stats,
@@ -461,7 +466,7 @@ export function campView(t: Tables, s: CampSession) {
       description: (data.descriptions as Record<string, string>)[p.id],
       position: (data.map.nodes as Record<string, number[]>)[p.id],
       cost: travelCost(s.location, p.id),
-      isOpen: p.open.includes(s.slot),
+      isOpen: placeOpen(p, s.hour),
     })),
     presence: present(s).map((id) => ({
       id,
@@ -477,8 +482,10 @@ export function campView(t: Tables, s: CampSession) {
             label,
             intent: d.intent,
             gains: actionPreview(t, s, d),
+            hours: activityHours(d, t.season),
           })),
-    actionCost: data.actionCost,
+    parleyHours: t.season.activityHours.PARLEY,
+    listeningHours: t.season.activityHours.LISTEN,
     listeningRules: {
       requiredClues: data.listening.requiredClues,
       captureTicks: data.listening.captureTicks,

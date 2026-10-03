@@ -24,7 +24,7 @@ const night = () => passSlot(passSlot(start()));
 const settle = (s: ReturnType<typeof start>) =>
   settleCamp(t, s, [], (id) => safeFallback(t, s.camp, id));
 
-describe("playable camp slots", () => {
+describe("playable camp hours", () => {
   it("has exactly the eight authored places, six Games and six eves", () => {
     const v = campView(t, start());
     expect(v.places.map((p) => p.id)).toEqual([
@@ -49,19 +49,19 @@ describe("playable camp slots", () => {
       ),
     ).toBe(true);
   });
-  it("charges routes, refuses closed places and cannot mint travel time", () => {
+  it("travel is free, refuses closed places and cannot mint hours", () => {
     const original = start(),
       s = moveCamp(t, original, "yard");
-    expect(travelCost("tent", "yard")).toBe(2);
-    expect(s.budget).toBe(1);
-    expect(original.budget).toBe(3);
+    expect(travelCost("tent", "yard")).toBe(0);
+    expect(s.hour).toBe(8);
+    expect(original.hour).toBe(8);
     expect(() => moveCamp(t, original, "pit")).toThrow(/closed/);
-    expect(() => moveCamp(t, s, "door")).toThrow(/time/);
+    expect(moveCamp(t, s, "door").hour).toBe(8);
     expect(travelCost("fake", "tent")).toBe(Infinity);
-    expect(moveCamp(t, s, "yard").budget).toBe(1);
+    expect(moveCamp(t, s, "yard").hour).toBe(8);
     expect(() => moveCamp(t, original, "__proto__")).toThrow();
   });
-  it("trains in the right place, ends a slot and settles routines only at dawn", () => {
+  it("trains in the right place, spends two hours and settles routines only at dawn", () => {
     const before = moveCamp(t, start(), "yard");
     const points = before.camp.characters.cassia.points.vigor;
     const s = actCamp(
@@ -69,7 +69,8 @@ describe("playable camp slots", () => {
       before,
       decision(t, before.camp, "cassia", "TRAIN", { stat: "vigor" }),
     );
-    expect(s.slot).toBe("dusk");
+    expect(s.slot).toBe("day");
+    expect(s.hour).toBe(10);
     expect(s.camp.day).toBe(1);
     expect(s.camp.characters.cassia.points.vigor).toBe(points + 3);
     expect(s.camp.characters.nysa.points).toEqual(
@@ -85,7 +86,7 @@ describe("playable camp slots", () => {
     expect(() =>
       actCamp(t, before, decision(t, before.camp, "nysa", "REST")),
     ).toThrow(/own/);
-    const dawn = settle(passSlot(passSlot(s)));
+    const dawn = settle(passSlot(passSlot(passSlot(s))));
     expect(dawn.camp.day).toBe(2);
     expect(dawn.slot).toBe("day");
     expect(dawn.camp.characters.nysa.points.focus).toBe(
@@ -104,7 +105,7 @@ describe("playable camp slots", () => {
     expect(s.camp.characters.cassia.gold).toBe(8);
     expect(s.camp.characters.fenna.hunger).toBe(hunger - 30);
     expect(s.camp.characters.fenna.warned).toBe(true);
-    const dawn = settle(passSlot(passSlot(s)));
+    const dawn = settle(passSlot(passSlot(passSlot(s))));
     expect(dawn.camp.characters.fenna.hunger).toBe(hunger - 30);
     expect(dawn.camp.characters.fenna.warned).toBe(true);
     let work = moveCamp(t, start(), "exchange");
@@ -113,7 +114,7 @@ describe("playable camp slots", () => {
     expect(work.camp.characters.cassia.fatigue).toBe(1);
     expect(work.carry.working).toContain("cassia");
   });
-  it("presence gates conversation and retains a wait escape from exhausted travel", () => {
+  it("presence gates conversation and free travel preserves activity time", () => {
     let s = moveCamp(t, start(), "commons");
     expect(() =>
       actCamp(
@@ -123,8 +124,8 @@ describe("playable camp slots", () => {
       ),
     ).toThrow(/not here/);
     s = moveCamp(t, moveCamp(t, s, "yard"), "commons");
-    expect(s.budget).toBe(0);
-    expect(campActions(t, s)).toHaveLength(0);
+    expect(s.hour).toBe(8);
+    expect(campActions(t, s).length).toBeGreaterThan(0);
     expect(passSlot(s).slot).toBe("dusk");
   });
   it("consumes the day's scarce cap before Director night choices", () => {
@@ -148,7 +149,7 @@ describe("playable camp slots", () => {
       decision(t, s.camp, "cassia", "BEFRIEND", { target: "fenna" }),
     );
     expect(new Set(s.dayEvents.map((f) => f.id)).size).toBe(2);
-    const dawn = settle(passSlot(s));
+    const dawn = settle(passSlot(passSlot(passSlot(s))));
     expect(
       campView(t, dawn).board.filter(
         (b) => b.text.includes("Cassia") && b.text.includes("Fenna"),
