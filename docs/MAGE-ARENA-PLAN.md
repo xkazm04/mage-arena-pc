@@ -97,11 +97,6 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
 | Art | A5 | Icons, HUD, spell-line icons | A1 owner choice | not planned | | |
-| Game [`integration`] | U3a | Data-driven hours, free travel, fixed appointments, save v2 | D25 | done; gate green | `a7a0351` | 2026-10-03 |
-| Game | U3b | Name-only places, header stat icons and daily rune dial | U3a / D26 | done; both desktop routes green | `b734332` | 2026-10-03 |
-| Game | AU4 | Kept-sample WebAudio engine, app-side calming, adaptive playback and settings | D28 / D30 | done; owner listening pending | this AU4 commit | 2026-10-03 |
-| Game | U4 | Art wiring round 2: A8 effects, A10 directional bodies/fallbacks, A11 Tideglass/stats | D26 / D27 / art session 6 | done; automated gate green, owner motion review pending | `b318fca`, `d041397`, `b19c9aa`, `7a9c71c`, U4 polish commit | 2026-10-03 |
-
 
 ## h. Wave cards
 
@@ -223,7 +218,7 @@ Pattern to follow (read-only): `C:\Users\kazda\kiro\garden-vr\docs\audio\` (`AUD
 | Audio [`audio`] | AU1 | **Philosophy and audition round 1**: audio bible (pillars, palette of sound, mix and priority rules, adaptive music design tied to the collar clock, loudness targets); the project ElevenLabs tool with ledger and credit guard; about 30 to 40 samples across directions and themes; the audition report; stop for the owner | D21-D24 | not started |
 | Audio | AU2 | Round 2 refinement of the chosen directions (variants inside the chosen family), narration or bark voice if wanted | AU1 owner choice | blocked |
 | Audio | AU3 | Production set: the full effect list per element and event, the music set (title, camp day/dusk/night, arena per palette, win and loss stingers, adaptive layers), UI sounds, ambiences; loudness-normalised, loop-checked, sidecars and ledger | AU2 | blocked |
-| Game | AU4 | In-game audio engine: WebAudio mixer with buses, priority, cooldown and concurrency limits, ducking, adaptive music following the collar tiers and absorb events, UI sounds from the UI kit, volume and mute settings, tests for the priority table | AU3 or placeholders | done with owner-kept samples; listening pending |
+| Game | AU4 | In-game audio engine: WebAudio mixer with buses, priority, cooldown and concurrency limits, ducking, adaptive music following the collar tiers and absorb events, UI sounds from the UI kit, volume and mute settings, tests for the priority table | AU3 or placeholders | not started |
 
 ## q. Owner review of the U2 gallery and audio round 2 (2026-10-03)
 
@@ -243,10 +238,23 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 | Art | A9 | **Arena restoration**: ground, rim, structures, banners, props and surface at proper resolution, matching the approved arena concept, in the three palettes, with tiling or tiled-by-design ground where needed | D27 | not started |
 | Art | A10 | **Character fidelity and direction**: four mages and the enemy roster with real multi-direction animation sets and a consistency pipeline | A8 | not started |
 | Art | A11 | **Stat icons (gold, reputation, fatigue) and the daily clock art** | D26 | not started |
-| Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: hour tables/fixtures, free travel, header stats and rendered dial | D25, D26 | done: U3a `a7a0351`, U3b `b734332`; owner hour pacing pending |
-| Game | AU4 | **Audio engine** with buses, priority, concurrency and cooldown limits, ducking, the app-side calming of effects (D30), music playback with crossfades and the collar-tier adaptive layers, UI sounds, volume settings; uses the kept samples through a manifest | D28, D30 | done in this AU4 commit; owner listening pending |
+| Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: core data and tests, replayer fixtures regenerated, Director inputs in hours, place buttons by name only, header with the stat icons (placeholder until A11) and the rendered clock | D25, D26 | not started |
+| Game | AU4 | **Audio engine** with buses, priority, concurrency and cooldown limits, ducking, the app-side calming of effects (D30), music playback with crossfades and the collar-tier adaptive layers, UI sounds, volume settings; uses the kept samples through a manifest | D28, D30 | not started |
 | Audio | AU2b | Regenerate the rejected categories: absorb as an energy barrier stopping and slowing an energy source (elemental, natural, not a notification, not cartoonish), the title theme (melodic like the arena music, calm), roll (single sand step), crowd (raw, bloodlust colosseum), collar rune alternative if needed | D28 | not started |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks in the kept directions, after the credit reset; camp music re-direction | account reset | blocked |
+
+## r. Owner review of the A12 plates and U4 build (2026-10-03): plates accepted, figures bigger, combat feel is the focus, sigils redone
+
+> "1. Wire the plates, it will be acceptable for now. 3. Figures are small, 50% increase of them would help. We will focus then primarily on gameplay mechanics, first how it feels on PC as I see the combat now as the weakest point. After plates guide me how to start the game, extend training mode against dummy to set one opponent too and I will go through. One piece which did not go through art transformations are sigils, they look like geometry in elementary math, not following artstyle nor any feel of magicality."
+
+Decisions: **D31** the A12 plates are accepted for now and are wired into the game (the plate-based arena with the compact-layout step, the occluder sprites with base lines, palette per tier). **D32** characters are drawn **50% larger** (figures about 5.6 percent of screen height at 1080p instead of 3.75; the scale contract is versioned, the camera distance and arena layout are re-checked so the fight still reads and the plate geometry still works; the A10 masters are 384 px so there is headroom). **D33** the primary focus becomes **combat feel on PC with mouse and keyboard** (the owner sees combat as the weakest point): a **Combat Feel Lab** training mode with a dummy and **one selectable opponent** (a mage AI of a chosen school and competence), live-tunable parameters, a reset and metrics, so the owner can play and give feedback; then the improvements it shows are needed (hit feedback, cast timing, movement, absorb feel, enemy behaviour and telegraphs). **D34** **sigils are redone as art**: the casting circles, telegraph marks (ring, cone, line, area, unblockable), the ward and absorb geometry, the perfect-absorb window mark and the rune glyphs currently read as geometry from elementary mathematics; they must follow the Covenant style and feel magical (painted rune circles with glow, wear and elemental character, animated), while the exact hit geometry stays authored in data.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Game | U5 | Wire the A12 plates (compact layout, occluders, palette per tier) and figures 50% larger (scale contract v3, camera and layout re-check) | D31, D32 | not started |
+| Game | CF1 | **Combat Feel Lab**: training mode with a dummy and one selectable opponent, live tuning, reset, metrics, replay of the last bout; the owner's start guide | U5 | not started |
+| Game | CF2 | Combat feel improvements from the Lab findings: hit feedback (hit stop, flash, shake, knockback, numbers), cast and animation timing, movement feel, absorb and perfect-absorb feel, telegraph readability, enemy behaviour; data-driven; census bands re-set where gameplay changes | CF1 | not started |
+| Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | not started |
 
 ## l. Session log
 
@@ -255,72 +263,3 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
-
-
-| Stream | Id | Wave | Depends on | Status | Commit | Date |
-|---|---|---|---|---|---|---|
-| Game | U3a | Camp time in hours, tables/replayer/Director/save v2 | D25 | done; gate green | this U3a commit | 2026-10-03 |
-
-**U3a session ? 2026-10-03 (GAME/integration).** Implemented the 14-hour waking day,
-free travel, facility duration/opening tables, hour-derived phases, fixed Trial/Games
-appointments, hour facts for Director and Parley, deterministic repeated activities,
-version-2 saves with explicit old-save rejection. Design: `docs/waves/U3a-hours.md`.
-Commands: `npm run gate` (162 TS + 11 reference tests, zero contradictions),
-`node packages/tools/replay/cli.mjs generate`, `npx tsx packages/tools/src/camp-fixtures-write.ts`,
-`npx tsx packages/tools/src/u3-replay.ts` (exact double replay and load round trip).
-Historical paid provider evidence retained byte-for-byte. Arena census code/data
-untouched. Hour-model balance/feel not measured. Next: U3b camp clock/header/map.
-
-
-| Stream | Id | Wave | Depends on | Status | Commit | Date |
-|---|---|---|---|---|---|---|
-| Game | U3b | Name-only places, header stats, daily rune dial | U3a / D26 | done; gate and both browser routes green | this U3b commit | 2026-10-03 |
-
-**U3b session ? 2026-10-03 (GAME/integration).** Name-only places with disabled
-hatch state for closure; header icons for gold/reputation/fatigue; animated rune
-dial, low-hours warning and reduced-motion handling. Hour costs/context on
-facility actions, Board, journal, Parley, calendar and saves. Read art worktree
-A5b contract, left A11 optional swap-in keys. `npm run gate`: 162 TS + 11 reference
-tests, zero contradictions. `npm run smoke:u3`: both full two-week routes pass,
-26 retained 1080p/1440p screenshots, zero errors/overflow, exact saves.
-`npx tsx packages/tools/src/u3-gallery.ts`: review gallery. Fixed and retained
-clock origin-line defect evidence. Human animation comfort/hour pacing not felt.
-No arena/census changes. Next: AU4 using owner-kept sources only.
-
-**AU4 session — 2026-10-03 (GAME/integration).** Selectively integrated 22 kept
-sources through a hash-checked manifest, including the isolated first roll step.
-Four buses, authored per-sound trims, high-cut/compressor/limiter, bounded cues,
-presentation-only variation, ducking, camp phase music and collar-tier crossfades;
-duration-driven playlists accept future 2–3 minute tracks. Central UI sounds,
-volume/mute settings and exact voice caption. `python packages/tools/audio/import-kept.py`
-records provenance, peaks and cut windows. `npm run gate`: 169 TS + 11 reference
-tests, zero contradictions. `npm run smoke:audio`: both desktop resolutions and
-missing/corrupt audio pass, actual graph/events retained. `npx tsx
-packages/tools/src/u3-replay.ts`: exact U3 save hash and 1,300,369-byte round trip.
-`npm run smoke:u3`: both complete 14-day desktop routes pass with audio enabled,
-zero page errors/overflow; report retained as `AU4-evidence/camp-regression.json`.
-Design and limitations: `docs/waves/AU4-audio-engine.md`. Headless audio cannot be
-listened to; trims, seams and artistic fit are not felt. No generation, provider
-calls, pushes or core arena/census changes. Next: owner listening and subsequent
-art/audio deliveries; unapproved round-3 auditions remain excluded.
-
-**U4 session ? 2026-10-03 (GAME/integration).** Five sub-waves selectively import
-35 A8/A10/A11 delivery files with hashes/sidecars, play pooled element effects and
-contact/perfect barrier clips, animate A10 bodies with explicit same-entity
-fallbacks for all 90 absent requests, and replace camp stats/dial with A11 layers.
-F8 exposes fallback decisions; no upright figure rotation. Lossless atlas packing
-reduces A10 pages from 174.6 to 42.5 MiB; leased body/effect pages unload on exit.
-`npm run gate`: 176 TS + 11 reference tests, zero contradictions. `npm run smoke:u4`:
-both native art/stress suites and complete two-week screen routes, 117 distinct
-successful PNGs, zero page errors/overflow; 100 moving projectiles plus 12 animated
-figures sustain about 60 fps, 228.8 MiB estimated texture storage at both sizes.
-`MAGE_EVIDENCE=U4` with `u3-replay.ts`: exact prior save hash/1,300,369 bytes.
-Fresh `report:w4 -- --evidence U4-evidence --tag census`: 8,000 fights, unchanged
-digests/medians. `npm run audit:u4`: 289 accepted/production hashes and sidecars,
-unchanged core/Director/camera/ground. Report: `docs/waves/U4-report.md`; gallery:
-`docs/waves/U4-evidence/index.html`. Retained and corrected an offscreen stress
-fixture wrap. A10 missing/front-view/gait issues, procedural hound/dummy, generic
-spell choreography, authored A11 painting backlog and the old arena surface/rim
-remain explicit. No art-worktree edits, raw reads, generation, pushes or new
-human-feel claim. Next: owner motion/readability review and later plate-based
-arena delivery behind the existing loader.
