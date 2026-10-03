@@ -1,4 +1,4 @@
-# AU1 + AU2 raw audio measurements
+# AU1 + AU2 + AU2b raw audio measurements
 
 Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not a quality score. Audition trim is browser gain; raw files are unchanged.
 
@@ -62,3 +62,16 @@ Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not 
 | ui-B-tab | 0.48 | -13.6 | -3.7 | 0.0 | -12.4 |
 | fire-kept-variation | 2.0 | -11.9 | -0.1 | 0.0 | -14.1 |
 | water-kept-variation | 2.0 | -25.7 | -5.6 | 0.0 | -0.3 |
+| absorb-A-pressure-wall-normal | 2.0 | -13.6 | 1.6 | 0.0 | -12.4 |
+| absorb-A-pressure-wall-perfect | 2.48 | -12.0 | 1.8 | 0.0 | -14.0 |
+| absorb-B-undertow-normal | 2.0 | -18.3 | -0.2 | 0.0 | -7.7 |
+| absorb-B-undertow-perfect | 2.48 | -18.4 | -0.5 | 0.0 | -7.6 |
+| absorb-C-mineral-drag-normal | 2.0 | -25.2 | -9.0 | 0.0 | -0.8 |
+| absorb-C-mineral-drag-perfect | 2.48 | -21.2 | -5.0 | 0.0 | -4.8 |
+| title-C-reed-standard | 29.988571 | -13.2 | -1.2 | 5.2 | -10.8 |
+| title-D-lyre-vow | 29.988571 | -13.2 | -1.3 | 6.8 | -10.8 |
+| roll-C-sand-plant | 0.680249 | -31.1 | -10.5 | 0.0 | 0 |
+| roll-D-sand-cut | 0.8 | -12.9 | -2.0 | 0.0 | -13.1 |
+| crowd-C-hungry-terraces | 3.0 | -8.1 | 0.7 | 20.0 | -17.9 |
+| crowd-D-stamping-bowl | 3.0 | -9.9 | -0.4 | 20.0 | -16.1 |
+| collar-C-stone-latch | 1.0 | -23.7 | -0.1 | 0.0 | -2.9 |

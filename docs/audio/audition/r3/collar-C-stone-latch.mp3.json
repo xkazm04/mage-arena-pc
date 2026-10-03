@@ -1,0 +1,51 @@
+{
+  "id": "35fd6129-abac-435e-8dac-dd4f311ef469",
+  "wave": "AU2b",
+  "ts": "2026-10-03T11:34:15.850Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One collar rune unlocking: a tiny heavy stone latch releases under pressure with a crisp mineral tick, a short gritty stone-body vibration and a breath of escaping pressure. Compact, tactile, ancient and physically grounded. One event, dry close detail. No bell, chime, melody, UI alert, voice, music or repeated ticks.",
+  "seconds": 1,
+  "chars": null,
+  "out": "docs/audio/audition/r3/collar-C-stone-latch.mp3",
+  "request": {
+    "text": "One collar rune unlocking: a tiny heavy stone latch releases under pressure with a crisp mineral tick, a short gritty stone-body vibration and a breath of escaping pressure. Compact, tactile, ancient and physically grounded. One event, dry close detail. No bell, chime, melody, UI alert, voice, music or repeated ticks.",
+    "duration_seconds": 1,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "10"
+  },
+  "bytes": 17180,
+  "sha256": "b8a902cca8189c080f39ff443d763e9d282a2ca6f76136f41c9e98c6b39f001c",
+  "accountBefore": {
+    "observedAt": "2026-10-03T11:34:15.850Z",
+    "tier": "starter",
+    "used": 73841,
+    "limit": 90000,
+    "remaining": 16159,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 20,
+  "estimatedCredits": 20,
+  "documentedEstimateCredits": 20,
+  "chargedCredits": 70,
+  "measuredCredits": 10,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-03T11:34:35.120Z",
+    "tier": "starter",
+    "used": 73911,
+    "limit": 90000,
+    "remaining": 16089,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 70,
+  "flags": [
+    "shared_delta_implausibly_large"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

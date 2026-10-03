@@ -1,7 +1,7 @@
 // Offline review only. No network, no generator, no automatic owner choices.
 (() => {
   const round = document.body.dataset.round || 'r1';
-  const key = `mage-arena.audio.${round === 'r2' ? 'au2.r2' : 'au1.r1'}.v1`;
+  const key = `mage-arena.audio.${round === 'r3' ? 'au2b.r3' : round === 'r2' ? 'au2.r2' : 'au1.r1'}.v1`;
   const status = document.getElementById('status');
   let state = { choices: {}, theme: 'system' };
   let storageOk = true;
@@ -48,8 +48,8 @@
   }));
   const escapeCell = value => String(value || '').replaceAll('|', '\\|').replace(/\r?\n/g, '<br>').replaceAll('<script', '&lt;script');
   const exportText = () => {
-    const title = round === 'r2' ? '## AU2 round 2 — owner triage' : '## AU1 round 1 — owner triage';
-    const description = round === 'r2' ? 'Refinement of the owner’s round-1 choices; separate 5,000-credit cap. Reference keeps remain in CHOICES.md; these picks judge new directions only. Keep is a direction choice, not production approval.' : 'Smaller audition: 15 samples generated before a provider 429 stop; 4,000-credit cap. Unrendered directions remain unjudged.';
+    const title = round === 'r3' ? '## AU2b round 3 — owner triage' : round === 'r2' ? '## AU2 round 2 — owner triage' : '## AU1 round 1 — owner triage';
+    const description = round === 'r3' ? 'Rejected-category refinements; separate 3,000-credit cap, 13,000 shared-account floor and 8,000 reserve. References retain the owner’s round-1/2 choices. New picks judge directions, not production readiness.' : round === 'r2' ? 'Refinement of the owner’s round-1 choices; separate 5,000-credit cap. Reference keeps remain in CHOICES.md; these picks judge new directions only. Keep is a direction choice, not production approval.' : 'Smaller audition: 15 samples generated before a provider 429 stop; 4,000-credit cap. Unrendered directions remain unjudged.';
     const lines = [title, '', description, '', '| Theme / direction | Pick | Samples | Owner note |', '|---|---|---|---|'];
     document.querySelectorAll('[data-direction]').forEach(card => {
       const choice = state.choices[card.dataset.direction] || {};

@@ -8,16 +8,20 @@ EVIDENCE = ROOT / 'docs/audio/evidence'
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 ledger = [json.loads(line) for line in (ROOT / 'tools/audio/ledger.jsonl').read_text().splitlines() if line]
 results = []
+cached = {m['source']:m for m in json.loads((EVIDENCE/'measurements.json').read_text())} if (EVIDENCE/'measurements.json').exists() else {}
 def db(value): return round(20 * math.log10(max(float(value), 1e-12)), 2)
 for entry in ledger:
     source = ROOT / entry['out']
+    if entry['out'] in cached and cached[entry['out']]['sourceSha256'] == hashlib.sha256(source.read_bytes()).hexdigest():
+        results.append(cached[entry['out']])
+        continue
     probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-show_format', '-show_streams', '-of', 'json', str(source)]))
     stream = next(s for s in probe['streams'] if s['codec_type'] == 'audio')
     rate, channels = int(stream['sample_rate']), int(stream['channels'])
     cmd = ['ffmpeg', '-hide_banner', '-i', str(source), '-af', 'ebur128=peak=true', '-f', 'null', '-']
     measured = subprocess.run(cmd, capture_output=True, text=True, check=True).stderr
     meter_log = EVIDENCE / (source.stem + '.ebur128.txt')
-    if entry.get('wave')=='AU2' or not meter_log.exists():
+    if not meter_log.exists():
         stable_log = re.sub(r'\[Parsed_ebur128_\d+ @ [0-9a-fA-F]+\]', '[Parsed_ebur128 @ ADDRESS]', measured)
         meter_log.write_text('\n'.join(line.rstrip() for line in stable_log.splitlines())+'\n', encoding='utf-8')
     summary = measured.rsplit('Summary:', 1)[1]
@@ -90,8 +94,17 @@ for family in ['absorb-A-warm-rune','absorb-B-liquid-prism','absorb-C-hushed-orb
         for r in pair:
             r['auditionTargetLufs']=target
             r['auditionGainDb']=round(min(0,target-r['integratedLufs'],-3-r['truePeakDbTP']),2)
+# AU2b pairs: match to the quieter member; do not create a fake perfect reward
+# merely by auditioning the louder raw file at a higher level.
+for family in ['absorb-A-pressure-wall','absorb-B-undertow','absorb-C-mineral-drag']:
+    pair=[r for r in results if r['wave']=='AU2b' and r['id'].startswith(family+'-')]
+    if len(pair)==2:
+        target=min(-26,*(r['integratedLufs'] for r in pair))
+        for r in pair:
+            r['auditionTargetLufs']=target
+            r['auditionGainDb']=round(min(0,target-r['integratedLufs'],-3-r['truePeakDbTP']),2)
 (EVIDENCE / 'measurements.json').write_text(json.dumps(results, indent=2)+'\n', encoding='utf-8')
-lines = ['# AU1 + AU2 raw audio measurements', '', 'Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not a quality score. Audition trim is browser gain; raw files are unchanged.', '', '| Sample | Decoded seconds | LUFS-I | dBTP | LRA LU | Audition trim dB |', '|---|---:|---:|---:|---:|---:|']
+lines = ['# AU1 + AU2 + AU2b raw audio measurements', '', 'Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not a quality score. Audition trim is browser gain; raw files are unchanged.', '', '| Sample | Decoded seconds | LUFS-I | dBTP | LRA LU | Audition trim dB |', '|---|---:|---:|---:|---:|---:|']
 for m in results: lines.append(f"| {m['id']} | {m['decodedSeconds']} | {m['integratedLufs']} | {m['truePeakDbTP']} | {m['loudnessRangeLu']} | {m['auditionGainDb']} |")
 (EVIDENCE / 'LOUDNESS.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
 print(json.dumps({'measuredSamples':len(results),'output':'docs/audio/evidence/measurements.json'}))

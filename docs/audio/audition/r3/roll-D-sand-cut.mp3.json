@@ -1,0 +1,51 @@
+{
+  "id": "bf02b15c-e499-4c3d-b891-03df7f648ae6",
+  "wave": "AU2b",
+  "ts": "2026-10-03T11:32:42.447Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "Exactly ONE short lateral dodge scuff in dry arena sand. One weighted leather sole catches and drags sideways in a single continuous gritty scrape, grains spraying and settling directly from that same contact. Immediate onset, then silence. No second step, separate landing, bounce, cloth flap, voice or music. Natural sand foley.",
+  "seconds": 0.8,
+  "chars": null,
+  "out": "docs/audio/audition/r3/roll-D-sand-cut.mp3",
+  "request": {
+    "text": "Exactly ONE short lateral dodge scuff in dry arena sand. One weighted leather sole catches and drags sideways in a single continuous gritty scrape, grains spraying and settling directly from that same contact. Immediate onset, then silence. No second step, separate landing, bounce, cloth flap, voice or music. Natural sand foley.",
+    "duration_seconds": 0.8,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "8"
+  },
+  "bytes": 13836,
+  "sha256": "9990934aba1f5c159c2d1dda96330b0753eb5e1617d1aa483fc9a7c1e4c4a44d",
+  "accountBefore": {
+    "observedAt": "2026-10-03T11:32:42.446Z",
+    "tier": "starter",
+    "used": 73826,
+    "limit": 90000,
+    "remaining": 16174,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 16,
+  "estimatedCredits": 16,
+  "documentedEstimateCredits": 16,
+  "chargedCredits": 16,
+  "measuredCredits": 8,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-03T11:33:05.626Z",
+    "tier": "starter",
+    "used": 73826,
+    "limit": 90000,
+    "remaining": 16174,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

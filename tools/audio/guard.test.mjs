@@ -6,7 +6,8 @@ import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { checkFunds, estimate, accountCost } from './elevenlabs.mjs';
-const b = JSON.parse(fs.readFileSync(new URL('./budget.json', import.meta.url)));
+// Preserve AU2 regression fixtures independently of the currently open round.
+const b = JSON.parse(fs.readFileSync(new URL('../../docs/audio/evidence/r2-final/budget.json', import.meta.url)));
 test('cap and reserve boundaries, invalid counters and pending reservations', () => {
   assert.doesNotThrow(() => checkFunds(b, 4900, 0, 14100, 100));
   assert.throws(() => checkFunds(b, 4901, 0, 90000, 100), /cap refusal/);
@@ -40,7 +41,7 @@ globalThis.fetch = async (url, init) => {
  ${scenario === '429' ? "return Response.json({detail:{status:'rate_limit_exceeded'}},{status:429});" : scenario === 'quota' ? "return Response.json({detail:{status:'quota_exceeded'}},{status:401});" : ['missing-header','musicLag'].includes(scenario) ? "return new Response(new Uint8Array([73,68,51,0]));" : "return new Response(new Uint8Array([73,68,51,0]),{headers:{'character-cost':'20'}});"}
 };`;
   fs.writeFileSync(path.join(dir, 'mock.mjs'), mock);
-  const run = (file = 'test', seconds = '2', text = 'Test', kind = 'sfx') => spawnSync(process.execPath, ['--import', pathToFileURL(path.join(dir, 'mock.mjs')).href, path.join(dir, 'tools/audio/elevenlabs.mjs'), kind, kind === 'music' ? '--prompt' : '--text', text, '--seconds', seconds, '--out', `docs/audio/audition/r2/${file}.mp3`], { cwd: dir, encoding: 'utf8', env: { ...process.env, ELEVENLABS_API_KEY: 'fake-test-key-never-sent' } });
+  const run = (file = 'test', seconds = '2', text = 'Test', kind = 'sfx', round = 'r2') => spawnSync(process.execPath, ['--import', pathToFileURL(path.join(dir, 'mock.mjs')).href, path.join(dir, 'tools/audio/elevenlabs.mjs'), kind, kind === 'music' ? '--prompt' : '--text', text, '--seconds', seconds, '--out', `docs/audio/audition/${round}/${file}.mp3`], { cwd: dir, encoding: 'utf8', env: { ...process.env, ELEVENLABS_API_KEY: 'fake-test-key-never-sent' } });
   return { dir, run, calls: () => fs.existsSync(path.join(dir, 'calls.txt')) ? fs.readFileSync(path.join(dir, 'calls.txt'), 'utf8') : '' };
 }
 for (const scenario of ['429', 'quota']) test(`first ${scenario} permanently latches; POST is not retried`, t => {
@@ -173,4 +174,43 @@ for(const scenario of ['floorBefore','floorAfter']) test(`account floor latches 
  assert.equal(stop.reason,'account_floor_reached');assert.ok(stop.remaining<14000);
  assert.equal((f.calls().match(/POST/g)||[]).length,scenario==='floorBefore'?0:1);
  const prior=f.calls();assert.equal(f.run('later').status,1);assert.equal(f.calls(),prior);
+});
+
+test('AU2b has independent 3000 cap, 13000 floor and rejects non-plan/production/early optional requests before any HTTP', t => {
+ const f=fixture(t,'ok');
+ const b3={...b,wave:'AU2b',capCredits:3000,stopBelowCredits:13000,status:'audition'};
+ const bp=path.join(f.dir,'tools/audio/budget.json');
+ fs.writeFileSync(bp,JSON.stringify(b3));
+ fs.writeFileSync(path.join(f.dir,'tools/audio/audition-plan-r3.json'),JSON.stringify({samples:[{id:'test',kind:'sfx',prompt:'Test',seconds:2},{id:'menu',kind:'music',prompt:'Original melody',seconds:30},{id:'collar',kind:'sfx',prompt:'Test',seconds:2,optional:true}]}));
+ assert.doesNotThrow(()=>checkFunds(b3,2960,0,13040,40));
+ assert.throws(()=>checkFunds(b3,2961,0,90000,40),/cap refusal/);
+ assert.throws(()=>checkFunds(b3,0,0,13039,40),/floor refusal/);
+ assert.equal(f.run('test','2','Test','sfx','r2').status,1);
+ assert.equal(f.run('test','2','Changed','sfx','r3').status,1);
+ assert.equal(f.run('menu','150','Original melody','music','r3').status,1);
+ assert.equal(f.run('collar','2','Test','sfx','r3').status,1);
+ fs.writeFileSync(bp,JSON.stringify({...b3,capCredits:3001}));
+ assert.equal(f.run('test','2','Test','sfx','r3').status,1);
+ assert.equal(f.calls(),'');
+ fs.writeFileSync(bp,JSON.stringify(b3));
+ fs.writeFileSync(path.join(f.dir,'tools/audio/ledger.jsonl'),JSON.stringify({wave:'AU2',chargedCredits:4995})+'\n');
+ const r=f.run('menu','30','Original melody','music','r3'); assert.equal(r.status,0,r.stderr);
+ const e=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/ledger.jsonl'),'utf8').trim().split('\n').at(-1));
+ assert.equal(e.wave,'AU2b');assert.equal(e.chargedCredits,900);
+ assert.equal(e.request.music_length_ms,30000);
+ assert.equal(JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/state.json'))).spentCredits,900);
+});
+
+for (const scenario of ['floorBefore','floorAfter']) test(`AU2b 13000 observed floor latches on ${scenario}, including outside spending`, t => {
+ const f=fixture(t,scenario);
+ const mock=path.join(f.dir,'mock.mjs');
+ fs.writeFileSync(mock,fs.readFileSync(mock,'utf8').replaceAll('76001','77001').replaceAll('75950','76950').replaceAll('76010','77010'));
+ fs.writeFileSync(path.join(f.dir,'tools/audio/budget.json'),JSON.stringify({...b,wave:'AU2b',capCredits:3000,stopBelowCredits:13000,status:'audition'}));
+ fs.writeFileSync(path.join(f.dir,'tools/audio/audition-plan-r3.json'),JSON.stringify({samples:[{id:'test',kind:'sfx',prompt:'Test',seconds:2}]}));
+ const r=f.run('test','2','Test','sfx','r3');
+ assert.equal(r.status,scenario==='floorBefore'?1:0,r.stderr);
+ const stop=JSON.parse(fs.readFileSync(path.join(f.dir,'tools/audio/STOP.json')));
+ assert.equal(stop.reason,'account_floor_reached');assert.ok(stop.remaining<13000);
+ assert.equal((f.calls().match(/POST/g)||[]).length,scenario==='floorBefore'?0:1);
+ const prior=f.calls();assert.equal(f.run('test','2','Test','sfx','r3').status,1);assert.equal(f.calls(),prior);
 });

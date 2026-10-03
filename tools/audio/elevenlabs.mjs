@@ -17,7 +17,8 @@ const stopPath = path.join(here, 'STOP.json');
 const statePath = path.join(here, 'state.json');
 const budget = () => {
   const b = json(path.join(here, 'budget.json'));
-  if (b.wave !== 'AU2' || !Number.isFinite(b.capCredits) || b.capCredits > 5000 || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < 8000 || b.stopBelowCredits !== 14000 || !Number.isFinite(b.minRequestGapMs) || b.minRequestGapMs < 8000 || !Number.isFinite(b.musicSettlementMs) || b.musicSettlementMs < 30000) throw Error('Invalid AU2 cap/reserve/floor/pacing');
+  const limits = { AU2: { cap: 5000, floor: 14000 }, AU2b: { cap: 3000, floor: 13000 } }[b.wave];
+  if (!limits || !Number.isFinite(b.capCredits) || b.capCredits > limits.cap || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < 8000 || b.stopBelowCredits !== limits.floor || !Number.isFinite(b.minRequestGapMs) || b.minRequestGapMs < 8000 || !Number.isFinite(b.musicSettlementMs) || b.musicSettlementMs < 30000) throw Error('Invalid audition cap/reserve/floor/pacing');
   return b;
 };
 function latch(reason, extra = {}) {
@@ -115,10 +116,17 @@ async function generate(kind, a) {
   if (kind === 'sfx' && text.length > 450) throw Error('SFX prompt exceeds provider 450-character limit; no call made');
   const seconds = kind === 'tts' ? null : Number(need('seconds'));
   if (kind === 'sfx' && (!Number.isFinite(seconds) || seconds < 0.5 || seconds > 30)) throw Error('SFX duration must be 0.5–30 s');
-  if (kind === 'music' && (!Number.isFinite(seconds) || seconds < 10 || seconds > 20)) throw Error('AU2 music duration must be 10–20 s');
+  if (kind === 'music' && (!Number.isFinite(seconds) || seconds < 10 || seconds > (b.wave === 'AU2b' ? 30 : 20))) throw Error('Music duration outside authorized audition range');
   const out = path.resolve(root, need('out'));
-  const relative = path.relative(path.join(root, 'docs/audio/audition/r2'), out);
-  if (relative.startsWith('..') || path.isAbsolute(relative) || !out.endsWith('.mp3')) throw Error('AU2 outputs must be MP3s inside audition/r2');
+  const round = b.wave === 'AU2b' ? 'r3' : 'r2';
+  const relative = path.relative(path.join(root, 'docs/audio/audition', round), out);
+  if (relative.startsWith('..') || path.isAbsolute(relative) || !out.endsWith('.mp3')) throw Error(`Outputs must be MP3s inside audition/${round}`);
+  if (b.wave === 'AU2b') {
+    const plan = json(path.join(here, 'audition-plan-r3.json'));
+    const sample = plan.samples.find(s => `${s.id}.mp3` === relative);
+    if (!sample || sample.kind !== kind || sample.prompt !== text || sample.seconds !== seconds || !!sample.loop !== !!a.loop || !!sample.vocals !== !!a.vocals) throw Error('Request does not match authorized AU2b brief');
+    if (sample.optional && plan.samples.filter(s => !s.optional).some(s => !rows('ledger.jsonl').some(e => e.wave === b.wave && e.out === `docs/audio/audition/r3/${s.id}.mp3`))) throw Error('Optional collar must follow all required samples');
+  }
   if (fs.existsSync(out) || fs.existsSync(out + '.json')) throw Error('Output already exists; no paid overwrite');
   const model = kind === 'sfx' ? 'eleven_text_to_sound_v2' : kind === 'music' ? 'music_v1' : 'eleven_multilingual_v2';
   const voice = kind === 'tts' ? need('voice') : null;
@@ -131,7 +139,7 @@ async function generate(kind, a) {
   const before = await credits();
   if (fs.existsSync(stopPath)) throw Error('Read-only lookup tripped stop latch; no POST');
   const initial = previous.initial || before;
-  if (initial.resetsAt !== before.resetsAt) throw Error('Account reset changed; AU2 requires reconciliation');
+  if (initial.resetsAt !== before.resetsAt) throw Error('Account reset changed; audition requires reconciliation');
   // Account counters may lag. Never spend the same unreflected balance twice.
   // Compare the actual counter with the round baseline less every local debit.
   const conservativeRemaining = Math.min(before.remaining, initial.remaining - spent);

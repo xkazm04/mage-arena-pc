@@ -1,0 +1,2138 @@
+{
+  "status": "pass",
+  "generatedSamples": 71,
+  "newSamples": 13,
+  "plannedNewSamples": 13,
+  "coverageGate": "Actual coverage is explicit; missing directions never count as quality failures",
+  "relativeReferences": "all exist",
+  "sidecarsAndLedger": "one per original; exact match; hashes verified",
+  "budgetDebit": 2325,
+  "cumulativeDebit": 9172,
+  "cap": 3000,
+  "reserve": 8000,
+  "accountFloor": 13000,
+  "minimumObservedAccountBalance": 16089,
+  "minimumRequestGapSeconds": 8.001,
+  "HTTP429Count": 0,
+  "browserErrors": [],
+  "checks": [
+    {
+      "page": "docs/audio/audition/r1/index.html",
+      "viewport": "desktop",
+      "media": [
+        {
+          "src": "arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.110819,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "arena-B-ashen-vault.mp3",
+          "duration": 20.062,
+          "currentTime": 0.110808,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109884,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "fire-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110236,
+          "volume": 0.42657951880159267
+        },
+        {
+          "src": "water-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110719,
+          "volume": 0.4415704473533125
+        },
+        {
+          "src": "water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110195,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "earth-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110123,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110295,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "air-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110111,
+          "volume": 0.4570881896148751
+        },
+        {
+          "src": "air-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.108908,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "absorb-A-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110427,
+          "volume": 0.26607250597988097
+        },
+        {
+          "src": "absorb-A-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110115,
+          "volume": 0.1428893958511103
+        },
+        {
+          "src": "absorb-B-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110582,
+          "volume": 1
+        },
+        {
+          "src": "absorb-B-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109902,
+          "volume": 0.21134890398366465
+        },
+        {
+          "src": "voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.109286,
+          "volume": 0.8609937521846006
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/audition/r2/index.html",
+      "viewport": "desktop",
+      "media": [
+        {
+          "src": "../r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.116595,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "../r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109296,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "../r1/water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110385,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "../r1/earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11074,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "../r1/voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.109808,
+          "volume": 0.8609937521846006
+        },
+        {
+          "src": "arena-C-reed-oath.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.111613,
+          "volume": 0.2754228703338167
+        },
+        {
+          "src": "arena-D-lyre-under-iron.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.110077,
+          "volume": 0.3589219346450052
+        },
+        {
+          "src": "air-A-silk-rotor.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109688,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "air-B2-hollow-vortex-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.112122,
+          "volume": 1
+        },
+        {
+          "src": "air-B-hollow-vortex.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11084,
+          "volume": 0.18620871366628675
+        },
+        {
+          "src": "air-C2-spiral-filament-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.111493,
+          "volume": 1
+        },
+        {
+          "src": "air-C-spiral-filament.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11928,
+          "volume": 0.19054607179632474
+        },
+        {
+          "src": "absorb-A-warm-rune-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.1096,
+          "volume": 0.05128613839913648
+        },
+        {
+          "src": "absorb-A-warm-rune-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109587,
+          "volume": 1
+        },
+        {
+          "src": "absorb-B-liquid-prism-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.120298,
+          "volume": 0.5188000389289611
+        },
+        {
+          "src": "absorb-B-liquid-prism-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110139,
+          "volume": 1
+        },
+        {
+          "src": "absorb-C-hushed-orbit-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11418,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "absorb-C-hushed-orbit-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.108928,
+          "volume": 0.2137962089502232
+        },
+        {
+          "src": "camp-A-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110171,
+          "volume": 0.21627185237270202
+        },
+        {
+          "src": "camp-A-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110088,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "camp-A-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109698,
+          "volume": 0.24266100950824154
+        },
+        {
+          "src": "camp-B-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110392,
+          "volume": 0.4027170343254591
+        },
+        {
+          "src": "camp-B-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110663,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "camp-B-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109778,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "title-A-unbroken-thread.mp3",
+          "duration": 10.031,
+          "currentTime": 0.111625,
+          "volume": 0.3890451449942806
+        },
+        {
+          "src": "title-B-oath-in-stone.mp3",
+          "duration": 10.031,
+          "currentTime": 0.110571,
+          "volume": 1
+        },
+        {
+          "src": "hit-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110056,
+          "volume": 1
+        },
+        {
+          "src": "impact-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109072,
+          "volume": 1
+        },
+        {
+          "src": "hit-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109582,
+          "volume": 0.7943282347242815
+        },
+        {
+          "src": "impact-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110576,
+          "volume": 0.35481338923357547
+        },
+        {
+          "src": "collar-A-bronze-unbinding.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.11038,
+          "volume": 0.10351421666793438
+        },
+        {
+          "src": "collar-B-stone-waking.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.110188,
+          "volume": 0.4897788193684462
+        },
+        {
+          "src": "roll-A-linen-and-grit.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.111069,
+          "volume": 1
+        },
+        {
+          "src": "roll-B-cloak-and-stone.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110157,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "crowd-A-stone-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.114579,
+          "volume": 0.16595869074375605
+        },
+        {
+          "src": "crowd-B-low-thunder.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.110237,
+          "volume": 0.25409727055493053
+        },
+        {
+          "src": "ui-A-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109571,
+          "volume": 1
+        },
+        {
+          "src": "ui-A-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.10957,
+          "volume": 0.6760829753919818
+        },
+        {
+          "src": "ui-A-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110078,
+          "volume": 0.15488166189124816
+        },
+        {
+          "src": "ui-A-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.108659,
+          "volume": 0.6095368972401691
+        },
+        {
+          "src": "ui-A-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110401,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "ui-B-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109553,
+          "volume": 0.7673614893618189
+        },
+        {
+          "src": "ui-B-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.10905,
+          "volume": 0.436515832240166
+        },
+        {
+          "src": "ui-B-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.111611,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "ui-B-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109727,
+          "volume": 0.39355007545577747
+        },
+        {
+          "src": "ui-B-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109754,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "fire-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110593,
+          "volume": 0.19724227361148539
+        },
+        {
+          "src": "water-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110587,
+          "volume": 0.9660508789898133
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/audition/r3/index.html",
+      "viewport": "desktop",
+      "media": [
+        {
+          "src": "../r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.111842,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "../r2/arena-C-reed-oath.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.109879,
+          "volume": 0.2754228703338167
+        },
+        {
+          "src": "../r2/arena-D-lyre-under-iron.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.110732,
+          "volume": 0.3589219346450052
+        },
+        {
+          "src": "../r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110899,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "../r1/water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109169,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "../r1/earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11046,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "../r1/voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.109148,
+          "volume": 0.8609937521846006
+        },
+        {
+          "src": "../r2/air-B-hollow-vortex.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109691,
+          "volume": 0.18620871366628675
+        },
+        {
+          "src": "../r2/air-B2-hollow-vortex-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.110578,
+          "volume": 1
+        },
+        {
+          "src": "../r2/camp-A-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109655,
+          "volume": 0.21627185237270202
+        },
+        {
+          "src": "../r2/camp-A-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110575,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "../r2/camp-A-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109592,
+          "volume": 0.24266100950824154
+        },
+        {
+          "src": "../r2/hit-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110645,
+          "volume": 1
+        },
+        {
+          "src": "../r2/impact-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110585,
+          "volume": 1
+        },
+        {
+          "src": "../r2/collar-B-stone-waking.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.109705,
+          "volume": 0.4897788193684462
+        },
+        {
+          "src": "../r2/ui-B-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.113617,
+          "volume": 0.7673614893618189
+        },
+        {
+          "src": "../r2/ui-B-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110188,
+          "volume": 0.436515832240166
+        },
+        {
+          "src": "../r2/ui-B-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109606,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "../r2/ui-B-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.11064,
+          "volume": 0.39355007545577747
+        },
+        {
+          "src": "../r2/ui-B-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.108861,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "../r2/fire-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110209,
+          "volume": 0.19724227361148539
+        },
+        {
+          "src": "../r2/water-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111072,
+          "volume": 0.9660508789898133
+        },
+        {
+          "src": "absorb-A-pressure-wall-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.108631,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "absorb-A-pressure-wall-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.109076,
+          "volume": 0.19952623149688797
+        },
+        {
+          "src": "absorb-B-undertow-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109053,
+          "volume": 0.4120975190973302
+        },
+        {
+          "src": "absorb-B-undertow-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110637,
+          "volume": 0.4168693834703354
+        },
+        {
+          "src": "absorb-C-mineral-drag-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.121633,
+          "volume": 0.9120108393559098
+        },
+        {
+          "src": "absorb-C-mineral-drag-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110219,
+          "volume": 0.5754399373371569
+        },
+        {
+          "src": "title-C-reed-standard.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.109273,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "title-D-lyre-vow.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.111024,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "roll-C-sand-plant.mp3",
+          "duration": 0.731429,
+          "currentTime": 0.110259,
+          "volume": 1
+        },
+        {
+          "src": "roll-D-sand-cut.mp3",
+          "duration": 0.835918,
+          "currentTime": 0.10999,
+          "volume": 0.22130947096056375
+        },
+        {
+          "src": "crowd-C-hungry-terraces.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.11019,
+          "volume": 0.1273503081016662
+        },
+        {
+          "src": "crowd-D-stamping-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.112071,
+          "volume": 0.15667510701081488
+        },
+        {
+          "src": "collar-C-stone-latch.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.109673,
+          "volume": 0.7161434102129021
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/PROOF-REPORT.html",
+      "viewport": "desktop",
+      "media": [
+        {
+          "src": "audition/r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11026,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "audition/r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.111074,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "audition/r1/fire-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110243,
+          "volume": 0.42657951880159267
+        },
+        {
+          "src": "audition/r1/arena-B-ashen-vault.mp3",
+          "duration": 20.062,
+          "currentTime": 0.111058,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "audition/r1/voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.108558,
+          "volume": 0.8609937521846006
+        },
+        {
+          "src": "audition/r1/water-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111105,
+          "volume": 0.4415704473533125
+        },
+        {
+          "src": "audition/r1/water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11157,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "audition/r1/earth-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111236,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "audition/r1/earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110582,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "audition/r1/air-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11109,
+          "volume": 0.4570881896148751
+        },
+        {
+          "src": "audition/r1/air-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110118,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "audition/r1/absorb-A-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110672,
+          "volume": 0.26607250597988097
+        },
+        {
+          "src": "audition/r1/absorb-A-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109762,
+          "volume": 0.1428893958511103
+        },
+        {
+          "src": "audition/r1/absorb-B-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110734,
+          "volume": 1
+        },
+        {
+          "src": "audition/r1/absorb-B-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110088,
+          "volume": 0.21134890398366465
+        },
+        {
+          "src": "audition/r2/arena-C-reed-oath.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.11088,
+          "volume": 0.2754228703338167
+        },
+        {
+          "src": "audition/r2/arena-D-lyre-under-iron.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.110571,
+          "volume": 0.3589219346450052
+        },
+        {
+          "src": "audition/r2/air-A-silk-rotor.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111667,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "audition/r2/air-B-hollow-vortex.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.107652,
+          "volume": 0.18620871366628675
+        },
+        {
+          "src": "audition/r2/air-C-spiral-filament.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110059,
+          "volume": 0.19054607179632474
+        },
+        {
+          "src": "audition/r2/absorb-A-warm-rune-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109314,
+          "volume": 0.05128613839913648
+        },
+        {
+          "src": "audition/r2/absorb-A-warm-rune-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.107559,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/absorb-B-liquid-prism-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111096,
+          "volume": 0.5188000389289611
+        },
+        {
+          "src": "audition/r2/absorb-B-liquid-prism-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109807,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/absorb-C-hushed-orbit-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109174,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "audition/r2/absorb-C-hushed-orbit-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109319,
+          "volume": 0.2137962089502232
+        },
+        {
+          "src": "audition/r2/camp-A-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109492,
+          "volume": 0.21627185237270202
+        },
+        {
+          "src": "audition/r2/camp-A-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.111122,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "audition/r2/air-B2-hollow-vortex-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.10965,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/air-C2-spiral-filament-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.109687,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/camp-A-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110048,
+          "volume": 0.24266100950824154
+        },
+        {
+          "src": "audition/r2/camp-B-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110071,
+          "volume": 0.4027170343254591
+        },
+        {
+          "src": "audition/r2/camp-B-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110569,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "audition/r2/camp-B-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.111672,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "audition/r2/title-A-unbroken-thread.mp3",
+          "duration": 10.031,
+          "currentTime": 0.110539,
+          "volume": 0.3890451449942806
+        },
+        {
+          "src": "audition/r2/title-B-oath-in-stone.mp3",
+          "duration": 10.031,
+          "currentTime": 0.110043,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/hit-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109589,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/impact-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109731,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/hit-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110661,
+          "volume": 0.7943282347242815
+        },
+        {
+          "src": "audition/r2/impact-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.111233,
+          "volume": 0.35481338923357547
+        },
+        {
+          "src": "audition/r2/collar-A-bronze-unbinding.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.109776,
+          "volume": 0.10351421666793438
+        },
+        {
+          "src": "audition/r2/collar-B-stone-waking.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.110555,
+          "volume": 0.4897788193684462
+        },
+        {
+          "src": "audition/r2/roll-A-linen-and-grit.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110232,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/roll-B-cloak-and-stone.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.11031,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "audition/r2/crowd-A-stone-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.110581,
+          "volume": 0.16595869074375605
+        },
+        {
+          "src": "audition/r2/crowd-B-low-thunder.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.111156,
+          "volume": 0.25409727055493053
+        },
+        {
+          "src": "audition/r2/ui-A-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110284,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/ui-A-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.112228,
+          "volume": 0.6760829753919818
+        },
+        {
+          "src": "audition/r2/ui-A-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109494,
+          "volume": 0.15488166189124816
+        },
+        {
+          "src": "audition/r2/ui-A-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110054,
+          "volume": 0.6095368972401691
+        },
+        {
+          "src": "audition/r2/ui-A-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110663,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "audition/r2/ui-B-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110285,
+          "volume": 0.7673614893618189
+        },
+        {
+          "src": "audition/r2/ui-B-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109642,
+          "volume": 0.436515832240166
+        },
+        {
+          "src": "audition/r2/ui-B-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.112718,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "audition/r2/ui-B-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.111109,
+          "volume": 0.39355007545577747
+        },
+        {
+          "src": "audition/r2/ui-B-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110087,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "audition/r2/fire-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110109,
+          "volume": 0.19724227361148539
+        },
+        {
+          "src": "audition/r2/water-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109828,
+          "volume": 0.9660508789898133
+        },
+        {
+          "src": "audition/r3/absorb-A-pressure-wall-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.123614,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "audition/r3/absorb-A-pressure-wall-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110142,
+          "volume": 0.19952623149688797
+        },
+        {
+          "src": "audition/r3/absorb-B-undertow-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109056,
+          "volume": 0.4120975190973302
+        },
+        {
+          "src": "audition/r3/absorb-B-undertow-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.109212,
+          "volume": 0.4168693834703354
+        },
+        {
+          "src": "audition/r3/absorb-C-mineral-drag-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110324,
+          "volume": 0.9120108393559098
+        },
+        {
+          "src": "audition/r3/absorb-C-mineral-drag-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110151,
+          "volume": 0.5754399373371569
+        },
+        {
+          "src": "audition/r3/title-C-reed-standard.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.110951,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "audition/r3/title-D-lyre-vow.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.110278,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "audition/r3/roll-C-sand-plant.mp3",
+          "duration": 0.731429,
+          "currentTime": 0.110277,
+          "volume": 1
+        },
+        {
+          "src": "audition/r3/roll-D-sand-cut.mp3",
+          "duration": 0.835918,
+          "currentTime": 0.111931,
+          "volume": 0.22130947096056375
+        },
+        {
+          "src": "audition/r3/crowd-C-hungry-terraces.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.11049,
+          "volume": 0.1273503081016662
+        },
+        {
+          "src": "audition/r3/crowd-D-stamping-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.110042,
+          "volume": 0.15667510701081488
+        },
+        {
+          "src": "audition/r3/collar-C-stone-latch.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.110105,
+          "volume": 0.7161434102129021
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/audition/r1/index.html",
+      "viewport": "phone",
+      "media": [
+        {
+          "src": "arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.109642,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "arena-B-ashen-vault.mp3",
+          "duration": 20.062,
+          "currentTime": 0.109902,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109575,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "fire-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109934,
+          "volume": 0.42657951880159267
+        },
+        {
+          "src": "water-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109674,
+          "volume": 0.4415704473533125
+        },
+        {
+          "src": "water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109614,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "earth-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110518,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110054,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "air-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.119734,
+          "volume": 0.4570881896148751
+        },
+        {
+          "src": "air-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111096,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "absorb-A-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110568,
+          "volume": 0.26607250597988097
+        },
+        {
+          "src": "absorb-A-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110078,
+          "volume": 0.1428893958511103
+        },
+        {
+          "src": "absorb-B-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11078,
+          "volume": 1
+        },
+        {
+          "src": "absorb-B-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110339,
+          "volume": 0.21134890398366465
+        },
+        {
+          "src": "voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.109661,
+          "volume": 0.8609937521846006
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/audition/r2/index.html",
+      "viewport": "phone",
+      "media": [
+        {
+          "src": "../r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.111616,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "../r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.10958,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "../r1/water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111577,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "../r1/earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111172,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "../r1/voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.110612,
+          "volume": 0.8609937521846006
+        },
+        {
+          "src": "arena-C-reed-oath.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.110627,
+          "volume": 0.2754228703338167
+        },
+        {
+          "src": "arena-D-lyre-under-iron.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.109492,
+          "volume": 0.3589219346450052
+        },
+        {
+          "src": "air-A-silk-rotor.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110423,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "air-B2-hollow-vortex-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.110246,
+          "volume": 1
+        },
+        {
+          "src": "air-B-hollow-vortex.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109793,
+          "volume": 0.18620871366628675
+        },
+        {
+          "src": "air-C2-spiral-filament-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.11058,
+          "volume": 1
+        },
+        {
+          "src": "air-C-spiral-filament.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109432,
+          "volume": 0.19054607179632474
+        },
+        {
+          "src": "absorb-A-warm-rune-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110925,
+          "volume": 0.05128613839913648
+        },
+        {
+          "src": "absorb-A-warm-rune-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109574,
+          "volume": 1
+        },
+        {
+          "src": "absorb-B-liquid-prism-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111098,
+          "volume": 0.5188000389289611
+        },
+        {
+          "src": "absorb-B-liquid-prism-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109572,
+          "volume": 1
+        },
+        {
+          "src": "absorb-C-hushed-orbit-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.112582,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "absorb-C-hushed-orbit-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111201,
+          "volume": 0.2137962089502232
+        },
+        {
+          "src": "camp-A-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.112049,
+          "volume": 0.21627185237270202
+        },
+        {
+          "src": "camp-A-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.111819,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "camp-A-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.112161,
+          "volume": 0.24266100950824154
+        },
+        {
+          "src": "camp-B-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110841,
+          "volume": 0.4027170343254591
+        },
+        {
+          "src": "camp-B-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109727,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "camp-B-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110063,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "title-A-unbroken-thread.mp3",
+          "duration": 10.031,
+          "currentTime": 0.110927,
+          "volume": 0.3890451449942806
+        },
+        {
+          "src": "title-B-oath-in-stone.mp3",
+          "duration": 10.031,
+          "currentTime": 0.111566,
+          "volume": 1
+        },
+        {
+          "src": "hit-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110287,
+          "volume": 1
+        },
+        {
+          "src": "impact-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.111239,
+          "volume": 1
+        },
+        {
+          "src": "hit-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.111389,
+          "volume": 0.7943282347242815
+        },
+        {
+          "src": "impact-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.11508,
+          "volume": 0.35481338923357547
+        },
+        {
+          "src": "collar-A-bronze-unbinding.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.109704,
+          "volume": 0.10351421666793438
+        },
+        {
+          "src": "collar-B-stone-waking.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.109634,
+          "volume": 0.4897788193684462
+        },
+        {
+          "src": "roll-A-linen-and-grit.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110366,
+          "volume": 1
+        },
+        {
+          "src": "roll-B-cloak-and-stone.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109589,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "crowd-A-stone-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.109292,
+          "volume": 0.16595869074375605
+        },
+        {
+          "src": "crowd-B-low-thunder.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.109713,
+          "volume": 0.25409727055493053
+        },
+        {
+          "src": "ui-A-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.108585,
+          "volume": 1
+        },
+        {
+          "src": "ui-A-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110584,
+          "volume": 0.6760829753919818
+        },
+        {
+          "src": "ui-A-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.11065,
+          "volume": 0.15488166189124816
+        },
+        {
+          "src": "ui-A-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.11049,
+          "volume": 0.6095368972401691
+        },
+        {
+          "src": "ui-A-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109112,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "ui-B-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110562,
+          "volume": 0.7673614893618189
+        },
+        {
+          "src": "ui-B-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110036,
+          "volume": 0.436515832240166
+        },
+        {
+          "src": "ui-B-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.112541,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "ui-B-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110574,
+          "volume": 0.39355007545577747
+        },
+        {
+          "src": "ui-B-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.11118,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "fire-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110577,
+          "volume": 0.19724227361148539
+        },
+        {
+          "src": "water-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.107497,
+          "volume": 0.9660508789898133
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/audition/r3/index.html",
+      "viewport": "phone",
+      "media": [
+        {
+          "src": "../r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.110239,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "../r2/arena-C-reed-oath.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.110329,
+          "volume": 0.2754228703338167
+        },
+        {
+          "src": "../r2/arena-D-lyre-under-iron.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.109229,
+          "volume": 0.3589219346450052
+        },
+        {
+          "src": "../r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111992,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "../r1/water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110509,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "../r1/earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11046,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "../r1/voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.109758,
+          "volume": 0.8609937521846006
+        },
+        {
+          "src": "../r2/air-B-hollow-vortex.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109764,
+          "volume": 0.18620871366628675
+        },
+        {
+          "src": "../r2/air-B2-hollow-vortex-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.109933,
+          "volume": 1
+        },
+        {
+          "src": "../r2/camp-A-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110236,
+          "volume": 0.21627185237270202
+        },
+        {
+          "src": "../r2/camp-A-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110662,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "../r2/camp-A-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110924,
+          "volume": 0.24266100950824154
+        },
+        {
+          "src": "../r2/hit-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.111556,
+          "volume": 1
+        },
+        {
+          "src": "../r2/impact-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109593,
+          "volume": 1
+        },
+        {
+          "src": "../r2/collar-B-stone-waking.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.109687,
+          "volume": 0.4897788193684462
+        },
+        {
+          "src": "../r2/ui-B-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109923,
+          "volume": 0.7673614893618189
+        },
+        {
+          "src": "../r2/ui-B-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.112198,
+          "volume": 0.436515832240166
+        },
+        {
+          "src": "../r2/ui-B-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110353,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "../r2/ui-B-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.10985,
+          "volume": 0.39355007545577747
+        },
+        {
+          "src": "../r2/ui-B-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110143,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "../r2/fire-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109522,
+          "volume": 0.19724227361148539
+        },
+        {
+          "src": "../r2/water-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110572,
+          "volume": 0.9660508789898133
+        },
+        {
+          "src": "absorb-A-pressure-wall-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110573,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "absorb-A-pressure-wall-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110083,
+          "volume": 0.19952623149688797
+        },
+        {
+          "src": "absorb-B-undertow-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110581,
+          "volume": 0.4120975190973302
+        },
+        {
+          "src": "absorb-B-undertow-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110491,
+          "volume": 0.4168693834703354
+        },
+        {
+          "src": "absorb-C-mineral-drag-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110589,
+          "volume": 0.9120108393559098
+        },
+        {
+          "src": "absorb-C-mineral-drag-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.111167,
+          "volume": 0.5754399373371569
+        },
+        {
+          "src": "title-C-reed-standard.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.109629,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "title-D-lyre-vow.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.109536,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "roll-C-sand-plant.mp3",
+          "duration": 0.731429,
+          "currentTime": 0.109558,
+          "volume": 1
+        },
+        {
+          "src": "roll-D-sand-cut.mp3",
+          "duration": 0.835918,
+          "currentTime": 0.120081,
+          "volume": 0.22130947096056375
+        },
+        {
+          "src": "crowd-C-hungry-terraces.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.111613,
+          "volume": 0.1273503081016662
+        },
+        {
+          "src": "crowd-D-stamping-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.119366,
+          "volume": 0.15667510701081488
+        },
+        {
+          "src": "collar-C-stone-latch.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.110265,
+          "volume": 0.7161434102129021
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/PROOF-REPORT.html",
+      "viewport": "phone",
+      "media": [
+        {
+          "src": "audition/r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111317,
+          "volume": 0.15848931924611134
+        },
+        {
+          "src": "audition/r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.110846,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "audition/r1/fire-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109753,
+          "volume": 0.42657951880159267
+        },
+        {
+          "src": "audition/r1/arena-B-ashen-vault.mp3",
+          "duration": 20.062,
+          "currentTime": 0.109791,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "audition/r1/voice-A-george.mp3",
+          "duration": 2.115918,
+          "currentTime": 0.113001,
+          "volume": 0.8609937521846006
+        },
+        {
+          "src": "audition/r1/water-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110533,
+          "volume": 0.4415704473533125
+        },
+        {
+          "src": "audition/r1/water-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.107941,
+          "volume": 0.2630267991895382
+        },
+        {
+          "src": "audition/r1/earth-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.100149,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "audition/r1/earth-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.122105,
+          "volume": 0.38459178204535355
+        },
+        {
+          "src": "audition/r1/air-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11065,
+          "volume": 0.4570881896148751
+        },
+        {
+          "src": "audition/r1/air-B-bound-radiance.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110624,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "audition/r1/absorb-A-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110012,
+          "volume": 0.26607250597988097
+        },
+        {
+          "src": "audition/r1/absorb-A-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110699,
+          "volume": 0.1428893958511103
+        },
+        {
+          "src": "audition/r1/absorb-B-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110059,
+          "volume": 1
+        },
+        {
+          "src": "audition/r1/absorb-B-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109425,
+          "volume": 0.21134890398366465
+        },
+        {
+          "src": "audition/r2/arena-C-reed-oath.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.111141,
+          "volume": 0.2754228703338167
+        },
+        {
+          "src": "audition/r2/arena-D-lyre-under-iron.mp3",
+          "duration": 20.00975,
+          "currentTime": 0.110355,
+          "volume": 0.3589219346450052
+        },
+        {
+          "src": "audition/r2/air-A-silk-rotor.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.10871,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "audition/r2/air-B-hollow-vortex.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110058,
+          "volume": 0.18620871366628675
+        },
+        {
+          "src": "audition/r2/air-C-spiral-filament.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110105,
+          "volume": 0.19054607179632474
+        },
+        {
+          "src": "audition/r2/absorb-A-warm-rune-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109618,
+          "volume": 0.05128613839913648
+        },
+        {
+          "src": "audition/r2/absorb-A-warm-rune-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110449,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/absorb-B-liquid-prism-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.1096,
+          "volume": 0.5188000389289611
+        },
+        {
+          "src": "audition/r2/absorb-B-liquid-prism-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110414,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/absorb-C-hushed-orbit-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110899,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "audition/r2/absorb-C-hushed-orbit-perfect.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110121,
+          "volume": 0.2137962089502232
+        },
+        {
+          "src": "audition/r2/camp-A-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109986,
+          "volume": 0.21627185237270202
+        },
+        {
+          "src": "audition/r2/camp-A-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110716,
+          "volume": 0.2344228815319922
+        },
+        {
+          "src": "audition/r2/air-B2-hollow-vortex-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.110631,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/air-C2-spiral-filament-sustained.mp3",
+          "duration": 2.298776,
+          "currentTime": 0.112018,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/camp-A-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109746,
+          "volume": 0.24266100950824154
+        },
+        {
+          "src": "audition/r2/camp-B-day.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.110095,
+          "volume": 0.4027170343254591
+        },
+        {
+          "src": "audition/r2/camp-B-dusk.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.109645,
+          "volume": 0.28183829312644537
+        },
+        {
+          "src": "audition/r2/camp-B-night.mp3",
+          "duration": 12.016313,
+          "currentTime": 0.111145,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "audition/r2/title-A-unbroken-thread.mp3",
+          "duration": 10.031,
+          "currentTime": 0.110582,
+          "volume": 0.3890451449942806
+        },
+        {
+          "src": "audition/r2/title-B-oath-in-stone.mp3",
+          "duration": 10.031,
+          "currentTime": 0.109742,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/hit-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.10957,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/impact-A-hide-and-slate.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.10909,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/hit-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109759,
+          "volume": 0.7943282347242815
+        },
+        {
+          "src": "audition/r2/impact-B-bronze-and-dust.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.110377,
+          "volume": 0.35481338923357547
+        },
+        {
+          "src": "audition/r2/collar-A-bronze-unbinding.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.110132,
+          "volume": 0.10351421666793438
+        },
+        {
+          "src": "audition/r2/collar-B-stone-waking.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.110313,
+          "volume": 0.4897788193684462
+        },
+        {
+          "src": "audition/r2/roll-A-linen-and-grit.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.109058,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/roll-B-cloak-and-stone.mp3",
+          "duration": 1.515102,
+          "currentTime": 0.113218,
+          "volume": 0.4216965034285822
+        },
+        {
+          "src": "audition/r2/crowd-A-stone-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.110134,
+          "volume": 0.16595869074375605
+        },
+        {
+          "src": "audition/r2/crowd-B-low-thunder.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.110064,
+          "volume": 0.25409727055493053
+        },
+        {
+          "src": "audition/r2/ui-A-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.111103,
+          "volume": 1
+        },
+        {
+          "src": "audition/r2/ui-A-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110161,
+          "volume": 0.6760829753919818
+        },
+        {
+          "src": "audition/r2/ui-A-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110077,
+          "volume": 0.15488166189124816
+        },
+        {
+          "src": "audition/r2/ui-A-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.111075,
+          "volume": 0.6095368972401691
+        },
+        {
+          "src": "audition/r2/ui-A-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.111819,
+          "volume": 0.24831331052955705
+        },
+        {
+          "src": "audition/r2/ui-B-click.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110839,
+          "volume": 0.7673614893618189
+        },
+        {
+          "src": "audition/r2/ui-B-confirm.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.112469,
+          "volume": 0.436515832240166
+        },
+        {
+          "src": "audition/r2/ui-B-deny.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.109833,
+          "volume": 0.31622776601683794
+        },
+        {
+          "src": "audition/r2/ui-B-slot.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110328,
+          "volume": 0.39355007545577747
+        },
+        {
+          "src": "audition/r2/ui-B-tab.mp3",
+          "duration": 0.522449,
+          "currentTime": 0.110446,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "audition/r2/fire-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110264,
+          "volume": 0.19724227361148539
+        },
+        {
+          "src": "audition/r2/water-kept-variation.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110064,
+          "volume": 0.9660508789898133
+        },
+        {
+          "src": "audition/r3/absorb-A-pressure-wall-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.11061,
+          "volume": 0.23988329190194904
+        },
+        {
+          "src": "audition/r3/absorb-A-pressure-wall-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110205,
+          "volume": 0.19952623149688797
+        },
+        {
+          "src": "audition/r3/absorb-B-undertow-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110156,
+          "volume": 0.4120975190973302
+        },
+        {
+          "src": "audition/r3/absorb-B-undertow-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.110184,
+          "volume": 0.4168693834703354
+        },
+        {
+          "src": "audition/r3/absorb-C-mineral-drag-normal.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.112917,
+          "volume": 0.9120108393559098
+        },
+        {
+          "src": "audition/r3/absorb-C-mineral-drag-perfect.mp3",
+          "duration": 2.507755,
+          "currentTime": 0.109566,
+          "volume": 0.5754399373371569
+        },
+        {
+          "src": "audition/r3/title-C-reed-standard.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.10855,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "audition/r3/title-D-lyre-vow.mp3",
+          "duration": 29.988563,
+          "currentTime": 0.110349,
+          "volume": 0.28840315031266056
+        },
+        {
+          "src": "audition/r3/roll-C-sand-plant.mp3",
+          "duration": 0.731429,
+          "currentTime": 0.110569,
+          "volume": 1
+        },
+        {
+          "src": "audition/r3/roll-D-sand-cut.mp3",
+          "duration": 0.835918,
+          "currentTime": 0.109371,
+          "volume": 0.22130947096056375
+        },
+        {
+          "src": "audition/r3/crowd-C-hungry-terraces.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.110098,
+          "volume": 0.1273503081016662
+        },
+        {
+          "src": "audition/r3/crowd-D-stamping-bowl.mp3",
+          "duration": 3.030204,
+          "currentTime": 0.108279,
+          "volume": 0.15667510701081488
+        },
+        {
+          "src": "audition/r3/collar-C-stone-latch.mp3",
+          "duration": 1.044898,
+          "currentTime": 0.110798,
+          "volume": 0.7161434102129021
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    }
+  ],
+  "persistenceAndExport": "pass: radio, multiline note, pipe escape, reload, copy/fallback, loop toggle",
+  "ownerListening": "AU2b pending; rounds 1 and 2 recorded in CHOICES.md"
+}

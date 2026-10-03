@@ -1,17 +1,15 @@
 """File/provenance and Playwright file:// gates. No provider calls."""
 import hashlib, json, re, datetime
-import runpy
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[2]
-if json.loads((ROOT/'tools/audio/budget.json').read_text())['wave']=='AU2b':
-    runpy.run_path(str(Path(__file__).with_name('check-r3-reports.py')),run_name='__main__')
-    raise SystemExit(0)
-OUT = ROOT / 'docs/audio/evidence/r2'
-pages = [ROOT/'docs/audio/audition/r1/index.html', ROOT/'docs/audio/audition/r2/index.html', ROOT/'docs/audio/PROOF-REPORT.html']
+OUT = ROOT / 'docs/audio/evidence/r3'
+OUT.mkdir(exist_ok=True)
+(OUT/'validation.json').write_text('{"status":"running"}\n')
+pages = [ROOT/'docs/audio/audition/r1/index.html', ROOT/'docs/audio/audition/r2/index.html', ROOT/'docs/audio/audition/r3/index.html', ROOT/'docs/audio/PROOF-REPORT.html']
 class References(HTMLParser):
     def __init__(self): super().__init__(); self.refs=[]; self.ids=[]; self.audio=[]
     def handle_starttag(self, tag, attrs):
@@ -25,8 +23,9 @@ budget = json.loads((ROOT/'tools/audio/budget.json').read_text())
 by_path = {row['out']:row for row in ledger}
 assert len(by_path)==len(ledger)
 measurements = json.loads((ROOT/'docs/audio/evidence/measurements.json').read_text())
-new = [e for e in ledger if e.get('wave')=='AU2']
-expected = {pages[0]:15,pages[1]:len(new)+5,pages[2]:len(ledger)}
+new = [e for e in ledger if e.get('wave')=='AU2b']
+plan=json.loads((ROOT/'tools/audio/audition-plan-r3.json').read_text(encoding='utf-8'))
+expected = {pages[0]:15,pages[1]:48,pages[2]:len(new)+len(plan['references']),pages[3]:len(ledger)}
 assert len(measurements)==len(ledger)
 for row in ledger:
     source=ROOT/row['out']
@@ -37,17 +36,35 @@ for row in ledger:
 assert {p.relative_to(ROOT).as_posix() for p in (ROOT/'docs/audio/audition').glob('r*/*.mp3')}==set(by_path)
 assert sum(e['chargedCredits'] for e in new)<=budget['capCredits']
 assert all(e['accountBefore']['remaining']-e['reservedCredits']>=budget['reserveCredits'] for e in ledger)
-assert budget['capCredits']==5000
-assert budget['stopBelowCredits']==14000
+assert budget['capCredits']==3000
+assert budget['stopBelowCredits']==13000
 assert budget['status'] in ['closed-owner-review','stopped-provider-rate-limit','stopped-account-floor']
 assert json.loads((ROOT/'tools/audio/state.json').read_text())['pending'] is None
-assert min(e['accountBefore']['remaining'] for e in new)>=14000
-http=[json.loads(x) for x in (ROOT/'tools/audio/http.jsonl').read_text().splitlines() if x]
-balances=[json.loads(x) for x in (ROOT/'tools/audio/balances.jsonl').read_text().splitlines() if x]
+assert min(e['accountBefore']['remaining'] for e in new)>=13000
+http=[json.loads(x) for x in (ROOT/'tools/audio/http.jsonl').read_text().splitlines() if x and json.loads(x).get('wave')=='AU2b']
+balances=[json.loads(x) for x in (ROOT/'tools/audio/balances.jsonl').read_text().splitlines() if x and json.loads(x).get('wave')=='AU2b']
 stamp=lambda s:datetime.datetime.fromisoformat(s.replace('Z','+00:00'))
 gaps=[(stamp(b['startedAt'])-stamp(a['completedAt'])).total_seconds() for a,b in zip(http,http[1:])]
 assert min(gaps)>=7.99, 'All API requests, including balance reads, must be paced and serial'
-assert min(e['remaining'] for e in balances)>=14000
+assert min(e['remaining'] for e in balances)>=13000
+assert len(new)==13 and len(plan['samples'])==13
+assert sum(e['kind']=='music' for e in new)==2
+assert all(e['seconds']==30 for e in new if e['kind']=='music')
+assert all(e['seconds']==3 for e in new if Path(e['out']).stem.startswith('crowd-'))
+assert len([e for e in new if Path(e['out']).stem.startswith('absorb-')])==6
+assert new[-1]['out'].endswith('collar-C-stone-latch.mp3'), 'Optional collar generated last'
+for e in new:
+    brief=next(s for s in plan['samples'] if s['id']==Path(e['out']).stem)
+    assert brief['prompt']==e['text'] and brief['seconds']==e['seconds']
+    assert e['kind']=='music' or len(e['text'])<=450
+    assert e['accountBefore']['remaining']-e['estimatedCredits']>=13000
+full_plan=(ROOT/'docs/audio/AU3-FULL-TRACKS-PLAN.md').read_text(encoding='utf-8')
+for label in ('### A — Hide and iron','### C — Reed oath','### D — Lyre under iron'):
+    block=full_plan.split(label,1)[1].split('\n##',1)[0]
+    durations=[int(n) for n in re.findall(r'^\| (?:Entrance|Theme statement|Development|Tension|Climax|Release) / (\d+) \|',block,re.M)]
+    assert durations==[15000,30000,30000,30000,30000,15000] and sum(durations)==150000
+assert '2026-10-04 19:31:41 UTC' in full_plan
+assert 'E — 30 s chamber narrative' in full_plan and 'F — 30 s breathing spaces' in full_plan
 assert len([h for h in http if h['method']=='POST' and h['status']==200])==len(new)
 assert hashlib.sha256((ROOT/'docs/audio/evidence/r1-final/STOP.json').read_bytes()).hexdigest()=='dad0c9e773f9e86d209cb695097cbe54d7dbda90bad825606506f8a560859591', 'Old STOP must be preserved exactly'
 
@@ -106,9 +123,13 @@ with sync_playwright() as p:
                 page.select_option('#theme',theme)
                 assert page.locator('html').get_attribute('data-theme')==theme
                 page.screenshot(path=str(OUT/f'{"proof" if "PROOF" in source.name else source.parent.name+'-triage'}-{label}-{theme}.png'),full_page=False)
+                if source==pages[2]:
+                    page.locator('#absorb-perfect-absorb').scroll_into_view_if_needed()
+                    page.screenshot(path=str(OUT/f'r3-absorb-{label}-{theme}.png'),full_page=False)
+                    page.evaluate('scrollTo(0,0)')
             browsers.append({'page':source.relative_to(ROOT).as_posix(),'viewport':label,'media':media,'themes':['light','dark'],'noOverflow':True})
         # Triage persistence + export, using synthetic test notes in an isolated browser context.
-        page.goto(pages[1].as_uri())
+        page.goto(pages[2].as_uri())
         assert page.locator('input[type=radio]:checked').count()==0
         first=page.locator('[data-direction]').first
         first.locator('input[value=maybe]').check()
@@ -123,10 +144,12 @@ with sync_playwright() as p:
         page.wait_for_function("document.querySelector('#status').textContent.includes('Markdown')")
         assert page.locator('#export').input_value()==exported
         assert '<script' not in exported
-        assert 'AU2 round 2' in exported
+        assert 'AU2b round 3' in exported
         page.goto(pages[0].as_uri())
-        assert page.locator('input[type=radio]:checked').count()==0, 'AU2 choices must not change round 1'
+        assert page.locator('input[type=radio]:checked').count()==0, 'AU2b choices must not change round 1'
         page.goto(pages[1].as_uri())
+        assert page.locator('input[type=radio]:checked').count()==0, 'AU2b choices must not change round 2'
+        page.goto(pages[2].as_uri())
         assert page.locator('[data-direction]').first.locator('input[value=maybe]').is_checked()
         page.locator('[data-loop-target]').first.click()
         assert page.locator('[data-loop-target]').first.get_attribute('aria-pressed')=='true'
@@ -142,6 +165,6 @@ with sync_playwright() as p:
         context.close()
     browser.close()
 assert not errors, errors
-result={'status':'pass','generatedSamples':len(ledger),'newSamples':len(new),'plannedNewSamples':len(json.loads((ROOT/'tools/audio/audition-plan-r2.json').read_text())['samples']),'coverageGate':'Actual coverage is explicit; missing directions never count as quality failures','relativeReferences':'all exist','sidecarsAndLedger':'one per original; exact match; hashes verified','budgetDebit':sum(e['chargedCredits'] for e in new),'cumulativeDebit':sum(e['chargedCredits'] for e in ledger),'cap':budget['capCredits'],'reserve':budget['reserveCredits'],'accountFloor':budget['stopBelowCredits'],'minimumObservedAccountBalance':min(e['remaining'] for e in balances),'minimumRequestGapSeconds':min(gaps),'HTTP429Count':sum(e['status']==429 for e in http),'browserErrors':errors,'checks':browsers,'persistenceAndExport':'pass: radio, multiline note, pipe escape, reload, copy/fallback, loop toggle','ownerListening':'not measured'}
+result={'status':'pass','generatedSamples':len(ledger),'newSamples':len(new),'plannedNewSamples':len(json.loads((ROOT/'tools/audio/audition-plan-r3.json').read_text())['samples']),'coverageGate':'Actual coverage is explicit; missing directions never count as quality failures','relativeReferences':'all exist','sidecarsAndLedger':'one per original; exact match; hashes verified','budgetDebit':sum(e['chargedCredits'] for e in new),'cumulativeDebit':sum(e['chargedCredits'] for e in ledger),'cap':budget['capCredits'],'reserve':budget['reserveCredits'],'accountFloor':budget['stopBelowCredits'],'minimumObservedAccountBalance':min(e['remaining'] for e in balances),'minimumRequestGapSeconds':min(gaps),'HTTP429Count':sum(e['status']==429 for e in http),'browserErrors':errors,'checks':browsers,'persistenceAndExport':'pass: radio, multiline note, pipe escape, reload, copy/fallback, loop toggle','ownerListening':'AU2b pending; rounds 1 and 2 recorded in CHOICES.md'}
 (OUT/'validation.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({k:v for k,v in result.items() if k!='checks'},indent=2))
