@@ -234,7 +234,7 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Art | A8 | **Spell and effect art** in the Covenant style matching the approved concept: per element cast, travel, impact, the absorb as an energy barrier arc and its perfect-absorb flare, auras, telegraphs, hit sparks; sheets and loops that read at the far camera | D27 | not started |
+| Art | A8 | **Spell and effect art** in the Covenant style matching the approved concept: per element cast, travel, impact, the absorb as an energy barrier arc and its perfect-absorb flare, auras, telegraphs, hit sparks; sheets and loops that read at the far camera | D27 | delivered; owner motion/fidelity review |
 | Art | A9 | **Arena restoration**: ground, rim, structures, banners, props and surface at proper resolution, matching the approved arena concept, in the three palettes, with tiling or tiled-by-design ground where needed | D27 | not started |
 | Art | A10 | **Character fidelity and direction**: four mages and the enemy roster with real multi-direction animation sets and a consistency pipeline | A8 | not started |
 | Art | A11 | **Stat icons (gold, reputation, fatigue) and the daily clock art** | D26 | not started |
@@ -250,3 +250,5 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
+
+**ART session 6 / A8 / 2026-10-03:** Delivered 35 effect clips, nine RGBA pages, 134 unique painted keys plus 64 authored telegraph keys; explicit pivots, timing, blend hints and loop flags. Seven calls, cumulative 230/300. Delivery/source/browser/portable gates and 65 tests pass; one rejected correction and partial-cell exclusions retained. Owner motion/fidelity, game integration and performance not measured. Next A9.

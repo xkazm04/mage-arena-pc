@@ -1,0 +1,4331 @@
+{
+  "schemaVersion": 1,
+  "id": "covenant-effects-a8",
+  "status": "owner-review",
+  "paths": "repository-root-relative",
+  "pages": [
+    {
+      "file": "art/delivery/a8/atlases/fire.png",
+      "sha256": "39c4ddb94cdabb914576a86e61ad3286ce1dc81491d8b24e45fc135490ce4a9e",
+      "size": [
+        1560,
+        1300
+      ],
+      "gutter": 2,
+      "id": "fire"
+    },
+    {
+      "file": "art/delivery/a8/atlases/fire-marks.png",
+      "sha256": "a5b539510e8648780a978a97383429396a185558f2fe17263c64c6636d10d86f",
+      "size": [
+        2080,
+        520
+      ],
+      "gutter": 2,
+      "id": "fire-marks"
+    },
+    {
+      "file": "art/delivery/a8/atlases/water.png",
+      "sha256": "a81a29db570901ab0a6f6ec6212ba07f8165e7a882958ef23970c0bea621f108",
+      "size": [
+        1560,
+        1300
+      ],
+      "gutter": 2,
+      "id": "water"
+    },
+    {
+      "file": "art/delivery/a8/atlases/water-marks.png",
+      "sha256": "cc6b0727916b46e7741a00a117e5d92c4c2fa4aa1a257581a449166cdd520d4d",
+      "size": [
+        2080,
+        520
+      ],
+      "gutter": 2,
+      "id": "water-marks"
+    },
+    {
+      "file": "art/delivery/a8/atlases/earth.png",
+      "sha256": "3441265246793a7e162c052c0a04f0d0073b6dd8d31a16e29e13740afa369005",
+      "size": [
+        1560,
+        1300
+      ],
+      "gutter": 2,
+      "id": "earth"
+    },
+    {
+      "file": "art/delivery/a8/atlases/earth-marks.png",
+      "sha256": "470e24dc1aa92059836ca764fbba83fc501979a7aebe2ce65f94a7bcc2c7ede5",
+      "size": [
+        2080,
+        520
+      ],
+      "gutter": 2,
+      "id": "earth-marks"
+    },
+    {
+      "file": "art/delivery/a8/atlases/air.png",
+      "sha256": "2f3a2937d4313a8c4e336c4607ed0f1f45168f88d4502a039181ec3044466f25",
+      "size": [
+        1560,
+        1300
+      ],
+      "gutter": 2,
+      "id": "air"
+    },
+    {
+      "file": "art/delivery/a8/atlases/air-marks.png",
+      "sha256": "1e91b18253fdc0ade729e0eb0563b709f470050b740bc5dc82a1ace9b7f313fd",
+      "size": [
+        2080,
+        520
+      ],
+      "gutter": 2,
+      "id": "air-marks"
+    },
+    {
+      "file": "art/delivery/a8/atlases/barrier.png",
+      "sha256": "d058b554bca251ea483ed05eda9f73c46a73ebea744d4eb739eecec2a9a50bc6",
+      "size": [
+        1560,
+        780
+      ],
+      "gutter": 2,
+      "id": "barrier"
+    }
+  ],
+  "clips": {
+    "fire.cast": {
+      "page": "fire",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            0,
+            200,
+            179
+          ]
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            0,
+            400,
+            179
+          ]
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            0,
+            600,
+            179
+          ]
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            0,
+            800,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            0,
+            1000,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            0,
+            1200,
+            179
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        96,
+        96
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-fire-animation-agy-a01.png",
+      "sourceSha256": "6ec29a0e210ccd50f5338dd569f602cfb4f170560c56ef50b03c28c170b7070c",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "fire.travel": {
+      "page": "fire",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            179,
+            200,
+            358
+          ]
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            179,
+            800,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-fire-animation-agy-a01.png",
+      "sourceSha256": "6ec29a0e210ccd50f5338dd569f602cfb4f170560c56ef50b03c28c170b7070c",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "fire.impact": {
+      "page": "fire",
+      "frames": [
+        {
+          "rect": [
+            2,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            358,
+            200,
+            538
+          ]
+        },
+        {
+          "rect": [
+            262,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            358,
+            400,
+            538
+          ]
+        },
+        {
+          "rect": [
+            522,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            358,
+            600,
+            538
+          ]
+        },
+        {
+          "rect": [
+            782,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            358,
+            800,
+            538
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            358,
+            1000,
+            538
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            358,
+            1200,
+            538
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        144,
+        144
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-fire-animation-agy-a01.png",
+      "sourceSha256": "6ec29a0e210ccd50f5338dd569f602cfb4f170560c56ef50b03c28c170b7070c",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "fire.hit": {
+      "page": "fire",
+      "frames": [
+        {
+          "rect": [
+            2,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            538,
+            200,
+            717
+          ]
+        },
+        {
+          "rect": [
+            262,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            538,
+            400,
+            717
+          ]
+        },
+        {
+          "rect": [
+            522,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            538,
+            600,
+            717
+          ]
+        },
+        {
+          "rect": [
+            782,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            538,
+            800,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            538,
+            1000,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            538,
+            1200,
+            717
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        55,
+        55
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-fire-animation-agy-a01.png",
+      "sourceSha256": "6ec29a0e210ccd50f5338dd569f602cfb4f170560c56ef50b03c28c170b7070c",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "fire.aura": {
+      "page": "fire",
+      "frames": [
+        {
+          "rect": [
+            2,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            717,
+            200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            717,
+            1200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        }
+      ],
+      "frameCount": 10,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "authored ping-pong of six generated keys",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        90,
+        72
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-fire-animation-agy-a01.png",
+      "sourceSha256": "6ec29a0e210ccd50f5338dd569f602cfb4f170560c56ef50b03c28c170b7070c",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "fire.projectile": {
+      "page": "fire",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            179,
+            200,
+            358
+          ]
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            179,
+            800,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-fire-animation-agy-a01.png",
+      "sourceSha256": "6ec29a0e210ccd50f5338dd569f602cfb4f170560c56ef50b03c28c170b7070c",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false,
+      "aliasOf": "fire.travel"
+    },
+    "fire.telegraph.ring": {
+      "page": "fire-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "fire.telegraph.cone": {
+      "page": "fire-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "water.cast": {
+      "page": "water",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            0,
+            200,
+            179
+          ]
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            0,
+            400,
+            179
+          ]
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            0,
+            600,
+            179
+          ]
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            0,
+            800,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            0,
+            1000,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            0,
+            1200,
+            179
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        96,
+        96
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-water-animation-agy-a01.png",
+      "sourceSha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "water.travel": {
+      "page": "water",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            179,
+            200,
+            358
+          ]
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            179,
+            800,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-water-animation-agy-a01.png",
+      "sourceSha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [
+        3,
+        5
+      ],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "water.impact": {
+      "page": "water",
+      "frames": [
+        {
+          "rect": [
+            2,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            358,
+            200,
+            538
+          ]
+        },
+        {
+          "rect": [
+            262,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            358,
+            400,
+            538
+          ]
+        },
+        {
+          "rect": [
+            522,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            358,
+            600,
+            538
+          ]
+        },
+        {
+          "rect": [
+            782,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            358,
+            800,
+            538
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            358,
+            1000,
+            538
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            358,
+            1200,
+            538
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        144,
+        144
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-water-animation-agy-a01.png",
+      "sourceSha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "water.hit": {
+      "page": "water",
+      "frames": [
+        {
+          "rect": [
+            2,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            538,
+            200,
+            717
+          ]
+        },
+        {
+          "rect": [
+            262,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            538,
+            400,
+            717
+          ]
+        },
+        {
+          "rect": [
+            522,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            538,
+            600,
+            717
+          ]
+        },
+        {
+          "rect": [
+            782,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            538,
+            800,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            538,
+            1000,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            538,
+            1200,
+            717
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        55,
+        55
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-water-animation-agy-a01.png",
+      "sourceSha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "water.aura": {
+      "page": "water",
+      "frames": [
+        {
+          "rect": [
+            2,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            717,
+            200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            717,
+            1200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        }
+      ],
+      "frameCount": 10,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "authored ping-pong of six generated keys",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        90,
+        72
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-water-animation-agy-a01.png",
+      "sourceSha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "water.projectile": {
+      "page": "water",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            179,
+            200,
+            358
+          ]
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            179,
+            800,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-water-animation-agy-a01.png",
+      "sourceSha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [
+        3,
+        5
+      ],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false,
+      "aliasOf": "water.travel"
+    },
+    "water.telegraph.ring": {
+      "page": "water-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "water.telegraph.cone": {
+      "page": "water-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "earth.cast": {
+      "page": "earth",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            0,
+            200,
+            179
+          ]
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            0,
+            400,
+            179
+          ]
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            0,
+            600,
+            179
+          ]
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            0,
+            800,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            0,
+            1000,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            0,
+            1200,
+            179
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        96,
+        96
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-earth-animation-agy-a01.png",
+      "sourceSha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "earth.travel": {
+      "page": "earth",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            179,
+            200,
+            358
+          ]
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            179,
+            800,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-earth-animation-agy-a01.png",
+      "sourceSha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "earth.impact": {
+      "page": "earth",
+      "frames": [
+        {
+          "rect": [
+            2,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            0,
+            427,
+            360
+          ]
+        },
+        {
+          "rect": [
+            262,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            427,
+            0,
+            853,
+            360
+          ]
+        },
+        {
+          "rect": [
+            522,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            853,
+            0,
+            1280,
+            360
+          ]
+        },
+        {
+          "rect": [
+            782,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            360,
+            427,
+            720
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            427,
+            360,
+            853,
+            720
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            853,
+            360,
+            1280,
+            720
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        144,
+        144
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-earth-impact-isolated-grok-a02.jpg",
+      "sourceSha256": "8fd6452c26bced092ef57d006a28636bc2cae5b601483e4e6f9a8f6c6fba7e57",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        25,
+        25,
+        25
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "earth.hit": {
+      "page": "earth",
+      "frames": [
+        {
+          "rect": [
+            2,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            538,
+            200,
+            717
+          ]
+        },
+        {
+          "rect": [
+            262,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            538,
+            400,
+            717
+          ]
+        },
+        {
+          "rect": [
+            522,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            538,
+            600,
+            717
+          ]
+        },
+        {
+          "rect": [
+            782,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            538,
+            800,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            538,
+            1000,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            538,
+            1200,
+            717
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        55,
+        55
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-earth-animation-agy-a01.png",
+      "sourceSha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "earth.aura": {
+      "page": "earth",
+      "frames": [
+        {
+          "rect": [
+            2,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            717,
+            200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            717,
+            1200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        }
+      ],
+      "frameCount": 10,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "authored ping-pong of six generated keys",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        90,
+        72
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-earth-animation-agy-a01.png",
+      "sourceSha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "earth.projectile": {
+      "page": "earth",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            179,
+            200,
+            358
+          ]
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            179,
+            800,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-earth-animation-agy-a01.png",
+      "sourceSha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false,
+      "aliasOf": "earth.travel"
+    },
+    "earth.telegraph.ring": {
+      "page": "earth-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "earth.telegraph.cone": {
+      "page": "earth-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "air.cast": {
+      "page": "air",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            0,
+            200,
+            179
+          ]
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            0,
+            400,
+            179
+          ]
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            0,
+            600,
+            179
+          ]
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            0,
+            800,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            0,
+            1000,
+            179
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            0,
+            1200,
+            179
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        96,
+        96
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sourceSha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "air.travel": {
+      "page": "air",
+      "frames": [
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 4,
+      "generatedKeyCount": 4,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sourceSha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [
+        0,
+        3
+      ],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "air.impact": {
+      "page": "air",
+      "frames": [
+        {
+          "rect": [
+            2,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            358,
+            200,
+            538
+          ]
+        },
+        {
+          "rect": [
+            262,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            358,
+            400,
+            538
+          ]
+        },
+        {
+          "rect": [
+            522,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            358,
+            600,
+            538
+          ]
+        },
+        {
+          "rect": [
+            782,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            358,
+            800,
+            538
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            358,
+            1000,
+            538
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            358,
+            1200,
+            538
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        144,
+        144
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sourceSha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "air.hit": {
+      "page": "air",
+      "frames": [
+        {
+          "rect": [
+            2,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            0,
+            538,
+            200,
+            717
+          ]
+        },
+        {
+          "rect": [
+            262,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            200,
+            538,
+            400,
+            717
+          ]
+        },
+        {
+          "rect": [
+            522,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            400,
+            538,
+            600,
+            717
+          ]
+        },
+        {
+          "rect": [
+            782,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            600,
+            538,
+            800,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            800,
+            538,
+            1000,
+            717
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            782,
+            256,
+            256
+          ],
+          "durationMs": 65,
+          "sourceCrop": [
+            1000,
+            538,
+            1200,
+            717
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "generatedKeyCount": 6,
+      "loop": false,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        55,
+        55
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sourceSha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "air.aura": {
+      "page": "air",
+      "frames": [
+        {
+          "rect": [
+            2,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            0,
+            717,
+            200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            717,
+            1200,
+            896
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            717,
+            1000,
+            896
+          ]
+        },
+        {
+          "rect": [
+            782,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            600,
+            717,
+            800,
+            896
+          ]
+        },
+        {
+          "rect": [
+            522,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            717,
+            600,
+            896
+          ]
+        },
+        {
+          "rect": [
+            262,
+            1042,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            717,
+            400,
+            896
+          ]
+        }
+      ],
+      "frameCount": 10,
+      "generatedKeyCount": 6,
+      "loop": true,
+      "loopMethod": "authored ping-pong of six generated keys",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        90,
+        72
+      ],
+      "facing": "non-directional",
+      "rotateWithAim": false,
+      "source": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sourceSha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false
+    },
+    "air.projectile": {
+      "page": "air",
+      "frames": [
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            200,
+            179,
+            400,
+            358
+          ]
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            400,
+            179,
+            600,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            800,
+            179,
+            1000,
+            358
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 100,
+          "sourceCrop": [
+            1000,
+            179,
+            1200,
+            358
+          ]
+        }
+      ],
+      "frameCount": 4,
+      "generatedKeyCount": 4,
+      "loop": true,
+      "loopMethod": "forward",
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "lighter",
+      "fallbackBlend": "source-over",
+      "designSize1080": [
+        100,
+        64
+      ],
+      "facing": "screen-right",
+      "rotateWithAim": true,
+      "source": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sourceSha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "origin": "generated consecutive painted keys; local black-matte extraction, common-cell resampling and packing",
+      "mirroredSourceFrames": [],
+      "excludedSourceFrames": [
+        0,
+        3
+      ],
+      "matteRGB": [
+        0,
+        0,
+        0
+      ],
+      "timeline": "authored visual proposal; engine event owns start/stop and speed",
+      "owner_accepted": false,
+      "aliasOf": "air.travel"
+    },
+    "air.telegraph.ring": {
+      "page": "air-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "air.telegraph.cone": {
+      "page": "air-marks",
+      "frames": [
+        {
+          "rect": [
+            2,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            262,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1562,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        },
+        {
+          "rect": [
+            1822,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 90
+        }
+      ],
+      "frameCount": 8,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "blend": "source-over",
+      "designSize1080": [
+        112,
+        112
+      ],
+      "origin": "procedurally authored exact projected geometry and rhythmic opacity; not generated",
+      "projectionElevationDegrees": 55,
+      "mechanicalBoundary": "engine-owned; draw exact hitbox separately if dimensions differ",
+      "rotateWithAim": false,
+      "owner_accepted": false
+    },
+    "absorb.hold": {
+      "page": "barrier",
+      "frames": [
+        {
+          "rect": [
+            2,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            0,
+            0,
+            229,
+            256
+          ]
+        },
+        {
+          "rect": [
+            262,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            229,
+            0,
+            459,
+            256
+          ]
+        },
+        {
+          "rect": [
+            522,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            459,
+            0,
+            688,
+            256
+          ]
+        },
+        {
+          "rect": [
+            782,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            688,
+            0,
+            917,
+            256
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            917,
+            0,
+            1147,
+            256
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            2,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            1147,
+            0,
+            1376,
+            256
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "loop": true,
+      "anchor": [
+        0.3203125,
+        0.5
+      ],
+      "blend": "lighter",
+      "designSize1080": [
+        146,
+        146
+      ],
+      "origin": "generated barrier phases; local emitted-light key and atlas packing",
+      "cropPolicy": "authored source isolation windows and common centre of curvature; no glow-bound recentering",
+      "excludedSourceFrames": [],
+      "source": "art/review/sources/a8-barrier-animation-agy-a01.png",
+      "sourceSha256": "6cc63e6308f6d15a628ce2ae764040ae869ed5a592c4a2ac2faa34da49acc4fd",
+      "facing": "screen-right",
+      "rotateWithAim": false,
+      "rendererArcDegrees": 140,
+      "geometryPolicy": "painted texture is clipped/remapped by renderer to exact game arc; generated angle is not measured and image is not hitbox",
+      "owner_accepted": false
+    },
+    "absorb.contact": {
+      "page": "barrier",
+      "frames": [
+        {
+          "rect": [
+            522,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            459,
+            256,
+            688,
+            512
+          ]
+        },
+        {
+          "rect": [
+            782,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            688,
+            256,
+            917,
+            512
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            917,
+            256,
+            1147,
+            512
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            262,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            1147,
+            256,
+            1376,
+            512
+          ]
+        }
+      ],
+      "frameCount": 4,
+      "loop": false,
+      "anchor": [
+        0.3203125,
+        0.5
+      ],
+      "blend": "lighter",
+      "designSize1080": [
+        146,
+        146
+      ],
+      "origin": "generated barrier phases; local emitted-light key and atlas packing",
+      "cropPolicy": "authored source isolation windows and common centre of curvature; no glow-bound recentering",
+      "excludedSourceFrames": [
+        0,
+        1
+      ],
+      "source": "art/review/sources/a8-barrier-animation-agy-a01.png",
+      "sourceSha256": "6cc63e6308f6d15a628ce2ae764040ae869ed5a592c4a2ac2faa34da49acc4fd",
+      "facing": "screen-right",
+      "rotateWithAim": false,
+      "rendererArcDegrees": 140,
+      "geometryPolicy": "painted texture is clipped/remapped by renderer to exact game arc; generated angle is not measured and image is not hitbox",
+      "owner_accepted": false
+    },
+    "absorb.perfect": {
+      "page": "barrier",
+      "frames": [
+        {
+          "rect": [
+            2,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            45,
+            512,
+            275,
+            768
+          ]
+        },
+        {
+          "rect": [
+            262,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            280,
+            512,
+            460,
+            768
+          ]
+        },
+        {
+          "rect": [
+            522,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            510,
+            512,
+            735,
+            768
+          ]
+        },
+        {
+          "rect": [
+            782,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            730,
+            512,
+            955,
+            768
+          ]
+        },
+        {
+          "rect": [
+            1042,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            955,
+            512,
+            1147,
+            768
+          ]
+        },
+        {
+          "rect": [
+            1302,
+            522,
+            256,
+            256
+          ],
+          "durationMs": 80,
+          "sourceCrop": [
+            1147,
+            512,
+            1376,
+            768
+          ]
+        }
+      ],
+      "frameCount": 6,
+      "loop": false,
+      "anchor": [
+        0.3203125,
+        0.5
+      ],
+      "blend": "lighter",
+      "designSize1080": [
+        146,
+        146
+      ],
+      "origin": "generated barrier phases; local emitted-light key and atlas packing",
+      "cropPolicy": "authored source isolation windows and common centre of curvature; no glow-bound recentering",
+      "excludedSourceFrames": [],
+      "source": "art/review/sources/a8-barrier-animation-agy-a01.png",
+      "sourceSha256": "6cc63e6308f6d15a628ce2ae764040ae869ed5a592c4a2ac2faa34da49acc4fd",
+      "facing": "screen-right",
+      "rotateWithAim": false,
+      "rendererArcDegrees": 140,
+      "geometryPolicy": "painted texture is clipped/remapped by renderer to exact game arc; generated angle is not measured and image is not hitbox",
+      "owner_accepted": false
+    }
+  },
+  "alpha": "sRGB straight RGBA; RGB unpremultiplied once from black matte; convert once on GPU upload",
+  "renderOrder": [
+    "ground telegraphs",
+    "rear aura",
+    "body",
+    "cast/travel/contact",
+    "front aura and barrier",
+    "localized perfect flare"
+  ],
+  "scale": "design units at 1080p; multiply by viewportHeight/1080",
+  "gameOwns": [
+    "collision",
+    "slowing",
+    "event timing",
+    "arc direction",
+    "spell balance"
+  ],
+  "owner_accepted": false
+}

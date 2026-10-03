@@ -3,14 +3,14 @@
   "project_budget": "../budget.json",
   "providers": {
     "agy": {
-      "weekly_image_cap": 150,
+      "weekly_image_cap": 300,
       "external_known_charges": {
         "2026-W40": 4
       },
       "note": "Four known probe outputs from provider ledger, outside project charges. Total account spend and actual quota unknown; local guard only."
     },
     "grok": {
-      "weekly_image_cap": 240,
+      "weekly_image_cap": 300,
       "note": "Includes inherited grok-cli jobs; shared subscription allowance unknown."
     }
   },

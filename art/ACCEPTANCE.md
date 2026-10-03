@@ -1,3 +1,9 @@
+# Session 6 / A8
+
+[Owner board](review/a8/index.html), [loading contract](delivery/a8/README.md). Delivered 35 effect clips, nine RGBA pages, 134 unique painted keys plus 64 authored telegraph keys; explicit pivots, timing, blend hints and loop flags. Seven calls, cumulative 230/300. Delivery/source/browser/portable gates and 65 tests pass; one rejected correction and partial-cell exclusions retained. Owner motion/fidelity, game integration and performance not measured. Next A9.
+
+Historical failures below remain unchanged.
+
 # Session 5 final boundary
 
 [Combined board](review/covenant/index.html), [contact sheet](review/covenant/contact-sheet.jpg),

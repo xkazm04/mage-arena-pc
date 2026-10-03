@@ -113,3 +113,9 @@ The [handoff](../art/SESSION-5-HANDOFF.md) gives loader entry points, measured c
 223/240 spend and remaining backlog. A3c pose/camera/animation continuity remains
 the main unfinished art work. Current integrity passes do not erase historical
 failures or establish game feel. No push.
+
+## Session 6 / A8
+
+[A8 owner board](../art/review/a8/index.html). Delivered 35 effect clips, nine RGBA pages, 134 unique painted keys plus 64 authored telegraph keys; explicit pivots, timing, blend hints and loop flags. Seven calls, cumulative 230/300. Delivery/source/browser/portable gates and 65 tests pass; one rejected correction and partial-cell exclusions retained. Owner motion/fidelity, game integration and performance not measured. Next A9.
+
+Owner feel and approval remain unmeasured; the local grader may only reject or route.

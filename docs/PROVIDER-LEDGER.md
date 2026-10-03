@@ -41,3 +41,34 @@ exact requested pixel size. Strong reference conditioning preserved cast faces
 but sometimes suppressed emotion changes; explicit chin/gaze/mouth direction was
 needed for corrections. Neutral versus proud and grief remain human-review gates.
 These are observed session findings, not general quality or quota guarantees.
+
+## ART session 6 observations (2026-10-03)
+
+Owner authorization raises Grok's local guard and the inherited cumulative
+project ceiling to 300, and agy's weekly local guard to 300. The cumulative
+ceiling is retained as an additional conservative limit across providers; the
+session began at 223 project charges. This does not assert the shared account's
+real remaining allowance. No historical charge is reclassified or refunded.
+
+A8 reference-guided agy sheets returned 1200x896 and 1264x848 despite requests
+for larger dimensions. Six-column layouts were broadly coherent, but requested
+empty gutters were not reliable: three Earth impact cells and two Air travel
+cells touched their crop edges. A roomier Earth correction also clipped its
+peak frame and was rejected. Two Water projectile keys faced left; explicit
+local mirroring corrects those keys, with provenance in the clip metadata.
+These are concrete findings from this session, not general provider guarantees.
+
+Black-matte effect outputs are RGB. Local emitted-light alpha extraction,
+atlas padding, playback order, timing and exact telegraph geometry are authored
+derivations. The generated six-key source is not relabeled as a larger number of
+generated frames when ping-pong playback adds frame references. Local diagnostics
+have expressed uncertainty about painting fidelity; they remain reject-or-owner
+observations and do not establish quality acceptance.
+
+The Earth correction routed to Grok succeeded in 21.5 seconds with a 1280x720
+JPEG: richer mineral painting, six separated keys, but charcoal panels instead
+of the requested black background. Measured RGB-25 matte subtraction removes
+those panels locally. The agy barrier sheet took 338 seconds; explicit isolation
+windows recover its complete perfect flares, while two crossed-grid approach
+cells are excluded. A8 charged seven images (six agy, one Grok), cumulative
+230/300; both provider stops clear. Actual account quota remains unknown.

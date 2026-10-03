@@ -14963,6 +14963,356 @@
       "archive": "art/review/sources/a2c-moods-kesh-agy-a02.png",
       "sha256": "12fb50121f4e37e29a00d1308619757b9455f2e77293c922cb2fd49e9319b9d7",
       "invocation_evidence": "art/providers/runs/a2c-moods-kesh-agy-a02"
+    },
+    {
+      "id": "a8-water-animation-agy-a01",
+      "wave": "A8",
+      "style_id": "covenant",
+      "scene": "water-animation",
+      "attempt": 1,
+      "input": {
+        "wave": "A8",
+        "id": "water-animation",
+        "pilot": true,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "3:2",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+            "role": "energy/mist/spark painting reference"
+          },
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+            "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+            "role": "painted effect fidelity and grounded light reference"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY WATER magic: crescent, mist, separated droplets, main pigment #75d9f4, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only."
+      },
+      "input_hash": "11359c519d91b2b4af60d2e47a047dfe8e2409ac6f320b0129187610b59f7a77",
+      "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY WATER magic: crescent, mist, separated droplets, main pigment #75d9f4, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "de21ec8e-77db-4081-9c65-3ca6c3d01e10",
+      "at": "2026-10-03T11:23:54.850817+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 164.359,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a8-water-animation-agy-a01/source.png",
+      "archive": "art/review/sources/a8-water-animation-agy-a01.png",
+      "sha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+      "invocation_evidence": "art/providers/runs/a8-water-animation-agy-a01"
+    },
+    {
+      "id": "a8-fire-animation-agy-a01",
+      "wave": "A8",
+      "style_id": "covenant",
+      "scene": "fire-animation",
+      "attempt": 1,
+      "input": {
+        "wave": "A8",
+        "id": "fire-animation",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "3:2",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+            "role": "energy/mist/spark painting reference"
+          },
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+            "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+            "role": "painted effect fidelity and grounded light reference"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY FIRE magic: forked flame, ember flecks, heat, main pigment #ffa657, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only."
+      },
+      "input_hash": "8f9d2fb22fdf71cac41535aaaf80fb41250c71870be136862111ea5a43e5c164",
+      "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY FIRE magic: forked flame, ember flecks, heat, main pigment #ffa657, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "3971094b-e150-4969-978b-e04927032088",
+      "at": "2026-10-03T11:28:38.188293+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 145.375,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a8-fire-animation-agy-a01/source.png",
+      "archive": "art/review/sources/a8-fire-animation-agy-a01.png",
+      "sha256": "6ec29a0e210ccd50f5338dd569f602cfb4f170560c56ef50b03c28c170b7070c",
+      "invocation_evidence": "art/providers/runs/a8-fire-animation-agy-a01"
+    },
+    {
+      "id": "a8-earth-animation-agy-a01",
+      "wave": "A8",
+      "style_id": "covenant",
+      "scene": "earth-animation",
+      "attempt": 1,
+      "input": {
+        "wave": "A8",
+        "id": "earth-animation",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "3:2",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+            "role": "energy/mist/spark painting reference"
+          },
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+            "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+            "role": "painted effect fidelity and grounded light reference"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY EARTH magic: angular stone motes and dust, main pigment #d6bd77, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only."
+      },
+      "input_hash": "7aec1a234891f50a000ef7d6a006c380605d6c2c33b0bd465485958b2447b286",
+      "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY EARTH magic: angular stone motes and dust, main pigment #d6bd77, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "a362a7b2-d49f-401f-b30d-335cc905877d",
+      "at": "2026-10-03T11:32:03.483168+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 147.313,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a8-earth-animation-agy-a01/source.png",
+      "archive": "art/review/sources/a8-earth-animation-agy-a01.png",
+      "sha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+      "invocation_evidence": "art/providers/runs/a8-earth-animation-agy-a01"
+    },
+    {
+      "id": "a8-air-animation-agy-a01",
+      "wave": "A8",
+      "style_id": "covenant",
+      "scene": "air-animation",
+      "attempt": 1,
+      "input": {
+        "wave": "A8",
+        "id": "air-animation",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "3:2",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+            "role": "energy/mist/spark painting reference"
+          },
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+            "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+            "role": "painted effect fidelity and grounded light reference"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY AIR magic: split wisps and forked lightning, main pigment #c8b7ff, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only."
+      },
+      "input_hash": "d2f2dfe82ce1dbe6a93354a2ca85c72d25347b61127d52ef25cd59b582264fb9",
+      "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY AIR magic: split wisps and forked lightning, main pigment #c8b7ff, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "d38c3589-ecb7-437e-9b0e-c35e0167675b",
+      "at": "2026-10-03T11:34:47.816121+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 156.172,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a8-air-animation-agy-a01/source.png",
+      "archive": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "invocation_evidence": "art/providers/runs/a8-air-animation-agy-a01"
+    },
+    {
+      "id": "a8-earth-impact-isolated-agy-a01",
+      "wave": "A8",
+      "style_id": "covenant",
+      "scene": "earth-impact-isolated",
+      "attempt": 1,
+      "input": {
+        "wave": "A8",
+        "id": "earth-impact-isolated",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "3:2",
+        "references": [
+          {
+            "path": "art/review/sources/a8-earth-animation-agy-a01.png",
+            "sha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+            "role": "earth palette and rock/dust material"
+          },
+          {
+            "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+            "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+            "role": "painted stone and dust fidelity"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. A replacement six-frame EARTH IMPACT animation sheet.\nReference-1.png supplies the ochre stone, golden energy and dust style. Its impact bursts clipped their cells; fix that technical defect here. Reference-2.png supplies painted material richness.\nONE image, EXACTLY THREE equal columns and TWO equal rows. Six chronological frames in reading order, each isolated on uniform pure BLACK #000000. No text or dividers.\nEach effect MUST remain within the central 55 PERCENT of its cell, at least 22 percent empty BLACK margin on EVERY side, including dust. All six centers and canvas scales consistent. Ideally 1536x1024.\nFrame 1 tiny earth contact spark; frame 2 bright fissure-like compression; frame 3 peak sharp angular fragments and ochre dust burst; frame 4 outward fragment spray; frame 5 settling translucent dust and a few fading motes; frame 6 faint residual dust.\nOriginal finely hand-painted digital dark fantasy, physical angular stone splinters, smoky natural dust, thin sharp ivory-gold light, no cartoon outline, no smooth vector symbols, no physical ground or environment. Oblique view 55 degrees. No people or objects except the impact fragments. Absolutely no cropping or overlapping adjacent effects."
+      },
+      "input_hash": "afb442db4788d8057d5b56de7a20475c3d816fc92650ca615f279e5de91f3425",
+      "prompt": "Use case: stylized-concept. A replacement six-frame EARTH IMPACT animation sheet.\nReference-1.png supplies the ochre stone, golden energy and dust style. Its impact bursts clipped their cells; fix that technical defect here. Reference-2.png supplies painted material richness.\nONE image, EXACTLY THREE equal columns and TWO equal rows. Six chronological frames in reading order, each isolated on uniform pure BLACK #000000. No text or dividers.\nEach effect MUST remain within the central 55 PERCENT of its cell, at least 22 percent empty BLACK margin on EVERY side, including dust. All six centers and canvas scales consistent. Ideally 1536x1024.\nFrame 1 tiny earth contact spark; frame 2 bright fissure-like compression; frame 3 peak sharp angular fragments and ochre dust burst; frame 4 outward fragment spray; frame 5 settling translucent dust and a few fading motes; frame 6 faint residual dust.\nOriginal finely hand-painted digital dark fantasy, physical angular stone splinters, smoky natural dust, thin sharp ivory-gold light, no cartoon outline, no smooth vector symbols, no physical ground or environment. Oblique view 55 degrees. No people or objects except the impact fragments. Absolutely no cropping or overlapping adjacent effects.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "b2d52527-f7f4-4b03-880e-7d574e1db7d8",
+      "at": "2026-10-03T11:37:41.932898+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 187.282,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a8-earth-impact-isolated-agy-a01/source.png",
+      "archive": "art/review/sources/a8-earth-impact-isolated-agy-a01.png",
+      "sha256": "09fd78e1bea56a824fe9cbe9ddeb284b537eeda7f60674f0fd29075a2e1466a5",
+      "invocation_evidence": "art/providers/runs/a8-earth-impact-isolated-agy-a01"
+    },
+    {
+      "id": "a8-barrier-animation-agy-a01",
+      "wave": "A8",
+      "style_id": "covenant",
+      "scene": "barrier-animation",
+      "attempt": 1,
+      "input": {
+        "wave": "A8",
+        "id": "barrier-animation",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "aspect_ratio": "3:2",
+        "references": [
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+            "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+            "role": "painted crescent energy and sparks"
+          },
+          {
+            "path": "art/review/sources/a8-water-animation-agy-a01.png",
+            "sha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+            "role": "match already generated fine water energy"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. ONE painted VFX animation spritesheet. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nReference-1.png provides the dark magical arena effect fidelity, reference-2.png provides related mist and spark pigments. No characters or environment in this output.\nEXACTLY SIX equal columns and THREE equal rows on pure BLACK #000000. No text, dividers, labels or watermark.\nEach cell has 15 percent empty margin, all effects fully isolated. Largest supported high resolution, ideally 3072x1536.\nThe subject is an ABSORB ENERGY BARRIER, like a curved upright translucent membrane of cool ivory-blue energy supported by fine filaments and mist. It has visible thickness, a curved bright rim and internal flowing threads; not a logo, bell, shield object, bubble or filled disc.\nCamera distant 55 degree oblique. Every cell SAME right-facing CRESCENT with open rear on LEFT. The mage position is the empty cell center, barrier curves around its RIGHT side. Tips at upper-right and lower-right, approximately 140 degree forward arc. Keep left half clear. Six consistent successive phases left to right.\nROW ONE HOLD LOOP: gentle irregular energy traveling around a stable curved crescent membrane. Six distinct phases, final near first, steady energy and size.\nROW TWO ABSORB CONTACT: an incoming orange energy bolt from the RIGHT approaches this SAME blue barrier, slows visibly, shortens, compresses against the barrier, fans into filaments ALONG its curved surface, then disappears into small motes. It never passes to the LEFT side. This is resistance and absorption, not reflection. Each cell an instantaneous key, not multiple poses.\nROW THREE PERFECT ABSORB: the same barrier has a sharp tiny ivory contact, intense fine branching filaments running along the arc, one concentrated flare at its RIGHT midpoint, then an elegant halo of droplets breaking away and settling back to the stable blue crescent. No full screen explosion or uniform white disk.\nFine painterly light, subtle mist, separated sparks, selective intense highlights matching the supplied concepts. Original artwork only."
+      },
+      "input_hash": "49dae94de1544c08ad44a143c0d249785e61b10f88878cae935d1c23d8887355",
+      "prompt": "Use case: stylized-concept. ONE painted VFX animation spritesheet. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nReference-1.png provides the dark magical arena effect fidelity, reference-2.png provides related mist and spark pigments. No characters or environment in this output.\nEXACTLY SIX equal columns and THREE equal rows on pure BLACK #000000. No text, dividers, labels or watermark.\nEach cell has 15 percent empty margin, all effects fully isolated. Largest supported high resolution, ideally 3072x1536.\nThe subject is an ABSORB ENERGY BARRIER, like a curved upright translucent membrane of cool ivory-blue energy supported by fine filaments and mist. It has visible thickness, a curved bright rim and internal flowing threads; not a logo, bell, shield object, bubble or filled disc.\nCamera distant 55 degree oblique. Every cell SAME right-facing CRESCENT with open rear on LEFT. The mage position is the empty cell center, barrier curves around its RIGHT side. Tips at upper-right and lower-right, approximately 140 degree forward arc. Keep left half clear. Six consistent successive phases left to right.\nROW ONE HOLD LOOP: gentle irregular energy traveling around a stable curved crescent membrane. Six distinct phases, final near first, steady energy and size.\nROW TWO ABSORB CONTACT: an incoming orange energy bolt from the RIGHT approaches this SAME blue barrier, slows visibly, shortens, compresses against the barrier, fans into filaments ALONG its curved surface, then disappears into small motes. It never passes to the LEFT side. This is resistance and absorption, not reflection. Each cell an instantaneous key, not multiple poses.\nROW THREE PERFECT ABSORB: the same barrier has a sharp tiny ivory contact, intense fine branching filaments running along the arc, one concentrated flare at its RIGHT midpoint, then an elegant halo of droplets breaking away and settling back to the stable blue crescent. No full screen explosion or uniform white disk.\nFine painterly light, subtle mist, separated sparks, selective intense highlights matching the supplied concepts. Original artwork only.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "3aff1c10-4c68-498e-a3d2-b331207053ac",
+      "at": "2026-10-03T11:41:23.003682+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 338.328,
+      "returncode": 0,
+      "tool_calls": [],
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+      "source": "art/raw/a8-barrier-animation-agy-a01/source.png",
+      "archive": "art/review/sources/a8-barrier-animation-agy-a01.png",
+      "sha256": "6cc63e6308f6d15a628ce2ae764040ae869ed5a592c4a2ac2faa34da49acc4fd",
+      "invocation_evidence": "art/providers/runs/a8-barrier-animation-agy-a01"
+    },
+    {
+      "id": "a8-earth-impact-isolated-grok-a02",
+      "wave": "A8",
+      "style_id": "covenant",
+      "scene": "earth-impact-isolated",
+      "attempt": 2,
+      "input": {
+        "wave": "A8",
+        "id": "earth-impact-isolated",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "grok"
+        ],
+        "aspect_ratio": "3:2",
+        "references": [
+          {
+            "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+            "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+            "role": "painted ochre stone and dust reference only"
+          }
+        ],
+        "prompt": "Create an entirely new VFX sprite sheet using the supplied image only as reference for rich painterly stone and dust. Do NOT retain its scene, characters or floor. Original dark fantasy earth magic.\nONE landscape image with exactly 3 columns and 2 rows, SIX separate sprites on pure flat BLACK. No letters, dividers or captions.\nEach sprite is SMALL: fits inside a circle whose diameter is HALF the cell width. All outer edges and all internal cell boundaries have WIDE plain BLACK gutters. Do not fill cells. The brightest peak sprite is no bigger than the others. Absolutely no glow or dust touches any cell edge.\nSix consecutive frames of one stone impact, in reading order: 1 gold contact spark; 2 a compressed cracked glowing pebble; 3 concentrated angular stone burst and tight dust puff; 4 small fragmented stones expanding slightly; 5 dissipating dust; 6 faint motes. Shared center and scale. Fine worn ochre mineral surfaces, irregular brush accents, sharp ivory light and soft dusty light falloff. No arrows, no weapon, no ground, no environment, no white outline. Camera 55 degree oblique.\nStrong material painting and irregular fine particles matching the supplied reference. Black background for local alpha extraction. This is not a concept scene or a poster.",
+        "revision": 2,
+        "correction_of": "a8-earth-impact-isolated-agy-a01"
+      },
+      "input_hash": "07252c89391523964a04b740c2e96dcfc9b2ae693d456bb22a446c8f6c5274ae",
+      "prompt": "Create an entirely new VFX sprite sheet using the supplied image only as reference for rich painterly stone and dust. Do NOT retain its scene, characters or floor. Original dark fantasy earth magic.\nONE landscape image with exactly 3 columns and 2 rows, SIX separate sprites on pure flat BLACK. No letters, dividers or captions.\nEach sprite is SMALL: fits inside a circle whose diameter is HALF the cell width. All outer edges and all internal cell boundaries have WIDE plain BLACK gutters. Do not fill cells. The brightest peak sprite is no bigger than the others. Absolutely no glow or dust touches any cell edge.\nSix consecutive frames of one stone impact, in reading order: 1 gold contact spark; 2 a compressed cracked glowing pebble; 3 concentrated angular stone burst and tight dust puff; 4 small fragmented stones expanding slightly; 5 dissipating dust; 6 faint motes. Shared center and scale. Fine worn ochre mineral surfaces, irregular brush accents, sharp ivory light and soft dusty light falloff. No arrows, no weapon, no ground, no environment, no white outline. Camera 55 degree oblique.\nStrong material painting and irregular fine particles matching the supplied reference. Black background for local alpha extraction. This is not a concept scene or a poster.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "69e5a74e-8c83-4293-86e5-e459489b8153",
+      "at": "2026-10-03T11:47:48.901823+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 21.547,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_edit",
+          "arguments": {
+            "prompt": "Create an entirely new VFX sprite sheet using the supplied image only as reference for rich painterly stone and dust. Do NOT retain its scene, characters or floor. Original dark fantasy earth magic.\nONE landscape image with exactly 3 columns and 2 rows, SIX separate sprites on pure flat BLACK. No letters, dividers or captions.\nEach sprite is SMALL: fits inside a circle whose diameter is HALF the cell width. All outer edges and all internal cell boundaries have WIDE plain BLACK gutters. Do not fill cells. The brightest peak sprite is no bigger than the others. Absolutely no glow or dust touches any cell edge.\nSix consecutive frames of one stone impact, in reading order: 1 gold contact spark; 2 a compressed cracked glowing pebble; 3 concentrated angular stone burst and tight dust puff; 4 small fragmented stones expanding slightly; 5 dissipating dust; 6 faint motes. Shared center and scale. Fine worn ochre mineral surfaces, irregular brush accents, sharp ivory light and soft dusty light falloff. No arrows, no weapon, no ground, no environment, no white outline. Camera 55 degree oblique.\nStrong material painting and irregular fine particles matching the supplied reference. Black background for local alpha extraction. This is not a concept scene or a poster.",
+            "image": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a8-earth-impact-isolated-grok-a02\\reference-1.png"
+            ],
+            "aspect_ratio": "3:2"
+          }
+        }
+      ],
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a8-earth-impact-isolated-grok-a02/source.jpg",
+      "archive": "art/review/sources/a8-earth-impact-isolated-grok-a02.jpg",
+      "sha256": "8fd6452c26bced092ef57d006a28636bc2cae5b601483e4e6f9a8f6c6fba7e57",
+      "invocation_evidence": "art/providers/runs/a8-earth-impact-isolated-grok-a02"
     }
   ],
   "events": [
@@ -18180,6 +18530,111 @@
       "event": "generated",
       "id": "a2c-moods-kesh-agy-a02",
       "at": "2026-10-02T21:18:05.657074+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a8-water-animation-agy-a01",
+      "at": "2026-10-03T11:23:54.850817+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a8-water-animation-agy-a01",
+      "at": "2026-10-03T11:23:54.963818+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a8-water-animation-agy-a01",
+      "at": "2026-10-03T11:26:39.410489+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a8-fire-animation-agy-a01",
+      "at": "2026-10-03T11:28:38.188293+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a8-fire-animation-agy-a01",
+      "at": "2026-10-03T11:28:38.239568+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a8-fire-animation-agy-a01",
+      "at": "2026-10-03T11:31:03.684514+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a8-earth-animation-agy-a01",
+      "at": "2026-10-03T11:32:03.483168+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a8-earth-animation-agy-a01",
+      "at": "2026-10-03T11:32:03.520483+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a8-earth-animation-agy-a01",
+      "at": "2026-10-03T11:34:30.896373+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a8-air-animation-agy-a01",
+      "at": "2026-10-03T11:34:47.816121+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a8-air-animation-agy-a01",
+      "at": "2026-10-03T11:34:47.866715+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a8-air-animation-agy-a01",
+      "at": "2026-10-03T11:37:24.099911+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a8-earth-impact-isolated-agy-a01",
+      "at": "2026-10-03T11:37:41.932898+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a8-earth-impact-isolated-agy-a01",
+      "at": "2026-10-03T11:37:41.987750+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a8-earth-impact-isolated-agy-a01",
+      "at": "2026-10-03T11:40:49.351796+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a8-barrier-animation-agy-a01",
+      "at": "2026-10-03T11:41:23.003682+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a8-barrier-animation-agy-a01",
+      "at": "2026-10-03T11:41:23.051166+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a8-barrier-animation-agy-a01",
+      "at": "2026-10-03T11:47:01.444980+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a8-earth-impact-isolated-grok-a02",
+      "at": "2026-10-03T11:47:48.901823+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a8-earth-impact-isolated-grok-a02",
+      "at": "2026-10-03T11:47:48.934069+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a8-earth-impact-isolated-grok-a02",
+      "at": "2026-10-03T11:48:10.557746+00:00"
     }
   ],
   "stop_cleared": {
