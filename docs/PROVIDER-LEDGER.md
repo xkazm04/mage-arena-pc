@@ -72,3 +72,7 @@ those panels locally. The agy barrier sheet took 338 seconds; explicit isolation
 windows recover its complete perfect flares, while two crossed-grid approach
 cells are excluded. A8 charged seven images (six agy, one Grok), cumulative
 230/300; both provider stops clear. Actual account quota remains unknown.
+
+### Session 6 / A9 / 2026-10-03
+
+Eleven serial Grok calls, no retry/refund or latch reset. Rich masonry and floor painting was usable; requested resolution/aspect was not reliable (most outputs 1280x720). Rust banner clipped; corrected by a separate reserved image. Decal sheet introduced letter-like marks and an unwanted figure; those cells are excluded. Individual physical materials outperform the earlier simplified A7 export, but generated front/back wall prompts did not produce trustworthy opposite facings. Source variants are treated as materials, with authored geometry disclosed. Cumulative 241/300; remaining 59 under the conservative shared ceiling. agy actual weekly allowance remains unknown.

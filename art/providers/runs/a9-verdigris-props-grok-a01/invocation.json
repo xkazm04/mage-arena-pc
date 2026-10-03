@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "6b95e315-315a-4d3c-90d2-a6f8015efc2b",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a9-verdigris-props-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a9-verdigris-props-grok-a01",
+  "references": [
+    {
+      "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+      "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+      "role": "approved arena material, light and detail reference"
+    }
+  ]
+}

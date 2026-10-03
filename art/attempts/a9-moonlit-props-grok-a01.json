@@ -1,0 +1,55 @@
+{
+  "id": "a9-moonlit-props-grok-a01",
+  "wave": "A9",
+  "style_id": "covenant",
+  "scene": "moonlit-props",
+  "attempt": 1,
+  "input": {
+    "wave": "A9",
+    "id": "moonlit-props",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok",
+      "agy"
+    ],
+    "aspect_ratio": "3:2",
+    "references": [
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+        "role": "approved arena material, light and detail reference"
+      }
+    ],
+    "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: blue-black slate and basalt, cold moonlit silver edges, dark navy recesses, pale worn silver.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE environment sprite sheet on uniform vivid MAGENTA #FF00FF, no floor, no shadows, no text, no panel lines. Fixed 55-degree oblique orthographic camera, visible tops and ground contacts.\nEXACTLY THREE equal columns and TWO equal rows, SIX isolated objects with wide empty magenta margins, each contained inside central 65 percent of cell. No overlap or cropping.\nRow 1: (1) a tall ragged cloth banner on worn iron pole anchored in a chipped stone foot, original abstract crescent device without writing; (2) a brazier on three worn bronze legs with a small contained ember flame, smoky tips contained within cell; (3) a cluster of three fallen stone blocks and angular fractured slabs.\nRow 2: (1) a worn supply amphora beside a coiled rope and small wooden crate; (2) a shallow broken stone altar slab with copper bindings and a small crystal socket; (3) a short damaged freestanding column stump on a chipped square base.\nRich painterly physical material, subtle cloth folds, lit worn edges, believable weight, matching supplied reference. No toy-like icons, no paper texture. Prefer 1536x1024 or larger."
+  },
+  "input_hash": "fd7cd3b57e12510a5876f9414350c2f14119c9816020dbc3fe7ecdad0f18c02e",
+  "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: blue-black slate and basalt, cold moonlit silver edges, dark navy recesses, pale worn silver.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE environment sprite sheet on uniform vivid MAGENTA #FF00FF, no floor, no shadows, no text, no panel lines. Fixed 55-degree oblique orthographic camera, visible tops and ground contacts.\nEXACTLY THREE equal columns and TWO equal rows, SIX isolated objects with wide empty magenta margins, each contained inside central 65 percent of cell. No overlap or cropping.\nRow 1: (1) a tall ragged cloth banner on worn iron pole anchored in a chipped stone foot, original abstract crescent device without writing; (2) a brazier on three worn bronze legs with a small contained ember flame, smoky tips contained within cell; (3) a cluster of three fallen stone blocks and angular fractured slabs.\nRow 2: (1) a worn supply amphora beside a coiled rope and small wooden crate; (2) a shallow broken stone altar slab with copper bindings and a small crystal socket; (3) a short damaged freestanding column stump on a chipped square base.\nRich painterly physical material, subtle cloth folds, lit worn edges, believable weight, matching supplied reference. No toy-like icons, no paper texture. Prefer 1536x1024 or larger.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "4601ab5e-8006-4848-abdf-bcbec957d8ec",
+  "at": "2026-10-03T12:16:02.923843+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 34.703,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a9-moonlit-props-grok-a01\\reference-1.png"
+        ],
+        "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: blue-black slate and basalt, cold moonlit silver edges, dark navy recesses, pale worn silver.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE environment sprite sheet on uniform vivid MAGENTA #FF00FF, no floor, no shadows, no text, no panel lines. Fixed 55-degree oblique orthographic camera, visible tops and ground contacts.\nEXACTLY THREE equal columns and TWO equal rows, SIX isolated objects with wide empty magenta margins, each contained inside central 65 percent of cell. No overlap or cropping.\nRow 1: (1) a tall ragged cloth banner on worn iron pole anchored in a chipped stone foot, original abstract crescent device without writing; (2) a brazier on three worn bronze legs with a small contained ember flame, smoky tips contained within cell; (3) a cluster of three fallen stone blocks and angular fractured slabs.\nRow 2: (1) a worn supply amphora beside a coiled rope and small wooden crate; (2) a shallow broken stone altar slab with copper bindings and a small crystal socket; (3) a short damaged freestanding column stump on a chipped square base.\nRich painterly physical material, subtle cloth folds, lit worn edges, believable weight, matching supplied reference. No toy-like icons, no paper texture. Prefer 1536x1024 or larger.",
+        "aspect_ratio": "3:2"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a9-moonlit-props-grok-a01/source.jpg",
+  "archive": "art/review/sources/a9-moonlit-props-grok-a01.jpg",
+  "sha256": "a9f90ef562a2b75b2b7eec88cf4c073cd250eee46d7f17218c50aed8e8225acc",
+  "invocation_evidence": "art/providers/runs/a9-moonlit-props-grok-a01"
+}

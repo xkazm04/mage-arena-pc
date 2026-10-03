@@ -1,0 +1,1447 @@
+{
+  "schemaVersion": 1,
+  "id": "covenant-arena-layout-a9",
+  "units": "metres",
+  "worldAxes": "X right, Y towards screen bottom",
+  "coreBoundary": {
+    "shape": "ellipse",
+    "centre": [
+      16,
+      62
+    ],
+    "size": [
+      192,
+      144
+    ],
+    "authority": "existing game/core geometry; unchanged"
+  },
+  "camera": {
+    "elevationDegrees": 55,
+    "groundPixelsPerMetre1080": 22.5,
+    "proofCentre": [
+      16,
+      14
+    ],
+    "entryCentre": [
+      12,
+      10
+    ],
+    "deadZoneNormalized": [
+      0.16,
+      0.18,
+      0.84,
+      0.8
+    ],
+    "edgeFollow": "game-owned; preserve D17"
+  },
+  "ground": {
+    "tileOriginMetres": [
+      -80,
+      -10
+    ],
+    "repeat": "both axes; native unprojected tile, scale by declared worldSizeMetres",
+    "clipTo": "coreBoundary ellipse",
+    "outside": "same physical floor at 0.45 luminance; stands/rim occlude seam"
+  },
+  "objects": [
+    {
+      "id": "ward-0",
+      "sprite": "pylon",
+      "positionMetres": [
+        -16,
+        1
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "ward-1",
+      "sprite": "pylon",
+      "positionMetres": [
+        16,
+        -5
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "ward-2",
+      "sprite": "pylon",
+      "positionMetres": [
+        48,
+        1
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "ward-3",
+      "sprite": "pylon",
+      "positionMetres": [
+        -18,
+        40
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "ward-4",
+      "sprite": "pylon",
+      "positionMetres": [
+        50,
+        40
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "banner-0",
+      "sprite": "banner",
+      "positionMetres": [
+        -24,
+        0
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "banner-1",
+      "sprite": "banner",
+      "positionMetres": [
+        -4,
+        -7
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "banner-2",
+      "sprite": "banner",
+      "positionMetres": [
+        36,
+        -7
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "banner-3",
+      "sprite": "banner",
+      "positionMetres": [
+        56,
+        0
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "north-gate",
+      "sprite": "gate",
+      "positionMetres": [
+        16,
+        -9
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "west-arch",
+      "sprite": "arch",
+      "positionMetres": [
+        -28,
+        4
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "east-arch",
+      "sprite": "arch",
+      "positionMetres": [
+        60,
+        4
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-0",
+      "sprite": "stands",
+      "positionMetres": [
+        -42,
+        1.626
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-1",
+      "sprite": "stands",
+      "positionMetres": [
+        -32,
+        -3.354
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-2",
+      "sprite": "stands",
+      "positionMetres": [
+        -22,
+        -7.119
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-3",
+      "sprite": "stands",
+      "positionMetres": [
+        -12,
+        -9.869
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-4",
+      "sprite": "stands",
+      "positionMetres": [
+        -2,
+        -11.723
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-5",
+      "sprite": "stands",
+      "positionMetres": [
+        8,
+        -12.75
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-6",
+      "sprite": "stands",
+      "positionMetres": [
+        18,
+        -12.984
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-7",
+      "sprite": "stands",
+      "positionMetres": [
+        28,
+        -12.435
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-8",
+      "sprite": "stands",
+      "positionMetres": [
+        38,
+        -11.084
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-9",
+      "sprite": "stands",
+      "positionMetres": [
+        48,
+        -8.882
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-10",
+      "sprite": "stands",
+      "positionMetres": [
+        58,
+        -5.744
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "stand-11",
+      "sprite": "stands",
+      "positionMetres": [
+        68,
+        -1.523
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "brazier-0",
+      "sprite": "brazier",
+      "positionMetres": [
+        -22,
+        7
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "brazier-1",
+      "sprite": "brazier",
+      "positionMetres": [
+        54,
+        7
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "brazier-2",
+      "sprite": "brazier",
+      "positionMetres": [
+        -25,
+        35
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "brazier-3",
+      "sprite": "brazier",
+      "positionMetres": [
+        57,
+        35
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "rubble-0",
+      "sprite": "rubble",
+      "positionMetres": [
+        -25,
+        18
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "rubble-1",
+      "sprite": "rubble",
+      "positionMetres": [
+        58,
+        24
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "rubble-2",
+      "sprite": "rubble",
+      "positionMetres": [
+        -12,
+        43
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "rubble-3",
+      "sprite": "rubble",
+      "positionMetres": [
+        44,
+        43
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "supplies-32",
+      "sprite": "supplies",
+      "positionMetres": [
+        -26,
+        12
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "altar-33",
+      "sprite": "altar",
+      "positionMetres": [
+        55,
+        15
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "column-34",
+      "sprite": "column",
+      "positionMetres": [
+        -29,
+        29
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    },
+    {
+      "id": "column-35",
+      "sprite": "column",
+      "positionMetres": [
+        61,
+        31
+      ],
+      "depthSort": "worldY at base line",
+      "collision": "none; presentation only"
+    }
+  ],
+  "rimSegments": [
+    {
+      "id": "rim-0",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.0,
+        0.09817477042468103
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-1",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.09817477042468103,
+        0.19634954084936207
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-2",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.19634954084936207,
+        0.2945243112740431
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-3",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.2945243112740431,
+        0.39269908169872414
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-4",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.39269908169872414,
+        0.4908738521234052
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-5",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.4908738521234052,
+        0.5890486225480862
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-6",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.5890486225480862,
+        0.6872233929727672
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-7",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.6872233929727672,
+        0.7853981633974483
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-8",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.7853981633974483,
+        0.8835729338221293
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-9",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.8835729338221293,
+        0.9817477042468103
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-10",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        0.9817477042468103,
+        1.0799224746714913
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-11",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.0799224746714913,
+        1.1780972450961724
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-12",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.1780972450961724,
+        1.2762720155208536
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-13",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.2762720155208536,
+        1.3744467859455345
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-14",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.3744467859455345,
+        1.4726215563702154
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-15",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.4726215563702154,
+        1.5707963267948966
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-16",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.5707963267948966,
+        1.6689710972195777
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-17",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.6689710972195777,
+        1.7671458676442586
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-18",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.7671458676442586,
+        1.8653206380689396
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-19",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.8653206380689396,
+        1.9634954084936207
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-20",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        1.9634954084936207,
+        2.061670178918302
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-21",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.061670178918302,
+        2.1598449493429825
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-22",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.1598449493429825,
+        2.2580197197676637
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-23",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.2580197197676637,
+        2.356194490192345
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-24",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.356194490192345,
+        2.454369260617026
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-25",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.454369260617026,
+        2.552544031041707
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-26",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.552544031041707,
+        2.650718801466388
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-27",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.650718801466388,
+        2.748893571891069
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-28",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.748893571891069,
+        2.84706834231575
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-29",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.84706834231575,
+        2.945243112740431
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-30",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        2.945243112740431,
+        3.043417883165112
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-31",
+      "sprite": "rim.back",
+      "ellipseAnglesRadians": [
+        3.043417883165112,
+        3.141592653589793
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-32",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.141592653589793,
+        3.2397674240144743
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-33",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.2397674240144743,
+        3.3379421944391554
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-34",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.3379421944391554,
+        3.436116964863836
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-35",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.436116964863836,
+        3.5342917352885173
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-36",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.5342917352885173,
+        3.6324665057131984
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-37",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.6324665057131984,
+        3.730641276137879
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-38",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.730641276137879,
+        3.8288160465625602
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-39",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.8288160465625602,
+        3.9269908169872414
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-40",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        3.9269908169872414,
+        4.025165587411922
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-41",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.025165587411922,
+        4.123340357836604
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-42",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.123340357836604,
+        4.221515128261284
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-43",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.221515128261284,
+        4.319689898685965
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-44",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.319689898685965,
+        4.417864669110647
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-45",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.417864669110647,
+        4.516039439535327
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-46",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.516039439535327,
+        4.614214209960009
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-47",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.614214209960009,
+        4.71238898038469
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-48",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.71238898038469,
+        4.81056375080937
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-49",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.81056375080937,
+        4.908738521234052
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-50",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        4.908738521234052,
+        5.006913291658733
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-51",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.006913291658733,
+        5.105088062083414
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-52",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.105088062083414,
+        5.203262832508095
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-53",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.203262832508095,
+        5.301437602932776
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-54",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.301437602932776,
+        5.399612373357457
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-55",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.399612373357457,
+        5.497787143782138
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-56",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.497787143782138,
+        5.595961914206819
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-57",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.595961914206819,
+        5.6941366846315
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-58",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.6941366846315,
+        5.792311455056181
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-59",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.792311455056181,
+        5.890486225480862
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-60",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.890486225480862,
+        5.988660995905543
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-61",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        5.988660995905543,
+        6.086835766330224
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-62",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        6.086835766330224,
+        6.1850105367549055
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    },
+    {
+      "id": "rim-63",
+      "sprite": "rim.front",
+      "ellipseAnglesRadians": [
+        6.1850105367549055,
+        6.283185307179586
+      ],
+      "render": "vertical-strip warp along exact ellipse; never rotate upright masonry",
+      "sourceBaseProfile": "sprite.baseProfilePx",
+      "sourceTopProfile": "sprite.topProfilePx",
+      "stripSourceWidthPx": 4,
+      "wallHeightMetres": 2.2,
+      "derivation": "each vertical texture strip fits between explicit top/base curves; true new painted facings are not claimed"
+    }
+  ],
+  "decalPlacements": [
+    {
+      "id": "ward-seal-0",
+      "kind": "rune.seal",
+      "positionMetres": [
+        -16,
+        1
+      ],
+      "sizeMetres": [
+        8,
+        8
+      ],
+      "opacity": 0.56
+    },
+    {
+      "id": "ward-seal-1",
+      "kind": "rune.seal",
+      "positionMetres": [
+        16,
+        -5
+      ],
+      "sizeMetres": [
+        8,
+        8
+      ],
+      "opacity": 0.56
+    },
+    {
+      "id": "ward-seal-2",
+      "kind": "rune.seal",
+      "positionMetres": [
+        48,
+        1
+      ],
+      "sizeMetres": [
+        8,
+        8
+      ],
+      "opacity": 0.56
+    },
+    {
+      "id": "ward-seal-3",
+      "kind": "rune.seal",
+      "positionMetres": [
+        -18,
+        40
+      ],
+      "sizeMetres": [
+        8,
+        8
+      ],
+      "opacity": 0.56
+    },
+    {
+      "id": "ward-seal-4",
+      "kind": "rune.seal",
+      "positionMetres": [
+        50,
+        40
+      ],
+      "sizeMetres": [
+        8,
+        8
+      ],
+      "opacity": 0.56
+    },
+    {
+      "id": "surface-0",
+      "kind": "scorch",
+      "positionMetres": [
+        -4,
+        17
+      ],
+      "sizeMetres": [
+        4,
+        4
+      ],
+      "opacity": 0.75
+    },
+    {
+      "id": "surface-1",
+      "kind": "crater",
+      "positionMetres": [
+        38,
+        35
+      ],
+      "sizeMetres": [
+        4,
+        4
+      ],
+      "opacity": 0.55
+    },
+    {
+      "id": "surface-2",
+      "kind": "cracks",
+      "positionMetres": [
+        24,
+        18
+      ],
+      "sizeMetres": [
+        4,
+        4
+      ],
+      "opacity": 0.65
+    },
+    {
+      "id": "surface-3",
+      "kind": "scorch",
+      "positionMetres": [
+        4,
+        36
+      ],
+      "sizeMetres": [
+        4,
+        4
+      ],
+      "opacity": 0.7
+    },
+    {
+      "id": "surface-4",
+      "kind": "rune.glyphs",
+      "positionMetres": [
+        37,
+        4
+      ],
+      "sizeMetres": [
+        4,
+        4
+      ],
+      "opacity": 0.45
+    }
+  ],
+  "renderOrder": [
+    "ground",
+    "ground decals",
+    "base shadows",
+    "rim strips and objects and actors sorted by base world Y",
+    "effects"
+  ],
+  "geometryBoundary": "All scenery is presentation. Never create colliders or move existing spawn points from this file.",
+  "owner_accepted": false
+}

@@ -1,0 +1,55 @@
+{
+  "id": "a9-rust-sand-ground-grok-a01",
+  "wave": "A9",
+  "style_id": "covenant",
+  "scene": "rust-sand-ground",
+  "attempt": 1,
+  "input": {
+    "wave": "A9",
+    "id": "rust-sand-ground",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok",
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+        "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+        "role": "approved arena material, light and detail reference"
+      }
+    ],
+    "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: warm weathered sandstone and dark slate, dusty ochre seams, burnt rust recesses, cool shadow, worn brass.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE square seamless bare arena FLOOR TEXTURE, viewed flat perpendicular to the surface for mapping onto an oblique game ground. Edge-to-edge material, no perspective scene, no horizon, no border, no vignette.\nLarge irregular worn flagstone slabs, fractured mineral layers, sparse small mortar seams, varied subtle stone colour, restrained areas of eroded stone. Fine painted detail and physical surface richness as in the reference. The whole square has even lighting and equal sharpness.\nNo runes, circles, glyphs, pylons, props, plants, people, shadows from objects or active effects. No central focal object. Seamless left/right and top/bottom by design; all edges should join. 1024x1024 or larger. Never bake a camera projection into the texture."
+  },
+  "input_hash": "5704b91c8ec83dc521f08fa22f251decdc6757d61e28faa44d74e17480217d06",
+  "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: warm weathered sandstone and dark slate, dusty ochre seams, burnt rust recesses, cool shadow, worn brass.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE square seamless bare arena FLOOR TEXTURE, viewed flat perpendicular to the surface for mapping onto an oblique game ground. Edge-to-edge material, no perspective scene, no horizon, no border, no vignette.\nLarge irregular worn flagstone slabs, fractured mineral layers, sparse small mortar seams, varied subtle stone colour, restrained areas of eroded stone. Fine painted detail and physical surface richness as in the reference. The whole square has even lighting and equal sharpness.\nNo runes, circles, glyphs, pylons, props, plants, people, shadows from objects or active effects. No central focal object. Seamless left/right and top/bottom by design; all edges should join. 1024x1024 or larger. Never bake a camera projection into the texture.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "0d70bf84-5cbb-4060-9747-44cc5645aab5",
+  "at": "2026-10-03T12:02:05.414524+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 26.312,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: warm weathered sandstone and dark slate, dusty ochre seams, burnt rust recesses, cool shadow, worn brass.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE square seamless bare arena FLOOR TEXTURE, viewed flat perpendicular to the surface for mapping onto an oblique game ground. Edge-to-edge material, no perspective scene, no horizon, no border, no vignette.\nLarge irregular worn flagstone slabs, fractured mineral layers, sparse small mortar seams, varied subtle stone colour, restrained areas of eroded stone. Fine painted detail and physical surface richness as in the reference. The whole square has even lighting and equal sharpness.\nNo runes, circles, glyphs, pylons, props, plants, people, shadows from objects or active effects. No central focal object. Seamless left/right and top/bottom by design; all edges should join. 1024x1024 or larger. Never bake a camera projection into the texture.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a9-rust-sand-ground-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a9-rust-sand-ground-grok-a01/source.jpg",
+  "archive": "art/review/sources/a9-rust-sand-ground-grok-a01.jpg",
+  "sha256": "78c0f6db19dac704c17374580b2328dcaba8a6aa29548c46f30e897e97b32c8b",
+  "invocation_evidence": "art/providers/runs/a9-rust-sand-ground-grok-a01"
+}

@@ -4,11 +4,34 @@ import tempfile
 from pathlib import Path
 import numpy as np
 from PIL import Image
-from restoration_common import luminous_alpha,alpha_metrics,grid,pack_frames
+from restoration_common import luminous_alpha,alpha_metrics,grid,pack_frames,adaptive_magenta,isolated_sheet
+from restoration_arena import periodic,seam_metrics
 from restoration_effects import exact_telegraph
 
 
 class RestorationTests(unittest.TestCase):
+    def test_magenta_key_preserves_neutral_and_rejects_wrong_matte(self):
+        im=Image.fromarray(np.array([[[255,0,255],[80,80,80],[255,255,255]]],dtype='uint8'))
+        got,_=adaptive_magenta(im,[255,0,255])
+        self.assertEqual(got.getpixel((0,0))[3],0)
+        self.assertEqual(got.getpixel((1,0)),(80,80,80,255))
+        with self.assertRaises(ValueError):adaptive_magenta(im,[10,10,10])
+
+    def test_periodic_edges_preserve_native_interior(self):
+        rng=np.random.default_rng(5);a=rng.integers(0,256,(256,256,3),dtype='uint8')
+        result=periodic(Image.fromarray(a),32)
+        self.assertEqual(sum(seam_metrics(result).values()),0)
+        np.testing.assert_array_equal(np.asarray(result)[32:-32,32:-32],a[32:-32,32:-32])
+
+    def test_isolation_never_hides_global_clipping(self):
+        from PIL import ImageDraw
+        im=Image.new('RGB',(300,200),(255,0,255));d=ImageDraw.Draw(im)
+        for y in range(2):
+            for x in range(3):d.rectangle((x*100+30,y*100+20,x*100+70,y*100+80),fill=(80,80,80))
+        self.assertEqual(len(isolated_sheet(im)),6)
+        d.rectangle((30,0,70,30),fill=(80,80,80))
+        with self.assertRaisesRegex(ValueError,'GLOBAL_SOURCE_CLIP'):isolated_sheet(im)
+
     def test_emission_extraction_reconstructs_source(self):
         rgb=np.array([[[0,0,0],[40,80,180],[255,180,80],[4,7,10]]],dtype='uint8')
         got=np.asarray(luminous_alpha(Image.fromarray(rgb))).astype(float)

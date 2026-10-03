@@ -1,3 +1,7 @@
+# Session 6 / A9 candidate
+
+A9 delivery candidate: three native-density periodic grounds, 36 keyed structures/props, 15 decals and explicit core-preserving layout. Six 1080p/1440p composites and three A6 side-by-side comparisons are on art/review/a9/index.html. Eleven serial Grok reservations; cumulative 241/300. Clipped rust banner replaced; generated letter-like decal cells and unrequested figure excluded. Rim mapping, rune stencils, matte extraction and damage feathering are labeled derived. Material detail improved; repeated stands, derived rim and less integrated atmospheric lighting mean concept equivalence remains unproven. Owner review and game integration remain open.
+
 # Session 6 / A8
 
 [Owner board](review/a8/index.html), [loading contract](delivery/a8/README.md). Delivered 35 effect clips, nine RGBA pages, 134 unique painted keys plus 64 authored telegraph keys; explicit pivots, timing, blend hints and loop flags. Seven calls, cumulative 230/300. Delivery/source/browser/portable gates and 65 tests pass; one rejected correction and partial-cell exclusions retained. Owner motion/fidelity, game integration and performance not measured. Next A9.
