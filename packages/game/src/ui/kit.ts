@@ -52,6 +52,7 @@ export interface UiAtlas {
   designSize: [number, number];
   pages: { id: string; file: string; size: [number, number]; sha256: string }[];
   regions: Record<string, AtlasFrame>;
+  components?: { dailyClock?: DailyClockContract };
   motion?: {
     hoverMs: number;
     pressMs: number;
@@ -59,6 +60,12 @@ export interface UiAtlas {
     tooltipDelayMs: number;
     panelRevealMs: number;
   };
+}
+export interface DailyClockContract {
+  layers: Record<string, string>;
+  headerSize: [number, number];
+  waterClipSource: [number, number, number, number];
+  meniscusSourceCrop: [number, number, number, number];
 }
 export function validateAtlas(value: unknown): UiAtlas {
   if (!value || typeof value !== "object") throw Error("Invalid UI atlas");
@@ -138,6 +145,7 @@ export function validateAtlas(value: unknown): UiAtlas {
 
 /** Same named lookup for delivered art and original procedural placeholders. */
 export class UiKit {
+  dailyClock?: DailyClockContract;
   private textures = new Map<
     string,
     {
@@ -231,6 +239,7 @@ export class UiKit {
         0,
       );
       if (manifest.motion) this.motion = manifest.motion;
+      this.dailyClock = manifest.components?.dailyClock;
     } catch (error) {
       for (const t of pages.values()) t.destroy(true);
       this.diagnostics.push(String(error));

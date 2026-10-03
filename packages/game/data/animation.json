@@ -10,7 +10,11 @@
     "hitOpacity": 0.7,
     "barrierOpacity": 0.68
   },
-  "bodies": { "hitHoldMs": 240, "castHoldMs": 240, "deathOpacity": 0.55 },
+  "bodies": {
+    "hitHoldMs": 240,
+    "castHoldMs": 240,
+    "deathOpacity": 0.55
+  },
   "schoolBodies": {
     "water": "cassia",
     "fire": "brennic",
@@ -34,5 +38,9 @@
     "absorb": ["idle", "cast", "hit", "run", "death"],
     "hit": ["idle", "absorb", "cast", "run", "death"],
     "death": ["hit", "idle", "absorb", "cast", "run"]
+  },
+  "dailyClock": {
+    "middayArtHour": 12,
+    "phaseFadeMs": 500
   }
 }

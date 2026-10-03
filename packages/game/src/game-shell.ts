@@ -59,6 +59,7 @@ export class GameShell {
     if (new URLSearchParams(location.search).has("harness"))
       Object.assign(window, {
         __artReview: {
+          clock: () => this.dailyDial?.snapshot(),
           portrait: (id: string) => {
             if (!art.manifest?.characters.some((c) => c.id === id))
               throw Error("Unknown portrait");
@@ -154,7 +155,12 @@ export class GameShell {
               (target - (this.shownHours ?? target)) * Math.min(1, dt * 5);
         if (Math.abs(this.shownHours - target) < 0.005)
           this.shownHours = target;
-        this.dailyDial.draw(this.shownHours, now);
+        this.dailyDial.draw(
+          this.shownHours,
+          now,
+          this.view.hour,
+          this.view.slot,
+        );
       }
     };
     this.ui.onGamepad = (pad) => this.arena?.input.updateGamepad(pad);
@@ -438,7 +444,14 @@ export class GameShell {
       },
     ].entries()) {
       const x = 1284 + i * 186;
-      this.ui.icon(stat.icon, x, 111, 23, this.ui.content, stat.colour);
+      this.ui.icon(
+        `stat.${stat.icon}.header`,
+        x,
+        111,
+        16,
+        this.ui.content,
+        stat.colour,
+      );
       this.ui.text(String(stat.value), x + 36, 87, 34, colours.text, 120);
       this.ui.text(stat.label, x - 24, 147, 24, stat.colour, 178);
     }
@@ -573,7 +586,12 @@ export class GameShell {
       this.clockDay = v.day.day;
     }
     this.dailyDial = new DailyClock(u, v.wakingHours, 184, 959);
-    this.dailyDial.draw(this.shownHours ?? v.hoursRemaining, performance.now());
+    this.dailyDial.draw(
+      this.shownHours ?? v.hoursRemaining,
+      performance.now(),
+      v.hour,
+      v.slot,
+    );
     u.text(
       `${String(v.hour).padStart(2, "0")}:00  /  ${friendly(v.slot)}`,
       286,

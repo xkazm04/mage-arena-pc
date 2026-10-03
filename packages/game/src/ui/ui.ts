@@ -501,6 +501,7 @@ export class CanvasUI {
       parent.addChild(delivered);
       return delivered;
     }
+    kind = kind.replace(/^stat\./, "").replace(/\.header$/, "");
     const g = new Graphics();
     parent.addChild(g);
     g.circle(x, y, r * 1.12).stroke({ color: colour, width: 1, alpha: 0.25 });
