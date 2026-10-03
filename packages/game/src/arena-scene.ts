@@ -1,3 +1,4 @@
+import { tuningFor } from "@mage/core/arena";
 import {
   BitmapText,
   Container,
@@ -7,7 +8,6 @@ import {
 } from "pixi.js";
 import {
   arenaGeometry,
-  combat,
   runtime,
   seconds,
   spells,
@@ -332,7 +332,7 @@ export class ArenaScene {
           { behind: true },
         );
         const pending = a.pending,
-          s = spells.find((s) => s.id === pending.spellId)!;
+          s = pending.spell ?? spells.find((s) => s.id === pending.spellId)!;
         const progress =
             (state.tick - pending.startTick) /
             Math.max(1, pending.releaseTick - pending.startTick),
@@ -397,11 +397,15 @@ export class ArenaScene {
       if (a.absorb) {
         const angle = Math.atan2(a.facing.y, a.facing.x),
           radius = contract.absorb.visual_radius_metres;
-        this.path(arcPoints(foot, radius, angle, combat.absorb.arcDeg)).stroke({
+        this.path(
+          arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
+        ).stroke({
           color: 0x205f78,
           width: m.outlinePx * 2.6,
         });
-        this.path(arcPoints(foot, radius, angle, combat.absorb.arcDeg)).stroke({
+        this.path(
+          arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
+        ).stroke({
           color: 0x9de9df,
           width: m.outlinePx * 1.3,
         });

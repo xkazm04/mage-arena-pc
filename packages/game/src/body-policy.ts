@@ -12,6 +12,7 @@ export interface BodySelection {
 export function bodyIdentity(a: Actor): string {
   if (a.enemy) return a.enemy.id;
   if (a.dummy) return "dummy";
+  if (a.school) return policy.schoolBodies[a.school];
   const name = a.label.toLowerCase();
   for (const id of Object.values(policy.schoolBodies))
     if (name === id) return id;

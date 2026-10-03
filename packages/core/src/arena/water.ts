@@ -1,3 +1,4 @@
+import { adjustedSpell, tuningFor } from './tuning.ts';
 import { combat } from './data.generated.ts';
 import { newWaterState, spellFor, spells, type Spell } from './catalog.ts';
 import { constrainToArena } from './geometry.ts';
@@ -15,7 +16,7 @@ export function flowCast(a: Actor, line: string, tick: number): { crest: boolean
   return { crest, damageMult: crest ? combat.flow.crest.damageMult : 1 + w.flow * combat.flow.perStackDamage };
 }
 export function trySpellCast(state: ArenaState, a: Actor, input: InputFrame): boolean {
-  const s = spellFor(a, input.slot); if (!s || s.kind === 'passive' || state.tick < (a.water.cooldowns[s.line] ?? 0)) return false;
+  const s = spellFor(a, input.slot, state); if (!s || s.kind === 'passive' || state.tick < (a.water.cooldowns[s.line] ?? 0)) return false;
   const cost = a.water.flow >= combat.flow.max ? combat.flow.crest.manaCost : s.mana;
   if (a.mana < cost) return false;
   let targetId: number | undefined;
@@ -25,10 +26,12 @@ export function trySpellCast(state: ArenaState, a: Actor, input: InputFrame): bo
     if (targetId === undefined) return false;
   }
   const flow = flowCast(a, s.line, state.tick);
+  if (state.lab) a.metrics.manaCast = (a.metrics.manaCast ?? 0) + cost;
   a.mana -= cost; a.water.cooldowns[s.line] = state.tick + ticks(s.cooldownS);
   const d = unit(sub(input.aim, a.pos), a.facing), range = Math.min(distance(a.pos, input.aim), s.rangeM);
   const aim = s.kind === 'zone' || s.effect === 'decoy' ? { x: a.pos.x + d.x * range, y: a.pos.y + d.y * range } : { ...input.aim };
   a.pending = { kind: 'spell', startTick: state.tick, releaseTick: state.tick + ticks(Math.max(s.castS, s.telegraphS)), aim, activationId: state.nextId++, spellId: s.id, damageMult: flow.damageMult, targetId };
+  if (state.tuning || a.school) a.pending.spell = { ...s };
   a.metrics.casts++; emit(state, 'cast', a, s.tier); return true;
 }
 function applyControl(state: ArenaState, a: Actor, target: Actor, s: Spell): void {
@@ -46,7 +49,9 @@ function heal(a: Actor, amount: number): void {
 }
 export function releaseSpell(state: ArenaState, a: Actor): void {
   const p = a.pending; if (!p || p.kind !== 'spell') return;
-  const s = spells.find(s => s.id === p.spellId)!; a.pending = undefined;
+  const s = p.spell ?? adjustedSpell(spells.find(s => s.id === p.spellId)!, a, state); a.pending = undefined;
+  const recovery = tuningFor(state).castRecoveryS;
+  if (recovery > 0) a.recoveryUntil = Math.max(a.recoveryUntil, state.tick + ticks(recovery));
   const direction = unit(sub(p.aim, a.pos), a.facing), damage = s.damage * (p.damageMult ?? 1);
   const hit: Hit = { ownerId: a.id, activationId: p.activationId, damage, family: s.family, tier: s.tier, source: { ...a.pos }, bolt: s.line === 'bolt' };
   if (s.kind === 'projectile') {

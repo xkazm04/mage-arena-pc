@@ -199,6 +199,7 @@ export class GameShell {
     );
     this.poll = window.setInterval(() => void this.refresh(), 150);
     if (location.pathname === "/camp") await this.continue();
+    else if (location.pathname === "/lab") this.openLab();
     else if (location.pathname === "/training") this.training();
     else {
       await request("pause", { paused: true });
@@ -328,6 +329,15 @@ export class GameShell {
       {
         tooltip: "Learn the ward, compose spells and challenge the Tiro Games.",
       },
+    );
+    this.ui.button(
+      "combat-feel-lab",
+      "Combat Feel Lab",
+      1040,
+      863,
+      650,
+      72,
+      () => this.openLab(),
     );
     this.ui.button(
       "fullscreen",
@@ -1576,6 +1586,18 @@ export class GameShell {
       after();
     });
   }
+  private openLab() {
+    this.arena?.dispose();
+    this.arena = new ArenaGame(
+      this.ui,
+      () => void this.pause(),
+      () => this.results(),
+    );
+    this.arena.startLab(() =>
+      this.compose("lab", this.arena!.lab!.config.composition),
+    );
+    history.replaceState(null, "", `/lab${location.search}`);
+  }
   private compose(destination: string, initial: Composition = presets[0]!) {
     const choice = structuredClone(initial),
       u = this.ui;
@@ -1583,7 +1605,9 @@ export class GameShell {
     const draw = () => {
       this.scene(
         "composition",
-        "Compose your Water",
+        destination === "lab"
+          ? "Compose your practice loadout"
+          : "Compose your Water",
         "BEFORE THE COLLAR OPENS",
         "arena",
       );
@@ -1696,7 +1720,11 @@ export class GameShell {
         );
       });
       this.back(() =>
-        destination === "season" ? this.camp() : this.training(),
+        destination === "season"
+          ? this.camp()
+          : destination === "lab"
+            ? this.arena!.labUI!.openSetup()
+            : this.training(),
       );
       this.footer(
         "Alternate lines to build Flow. A full Flow makes the next cast a free Crest.",
@@ -1716,6 +1744,11 @@ export class GameShell {
               await seasonCommand({ type: "prepare", composition: choice });
               await seasonCommand({ type: "start" });
               await this.continue();
+            } else if (destination === "lab") {
+              this.arena!.labUI!.reset({
+                ...this.arena!.lab!.config,
+                composition: choice,
+              });
             } else {
               this.arena?.dispose();
               this.arena = new ArenaGame(
@@ -1966,13 +1999,8 @@ export class GameShell {
           this.menu();
         }),
     );
-    u.text(
-      "The collar and the camp are still.",
-      580,
-      790,
-      30,
-      colours.muted,
-      760,
+    u.button("pause-combat-lab", "Combat Feel Lab", 580, 766, 760, 70, () =>
+      this.openLab(),
     );
     u.onBack = () => void this.run(() => this.resume());
     u.end("resume");

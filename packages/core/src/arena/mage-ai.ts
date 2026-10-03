@@ -1,3 +1,4 @@
+import { tuningFor } from './tuning.ts';
 import { arenaContains, arenaGeometry } from './geometry.ts';
 import { enemyData } from './data.generated.ts';
 import { spellFor, spells } from './catalog.ts';
@@ -51,7 +52,9 @@ function threats(state: ArenaState, a: Actor): Threat[] {
 }
 export function mageInput(state: ArenaState, a: Actor): InputFrame {
   const brain = a.mageAI; if (!brain || a.down) return idleInput();
-  const profile = competence(brain.competence), target = state.actors.filter(t => t.team !== a.team && !t.down && hasLineOfSight(state, a.pos, t.pos)).sort((x, y) => distance(a.pos, x.pos) - distance(a.pos, y.pos) || x.id - y.id)[0];
+  const tune = tuningFor(state), baseProfile = competence(brain.competence);
+  const profile = { ...baseProfile, reactionDelayS: Math.max(enemyData.mages.caps.reactionDelayMinS, baseProfile.reactionDelayS * tune.enemyReactionScale), aimErrorDeg: baseProfile.aimErrorDeg * tune.enemyAimErrorScale };
+  const target = state.actors.filter(t => t.team !== a.team && !t.down && hasLineOfSight(state, a.pos, t.pos)).sort((x, y) => distance(a.pos, x.pos) - distance(a.pos, y.pos) || x.id - y.id)[0];
   const seen = threats(state, a);
   for (const threat of seen) {
     let memory = brain.observed.find(m => m.id === threat.id);
@@ -62,7 +65,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
       if (random(state, `mage ${a.id} absorb ${threat.id}`) < profile.absorbChance) {
         brain.targetPoint = { ...threat.origin };
         const perfect = random(state, `mage ${a.id} perfect ${threat.id}`) < profile.perfectChance;
-        brain.plannedRaiseTick = perfect ? Math.max(state.tick + 1, threat.impactTick - Math.floor(ticks(combat.absorb.perfect.windowS) / 2)) : state.tick + 1;
+        brain.plannedRaiseTick = perfect ? Math.max(state.tick + 1, threat.impactTick - Math.floor(ticks(tune.absorbWindowS) / 2)) : state.tick + 1;
         brain.plannedReleaseTick = threat.impactTick + 1; brain.defendUntil = brain.plannedReleaseTick;
       }
     } else if (a.stamina >= combat.roll.staminaCost) {
@@ -79,7 +82,8 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
       if (target) {
         const d = distance(a.pos, target.pos), direction = unit(sub(target.pos, a.pos));
         const strafe = Math.floor(state.tick / ticks(runtime.games.mageStrafePeriodS)) % 2 ? 1 : -1;
-        const preferred = runtime.games.magePreferredDistanceM;
+        const aggression = brain.aggression ?? 1;
+        const preferred = runtime.games.magePreferredDistanceM.map(v => v * (1.3 - .3 * aggression));
         input.move = d > preferred[1]! ? direction : d < preferred[0]! ? { x: -direction.x, y: -direction.y } : { x: -direction.y * strafe, y: direction.x * strafe };
         // Turn inward at the arena edge instead of getting pinned by the clamp.
         if (!arenaContains(a.pos, runtime.games.spawnMarginM)) input.move = unit(sub(arenaGeometry.centre, a.pos));
@@ -88,7 +92,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         const prediction = target.water.decoy ? aimPoint : { x: aimPoint.x + velocity.x * lead, y: aimPoint.y + velocity.y * lead };
         const error = (random(state, `mage ${a.id} aim`) * 2 - 1) * profile.aimErrorDeg * Math.PI / 180;
         const aimDirection = rotate(sub(prediction, a.pos), error); input.aim = { x: a.pos.x + aimDirection.x, y: a.pos.y + aimDirection.y };
-        const available = Array.from({ length: combat.lines.slots + 1 }, (_, slot) => ({ slot, s: spellFor(a, slot)! })).filter(({ s }) => s.kind !== 'passive' && (a.water.cooldowns[s.line] ?? 0) <= state.tick + 1 && (a.water.flow >= combat.flow.max || s.mana <= a.mana) && (!s.rangeM || d <= s.rangeM));
+        const available = Array.from({ length: combat.lines.slots + 1 }, (_, slot) => ({ slot, s: spellFor(a, slot, state)! })).filter(({ s }) => s.kind !== 'passive' && (a.water.cooldowns[s.line] ?? 0) <= state.tick + 1 && (a.water.flow >= combat.flow.max || s.mana <= a.mana) && (!s.rangeM || d <= s.rangeM));
         const useful = available.filter(({ s }) => s.damage > 0 || (['heal','hot'].includes(s.effect) && a.hp < a.maxHp) || (s.effect === 'font' && a.mana < a.maxMana) || (s.effect === 'ward' && seen.some(t => t.family === 'magic')) || s.kind === 'zone' || s.effect === 'decoy' || s.effect === 'sheen' || s.effect === 'encase');
         const choices = useful.length ? useful : available;
         if (choices.length) {
@@ -98,7 +102,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
               const counterX = profile.level >= 3 && target.absorb && x.s.family === 'unblockable', counterY = profile.level >= 3 && target.absorb && y.s.family === 'unblockable';
               return Number(counterY) - Number(counterX) || Number(sustainY) - Number(sustainX) || Number(y.s.line !== a.water.lastLine) - Number(x.s.line !== a.water.lastLine) || y.s.damage * y.s.count - x.s.damage * x.s.count || x.slot - y.slot;
             })[0]!;
-          input.slot = choice.slot; input.cast = true;
+          input.slot = choice.slot; input.cast = brain.aggression === undefined || brain.aggression >= 1 || random(state, `mage ${a.id} aggression`) < brain.aggression;
         }
       }
     }

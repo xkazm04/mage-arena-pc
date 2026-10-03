@@ -1,3 +1,4 @@
+import { tuningFor } from "@mage/core/arena";
 import {
   Container,
   Graphics,
@@ -57,6 +58,7 @@ export class EffectPlayer {
   private state?: ArenaState;
   private eventIndex = 0;
   private blocks = new Map<number, number>();
+  private arcDeg: number = combat.absorb.arcDeg;
   private pending = new Map<number, PendingCast>();
   private requests = new Set<string>();
   private disposed = false;
@@ -103,6 +105,7 @@ export class EffectPlayer {
   element(a?: Actor): Element {
     const override = a && this.elementOverrides.get(a.id);
     if (override) return override;
+    if (a?.school) return a.school;
     return a?.enemy
       ? ((policy.enemyElements[
           a.enemy.id as keyof typeof policy.enemyElements
@@ -123,6 +126,7 @@ export class EffectPlayer {
     this.used = 0;
     this.c = c;
     this.tick = state.tick + alpha;
+    this.arcDeg = tuningFor(state).absorbArcDeg;
     for (const slot of this.slots) slot.root.visible = false;
     if (this.namespace === "a13") {
       this.cpuMs = performance.now() - started;
@@ -337,10 +341,7 @@ export class EffectPlayer {
       // membrane to the same open-rear sector as the data-owned ward outline.
       mask.moveTo(0, 0);
       for (let i = 0; i <= 36; i++) {
-        const a =
-          ((-combat.absorb.arcDeg / 2 + (combat.absorb.arcDeg * i) / 36) *
-            Math.PI) /
-          180;
+        const a = ((-this.arcDeg / 2 + (this.arcDeg * i) / 36) * Math.PI) / 180;
         mask.lineTo(Math.cos(a) * r * 1.14, Math.sin(a) * r * 1.14 * squash);
       }
       mask.closePath().fill(0xffffff);

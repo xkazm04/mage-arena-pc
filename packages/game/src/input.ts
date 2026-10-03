@@ -39,7 +39,7 @@ export class ArenaInput {
       handler: (e: WindowEventMap[K]) => void,
     ) => window.addEventListener(type, handler, { signal });
     listen("keydown", (e) => {
-      if (!this.enabled()) return;
+      if (e.defaultPrevented || !this.enabled()) return;
       if (["Space", "ArrowUp", "ArrowDown"].includes(e.code))
         e.preventDefault();
       this.keys.add(e.code);

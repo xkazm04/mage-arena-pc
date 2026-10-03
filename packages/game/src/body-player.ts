@@ -1,5 +1,11 @@
 import { Rectangle, Texture, type Sprite } from "pixi.js";
-import { combat, seconds, type Actor, type ArenaState } from "@mage/core/arena";
+import {
+  tuningFor,
+  combat,
+  seconds,
+  type Actor,
+  type ArenaState,
+} from "@mage/core/arena";
 import { art } from "./art.ts";
 import {
   bodyIdentity,
@@ -24,6 +30,8 @@ interface Motion {
   castUntil: number;
   selection?: BodySelection;
   frame: number;
+  angle?: number;
+  lastTick?: number;
 }
 export class BodyPlayer {
   manifest?: BodyManifest;
@@ -135,12 +143,40 @@ export class BodyPlayer {
             : Math.abs(vx) + Math.abs(vy) > 1e-6
               ? "run"
               : "idle";
+    const response = this.state ? tuningFor(this.state).turnResponse : 0;
+    const tx = state === "run" ? vx : a.facing.x,
+      ty = state === "run" ? vy : a.facing.y;
+    const targetAngle = Math.atan2(ty, tx);
+    let smoothed: Direction | undefined;
+    if (response > 0 && Math.hypot(tx, ty) > 1e-6) {
+      const previous = motion.angle ?? targetAngle;
+      const delta = Math.atan2(
+        Math.sin(targetAngle - previous),
+        Math.cos(targetAngle - previous),
+      );
+      motion.angle =
+        previous +
+        delta *
+          (1 -
+            Math.exp(
+              (-response *
+                Math.max(0, this.tick - (motion.lastTick ?? this.tick))) /
+                combat.simStepHz,
+            ));
+      smoothed = facingFromVector(
+        Math.cos(motion.angle),
+        Math.sin(motion.angle),
+        motion.direction,
+      );
+    } else motion.angle = targetAngle;
+    motion.lastTick = this.tick;
     const direction =
-      state === "run"
+      smoothed ??
+      (state === "run"
         ? facingFromVector(vx, vy, motion.direction)
         : state === "cast" || state === "absorb" || state === "hit"
           ? facingFromVector(a.facing.x, a.facing.y, motion.direction)
-          : motion.direction;
+          : motion.direction);
     if (state !== motion.state) {
       motion.since = this.tick;
       motion.state = state;

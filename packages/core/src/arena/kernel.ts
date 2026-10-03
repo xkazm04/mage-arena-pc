@@ -1,3 +1,4 @@
+import { profileFor, tuningFor } from './tuning.ts';
 import { combat, statRules, bolt, rankRange } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
 import { constrainToArena } from './geometry.ts';
@@ -50,26 +51,33 @@ export function interrupt(state: ArenaState, actor: Actor): void {
 }
 export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean } {
   if (target.down || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
+  const tune = tuningFor(state);
   const spec = target.enemy ? enemySpec(target) : undefined;
   const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
   const incomingDamage = hit.damage * (hit.bolt ? spec?.armourMultVsBolt ?? 1 : 1) * (shielded ? spec?.frontBlockMult ?? 1 : 1);
-  const guarded = target.absorb && inArc(target.facing, sub(hit.source, target.pos), combat.absorb.arcDeg);
-  const perfect = guarded && hit.family === 'magic' && state.tick - target.absorbFreshTick <= ticks(combat.absorb.perfect.windowS);
+  const guarded = target.absorb && inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg);
+  const perfect = guarded && hit.family === 'magic' && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS);
   const reduction = guarded ? (perfect ? combat.absorb.perfect.reduction : combat.absorb.reduction[hit.family]) : combat.absorb.reduction.outsideArc;
   const damage = incomingDamage * (1 - reduction);
   if (perfect) {
     target.metrics.perfects++;
-    const refund = Math.min(target.maxMana - target.mana, perfectReturn(hit.tier, target.ranks.nerve) * refundMult(state, target));
+    const refund = Math.min(target.maxMana - target.mana, perfectReturn(hit.tier, target.ranks.nerve) * refundMult(state, target) * tune.perfectRefundScale);
     target.mana += refund; target.metrics.manaReturned += refund;
     target.clockAdvanceTicks += ticks(combat.tierClock.perfectAbsorbAdvanceS);
     emit(state, 'perfect', target, refund, hit.ownerId);
   } else if (reduction > 0) target.metrics.blocks++;
   if (reduction > 0) waterAbsorbed(state, target, hit, incomingDamage - damage, perfect);
-  const hpRemoved = Math.min(target.hp, damage);
-  target.hp = Math.max(0, target.hp - damage); target.metrics.damageTaken += hpRemoved;
+  const applied = state.lab?.damageEnabled === false ? 0 : damage;
+  const hpRemoved = Math.min(target.hp, applied);
+  target.hp = Math.max(0, target.hp - applied); target.metrics.damageTaken += hpRemoved;
   const owner = state.actors.find(a => a.id === hit.ownerId);
   if (owner) owner.metrics.damageDealt += hpRemoved;
   target.metrics.hits++; emit(state, 'hit', target, hpRemoved, hit.ownerId);
+  if (state.lab) Object.assign(state.events.at(-1)!, { family: hit.family, contactDamage: damage, guarded: guarded && reduction > 0, activationId: hit.activationId });
+  if (damage > 0 && !perfect) {
+    if (tune.hitStunS > 0) { target.staggerUntil = Math.max(target.staggerUntil ?? 0, state.tick + ticks(tune.hitStunS)); interrupt(state, target); }
+    if (tune.knockbackM > 0) { const d = unit(sub(target.pos, hit.source)), amount = tune.knockbackM * Math.min(2, damage / 10); target.pos = constrainToArena({ x: target.pos.x + d.x * amount, y: target.pos.y + d.y * amount }, target.radius); }
+  }
   if (target.hp === 0) { target.down = true; target.absorb = false; interrupt(state, target); emit(state, 'down', target); }
   return { damage, perfect };
 }
@@ -90,34 +98,45 @@ function updateWard(state: ArenaState, a: Actor, input: InputFrame): void {
     } else a.absorbExhausted = true;
   }
   if (a.absorb) {
-    const cost = drainPerSecond(a.ranks.nerve) * wardDrainMult(state, a) * DT;
+    const cost = drainPerSecond(a.ranks.nerve) * wardDrainMult(state, a) * tuningFor(state).absorbDrainScale * DT;
     const paid = Math.min(a.mana, cost); a.mana -= paid; a.metrics.manaDrained += paid;
     if (paid < cost || a.mana <= 1e-9) { a.mana = Math.max(0, a.mana); a.absorb = false; a.absorbExhausted = true; }
   }
 }
 function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   a.previousPos = { ...a.pos };
+  const tune = tuningFor(state);
+  const canCancel = !a.pending || tune.castCommitFraction >= 1 || state.tick < a.pending.startTick + Math.ceil((a.pending.releaseTick - a.pending.startTick) * tune.castCommitFraction);
   const rooted = state.tick < a.water.rootUntil || a.pending?.spellId === 'mend:4:base';
-  if (!rooted && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost) {
-    a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(combat.roll.durationS);
-    a.immuneUntil = state.tick + ticks(combat.roll.iFramesS); a.recoveryUntil = a.rollUntil + ticks(combat.roll.recoveryS);
+  if (!rooted && canCancel && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost) {
+    a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(tune.rollDurationS);
+    a.immuneUntil = state.tick + ticks(tune.rollIFramesS); a.recoveryUntil = a.rollUntil + ticks(tune.rollRecoveryS);
     a.stamina -= combat.roll.staminaCost; a.staminaUsedTick = state.tick; a.metrics.rolls++;
     a.absorb = false; if (input.absorb) a.absorbExhausted = true; interrupt(state, a); emit(state, 'roll', a);
   }
   let velocity = { x: 0, y: 0 };
   if (state.tick < a.rollUntil) {
-    const speed = combat.roll.distanceM / (ticks(combat.roll.durationS) * DT);
+    const speed = tune.rollDistanceM / (ticks(tune.rollDurationS) * DT);
     velocity = { x: a.rollDirection.x * speed, y: a.rollDirection.y * speed };
   } else if (!rooted && length(input.move) > 0) {
-    const move = unit(input.move); let speed: number = a.speedMps ?? combat.movement.walkMps;
+    const move = unit(input.move); let speed: number = a.speedMps ?? tune.walkMps;
     const sprintCost = combat.movement.sprintStaminaPerSecond * DT;
     if (input.sprint && !a.absorb && !a.pending && a.stamina >= sprintCost) {
-      speed = combat.movement.sprintMps; a.stamina -= sprintCost; a.staminaUsedTick = state.tick;
+      speed = tune.sprintMps; a.stamina -= sprintCost; a.staminaUsedTick = state.tick;
     }
+    speed *= profileFor(a).move;
+    if (a.pending) speed *= tune.castMoveMultiplier;
     if (a.absorb) speed *= combat.absorb.moveSpeedWhileHeldMult;
     if (state.tick < a.water.slowUntil) speed *= a.water.slowMult;
     velocity = { x: move.x * speed, y: move.y * speed };
   }
+  if (state.tick >= a.rollUntil && !rooted && (tune.accelerationMps2 > 0 || tune.decelerationMps2 > 0)) {
+    const previous = a.velocity ?? { x: 0, y: 0 }, dx = velocity.x - previous.x, dy = velocity.y - previous.y;
+    const acceleration = length(input.move) > 0 ? tune.accelerationMps2 : tune.decelerationMps2;
+    const amount = acceleration === 0 ? 1 : Math.min(1, acceleration * DT / Math.max(1e-9, Math.hypot(dx, dy)));
+    velocity = { x: previous.x + dx * amount, y: previous.y + dy * amount };
+    a.velocity = { ...velocity };
+  } else if (a.velocity) a.velocity = { ...velocity };
   a.pos = constrainToArena({ x: a.pos.x + velocity.x * DT, y: a.pos.y + velocity.y * DT }, a.radius);
 }
 function releaseCast(state: ArenaState, a: Actor): void {
@@ -215,7 +234,7 @@ function updateProjectiles(state: ArenaState): void {
 export function updateClock(state: ArenaState, a: Actor): void {
   const next = (a.tier + 1) as 2 | 3 | 4;
   if (next > 4) return;
-  if (state.tick - a.waveStartTick + a.clockAdvanceTicks >= ticks(combat.tierClock.unlockAtSeconds[next]) && state.tick - a.lastUnlockTick >= ticks(combat.tierClock.minimumSecondsBetweenUnlocks)) {
+  if (state.tick - a.waveStartTick + a.clockAdvanceTicks >= ticks((next - 1) * tuningFor(state).collarIntervalS) && state.tick - a.lastUnlockTick >= ticks(combat.tierClock.minimumSecondsBetweenUnlocks)) {
     a.tier = next; a.lastUnlockTick = state.tick; a.unlockTicks.push(state.tick); emit(state, 'unlock', a, next);
   }
 }
@@ -225,9 +244,10 @@ export function stepArena(state: ArenaState, inputs: Readonly<Record<number, Inp
   for (const a of state.actors) {
     if (a.down) continue;
     updateWater(state, a);
-    a.mana = Math.min(a.maxMana, a.mana + maximum(statRules.manaRegen, a.ranks.focus) * DT);
+    a.mana = Math.min(a.maxMana, a.mana + maximum(statRules.manaRegen, a.ranks.focus) * tuningFor(state).manaRegenScale * DT);
     if (state.tick - a.staminaUsedTick >= ticks(combat.stamina.regenDelayS)) a.stamina = Math.min(a.maxStamina, a.stamina + combat.stamina.regenPerSecond * DT);
     if (state.tick < a.water.encasedUntil) { a.previousPos = { ...a.pos }; continue; }
+    if (state.tick < (a.staggerUntil ?? 0)) { a.previousPos = { ...a.pos }; a.absorb = false; if (a.velocity) a.velocity = { x: 0, y: 0 }; continue; }
     const input = inputs[a.id] ?? idleInput({ x: a.pos.x + a.facing.x, y: a.pos.y + a.facing.y });
     a.facing = unit(sub(input.aim, a.pos), a.facing);
     updateWard(state, a, input); moveActor(state, a, input); releaseCast(state, a); startCast(state, a, input);

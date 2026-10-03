@@ -1,3 +1,4 @@
+import { LabUI } from "./lab-ui.ts";
 import { ArtFixture } from "./art-fixture.ts";
 import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
@@ -11,6 +12,12 @@ import {
 } from "@mage/core";
 import {
   combat,
+  createLab,
+  defaultLabConfig,
+  stepLab,
+  tuningFor,
+  type CombatLab,
+  type LabConfig,
   arenaGeometry,
   createTraining,
   FixedStepper,
@@ -64,8 +71,10 @@ export class ArenaGame {
   camera: Camera;
   training = createTraining();
   games?: Games;
+  lab?: CombatLab;
+  labUI?: LabUI;
   composition: Composition = structuredClone(presets[0]!);
-  mode: "training" | "roster" | "tiro" = "training";
+  mode: "training" | "roster" | "tiro" | "lab" = "training";
   paused = false;
   syncError = "";
   private clock = new FixedStepper();
@@ -286,6 +295,36 @@ export class ArenaGame {
       this.camera.zoom,
     );
   }
+  startLab(compose: () => void) {
+    this.resetLab(defaultLabConfig);
+    this.labUI = new LabUI(this.ui, this, compose);
+    this.hud();
+    this.labUI.openSetup();
+  }
+  resetLab(config: LabConfig) {
+    const previous = this.lab;
+    this.restart();
+    this.lab = createLab(
+      config,
+      previous?.training.state.tuning,
+      previous?.tuningName,
+    );
+    if (previous)
+      this.lab.training.state.lab!.damageEnabled =
+        previous.training.state.lab!.damageEnabled;
+    this.training = this.lab.training;
+    this.composition = config.composition;
+    this.mode = "lab";
+  }
+  stepLabOnce() {
+    if (this.lab && !this.labUI?.replayState)
+      stepLab(this.lab, {
+        ...this.input.frame(),
+        cast: false,
+        absorb: false,
+        roll: false,
+      });
+  }
   startGames(seed = 4) {
     this.restart();
     this.mode = "tiro";
@@ -365,7 +404,9 @@ export class ArenaGame {
     u.text(
       this.mode === "tiro"
         ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
-        : "THE PROVING GROUND",
+        : this.lab
+          ? "COMBAT FEEL LAB"
+          : "THE PROVING GROUND",
       96,
       58,
       24,
@@ -500,9 +541,11 @@ export class ArenaGame {
       heading.text =
         this.mode === "tiro"
           ? `${state.actors.filter((a) => a.team !== player.team && !a.down).length} opponents remain`
-          : "Cassia of the Tide";
+          : this.lab
+            ? `${this.lab.config.playerSchool.toUpperCase()} / practice mage`
+            : "Cassia of the Tide";
       for (let i = 0; i < 4; i++) {
-        const s = spellFor(player, i)!;
+        const s = spellFor(player, i, state)!;
         const slot = u.buttons.find((b) => b.id === `slot-${i}`)!;
         slot.selected = this.input.slot === i;
         slot.tooltip =
@@ -558,7 +601,7 @@ export class ArenaGame {
         nextTier <= 4
           ? Math.max(
               0,
-              combat.tierClock.unlockAtSeconds[nextTier] - elapsed,
+              (nextTier - 1) * tuningFor(state).collarIntervalS - elapsed,
               combat.tierClock.minimumSecondsBetweenUnlocks -
                 seconds(state.tick - player.lastUnlockTick),
             )
@@ -587,11 +630,7 @@ export class ArenaGame {
           ])
           .fill(i < tier ? colours.water : colours.edge);
       }
-      const interval =
-        tier < 4
-          ? combat.tierClock.unlockAtSeconds[nextTier] -
-            combat.tierClock.unlockAtSeconds[tier as 1 | 2 | 3 | 4]
-          : 1;
+      const interval = tier < 4 ? tuningFor(state).collarIntervalS : 1;
       const a =
         -Math.PI / 2 + Math.PI * 2 * (tier < 4 ? 1 - until / interval : 1);
       if (clockHand) clockHand.rotation = a + Math.PI / 2;
@@ -615,6 +654,7 @@ export class ArenaGame {
           ? "Left stick move  /  Right stick aim  /  RT cast  /  LT absorb  /  A roll  /  LB RB spells"
           : "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells";
     };
+    if (this.lab) this.labUI?.installHUD();
     u.end();
     this.hudUpdate();
   }
@@ -639,13 +679,15 @@ export class ArenaGame {
     let alpha = 1;
     if (
       !this.paused &&
+      !this.labUI?.replayState &&
       !this.pending &&
       !this.syncError &&
       !this.training.player.down &&
       !document.hidden
     )
       alpha = this.clock.advance(dt, () => {
-        if (this.games) {
+        if (this.lab) stepLab(this.lab, this.input.frame());
+        else if (this.games) {
           if (this.season && this.games.phase === "active")
             this.seasonStep({
               type: "tick",
@@ -691,7 +733,10 @@ export class ArenaGame {
               this.ui.notice("The collar loosens. Stand ready.");
             }
           } else if (e.kind === "cast")
-            void gameAudio.play(actor.enemy ? "impact" : "cast.water", spatial);
+            void gameAudio.play(
+              actor.enemy ? "impact" : `cast.${actor.school ?? "water"}`,
+              spatial,
+            );
           else if (e.kind === "hit" && e.value > 0)
             void gameAudio.play(e.actorId === p.id ? "hit" : "impact", spatial);
           else if (e.kind === "roll") void gameAudio.play("roll", spatial);
@@ -709,22 +754,23 @@ export class ArenaGame {
           "Checkpoint failed. Load the last accepted save to resume.",
         ),
       );
+    const replay = this.labUI?.frame(dt);
+    const shown = replay ?? this.training.state;
+    const shownPlayer =
+      replay?.actors.find((a) => a.id === this.training.player.id) ??
+      this.training.player;
     this.camera = clampPlateCamera(
       followCamera(
         this.camera,
-        interpolate(
-          this.training.player.previousPos,
-          this.training.player.pos,
-          alpha,
-        ),
+        interpolate(shownPlayer.previousPos, shownPlayer.pos, alpha),
         dt,
       ),
     );
     this.input.refreshAim();
     this.artFixture?.update(dt);
     this.scene.render(
-      this.artFixture?.state ?? this.training.state,
-      this.artFixture?.player ?? this.training.player,
+      this.artFixture?.state ?? shown,
+      this.artFixture?.player ?? shownPlayer,
       this.camera,
       alpha,
       this.input.aim,
@@ -735,6 +781,7 @@ export class ArenaGame {
     const phase =
       this.games?.phase ?? (this.training.player.down ? "failed" : "active");
     if (
+      !this.lab &&
       phase !== "active" &&
       phase !== this.lastPhase &&
       this.ui.screen === "arena"
@@ -753,6 +800,13 @@ export class ArenaGame {
       aim: this.input.aim,
       paused: this.paused,
       mode: this.mode,
+      lab: this.lab && {
+        config: this.lab.config,
+        metrics: this.lab.metrics,
+        tuningName: this.lab.tuningName,
+        historyCount: this.lab.historyCount,
+        replayTick: this.labUI?.replayState?.tick,
+      },
       games: this.games,
       camera: this.camera,
       cameraMetrics: cameraMetrics(this.camera),
@@ -771,6 +825,7 @@ export class ArenaGame {
   dispose() {
     this.disposed = true;
     window.removeEventListener("keydown", this.artDebugKey);
+    this.labUI?.dispose();
     this.input.dispose();
     this.scene.dispose();
     gameAudio.setScene("silent");

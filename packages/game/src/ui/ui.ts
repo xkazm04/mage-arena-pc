@@ -30,6 +30,13 @@ export interface ButtonOptions {
   hold?: (held: boolean) => void;
 }
 export interface Button extends Rect {
+  slider?: {
+    min: number;
+    max: number;
+    step: number;
+    value: number;
+    set: (value: number) => void;
+  };
   id: string;
   label: string;
   disabled: boolean;
@@ -147,6 +154,7 @@ export class CanvasUI {
       (e) => {
         this.modality = "mouse";
         this.point(e);
+        if (this.pressed?.slider) this.dragSlider(this.pressed);
         const id = this.hit()?.id ?? "";
         if (id !== this.hover) {
           if (id) void gameAudio.play("ui.slot");
@@ -174,6 +182,7 @@ export class CanvasUI {
           void gameAudio.play("ui.deny");
         if (b?.hold) void gameAudio.play("ui.click");
         this.pressed = b;
+        if (b?.slider) this.dragSlider(b);
         if (b) {
           this.focus = b.id;
           b.hold?.(true);
@@ -189,7 +198,8 @@ export class CanvasUI {
         const b = this.pressed;
         this.pressed = undefined;
         b?.hold?.(false);
-        if (b && this.hit()?.id === b.id && !b.hold) this.activate(b.id);
+        if (b && this.hit()?.id === b.id && !b.hold && !b.slider)
+          this.activate(b.id);
       },
       { signal },
     );
@@ -237,6 +247,14 @@ export class CanvasUI {
   blocksPointer() {
     return this.screen !== "arena" || !!this.hit();
   }
+  private dragSlider(b: Button) {
+    const s = b.slider!;
+    s.set(
+      s.min +
+        Math.max(0, Math.min(1, (this.pointer.x - b.x - 18) / (b.w - 36))) *
+          (s.max - s.min),
+    );
+  }
   private key(e: KeyboardEvent) {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (this.busy) {
@@ -252,6 +270,15 @@ export class CanvasUI {
       e.preventDefault();
       void gameAudio.play("ui.tab");
       this.onBack();
+      return;
+    }
+    const slider = this.buttons.find((b) => b.id === this.focus)?.slider;
+    if (slider && ["ArrowLeft", "ArrowRight"].includes(e.code)) {
+      e.preventDefault();
+      this.modality = "keyboard";
+      slider.set(
+        slider.value + (e.code === "ArrowLeft" ? -1 : 1) * slider.step,
+      );
       return;
     }
     const directions: Record<string, "left" | "right" | "up" | "down"> = {
@@ -483,6 +510,59 @@ export class CanvasUI {
     root.alpha = b.disabled ? 0.45 : 1;
     this.buttons.push(b);
     return b;
+  }
+  /** Canvas-native numeric slider: pointer drag or focused Left/Right. */
+  slider(
+    id: string,
+    x: number,
+    y: number,
+    w: number,
+    value: number,
+    min: number,
+    max: number,
+    step: number,
+    change: (value: number) => void,
+  ) {
+    const b = this.button(id, "", x, y, w, 64, () => {}, {
+      tooltip: "Drag, or focus and use Left / Right.",
+    });
+    const ink = new Graphics();
+    b.root.addChild(ink);
+    const paint = (v: number) => {
+      const fraction = (v - min) / (max - min);
+      ink
+        .clear()
+        .moveTo(x + 18, y + 32)
+        .lineTo(x + w - 18, y + 32)
+        .stroke({ color: colours.edge, width: 5 })
+        .moveTo(x + 18, y + 32)
+        .lineTo(x + 18 + fraction * (w - 36), y + 32)
+        .stroke({ color: colours.water, width: 5 })
+        .circle(x + 18 + fraction * (w - 36), y + 32, 10)
+        .fill(colours.gold);
+    };
+    b.slider = {
+      min,
+      max,
+      step,
+      value,
+      set: (v) => {
+        const bounded = Number(
+          Math.max(
+            min,
+            Math.min(max, min + Math.round((v - min) / step) * step),
+          ).toFixed(6),
+        );
+        b.slider!.value = bounded;
+        paint(bounded);
+        change(bounded);
+      },
+    };
+    paint(value);
+    return (v: number) => {
+      b.slider!.value = v;
+      paint(v);
+    };
   }
   icon(
     kind: string,

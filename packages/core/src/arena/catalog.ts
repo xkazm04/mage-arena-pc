@@ -1,6 +1,7 @@
+import { adjustedSpell } from './tuning.ts';
 import { combat, waterRows } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
-import type { Actor, Composition, Family, WaterLine, WaterState } from './types.ts';
+import type { Actor, ArenaState, Composition, Family, WaterLine, WaterState } from './types.ts';
 export interface Spell {
   id: string; line: string; tier: number; branch: string; name: string; castS: number; cooldownS: number; mana: number;
   damage: number; family: Family; telegraphS: number; rangeM: number;
@@ -63,12 +64,13 @@ export function newWaterState(composition: Composition = presets[0]!): WaterStat
   return { composition: structuredClone(composition), flow: 0, lastLine: '', lastCastTick: -1e9, lastActivityTick: -1e9, cooldowns: {}, stored: 0,
     rootUntil: 0, encasedUntil: 0, slowUntil: 0, slowMult: 1, wardUntil: 0, sheenUntil: 0, hotUntil: 0, hotPerTick: 0, crests: 0, healing: 0, controlTicks: 0 };
 }
-export function spellFor(actor: Actor, slot: number): Spell | undefined {
+export function spellFor(actor: Actor, slot: number, state?: ArenaState): Spell | undefined {
   const line = slot === 0 ? 'bolt' : actor.water.composition.lines[slot - 1];
   if (!line) return undefined;
   const tier = slot === 0 ? 0 : actor.tier;
   const branch = line === 'lash' || line === 'mirror' || line === 'tide_orb' ? actor.water.composition.branches[line] : '';
-  return spells.find(s => s.line === line && s.tier === tier && (!s.branch || s.branch === branch));
+  const spell = spells.find(s => s.line === line && s.tier === tier && (!s.branch || s.branch === branch));
+  return spell && adjustedSpell(spell, actor, state);
 }
 export function lintSpells(catalog: Spell[] = spells): string[] {
   const errors: string[] = [];

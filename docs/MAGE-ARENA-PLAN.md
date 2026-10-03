@@ -252,7 +252,7 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
 | Game | U5 | Wire the A12 plates (compact layout, occluders, palette per tier) and figures 50% larger (scale contract v3, camera and layout re-check) | D31, D32 | implemented; U5 report |
-| Game | CF1 | **Combat Feel Lab**: training mode with a dummy and one selectable opponent, live tuning, reset, metrics, replay of the last bout; the owner's start guide | U5 | not started |
+| Game | CF1 | **Combat Feel Lab**: training mode with a dummy and one selectable opponent, live tuning, reset, metrics, replay of the last bout; the owner's start guide | U5 | implemented; gate 183 TS + 11 reference; owner feel pending |
 | Game | CF2 | Combat feel improvements from the Lab findings: hit feedback (hit stop, flash, shake, knockback, numbers), cast and animation timing, movement feel, absorb and perfect-absorb feel, telegraph readability, enemy behaviour; data-driven; census bands re-set where gameplay changes | CF1 | not started |
 | Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | not started |
 
@@ -266,3 +266,5 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 
 
 **U5, 2026-10-03 (GAME).** A12 imported read-only with hashes, compact 94 x 62 m ellipse centred [16,10], fixed far camera clamped to the translated single plate, baseline overlays and tiled fallback. v3 figures 60.75/81px. Optional A13 skin boundary. `npm run gate`: 177 TS + 11 reference tests, zero contradictions. `npm run build:game`; `npx tsx packages/tools/src/u5-browser.ts`: both native resolutions, palettes/occlusion/fallbacks and performance. Fresh 2,000 fights per wave pass; boundary changes medians +0.25/+0.45/0/0 seconds; creature ceiling 46s explicitly provisional. Layout/final digests identical, presentation does not move simulation. Exact save replay passes. See U5 report/evidence. Motion, physical latency and owner feel not measured. Next CF1, then CF2.
+
+**CF1, 2026-10-04 (GAME).** Combat Feel Lab shipped before CF2: one target, four labelled school practice profiles, competence/aggression/seed/distance/loadout, canvas tuning and JSON transport, metrics and bounded replay. START-HERE guide duplicated atop OWNER-CHECKS. Gate 183 TS + 11 reference; native-resolution browser controls/replay pass, 10 PNGs. All 8,000 census per-fight hashes equal U5; exact season save replay passes. CF2 headless baseline recorded. See CF1-report.md. Physical input latency, human feel and unique non-Water catalogues remain unmeasured/pending. Next CF2.
