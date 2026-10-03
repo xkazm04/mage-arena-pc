@@ -106,6 +106,21 @@ export class CovenantArt {
   get(key: string) {
     return this.textures.get(key);
   }
+  async json(key: string): Promise<unknown> {
+    const entry = this.manifest?.entries[key];
+    if (!entry?.file.endsWith(".json")) throw Error(`Missing metadata: ${key}`);
+    const response = await fetch(this.base + entry.file, {
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) throw Error(`Metadata ${key}: ${response.status}`);
+    const bytes = await response.arrayBuffer();
+    const digest = Array.from(
+      new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
+      (b) => b.toString(16).padStart(2, "0"),
+    ).join("");
+    if (digest !== entry.sha256) throw Error(`Metadata hash: ${key}`);
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
   async load(key: string): Promise<Texture | undefined> {
     const existing = this.textures.get(key);
     if (existing) return existing;

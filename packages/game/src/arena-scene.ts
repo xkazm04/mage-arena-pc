@@ -21,7 +21,8 @@ import {
 } from "./camera.ts";
 import { FigureLibrary } from "./sprites.ts";
 import { ArenaArt, type Palette } from "./arena-art.ts";
-import { art } from "./art.ts";
+import { EffectPlayer } from "./effect-player.ts";
+import animation from "../data/animation.json" with { type: "json" };
 
 const ink = 0x07161e;
 const familyColour = (family: string) =>
@@ -37,9 +38,7 @@ export class ArenaScene {
   private ground = new Graphics();
   private figures = new Container();
   private effects = new Graphics();
-  private painted = new Container();
-  private motifs: Sprite[] = [];
-  private motifIndex = 0;
+  readonly clips = new EffectPlayer();
   private actors = new Map<
     number,
     { root: Container; sprite: Sprite; details: Graphics }
@@ -53,20 +52,14 @@ export class ArenaScene {
     parent.addChild(
       this.floor,
       this.ground,
+      this.clips.behind,
       this.figures,
-      this.painted,
+      this.clips.front,
       this.effects,
     );
     this.figures.sortableChildren = true;
     this.buildFloor();
     this.scenery = new ArenaArt(this.floor, this.figures);
-    void art.preload(
-      ["water", "fire", "earth", "air"].flatMap((s) => [
-        `effect.${s}.painted.aura`,
-        `effect.${s}.painted.bolt`,
-        `effect.${s}.painted.impact`,
-      ]),
-    );
   }
   palette(value: Palette) {
     void this.scenery.load(value);
@@ -76,41 +69,10 @@ export class ArenaScene {
   }
   dispose() {
     this.library.dispose();
+    this.clips.dispose();
     this.scenery.dispose();
-    for (const c of [
-      this.floor,
-      this.ground,
-      this.figures,
-      this.painted,
-      this.effects,
-    ])
+    for (const c of [this.floor, this.ground, this.figures, this.effects])
       c.destroy({ children: true });
-  }
-  private motif(
-    key: string,
-    x: number,
-    y: number,
-    w: number,
-    h: number,
-    angle = 0,
-    opacity = 0.65,
-  ) {
-    const t = art.get(`effect.${key}`);
-    if (!t) return;
-    let s = this.motifs[this.motifIndex++];
-    if (!s) {
-      s = new Sprite();
-      this.motifs.push(s);
-      this.painted.addChild(s);
-    }
-    s.texture = t;
-    s.anchor.set(0.5);
-    s.position.set(x, y);
-    s.width = w;
-    s.height = h;
-    s.rotation = angle;
-    s.alpha = opacity;
-    s.visible = true;
   }
   private buildFloor(): void {
     const g = new Graphics(),
@@ -274,7 +236,7 @@ export class ArenaScene {
     c: Camera,
     alpha: number,
     aim: Vec,
-    lastPerfect: number,
+    _lastPerfect: number,
     debug: boolean,
   ): void {
     this.c = c;
@@ -284,8 +246,7 @@ export class ArenaScene {
       e = this.effects;
     g.clear();
     e.clear();
-    this.motifIndex = 0;
-    for (const s of this.motifs) s.visible = false;
+    this.clips.begin(state, c, alpha);
     this.scenery.render(c);
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
     this.floor.position.set(
@@ -397,20 +358,16 @@ export class ArenaScene {
           color: 0x9de9df,
           width: m.outlinePx * 1.3,
         });
-        for (const end of [
-          angle - (combat.absorb.arcDeg * Math.PI) / 360,
-          angle + (combat.absorb.arcDeg * Math.PI) / 360,
-        ])
-          this.path([
-            {
-              x: foot.x + Math.cos(end) * (radius - 0.18),
-              y: foot.y + Math.sin(end) * (radius - 0.18),
-            },
-            {
-              x: foot.x + Math.cos(end) * (radius + 0.18),
-              y: foot.y + Math.sin(end) * (radius + 0.18),
-            },
-          ]).stroke({ color: 0x205f78, width: m.outlinePx });
+        this.clips.draw(
+          "absorb.hold",
+          seconds(state.tick - a.absorbFreshTick + alpha) * 1000,
+          foot,
+          {
+            angle,
+            barrier: true,
+            opacity: animation.effects.barrierOpacity,
+          },
+        );
       }
       let view = this.actors.get(a.id);
       if (!view) {
@@ -431,28 +388,17 @@ export class ArenaScene {
       const d = view.details;
       d.clear();
       if (!a.enemy && !a.dummy && !a.down) {
-        // Water is the only implemented school; opposing mages remain Water proxies.
-        const tint = 0x8cded8;
-        this.motif(
-          "water.painted.aura",
-          q.x,
-          q.y - h * 0.36,
-          h * 1.8,
-          h * 1.35,
-          0,
-          0.28,
+        this.clips.draw(
+          `${this.clips.element(a)}.aura`,
+          seconds(state.tick + alpha) * 1000,
+          foot,
+          {
+            behind: true,
+            lift: h * 0.36,
+            opacity: animation.effects.auraOpacity,
+            optional: true,
+          },
         );
-        for (let i = 0; i < 7; i++) {
-          const phase = state.tick / 75 + i * 2.4;
-          d.circle(
-            Math.cos(phase) * h * 0.43,
-            -h * 0.35 + Math.sin(phase * 0.7) * h * 0.47,
-            m.resolutionScale * (i % 2 ? 0.8 : 1.3),
-          ).fill({ color: tint, alpha: 0.7 });
-        }
-        d.moveTo(-h * 0.38, -h * 0.09)
-          .quadraticCurveTo(-h * 0.62, -h * 0.48, -h * 0.34, -h * 0.79)
-          .stroke({ color: tint, width: m.resolutionScale, alpha: 0.35 });
       }
       if (state.tick < a.water.encasedUntil)
         d.poly([
@@ -545,18 +491,20 @@ export class ArenaScene {
       if (q.x < -r || q.x > c.width + r || q.y < -r || q.y > c.height + r)
         continue;
       this.visibleProjectiles++;
-      if (p.family === "magic")
-        this.motif(
-          "water.painted.bolt",
-          q.x,
-          q.y,
-          30 * m.resolutionScale,
-          14 * m.resolutionScale,
-          Math.atan2(
-            p.velocity.y * m.pxPerMetreY,
-            p.velocity.x * m.pxPerMetreX,
-          ),
-        );
+      const owner = state.actors.find((a) => a.id === p.ownerId);
+      if (
+        p.family !== "physical" &&
+        this.clips.draw(
+          `${this.clips.element(owner)}.travel`,
+          seconds(state.tick + alpha) * 1000,
+          pos,
+          {
+            angle: Math.atan2(p.velocity.y, p.velocity.x),
+            opacity: animation.effects.travelOpacity,
+          },
+        )
+      )
+        continue;
       const colour = familyColour(p.family),
         speed = Math.hypot(p.velocity.x, p.velocity.y) || 1;
       const tail = groundToScreen(
@@ -585,28 +533,7 @@ export class ArenaScene {
         e.star(q.x, q.y, 4, r * 1.7, r).fill(colour);
       else e.circle(q.x, q.y, r).fill(colour);
     }
-    if (
-      seconds(state.tick - lastPerfect) < runtime.presentation.perfectFlashS
-    ) {
-      const q = groundToScreen(player.pos, c);
-      this.motif(
-        "water.painted.impact",
-        q.x,
-        q.y - m.figureHeightPx / 2,
-        m.figureHeightPx * 2.5,
-        m.figureHeightPx * 2,
-        0,
-        0.5,
-      );
-      this.circle(
-        interpolate(player.previousPos, player.pos, alpha),
-        1.4 + seconds(state.tick - lastPerfect) * 5,
-        0xffffff,
-        1 -
-          seconds(state.tick - lastPerfect) /
-            runtime.presentation.perfectFlashS,
-      );
-    }
+    this.clips.finish(state);
     const target = groundToScreen(aim, c),
       cross = 7 * m.resolutionScale;
     e.circle(target.x, target.y, cross).stroke({
