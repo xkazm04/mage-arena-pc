@@ -63,7 +63,8 @@ the authored reference. Setup/loadout changes reset; tuning remains selected.
 | H | Toggle HP damage for both sides; contacts/control still happen |
 | V | Replay up to the last 20 seconds; V again restores the untouched live bout |
 
-The Lab HUD repeats these shortcuts. Replay freezes live simulation, holds its
+The Lab HUD repeats these shortcuts. During replay, P freezes playback and period
+steps its frames; refill/damage changes are ignored. Replay freezes live simulation, holds its
 last frame at the end and preserves the prior pause state on exit. Reset before
 comparing presets. When either figure falls, the bout holds for reset/refill.
 
@@ -76,10 +77,12 @@ Click its numeric value, type a number, Enter applies, Escape cancels. Tabs:
   movement during casting. Zero acceleration/braking/turn means instant response.
   Mouse aim stays immediate; visual turn smoothing never delays the ward/hit arc.
 - Roll: distance, duration, invulnerability and recovery. Invulnerability cannot
-  exceed duration.
+  exceed duration. Recovery movement has its own speed multiplier.
 - Casting: cast/cooldown/projectile multipliers, commit fraction, recovery. A roll
   can cancel before the commit point; 1 preserves cancellation through windup.
-- Impact: stagger duration and knockback distance at 10 damage.
+  Cancelling keeps the mana cost and cooldown already spent.
+- Impact: stagger duration, immunity tail against repeated stagger, and knockback
+  distance at 10 damage.
 - Absorb: perfect window, arc angle, drain and perfect-refund multipliers.
 - Resources: mana regeneration and seconds between collar tiers.
 - Opponent: reaction-delay and aim-error multipliers. Reaction has a 250 ms floor.
@@ -87,12 +90,21 @@ Click its numeric value, type a number, Enter applies, Escape cancels. Tabs:
   projectile speed. Overrides affect both sides. Nonprojectile speed is unused.
 
 **Current**, **Snappier**, **Heavier** are named experiments, not owner-approved
-balance. Changes apply to future actions; active casts retain their spell data
+balance. Current now includes CF2's short acceleration/braking, cast commitment
+and recovery, stagger and knockback. Watch the white hit flash/damage numbers and
+the bright fresh-ward window with the actual +mana refund. Settings → Motion:
+Reduced disables camera shake, hit stop and perfect slow-down. These local holds
+stretch wall time; metrics count simulation seconds. Replay omits those holds
+and does not re-trigger sounds. [The CF report](waves/CF-report.md) records the
+changed difficulty and before/after numbers.
+
+Changes apply to future actions; active casts retain their spell data
 and travelling projectiles retain launch speed. Dangerous warning floors remain
 0.8 s unblockable / 0.4 s positional even if you shorten casting. Return to combat
 resumes. Export tuning downloads JSON. Import opens a canvas panel: paste JSON
 with Ctrl+V or drop that file on the canvas, then Enter validates/applies. Invalid
 values/unknown parameters are rejected without altering the current tuning.
+Version 2 exports can import older version 1 tuning files too.
 Exports contain tuning and preset name; record school/loadout/seed separately.
 
 HUD counts damaging contacts landed/taken, ward successes per incoming magic

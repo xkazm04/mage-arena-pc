@@ -1,3 +1,4 @@
+import { defaultTuning } from './tuning.ts';
 import { describe, expect, it } from 'vitest';
 import { addEnemy, addMage, advanceGames, attachMageAI, arenaGeometry, constrainToArena, competence, createArena, createGames, enemyInputs, enemyRoster, gamesResult, idleInput, mageInput, presets, queueDeathEffects, resolveHit, runFight, spawnProjectile, stepArena, stepGames, ticks, tiro } from './index.ts';
 const simulateEnemies = (state: ReturnType<typeof createArena>, count: number) => { for (let i = 0; i < count; i++) { stepArena(state, enemyInputs(state)); queueDeathEffects(state); } };
@@ -47,7 +48,7 @@ describe('the full roster on common damage and movement rules', () => {
     const state = createArena(), player = addMage(state, 0, { x: 4, y: 10 }), maw = addEnemy(state, 'mire_maw', { x: 10, y: 10 });
     enemyInputs(state); expect(state.telegraphs[0]!.family).toBe('magic'); state.telegraphs = []; maw.enemy!.readyTick = 0;
     enemyInputs(state); expect(state.telegraphs[0]!.pullM).toBe(4);
-    for (let i = 0; i < ticks(1) + 1; i++) stepArena(state); expect(player.pos.x).toBeCloseTo(8);
+    for (let i = 0; i < ticks(1) + 1; i++) stepArena(state); expect(player.pos.x).toBeCloseTo(8 - defaultTuning.knockbackM * .4);
     const s = createArena(), edge = arenaGeometry.centre.x + arenaGeometry.widthM / 2, y = arenaGeometry.centre.y, p = addMage(s, 0, { x: edge - 1, y }), thorn = addEnemy(s, 'thornback', { x: edge - 7, y });
     simulateEnemies(s, ticks(1) + 1); expect(p.hp).toBe(p.maxHp - 22); expect(thorn.enemy!.stunnedUntil).toBeGreaterThan(s.tick); expect(thorn.pos).toEqual(constrainToArena({ x: edge + 10, y }, thorn.radius));
   });

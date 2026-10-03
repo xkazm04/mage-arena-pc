@@ -1,3 +1,4 @@
+import { CombatFeedback, feedbackPolicy } from "./combat-feedback.ts";
 import { tuningFor } from "@mage/core/arena";
 import {
   BitmapText,
@@ -48,6 +49,7 @@ export class ArenaScene {
   readonly clips = new EffectPlayer();
   readonly sigils = new EffectPlayer("a13");
   readonly bodies = new BodyPlayer();
+  readonly feedback = new CombatFeedback();
   debugEnabled = false;
   debugPage = 0;
   private debugLabel = new BitmapText({
@@ -74,6 +76,7 @@ export class ArenaScene {
       this.clips.front,
       this.sigils.front,
       this.effects,
+      this.feedback.layer,
       this.debugPanel,
       this.debugLabel,
     );
@@ -92,6 +95,7 @@ export class ArenaScene {
     this.clips.dispose();
     this.sigils.dispose();
     this.bodies.dispose();
+    this.feedback.dispose();
     this.debugLabel.destroy();
     this.debugPanel.destroy();
     this.scenery.dispose();
@@ -166,7 +170,10 @@ export class ArenaScene {
       radius * m.pxPerMetreY,
     );
     if (fill) this.ground.fill({ color: colour, alpha });
-    else this.ground.stroke({ color: colour, width: m.outlinePx, alpha });
+    else
+      this.ground
+        .stroke({ color: ink, width: m.outlinePx * 2.1, alpha: 0.85 })
+        .stroke({ color: colour, width: m.outlinePx, alpha });
   }
   private locator(p: Vec, actualRadius: number, colour: number): void {
     const radius = Math.max(
@@ -185,7 +192,13 @@ export class ArenaScene {
           x: p.x + Math.cos(a) * (radius + 0.35),
           y: p.y + Math.sin(a) * (radius + 0.35),
         },
-      ]).stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
+      ])
+        .stroke({
+          color: ink,
+          width: cameraMetrics(this.c).outlinePx * 2.1,
+          alpha: 0.85,
+        })
+        .stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
     }
   }
   private area(p: Vec, radius: number, colour: number, progress: number): void {
@@ -229,6 +242,11 @@ export class ArenaScene {
     ])
       .closePath()
       .fill({ color: colour, alpha: 0.12 })
+      .stroke({
+        color: ink,
+        width: cameraMetrics(this.c).outlinePx * 2.1,
+        alpha: 0.85,
+      })
       .stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
     for (let d = 1; d < range; d += 1.5)
       this.path([
@@ -266,6 +284,11 @@ export class ArenaScene {
       origin,
     ])
       .fill({ color: colour, alpha: 0.13 })
+      .stroke({
+        color: ink,
+        width: cameraMetrics(this.c).outlinePx * 2.1,
+        alpha: 0.85,
+      })
       .stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
     this.locator(origin, radius, colour);
   }
@@ -288,6 +311,7 @@ export class ArenaScene {
     this.clips.begin(state, c, alpha);
     this.sigils.begin(state, c, alpha);
     this.bodies.begin(state, alpha);
+    this.feedback.begin(state);
     this.scenery.render(c);
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
     this.floor.position.set(
@@ -396,7 +420,9 @@ export class ArenaScene {
       );
       if (a.absorb) {
         const angle = Math.atan2(a.facing.y, a.facing.x),
-          radius = contract.absorb.visual_radius_metres;
+          radius =
+            contract.absorb.visual_radius_metres *
+            this.feedback.compression(a, state.tick + alpha);
         this.path(
           arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
         ).stroke({
@@ -409,11 +435,26 @@ export class ArenaScene {
           color: 0x9de9df,
           width: m.outlinePx * 1.3,
         });
+        const fresh =
+          seconds(state.tick - a.absorbFreshTick + alpha) <=
+          tuningFor(state).absorbWindowS;
+        if (fresh)
+          this.path(
+            arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
+          ).stroke({
+            color: 0xfff9d5,
+            width: m.outlinePx * 1.9,
+            alpha: feedbackPolicy.anticipationOpacity,
+          });
         const wardArt = this.sigils.draw(
           "absorb.hold",
           seconds(state.tick - a.absorbFreshTick + alpha) * 1000,
           foot,
-          { angle, barrier: true },
+          {
+            angle,
+            barrier: true,
+            scale: this.feedback.compression(a, state.tick + alpha),
+          },
         );
         if (!wardArt)
           this.clips.draw(
@@ -423,6 +464,7 @@ export class ArenaScene {
             {
               angle,
               barrier: true,
+              scale: this.feedback.compression(a, state.tick + alpha),
               opacity: animation.effects.barrierOpacity,
             },
           );
@@ -444,6 +486,9 @@ export class ArenaScene {
         q.x > -h && q.x < c.width + h && q.y > -h && q.y < c.height + h;
       if (!this.bodies.apply(view.sprite, a, m.figureHeightPx))
         this.library.apply(view.sprite, a, player.team, h);
+      view.sprite.filters = this.feedback.flash(a, state.tick + alpha)
+        ? [this.feedback.white]
+        : null;
       const d = view.details;
       d.clear();
       if (!a.enemy && !a.dummy && !a.down) {
@@ -616,6 +661,7 @@ export class ArenaScene {
         )
         .fill({ color: 0x081118, alpha: 0.94 });
     }
+    this.feedback.draw(state, c, alpha);
     const target = groundToScreen(aim, c),
       cross = 7 * m.resolutionScale;
     e.circle(target.x, target.y, cross).stroke({

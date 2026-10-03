@@ -115,7 +115,7 @@ export class BodyPlayer {
       if (e.kind === "hit" && e.value > 0)
         m.hitUntil =
           e.tick + (policy.bodies.hitHoldMs / 1000) * combat.simStepHz;
-      if (e.kind === "cast")
+      if (e.kind === "release")
         m.castUntil =
           e.tick + (policy.bodies.castHoldMs / 1000) * combat.simStepHz;
     }
@@ -215,7 +215,16 @@ export class BodyPlayer {
         : 0
       : frameIndex(
           selected.clip,
-          seconds(this.tick - motion.since) * 1000,
+          a.pending && state === "cast"
+            ? Math.min(
+                0.999,
+                Math.max(
+                  0,
+                  (this.tick - a.pending.startTick) /
+                    Math.max(1, a.pending.releaseTick - a.pending.startTick),
+                ),
+              ) * selected.clip.frames.reduce((n, f) => n + f.durationMs, 0)
+            : seconds(this.tick - motion.since) * 1000,
           true,
         );
     const frame = selected.clip.frames[index] ?? selected.clip.frames[0]!;

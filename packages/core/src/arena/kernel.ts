@@ -73,9 +73,9 @@ export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage
   const owner = state.actors.find(a => a.id === hit.ownerId);
   if (owner) owner.metrics.damageDealt += hpRemoved;
   target.metrics.hits++; emit(state, 'hit', target, hpRemoved, hit.ownerId);
-  if (state.lab) Object.assign(state.events.at(-1)!, { family: hit.family, contactDamage: damage, guarded: guarded && reduction > 0, activationId: hit.activationId });
+  Object.assign(state.events.at(-1)!, { family: hit.family, contactDamage: damage, guarded: guarded && reduction > 0, activationId: hit.activationId, at: {...target.pos} });
   if (damage > 0 && !perfect) {
-    if (tune.hitStunS > 0) { target.staggerUntil = Math.max(target.staggerUntil ?? 0, state.tick + ticks(tune.hitStunS)); interrupt(state, target); }
+    if (!guarded && tune.hitStunS > 0 && state.tick >= (target.staggerImmuneUntil ?? 0)) { target.staggerImmuneUntil = state.tick + ticks(tune.hitStunS + tune.hitStunGraceS); target.staggerUntil = Math.max(target.staggerUntil ?? 0, state.tick + ticks(tune.hitStunS)); interrupt(state, target); }
     if (tune.knockbackM > 0) { const d = unit(sub(target.pos, hit.source)), amount = tune.knockbackM * Math.min(2, damage / 10); target.pos = constrainToArena({ x: target.pos.x + d.x * amount, y: target.pos.y + d.y * amount }, target.radius); }
   }
   if (target.hp === 0) { target.down = true; target.absorb = false; interrupt(state, target); emit(state, 'down', target); }
@@ -110,7 +110,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   const rooted = state.tick < a.water.rootUntil || a.pending?.spellId === 'mend:4:base';
   if (!rooted && canCancel && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost) {
     a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(tune.rollDurationS);
-    a.immuneUntil = state.tick + ticks(tune.rollIFramesS); a.recoveryUntil = a.rollUntil + ticks(tune.rollRecoveryS);
+    a.immuneUntil = state.tick + ticks(tune.rollIFramesS); a.recoveryUntil = a.rollUntil + ticks(tune.rollRecoveryS); a.rollRecoveryUntil = a.recoveryUntil;
     a.stamina -= combat.roll.staminaCost; a.staminaUsedTick = state.tick; a.metrics.rolls++;
     a.absorb = false; if (input.absorb) a.absorbExhausted = true; interrupt(state, a); emit(state, 'roll', a);
   }
@@ -124,6 +124,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
     if (input.sprint && !a.absorb && !a.pending && a.stamina >= sprintCost) {
       speed = tune.sprintMps; a.stamina -= sprintCost; a.staminaUsedTick = state.tick;
     }
+    if (state.tick < (a.rollRecoveryUntil ?? 0)) speed *= tune.rollRecoveryMoveMultiplier;
     speed *= profileFor(a).move;
     if (a.pending) speed *= tune.castMoveMultiplier;
     if (a.absorb) speed *= combat.absorb.moveSpeedWhileHeldMult;
@@ -136,13 +137,14 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
     const amount = acceleration === 0 ? 1 : Math.min(1, acceleration * DT / Math.max(1e-9, Math.hypot(dx, dy)));
     velocity = { x: previous.x + dx * amount, y: previous.y + dy * amount };
     a.velocity = { ...velocity };
-  } else if (a.velocity) a.velocity = { ...velocity };
+  } else if (a.velocity) a.velocity = state.tick < a.rollUntil ? {x:0,y:0} : { ...velocity };
   a.pos = constrainToArena({ x: a.pos.x + velocity.x * DT, y: a.pos.y + velocity.y * DT }, a.radius);
 }
 function releaseCast(state: ArenaState, a: Actor): void {
   const pending = a.pending; if (!pending || state.tick < pending.releaseTick) return;
   if (pending.kind === 'spell') { releaseSpell(state, a); return; }
   a.pending = undefined;
+  emit(state, 'release', a); Object.assign(state.events.at(-1)!, { activationId: pending.activationId, at: {...a.pos} });
   const direction = unit(sub(pending.aim, a.pos), a.facing);
   if (pending.kind === 'bolt') {
     spawnProjectile(state, { ownerId: a.id, activationId: pending.activationId, damage: bolt.damage, family: 'magic', tier: 0, source: { ...a.pos }, bolt: true },
@@ -175,6 +177,7 @@ function updateTelegraphs(state: ArenaState): void {
   state.telegraphs = state.telegraphs.filter(t => t.resolveTick > state.tick);
   for (const t of due) {
     const owner = state.actors.find(a => a.id === t.ownerId); if (!owner || (owner.down && !t.survivesOwner) || (!t.survivesOwner && state.tick < owner.water.encasedUntil)) continue;
+    emit(state, 'release', owner, t.tier); Object.assign(state.events.at(-1)!, {activationId:t.activationId, at:{...t.origin}});
     const direction = unit(sub(t.target, t.origin));
     if (t.kind === 'projectile') spawnProjectile(state, t, t.origin, direction, t.speedMps, t.rangeM);
     else {
@@ -262,6 +265,7 @@ export function resetWave(state: ArenaState, actor: Actor): void {
   actor.tier = 1; actor.waveStartTick = state.tick; actor.lastUnlockTick = state.tick; actor.clockAdvanceTicks = 0; actor.unlockTicks = [state.tick];
   actor.absorb = false; actor.absorbExhausted = false; actor.absorbFreshTick = -1e9; actor.releaseTick = -1e9;
   actor.pending = undefined; actor.cooldownUntil = state.tick; actor.rollUntil = state.tick; actor.immuneUntil = state.tick; actor.recoveryUntil = state.tick;
+  actor.velocity = {x:0,y:0}; actor.staggerUntil = state.tick; actor.staggerImmuneUntil = state.tick; actor.rollRecoveryUntil = state.tick;
   actor.lastInput = idleInput(); state.projectiles = []; state.telegraphs = []; state.zones = []; resetWater(actor);
 }
 /** FNV-1a of the complete serializable state, including cooldowns, RNG and pending actions. */

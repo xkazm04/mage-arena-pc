@@ -1,22 +1,24 @@
 {
-  "version": 1,
+  "version": 2,
   "defaults": {
-    "accelerationMps2": 0,
-    "decelerationMps2": 0,
+    "accelerationMps2": 60,
+    "decelerationMps2": 90,
     "castTimeScale": 1,
     "cooldownScale": 1,
     "projectileSpeedScale": 1,
-    "hitStunS": 0,
-    "knockbackM": 0,
+    "hitStunS": 0.05,
+    "knockbackM": 0.16,
     "absorbDrainScale": 1,
     "perfectRefundScale": 1,
     "manaRegenScale": 1,
     "enemyReactionScale": 1,
     "enemyAimErrorScale": 1,
-    "castCommitFraction": 1,
-    "castRecoveryS": 0,
-    "castMoveMultiplier": 1,
-    "turnResponse": 0
+    "castCommitFraction": 0.65,
+    "castRecoveryS": 0.05,
+    "castMoveMultiplier": 0.75,
+    "turnResponse": 24,
+    "hitStunGraceS": 0.16,
+    "rollRecoveryMoveMultiplier": 0.5
   },
   "presets": {
     "Current": {},
@@ -44,5 +46,11 @@
       "hitStunS": 0.12,
       "knockbackM": 0.5
     }
+  },
+  "ai": {
+    "strafePhaseS": 1.7,
+    "spacingVariationM": 1.5,
+    "spellVarietyWeight": 8,
+    "reactionCastSafetyS": 0.05
   }
 }

@@ -39,7 +39,7 @@ export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
     targets.sort((x, y) => (spec.id === 'hush_moth' ? Number(y.absorb) - Number(x.absorb) : 0) || distance(a.pos, x.pos) - distance(a.pos, y.pos) || x.id - y.id);
     const target = targets[0]; if (!target) continue;
     const input = idleInput(target.pos); inputs[a.id] = input;
-    if (state.tick < brain.stunnedUntil || state.tick < a.water.encasedUntil) continue;
+    if (state.tick < (a.staggerUntil ?? 0) || state.tick < brain.stunnedUntil || state.tick < a.water.encasedUntil) continue;
     const windup = state.telegraphs.find(t => t.ownerId === a.id && !t.survivesOwner);
     if (windup) { input.aim = { ...windup.target }; continue; }
     if (state.tick < (brain.recoveryUntil ?? 0)) continue;

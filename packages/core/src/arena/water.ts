@@ -31,7 +31,7 @@ export function trySpellCast(state: ArenaState, a: Actor, input: InputFrame): bo
   const d = unit(sub(input.aim, a.pos), a.facing), range = Math.min(distance(a.pos, input.aim), s.rangeM);
   const aim = s.kind === 'zone' || s.effect === 'decoy' ? { x: a.pos.x + d.x * range, y: a.pos.y + d.y * range } : { ...input.aim };
   a.pending = { kind: 'spell', startTick: state.tick, releaseTick: state.tick + ticks(Math.max(s.castS, s.telegraphS)), aim, activationId: state.nextId++, spellId: s.id, damageMult: flow.damageMult, targetId };
-  if (state.tuning || a.school) a.pending.spell = { ...s };
+  a.pending.spell = { ...s };
   a.metrics.casts++; emit(state, 'cast', a, s.tier); return true;
 }
 function applyControl(state: ArenaState, a: Actor, target: Actor, s: Spell): void {
@@ -50,6 +50,8 @@ function heal(a: Actor, amount: number): void {
 export function releaseSpell(state: ArenaState, a: Actor): void {
   const p = a.pending; if (!p || p.kind !== 'spell') return;
   const s = p.spell ?? adjustedSpell(spells.find(s => s.id === p.spellId)!, a, state); a.pending = undefined;
+  emit(state, 'release', a, s.tier);
+  Object.assign(state.events.at(-1)!, { activationId:p.activationId, spellId:s.id, at:{...(s.kind === 'zone' || s.effect === 'decoy' ? p.aim : s.kind === 'target' ? state.actors.find(t=>t.id===p.targetId)?.pos ?? p.aim : a.pos)} });
   const recovery = tuningFor(state).castRecoveryS;
   if (recovery > 0) a.recoveryUntil = Math.max(a.recoveryUntil, state.tick + ticks(recovery));
   const direction = unit(sub(p.aim, a.pos), a.facing), damage = s.damage * (p.damageMult ?? 1);

@@ -20,9 +20,13 @@ type Win = Window & {
     visualFixture(k: string): void;
     panPlayer(p: { x: number; y: number }): void;
     reset(): void;
+    feedbackFixture(kind: "hit" | "perfect" | "cast" | "warning"): void;
+    stepInput(count: number): void;
   };
 };
-const out = resolve("docs/waves/CF1-evidence");
+const wave = process.env.MAGE_EVIDENCE ?? "CF1";
+if (!["CF1", "CF2"].includes(wave)) throw Error("Invalid evidence wave");
+const out = resolve(`docs/waves/${wave}-evidence`);
 mkdirSync(join(out, "screens"), { recursive: true });
 const server = spawn(
   process.execPath,
@@ -84,7 +88,9 @@ try {
   for (let i = 0; i < 100; i++) {
     try {
       if ((await fetch("http://127.0.0.1:4195/api/health")).ok) break;
-    } catch { /* server starting */ }
+    } catch {
+      /* server starting */
+    }
     await new Promise((r) => setTimeout(r, 100));
   }
   for (const height of [1080, 1440]) {
@@ -204,6 +210,58 @@ try {
     );
     await click(p, "pause-combat-lab");
     assert.equal((await ui(p)).screen, "lab-setup");
+    assert.equal(await p.locator("input,textarea,select").count(), 0);
+    if (wave === "CF2") {
+      await click(p, "lab-config-start");
+      for (const kind of ["hit", "perfect", "cast", "warning"] as const) {
+        await p.evaluate(
+          (k) => (window as unknown as Win).__arena.feedbackFixture(k),
+          kind,
+        );
+        await p.waitForTimeout(300);
+        let snap = await arena(p);
+        if (kind === "hit") assert(snap.feedback.numbers > 0);
+        if (kind === "perfect") {
+          assert(
+            snap.state.events.some((e) => e.kind === "perfect" && e.value > 0),
+          );
+          assert(snap.feedback.numbers > 0);
+        }
+        if (kind === "cast" || kind === "warning") {
+          const pending = snap.player.pending!;
+          assert(pending);
+          if(kind === "warning") { assert.equal(pending.spell!.family,"unblockable");assert(pending.releaseTick-pending.startTick>=48); }
+          assert(
+            !snap.state.events.some(
+              (e) =>
+                e.kind === "release" && e.activationId === pending.activationId,
+            ),
+          );
+          await shot(p, `${height}-${kind}-windup`);
+          await p.evaluate(
+            (n) => (window as unknown as Win).__arena.stepInput(n),
+            pending.releaseTick - snap.state.tick,
+          );
+          await p.waitForTimeout(100);
+          snap = await arena(p);
+          assert.equal(
+            snap.state.events.filter(
+              (e) =>
+                e.kind === "release" && e.activationId === pending.activationId,
+            ).length,
+            1,
+          );
+          assert(snap.effects.counts["water.cast"] > 0);
+        }
+        await shot(p, `${height}-${kind}-feedback`);
+      }
+      await p.evaluate(() => localStorage.setItem("mage-motion", "reduced"));
+      await p.evaluate(() =>
+        (window as unknown as Win).__arena.feedbackFixture("hit"),
+      );
+      await p.waitForTimeout(100);
+      assert.equal((await arena(p)).impactClock.stopS, 0);
+    }
     await context.close();
   }
   assert.deepEqual(errors, []);

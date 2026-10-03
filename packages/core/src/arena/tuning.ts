@@ -7,6 +7,7 @@ import { spells, type Spell } from "./catalog.ts";
 export type School = "fire" | "water" | "earth" | "air";
 export const schools: School[] = ["fire", "water", "earth", "air"];
 export const schoolProfiles = schoolData;
+export const feelPolicy = data;
 export const defaultTuning = {
   ...data.defaults,
   walkMps: combat.movement.walkMps as number,
@@ -176,6 +177,24 @@ export const tuningFields: TuningField[] = [
     0.05,
     "Opponent",
   ),
+  field(
+    "hitStunGraceS",
+    "Stagger immunity after hit",
+    "s",
+    0,
+    0.6,
+    0.01,
+    "Impact",
+  ),
+  field(
+    "rollRecoveryMoveMultiplier",
+    "Move speed in roll recovery",
+    "x",
+    0,
+    1,
+    0.05,
+    "Roll",
+  ),
 ];
 export const tuningPresets = Object.keys(
   data.presets,
@@ -285,7 +304,7 @@ export function exportTuning(tuning: CombatTuning, name: string): string {
   return JSON.stringify(
     {
       format: "mage-arena-tuning",
-      version: 1,
+      version: 2,
       name,
       tuning: validateTuning(tuning),
     },
@@ -301,11 +320,13 @@ export function importTuning(text: string): {
   const v = JSON.parse(text);
   if (
     v?.format !== "mage-arena-tuning" ||
-    v.version !== 1 ||
+    ![1, 2].includes(v.version) ||
     typeof v.name !== "string" ||
     v.name.length > 80 ||
     Object.keys(v).sort().join() !== "format,name,tuning,version"
   )
-    throw Error("Expected a version 1 Mage Arena tuning export.");
+    throw Error("Expected a version 1 or 2 Mage Arena tuning export.");
+  if (v.version === 1 && v.tuning && typeof v.tuning === "object")
+    v.tuning = { hitStunGraceS: 0, rollRecoveryMoveMultiplier: 1, ...v.tuning };
   return { name: v.name, tuning: validateTuning(v.tuning) };
 }

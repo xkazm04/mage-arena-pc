@@ -142,6 +142,12 @@ function recordLab(lab: CombatLab) {
     ...s,
     events: s.events.filter((e) => e.tick >= s.tick - replayTicks),
     randomLog: [],
+    actors: s.actors.map((a) => ({
+      ...a,
+      ...(a.mageAI
+        ? { mageAI: { ...a.mageAI, decisionTicks: [], reactionAges: [] } }
+        : {}),
+    })),
   });
   for (const a of compact.actors)
     if (a.mageAI) {
@@ -159,7 +165,11 @@ export function labReplay(lab: CombatLab): ArenaState[] {
     (_, i) => lab.history[(start + i) % (replayTicks + 1)]!,
   );
 }
-export function stepLab(lab: CombatLab, input: InputFrame, record = true): void {
+export function stepLab(
+  lab: CombatLab,
+  input: InputFrame,
+  record = true,
+): void {
   const { state, player, dummy } = lab.training;
   if (player.down || dummy.down) return;
   const first = state.events.length;

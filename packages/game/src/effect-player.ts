@@ -11,7 +11,6 @@ import {
   combat,
   seconds,
   spells,
-  type PendingCast,
   type Actor,
   type ArenaState,
   type Vec,
@@ -59,7 +58,6 @@ export class EffectPlayer {
   private eventIndex = 0;
   private blocks = new Map<number, number>();
   private arcDeg: number = combat.absorb.arcDeg;
-  private pending = new Map<number, PendingCast>();
   private requests = new Set<string>();
   private disposed = false;
   private c!: Camera;
@@ -134,10 +132,12 @@ export class EffectPlayer {
     }
     if (this.state !== state || state.events.length < this.eventIndex) {
       this.state = state;
-      this.eventIndex = state.events.length;
+      this.eventIndex = Math.max(
+        0,
+        state.events.findIndex((e) => e.tick >= state.tick - 1),
+      );
       this.shots = [];
       this.blocks.clear();
-      this.pending.clear();
     }
     // Expire independently of visibility and budgeting. No delayed bursts.
     this.shots = this.shots.filter((s) => {
@@ -150,13 +150,22 @@ export class EffectPlayer {
       const a = state.actors.find((a) => a.id === event.actorId);
       if (!a || state.tick - event.tick > combat.simStepHz) continue;
       const source = state.actors.find((a) => a.id === event.targetId);
-      if (event.kind === "cast")
+      if (event.kind === "release")
         this.shot({
           clip: `${this.element(a)}.cast`,
           at: { ...a.pos },
           actorId: a.id,
           tick: event.tick,
         });
+      if (event.kind === "release" && event.spellId) {
+        const spell = spells.find((s) => s.id === event.spellId);
+        if (spell && spell.kind !== "projectile")
+          this.shot({
+            clip: `${this.element(a)}.impact`,
+            at: event.at ?? { ...a.pos },
+            tick: event.tick,
+          });
+      }
       if (event.kind === "hit") {
         if (event.value > 0)
           this.shot({
@@ -196,40 +205,6 @@ export class EffectPlayer {
     }
     this.eventIndex = state.events.length;
     for (const a of state.actors) {
-      const pending = this.pending.get(a.id);
-      if (
-        pending &&
-        pending.activationId !== a.pending?.activationId &&
-        state.tick >= pending.releaseTick &&
-        !a.down
-      ) {
-        const spell = spells.find((s) => s.id === pending.spellId);
-        const interrupted = state.events
-          .slice(-64)
-          .some(
-            (e) =>
-              e.actorId === a.id &&
-              e.kind === "interrupt" &&
-              e.tick >= pending.startTick,
-          );
-        if (spell && spell.kind !== "projectile" && !interrupted) {
-          const at =
-            spell.kind === "zone" || spell.effect === "decoy"
-              ? pending.aim
-              : spell.kind === "target"
-                ? (state.actors.find((t) => t.id === pending.targetId)?.pos ??
-                  pending.aim)
-                : a.pos;
-          this.shot({
-            clip: `${this.element(a)}.impact`,
-            at: { ...at },
-            tick: pending.releaseTick,
-          });
-        }
-      }
-      if (a.pending)
-        this.pending.set(a.id, { ...a.pending, aim: { ...a.pending.aim } });
-      else this.pending.delete(a.id);
       const old = this.blocks.get(a.id);
       if (old !== undefined && a.metrics.blocks > old && a.absorb)
         this.shot({
@@ -336,7 +311,10 @@ export class EffectPlayer {
       );
     }
     if (options.barrier) {
-      const r = contract.absorb.visual_radius_metres * m.pxPerMetreX;
+      const r =
+        contract.absorb.visual_radius_metres *
+        m.pxPerMetreX *
+        (options.scale ?? 1);
       // The painted centre of curvature lies at its metadata anchor. Clip the
       // membrane to the same open-rear sector as the data-owned ward outline.
       mask.moveTo(0, 0);

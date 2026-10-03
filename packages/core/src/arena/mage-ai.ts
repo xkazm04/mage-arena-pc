@@ -1,4 +1,4 @@
-import { tuningFor } from './tuning.ts';
+import { tuningFor, feelPolicy } from './tuning.ts';
 import { arenaContains, arenaGeometry } from './geometry.ts';
 import { enemyData } from './data.generated.ts';
 import { spellFor, spells } from './catalog.ts';
@@ -38,7 +38,7 @@ function threats(state: ArenaState, a: Actor): Threat[] {
   for (const enemy of state.actors) {
     if (enemy.team === a.team || enemy.down || !enemy.pending || !hasLineOfSight(state, a.pos, enemy.pos)) continue;
     const p = enemy.pending;
-    const s = spells.find(s => s.id === p.spellId);
+    const s = p.spell ?? spells.find(s => s.id === p.spellId);
     if (s?.kind === 'self' || s?.kind === 'passive') continue;
     const centre = s?.kind === 'zone' || s?.kind === 'target' ? p.aim : enemy.pos;
     const aimedAtUs = s?.kind === 'zone' ? distance(centre, a.pos) <= s.radiusM + a.radius
@@ -81,9 +81,9 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
       const input = idleInput(brain.targetPoint); brain.input = input;
       if (target) {
         const d = distance(a.pos, target.pos), direction = unit(sub(target.pos, a.pos));
-        const strafe = Math.floor(state.tick / ticks(runtime.games.mageStrafePeriodS)) % 2 ? 1 : -1;
+        const strafe = Math.floor((state.tick + (state.seed + a.id * 17) % ticks(feelPolicy.ai.strafePhaseS)) / ticks(runtime.games.mageStrafePeriodS)) % 2 ? 1 : -1;
         const aggression = brain.aggression ?? 1;
-        const preferred = runtime.games.magePreferredDistanceM.map(v => v * (1.3 - .3 * aggression));
+        const preferred = runtime.games.magePreferredDistanceM.map(v => v * (1.3 - .3 * aggression) + ((state.seed + a.id * 31) % 101 / 100 - .5) * feelPolicy.ai.spacingVariationM);
         input.move = d > preferred[1]! ? direction : d < preferred[0]! ? { x: -direction.x, y: -direction.y } : { x: -direction.y * strafe, y: direction.x * strafe };
         // Turn inward at the arena edge instead of getting pinned by the clamp.
         if (!arenaContains(a.pos, runtime.games.spawnMarginM)) input.move = unit(sub(arenaGeometry.centre, a.pos));
@@ -94,13 +94,14 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         const aimDirection = rotate(sub(prediction, a.pos), error); input.aim = { x: a.pos.x + aimDirection.x, y: a.pos.y + aimDirection.y };
         const available = Array.from({ length: combat.lines.slots + 1 }, (_, slot) => ({ slot, s: spellFor(a, slot, state)! })).filter(({ s }) => s.kind !== 'passive' && (a.water.cooldowns[s.line] ?? 0) <= state.tick + 1 && (a.water.flow >= combat.flow.max || s.mana <= a.mana) && (!s.rangeM || d <= s.rangeM));
         const useful = available.filter(({ s }) => s.damage > 0 || (['heal','hot'].includes(s.effect) && a.hp < a.maxHp) || (s.effect === 'font' && a.mana < a.maxMana) || (s.effect === 'ward' && seen.some(t => t.family === 'magic')) || s.kind === 'zone' || s.effect === 'decoy' || s.effect === 'sheen' || s.effect === 'encase');
-        const choices = useful.length ? useful : available;
+        const choices = (useful.length ? useful : available).filter(({s}) => brain.plannedRaiseTick <= state.tick || brain.plannedRaiseTick >= state.tick + ticks(Math.max(s.castS,s.telegraphS) + feelPolicy.ai.reactionCastSafetyS));
+        const variety = new Map(choices.map(c => [c.slot, random(state, `mage ${a.id} variety ${c.slot}`) * feelPolicy.ai.spellVarietyWeight]));
         if (choices.length) {
           const choice = profile.level < 2 ? choices[Math.floor(random(state, `mage ${a.id} spell`) * choices.length)]!
             : choices.sort((x, y) => {
               const sustainX = ['heal','hot'].includes(x.s.effect) && a.hp < a.maxHp / 2, sustainY = ['heal','hot'].includes(y.s.effect) && a.hp < a.maxHp / 2;
               const counterX = profile.level >= 3 && target.absorb && x.s.family === 'unblockable', counterY = profile.level >= 3 && target.absorb && y.s.family === 'unblockable';
-              return Number(counterY) - Number(counterX) || Number(sustainY) - Number(sustainX) || Number(y.s.line !== a.water.lastLine) - Number(x.s.line !== a.water.lastLine) || y.s.damage * y.s.count - x.s.damage * x.s.count || x.slot - y.slot;
+              return Number(counterY) - Number(counterX) || Number(sustainY) - Number(sustainX) || Number(y.s.line !== a.water.lastLine) - Number(x.s.line !== a.water.lastLine) || (y.s.damage * y.s.count + variety.get(y.slot)!) - (x.s.damage * x.s.count + variety.get(x.slot)!) || x.slot - y.slot;
             })[0]!;
           input.slot = choice.slot; input.cast = brain.aggression === undefined || brain.aggression >= 1 || random(state, `mage ${a.id} aggression`) < brain.aggression;
         }
@@ -109,6 +110,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
   }
   const result: InputFrame = { ...brain.input, move: { ...brain.input.move }, aim: { ...brain.input.aim } };
   result.absorb = state.tick + 1 >= brain.plannedRaiseTick && state.tick + 1 <= brain.plannedReleaseTick;
+  if (brain.plannedRaiseTick > state.tick && brain.plannedRaiseTick <= state.tick + ticks(profile.decisionCadenceS + feelPolicy.ai.reactionCastSafetyS)) result.cast = false;
   if (result.absorb) { result.cast = false; result.aim = { ...brain.targetPoint }; }
   if (!target) { result.cast = false; result.move = { x: 0, y: 0 }; }
   brain.input.roll = false; return result;

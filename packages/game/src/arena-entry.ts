@@ -1,3 +1,4 @@
+import { ImpactClock } from "./combat-feedback.ts";
 import { LabUI } from "./lab-ui.ts";
 import { ArtFixture } from "./art-fixture.ts";
 import type { BodyState, Direction, Element } from "./animation-contract.ts";
@@ -12,6 +13,7 @@ import {
 } from "@mage/core";
 import {
   combat,
+  resolveHit,
   createLab,
   defaultLabConfig,
   stepLab,
@@ -82,6 +84,8 @@ export class ArenaGame {
   private pending: Promise<void> | null = null;
   private bot?: BotKind;
   private lastPerfect = -1e9;
+  private lastRefund = 0;
+  private impactClock = new ImpactClock();
   private lastEvents = 0;
   private reference = false;
   private hudUpdate: () => void = () => {};
@@ -212,6 +216,43 @@ export class ArenaGame {
                     [this.training.player.id]: this.input.frame(),
                   });
               },
+              feedbackFixture: (
+                kind: "hit" | "perfect" | "cast" | "warning",
+              ) => {
+                this.composition = structuredClone(presets[2]!);
+                this.composition.branches.tide_orb = "A";
+                this.restart();
+                this.hud();
+                this.pause(true);
+                const { state, player, dummy } = this.training;
+                state.tick = 60;
+                player.mana = 20;
+                if (kind === "cast" || kind === "warning") {
+                  player.tier = kind === "warning" ? 4 : 1;
+                  player.mana = player.maxMana;
+                  stepArena(state, {
+                    [player.id]: {
+                      ...this.input.frame(),
+                      aim: dummy.pos,
+                      slot: 1,
+                      cast: true,
+                    },
+                  });
+                } else {
+                  player.absorb = kind === "perfect";
+                  player.absorbFreshTick = state.tick;
+                  player.facing = { x: 1, y: 0 };
+                  dummy.pos = { x: player.pos.x + 8, y: player.pos.y };
+                  resolveHit(state, player, {
+                    ownerId: dummy.id,
+                    activationId: state.nextId++,
+                    family: "magic",
+                    damage: 18,
+                    tier: 1,
+                    source: dummy.pos,
+                  });
+                }
+              },
               visualFixture: (kind: string, direction = 0) => {
                 this.restart();
                 this.bot = undefined;
@@ -279,6 +320,7 @@ export class ArenaGame {
   }
   restart(kind: TrainingKind = "magic") {
     this.mode = "training";
+    this.lab = undefined;
     this.games = undefined;
     this.reference = false;
     this.training = createTraining(kind);
@@ -288,6 +330,7 @@ export class ArenaGame {
     this.paused = false;
     this.lastEvents = 0;
     this.lastPerfect = -1e9;
+    this.impactClock.reset();
     this.lastPhase = "";
     this.camera = makeCamera(
       this.camera,
@@ -387,6 +430,7 @@ export class ArenaGame {
     this.sync();
     this.lastEvents = this.training.state.events.length;
     this.lastPerfect = -1e9;
+    this.impactClock.reset();
     this.lastPhase = "";
     this.camera = makeCamera(
       this.camera,
@@ -509,7 +553,15 @@ export class ArenaGame {
     clock.visible = !artClock;
     const rune = u.text("", 1064, 64, 34, colours.gold, 400, true),
       next = u.text("", 1064, 109, 26, colours.muted, 420);
-    const feedback = u.text("", 700, 220, 42, colours.water, 600, true);
+    const feedback = u.text(
+      "",
+      650,
+      this.lab ? 365 : 220,
+      32,
+      colours.water,
+      1000,
+      true,
+    );
     const hint = u.text(
       "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
       524,
@@ -536,7 +588,14 @@ export class ArenaGame {
       castLabel.text = pending
         ? pending.kind === "staff"
           ? "Staff strike"
-          : "Shaping a spell"
+          : state.tick <
+              pending.startTick +
+                Math.ceil(
+                  (pending.releaseTick - pending.startTick) *
+                    tuningFor(state).castCommitFraction,
+                )
+            ? "Shaping / roll cancels"
+            : "Committed / releasing"
         : "";
       heading.text =
         this.mode === "tiro"
@@ -645,7 +704,7 @@ export class ArenaGame {
       feedback.text =
         seconds(state.tick - this.lastPerfect) <
         runtime.presentation.perfectFlashS
-          ? "PERFECT ABSORB"
+          ? `PERFECT ABSORB  +${this.lastRefund.toFixed(1)} MANA`
           : player.absorb
             ? "WARD RAISED"
             : "";
@@ -676,6 +735,10 @@ export class ArenaGame {
       this.previousSlot = this.input.slot;
       void gameAudio.play("ui.slot");
     }
+    const reduced = localStorage.getItem("mage-motion") === "reduced";
+    const simulationDt = this.paused
+      ? 0
+      : this.impactClock.advance(dt, reduced);
     let alpha = 1;
     if (
       !this.paused &&
@@ -685,7 +748,7 @@ export class ArenaGame {
       !this.training.player.down &&
       !document.hidden
     )
-      alpha = this.clock.advance(dt, () => {
+      alpha = this.clock.advance(simulationDt, () => {
         if (this.lab) stepLab(this.lab, this.input.frame());
         else if (this.games) {
           if (this.season && this.games.phase === "active")
@@ -710,38 +773,6 @@ export class ArenaGame {
             this.training,
             this.bot ? timingBot(this.training, this.bot) : this.input.frame(),
           );
-        for (const e of this.training.state.events.slice(this.lastEvents)) {
-          const p = this.training.player,
-            actor = this.training.state.actors.find((a) => a.id === e.actorId);
-          if (!actor) continue;
-          const dx = actor.pos.x - p.pos.x,
-            dy = actor.pos.y - p.pos.y;
-          const spatial = {
-            pan: dx / audioData.spatial.rangeM,
-            gain: Math.max(
-              audioData.spatial.minGain,
-              1 - Math.hypot(dx, dy) / audioData.spatial.rangeM,
-            ),
-          };
-          if (e.kind === "perfect" && e.actorId === p.id) {
-            this.lastPerfect = e.tick;
-            void gameAudio.play("perfect");
-          } else if (e.kind === "unlock" && e.actorId === p.id) {
-            void gameAudio.play("collar");
-            if (e.value === 2) {
-              void gameAudio.play("voice.collar");
-              this.ui.notice("The collar loosens. Stand ready.");
-            }
-          } else if (e.kind === "cast")
-            void gameAudio.play(
-              actor.enemy ? "impact" : `cast.${actor.school ?? "water"}`,
-              spatial,
-            );
-          else if (e.kind === "hit" && e.value > 0)
-            void gameAudio.play(e.actorId === p.id ? "hit" : "impact", spatial);
-          else if (e.kind === "roll") void gameAudio.play("roll", spatial);
-        }
-        this.lastEvents = this.training.state.events.length;
       });
     if (
       this.season &&
@@ -754,7 +785,8 @@ export class ArenaGame {
           "Checkpoint failed. Load the last accepted save to resume.",
         ),
       );
-    const replay = this.labUI?.frame(dt);
+    this.consumeEvents(reduced);
+    const replay = this.lab ? this.labUI?.frame(dt) : undefined;
     const shown = replay ?? this.training.state;
     const shownPlayer =
       replay?.actors.find((a) => a.id === this.training.player.id) ??
@@ -768,6 +800,13 @@ export class ArenaGame {
     );
     this.input.refreshAim();
     this.artFixture?.update(dt);
+    const shake = this.impactClock.offset(
+      cameraMetrics(this.camera).resolutionScale,
+    );
+    this.ui.world.position.set(
+      reduced || this.paused ? 0 : shake.x,
+      reduced || this.paused ? 0 : shake.y,
+    );
     this.scene.render(
       this.artFixture?.state ?? shown,
       this.artFixture?.player ?? shownPlayer,
@@ -790,6 +829,48 @@ export class ArenaGame {
       this.pause(true);
       this.results();
     }
+  }
+  private consumeEvents(reduced: boolean) {
+    for (const e of this.training.state.events.slice(this.lastEvents)) {
+      const p = this.training.player,
+        actor = this.training.state.actors.find((a) => a.id === e.actorId);
+      if (!actor) continue;
+      const dx = actor.pos.x - p.pos.x,
+        dy = actor.pos.y - p.pos.y;
+      const spatial = {
+        pan: dx / audioData.spatial.rangeM,
+        gain: Math.max(
+          audioData.spatial.minGain,
+          1 - Math.hypot(dx, dy) / audioData.spatial.rangeM,
+        ),
+      };
+      if (e.kind === "perfect" && e.actorId === p.id) {
+        this.lastPerfect = e.tick;
+        this.lastRefund = e.value;
+        if (!reduced) this.impactClock.hit(0, true);
+        void gameAudio.play("perfect");
+      } else if (e.kind === "unlock" && e.actorId === p.id) {
+        void gameAudio.play("collar");
+        if (e.value === 2) {
+          void gameAudio.play("voice.collar");
+          this.ui.notice("The collar loosens. Stand ready.");
+        }
+      } else if (e.kind === "release")
+        void gameAudio.play(
+          actor.enemy ? "impact" : `cast.${actor.school ?? "water"}`,
+          spatial,
+        );
+      else if (e.kind === "hit" && (e.contactDamage ?? e.value) > 0) {
+        const damage = e.contactDamage ?? e.value;
+        if (!reduced && (e.actorId === p.id || e.targetId === p.id))
+          this.impactClock.hit(damage);
+        void gameAudio.play(e.actorId === p.id ? "hit" : "impact", {
+          ...spatial,
+          gain: spatial.gain * Math.min(1, 0.45 + damage / 25),
+        });
+      } else if (e.kind === "roll") void gameAudio.play("roll", spatial);
+    }
+    this.lastEvents = this.training.state.events.length;
   }
   snapshot() {
     return structuredClone({
@@ -819,12 +900,18 @@ export class ArenaGame {
         "A10 partial directional clips with explicit same-entity fallback",
       animation: this.scene.bodies.snapshot(),
       effects: this.scene.clips.snapshot(),
+      feedback: this.scene.feedback.snapshot(),
+      impactClock: {
+        stopS: this.impactClock.stopS,
+        compressionS: this.impactClock.compressionS,
+      },
       depthOrder: this.scene.depthSnapshot(),
     });
   }
   dispose() {
     this.disposed = true;
     window.removeEventListener("keydown", this.artDebugKey);
+    this.ui.world.position.set(0, 0);
     this.labUI?.dispose();
     this.input.dispose();
     this.scene.dispose();

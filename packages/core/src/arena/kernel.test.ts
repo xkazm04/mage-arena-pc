@@ -1,3 +1,4 @@
+import { makeTuning } from './tuning.ts';
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { addMage, combat, createArena, drainPerSecond, DT, FixedStepper, perfectReturn, resetWave, resolveHit, runtime, spawnProjectile, stateHash, stepArena, ticks } from './kernel.ts';
@@ -59,8 +60,9 @@ describe('directional absorb', () => {
   });
 });
 describe('movement, actions and clock', () => {
-  it('normalizes diagonals, sprints with cost, and rolls four metres once per press', () => {
+  it('normalizes diagonals at instant acceleration, sprints with cost, and rolls four metres once per press', () => {
     const s = createArena(), a = addMage(s, 0, { x: 10, y: 10 });
+    s.tuning = {...makeTuning(),accelerationMps2:0,decelerationMps2:0};
     for (let i = 0; i < ticks(1); i++) stepArena(s, { [a.id]: { ...idleInput(), move: { x: 1, y: 1 } } });
     expect(Math.hypot(a.pos.x - 10, a.pos.y - 10)).toBeCloseTo(combat.movement.walkMps);
     a.pos = { x: 10, y: 10 };

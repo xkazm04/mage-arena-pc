@@ -14,7 +14,7 @@ export interface EnemyBrain { id: string; readyTick: number; backoffUntil: numbe
 export interface MageBrain { aggression?: number; competence: number; nextDecisionTick: number; input: InputFrame; observed: { id: number; firstSeenTick: number; reacted: boolean }[]; defendUntil: number; plannedRaiseTick: number; plannedReleaseTick: number; targetPoint: Vec; decisionTicks: number[]; reactionAges: number[] }
 export interface PendingCast { spell?: Spell; kind: 'bolt' | 'staff' | 'spell'; releaseTick: number; startTick: number; aim: Vec; activationId: number; spellId?: string; damageMult?: number; targetId?: number }
 export interface Actor {
-  school?: School; velocity?: Vec; staggerUntil?: number;
+  school?: School; velocity?: Vec; staggerUntil?: number; staggerImmuneUntil?: number; rollRecoveryUntil?: number;
   id: number; team: number; label: string; pos: Vec; previousPos: Vec; facing: Vec; radius: number;
   ranks: Ranks; hp: number; maxHp: number; mana: number; maxMana: number; stamina: number; maxStamina: number;
   down: boolean; dummy: boolean; absorb: boolean; absorbFreshTick: number; releaseTick: number; absorbExhausted: boolean;
@@ -28,7 +28,7 @@ export interface Actor {
 export interface Projectile extends Hit { id: number; pos: Vec; previousPos: Vec; velocity: Vec; radius: number; remainingM: number; hitIds: number[]; burstRadiusM?: number; piercing?: boolean; reflected?: boolean }
 export interface Zone { id: number; ownerId: number; pos: Vec; radiusM: number; until: number; kind: 'slow' | 'fog'; slowMult: number }
 export interface Telegraph extends Hit { id: number; kind: 'projectile' | 'lane' | 'melee' | 'area' | 'charge'; origin: Vec; target: Vec; resolveTick: number; startTick: number; speedMps: number; rangeM: number; widthM: number; rootS?: number; pullM?: number; survivesOwner?: boolean; wallStunS?: number }
-export interface ArenaEvent { family?: Family; contactDamage?: number; guarded?: boolean; activationId?: number; tick: number; kind: 'perfect' | 'hit' | 'cast' | 'down' | 'unlock' | 'interrupt' | 'roll'; actorId: number; targetId?: number; value: number }
+export interface ArenaEvent { spellId?: string; at?: Vec; family?: Family; contactDamage?: number; guarded?: boolean; activationId?: number; tick: number; kind: 'perfect' | 'hit' | 'cast' | 'release' | 'down' | 'unlock' | 'interrupt' | 'roll'; actorId: number; targetId?: number; value: number }
 export interface RandomDraw { tick: number; purpose: string; value: number }
 export interface ArenaState {
   tuning?: CombatTuning; lab?: { damageEnabled: boolean };

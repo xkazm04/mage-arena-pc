@@ -74,7 +74,7 @@ describe('damage geometry and control', () => {
     const x = target.pos.x; stepArena(state, { [target.id]: { ...idleInput(), move: { x: 1, y: 0 }, roll: true } }); expect(target.pos.x).toBe(x);
   });
   it('Puddle slows, Fog blocks sight then expires, Freeze roots at its centre', () => {
-    const p = setup('mire', 1); cast(p.state, p.actor, p.target); advance(p.state, ticks(0.5)); const x = p.target.pos.x;
+    const p = setup('mire', 1); cast(p.state, p.actor, p.target); advance(p.state, ticks(0.5)); p.target.velocity = { x: combat.movement.walkMps * .7, y: 0 }; const x = p.target.pos.x;
     stepArena(p.state, { [p.target.id]: { ...idleInput(), move: { x: 1, y: 0 } } }); expect(p.target.pos.x - x).toBeCloseTo(combat.movement.walkMps * 0.7 / combat.simStepHz);
     const f = setup('mire', 2); cast(f.state, f.actor, f.target); advance(f.state, ticks(0.5)); expect(hasLineOfSight(f.state, f.actor.pos, f.target.pos)).toBe(false);
     advance(f.state, ticks(5)); expect(hasLineOfSight(f.state, f.actor.pos, f.target.pos)).toBe(true);
@@ -100,7 +100,7 @@ describe('sustain and mirror', () => {
     const hit = { ownerId: target.id, activationId: 100, damage: 40, family: 'magic' as const, tier: 1, source: target.pos };
     resolveHit(state, actor, hit); expect(actor.mana).toBeCloseTo(36.5); expect(actor.water.stored).toBe(20);
     for (let i = 0; i < 5; i++) resolveHit(state, actor, hit); expect(actor.water.stored).toBe(40);
-    actor.absorb = false; actor.water.flow = 0; actor.tier = 4; actor.water.cooldowns = {}; cast(state, actor, target); advance(state, ticks(0.4)); expect(actor.water.stored).toBe(0); expect(state.projectiles[0]!.damage).toBe(40);
+    actor.absorb = false; actor.water.flow = 0; actor.tier = 4; actor.water.cooldowns = {}; advance(state, Math.max(0, actor.recoveryUntil - state.tick)); cast(state, actor, target); advance(state, ticks(0.4)); expect(actor.water.stored).toBe(0); expect(state.projectiles[0]!.damage).toBe(40);
   });
   it('Reflection returns only eligible magic even above tier II', () => {
     for (const [tier, family, reflected] of [[1,'magic',true],[4,'magic',false],[1,'physical',false]] as const) {

@@ -11,8 +11,8 @@
     "barrierOpacity": 0.68
   },
   "bodies": {
-    "hitHoldMs": 240,
-    "castHoldMs": 240,
+    "hitHoldMs": 100,
+    "castHoldMs": 80,
     "deathOpacity": 0.55
   },
   "schoolBodies": {
@@ -32,12 +32,48 @@
     "netter": "water"
   },
   "compatibleStates": {
-    "idle": ["absorb", "run", "cast", "hit", "death"],
-    "run": ["idle", "absorb", "cast", "hit", "death"],
-    "cast": ["absorb", "idle", "hit", "run", "death"],
-    "absorb": ["idle", "cast", "hit", "run", "death"],
-    "hit": ["idle", "absorb", "cast", "run", "death"],
-    "death": ["hit", "idle", "absorb", "cast", "run"]
+    "idle": [
+      "absorb",
+      "run",
+      "cast",
+      "hit",
+      "death"
+    ],
+    "run": [
+      "idle",
+      "absorb",
+      "cast",
+      "hit",
+      "death"
+    ],
+    "cast": [
+      "absorb",
+      "idle",
+      "hit",
+      "run",
+      "death"
+    ],
+    "absorb": [
+      "idle",
+      "cast",
+      "hit",
+      "run",
+      "death"
+    ],
+    "hit": [
+      "idle",
+      "absorb",
+      "cast",
+      "run",
+      "death"
+    ],
+    "death": [
+      "hit",
+      "idle",
+      "absorb",
+      "cast",
+      "run"
+    ]
   },
   "dailyClock": {
     "middayArtHour": 12,
