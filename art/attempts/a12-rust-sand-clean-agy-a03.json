@@ -1,0 +1,73 @@
+{
+  "id": "a12-rust-sand-clean-agy-a03",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "rust-sand-clean",
+  "attempt": 3,
+  "input": {
+    "wave": "A12",
+    "id": "rust-sand-clean",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+        "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+        "role": "approved A6 scene; edit target, preserve entire environment"
+      }
+    ],
+    "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: remove the entire floating earth-spell stone cluster and golden glow surrounding the lower-middle-right mage (x .62 y .70). The thorn-backed stone quadruped is also a CREATURE, not architecture. Remove it. The only upright forms remaining are the FIVE existing tall cloth-wrapped pillars. The floor must contain no floating objects or combat residue.",
+    "correction_of": "a12-rust-sand-clean-grok-a02",
+    "revision": 3
+  },
+  "input_hash": "12b8364ee5f9f31dc49b6b8b7d3cc5ec77a57a4b6a3fecdcda0b82a371964f75",
+  "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: remove the entire floating earth-spell stone cluster and golden glow surrounding the lower-middle-right mage (x .62 y .70). The thorn-backed stone quadruped is also a CREATURE, not architecture. Remove it. The only upright forms remaining are the FIVE existing tall cloth-wrapped pillars. The floor must contain no floating objects or combat residue.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "8ad91fed-5cf1-4fbc-8fcf-a0f7f1eaff7e",
+  "at": "2026-10-03T15:33:08.637028+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 227.328,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "at": "2026-10-03T15:35:23Z",
+      "step": 3,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "clean_arena_background",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-agy-a03\\reference-1.png"
+        ],
+        "Prompt": "Precise object removal and arena restoration based on reference-1.png. Lock the exact camera angle, framing, perspective, architectural geometry, and lighting from reference-1.png. Empty arena floor only. Remove all characters, creatures, and combat magic effects: remove the four mages (fire mage, water mage, earth mage with floating rocks, and purple ribbon mage), remove the two armed soldiers in the midground, remove the two ember hounds on the left, and remove the large spiky thorn-backed stone quadruped beast on the right. Remove all magic spells, floating stones, glowing runes, cast shadows of figures, embers, swirls, and ribbons. Seamlessly restore the arena ground beneath all removed figures with the continuous matching weathered limestone flagstones, warm ochre sand, cracks, and dark slate floor patterns. The five cloth-wrapped stone pillars/pylons remain intact at their exact locations. The back wall with hanging blue and rust banners remains intact. Completely deserted, empty battle arena, pristine painted background art.",
+        "toolAction": "Generating clean arena background",
+        "toolSummary": "Generate clean arena background"
+      },
+      "conversation": "d456c62f-2a71-4439-b712-7d387f944aaa"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "31f26f58da3eee511c48da6479565b7df2506ba247fbea2661d27ee76d28656e",
+      "paths": [
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-agy-a03\\output.png"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a12-rust-sand-clean-agy-a03/_driver/source.png",
+  "archive": "art/review/sources/a12-rust-sand-clean-agy-a03.png",
+  "sha256": "31f26f58da3eee511c48da6479565b7df2506ba247fbea2661d27ee76d28656e",
+  "invocation_evidence": "art/providers/runs/a12-rust-sand-clean-agy-a03"
+}

@@ -86,3 +86,15 @@ agy first: multi-direction grids drifted; its front-right Cassia keys were usabl
 ### Session 6 / A11 / 2026-10-03
 
 No provider call. agy remains stopped on duplicate output anomaly and Grok remains stopped on HTTP 429. The stat proof, painted clock states and independent-layer briefs are staged under art/briefs/a11 but not submitted. No third provider or untracked generation bypass was used. A11 assets explicitly distinguish old generated material from authored geometry; the requested new generated paintings are not complete. Cumulative 285 charged; session charges A8 7, A9 11, A10 44, A11 0.
+
+### Session 7 / A12 / 2026-10-03
+
+The owner authorized preserving/clearing both old latches and raised guards to agy 400 / Grok 330 for this wave. Snapshot and original latches are under `art/waves/A12/before` and `latches`. The combined ceiling is 345 (285 inherited + about 60), serial calls and first-error provider stops retained.
+
+agy diagnosis is now concrete: the old Brennic parent explicitly copied output.png to source.png; their bytes are identical. Its linked worker nevertheless made **three** image calls. The old two-charge row is unchanged; `a12-a10-agy-hidden-call-reconciliation` appends one historical charge. Evidence contains task-linked tool arguments and original transcript hashes. The repaired driver groups file aliases, isolates its own `_driver` copy, rejects unchanged references, monitors exact-request-linked parent/worker image calls, and fails closed on unverified or extra calls. Extra-call/rate-limit detection terminates the process tree and latches only that provider; already started calls remain conservatively charged.
+
+One Grok clean-plate proof succeeded in about 28 seconds. The prior “temporarily at capacity” 429 is no longer blocking; this is consistent with transient capacity, not proof of the account allowance type. One agy proof also succeeded, and its single internal call is archived. Subsequent agy runs use live transcript monitoring. No new quota/rate errors or moderation refusals occurred. Four visually rejected Grok scenes remain charged and archived.
+
+**11 new images: agy 6, Grok 5; plus 1 historical reconciliation. Project total 297/345.** Current provider project charges: agy 81, Grok 189; agy's 4 known external probes additionally count against its guard. Local guard remainders: agy 315, Grok 141; combined project remainder 48. Both latches are clear. Actual account balance and image monetary cost remain unknown; CLI token cost is not image-generation spend.
+
+No other paid image provider was used. Three local RealESRGAN_x4plus passes use the existing CUDA/Comfy runtime. No upscale weights were installed before this wave; the official release URL and BSD-3-Clause licence were recorded **before** downloading the 67,040,989-byte weight, SHA-256 `4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1`. Source/licence/hash and learned-versus-Lanczos comparisons are under `art/waves/A12`; the ignored model is not committed. Existing EasyOCR weights were reused with downloads disabled. Local Qwen/OCR observations remain advice only.

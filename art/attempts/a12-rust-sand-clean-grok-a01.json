@@ -1,0 +1,64 @@
+{
+  "id": "a12-rust-sand-clean-grok-a01",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "rust-sand-clean",
+  "attempt": 1,
+  "input": {
+    "wave": "A12",
+    "id": "rust-sand-clean",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+        "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+        "role": "approved A6 scene; edit target, preserve entire environment"
+      }
+    ],
+    "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority."
+  },
+  "input_hash": "3993cf8dd3363d7a3a8f9b1a115af12ce8a5796ec21f3488e64fd3f1bebde89c",
+  "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "81f6566b-4cf7-4930-ac8a-81076bd2e9b0",
+  "at": "2026-10-03T15:24:11.517742+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 22.532,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "71dc188d955643291f97bc76214d09a5e92cc2baa0c62bc42b2b7a812ca9432f",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-rust-sand-clean-grok-a01\\81f6566b-4cf7-4930-ac8a-81076bd2e9b0\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a12-rust-sand-clean-grok-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a12-rust-sand-clean-grok-a01.jpg",
+  "sha256": "71dc188d955643291f97bc76214d09a5e92cc2baa0c62bc42b2b7a812ca9432f",
+  "invocation_evidence": "art/providers/runs/a12-rust-sand-clean-grok-a01"
+}

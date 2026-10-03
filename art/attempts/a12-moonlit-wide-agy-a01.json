@@ -1,0 +1,72 @@
+{
+  "id": "a12-moonlit-wide-agy-a01",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "moonlit-wide",
+  "attempt": 1,
+  "input": {
+    "wave": "A12",
+    "id": "moonlit-wide",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/waves/A12/references/moonlit-overscan-guide.png",
+        "sha256": "eff2a9c3f8c3b6fd5d9b4f98c26d27bd988f4ac2d5952f75e050bfe80d810b89",
+        "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+      }
+    ],
+    "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result."
+  },
+  "input_hash": "146b409510433354654f5df0ea5365fffb451e261338ae1241c61b4aa3fda095",
+  "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "bc9f7aeb-0392-4b8d-a81a-3a84d53d0038",
+  "at": "2026-10-03T15:43:32.681928+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 100.875,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "at": "2026-10-03T15:44:12Z",
+      "step": 3,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "output",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-wide-agy-a01\\reference-1.png"
+        ],
+        "Prompt": "Outpaint and seamlessly expand the reference image to fill the entire 16:9 frame, replacing only the solid grey border margins. In reference-1.png, the dark moonlit stone arena occupies the central five-sixths of the image, bordered on all four sides by flat solid grey padding bands. Seamlessly extend the existing environment into these grey margins: continue the dark cracked stone floor and rocky slab ground to the left, right, and bottom edges; continue the dark masonry walls, arches, and tattered banners upward to the top edge. Keep the original central scene, including all five glowing blue-topped rune pylons, cracks, and floor markings, exactly at their original position and scale. Do not duplicate pylons or add new structures. Eliminate all grey margins completely with seamless texture continuity and no visible edges or seams. Consistent dark moonlit fantasy atmosphere, 55-degree oblique top-down perspective, painterly game environment concept art. No figures, creatures, text, or UI.",
+        "toolAction": "Generating outpainted image",
+        "toolSummary": "Outpaint arena margins"
+      },
+      "conversation": "322f5551-08bc-4ef9-a2cd-ddf18e159576"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "1a13c5d74924fb21413486d5ff9e1133a7538b5276ae20280223ed0a5e2b7ac6",
+      "paths": [
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-wide-agy-a01\\output.png"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a12-moonlit-wide-agy-a01/_driver/source.png",
+  "archive": "art/review/sources/a12-moonlit-wide-agy-a01.png",
+  "sha256": "1a13c5d74924fb21413486d5ff9e1133a7538b5276ae20280223ed0a5e2b7ac6",
+  "invocation_evidence": "art/providers/runs/a12-moonlit-wide-agy-a01"
+}

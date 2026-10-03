@@ -1,0 +1,938 @@
+{
+  "schemaVersion": 1,
+  "id": "covenant-arena-plates-a12",
+  "status": "owner-review",
+  "paths": "repository-root-relative",
+  "geometry": "art/delivery/a12/geometry.json",
+  "geometrySha256": "0cf13f142b11ae5b24c6898b2c99b198dc9d2775c035ba5832188328b5f72d19",
+  "paletteForGames": {
+    "training": "verdigris",
+    "1": "verdigris",
+    "2": "verdigris",
+    "3": "rust-sand",
+    "4": "rust-sand",
+    "5": "moonlit",
+    "6": "moonlit"
+  },
+  "palettes": {
+    "verdigris": {
+      "file": "art/delivery/a12/plates/verdigris.png",
+      "sha256": "131f18264e43c555c88283f4b70ed00bc40c5de837c6c749007f54d61e8546e6",
+      "size": [
+        3072,
+        1728
+      ],
+      "palette": "verdigris",
+      "offsetWorldMetres": [
+        -35.2,
+        26.84169184367007
+      ],
+      "worldSizeMetres": [
+        102.4,
+        70.31661631265986
+      ],
+      "preprojected": true,
+      "repeat": false,
+      "nativeRestoration": {
+        "file": "art/delivery/a12/native/verdigris.png",
+        "sha256": "b0ed3d041aede70abb122ed10a162e04bae7ed0ed8da63e5f68ec5c4b067be0c",
+        "size": [
+          1376,
+          768
+        ]
+      },
+      "occluders": [
+        {
+          "id": "southwest-pylon",
+          "file": "art/delivery/a12/occluders/verdigris-southwest-pylon.png",
+          "sha256": "67b5fcff829ad20d50259babab15f189ee3f8220d6aad2d305c7f465e77fdecd",
+          "size": [
+            87,
+            208
+          ],
+          "cropMasterPx": [
+            436,
+            1244,
+            87,
+            208
+          ],
+          "anchorPx": [
+            46.2326,
+            191.5
+          ],
+          "baseLineMasterPx": 1435.5,
+          "baseWorldMetres": [
+            -19.12558139534884,
+            85.25575591590572
+          ],
+          "depthSort": "baseWorldMetres[1]",
+          "purpose": "fixed-position foreground depth overlay; copied from this same plate, never moved or repeated",
+          "backgroundContainsSameObject": true,
+          "extraction": "authored silhouette polygon plus 0.65 master-pixel edge feather; RGB is byte-identical to plate crop",
+          "collision": "none authored; game owns obstruction policy",
+          "polygonUV": [
+            [
+              0.15988372093023256,
+              0.7213541666666666
+            ],
+            [
+              0.1620639534883721,
+              0.7421875
+            ],
+            [
+              0.16351744186046513,
+              0.77734375
+            ],
+            [
+              0.16569767441860464,
+              0.80078125
+            ],
+            [
+              0.1693313953488372,
+              0.8138020833333334
+            ],
+            [
+              0.16787790697674418,
+              0.8307291666666666
+            ],
+            [
+              0.1555232558139535,
+              0.8385416666666666
+            ],
+            [
+              0.14244186046511628,
+              0.8333333333333334
+            ],
+            [
+              0.14244186046511628,
+              0.8151041666666666
+            ],
+            [
+              0.14607558139534885,
+              0.7760416666666666
+            ],
+            [
+              0.14898255813953487,
+              0.7526041666666666
+            ],
+            [
+              0.15334302325581395,
+              0.73828125
+            ],
+            [
+              0.15770348837209303,
+              0.7317708333333334
+            ]
+          ]
+        },
+        {
+          "id": "southeast-pylon",
+          "file": "art/delivery/a12/occluders/verdigris-southeast-pylon.png",
+          "sha256": "2581a28509a05fab546b5b1358567d0ff38a1bdfbb097ebf28e14aaa08758eca",
+          "size": [
+            96,
+            221
+          ],
+          "cropMasterPx": [
+            2548,
+            1218,
+            96,
+            221
+          ],
+          "anchorPx": [
+            52.9302,
+            208.5
+          ],
+          "baseLineMasterPx": 1426.5,
+          "baseWorldMetres": [
+            51.49767441860466,
+            84.88952353927729
+          ],
+          "depthSort": "baseWorldMetres[1]",
+          "purpose": "fixed-position foreground depth overlay; copied from this same plate, never moved or repeated",
+          "backgroundContainsSameObject": true,
+          "extraction": "authored silhouette polygon plus 0.65 master-pixel edge feather; RGB is byte-identical to plate crop",
+          "collision": "none authored; game owns obstruction policy",
+          "polygonUV": [
+            [
+              0.842296511627907,
+              0.7057291666666666
+            ],
+            [
+              0.8510174418604651,
+              0.7278645833333334
+            ],
+            [
+              0.8575581395348837,
+              0.75390625
+            ],
+            [
+              0.8575581395348837,
+              0.7942708333333334
+            ],
+            [
+              0.8597383720930233,
+              0.8190104166666666
+            ],
+            [
+              0.8539244186046512,
+              0.828125
+            ],
+            [
+              0.8357558139534884,
+              0.8307291666666666
+            ],
+            [
+              0.8299418604651163,
+              0.8229166666666666
+            ],
+            [
+              0.8328488372093024,
+              0.7890625
+            ],
+            [
+              0.8350290697674418,
+              0.7552083333333334
+            ],
+            [
+              0.8393895348837209,
+              0.73046875
+            ]
+          ]
+        }
+      ],
+      "provenance": {
+        "concept": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+        "conceptSha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+        "conceptNativeSize": [
+          1672,
+          941
+        ],
+        "generated": "art/review/sources/a12-verdigris-wide-agy-a01.png",
+        "generatedSha256": "b0ed3d041aede70abb122ed10a162e04bae7ed0ed8da63e5f68ec5c4b067be0c",
+        "generatedNativeSize": [
+          1376,
+          768
+        ],
+        "job": "a12-verdigris-wide-agy-a01",
+        "method": "reference-guided complete clean scene, followed by ONE coherent wide outpainted painting from a grey overscan guide; no masks, no assembled floor, no repeated parts",
+        "upscaleEvidence": "art/waves/A12/upscaled/verdigris.json",
+        "pixelPreserving": false,
+        "outpaintGuide": {
+          "path": "art/waves/A12/references/verdigris-overscan-guide.png",
+          "sha256": "cb4a4ed8ec4e74f1e5a97920b2574d8fc59fee111ab92a00a74a4686fcdffbcf",
+          "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+        },
+        "wholePlateColourGrade": {
+          "method": "single whole-image RGB gain from mean approved/reference-centre environment; original figure boxes excluded from measurement; never composited",
+          "gainRGB": [
+            1.1918665191876225,
+            1.198343137853469,
+            1.25
+          ],
+          "gainLimits": [
+            0.8,
+            1.25
+          ],
+          "clippedChannelFraction": 3.767602237654321e-07,
+          "measurementMaskExcludedFraction": 0.16774885721694827
+        }
+      },
+      "density": {
+        "exportTexelsPerDisplayPixel1080": 1.3333333333333333,
+        "exportTexelsPerDisplayPixel1440": 1,
+        "generatedSourcePixelsPerDisplayPixel1080": 0.5972222222222222,
+        "generatedSourcePixelsPerDisplayPixel1440": 0.4479166666666667,
+        "upscale": "35% local learned restoration + 65% Lanczos; exported density is not native resolved detail; full model/source/licence in separate evidence"
+      },
+      "quality": {
+        "owner_accepted": false,
+        "status": "owner-review",
+        "limits": [
+          "lower native resolution than A6; fine crack and rune geometry drift",
+          "under-figure floor and overscan architecture are inferred",
+          "local learned pass changes microtexture",
+          "compact geometry needs game migration",
+          "static light does not relight moving actors"
+        ]
+      }
+    },
+    "rust-sand": {
+      "file": "art/delivery/a12/plates/rust-sand.png",
+      "sha256": "9f73f5b60ec9ab14166efcf115de7d8bfc0ad99c90e4c9fd4ecf859d9ced2cac",
+      "size": [
+        3072,
+        1728
+      ],
+      "palette": "rust-sand",
+      "offsetWorldMetres": [
+        -35.2,
+        26.84169184367007
+      ],
+      "worldSizeMetres": [
+        102.4,
+        70.31661631265986
+      ],
+      "preprojected": true,
+      "repeat": false,
+      "nativeRestoration": {
+        "file": "art/delivery/a12/native/rust-sand.png",
+        "sha256": "c831f7467608bc117d54495749e920aba830439500b5252317953157e3c7c9da",
+        "size": [
+          1376,
+          768
+        ]
+      },
+      "occluders": [
+        {
+          "id": "southwest-pylon",
+          "file": "art/delivery/a12/occluders/rust-sand-southwest-pylon.png",
+          "sha256": "56a9b3512aa1444850ce6072ce695dfd6361374962e16c1d25fea06e1cecde93",
+          "size": [
+            152,
+            295
+          ],
+          "cropMasterPx": [
+            342,
+            1087,
+            152,
+            295
+          ],
+          "anchorPx": [
+            97.814,
+            285.5
+          ],
+          "baseLineMasterPx": 1372.5,
+          "baseWorldMetres": [
+            -20.539534883720933,
+            82.69212927950667
+          ],
+          "depthSort": "baseWorldMetres[1]",
+          "purpose": "fixed-position foreground depth overlay; copied from this same plate, never moved or repeated",
+          "backgroundContainsSameObject": true,
+          "extraction": "authored silhouette polygon plus 0.65 master-pixel edge feather; RGB is byte-identical to plate crop",
+          "collision": "none authored; game owns obstruction policy",
+          "polygonUV": [
+            [
+              0.13372093023255813,
+              0.6328125
+            ],
+            [
+              0.13880813953488372,
+              0.6302083333333334
+            ],
+            [
+              0.14462209302325582,
+              0.6419270833333334
+            ],
+            [
+              0.1438953488372093,
+              0.6627604166666666
+            ],
+            [
+              0.14534883720930233,
+              0.671875
+            ],
+            [
+              0.14825581395348839,
+              0.6783854166666666
+            ],
+            [
+              0.14898255813953487,
+              0.70703125
+            ],
+            [
+              0.15334302325581395,
+              0.7408854166666666
+            ],
+            [
+              0.15479651162790697,
+              0.7604166666666666
+            ],
+            [
+              0.15988372093023256,
+              0.7786458333333334
+            ],
+            [
+              0.15479651162790697,
+              0.7916666666666666
+            ],
+            [
+              0.14244186046511628,
+              0.7981770833333334
+            ],
+            [
+              0.13372093023255813,
+              0.7942708333333334
+            ],
+            [
+              0.12936046511627908,
+              0.78515625
+            ],
+            [
+              0.1308139534883721,
+              0.7643229166666666
+            ],
+            [
+              0.12427325581395349,
+              0.765625
+            ],
+            [
+              0.12863372093023256,
+              0.7434895833333334
+            ],
+            [
+              0.12063953488372094,
+              0.75390625
+            ],
+            [
+              0.1119186046511628,
+              0.7578125
+            ],
+            [
+              0.11627906976744186,
+              0.7395833333333334
+            ],
+            [
+              0.12209302325581395,
+              0.71875
+            ],
+            [
+              0.12281976744186046,
+              0.69921875
+            ],
+            [
+              0.12863372093023256,
+              0.68359375
+            ],
+            [
+              0.1308139534883721,
+              0.6653645833333334
+            ]
+          ]
+        },
+        {
+          "id": "southeast-pylon",
+          "file": "art/delivery/a12/occluders/rust-sand-southeast-pylon.png",
+          "sha256": "f6a7d5be45d02a1090e004f5b7746b00cb33b7163c1e019ad3d9227af154f76d",
+          "size": [
+            114,
+            305
+          ],
+          "cropMasterPx": [
+            2559,
+            1244,
+            114,
+            305
+          ],
+          "anchorPx": [
+            59.7907,
+            295.0
+          ],
+          "baseLineMasterPx": 1539.0,
+          "baseWorldMetres": [
+            52.09302325581396,
+            89.46742824713276
+          ],
+          "depthSort": "baseWorldMetres[1]",
+          "purpose": "fixed-position foreground depth overlay; copied from this same plate, never moved or repeated",
+          "backgroundContainsSameObject": true,
+          "extraction": "authored silhouette polygon plus 0.65 master-pixel edge feather; RGB is byte-identical to plate crop",
+          "collision": "none authored; game owns obstruction policy",
+          "polygonUV": [
+            [
+              0.8481104651162791,
+              0.7265625
+            ],
+            [
+              0.8546511627906976,
+              0.7213541666666666
+            ],
+            [
+              0.8582848837209303,
+              0.73046875
+            ],
+            [
+              0.8568313953488372,
+              0.7604166666666666
+            ],
+            [
+              0.8597383720930233,
+              0.77734375
+            ],
+            [
+              0.8604651162790697,
+              0.7981770833333334
+            ],
+            [
+              0.8633720930232558,
+              0.8385416666666666
+            ],
+            [
+              0.8662790697674418,
+              0.8671875
+            ],
+            [
+              0.8691860465116279,
+              0.8841145833333334
+            ],
+            [
+              0.8640988372093024,
+              0.890625
+            ],
+            [
+              0.8517441860465116,
+              0.89453125
+            ],
+            [
+              0.84375,
+              0.8854166666666666
+            ],
+            [
+              0.8415697674418605,
+              0.875
+            ],
+            [
+              0.8372093023255814,
+              0.8828125
+            ],
+            [
+              0.8335755813953488,
+              0.87890625
+            ],
+            [
+              0.8357558139534884,
+              0.84375
+            ],
+            [
+              0.8386627906976745,
+              0.8098958333333334
+            ],
+            [
+              0.8415697674418605,
+              0.78515625
+            ],
+            [
+              0.8459302325581395,
+              0.77734375
+            ]
+          ]
+        }
+      ],
+      "provenance": {
+        "concept": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+        "conceptSha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+        "conceptNativeSize": [
+          1672,
+          941
+        ],
+        "generated": "art/review/sources/a12-rust-sand-wide-agy-a01.png",
+        "generatedSha256": "c831f7467608bc117d54495749e920aba830439500b5252317953157e3c7c9da",
+        "generatedNativeSize": [
+          1376,
+          768
+        ],
+        "job": "a12-rust-sand-wide-agy-a01",
+        "method": "reference-guided complete clean scene, followed by ONE coherent wide outpainted painting from a grey overscan guide; no masks, no assembled floor, no repeated parts",
+        "upscaleEvidence": "art/waves/A12/upscaled/rust-sand.json",
+        "pixelPreserving": false,
+        "outpaintGuide": {
+          "path": "art/waves/A12/references/rust-sand-overscan-guide.png",
+          "sha256": "d204922272f3071dd04f9f67ad7711752c1d596414f9ea5aa168bae88a7a58e6",
+          "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+        },
+        "wholePlateColourGrade": {
+          "method": "single whole-image RGB gain from mean approved/reference-centre environment; original figure boxes excluded from measurement; never composited",
+          "gainRGB": [
+            1.0423004483968836,
+            1.0673089287622113,
+            1.0820982994567403
+          ],
+          "gainLimits": [
+            0.8,
+            1.25
+          ],
+          "clippedChannelFraction": 3.453635384516461e-06,
+          "measurementMaskExcludedFraction": 0.2049763816361501
+        }
+      },
+      "density": {
+        "exportTexelsPerDisplayPixel1080": 1.3333333333333333,
+        "exportTexelsPerDisplayPixel1440": 1,
+        "generatedSourcePixelsPerDisplayPixel1080": 0.5972222222222222,
+        "generatedSourcePixelsPerDisplayPixel1440": 0.4479166666666667,
+        "upscale": "35% local learned restoration + 65% Lanczos; exported density is not native resolved detail; full model/source/licence in separate evidence"
+      },
+      "quality": {
+        "owner_accepted": false,
+        "status": "owner-review",
+        "limits": [
+          "lower native resolution than A6; fine crack and rune geometry drift",
+          "under-figure floor and overscan architecture are inferred",
+          "local learned pass changes microtexture",
+          "compact geometry needs game migration",
+          "static light does not relight moving actors"
+        ]
+      }
+    },
+    "moonlit": {
+      "file": "art/delivery/a12/plates/moonlit.png",
+      "sha256": "7fd50f289e694e52db017fa99ac158f27b0ea2c634fbc626f13a65a9a8fef33c",
+      "size": [
+        3072,
+        1728
+      ],
+      "palette": "moonlit",
+      "offsetWorldMetres": [
+        -35.2,
+        26.84169184367007
+      ],
+      "worldSizeMetres": [
+        102.4,
+        70.31661631265986
+      ],
+      "preprojected": true,
+      "repeat": false,
+      "nativeRestoration": {
+        "file": "art/delivery/a12/native/moonlit.png",
+        "sha256": "1a13c5d74924fb21413486d5ff9e1133a7538b5276ae20280223ed0a5e2b7ac6",
+        "size": [
+          1376,
+          768
+        ]
+      },
+      "occluders": [
+        {
+          "id": "south-pylon",
+          "file": "art/delivery/a12/occluders/moonlit-south-pylon.png",
+          "sha256": "04407107f4bc95ac689c2d5e804d36a67c1d00a7faf3f880f4b32139e3ac2b38",
+          "size": [
+            108,
+            237
+          ],
+          "cropMasterPx": [
+            1554,
+            1278,
+            108,
+            237
+          ],
+          "anchorPx": [
+            48.9767,
+            220.5
+          ],
+          "baseLineMasterPx": 1498.5,
+          "baseWorldMetres": [
+            18.232558139534888,
+            87.8193825523048
+          ],
+          "depthSort": "baseWorldMetres[1]",
+          "purpose": "fixed-position foreground depth overlay; copied from this same plate, never moved or repeated",
+          "backgroundContainsSameObject": true,
+          "extraction": "authored silhouette polygon plus 0.65 master-pixel edge feather; RGB is byte-identical to plate crop",
+          "collision": "none authored; game owns obstruction policy",
+          "polygonUV": [
+            [
+              0.5159883720930233,
+              0.7630208333333334
+            ],
+            [
+              0.5196220930232558,
+              0.7604166666666666
+            ],
+            [
+              0.5188953488372093,
+              0.7486979166666666
+            ],
+            [
+              0.5218023255813954,
+              0.7408854166666666
+            ],
+            [
+              0.5232558139534884,
+              0.7552083333333334
+            ],
+            [
+              0.5261627906976745,
+              0.7630208333333334
+            ],
+            [
+              0.529796511627907,
+              0.7669270833333334
+            ],
+            [
+              0.5319767441860465,
+              0.81640625
+            ],
+            [
+              0.5348837209302325,
+              0.8346354166666666
+            ],
+            [
+              0.5399709302325582,
+              0.8463541666666666
+            ],
+            [
+              0.5370639534883721,
+              0.8619791666666666
+            ],
+            [
+              0.5305232558139535,
+              0.87109375
+            ],
+            [
+              0.5196220930232558,
+              0.875
+            ],
+            [
+              0.5116279069767442,
+              0.8658854166666666
+            ],
+            [
+              0.5065406976744186,
+              0.8515625
+            ],
+            [
+              0.5079941860465116,
+              0.8333333333333334
+            ],
+            [
+              0.5109011627906976,
+              0.80859375
+            ],
+            [
+              0.5138081395348837,
+              0.7682291666666666
+            ]
+          ]
+        },
+        {
+          "id": "west-pylon",
+          "file": "art/delivery/a12/occluders/moonlit-west-pylon.png",
+          "sha256": "90e2811fa82e4a221001031d71a0b2b2cfa76e8779adaa4f42a4a1cfe1f3c506",
+          "size": [
+            99,
+            196
+          ],
+          "cropMasterPx": [
+            357,
+            691,
+            99,
+            196
+          ],
+          "anchorPx": [
+            49.3256,
+            184.25
+          ],
+          "baseLineMasterPx": 875.25,
+          "baseWorldMetres": [
+            -21.655813953488373,
+            62.45779047078555
+          ],
+          "depthSort": "baseWorldMetres[1]",
+          "purpose": "fixed-position foreground depth overlay; copied from this same plate, never moved or repeated",
+          "backgroundContainsSameObject": true,
+          "extraction": "authored silhouette polygon plus 0.65 master-pixel edge feather; RGB is byte-identical to plate crop",
+          "collision": "none authored; game owns obstruction policy",
+          "polygonUV": [
+            [
+              0.12645348837209303,
+              0.41796875
+            ],
+            [
+              0.12936046511627908,
+              0.4153645833333333
+            ],
+            [
+              0.1300872093023256,
+              0.4010416666666667
+            ],
+            [
+              0.13372093023255813,
+              0.4127604166666667
+            ],
+            [
+              0.13590116279069767,
+              0.4192708333333333
+            ],
+            [
+              0.1380813953488372,
+              0.4544270833333333
+            ],
+            [
+              0.14171511627906977,
+              0.48046875
+            ],
+            [
+              0.14752906976744187,
+              0.4973958333333333
+            ],
+            [
+              0.14171511627906977,
+              0.5091145833333334
+            ],
+            [
+              0.12427325581395349,
+              0.51171875
+            ],
+            [
+              0.11700581395348837,
+              0.5013020833333334
+            ],
+            [
+              0.12063953488372094,
+              0.4700520833333333
+            ],
+            [
+              0.12427325581395349,
+              0.4283854166666667
+            ]
+          ]
+        },
+        {
+          "id": "east-pylon",
+          "file": "art/delivery/a12/occluders/moonlit-east-pylon.png",
+          "sha256": "0ca21c6b3d175bc410c74d27ab15adbc2cf95dccf79ca3cda3263ccdfbe59198",
+          "size": [
+            89,
+            210
+          ],
+          "cropMasterPx": [
+            2635,
+            630,
+            89,
+            210
+          ],
+          "anchorPx": [
+            41.8372,
+            193.5
+          ],
+          "baseLineMasterPx": 823.5,
+          "baseWorldMetres": [
+            54.02790697674419,
+            60.351954305172036
+          ],
+          "depthSort": "baseWorldMetres[1]",
+          "purpose": "fixed-position foreground depth overlay; copied from this same plate, never moved or repeated",
+          "backgroundContainsSameObject": true,
+          "extraction": "authored silhouette polygon plus 0.65 master-pixel edge feather; RGB is byte-identical to plate crop",
+          "collision": "none authored; game owns obstruction policy",
+          "polygonUV": [
+            [
+              0.8648255813953488,
+              0.3854166666666667
+            ],
+            [
+              0.8684593023255814,
+              0.37890625
+            ],
+            [
+              0.8699127906976745,
+              0.3658854166666667
+            ],
+            [
+              0.8728197674418605,
+              0.3802083333333333
+            ],
+            [
+              0.8771802325581395,
+              0.3854166666666667
+            ],
+            [
+              0.8793604651162791,
+              0.4296875
+            ],
+            [
+              0.8859011627906976,
+              0.46484375
+            ],
+            [
+              0.8822674418604651,
+              0.4791666666666667
+            ],
+            [
+              0.8677325581395349,
+              0.484375
+            ],
+            [
+              0.8582848837209303,
+              0.4739583333333333
+            ],
+            [
+              0.8597383720930233,
+              0.4557291666666667
+            ],
+            [
+              0.8626453488372093,
+              0.4153645833333333
+            ]
+          ]
+        }
+      ],
+      "provenance": {
+        "concept": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "conceptSha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+        "conceptNativeSize": [
+          1672,
+          941
+        ],
+        "generated": "art/review/sources/a12-moonlit-wide-agy-a01.png",
+        "generatedSha256": "1a13c5d74924fb21413486d5ff9e1133a7538b5276ae20280223ed0a5e2b7ac6",
+        "generatedNativeSize": [
+          1376,
+          768
+        ],
+        "job": "a12-moonlit-wide-agy-a01",
+        "method": "reference-guided complete clean scene, followed by ONE coherent wide outpainted painting from a grey overscan guide; no masks, no assembled floor, no repeated parts",
+        "upscaleEvidence": "art/waves/A12/upscaled/moonlit.json",
+        "pixelPreserving": false,
+        "outpaintGuide": {
+          "path": "art/waves/A12/references/moonlit-overscan-guide.png",
+          "sha256": "eff2a9c3f8c3b6fd5d9b4f98c26d27bd988f4ac2d5952f75e050bfe80d810b89",
+          "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+        },
+        "wholePlateColourGrade": {
+          "method": "single whole-image RGB gain from mean approved/reference-centre environment; original figure boxes excluded from measurement; never composited",
+          "gainRGB": [
+            1.25,
+            1.25,
+            1.2336760903565573
+          ],
+          "gainLimits": [
+            0.8,
+            1.25
+          ],
+          "clippedChannelFraction": 0.00010059497974537037,
+          "measurementMaskExcludedFraction": 0.2451428542373226
+        }
+      },
+      "density": {
+        "exportTexelsPerDisplayPixel1080": 1.3333333333333333,
+        "exportTexelsPerDisplayPixel1440": 1,
+        "generatedSourcePixelsPerDisplayPixel1080": 0.5972222222222222,
+        "generatedSourcePixelsPerDisplayPixel1440": 0.4479166666666667,
+        "upscale": "35% local learned restoration + 65% Lanczos; exported density is not native resolved detail; full model/source/licence in separate evidence"
+      },
+      "quality": {
+        "owner_accepted": false,
+        "status": "owner-review",
+        "limits": [
+          "lower native resolution than A6; fine crack and rune geometry drift",
+          "under-figure floor and overscan architecture are inferred",
+          "local learned pass changes microtexture",
+          "compact geometry needs game migration",
+          "static light does not relight moving actors"
+        ]
+      }
+    }
+  },
+  "renderOrder": [
+    "single preprojected opaque plate",
+    "ground contact shadows",
+    "actors and fixed-position occluder depth overlays sorted by foot world Y",
+    "A8 effects using declared blend"
+  ],
+  "legacyLayoutCompatible": false,
+  "requiredLayout": "a12-compact-single-plate",
+  "owner_accepted": false,
+  "gameIntegration": "not performed; reference loader and proofs only"
+}

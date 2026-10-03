@@ -1,0 +1,246 @@
+{
+  "verdict": "reject",
+  "reason": "soft rectangular patch regions, severed floor cracks, surviving fire embers outside masks; numeric and local vision gates missed these defects",
+  "metrics": {
+    "moonlit": {
+      "meanEncodedLuminanceConcept": 0.108142,
+      "meanEncodedLuminancePlate": 0.104159,
+      "meanLuminanceDelta": -0.003983,
+      "meanRGBDelta": [
+        -0.004611,
+        -0.003797,
+        -0.003978
+      ],
+      "preservedPixelFraction": 0.770419,
+      "maximumByteDifferenceOutsideMask": 0,
+      "patchJoinP95GradientRatioToConcept": 0.824003,
+      "patchJoinFlag": false,
+      "extensionSeams": {
+        "status": "not applicable",
+        "joinCount": 0,
+        "reason": "one painting, no extension panels"
+      },
+      "thresholds": {
+        "meanLuminanceAbsoluteDelta": 0.035,
+        "meanRGBAbsoluteDelta": 0.035,
+        "patchJoinGradientRatio": 1.8
+      },
+      "driftFlag": false,
+      "thresholdAuthority": "authored diagnostics, not calibrated perceptual acceptance",
+      "autocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.014833,
+            "lagAt768x432": 48
+          },
+          {
+            "axis": "x",
+            "peak": 0.018139,
+            "lagAt768x432": 374
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      },
+      "a6ControlAutocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.009625,
+            "lagAt768x432": 62
+          },
+          {
+            "axis": "x",
+            "peak": 0.012649,
+            "lagAt768x432": 212
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      },
+      "a9ControlAutocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.247087,
+            "lagAt768x432": 166
+          },
+          {
+            "axis": "x",
+            "peak": 0.273808,
+            "lagAt768x432": 360
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      }
+    },
+    "verdigris": {
+      "meanEncodedLuminanceConcept": 0.178802,
+      "meanEncodedLuminancePlate": 0.17707,
+      "meanLuminanceDelta": -0.001732,
+      "meanRGBDelta": [
+        -0.00224,
+        -0.001579,
+        -0.001759
+      ],
+      "preservedPixelFraction": 0.84364,
+      "maximumByteDifferenceOutsideMask": 0,
+      "patchJoinP95GradientRatioToConcept": 0.808073,
+      "patchJoinFlag": false,
+      "extensionSeams": {
+        "status": "not applicable",
+        "joinCount": 0,
+        "reason": "one painting, no extension panels"
+      },
+      "thresholds": {
+        "meanLuminanceAbsoluteDelta": 0.035,
+        "meanRGBAbsoluteDelta": 0.035,
+        "patchJoinGradientRatio": 1.8
+      },
+      "driftFlag": false,
+      "thresholdAuthority": "authored diagnostics, not calibrated perceptual acceptance",
+      "autocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.007961,
+            "lagAt768x432": 216
+          },
+          {
+            "axis": "x",
+            "peak": 0.017694,
+            "lagAt768x432": 370
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      },
+      "a6ControlAutocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.013226,
+            "lagAt768x432": 74
+          },
+          {
+            "axis": "x",
+            "peak": 0.015806,
+            "lagAt768x432": 370
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      },
+      "a9ControlAutocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.190994,
+            "lagAt768x432": 166
+          },
+          {
+            "axis": "x",
+            "peak": 0.164081,
+            "lagAt768x432": 360
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      }
+    },
+    "rust-sand": {
+      "meanEncodedLuminanceConcept": 0.418238,
+      "meanEncodedLuminancePlate": 0.422841,
+      "meanLuminanceDelta": 0.004603,
+      "meanRGBDelta": [
+        0.004914,
+        0.004598,
+        0.003741
+      ],
+      "preservedPixelFraction": 0.809354,
+      "maximumByteDifferenceOutsideMask": 0,
+      "patchJoinP95GradientRatioToConcept": 0.828339,
+      "patchJoinFlag": false,
+      "extensionSeams": {
+        "status": "not applicable",
+        "joinCount": 0,
+        "reason": "one painting, no extension panels"
+      },
+      "thresholds": {
+        "meanLuminanceAbsoluteDelta": 0.035,
+        "meanRGBAbsoluteDelta": 0.035,
+        "patchJoinGradientRatio": 1.8
+      },
+      "driftFlag": false,
+      "thresholdAuthority": "authored diagnostics, not calibrated perceptual acceptance",
+      "autocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.012951,
+            "lagAt768x432": 42
+          },
+          {
+            "axis": "x",
+            "peak": 0.013658,
+            "lagAt768x432": 48
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      },
+      "a6ControlAutocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.01658,
+            "lagAt768x432": 42
+          },
+          {
+            "axis": "x",
+            "peak": 0.014658,
+            "lagAt768x432": 50
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": false,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      },
+      "a9ControlAutocorrelation": {
+        "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+        "axes": [
+          {
+            "axis": "y",
+            "peak": 0.403608,
+            "lagAt768x432": 166
+          },
+          {
+            "axis": "x",
+            "peak": 0.410599,
+            "lagAt768x432": 360
+          }
+        ],
+        "flagThreshold": 0.3,
+        "repetitionFlag": true,
+        "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+      }
+    }
+  }
+}

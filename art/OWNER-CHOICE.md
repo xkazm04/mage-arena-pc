@@ -13,3 +13,7 @@ Owner: A6 directions 02 Verdigris Covenant, 03 Ragged Oracle and 04 Moonchalk Te
 ## Owner verdict / session 6 / 2026-10-03
 
 Owner likes the camp and portraits and considers them production quality; preserve them. Arena structure, surface and objects lost fidelity versus the approved concepts. Character fidelity and one-axis movement are the most painful remaining problem; spells/effects are a key gap. Requested work is A8 effects, A9 arena restoration, A10 real directional animation, A11 stat icons and creative daily clock. This verdict does not approve the new session-6 candidates. The session audit confirms all 156 tracked camp/portrait delivery files are unchanged.
+
+## Owner verdict / session 7 / 2026-10-03
+
+The new effects and characters are a very significant improvement; camp and portraits remain production quality. The arena is the remaining quality gap. A12 must approach the approved A6 scenes' painted cohesion, architecture, objects, surface, lighting and atmosphere. Do not repeat A9's assembled ground tiles, authored rim and repeated stands. Use coherent reference-guided plates and only a few same-painting foreground occluders, with a far, rarely moving camera and an arena only a little larger than one screen. The owner authorized preserving and clearing both provider latches, agy 400 / Grok 330 caps, serial proof-first calls and about 60 new images. This instruction does not pre-approve the A12 result; [the A12 board](review/a12/index.html) is submitted for owner review.

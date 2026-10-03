@@ -2,12 +2,7 @@
   "schema": 1,
   "providers": {
     "agy": {
-      "stop": {
-        "at": "2026-10-03T13:17:30.387432+00:00",
-        "event": "stop",
-        "job": "a10-brennic-north-agy-a01",
-        "reason": "exit=0; files=2"
-      },
+      "stop": null,
       "events": [
         {
           "at": "2026-10-02T18:54:18.844923+00:00",
@@ -745,16 +740,83 @@
           "event": "stop",
           "job": "a10-brennic-north-agy-a01",
           "reason": "exit=0; files=2"
+        },
+        {
+          "at": "2026-10-03T15:13:21.480959+00:00",
+          "event": "owner-authorized-reset",
+          "job": "A12",
+          "previousStop": {
+            "at": "2026-10-03T13:17:30.387432+00:00",
+            "event": "stop",
+            "job": "a10-brennic-north-agy-a01",
+            "reason": "exit=0; files=2"
+          },
+          "reason": "Explicit session 7 authorization; archived old latch; one proof per provider before siblings."
+        },
+        {
+          "at": "2026-10-03T15:14:39.304294+00:00",
+          "event": "reserved",
+          "job": "a12-moonlit-proof-agy-agy-a01"
+        },
+        {
+          "at": "2026-10-03T15:16:51.514423+00:00",
+          "event": "generated",
+          "job": "a12-moonlit-proof-agy-agy-a01"
+        },
+        {
+          "at": "2026-10-03T15:29:03.190638+00:00",
+          "event": "reserved",
+          "job": "a12-verdigris-clean-agy-a03"
+        },
+        {
+          "at": "2026-10-03T15:31:01.293598+00:00",
+          "event": "generated",
+          "job": "a12-verdigris-clean-agy-a03"
+        },
+        {
+          "at": "2026-10-03T15:33:08.660572+00:00",
+          "event": "reserved",
+          "job": "a12-rust-sand-clean-agy-a03"
+        },
+        {
+          "at": "2026-10-03T15:36:56.094848+00:00",
+          "event": "generated",
+          "job": "a12-rust-sand-clean-agy-a03"
+        },
+        {
+          "at": "2026-10-03T15:43:32.803004+00:00",
+          "event": "reserved",
+          "job": "a12-moonlit-wide-agy-a01"
+        },
+        {
+          "at": "2026-10-03T15:45:13.891964+00:00",
+          "event": "generated",
+          "job": "a12-moonlit-wide-agy-a01"
+        },
+        {
+          "at": "2026-10-03T15:46:58.895152+00:00",
+          "event": "reserved",
+          "job": "a12-verdigris-wide-agy-a01"
+        },
+        {
+          "at": "2026-10-03T15:49:17.703912+00:00",
+          "event": "generated",
+          "job": "a12-verdigris-wide-agy-a01"
+        },
+        {
+          "at": "2026-10-03T15:50:15.781847+00:00",
+          "event": "reserved",
+          "job": "a12-rust-sand-wide-agy-a01"
+        },
+        {
+          "at": "2026-10-03T15:52:06.894733+00:00",
+          "event": "generated",
+          "job": "a12-rust-sand-wide-agy-a01"
         }
       ]
     },
     "grok": {
-      "stop": {
-        "at": "2026-10-03T14:16:21.382680+00:00",
-        "event": "stop",
-        "job": "a10-cinder_hound-ne-grok-a02",
-        "reason": "HTTP 429"
-      },
+      "stop": null,
       "events": [
         {
           "at": "2026-10-02T19:04:22.020804+00:00",
@@ -1282,6 +1344,68 @@
           "event": "stop",
           "job": "a10-cinder_hound-ne-grok-a02",
           "reason": "HTTP 429"
+        },
+        {
+          "at": "2026-10-03T15:13:21.482480+00:00",
+          "event": "owner-authorized-reset",
+          "job": "A12",
+          "previousStop": {
+            "at": "2026-10-03T14:16:21.382680+00:00",
+            "event": "stop",
+            "job": "a10-cinder_hound-ne-grok-a02",
+            "reason": "HTTP 429"
+          },
+          "reason": "Explicit session 7 authorization; archived old latch; one proof per provider before siblings."
+        },
+        {
+          "at": "2026-10-03T15:13:38.799996+00:00",
+          "event": "reserved",
+          "job": "a12-moonlit-proof-grok-grok-a01"
+        },
+        {
+          "at": "2026-10-03T15:14:06.991958+00:00",
+          "event": "generated",
+          "job": "a12-moonlit-proof-grok-grok-a01"
+        },
+        {
+          "at": "2026-10-03T15:22:35.574405+00:00",
+          "event": "reserved",
+          "job": "a12-verdigris-clean-grok-a01"
+        },
+        {
+          "at": "2026-10-03T15:23:01.481631+00:00",
+          "event": "generated",
+          "job": "a12-verdigris-clean-grok-a01"
+        },
+        {
+          "at": "2026-10-03T15:24:11.547141+00:00",
+          "event": "reserved",
+          "job": "a12-rust-sand-clean-grok-a01"
+        },
+        {
+          "at": "2026-10-03T15:24:34.201941+00:00",
+          "event": "generated",
+          "job": "a12-rust-sand-clean-grok-a01"
+        },
+        {
+          "at": "2026-10-03T15:25:54.808708+00:00",
+          "event": "reserved",
+          "job": "a12-verdigris-clean-grok-a02"
+        },
+        {
+          "at": "2026-10-03T15:26:14.269112+00:00",
+          "event": "generated",
+          "job": "a12-verdigris-clean-grok-a02"
+        },
+        {
+          "at": "2026-10-03T15:27:39.129777+00:00",
+          "event": "reserved",
+          "job": "a12-rust-sand-clean-grok-a02"
+        },
+        {
+          "at": "2026-10-03T15:28:01.734409+00:00",
+          "event": "generated",
+          "job": "a12-rust-sand-clean-grok-a02"
         }
       ]
     }

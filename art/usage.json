@@ -18291,6 +18291,778 @@
       "tool_input_visibility": "session tool history",
       "error": "HTTP 429",
       "invocation_evidence": "art/providers/runs/a10-cinder_hound-ne-grok-a02"
+    },
+    {
+      "id": "a12-moonlit-proof-grok-grok-a01",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "moonlit-proof-grok",
+      "attempt": 1,
+      "input": {
+        "wave": "A12",
+        "id": "moonlit-proof-grok",
+        "pilot": true,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "grok"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+            "role": "edit target: approved concept; preserve environment"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena."
+      },
+      "input_hash": "6aa89813d846265fc6173781f7dac68acaadf1c0c2fe1d71735f56f04b44888f",
+      "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "90606795-65ab-4a1b-b65f-4fcd7f6c416d",
+      "at": "2026-10-03T15:13:38.765172+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 28.062,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_edit",
+          "arguments": {
+            "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena.",
+            "image": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-proof-grok-grok-a01\\reference-1.png"
+            ],
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "c3cf3e17496bdc952b41905aa7c2c78bacba58f6a248bf7d0dae51ba35d056a3",
+          "paths": [
+            "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-moonlit-proof-grok-grok-a01\\90606795-65ab-4a1b-b65f-4fcd7f6c416d\\images\\1.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a12-moonlit-proof-grok-grok-a01/_driver/source.jpg",
+      "archive": "art/review/sources/a12-moonlit-proof-grok-grok-a01.jpg",
+      "sha256": "c3cf3e17496bdc952b41905aa7c2c78bacba58f6a248bf7d0dae51ba35d056a3",
+      "invocation_evidence": "art/providers/runs/a12-moonlit-proof-grok-grok-a01"
+    },
+    {
+      "id": "a12-moonlit-proof-agy-agy-a01",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "moonlit-proof-agy",
+      "attempt": 1,
+      "input": {
+        "wave": "A12",
+        "id": "moonlit-proof-agy",
+        "pilot": true,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+            "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+            "role": "edit target: approved concept; preserve environment"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena."
+      },
+      "input_hash": "db4820c47b713d5f9025ef8c813924f6f823d904676083f48e7b742df028ea39",
+      "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "b9c63559-9f0b-45c4-8ce9-ab61c0b967a6",
+      "at": "2026-10-03T15:14:39.273565+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 132.078,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "at": "2026-10-03T15:15:53Z",
+          "step": 3,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "moonlit_arena_clean_plate",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-proof-agy-agy-a01\\reference-1.png"
+            ],
+            "Prompt": "A clean environment plate editing the provided reference image reference-1.png. Completely remove all four mages, both soldiers, both hounds, and the large stone golem creature in the center, as well as all of their cast shadows, glowing staffs, fire embers, blue water vortex swirl, purple lightning spell ribbons, floating rocks, projectiles, and combat sparks. Inpaint and seamlessly reconstruct the dark blue-black stone arena floor where the characters stood, perfectly continuing the natural craggy slate rock strata, cracks, texture, and eroded chalk-like circular rune geometry etched across the floor. Preserve the exact composition, 55-degree elevated oblique camera framing, all five wardstone pylons in their exact radial positions with their subtle glowing blue architectural flames at their tips, the rear curved masonry wall with hung banners, and the cool nocturnal grazing moonlight illumination. The arena must be completely empty of any people, creatures, or statues. No UI, no watermark, no text.",
+            "toolAction": "Generating clean environment plate",
+            "toolSummary": "Generate clean arena plate"
+          }
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "7fb800cfc47d045d8b12c30a790699baa71486fae73cd1088cfe1db6ae3232ab",
+          "paths": [
+            "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-proof-agy-agy-a01\\output.png"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "subsequently audited exact parent/worker transcripts; see waves/A12/provider-evidence",
+      "source": "art/raw/a12-moonlit-proof-agy-agy-a01/_driver/source.png",
+      "archive": "art/review/sources/a12-moonlit-proof-agy-agy-a01.png",
+      "sha256": "7fb800cfc47d045d8b12c30a790699baa71486fae73cd1088cfe1db6ae3232ab",
+      "invocation_evidence": "art/providers/runs/a12-moonlit-proof-agy-agy-a01",
+      "subsequent_audit": "art/waves/A12/provider-evidence/a12-moonlit-proof-agy-agy-a01.json"
+    },
+    {
+      "id": "a12-a10-agy-hidden-call-reconciliation",
+      "wave": "A12-audit",
+      "style_id": "covenant",
+      "scene": "a10-agy-reconciliation",
+      "provider": "agy",
+      "origin": "historical-call-audit",
+      "related_job": "a10-brennic-north-agy-a01",
+      "at": "2026-10-03T15:20:10.148757+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "historical-reconciliation",
+      "note": "Three historical generate_image calls now observed versus two old charges. Append one charge, never rewrite old jobs. No new image generated.",
+      "evidence": "art/waves/A12/provider-evidence/a10-brennic-north-agy-a01.json"
+    },
+    {
+      "id": "a12-verdigris-clean-grok-a01",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "verdigris-clean",
+      "attempt": 1,
+      "input": {
+        "wave": "A12",
+        "id": "verdigris-clean",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "grok"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+            "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+            "role": "approved A6 scene; edit target, preserve entire environment"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: deep bottle-green mineral flagstones, malachite glaze, pitted bronze-copper inlays, five green eroded obelisks, the large central concentric copper ring-and-crescent and the fine interconnected copper geometrical floor network, rear worn masonry, muted warm grazing light and deep green shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority."
+      },
+      "input_hash": "e568841b7748b082ff9c1a7d1f242cbcbc872f0183a5ab04703d7a6f57a53859",
+      "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: deep bottle-green mineral flagstones, malachite glaze, pitted bronze-copper inlays, five green eroded obelisks, the large central concentric copper ring-and-crescent and the fine interconnected copper geometrical floor network, rear worn masonry, muted warm grazing light and deep green shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "20552a1d-7b36-4037-bc3a-e456fd2a2b65",
+      "at": "2026-10-03T15:22:35.545626+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 25.781,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_edit",
+          "arguments": {
+            "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: deep bottle-green mineral flagstones, malachite glaze, pitted bronze-copper inlays, five green eroded obelisks, the large central concentric copper ring-and-crescent and the fine interconnected copper geometrical floor network, rear worn masonry, muted warm grazing light and deep green shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority.",
+            "image": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-grok-a01\\reference-1.png"
+            ],
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "84f25fda44bb8483ec92097d67037e711fd2cc22a7b003d5c170f4e0c7e79a46",
+          "paths": [
+            "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-verdigris-clean-grok-a01\\20552a1d-7b36-4037-bc3a-e456fd2a2b65\\images\\1.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a12-verdigris-clean-grok-a01/_driver/source.jpg",
+      "archive": "art/review/sources/a12-verdigris-clean-grok-a01.jpg",
+      "sha256": "84f25fda44bb8483ec92097d67037e711fd2cc22a7b003d5c170f4e0c7e79a46",
+      "invocation_evidence": "art/providers/runs/a12-verdigris-clean-grok-a01"
+    },
+    {
+      "id": "a12-rust-sand-clean-grok-a01",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "rust-sand-clean",
+      "attempt": 1,
+      "input": {
+        "wave": "A12",
+        "id": "rust-sand-clean",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "grok"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+            "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+            "role": "approved A6 scene; edit target, preserve entire environment"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority."
+      },
+      "input_hash": "3993cf8dd3363d7a3a8f9b1a115af12ce8a5796ec21f3488e64fd3f1bebde89c",
+      "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "81f6566b-4cf7-4930-ac8a-81076bd2e9b0",
+      "at": "2026-10-03T15:24:11.517742+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 22.532,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_edit",
+          "arguments": {
+            "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority.",
+            "image": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-grok-a01\\reference-1.png"
+            ],
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "71dc188d955643291f97bc76214d09a5e92cc2baa0c62bc42b2b7a812ca9432f",
+          "paths": [
+            "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-rust-sand-clean-grok-a01\\81f6566b-4cf7-4930-ac8a-81076bd2e9b0\\images\\1.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a12-rust-sand-clean-grok-a01/_driver/source.jpg",
+      "archive": "art/review/sources/a12-rust-sand-clean-grok-a01.jpg",
+      "sha256": "71dc188d955643291f97bc76214d09a5e92cc2baa0c62bc42b2b7a812ca9432f",
+      "invocation_evidence": "art/providers/runs/a12-rust-sand-clean-grok-a01"
+    },
+    {
+      "id": "a12-verdigris-clean-grok-a02",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "verdigris-clean",
+      "attempt": 2,
+      "input": {
+        "wave": "A12",
+        "id": "verdigris-clean",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "grok"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a12-verdigris-clean-grok-a01.jpg",
+            "sha256": "84f25fda44bb8483ec92097d67037e711fd2cc22a7b003d5c170f4e0c7e79a46",
+            "role": "edit target; rejected because one quadruped remains"
+          }
+        ],
+        "prompt": "Remove the ONE remaining thorn-backed stone animal near x=63 percent from left, y=32 percent from top. It is a four-legged creature, NOT architectural rubble. Remove its entire spined back, head, legs, feet and cast shadow. Reconstruct the exposed patch as flat continuous dark green mineral flagstones and thin copper inlays that match the surrounding arena floor. Preserve absolutely everything else: all five tall green standing obelisks, rear masonry, precise concentric copper rune circles, cracks, bottle-green and umber material palette, muted grazing illumination, original elevated oblique camera and framing. The result must be a completely EMPTY arena with ZERO people, beasts, creatures, golems, soldiers, mages, weapons, personal auras or combat effects. ONE coherent detailed painted environment plate; do not simplify, soften or rearrange it. No text, letters, logos or UI. Original design. Landscape 16:9.",
+        "correction_of": "a12-verdigris-clean-grok-a01",
+        "revision": 2
+      },
+      "input_hash": "5b9200a96ec1089a416566b1d41a0922e1e9adf9f3c59dabccbe98dd490a995d",
+      "prompt": "Remove the ONE remaining thorn-backed stone animal near x=63 percent from left, y=32 percent from top. It is a four-legged creature, NOT architectural rubble. Remove its entire spined back, head, legs, feet and cast shadow. Reconstruct the exposed patch as flat continuous dark green mineral flagstones and thin copper inlays that match the surrounding arena floor. Preserve absolutely everything else: all five tall green standing obelisks, rear masonry, precise concentric copper rune circles, cracks, bottle-green and umber material palette, muted grazing illumination, original elevated oblique camera and framing. The result must be a completely EMPTY arena with ZERO people, beasts, creatures, golems, soldiers, mages, weapons, personal auras or combat effects. ONE coherent detailed painted environment plate; do not simplify, soften or rearrange it. No text, letters, logos or UI. Original design. Landscape 16:9.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "36344771-462f-4b3d-8351-b97f86f6ff2a",
+      "at": "2026-10-03T15:25:54.782912+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 19.344,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_edit",
+          "arguments": {
+            "prompt": "Remove the ONE remaining thorn-backed stone animal near x=63 percent from left, y=32 percent from top. It is a four-legged creature, NOT architectural rubble. Remove its entire spined back, head, legs, feet and cast shadow. Reconstruct the exposed patch as flat continuous dark green mineral flagstones and thin copper inlays that match the surrounding arena floor. Preserve absolutely everything else: all five tall green standing obelisks, rear masonry, precise concentric copper rune circles, cracks, bottle-green and umber material palette, muted grazing illumination, original elevated oblique camera and framing. The result must be a completely EMPTY arena with ZERO people, beasts, creatures, golems, soldiers, mages, weapons, personal auras or combat effects. ONE coherent detailed painted environment plate; do not simplify, soften or rearrange it. No text, letters, logos or UI. Original design. Landscape 16:9.",
+            "image": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-grok-a02\\reference-1.jpg"
+            ],
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "80b7652fc82d1a03ff8731058e8d0b9d803b7540b65c089aa8eabe281224946c",
+          "paths": [
+            "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-verdigris-clean-grok-a02\\36344771-462f-4b3d-8351-b97f86f6ff2a\\images\\1.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a12-verdigris-clean-grok-a02/_driver/source.jpg",
+      "archive": "art/review/sources/a12-verdigris-clean-grok-a02.jpg",
+      "sha256": "80b7652fc82d1a03ff8731058e8d0b9d803b7540b65c089aa8eabe281224946c",
+      "invocation_evidence": "art/providers/runs/a12-verdigris-clean-grok-a02"
+    },
+    {
+      "id": "a12-rust-sand-clean-grok-a02",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "rust-sand-clean",
+      "attempt": 2,
+      "input": {
+        "wave": "A12",
+        "id": "rust-sand-clean",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "grok"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a12-rust-sand-clean-grok-a01.jpg",
+            "sha256": "71dc188d955643291f97bc76214d09a5e92cc2baa0c62bc42b2b7a812ca9432f",
+            "role": "edit target; remaining floating magic stones at lower middle-right"
+          }
+        ],
+        "prompt": "Precisely clean this environment painting. Remove the entire cluster of floating brown pebble-like stones, their little shadows and the pale golden spell haze at x=62 percent from the left and y=70 percent from the top (just LEFT of the lower-right reddish scorch patch). These airborne stones are magical combat effects, not terrain. Paint flat continuous weathered pale warm sand and worn limestone in their place, matching the neighbouring ground. No isolated hovering rocks remain. Preserve the five tall existing cloth-wrapped pylons, all floor sun-circle geometrical designs, irregular broad slate patches, existing rear walls and banners, elevated oblique camera, framing, diffuse light and subtle physical cracks. No new objects. No changes elsewhere. Empty arena: zero people, animals, stone creatures, warriors, staffs, projectiles, personal auras or combat effects. One coherent detailed painting. No text, lettering, logo, border, UI or all-over texture overlay. Original designs. Landscape 16:9.",
+        "correction_of": "a12-rust-sand-clean-grok-a01",
+        "revision": 2
+      },
+      "input_hash": "7f016e0fd8291d512ec22d2b3f86af69da19df7f10367ded01b89c8270e88500",
+      "prompt": "Precisely clean this environment painting. Remove the entire cluster of floating brown pebble-like stones, their little shadows and the pale golden spell haze at x=62 percent from the left and y=70 percent from the top (just LEFT of the lower-right reddish scorch patch). These airborne stones are magical combat effects, not terrain. Paint flat continuous weathered pale warm sand and worn limestone in their place, matching the neighbouring ground. No isolated hovering rocks remain. Preserve the five tall existing cloth-wrapped pylons, all floor sun-circle geometrical designs, irregular broad slate patches, existing rear walls and banners, elevated oblique camera, framing, diffuse light and subtle physical cracks. No new objects. No changes elsewhere. Empty arena: zero people, animals, stone creatures, warriors, staffs, projectiles, personal auras or combat effects. One coherent detailed painting. No text, lettering, logo, border, UI or all-over texture overlay. Original designs. Landscape 16:9.",
+      "provider": "grok",
+      "origin": "grok-cli",
+      "session_id": "c7a6b977-1d6e-4e12-a4ff-7fff75c2263e",
+      "at": "2026-10-03T15:27:39.099855+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 22.484,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "name": "image_edit",
+          "arguments": {
+            "image": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-grok-a02\\reference-1.jpg"
+            ],
+            "prompt": "Precisely clean this environment painting. Remove the entire cluster of floating brown pebble-like stones, their little shadows and the pale golden spell haze at x=62 percent from the left and y=70 percent from the top (just LEFT of the lower-right reddish scorch patch). These airborne stones are magical combat effects, not terrain. Paint flat continuous weathered pale warm sand and worn limestone in their place, matching the neighbouring ground. No isolated hovering rocks remain. Preserve the five tall existing cloth-wrapped pylons, all floor sun-circle geometrical designs, irregular broad slate patches, existing rear walls and banners, elevated oblique camera, framing, diffuse light and subtle physical cracks. No new objects. No changes elsewhere. Empty arena: zero people, animals, stone creatures, warriors, staffs, projectiles, personal auras or combat effects. One coherent detailed painting. No text, lettering, logo, border, UI or all-over texture overlay. Original designs. Landscape 16:9.",
+            "aspect_ratio": "16:9"
+          }
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "ff232961319b2ccb224f7ff8ecbfdacd01a184693c68d6b746da24a05dd64275",
+          "paths": [
+            "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-rust-sand-clean-grok-a02\\c7a6b977-1d6e-4e12-a4ff-7fff75c2263e\\images\\1.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": true,
+      "tool_input_visibility": "session tool history",
+      "source": "art/raw/a12-rust-sand-clean-grok-a02/_driver/source.jpg",
+      "archive": "art/review/sources/a12-rust-sand-clean-grok-a02.jpg",
+      "sha256": "ff232961319b2ccb224f7ff8ecbfdacd01a184693c68d6b746da24a05dd64275",
+      "invocation_evidence": "art/providers/runs/a12-rust-sand-clean-grok-a02"
+    },
+    {
+      "id": "a12-verdigris-clean-agy-a03",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "verdigris-clean",
+      "attempt": 3,
+      "input": {
+        "wave": "A12",
+        "id": "verdigris-clean",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+            "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+            "role": "approved A6 scene; edit target, preserve entire environment"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: deep bottle-green mineral flagstones, malachite glaze, pitted bronze-copper inlays, five green eroded obelisks, the large central concentric copper ring-and-crescent and the fine interconnected copper geometrical floor network, rear worn masonry, muted warm grazing light and deep green shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: The large thorn-backed four-legged stone creature at x .63 y .33 is an ANIMAL and must also disappear entirely. Replace it with the same flat worn dark green floor. No raised slab islands. No hovering pebbles, no glowing residual silhouettes.",
+        "correction_of": "a12-verdigris-clean-grok-a02",
+        "revision": 3
+      },
+      "input_hash": "22e376eb26ccea2524f28b1fade5f21b2cb5b8865d4e5461e479d73af5263801",
+      "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: deep bottle-green mineral flagstones, malachite glaze, pitted bronze-copper inlays, five green eroded obelisks, the large central concentric copper ring-and-crescent and the fine interconnected copper geometrical floor network, rear worn masonry, muted warm grazing light and deep green shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: The large thorn-backed four-legged stone creature at x .63 y .33 is an ANIMAL and must also disappear entirely. Replace it with the same flat worn dark green floor. No raised slab islands. No hovering pebbles, no glowing residual silhouettes.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "1d7aeb90-e58c-454e-9027-18ae7d6a9b2e",
+      "at": "2026-10-03T15:29:03.164492+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 118.0,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "at": "2026-10-03T15:29:49Z",
+          "step": 3,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "output",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-agy-a03\\reference-1.png"
+            ],
+            "Prompt": "Inpainting and clean background restoration of the provided fantasy arena painting. Completely remove all characters, creatures, and magical effects from the scene while seamlessly reconstructing the floor underneath them. Specifically remove: the four robed mages (the fire mage at middle-left, the earth mage with hovering stones at bottom-left, the ice mage at middle-right, and the lightning mage at bottom-right), all three armored soldiers at upper-left, the two shadow hounds at upper-center, and the large spiked four-legged stone beast at upper-right. Remove all spell effects, fire streams, sparks, water arcs, purple ribbons, hovering rock fragments, cast shadows, and character glowing auras. Reconstruct the continuous floor beneath them with exact matching deep bottle-green mineral flagstones, malachite glaze, and unbroken inlaid bronze-copper geometric astronomical circles, arcs, and central crescent moon line network. Keep all five weathered green stone obelisks, the rear masonry boundary wall, the exact 55-degree elevated oblique camera framing, lighting, and rich painted texture identical to the original reference image. Clean empty arena with no living beings, creatures, or characters.",
+            "toolAction": "Generating clean arena image",
+            "toolSummary": "Arena background generation"
+          },
+          "conversation": "e7947dcd-8398-44d8-a311-be9e94fce4c7"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "bcdd12b93ac7649d8131bc245ef6f2c9abe588b5e9619957a4f79cb0dc1bee52",
+          "paths": [
+            "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-agy-a03\\output.png"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/a12-verdigris-clean-agy-a03/_driver/source.png",
+      "archive": "art/review/sources/a12-verdigris-clean-agy-a03.png",
+      "sha256": "bcdd12b93ac7649d8131bc245ef6f2c9abe588b5e9619957a4f79cb0dc1bee52",
+      "invocation_evidence": "art/providers/runs/a12-verdigris-clean-agy-a03"
+    },
+    {
+      "id": "a12-rust-sand-clean-agy-a03",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "rust-sand-clean",
+      "attempt": 3,
+      "input": {
+        "wave": "A12",
+        "id": "rust-sand-clean",
+        "pilot": false,
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+            "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+            "role": "approved A6 scene; edit target, preserve entire environment"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: remove the entire floating earth-spell stone cluster and golden glow surrounding the lower-middle-right mage (x .62 y .70). The thorn-backed stone quadruped is also a CREATURE, not architecture. Remove it. The only upright forms remaining are the FIVE existing tall cloth-wrapped pillars. The floor must contain no floating objects or combat residue.",
+        "correction_of": "a12-rust-sand-clean-grok-a02",
+        "revision": 3
+      },
+      "input_hash": "12b8364ee5f9f31dc49b6b8b7d3cc5ec77a57a4b6a3fecdcda0b82a371964f75",
+      "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: warm muted ochre sand and pale weathered limestone, broad irregular dark slate patches, fine cracks, five irregular cloth-wrapped stone pylons, all existing ragged blue and rust-red banners painted into the architecture, weathered radial sun-circle designs in slate, rear masonry, dusty warm daylight and cool slate shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: remove the entire floating earth-spell stone cluster and golden glow surrounding the lower-middle-right mage (x .62 y .70). The thorn-backed stone quadruped is also a CREATURE, not architecture. Remove it. The only upright forms remaining are the FIVE existing tall cloth-wrapped pillars. The floor must contain no floating objects or combat residue.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "8ad91fed-5cf1-4fbc-8fcf-a0f7f1eaff7e",
+      "at": "2026-10-03T15:33:08.637028+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 227.328,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "at": "2026-10-03T15:35:23Z",
+          "step": 3,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "clean_arena_background",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-agy-a03\\reference-1.png"
+            ],
+            "Prompt": "Precise object removal and arena restoration based on reference-1.png. Lock the exact camera angle, framing, perspective, architectural geometry, and lighting from reference-1.png. Empty arena floor only. Remove all characters, creatures, and combat magic effects: remove the four mages (fire mage, water mage, earth mage with floating rocks, and purple ribbon mage), remove the two armed soldiers in the midground, remove the two ember hounds on the left, and remove the large spiky thorn-backed stone quadruped beast on the right. Remove all magic spells, floating stones, glowing runes, cast shadows of figures, embers, swirls, and ribbons. Seamlessly restore the arena ground beneath all removed figures with the continuous matching weathered limestone flagstones, warm ochre sand, cracks, and dark slate floor patterns. The five cloth-wrapped stone pillars/pylons remain intact at their exact locations. The back wall with hanging blue and rust banners remains intact. Completely deserted, empty battle arena, pristine painted background art.",
+            "toolAction": "Generating clean arena background",
+            "toolSummary": "Generate clean arena background"
+          },
+          "conversation": "d456c62f-2a71-4439-b712-7d387f944aaa"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "31f26f58da3eee511c48da6479565b7df2506ba247fbea2661d27ee76d28656e",
+          "paths": [
+            "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-agy-a03\\output.png"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/a12-rust-sand-clean-agy-a03/_driver/source.png",
+      "archive": "art/review/sources/a12-rust-sand-clean-agy-a03.png",
+      "sha256": "31f26f58da3eee511c48da6479565b7df2506ba247fbea2661d27ee76d28656e",
+      "invocation_evidence": "art/providers/runs/a12-rust-sand-clean-agy-a03"
+    },
+    {
+      "id": "a12-moonlit-wide-agy-a01",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "moonlit-wide",
+      "attempt": 1,
+      "input": {
+        "wave": "A12",
+        "id": "moonlit-wide",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/waves/A12/references/moonlit-overscan-guide.png",
+            "sha256": "eff2a9c3f8c3b6fd5d9b4f98c26d27bd988f4ac2d5952f75e050bfe80d810b89",
+            "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result."
+      },
+      "input_hash": "146b409510433354654f5df0ea5365fffb451e261338ae1241c61b4aa3fda095",
+      "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "bc9f7aeb-0392-4b8d-a81a-3a84d53d0038",
+      "at": "2026-10-03T15:43:32.681928+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 100.875,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "at": "2026-10-03T15:44:12Z",
+          "step": 3,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "output",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-wide-agy-a01\\reference-1.png"
+            ],
+            "Prompt": "Outpaint and seamlessly expand the reference image to fill the entire 16:9 frame, replacing only the solid grey border margins. In reference-1.png, the dark moonlit stone arena occupies the central five-sixths of the image, bordered on all four sides by flat solid grey padding bands. Seamlessly extend the existing environment into these grey margins: continue the dark cracked stone floor and rocky slab ground to the left, right, and bottom edges; continue the dark masonry walls, arches, and tattered banners upward to the top edge. Keep the original central scene, including all five glowing blue-topped rune pylons, cracks, and floor markings, exactly at their original position and scale. Do not duplicate pylons or add new structures. Eliminate all grey margins completely with seamless texture continuity and no visible edges or seams. Consistent dark moonlit fantasy atmosphere, 55-degree oblique top-down perspective, painterly game environment concept art. No figures, creatures, text, or UI.",
+            "toolAction": "Generating outpainted image",
+            "toolSummary": "Outpaint arena margins"
+          },
+          "conversation": "322f5551-08bc-4ef9-a2cd-ddf18e159576"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "1a13c5d74924fb21413486d5ff9e1133a7538b5276ae20280223ed0a5e2b7ac6",
+          "paths": [
+            "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-wide-agy-a01\\output.png"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/a12-moonlit-wide-agy-a01/_driver/source.png",
+      "archive": "art/review/sources/a12-moonlit-wide-agy-a01.png",
+      "sha256": "1a13c5d74924fb21413486d5ff9e1133a7538b5276ae20280223ed0a5e2b7ac6",
+      "invocation_evidence": "art/providers/runs/a12-moonlit-wide-agy-a01"
+    },
+    {
+      "id": "a12-verdigris-wide-agy-a01",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "verdigris-wide",
+      "attempt": 1,
+      "input": {
+        "wave": "A12",
+        "id": "verdigris-wide",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/waves/A12/references/verdigris-overscan-guide.png",
+            "sha256": "cb4a4ed8ec4e74f1e5a97920b2574d8fc59fee111ab92a00a74a4686fcdffbcf",
+            "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result."
+      },
+      "input_hash": "4d73775912005a4a6b5a6b6ccc2fc0547cb7efa23196bb4b2db2691544a2a61d",
+      "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "073b0b51-998c-4ef3-aa25-0ece884dab87",
+      "at": "2026-10-03T15:46:58.839003+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 138.657,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "at": "2026-10-03T15:48:21Z",
+          "step": 3,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "output",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-wide-agy-a01\\reference-1.png"
+            ],
+            "Prompt": "Precise environment outpainting extending the provided reference image into a full 16:9 canvas. The reference image contains an ancient dark fantasy arena surrounded by flat grey border margins on all four sides. Seamlessly fill and replace all grey margins by continuing the existing painted environment outward to the edges of the 16:9 frame:\n- The central arena must remain intact, identical in scale, perspective, and position: dark verdigris-green weathered stone flagstone ground, intricate cracks, bronze/copper glowing astrological circles and crescent moon markings, and exactly five ancient standing stone monolith pylons carved with concentric circle runes.\n- Keep all five pylons intact; do not duplicate them or add new pylons in the outer margins.\n- Extend the dark greenish-grey verdigris cracked stone floor naturally and seamlessly across the left, right, and bottom margins.\n- Extend the ancient crumbling masonry stone wall and dark atmospheric background seamlessly across the top margin.\n- Perfect seamless blending across the previous grey boundaries with zero seams, zero lines, and absolutely no remaining grey bands, borders, or frames.\n- Stylized hand-painted dark fantasy digital painting aesthetic, isometric 55-degree high-angle oblique camera view, moody ambient lighting. No characters, no figures, no monsters, no weapons, no text, no UI.",
+            "toolAction": "Generating outpainted arena image",
+            "toolSummary": "Generate outpainted arena image"
+          },
+          "conversation": "2ddb0f40-5c7a-46a6-9c93-3d436a816ec4"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "b0ed3d041aede70abb122ed10a162e04bae7ed0ed8da63e5f68ec5c4b067be0c",
+          "paths": [
+            "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-wide-agy-a01\\output.png"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/a12-verdigris-wide-agy-a01/_driver/source.png",
+      "archive": "art/review/sources/a12-verdigris-wide-agy-a01.png",
+      "sha256": "b0ed3d041aede70abb122ed10a162e04bae7ed0ed8da63e5f68ec5c4b067be0c",
+      "invocation_evidence": "art/providers/runs/a12-verdigris-wide-agy-a01"
+    },
+    {
+      "id": "a12-rust-sand-wide-agy-a01",
+      "wave": "A12",
+      "style_id": "covenant",
+      "scene": "rust-sand-wide",
+      "attempt": 1,
+      "input": {
+        "wave": "A12",
+        "id": "rust-sand-wide",
+        "pilot": false,
+        "providers": [
+          "agy",
+          "grok"
+        ],
+        "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/waves/A12/references/rust-sand-overscan-guide.png",
+            "sha256": "d204922272f3071dd04f9f67ad7711752c1d596414f9ea5aa168bae88a7a58e6",
+            "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+          }
+        ],
+        "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result."
+      },
+      "input_hash": "b506671d4484b01529c880cf620ecf535c6abb2d371ceba309bb30cf3ea091bd",
+      "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "1a6f2256-5c9c-49f4-9e05-518121ccd8f7",
+      "at": "2026-10-03T15:50:15.753456+00:00",
+      "week": "2026-W40",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 110.938,
+      "returncode": 0,
+      "tool_calls": [
+        {
+          "at": "2026-10-03T15:50:49Z",
+          "step": 3,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "output",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-wide-agy-a01\\reference-1.png"
+            ],
+            "Prompt": "This is an environment outpainting task extending input_file_0.png. The reference image has a hand-painted fantasy battle arena in the central region surrounded by flat grey border margins on all four sides. Seamlessly outpaint and fill ONLY the grey borders to complete the full 16:9 frame, continuing the exact scene naturally to the outer edges. Do not crop or zoom the existing central scene; keep all elements of input_file_0.png in their exact locations, proportions, and scale. Keep all five stone pylons / obelisks exactly as they appear, intact and undamaged, without duplicating or adding any new pylons in the margins. Extend the cracked sandstone ground, sandy earth, and dark blue slate floor tiles smoothly outward across the left, right, and bottom edges to fill the grey bands completely. Extend the back stone arena wall, wooden scaffolding/stakes, weathered blue and red banners/flags, and dark shadowy perimeter naturally upward across the top edge. Ensure flawless blending across former grey boundaries with identical painterly texture, weathered stone cracks, dust, lighting from the upper right/diffuse overhead, palette of warm ochre/sand and cool slate blue, and elevated 55-degree oblique isometric perspective. Remove all solid grey margins completely. No borders, no frames, no grey bars, no figures, no characters, no monsters, no weapons, no text, no UI.",
+            "toolAction": "Outpainting arena borders",
+            "toolSummary": "Outpaint arena image"
+          },
+          "conversation": "71e62ac7-f188-437c-888f-9eda8758a773"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "c831f7467608bc117d54495749e920aba830439500b5252317953157e3c7c9da",
+          "paths": [
+            "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-wide-agy-a01\\output.png"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/a12-rust-sand-wide-agy-a01/_driver/source.png",
+      "archive": "art/review/sources/a12-rust-sand-wide-agy-a01.png",
+      "sha256": "c831f7467608bc117d54495749e920aba830439500b5252317953157e3c7c9da",
+      "invocation_evidence": "art/providers/runs/a12-rust-sand-wide-agy-a01"
     }
   ],
   "events": [
@@ -22423,6 +23195,186 @@
       "event": "quota-stopped",
       "id": "a10-cinder_hound-ne-grok-a02",
       "at": "2026-10-03T14:16:21.337753+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-moonlit-proof-grok-grok-a01",
+      "at": "2026-10-03T15:13:38.765172+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-moonlit-proof-grok-grok-a01",
+      "at": "2026-10-03T15:13:38.812677+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-moonlit-proof-grok-grok-a01",
+      "at": "2026-10-03T15:14:06.950979+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-moonlit-proof-agy-agy-a01",
+      "at": "2026-10-03T15:14:39.273565+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-moonlit-proof-agy-agy-a01",
+      "at": "2026-10-03T15:14:39.315429+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-moonlit-proof-agy-agy-a01",
+      "at": "2026-10-03T15:16:51.472402+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-a10-agy-hidden-call-reconciliation",
+      "at": "2026-10-03T15:20:10.148757+00:00"
+    },
+    {
+      "event": "historical-reconciliation",
+      "id": "a12-a10-agy-hidden-call-reconciliation",
+      "at": "2026-10-03T15:20:10.192586+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-verdigris-clean-grok-a01",
+      "at": "2026-10-03T15:22:35.545626+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-verdigris-clean-grok-a01",
+      "at": "2026-10-03T15:22:35.585703+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-verdigris-clean-grok-a01",
+      "at": "2026-10-03T15:23:01.437195+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-rust-sand-clean-grok-a01",
+      "at": "2026-10-03T15:24:11.517742+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-rust-sand-clean-grok-a01",
+      "at": "2026-10-03T15:24:11.557614+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-rust-sand-clean-grok-a01",
+      "at": "2026-10-03T15:24:34.158730+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-verdigris-clean-grok-a02",
+      "at": "2026-10-03T15:25:54.782912+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-verdigris-clean-grok-a02",
+      "at": "2026-10-03T15:25:54.819408+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-verdigris-clean-grok-a02",
+      "at": "2026-10-03T15:26:14.227724+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-rust-sand-clean-grok-a02",
+      "at": "2026-10-03T15:27:39.099855+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-rust-sand-clean-grok-a02",
+      "at": "2026-10-03T15:27:39.142005+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-rust-sand-clean-grok-a02",
+      "at": "2026-10-03T15:28:01.694866+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-verdigris-clean-agy-a03",
+      "at": "2026-10-03T15:29:03.164492+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-verdigris-clean-agy-a03",
+      "at": "2026-10-03T15:29:03.199188+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-verdigris-clean-agy-a03",
+      "at": "2026-10-03T15:31:01.259068+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-rust-sand-clean-agy-a03",
+      "at": "2026-10-03T15:33:08.637028+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-rust-sand-clean-agy-a03",
+      "at": "2026-10-03T15:33:08.669092+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-rust-sand-clean-agy-a03",
+      "at": "2026-10-03T15:36:56.057722+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-moonlit-wide-agy-a01",
+      "at": "2026-10-03T15:43:32.681928+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-moonlit-wide-agy-a01",
+      "at": "2026-10-03T15:43:32.822268+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-moonlit-wide-agy-a01",
+      "at": "2026-10-03T15:45:13.852031+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-verdigris-wide-agy-a01",
+      "at": "2026-10-03T15:46:58.839003+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-verdigris-wide-agy-a01",
+      "at": "2026-10-03T15:46:58.909995+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-verdigris-wide-agy-a01",
+      "at": "2026-10-03T15:49:17.662048+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "a12-rust-sand-wide-agy-a01",
+      "at": "2026-10-03T15:50:15.753456+00:00"
+    },
+    {
+      "event": "running",
+      "id": "a12-rust-sand-wide-agy-a01",
+      "at": "2026-10-03T15:50:15.793480+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-rust-sand-wide-agy-a01",
+      "at": "2026-10-03T15:52:06.827984+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "a12-moonlit-proof-agy-agy-a01",
+      "at": "2026-10-03T16:09:33.755124+00:00"
     }
   ],
   "stop_cleared": {

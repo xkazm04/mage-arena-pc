@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "90606795-65ab-4a1b-b65f-4fcd7f6c416d",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-proof-grok-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-proof-grok-grok-a01",
+  "references": [
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+      "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+      "role": "edit target: approved concept; preserve environment"
+    }
+  ]
+}
