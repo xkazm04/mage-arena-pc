@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "integration": "U2",
+  "integration": "U2 + U4",
   "ownerAccepted": false,
   "entries": {
     "arena-verdigris-1920": {
@@ -1869,7 +1869,7 @@
     },
     "ui.kit.json": {
       "file": "ui/kit.json",
-      "sha256": "30e40c83c9573cc82b24cd4cd267080c105c6139a6d148181816ba29fe36f69a"
+      "sha256": "d95133988297b14b6228733082b8cd68e6d440868a376027f6b28eedccfdbade"
     },
     "ui.icons.json": {
       "file": "ui/icons.json",
@@ -1882,6 +1882,214 @@
     "ui.source-crops.json": {
       "file": "ui/source-crops.json",
       "sha256": "7b2fe8e3d7b08e35d6831f4ba121628bfc933a10cc7ef011a11b9bd7a49e97f1"
+    },
+    "a8.manifest": {
+      "file": "a8/effects.json",
+      "sha256": "e0578a5edb844b16d05c9e459983a57140bb401ca81360878210e5c8ebb6a277"
+    },
+    "a8.page.fire": {
+      "file": "a8/atlases/fire.png",
+      "sha256": "39c4ddb94cdabb914576a86e61ad3286ce1dc81491d8b24e45fc135490ce4a9e",
+      "size": [
+        1560,
+        1300
+      ]
+    },
+    "a8.page.fire-marks": {
+      "file": "a8/atlases/fire-marks.png",
+      "sha256": "a5b539510e8648780a978a97383429396a185558f2fe17263c64c6636d10d86f",
+      "size": [
+        2080,
+        520
+      ]
+    },
+    "a8.page.water": {
+      "file": "a8/atlases/water.png",
+      "sha256": "a81a29db570901ab0a6f6ec6212ba07f8165e7a882958ef23970c0bea621f108",
+      "size": [
+        1560,
+        1300
+      ]
+    },
+    "a8.page.water-marks": {
+      "file": "a8/atlases/water-marks.png",
+      "sha256": "cc6b0727916b46e7741a00a117e5d92c4c2fa4aa1a257581a449166cdd520d4d",
+      "size": [
+        2080,
+        520
+      ]
+    },
+    "a8.page.earth": {
+      "file": "a8/atlases/earth.png",
+      "sha256": "3441265246793a7e162c052c0a04f0d0073b6dd8d31a16e29e13740afa369005",
+      "size": [
+        1560,
+        1300
+      ]
+    },
+    "a8.page.earth-marks": {
+      "file": "a8/atlases/earth-marks.png",
+      "sha256": "470e24dc1aa92059836ca764fbba83fc501979a7aebe2ce65f94a7bcc2c7ede5",
+      "size": [
+        2080,
+        520
+      ]
+    },
+    "a8.page.air": {
+      "file": "a8/atlases/air.png",
+      "sha256": "2f3a2937d4313a8c4e336c4607ed0f1f45168f88d4502a039181ec3044466f25",
+      "size": [
+        1560,
+        1300
+      ]
+    },
+    "a8.page.air-marks": {
+      "file": "a8/atlases/air-marks.png",
+      "sha256": "1e91b18253fdc0ade729e0eb0563b709f470050b740bc5dc82a1ace9b7f313fd",
+      "size": [
+        2080,
+        520
+      ]
+    },
+    "a8.page.barrier": {
+      "file": "a8/atlases/barrier.png",
+      "sha256": "d058b554bca251ea483ed05eda9f73c46a73ebea744d4eb739eecec2a9a50bc6",
+      "size": [
+        1560,
+        780
+      ]
+    },
+    "a8.notes": {
+      "file": "a8/README.md",
+      "sha256": "cf9d33eb79040f652efceea980d35517fdf27c934c25ebf84bad0c54f2c2eee8"
+    },
+    "a10.manifest": {
+      "file": "a10/characters.json",
+      "sha256": "cdcbd41567ae9ce75f4256d924e56a49ad53ca377242f9498db425858964901e"
+    },
+    "a10.page.cassia": {
+      "file": "a10/atlases/cassia.png",
+      "sha256": "7b94a795ea5cd99b2149bff35eaf89b50e1673195d71ab56de7e6607276b2a36",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.brennic": {
+      "file": "a10/atlases/brennic.png",
+      "sha256": "3f58db1dc02291954b120ec9afbcf675c8860a6cd3676311b7dbd5564b7949e7",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.garran": {
+      "file": "a10/atlases/garran.png",
+      "sha256": "8c0d2be060fd82d04a8ef250099cfbcc5717a04b7600447c517129cac5d8c415",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.iskar": {
+      "file": "a10/atlases/iskar.png",
+      "sha256": "97aa75d6b9afa1ee5b3f1743ff057181de36e8bc6eae0c796202d27deb2f58f8",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.conscript": {
+      "file": "a10/atlases/conscript.png",
+      "sha256": "0ade3a3e645d2f2fef7d6a0484111eda24e3fe81b365f8a00310e832e6755256",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.shieldman": {
+      "file": "a10/atlases/shieldman.png",
+      "sha256": "ab5a3f2d6c7afc8000e1a81243c29737a257315a6d4bffb58c6ad38428aed812",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.slinger": {
+      "file": "a10/atlases/slinger.png",
+      "sha256": "971c265f788f1c104b87cd2ef1184eeb3da0140cc6fc5ad5a155d814694416be",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.netter": {
+      "file": "a10/atlases/netter.png",
+      "sha256": "5fac0d75104ce587a2694b5d990247536fba0d5ab8ec7f2549e30425b1eb8dab",
+      "size": [
+        3104,
+        1552
+      ]
+    },
+    "a10.page.mire_maw": {
+      "file": "a10/atlases/mire_maw.png",
+      "sha256": "5521f3f8e7f8580f66aeb925e117812569683f66b6da338e0891ade354050a5b",
+      "size": [
+        3104,
+        776
+      ]
+    },
+    "a10.page.thornback": {
+      "file": "a10/atlases/thornback.png",
+      "sha256": "db37a4b5645b3fe07fa554228c50503fa5fed3215f584e807af8fc749efcf438",
+      "size": [
+        3104,
+        776
+      ]
+    },
+    "a10.page.hush_moth": {
+      "file": "a10/atlases/hush_moth.png",
+      "sha256": "a5fb8c3169f9cdf9159ece416c902103f39617c5b4abbac9f137feb025bd71a5",
+      "size": [
+        3104,
+        776
+      ]
+    },
+    "a10.notes": {
+      "file": "a10/README.md",
+      "sha256": "6f5f31b554e898dcc3ec8c99c3eb0c780e747ef7639a00ce88481a545e6aea63"
+    },
+    "a8.source-measurements.json": {
+      "file": "a8/source-measurements.json",
+      "sha256": "e5fe8fa2f87995ec7f8ed66be0c1d041adc9bebf8f691a03c62f705f9add0e4c"
+    },
+    "a10.source-gates.json": {
+      "file": "a10/source-gates.json",
+      "sha256": "2dad71e9814f7c036d6f80d64dd07b2855af6d629658689defe60c9e615cf14a"
+    },
+    "a10.proofs.json": {
+      "file": "a10/proofs.json",
+      "sha256": "2155d430ef1cbe5af48d3b6a7659fe81c8f1cbca769a7789f61e13580ac4c517"
+    },
+    "a11.provenance.json": {
+      "file": "a11/provenance.json",
+      "sha256": "4cbd22de2fd63c02a8948b5cbb6356bc901048937fa953361ea157f04b1f995c"
+    },
+    "a11.proofs.json": {
+      "file": "a11/proofs.json",
+      "sha256": "f88776b6d81733e268ac5444776dd2ca1cf239ca55b4a7fe1794aaee57dd72f2"
+    },
+    "a11.README.md": {
+      "file": "a11/README.md",
+      "sha256": "70b3e0706145c46bf562eb7479cd6fb20522fa6c4656f2a70a7d39490b5c21a0"
+    },
+    "ui.daily-stats": {
+      "file": "ui/atlases/daily-stats.png",
+      "sha256": "04d7e5fa272a09d60afc4e752577ecd520179d4aa67df911078cc69f83edd281",
+      "size": [
+        4096,
+        2048
+      ]
     }
   },
   "places": [

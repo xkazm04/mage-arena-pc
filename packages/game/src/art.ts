@@ -31,7 +31,7 @@ export function validateArt(value: unknown): ArtManifest {
     throw Error("Unsupported Covenant delivery");
   for (const e of Object.values(m.entries)) {
     if (
-      !/^(a7|a4c|a2c|a3c|ui)\/[\w/.-]+$/.test(e.file) ||
+      !/^(a7|a4c|a2c|a3c|a8|a10|a11|ui)\/[\w/.-]+$/.test(e.file) ||
       e.file.includes("..") ||
       !/^[a-f0-9]{64}$/.test(e.sha256)
     )
