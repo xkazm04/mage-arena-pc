@@ -39,6 +39,19 @@ def check(wave,page_name='motion.html'):
                         page.locator('#palette').select_option(palette);page.wait_for_timeout(50)
                         page.locator('canvas').screenshot(path=str(ART/f'review/{wave.lower()}/motion-{palette}-{w}.png'))
                 else:page.locator('canvas').screenshot(path=str(ART/f'review/{wave.lower()}/motion-{w}.png'))
+                if wave=='A11':
+                    phase_images=[]
+                    for phase in ['dawn','midday','dusk','night']:
+                        page.locator('#phase').select_option(phase);page.wait_for_timeout(40)
+                        phase_images.append(page.locator('canvas').screenshot(path=str(ART/f'review/a11/phase-{phase}-{w}.png')))
+                    assert len(set(phase_images))==4,'PHASES_NOT_DISTINCT'
+                    page.locator('#hour').fill('0');page.locator('#hour').dispatch_event('input');page.wait_for_timeout(40)
+                    full=page.locator('canvas').screenshot(path=str(ART/f'review/a11/full-{w}.png'))
+                    page.locator('#hour').fill('24');page.locator('#hour').dispatch_event('input');page.wait_for_timeout(40)
+                    empty=page.locator('canvas').screenshot(path=str(ART/f'review/a11/empty-{w}.png'))
+                    assert full!=empty,'WATER_PROGRESS_NOT_RENDERED'
+                    page.locator('#layer').select_option('rim');page.wait_for_timeout(40)
+                    assert page.locator('canvas').screenshot()!=empty,'INDEPENDENT_RIM_NOT_RENDERED'
                 assert not errors and not failed
                 results.append({'viewport':[w,h],'canvas_changed':True,'loader_checks':checks,'errors':errors,'failed_requests':failed})
                 page.close()

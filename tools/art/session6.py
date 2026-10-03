@@ -111,8 +111,11 @@ def portable(wave):
         from restoration_arena import build
     elif wave=='A10':
         from restoration_characters import build
+    elif wave=='A11':
+        from restoration_ui import build
     else:raise ValueError('UNSUPPORTED_WAVE')
     files=[p for p in (ART/'delivery'/wave.lower()).rglob('*') if p.is_file()]
+    if wave=='A11':files += [ART/'ui/kit.json',ART/'ui/icons.json',ART/'ui/atlases/daily-stats.png']
     before={relative(p):sha(p) for p in files};blocked=[];raw=(ART/'raw').resolve()
     def guard(event,args):
         if event=='open' and isinstance(args[0],(str,bytes,Path)):

@@ -131,3 +131,9 @@ Owner feel and approval remain unmeasured; the local grader may only reject or r
 [A10 owner board](../art/review/a10/index.html). A10 PARTIAL candidate: 198/288 state-direction clips in 11 atlases; 90 missing clips explicitly enumerated. Two generated diagonal views where available, two declared mirrored left views, six states, shared pivots and scale, canvas loader and native A9/A8 context proofs. Repeated leading-leg poses and identity differences remain; technical gates do not certify production animation. Cinder hound and Iskar front-gait repair rejected. 43 serial attempts, 44 charges: 41 generated jobs, one agy duplicate-output anomaly charged twice, one Grok HTTP 429. Both provider latches retained; cumulative 285/300. Owner review, missing animation and game integration remain open.
 
 Owner feel and approval remain unmeasured; the local grader may only reject or route.
+
+## Session 6 / A11
+
+[A11 owner board](../art/review/a11/index.html). A11 PARTIAL / generation blocked: Tideglass daily clock with four light states and independent water, meniscus, rim, glass, marks, mist and rotating bead; gold/reputation/fatigue design symbols at header and large sizes. Eighteen new UI regions on one separate page preserve all 90 A5b regions and both original pages. Zero new generated images: A5b rim/A8 mist reused, other geometry and shading authored. Local review flags the regular icon bevels and geometric sky below the painted Covenant bar. Prepared briefs remain unsubmitted. Both provider latches retained at 285/300; 15 local reservations do not establish provider availability. Owner board and session-6 combined contact sheet delivered; new painting, owner acceptance and game integration remain open.
+
+Owner feel and approval remain unmeasured; the local grader may only reject or route.

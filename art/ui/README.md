@@ -1,15 +1,16 @@
 # Covenant UI loading contract — version 1
 
-Published first for the parallel game stream. Entry point: `art/ui/kit.json`.
-The A5b delivery will populate that file and its PNG pages without changing this
-schema. Until it exists, use the same region IDs with temporary engine shapes.
+Published for the parallel game stream. Entry point: `art/ui/kit.json`.
+A5b supplies the base kit; A11 adds the separate daily-clock/stat extension
+documented below without changing existing region IDs or atlas bytes.
 This is an art interchange format, independent of a canvas library.
 
 All paths in the manifest are relative to this directory. PNG pages use sRGB,
 straight RGBA, transparent background, no mipmaps, linear filtering, no rotation,
 no trimming. Upload with the engine's normal straight-to-premultiplied conversion
 exactly once. Regions exclude a 2 px transparent gutter. Do not sample adjacent
-regions or stretch ornament corners. Source pixels equal design units at 1080p.
+regions or stretch ornament corners. Base A5b source pixels equal design units
+at 1080p; A11 regions declare their own designSize as documented below.
 
 ```json
 {
@@ -85,3 +86,38 @@ Delivery validation: `python tools/art/covenant_ui.py check`. Expected evidence:
 region bounds/gutters, alpha, state coverage, nine-slice stretch proofs, both
 resolution captures, missing-file detection and owner board. Engine integration,
 runtime performance and sofa-distance feel remain for the game stream/owner.
+
+## A11 extension: Tideglass and stat symbols
+
+The kit now includes an additional `daily-stats` page (4096×2048), preserving
+all 90 original regions and both original pages. This extension is a partial
+authored/composited review candidate. Both image providers stopped before A11;
+new generated stat/clock paintings remain pending. Existing generated silver
+rim and water mist are reused with hashes in `../delivery/a11/provenance.json`.
+The remaining geometry, shading, sky states and animation assembly are authored.
+
+| Regions | Source / design size | Use |
+| --- | --- | --- |
+| `icon.stat.gold.header`, `icon.stat.reputation.header`, `icon.stat.fatigue.header` | 64 / 32px | Header symbols; centre anchor |
+| `icon.stat.gold.large`, `icon.stat.reputation.large`, `icon.stat.fatigue.large` | 256 / 128px | Larger stat display; centre anchor |
+| `clock.daily.face.dawn`, `.midday`, `.dusk`, `.night` | 512 / 240px | Crossfade game-selected phase plates |
+| `clock.daily.rim`, `.basin`, `.ticks`, `.glass` | 512 / 240px | Stationary shared-centre layers |
+| `clock.daily.water`, `.meniscus`, `.mist` | 512 / 240px | Draining reservoir, moving surface, optional paint wisps |
+| `clock.daily.pointer` | 512 / 240px | Rotate clockwise around [0.5,0.5] |
+
+The daily clock can also draw at 96px in the header. All layers have the same
+untrimmed canvas and pivot. Read `components.dailyClock` for draw order, crop
+rectangles and visual semantics; `components.stats.items` maps the three
+symbols to header/large regions. Existing `clock.*` and `icon.gold` IDs remain
+valid. This extension does not silently replace those earlier art candidates.
+
+The game supplies an elapsed day fraction and phase blend. Water drains from
+source Y=307 toward Y=411, while the pointer advances through 24 visual marks.
+No tier schedule or activity cost is encoded. Reduced motion removes optional
+mist/shimmer and retains direct state changes. Numeric hours and stat values
+are drawn by the engine using the existing typography tokens.
+
+The reference consumer and precise placement math are in
+`../delivery/a11/canvas-loader.js` and `../delivery/a11/README.md`. Additional
+validation: `python tools/art/restoration_ui.py check`. A11's board and canvas
+preview are `../review/a11/index.html` and `../review/a11/motion.html`.

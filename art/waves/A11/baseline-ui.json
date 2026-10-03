@@ -1,0 +1,2162 @@
+{
+  "kit": {
+    "schemaVersion": 1,
+    "id": "covenant-ui-v1",
+    "status": "owner-review",
+    "designSize": [
+      1920,
+      1080
+    ],
+    "safeArea": [
+      96,
+      54,
+      96,
+      54
+    ],
+    "pages": [
+      {
+        "id": "frames",
+        "file": "atlases/frames.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "sha256": "60d860b20394c4cf5a49e62bfcf230e8b8fd294c075e9fcf5db897d2c52f6d1f"
+      },
+      {
+        "id": "icons",
+        "file": "atlases/icons.png",
+        "size": [
+          2048,
+          2048
+        ],
+        "sha256": "9e8c5353e7fc9b7577869d3f79f1aa55f775cca96abf5677d032af6201e9c79c"
+      }
+    ],
+    "regions": {
+      "panel.body": {
+        "page": "frames",
+        "rect": [
+          2,
+          2,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "panel.header": {
+        "page": "frames",
+        "rect": [
+          262,
+          2,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "panel.tooltip": {
+        "page": "frames",
+        "rect": [
+          522,
+          2,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "panel.modal": {
+        "page": "frames",
+        "rect": [
+          782,
+          2,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "panel.story": {
+        "page": "frames",
+        "rect": [
+          1042,
+          2,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "button.normal": {
+        "page": "frames",
+        "rect": [
+          1302,
+          2,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "button.hover": {
+        "page": "frames",
+        "rect": [
+          1562,
+          2,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "button.focus": {
+        "page": "frames",
+        "rect": [
+          2,
+          262,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "button.pressed": {
+        "page": "frames",
+        "rect": [
+          262,
+          262,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "button.disabled": {
+        "page": "frames",
+        "rect": [
+          522,
+          262,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "tab.normal": {
+        "page": "frames",
+        "rect": [
+          782,
+          262,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "tab.hover": {
+        "page": "frames",
+        "rect": [
+          1042,
+          262,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "tab.focus": {
+        "page": "frames",
+        "rect": [
+          1302,
+          262,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "tab.selected": {
+        "page": "frames",
+        "rect": [
+          1562,
+          262,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "tab.disabled": {
+        "page": "frames",
+        "rect": [
+          2,
+          362,
+          256,
+          96
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          34,
+          25,
+          34,
+          25
+        ],
+        "minSize": [
+          112,
+          64
+        ],
+        "contentInsets": [
+          38,
+          20,
+          38,
+          20
+        ]
+      },
+      "slot.normal": {
+        "page": "frames",
+        "rect": [
+          262,
+          362,
+          128,
+          128
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "minSize": [
+          64,
+          64
+        ],
+        "contentInsets": [
+          26,
+          26,
+          26,
+          26
+        ]
+      },
+      "slot.hover": {
+        "page": "frames",
+        "rect": [
+          394,
+          362,
+          128,
+          128
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "minSize": [
+          64,
+          64
+        ],
+        "contentInsets": [
+          26,
+          26,
+          26,
+          26
+        ]
+      },
+      "slot.focus": {
+        "page": "frames",
+        "rect": [
+          526,
+          362,
+          128,
+          128
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "minSize": [
+          64,
+          64
+        ],
+        "contentInsets": [
+          26,
+          26,
+          26,
+          26
+        ]
+      },
+      "slot.selected": {
+        "page": "frames",
+        "rect": [
+          658,
+          362,
+          128,
+          128
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "minSize": [
+          64,
+          64
+        ],
+        "contentInsets": [
+          26,
+          26,
+          26,
+          26
+        ]
+      },
+      "slot.locked": {
+        "page": "frames",
+        "rect": [
+          790,
+          362,
+          128,
+          128
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "minSize": [
+          64,
+          64
+        ],
+        "contentInsets": [
+          26,
+          26,
+          26,
+          26
+        ]
+      },
+      "slot.cooldown": {
+        "page": "frames",
+        "rect": [
+          922,
+          362,
+          128,
+          128
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "minSize": [
+          64,
+          64
+        ],
+        "contentInsets": [
+          26,
+          26,
+          26,
+          26
+        ]
+      },
+      "slot.borrowed": {
+        "page": "frames",
+        "rect": [
+          1054,
+          362,
+          128,
+          128
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "minSize": [
+          64,
+          64
+        ],
+        "contentInsets": [
+          26,
+          26,
+          26,
+          26
+        ]
+      },
+      "card.normal": {
+        "page": "frames",
+        "rect": [
+          1186,
+          362,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "card.unread": {
+        "page": "frames",
+        "rect": [
+          1446,
+          362,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "card.selected": {
+        "page": "frames",
+        "rect": [
+          1706,
+          362,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "card.warning": {
+        "page": "frames",
+        "rect": [
+          2,
+          622,
+          256,
+          256
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "minSize": [
+          112,
+          112
+        ],
+        "contentInsets": [
+          50,
+          50,
+          50,
+          50
+        ]
+      },
+      "bar.track": {
+        "page": "frames",
+        "rect": [
+          262,
+          622,
+          256,
+          32
+        ],
+        "anchor": [
+          0,
+          0
+        ],
+        "nineSlice": [
+          16,
+          8,
+          16,
+          8
+        ],
+        "minSize": [
+          40,
+          20
+        ],
+        "contentInsets": [
+          9,
+          7,
+          9,
+          7
+        ]
+      },
+      "bar.hp": {
+        "page": "frames",
+        "rect": [
+          522,
+          622,
+          256,
+          18
+        ],
+        "anchor": [
+          0,
+          0.5
+        ]
+      },
+      "bar.mana": {
+        "page": "frames",
+        "rect": [
+          782,
+          622,
+          256,
+          18
+        ],
+        "anchor": [
+          0,
+          0.5
+        ]
+      },
+      "bar.stamina": {
+        "page": "frames",
+        "rect": [
+          1042,
+          622,
+          256,
+          18
+        ],
+        "anchor": [
+          0,
+          0.5
+        ]
+      },
+      "bar.cast": {
+        "page": "frames",
+        "rect": [
+          1302,
+          622,
+          256,
+          18
+        ],
+        "anchor": [
+          0,
+          0.5
+        ]
+      },
+      "bar.cooldown": {
+        "page": "frames",
+        "rect": [
+          1562,
+          622,
+          256,
+          18
+        ],
+        "anchor": [
+          0,
+          0.5
+        ]
+      },
+      "clock.rim": {
+        "page": "frames",
+        "rect": [
+          1822,
+          622,
+          192,
+          192
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "clock.face": {
+        "page": "frames",
+        "rect": [
+          2,
+          882,
+          192,
+          192
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "clock.hand": {
+        "page": "frames",
+        "rect": [
+          198,
+          882,
+          192,
+          192
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "clock.pip.off": {
+        "page": "frames",
+        "rect": [
+          394,
+          882,
+          24,
+          24
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "clock.pip.on": {
+        "page": "frames",
+        "rect": [
+          422,
+          882,
+          24,
+          24
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "cursor.pointer": {
+        "page": "frames",
+        "rect": [
+          450,
+          882,
+          64,
+          64
+        ],
+        "anchor": [
+          0.109375,
+          0.078125
+        ]
+      },
+      "cursor.aim": {
+        "page": "frames",
+        "rect": [
+          518,
+          882,
+          64,
+          64
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "cursor.interact": {
+        "page": "frames",
+        "rect": [
+          586,
+          882,
+          64,
+          64
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "cursor.blocked": {
+        "page": "frames",
+        "rect": [
+          654,
+          882,
+          64,
+          64
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.fire": {
+        "page": "icons",
+        "rect": [
+          2,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.water": {
+        "page": "icons",
+        "rect": [
+          134,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.earth": {
+        "page": "icons",
+        "rect": [
+          266,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.air": {
+        "page": "icons",
+        "rect": [
+          398,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.hp": {
+        "page": "icons",
+        "rect": [
+          530,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.mana": {
+        "page": "icons",
+        "rect": [
+          662,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.stamina": {
+        "page": "icons",
+        "rect": [
+          794,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.heat": {
+        "page": "icons",
+        "rect": [
+          926,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.flow": {
+        "page": "icons",
+        "rect": [
+          1058,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.footing": {
+        "page": "icons",
+        "rect": [
+          1190,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.momentum": {
+        "page": "icons",
+        "rect": [
+          1322,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.water-bolt": {
+        "page": "icons",
+        "rect": [
+          1454,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.water-tide-orb": {
+        "page": "icons",
+        "rect": [
+          1586,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.water-lash": {
+        "page": "icons",
+        "rect": [
+          1718,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.water-mire": {
+        "page": "icons",
+        "rect": [
+          1850,
+          2,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.water-mend": {
+        "page": "icons",
+        "rect": [
+          2,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.water-mirror": {
+        "page": "icons",
+        "rect": [
+          134,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.inventory": {
+        "page": "icons",
+        "rect": [
+          266,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.journal": {
+        "page": "icons",
+        "rect": [
+          398,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.knowing": {
+        "page": "icons",
+        "rect": [
+          530,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.trust": {
+        "page": "icons",
+        "rect": [
+          662,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.gold": {
+        "page": "icons",
+        "rect": [
+          794,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.food": {
+        "page": "icons",
+        "rect": [
+          926,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.day": {
+        "page": "icons",
+        "rect": [
+          1058,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.dusk": {
+        "page": "icons",
+        "rect": [
+          1190,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.night": {
+        "page": "icons",
+        "rect": [
+          1322,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.calendar": {
+        "page": "icons",
+        "rect": [
+          1454,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.camp": {
+        "page": "icons",
+        "rect": [
+          1586,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.arena": {
+        "page": "icons",
+        "rect": [
+          1718,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.save": {
+        "page": "icons",
+        "rect": [
+          1850,
+          134,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.load": {
+        "page": "icons",
+        "rect": [
+          2,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.pause": {
+        "page": "icons",
+        "rect": [
+          134,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.settings": {
+        "page": "icons",
+        "rect": [
+          266,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.back": {
+        "page": "icons",
+        "rect": [
+          398,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.next": {
+        "page": "icons",
+        "rect": [
+          530,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.close": {
+        "page": "icons",
+        "rect": [
+          662,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.lock": {
+        "page": "icons",
+        "rect": [
+          794,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.check": {
+        "page": "icons",
+        "rect": [
+          926,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.warning": {
+        "page": "icons",
+        "rect": [
+          1058,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.absorb": {
+        "page": "icons",
+        "rect": [
+          1190,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.perfect": {
+        "page": "icons",
+        "rect": [
+          1322,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.staff": {
+        "page": "icons",
+        "rect": [
+          1454,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.wardstone": {
+        "page": "icons",
+        "rect": [
+          1586,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.map": {
+        "page": "icons",
+        "rect": [
+          1718,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.parley": {
+        "page": "icons",
+        "rect": [
+          1850,
+          266,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.results": {
+        "page": "icons",
+        "rect": [
+          2,
+          398,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.keyboard": {
+        "page": "icons",
+        "rect": [
+          134,
+          398,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.gamepad": {
+        "page": "icons",
+        "rect": [
+          266,
+          398,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      },
+      "icon.mouse": {
+        "page": "icons",
+        "rect": [
+          398,
+          398,
+          128,
+          128
+        ],
+        "anchor": [
+          0.5,
+          0.5
+        ]
+      }
+    },
+    "components": {
+      "panel": {
+        "states": {
+          "body": "panel.body",
+          "header": "panel.header",
+          "tooltip": "panel.tooltip",
+          "modal": "panel.modal",
+          "story": "panel.story"
+        }
+      },
+      "button": {
+        "states": {
+          "normal": "button.normal",
+          "hover": "button.hover",
+          "focus": "button.focus",
+          "pressed": "button.pressed",
+          "disabled": "button.disabled"
+        }
+      },
+      "tab": {
+        "states": {
+          "normal": "tab.normal",
+          "hover": "tab.hover",
+          "focus": "tab.focus",
+          "selected": "tab.selected",
+          "disabled": "tab.disabled"
+        }
+      },
+      "slot": {
+        "states": {
+          "normal": "slot.normal",
+          "hover": "slot.hover",
+          "focus": "slot.focus",
+          "selected": "slot.selected",
+          "locked": "slot.locked",
+          "cooldown": "slot.cooldown",
+          "borrowed": "slot.borrowed"
+        }
+      },
+      "bar": {
+        "states": {
+          "track": "bar.track",
+          "hp": "bar.hp",
+          "mana": "bar.mana",
+          "stamina": "bar.stamina",
+          "cast": "bar.cast",
+          "cooldown": "bar.cooldown"
+        }
+      },
+      "clock": {
+        "states": {
+          "rim": "clock.rim",
+          "face": "clock.face",
+          "hand": "clock.hand",
+          "pip.off": "clock.pip.off",
+          "pip.on": "clock.pip.on"
+        }
+      },
+      "cursor": {
+        "states": {
+          "pointer": "cursor.pointer",
+          "aim": "cursor.aim",
+          "interact": "cursor.interact",
+          "blocked": "cursor.blocked"
+        }
+      },
+      "card": {
+        "states": {
+          "normal": "card.normal",
+          "unread": "card.unread",
+          "selected": "card.selected",
+          "warning": "card.warning"
+        }
+      }
+    },
+    "tokens": {
+      "text": "#eee8d6",
+      "mutedText": "#bbc8ca",
+      "focus": "#7ecbbb",
+      "selected": "#d5b978",
+      "panel": "#101820",
+      "minimumTarget": [
+        64,
+        64
+      ],
+      "targetGap": 16,
+      "statePriority": [
+        "disabled",
+        "locked",
+        "pressed",
+        "focus",
+        "hover",
+        "selected",
+        "normal"
+      ]
+    },
+    "typography": {
+      "display": {
+        "family": "Cinzel",
+        "file": "fonts/Cinzel.ttf",
+        "weight": 600,
+        "size": 64,
+        "license": "fonts/cinzel-OFL.txt"
+      },
+      "heading": {
+        "family": "Cinzel",
+        "file": "fonts/Cinzel.ttf",
+        "weight": 600,
+        "size": 40,
+        "license": "fonts/cinzel-OFL.txt"
+      },
+      "body": {
+        "family": "Source Sans 3",
+        "file": "fonts/SourceSans3.ttf",
+        "weight": 400,
+        "size": 28,
+        "license": "fonts/sourcesans3-OFL.txt"
+      },
+      "secondary": {
+        "family": "Source Sans 3",
+        "file": "fonts/SourceSans3.ttf",
+        "weight": 400,
+        "size": 24,
+        "license": "fonts/sourcesans3-OFL.txt"
+      },
+      "policy": "wrap or paginate; never shrink to fit"
+    },
+    "motion": {
+      "hoverMs": 100,
+      "pressMs": 70,
+      "focusPulseMs": 1200,
+      "tooltipDelayMs": 450,
+      "panelRevealMs": 160,
+      "reducedMotion": "disable translations and pulses, retain immediate state changes"
+    },
+    "sampling": {
+      "colourSpace": "sRGB",
+      "alpha": "straight",
+      "filter": "linear",
+      "mipmaps": false,
+      "gutterPx": 2,
+      "rotation": false,
+      "trim": false
+    },
+    "ownerAccepted": false
+  },
+  "icons": {
+    "schemaVersion": 1,
+    "icons": {
+      "fire": {
+        "region": "icon.fire",
+        "origin": "original native geometry"
+      },
+      "water": {
+        "region": "icon.water",
+        "origin": "original native geometry"
+      },
+      "earth": {
+        "region": "icon.earth",
+        "origin": "original native geometry"
+      },
+      "air": {
+        "region": "icon.air",
+        "origin": "original native geometry"
+      },
+      "hp": {
+        "region": "icon.hp",
+        "origin": "original native geometry"
+      },
+      "mana": {
+        "region": "icon.mana",
+        "origin": "original native geometry"
+      },
+      "stamina": {
+        "region": "icon.stamina",
+        "origin": "original native geometry"
+      },
+      "heat": {
+        "region": "icon.heat",
+        "origin": "original native geometry"
+      },
+      "flow": {
+        "region": "icon.flow",
+        "origin": "original native geometry"
+      },
+      "footing": {
+        "region": "icon.footing",
+        "origin": "original native geometry"
+      },
+      "momentum": {
+        "region": "icon.momentum",
+        "origin": "original native geometry"
+      },
+      "water-bolt": {
+        "region": "icon.water-bolt",
+        "origin": "original native geometry"
+      },
+      "water-tide-orb": {
+        "region": "icon.water-tide-orb",
+        "origin": "original native geometry"
+      },
+      "water-lash": {
+        "region": "icon.water-lash",
+        "origin": "original native geometry"
+      },
+      "water-mire": {
+        "region": "icon.water-mire",
+        "origin": "original native geometry"
+      },
+      "water-mend": {
+        "region": "icon.water-mend",
+        "origin": "original native geometry"
+      },
+      "water-mirror": {
+        "region": "icon.water-mirror",
+        "origin": "original native geometry"
+      },
+      "inventory": {
+        "region": "icon.inventory",
+        "origin": "original native geometry"
+      },
+      "journal": {
+        "region": "icon.journal",
+        "origin": "original native geometry"
+      },
+      "knowing": {
+        "region": "icon.knowing",
+        "origin": "original native geometry"
+      },
+      "trust": {
+        "region": "icon.trust",
+        "origin": "original native geometry"
+      },
+      "gold": {
+        "region": "icon.gold",
+        "origin": "original native geometry"
+      },
+      "food": {
+        "region": "icon.food",
+        "origin": "original native geometry"
+      },
+      "day": {
+        "region": "icon.day",
+        "origin": "original native geometry"
+      },
+      "dusk": {
+        "region": "icon.dusk",
+        "origin": "original native geometry"
+      },
+      "night": {
+        "region": "icon.night",
+        "origin": "original native geometry"
+      },
+      "calendar": {
+        "region": "icon.calendar",
+        "origin": "original native geometry"
+      },
+      "camp": {
+        "region": "icon.camp",
+        "origin": "original native geometry"
+      },
+      "arena": {
+        "region": "icon.arena",
+        "origin": "original native geometry"
+      },
+      "save": {
+        "region": "icon.save",
+        "origin": "original native geometry"
+      },
+      "load": {
+        "region": "icon.load",
+        "origin": "original native geometry"
+      },
+      "pause": {
+        "region": "icon.pause",
+        "origin": "original native geometry"
+      },
+      "settings": {
+        "region": "icon.settings",
+        "origin": "original native geometry"
+      },
+      "back": {
+        "region": "icon.back",
+        "origin": "original native geometry"
+      },
+      "next": {
+        "region": "icon.next",
+        "origin": "original native geometry"
+      },
+      "close": {
+        "region": "icon.close",
+        "origin": "original native geometry"
+      },
+      "lock": {
+        "region": "icon.lock",
+        "origin": "original native geometry"
+      },
+      "check": {
+        "region": "icon.check",
+        "origin": "original native geometry"
+      },
+      "warning": {
+        "region": "icon.warning",
+        "origin": "original native geometry"
+      },
+      "absorb": {
+        "region": "icon.absorb",
+        "origin": "original native geometry"
+      },
+      "perfect": {
+        "region": "icon.perfect",
+        "origin": "original native geometry"
+      },
+      "staff": {
+        "region": "icon.staff",
+        "origin": "original native geometry"
+      },
+      "wardstone": {
+        "region": "icon.wardstone",
+        "origin": "original native geometry"
+      },
+      "map": {
+        "region": "icon.map",
+        "origin": "original native geometry"
+      },
+      "parley": {
+        "region": "icon.parley",
+        "origin": "original native geometry"
+      },
+      "results": {
+        "region": "icon.results",
+        "origin": "original native geometry"
+      },
+      "keyboard": {
+        "region": "icon.keyboard",
+        "origin": "original native geometry"
+      },
+      "gamepad": {
+        "region": "icon.gamepad",
+        "origin": "original native geometry"
+      },
+      "mouse": {
+        "region": "icon.mouse",
+        "origin": "original native geometry"
+      }
+    },
+    "waterSpells": [
+      {
+        "line": "bolt",
+        "tier": "0",
+        "branch": "",
+        "name": "Rain Needle",
+        "region": "icon.water-bolt"
+      },
+      {
+        "line": "tide_orb",
+        "tier": "1",
+        "branch": "",
+        "name": "Bubble Shot",
+        "region": "icon.water-tide-orb"
+      },
+      {
+        "line": "tide_orb",
+        "tier": "2",
+        "branch": "",
+        "name": "Crash Orb",
+        "region": "icon.water-tide-orb"
+      },
+      {
+        "line": "tide_orb",
+        "tier": "3",
+        "branch": "",
+        "name": "Twin Tides",
+        "region": "icon.water-tide-orb"
+      },
+      {
+        "line": "tide_orb",
+        "tier": "4",
+        "branch": "A",
+        "name": "Leviathan Orb",
+        "region": "icon.water-tide-orb"
+      },
+      {
+        "line": "tide_orb",
+        "tier": "4",
+        "branch": "B",
+        "name": "Rain of Orbs",
+        "region": "icon.water-tide-orb"
+      },
+      {
+        "line": "lash",
+        "tier": "1",
+        "branch": "",
+        "name": "Tide Lash",
+        "region": "icon.water-lash"
+      },
+      {
+        "line": "lash",
+        "tier": "2",
+        "branch": "A",
+        "name": "Undertow",
+        "region": "icon.water-lash"
+      },
+      {
+        "line": "lash",
+        "tier": "2",
+        "branch": "B",
+        "name": "Riptide",
+        "region": "icon.water-lash"
+      },
+      {
+        "line": "lash",
+        "tier": "3",
+        "branch": "",
+        "name": "Maelstrom Lash",
+        "region": "icon.water-lash"
+      },
+      {
+        "line": "lash",
+        "tier": "4",
+        "branch": "",
+        "name": "Drown Coil",
+        "region": "icon.water-lash"
+      },
+      {
+        "line": "mire",
+        "tier": "1",
+        "branch": "",
+        "name": "Puddle",
+        "region": "icon.water-mire"
+      },
+      {
+        "line": "mire",
+        "tier": "2",
+        "branch": "",
+        "name": "Fog Bank",
+        "region": "icon.water-mire"
+      },
+      {
+        "line": "mire",
+        "tier": "3",
+        "branch": "",
+        "name": "Freeze Field",
+        "region": "icon.water-mire"
+      },
+      {
+        "line": "mire",
+        "tier": "4",
+        "branch": "",
+        "name": "Glacier Tomb",
+        "region": "icon.water-mire"
+      },
+      {
+        "line": "mend",
+        "tier": "1",
+        "branch": "",
+        "name": "Cool Draught",
+        "region": "icon.water-mend"
+      },
+      {
+        "line": "mend",
+        "tier": "2",
+        "branch": "",
+        "name": "Tide Ward",
+        "region": "icon.water-mend"
+      },
+      {
+        "line": "mend",
+        "tier": "3",
+        "branch": "",
+        "name": "Spring",
+        "region": "icon.water-mend"
+      },
+      {
+        "line": "mend",
+        "tier": "4",
+        "branch": "",
+        "name": "Font",
+        "region": "icon.water-mend"
+      },
+      {
+        "line": "mirror",
+        "tier": "1",
+        "branch": "",
+        "name": "Sheen",
+        "region": "icon.water-mirror"
+      },
+      {
+        "line": "mirror",
+        "tier": "2",
+        "branch": "A",
+        "name": "Reflection",
+        "region": "icon.water-mirror"
+      },
+      {
+        "line": "mirror",
+        "tier": "2",
+        "branch": "B",
+        "name": "Ripple",
+        "region": "icon.water-mirror"
+      },
+      {
+        "line": "mirror",
+        "tier": "3",
+        "branch": "",
+        "name": "Mirage",
+        "region": "icon.water-mirror"
+      },
+      {
+        "line": "mirror",
+        "tier": "4",
+        "branch": "",
+        "name": "Return Tide",
+        "region": "icon.water-mirror"
+      }
+    ],
+    "otherSchools": "school/resource marks only; detailed line catalogue remains game-stream input"
+  },
+  "files": {
+    "art/ui/atlases/frames.png": "60d860b20394c4cf5a49e62bfcf230e8b8fd294c075e9fcf5db897d2c52f6d1f",
+    "art/ui/atlases/icons.png": "9e8c5353e7fc9b7577869d3f79f1aa55f775cca96abf5677d032af6201e9c79c"
+  }
+}
