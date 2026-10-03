@@ -1,3 +1,5 @@
+import { gameAudio } from "./audio.ts";
+import { audioData } from "./audio-policy.ts";
 import { BitmapText, Graphics } from "pixi.js";
 import {
   applyBoutInput,
@@ -71,7 +73,7 @@ export class ArenaGame {
   private reference = false;
   private hudUpdate: () => void = () => {};
   private lastPhase = "";
-  private audio?: AudioContext;
+  private previousSlot = 0;
   private disposed = false;
   private frames: number[] = [];
   constructor(
@@ -99,6 +101,8 @@ export class ArenaGame {
       this.mode = "tiro";
       this.sync();
     }
+    this.lastEvents = this.training.state.events.length;
+    gameAudio.pauseWorld(false);
     this.camera = makeCamera(this.camera, this.training.player.pos);
     this.scene.palette(
       paletteForGames(season ? season.bout.day / 7 : undefined),
@@ -278,6 +282,7 @@ export class ArenaGame {
     this.hud();
   }
   pause(value: boolean) {
+    gameAudio.pauseWorld(value);
     this.paused = value;
     this.input.clear();
     this.clock = new FixedStepper();
@@ -313,7 +318,7 @@ export class ArenaGame {
       this.seasonStep({ type: "advance", tick: this.games.state.tick });
     else advanceGames(this.games);
     this.sync();
-    this.lastEvents = 0;
+    this.lastEvents = this.training.state.events.length;
     this.lastPerfect = -1e9;
     this.lastPhase = "";
     this.camera = makeCamera(
@@ -323,26 +328,6 @@ export class ArenaGame {
     );
     this.pause(false);
     this.hud();
-  }
-  private bell() {
-    if (localStorage.getItem("mage-sound") === "off") return;
-    this.audio ??= new AudioContext();
-    if (this.audio.state !== "running") {
-      void this.audio.resume();
-      return;
-    }
-    const osc = this.audio.createOscillator(),
-      gain = this.audio.createGain();
-    osc.connect(gain);
-    gain.connect(this.audio.destination);
-    osc.frequency.value = runtime.presentation.bellHz;
-    gain.gain.setValueAtTime(0.025, this.audio.currentTime);
-    gain.gain.exponentialRampToValueAtTime(
-      0.001,
-      this.audio.currentTime + runtime.presentation.bellDurationS,
-    );
-    osc.start();
-    osc.stop(this.audio.currentTime + runtime.presentation.bellDurationS);
   }
   hud() {
     const u = this.ui,
@@ -618,6 +603,11 @@ export class ArenaGame {
         this.camera.centre,
         this.camera.zoom,
       );
+    gameAudio.setScene(`arena:${this.training.player.tier}`);
+    if (this.input.slot !== this.previousSlot) {
+      this.previousSlot = this.input.slot;
+      void gameAudio.play("ui.slot");
+    }
     let alpha = 1;
     if (
       !this.paused &&
@@ -650,11 +640,34 @@ export class ArenaGame {
             this.training,
             this.bot ? timingBot(this.training, this.bot) : this.input.frame(),
           );
-        for (const e of this.training.state.events.slice(this.lastEvents))
-          if (e.kind === "perfect" && e.actorId === this.training.player.id) {
+        for (const e of this.training.state.events.slice(this.lastEvents)) {
+          const p = this.training.player,
+            actor = this.training.state.actors.find((a) => a.id === e.actorId);
+          if (!actor) continue;
+          const dx = actor.pos.x - p.pos.x,
+            dy = actor.pos.y - p.pos.y;
+          const spatial = {
+            pan: dx / audioData.spatial.rangeM,
+            gain: Math.max(
+              audioData.spatial.minGain,
+              1 - Math.hypot(dx, dy) / audioData.spatial.rangeM,
+            ),
+          };
+          if (e.kind === "perfect" && e.actorId === p.id) {
             this.lastPerfect = e.tick;
-            this.bell();
-          }
+            void gameAudio.play("perfect");
+          } else if (e.kind === "unlock" && e.actorId === p.id) {
+            void gameAudio.play("collar");
+            if (e.value === 2) {
+              void gameAudio.play("voice.collar");
+              this.ui.notice("The collar loosens. Stand ready.");
+            }
+          } else if (e.kind === "cast")
+            void gameAudio.play(actor.enemy ? "impact" : "cast.water", spatial);
+          else if (e.kind === "hit" && e.value > 0)
+            void gameAudio.play(e.actorId === p.id ? "hit" : "impact", spatial);
+          else if (e.kind === "roll") void gameAudio.play("roll", spatial);
+        }
         this.lastEvents = this.training.state.events.length;
       });
     if (
@@ -723,7 +736,7 @@ export class ArenaGame {
     this.disposed = true;
     this.input.dispose();
     this.scene.dispose();
-    void this.audio?.close();
+    gameAudio.setScene("silent");
     delete (window as Window & { __arena?: unknown }).__arena;
     delete (window as Window & { __seasonArena?: unknown }).__seasonArena;
   }

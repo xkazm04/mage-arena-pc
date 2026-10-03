@@ -1,0 +1,55 @@
+{
+  "id": "65ef4905-7f1a-4c20-9c9e-43d9060dc4f0",
+  "ts": "2026-10-02T21:00:39.308Z",
+  "kind": "tts",
+  "model": "eleven_multilingual_v2",
+  "voice": "JBFqnCBsd6RMkjVDRZzb",
+  "text": "The collar loosens. Stand ready.",
+  "seconds": null,
+  "chars": 32,
+  "out": "docs/audio/audition/r1/voice-A-george.mp3",
+  "request": {
+    "text": "The collar loosens. Stand ready.",
+    "model_id": "eleven_multilingual_v2",
+    "voice_settings": {
+      "stability": 0.65,
+      "similarity_boost": 0.75,
+      "style": 0.1,
+      "use_speaker_boost": true
+    }
+  },
+  "billingHeaders": {
+    "character-cost": "32",
+    "request-id": "uvmUzLZJTF1X1MTVjvxv",
+    "history-item-id": "mGK2DTj8O5o4IDlcWv1t"
+  },
+  "bytes": 34316,
+  "sha256": "1593f736e788c497ba98e02c74536e198eb62dde8bfd2ec82979cd8f5c3b6509",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:00:39.307Z",
+    "tier": "starter",
+    "used": 64476,
+    "limit": 90000,
+    "remaining": 25524,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 32,
+  "estimatedCredits": 32,
+  "documentedEstimateCredits": 32,
+  "chargedCredits": 32,
+  "measuredCredits": 32,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:00:42.672Z",
+    "tier": "starter",
+    "used": 64476,
+    "limit": 90000,
+    "remaining": 25524,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

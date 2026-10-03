@@ -1,3 +1,5 @@
+import { gameAudio } from "./audio.ts";
+import type { AudioSettings, Cue } from "./audio-policy.ts";
 import { DailyClock } from "./ui/daily-clock.ts";
 import { Graphics, type BitmapText } from "pixi.js";
 import { bridgeRules, linkBout, type SeasonBout } from "@mage/core";
@@ -43,6 +45,7 @@ export class GameShell {
   private updateListening?: () => void;
   private parleyText = "";
   private parleyApproach = 0;
+  private audioPreview = 0;
   private typing = false;
   private textDisplay?: BitmapText;
   private currentMoment?: Moment;
@@ -143,10 +146,15 @@ export class GameShell {
     this.ui.onFrame = (dt, now) => {
       this.arena?.frame(dt);
       if (this.dailyDial) {
-        const target=this.view.hoursRemaining;
-        this.shownHours = localStorage.getItem("mage-motion")==="reduced" ? target : (this.shownHours ?? target)+(target-(this.shownHours ?? target))*Math.min(1,dt*5);
-        if (Math.abs(this.shownHours-target)<0.005) this.shownHours=target;
-        this.dailyDial.draw(this.shownHours,now);
+        const target = this.view.hoursRemaining;
+        this.shownHours =
+          localStorage.getItem("mage-motion") === "reduced"
+            ? target
+            : (this.shownHours ?? target) +
+              (target - (this.shownHours ?? target)) * Math.min(1, dt * 5);
+        if (Math.abs(this.shownHours - target) < 0.005)
+          this.shownHours = target;
+        this.dailyDial.draw(this.shownHours, now);
       }
     };
     this.ui.onGamepad = (pad) => this.arena?.input.updateGamepad(pad);
@@ -226,6 +234,7 @@ export class GameShell {
     try {
       await action();
     } catch (e) {
+      void gameAudio.play("ui.deny");
       this.ui.notice(e instanceof Error ? e.message : String(e));
     } finally {
       this.busy = false;
@@ -233,7 +242,7 @@ export class GameShell {
     }
   }
   private scene(id: string, title: string, kicker: string, kind = "gate") {
-    this.dailyDial=undefined;
+    this.dailyDial = undefined;
     this.ui.begin(id);
     backdrop(this.ui, kind);
     this.ui.text(kicker, 96, 57, 24, colours.gold);
@@ -258,6 +267,8 @@ export class GameShell {
     this.ui.text(text, 370, 966, 24, colours.muted, 1140);
   }
   private menu() {
+    gameAudio.setScene("silent");
+    gameAudio.pauseWorld(false);
     this.ui.begin("menu");
     backdrop(this.ui);
     this.ui.text("A COVENANT IN CHAINS", 112, 168, 26, colours.gold);
@@ -397,25 +408,56 @@ export class GameShell {
     history.replaceState(null, "", `/camp${location.search}`);
   }
   private campHeader(id: string, title: string) {
+    gameAudio.setScene(`camp:${this.view.slot}`);
+    gameAudio.pauseWorld(false);
     this.scene(
       id,
       title,
       `CASTRA CLAUSA  /  WEEK ${this.view.day.week}  /  DAY ${this.view.day.day}`,
       id === "visit" ? `place-${this.view.location}` : `camp-${this.view.slot}`,
     );
-    const v=this.view;
+    const v = this.view;
     for (const [i, stat] of [
-      {icon:"gold",value:v.player.gold,label:"GOLD",colour:colours.gold},
-      {icon:"reputation",value:v.player.reputation,label:"REPUTATION",colour:colours.water},
-      {icon:"fatigue",value:v.player.fatigue,label:"FATIGUE",colour:colours.muted},
+      {
+        icon: "gold",
+        value: v.player.gold,
+        label: "GOLD",
+        colour: colours.gold,
+      },
+      {
+        icon: "reputation",
+        value: v.player.reputation,
+        label: "REPUTATION",
+        colour: colours.water,
+      },
+      {
+        icon: "fatigue",
+        value: v.player.fatigue,
+        label: "FATIGUE",
+        colour: colours.muted,
+      },
     ].entries()) {
-      const x=1284+i*186;
-      this.ui.icon(stat.icon,x,111,23,this.ui.content,stat.colour);
-      this.ui.text(String(stat.value),x+36,87,34,colours.text,120);
-      this.ui.text(stat.label,x-24,147,24,stat.colour,178);
+      const x = 1284 + i * 186;
+      this.ui.icon(stat.icon, x, 111, 23, this.ui.content, stat.colour);
+      this.ui.text(String(stat.value), x + 36, 87, 34, colours.text, 120);
+      this.ui.text(stat.label, x - 24, 147, 24, stat.colour, 178);
     }
-    this.ui.text(`${String(v.hour).padStart(2,"0")}:00 / ${friendly(v.slot)}`,1320,207,24,colours.gold,310);
-    this.ui.text(`${v.hoursRemaining} hours remain`,1320,241,24,colours.muted,310);
+    this.ui.text(
+      `${String(v.hour).padStart(2, "0")}:00 / ${friendly(v.slot)}`,
+      1320,
+      207,
+      24,
+      colours.gold,
+      310,
+    );
+    this.ui.text(
+      `${v.hoursRemaining} hours remain`,
+      1320,
+      241,
+      24,
+      colours.muted,
+      310,
+    );
     const names = [
       ["camp", "Camp map"],
       ["calendar", "Season"],
@@ -504,10 +546,7 @@ export class GameShell {
     u.text(p.name, 134, 825, 28, colours.gold, 265);
     u.text(p.description, 430, 818, 24, colours.text, 940);
     const allowed =
-      !v.listening &&
-      !v.nightFinished &&
-      p.isOpen &&
-      !v.player.stocks;
+      !v.listening && !v.nightFinished && p.isOpen && !v.player.stocks;
     u.button(
       "visit-place",
       p.name,
@@ -529,13 +568,45 @@ export class GameShell {
     const u = this.ui,
       v = this.view;
     u.panel(96, 892, 1380, 134);
-    if(this.clockDay!==v.day.day) { if (!this.clockDay) this.shownHours=v.hoursRemaining; this.clockDay=v.day.day; }
-    this.dailyDial=new DailyClock(u,v.wakingHours,184,959);
-    this.dailyDial.draw(this.shownHours ?? v.hoursRemaining,performance.now());
-    u.text(`${String(v.hour).padStart(2,"0")}:00  /  ${friendly(v.slot)}`,286,911,34,colours.text,500);
-    u.text(v.hoursRemaining===0 ? "The day is spent ? dawn awaits" : v.hoursRemaining<=2 ? "Keep watch in the final hours" : `${v.hoursRemaining} waking hours remain`,286,965,26,v.hoursRemaining<=2?colours.danger:colours.water,600);
-    u.text(v.day.eve ? `Trial at ${v.day.trialHour}:00` : v.day.games ? `Games at ${String(v.day.gamesHour).padStart(2,"0")}:00` : "The hours are yours to spend",946,914,26,colours.gold,480);
-    u.text("Travel freely between places",946,963,24,colours.muted,480);
+    if (this.clockDay !== v.day.day) {
+      if (!this.clockDay) this.shownHours = v.hoursRemaining;
+      this.clockDay = v.day.day;
+    }
+    this.dailyDial = new DailyClock(u, v.wakingHours, 184, 959);
+    this.dailyDial.draw(this.shownHours ?? v.hoursRemaining, performance.now());
+    u.text(
+      `${String(v.hour).padStart(2, "0")}:00  /  ${friendly(v.slot)}`,
+      286,
+      911,
+      34,
+      colours.text,
+      500,
+    );
+    u.text(
+      v.hoursRemaining === 0
+        ? "The day is spent ? dawn awaits"
+        : v.hoursRemaining <= 2
+          ? "Keep watch in the final hours"
+          : `${v.hoursRemaining} waking hours remain`,
+      286,
+      965,
+      26,
+      v.hoursRemaining <= 2 ? colours.danger : colours.water,
+      600,
+    );
+    u.text(
+      v.day.eve
+        ? `Trial at ${v.day.trialHour}:00`
+        : v.day.games
+          ? `Games at ${String(v.day.gamesHour).padStart(2, "0")}:00`
+          : "The hours are yours to spend",
+      946,
+      914,
+      26,
+      colours.gold,
+      480,
+    );
+    u.text("Travel freely between places", 946, 963, 24, colours.muted, 480);
     if (v.season.due === "trial")
       u.button(
         "trial-summons",
@@ -746,7 +817,15 @@ export class GameShell {
     }
     u.panel(1350, 307, 474, 554);
     u.text("THE NEXT SUMMONS", 1382, 347, 26, colours.gold);
-    u.text(`Tent Trial ? ${v.day.trialHour}:00`, 1382, 406, 40, colours.text, 400, true);
+    u.text(
+      `Tent Trial ? ${v.day.trialHour}:00`,
+      1382,
+      406,
+      40,
+      colours.text,
+      400,
+      true,
+    );
     u.text(
       "On the eve of the Games, earn the right to carry your tent into the arena.",
       1382,
@@ -755,7 +834,14 @@ export class GameShell {
       colours.muted,
       405,
     );
-    u.text(`Games at ${String(v.day.gamesHour).padStart(2,"0")}:00 ? days 7 / 14`, 1382, 644, 30, colours.water, 405);
+    u.text(
+      `Games at ${String(v.day.gamesHour).padStart(2, "0")}:00 ? days 7 / 14`,
+      1382,
+      644,
+      30,
+      colours.water,
+      405,
+    );
     u.text(
       "Later weeks await the next chapter.",
       1382,
@@ -1812,8 +1898,12 @@ export class GameShell {
     u.end();
   }
   private async pause() {
-    if (["pause", "settings", "saves"].includes(this.ui.screen)) return;
+    if (
+      ["pause", "settings", "audio-settings", "saves"].includes(this.ui.screen)
+    )
+      return;
     this.returnScreen = this.ui.screen;
+    gameAudio.pauseWorld(true);
     this.arena?.pause(true);
     this.held = false;
     await this.control();
@@ -1885,20 +1975,8 @@ export class GameShell {
       u.text(label!, 132, 273 + i * 94, 24, colours.gold);
       u.text(value!, 132, 307 + i * 94, 32, colours.text, 1000);
     });
-    u.button(
-      "sound",
-      `Absorb bell: ${localStorage.getItem("mage-sound") === "off" ? "Off" : "On"}`,
-      1240,
-      242,
-      584,
-      98,
-      () => {
-        localStorage.setItem(
-          "mage-sound",
-          localStorage.getItem("mage-sound") === "off" ? "on" : "off",
-        );
-        this.settings();
-      },
+    u.button("sound", "Sound & music", 1240, 242, 584, 98, () =>
+      this.audioSettings(),
     );
     u.button(
       "fullscreen",
@@ -1938,7 +2016,86 @@ export class GameShell {
     this.footer();
     u.end();
   }
+  private audioSettings() {
+    this.scene(
+      "audio-settings",
+      "Sound beneath the wards",
+      "PAUSED  /  SOUND & MUSIC",
+    );
+    const u = this.ui,
+      settings = gameAudio.settings;
+    u.panel(96, 242, 1728, 638);
+    (["master", "music", "effects", "voice", "ui"] as const).forEach(
+      (bus, i) => {
+        const y = 278 + i * 108,
+          value = Math.round(settings[bus] * 100);
+        u.bar(
+          bus === "ui" ? "Interface" : friendly(bus),
+          132,
+          y,
+          950,
+          value,
+          100,
+          bus === "music" ? colours.water : colours.gold,
+        );
+        for (const [direction, delta, x] of [
+          ["down", -0.1, 1140],
+          ["up", 0.1, 1484],
+        ] as const)
+          u.button(
+            `volume-${bus}-${direction}`,
+            delta < 0 ? "Quieter" : "Louder",
+            x,
+            y,
+            292,
+            78,
+            () => {
+              gameAudio.setSettings({
+                [bus]: Math.round((settings[bus] + delta) * 10) / 10,
+              } as Partial<AudioSettings>);
+              this.audioSettings();
+            },
+            { disabled: delta < 0 ? value === 0 : value === 100 },
+          );
+      },
+    );
+    u.button(
+      "audio-mute",
+      settings.muted ? "Unmute all" : "Mute all",
+      1140,
+      834,
+      636,
+      68,
+      () => {
+        gameAudio.setSettings({ muted: !settings.muted });
+        this.audioSettings();
+      },
+    );
+    u.button("audio-preview", "Test effects", 96, 834, 340, 68, () => {
+      const cues: Cue[] = [
+        "cast.fire",
+        "cast.water",
+        "cast.earth",
+        "cast.air",
+        "hit",
+        "impact",
+        "roll",
+        "perfect",
+      ];
+      const cue = cues[this.audioPreview++ % cues.length]!;
+      void gameAudio.play(cue);
+      u.notice(`Sound: ${friendly(cue.replace("cast.", ""))}`);
+    });
+    u.button("voice-preview", "Test voice", 456, 834, 300, 68, () => {
+      void gameAudio.play("voice.preview");
+      u.notice("The collar loosens. Stand ready.");
+    });
+    this.back(() => this.settings());
+    this.footer("Volume changes are saved on this device.");
+    u.end();
+  }
   private async openSaves(from: string) {
+    gameAudio.pauseWorld(true);
     this.returnScreen = from;
     await this.run(async () => {
       await request("pause", { paused: true });
@@ -1990,6 +2147,7 @@ export class GameShell {
         void this.run(async () => {
           await this.arena?.flush();
           await request("save", {});
+          void gameAudio.play("ui.confirm");
           this.saves("Season saved. Your thread is held.");
         }),
       { icon: "water" },
@@ -2048,10 +2206,12 @@ export class GameShell {
       this.arena = undefined;
       await this.continue(true);
       this.returnScreen = this.arena ? "arena" : "camp";
+      gameAudio.pauseWorld(true);
       this.saves("Save loaded. Resume when ready.");
     });
   }
   private async resume() {
+    gameAudio.pauseWorld(false);
     await request("pause", { paused: false });
     this.view = await request<SeasonView>("session");
     if (this.arena) {

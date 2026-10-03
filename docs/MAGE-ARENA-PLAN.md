@@ -97,6 +97,9 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
 | Art | A5 | Icons, HUD, spell-line icons | A1 owner choice | not planned | | |
+| Game [`integration`] | U3a | Data-driven hours, free travel, fixed appointments, save v2 | D25 | done; gate green | `a7a0351` | 2026-10-03 |
+| Game | U3b | Name-only places, header stat icons and daily rune dial | U3a / D26 | done; both desktop routes green | `b734332` | 2026-10-03 |
+| Game | AU4 | Kept-sample WebAudio engine, app-side calming, adaptive playback and settings | D28 / D30 | done; owner listening pending | this AU4 commit | 2026-10-03 |
 
 ## h. Wave cards
 
@@ -218,7 +221,7 @@ Pattern to follow (read-only): `C:\Users\kazda\kiro\garden-vr\docs\audio\` (`AUD
 | Audio [`audio`] | AU1 | **Philosophy and audition round 1**: audio bible (pillars, palette of sound, mix and priority rules, adaptive music design tied to the collar clock, loudness targets); the project ElevenLabs tool with ledger and credit guard; about 30 to 40 samples across directions and themes; the audition report; stop for the owner | D21-D24 | not started |
 | Audio | AU2 | Round 2 refinement of the chosen directions (variants inside the chosen family), narration or bark voice if wanted | AU1 owner choice | blocked |
 | Audio | AU3 | Production set: the full effect list per element and event, the music set (title, camp day/dusk/night, arena per palette, win and loss stingers, adaptive layers), UI sounds, ambiences; loudness-normalised, loop-checked, sidecars and ledger | AU2 | blocked |
-| Game | AU4 | In-game audio engine: WebAudio mixer with buses, priority, cooldown and concurrency limits, ducking, adaptive music following the collar tiers and absorb events, UI sounds from the UI kit, volume and mute settings, tests for the priority table | AU3 or placeholders | not started |
+| Game | AU4 | In-game audio engine: WebAudio mixer with buses, priority, cooldown and concurrency limits, ducking, adaptive music following the collar tiers and absorb events, UI sounds from the UI kit, volume and mute settings, tests for the priority table | AU3 or placeholders | done with owner-kept samples; listening pending |
 
 ## q. Owner review of the U2 gallery and audio round 2 (2026-10-03)
 
@@ -238,8 +241,8 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 | Art | A9 | **Arena restoration**: ground, rim, structures, banners, props and surface at proper resolution, matching the approved arena concept, in the three palettes, with tiling or tiled-by-design ground where needed | D27 | not started |
 | Art | A10 | **Character fidelity and direction**: four mages and the enemy roster with real multi-direction animation sets and a consistency pipeline | A8 | not started |
 | Art | A11 | **Stat icons (gold, reputation, fatigue) and the daily clock art** | D26 | not started |
-| Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: hour tables/fixtures, free travel, header stats and rendered dial | D25, D26 | done: U3a `a7a0351`, U3b this commit; owner hour pacing pending |
-| Game | AU4 | **Audio engine** with buses, priority, concurrency and cooldown limits, ducking, the app-side calming of effects (D30), music playback with crossfades and the collar-tier adaptive layers, UI sounds, volume settings; uses the kept samples through a manifest | D28, D30 | not started |
+| Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: hour tables/fixtures, free travel, header stats and rendered dial | D25, D26 | done: U3a `a7a0351`, U3b `b734332`; owner hour pacing pending |
+| Game | AU4 | **Audio engine** with buses, priority, concurrency and cooldown limits, ducking, the app-side calming of effects (D30), music playback with crossfades and the collar-tier adaptive layers, UI sounds, volume settings; uses the kept samples through a manifest | D28, D30 | done in this AU4 commit; owner listening pending |
 | Audio | AU2b | Regenerate the rejected categories: absorb as an energy barrier stopping and slowing an energy source (elemental, natural, not a notification, not cartoonish), the title theme (melodic like the arena music, calm), roll (single sand step), crowd (raw, bloodlust colosseum), collar rune alternative if needed | D28 | not started |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks in the kept directions, after the credit reset; camp music re-direction | account reset | blocked |
 
@@ -281,3 +284,20 @@ tests, zero contradictions. `npm run smoke:u3`: both full two-week routes pass,
 `npx tsx packages/tools/src/u3-gallery.ts`: review gallery. Fixed and retained
 clock origin-line defect evidence. Human animation comfort/hour pacing not felt.
 No arena/census changes. Next: AU4 using owner-kept sources only.
+
+**AU4 session — 2026-10-03 (GAME/integration).** Selectively integrated 22 kept
+sources through a hash-checked manifest, including the isolated first roll step.
+Four buses, authored per-sound trims, high-cut/compressor/limiter, bounded cues,
+presentation-only variation, ducking, camp phase music and collar-tier crossfades;
+duration-driven playlists accept future 2–3 minute tracks. Central UI sounds,
+volume/mute settings and exact voice caption. `python packages/tools/audio/import-kept.py`
+records provenance, peaks and cut windows. `npm run gate`: 169 TS + 11 reference
+tests, zero contradictions. `npm run smoke:audio`: both desktop resolutions and
+missing/corrupt audio pass, actual graph/events retained. `npx tsx
+packages/tools/src/u3-replay.ts`: exact U3 save hash and 1,300,369-byte round trip.
+`npm run smoke:u3`: both complete 14-day desktop routes pass with audio enabled,
+zero page errors/overflow; report retained as `AU4-evidence/camp-regression.json`.
+Design and limitations: `docs/waves/AU4-audio-engine.md`. Headless audio cannot be
+listened to; trims, seams and artistic fit are not felt. No generation, provider
+calls, pushes or core arena/census changes. Next: owner listening and subsequent
+art/audio deliveries; unapproved round-3 auditions remain excluded.

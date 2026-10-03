@@ -1,0 +1,265 @@
+{
+  "label": "authored AU4 mix; owner listening pending",
+  "manifestUrl": "/audio/manifest.json",
+  "limits": {
+    "oneShots": 12,
+    "music": 2,
+    "buses": {
+      "effects": 8,
+      "ui": 2,
+      "voice": 1
+    },
+    "logEntries": 512,
+    "fetchTimeoutMs": 5000,
+    "maxAssetBytes": 16777216,
+    "maxDurationSeconds": 240,
+    "lateCueMs": 500,
+    "stealFadeSeconds": 0.02
+  },
+  "defaults": {
+    "master": 0.8,
+    "music": 0.7,
+    "effects": 0.8,
+    "ui": 0.7,
+    "voice": 0.9,
+    "muted": false
+  },
+  "effects": {
+    "highCutHz": 6500,
+    "compressor": {
+      "threshold": -20,
+      "knee": 12,
+      "ratio": 4,
+      "attack": 0.004,
+      "release": 0.16
+    },
+    "limiter": {
+      "threshold": -3,
+      "knee": 0,
+      "ratio": 20,
+      "attack": 0.001,
+      "release": 0.06
+    },
+    "sampleCeilingDb": -1
+  },
+  "masterLimiter": {
+    "threshold": -1,
+    "knee": 0,
+    "ratio": 20,
+    "attack": 0.001,
+    "release": 0.08
+  },
+  "duck": {
+    "effectsUnderMusicDb": -2,
+    "voice": {
+      "music": -7,
+      "effects": -6,
+      "ui": -3
+    },
+    "attackSeconds": 0.04,
+    "releaseSeconds": 0.5
+  },
+  "music": {
+    "crossfadeSeconds": 2,
+    "arena": {
+      "1": ["arena-a"],
+      "2": ["arena-c"],
+      "3": ["arena-d"],
+      "4": ["arena-a", "arena-d", "arena-c"]
+    },
+    "camp": {
+      "day": ["camp-day"],
+      "dusk": ["camp-dusk"],
+      "night": ["camp-night"]
+    },
+    "tierGainDb": {
+      "1": -4,
+      "2": -2,
+      "3": -1,
+      "4": 0
+    }
+  },
+  "spatial": {
+    "rangeM": 36,
+    "maxPan": 0.75,
+    "minGain": 0.15
+  },
+  "cues": {
+    "cast.fire": {
+      "bus": "effects",
+      "assets": ["fire-a", "fire-variation"],
+      "priority": 2,
+      "concurrency": 3,
+      "cooldownMs": 100,
+      "gainDb": -2,
+      "pitch": [0.95, 1.05],
+      "volumeVariationDb": 1.5,
+      "spatial": true
+    },
+    "cast.water": {
+      "bus": "effects",
+      "assets": ["water-b", "water-variation"],
+      "priority": 2,
+      "concurrency": 3,
+      "cooldownMs": 100,
+      "gainDb": -2,
+      "pitch": [0.95, 1.05],
+      "volumeVariationDb": 1.5,
+      "spatial": true
+    },
+    "cast.earth": {
+      "bus": "effects",
+      "assets": ["earth-b"],
+      "priority": 2,
+      "concurrency": 3,
+      "cooldownMs": 100,
+      "gainDb": -2,
+      "pitch": [0.95, 1.05],
+      "volumeVariationDb": 1.5,
+      "spatial": true
+    },
+    "cast.air": {
+      "bus": "effects",
+      "assets": ["air-b"],
+      "priority": 2,
+      "concurrency": 3,
+      "cooldownMs": 100,
+      "gainDb": -2,
+      "pitch": [0.95, 1.05],
+      "volumeVariationDb": 1.5,
+      "spatial": true
+    },
+    "hit": {
+      "bus": "effects",
+      "assets": ["hit-a"],
+      "priority": 1,
+      "concurrency": 2,
+      "cooldownMs": 120,
+      "gainDb": -1,
+      "pitch": [0.96, 1.04],
+      "volumeVariationDb": 1,
+      "spatial": true
+    },
+    "impact": {
+      "bus": "effects",
+      "assets": ["impact-a"],
+      "priority": 2,
+      "concurrency": 3,
+      "cooldownMs": 100,
+      "gainDb": -3,
+      "pitch": [0.94, 1.06],
+      "volumeVariationDb": 2,
+      "spatial": true
+    },
+    "roll": {
+      "bus": "effects",
+      "assets": ["roll-step"],
+      "priority": 2,
+      "concurrency": 2,
+      "cooldownMs": 200,
+      "gainDb": 0,
+      "pitch": [0.96, 1.04],
+      "volumeVariationDb": 1,
+      "spatial": true
+    },
+    "collar": {
+      "bus": "effects",
+      "assets": ["collar-b"],
+      "priority": 0,
+      "concurrency": 1,
+      "cooldownMs": 180,
+      "gainDb": -2,
+      "pitch": [1, 1],
+      "volumeVariationDb": 0,
+      "spatial": false
+    },
+    "perfect": {
+      "bus": "effects",
+      "assets": ["collar-b"],
+      "priority": 0,
+      "concurrency": 1,
+      "cooldownMs": 140,
+      "gainDb": -5,
+      "pitch": [1.1, 1.13],
+      "volumeVariationDb": 0.5,
+      "spatial": false
+    },
+    "ui.click": {
+      "bus": "ui",
+      "assets": ["ui-click"],
+      "priority": 2,
+      "concurrency": 1,
+      "cooldownMs": 70,
+      "gainDb": 0,
+      "pitch": [0.99, 1.01],
+      "volumeVariationDb": 0.5,
+      "spatial": false
+    },
+    "ui.confirm": {
+      "bus": "ui",
+      "assets": ["ui-confirm"],
+      "priority": 1,
+      "concurrency": 1,
+      "cooldownMs": 150,
+      "gainDb": 0,
+      "pitch": [0.99, 1.01],
+      "volumeVariationDb": 0.5,
+      "spatial": false
+    },
+    "ui.deny": {
+      "bus": "ui",
+      "assets": ["ui-deny"],
+      "priority": 1,
+      "concurrency": 1,
+      "cooldownMs": 150,
+      "gainDb": 0,
+      "pitch": [0.99, 1.01],
+      "volumeVariationDb": 0.5,
+      "spatial": false
+    },
+    "ui.slot": {
+      "bus": "ui",
+      "assets": ["ui-slot"],
+      "priority": 2,
+      "concurrency": 1,
+      "cooldownMs": 70,
+      "gainDb": 0,
+      "pitch": [0.99, 1.01],
+      "volumeVariationDb": 0.5,
+      "spatial": false
+    },
+    "ui.tab": {
+      "bus": "ui",
+      "assets": ["ui-tab"],
+      "priority": 2,
+      "concurrency": 1,
+      "cooldownMs": 70,
+      "gainDb": 0,
+      "pitch": [0.99, 1.01],
+      "volumeVariationDb": 0.5,
+      "spatial": false
+    },
+    "voice.collar": {
+      "bus": "voice",
+      "assets": ["voice-collar"],
+      "priority": 0,
+      "concurrency": 1,
+      "cooldownMs": 30000,
+      "gainDb": 0,
+      "pitch": [1, 1],
+      "volumeVariationDb": 0,
+      "spatial": false
+    },
+    "voice.preview": {
+      "bus": "voice",
+      "assets": ["voice-collar"],
+      "priority": 0,
+      "concurrency": 1,
+      "cooldownMs": 500,
+      "gainDb": 0,
+      "pitch": [1, 1],
+      "volumeVariationDb": 0,
+      "spatial": false
+    }
+  }
+}

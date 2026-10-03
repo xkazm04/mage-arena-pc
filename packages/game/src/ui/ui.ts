@@ -1,3 +1,4 @@
+import { gameAudio } from "../audio.ts";
 import {
   Application,
   BitmapText,
@@ -85,6 +86,7 @@ export class CanvasUI {
   private cpuTimes: number[] = [];
   layout = viewportLayout(1920, 1080);
   async init(host: HTMLElement) {
+    gameAudio.init();
     await Promise.all([
       art.init().then(() => installFonts()),
       this.app.init({
@@ -116,7 +118,30 @@ export class CanvasUI {
     const signal = this.lifetime.signal;
     window.addEventListener("resize", () => this.resize(), { signal });
     this.resize();
-    window.addEventListener("keydown", (e) => this.key(e), { signal });
+    window.addEventListener(
+      "keydown",
+      (e) => {
+        void gameAudio.unlock();
+        this.key(e);
+      },
+      { signal },
+    );
+    window.addEventListener(
+      "pointerdown",
+      () => {
+        void gameAudio.unlock();
+      },
+      { signal, capture: true },
+    );
+    if (new URLSearchParams(location.search).has("harness"))
+      Object.assign(window, {
+        __audio: {
+          snapshot: () => gameAudio.snapshot(),
+          play: gameAudio.play.bind(gameAudio),
+          scene: gameAudio.setScene.bind(gameAudio),
+          pause: gameAudio.pauseWorld.bind(gameAudio),
+        },
+      });
     this.app.canvas.addEventListener(
       "pointermove",
       (e) => {
@@ -124,6 +149,7 @@ export class CanvasUI {
         this.point(e);
         const id = this.hit()?.id ?? "";
         if (id !== this.hover) {
+          if (id) void gameAudio.play("ui.slot");
           this.hover = id;
           this.hoverSince = performance.now();
         }
@@ -139,6 +165,14 @@ export class CanvasUI {
         this.app.canvas.focus();
         if (e.button !== 0) return;
         const b = this.hit();
+        if (
+          !b &&
+          this.buttons.some(
+            (b) => b.disabled && contains(b, this.pointer.x, this.pointer.y),
+          )
+        )
+          void gameAudio.play("ui.deny");
+        if (b?.hold) void gameAudio.play("ui.click");
         this.pressed = b;
         if (b) {
           this.focus = b.id;
@@ -164,6 +198,7 @@ export class CanvasUI {
       "visibilitychange",
       () => {
         if (document.hidden) this.release();
+        void gameAudio.hidden(document.hidden);
       },
       { signal },
     );
@@ -215,6 +250,7 @@ export class CanvasUI {
     }
     if (e.code === "Escape") {
       e.preventDefault();
+      void gameAudio.play("ui.tab");
       this.onBack();
       return;
     }
@@ -236,6 +272,7 @@ export class CanvasUI {
             : "next"
           : directions[e.code]!,
       );
+      void gameAudio.play("ui.slot");
       this.hoverSince = performance.now();
       this.tooltip?.destroy({ children: true });
       this.tooltip = undefined;
@@ -255,6 +292,15 @@ export class CanvasUI {
     if (!b) return;
     this.focus = id;
     b.root.alpha = 0.75;
+    const cue =
+      b.kind === "tab"
+        ? "ui.tab"
+        : b.kind === "slot" || /slot|letter-/.test(id)
+          ? "ui.slot"
+          : /start|choose|confirm|dawn|load|receive/.test(id)
+            ? "ui.confirm"
+            : "ui.click";
+    void gameAudio.play(cue);
     b.activate();
   }
   release() {
@@ -459,17 +505,45 @@ export class CanvasUI {
     parent.addChild(g);
     g.circle(x, y, r * 1.12).stroke({ color: colour, width: 1, alpha: 0.25 });
     if (kind === "gold") {
-      g.circle(x,y,r*0.8).stroke({color:colour,width:3}).circle(x,y,r*0.55).stroke({color:colour,width:2});
-      g.moveTo(x,y-r*0.35).lineTo(x,y+r*0.35).moveTo(x-r*0.22,y).lineTo(x+r*0.22,y).stroke({color:colour,width:3});
+      g.circle(x, y, r * 0.8)
+        .stroke({ color: colour, width: 3 })
+        .circle(x, y, r * 0.55)
+        .stroke({ color: colour, width: 2 });
+      g.moveTo(x, y - r * 0.35)
+        .lineTo(x, y + r * 0.35)
+        .moveTo(x - r * 0.22, y)
+        .lineTo(x + r * 0.22, y)
+        .stroke({ color: colour, width: 3 });
     } else if (kind === "reputation") {
-      for (const direction of [-1,1]) for(let i=0;i<4;i++) {
-        const a=(i/4)*1.8-0.4;
-        g.ellipse(x+direction*Math.cos(a)*r*0.65,y+Math.sin(a)*r*0.7,r*0.17,r*0.3).fill({color:colour,alpha:0.85});
-      }
-      g.poly([x,y-r*0.55,x+r*0.22,y,x,y+r*0.3,x-r*0.22,y]).fill(colour);
+      for (const direction of [-1, 1])
+        for (let i = 0; i < 4; i++) {
+          const a = (i / 4) * 1.8 - 0.4;
+          g.ellipse(
+            x + direction * Math.cos(a) * r * 0.65,
+            y + Math.sin(a) * r * 0.7,
+            r * 0.17,
+            r * 0.3,
+          ).fill({ color: colour, alpha: 0.85 });
+        }
+      g.poly([
+        x,
+        y - r * 0.55,
+        x + r * 0.22,
+        y,
+        x,
+        y + r * 0.3,
+        x - r * 0.22,
+        y,
+      ]).fill(colour);
     } else if (kind === "fatigue") {
-      g.moveTo(x-r*0.6,y-r*0.75).lineTo(x+r*0.6,y-r*0.75).lineTo(x-r*0.6,y+r*0.75).lineTo(x+r*0.6,y+r*0.75).stroke({color:colour,width:3});
-      g.moveTo(x-r*0.6,y-r*0.75).lineTo(x+r*0.6,y+r*0.75).stroke({color:colour,width:2});
+      g.moveTo(x - r * 0.6, y - r * 0.75)
+        .lineTo(x + r * 0.6, y - r * 0.75)
+        .lineTo(x - r * 0.6, y + r * 0.75)
+        .lineTo(x + r * 0.6, y + r * 0.75)
+        .stroke({ color: colour, width: 3 });
+      g.moveTo(x - r * 0.6, y - r * 0.75)
+        .lineTo(x + r * 0.6, y + r * 0.75)
+        .stroke({ color: colour, width: 2 });
     } else if (kind === "water" || kind === "tide_orb" || kind === "mend") {
       g.moveTo(x, y - r)
         .bezierCurveTo(x - r * 1.3, y + r * 0.5, x - r * 0.4, y + r, x, y + r)
@@ -656,7 +730,10 @@ export class CanvasUI {
     }
     this.hadPad = !!pad;
     const e = this.padNavigation.poll(pad, now);
-    if (e.active) this.modality = "gamepad";
+    if (e.active) {
+      this.modality = "gamepad";
+      void gameAudio.unlock();
+    }
     this.onGamepad?.(pad);
     if (e.release) {
       this.padHeld?.hold?.(false);
@@ -664,18 +741,21 @@ export class CanvasUI {
     }
     if (this.busy) return;
     if (e.pause) {
+      void gameAudio.play("ui.tab");
       this.onBack();
       return;
     }
     if (this.screen === "arena") return;
     if (e.back) {
       this.release();
+      void gameAudio.play("ui.tab");
       this.onBack();
       return;
     }
     if (e.direction) {
       this.release();
       this.focus = nextFocus(this.buttons, this.focus, e.direction);
+      void gameAudio.play("ui.slot");
       this.hoverSince = now;
       this.tooltip?.destroy({ children: true });
       this.tooltip = undefined;
@@ -684,6 +764,7 @@ export class CanvasUI {
       const b = this.buttons.find((b) => b.id === this.focus && !b.disabled);
       if (b?.hold) {
         this.padHeld = b;
+        void gameAudio.play("ui.click");
         b.hold(true);
       } else this.activate(this.focus);
     }
@@ -695,6 +776,7 @@ export class CanvasUI {
     const dt = Math.min(0.05, (now - this.previous) / 1000);
     this.previous = now;
     this.pollPad(now);
+    gameAudio.update();
     this.onFrame?.(dt, now);
     for (const b of this.buttons) {
       b.ring.clear();
@@ -770,6 +852,7 @@ export class CanvasUI {
       now - this.hoverSince > this.kit.motion.tooltipDelayMs &&
       !this.tooltip
     ) {
+      void gameAudio.play("ui.click");
       const t = new Container();
       this.feedback.addChild(t);
       const x = Math.min(1250, Math.max(100, target.x)),
@@ -909,6 +992,7 @@ export class CanvasUI {
   }
   dispose() {
     this.ready = false;
+    gameAudio.close();
     cancelAnimationFrame(this.raf);
     this.release();
     this.lifetime.abort();

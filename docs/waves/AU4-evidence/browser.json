@@ -1,0 +1,4140 @@
+{
+  "label": "measured headless WebAudio graph/events; audio cannot be listened to headlessly",
+  "command": "npm run smoke:audio",
+  "passed": true,
+  "runs": [
+    {
+      "height": 1080,
+      "graph": [
+        {
+          "kind": "compressor",
+          "threshold": -1,
+          "ratio": 20
+        },
+        {
+          "kind": "ceiling",
+          "ceiling": 0.8912509083747864,
+          "oversample": "4x"
+        },
+        {
+          "kind": "filter",
+          "type": "lowpass",
+          "frequency": 6500
+        },
+        {
+          "kind": "compressor",
+          "threshold": -20,
+          "ratio": 4
+        },
+        {
+          "kind": "compressor",
+          "threshold": -3,
+          "ratio": 20
+        },
+        {
+          "kind": "ceiling",
+          "ceiling": 0.8912509083747864,
+          "oversample": "4x"
+        }
+      ],
+      "ducked": {
+        "music": 0.44887179136276245,
+        "effects": 0.4004875719547272,
+        "ui": 0.7091007828712463,
+        "voice": 1
+      },
+      "pause": {
+        "state": "running",
+        "settings": {
+          "master": 0.8,
+          "music": 0.7,
+          "effects": 0.8,
+          "ui": 0.7,
+          "voice": 0.9,
+          "muted": false
+        },
+        "scene": "camp:night",
+        "worldPaused": true,
+        "music": null,
+        "musicVoices": 0,
+        "active": [
+          {
+            "id": 5,
+            "cue": "ui.tab",
+            "bus": "ui",
+            "priority": 2,
+            "started": 1.4213333333333333
+          }
+        ],
+        "processing": {
+          "highCutHz": 6500,
+          "compressor": {
+            "threshold": -20,
+            "knee": 12,
+            "ratio": 4,
+            "attack": 0.004,
+            "release": 0.16
+          },
+          "limiter": {
+            "threshold": -3,
+            "knee": 0,
+            "ratio": 20,
+            "attack": 0.001,
+            "release": 0.06
+          },
+          "sampleCeilingDb": -1
+        },
+        "duckGains": {
+          "music": 0.4781891703605652,
+          "effects": 0.4323786795139313,
+          "ui": 0.7245753407478333,
+          "voice": 1
+        },
+        "logs": [
+          {
+            "time": 0,
+            "event": "manifest-ready",
+            "detail": 22
+          },
+          {
+            "time": 0,
+            "event": "locked",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0,
+            "event": "context-created"
+          },
+          {
+            "time": 0,
+            "event": "gesture-unlocked"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-deny",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-confirm",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-click",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 1.0027773545654217,
+              "gain": 0.1588767170906067,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "roll-step",
+            "detail": {
+              "duration": 0.45,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "collar-b",
+            "detail": {
+              "duration": 1,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "impact-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-slot",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "hit-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "air-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-tab",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "earth-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-a",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "voice-collar",
+            "detail": {
+              "duration": 2.0897916666666667,
+              "channels": 1
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0039778534159771,
+              "gain": 0.2399541735649109,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "stolen",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.confirm",
+            "detail": {
+              "asset": "ui-confirm",
+              "pitch": 0.9982558261639459,
+              "gain": 0.20252592861652374,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-scene",
+            "cue": "camp:day"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "camp-day",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-play",
+            "cue": "camp-day",
+            "detail": {
+              "scene": "camp:day",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.0163125
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "voice.collar",
+            "detail": {
+              "asset": "voice-collar",
+              "pitch": 1,
+              "gain": 0.6165950298309326,
+              "bus": "voice",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0.24,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.24,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.25066666666666665,
+            "event": "music-scene",
+            "cue": "camp:dusk"
+          },
+          {
+            "time": 0.32,
+            "event": "decoded",
+            "cue": "camp-dusk",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.32,
+            "event": "music-play",
+            "cue": "camp-dusk",
+            "detail": {
+              "scene": "camp:dusk",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.3363125
+            }
+          },
+          {
+            "time": 0.352,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.352,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.48,
+            "event": "music-scene",
+            "cue": "camp:night"
+          },
+          {
+            "time": 0.5413333333333333,
+            "event": "decoded",
+            "cue": "camp-night",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.5413333333333333,
+            "event": "music-play",
+            "cue": "camp-night",
+            "detail": {
+              "scene": "camp:night",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.557645833333334
+            }
+          },
+          {
+            "time": 1.4213333333333333,
+            "event": "paused",
+            "cue": "voice.collar"
+          },
+          {
+            "time": 1.4213333333333333,
+            "event": "world-paused"
+          },
+          {
+            "time": 1.4213333333333333,
+            "event": "play",
+            "cue": "ui.tab",
+            "detail": {
+              "asset": "ui-tab",
+              "pitch": 0.9906522003954394,
+              "gain": 0.15487225353717804,
+              "bus": "ui",
+              "pan": 0
+            }
+          }
+        ]
+      },
+      "settings": {
+        "master": 0.7,
+        "music": 0.6,
+        "effects": 0.7,
+        "ui": 0.6,
+        "voice": 0.8,
+        "muted": false
+      },
+      "unlockTicks": [
+        0,
+        540,
+        1080,
+        1620
+      ],
+      "perfects": 9,
+      "audio": {
+        "state": "running",
+        "settings": {
+          "master": 0.7,
+          "music": 0.6,
+          "effects": 0.7,
+          "ui": 0.6,
+          "voice": 0.8,
+          "muted": false
+        },
+        "scene": "arena:4",
+        "worldPaused": false,
+        "music": {
+          "id": "arena-a",
+          "offset": 0,
+          "duration": 20.06202083333333
+        },
+        "musicVoices": 2,
+        "active": [
+          {
+            "id": 41,
+            "cue": "collar",
+            "bus": "effects",
+            "priority": 0,
+            "started": 31.36
+          },
+          {
+            "id": 42,
+            "cue": "impact",
+            "bus": "effects",
+            "priority": 2,
+            "started": 31.992
+          },
+          {
+            "id": 43,
+            "cue": "perfect",
+            "bus": "effects",
+            "priority": 0,
+            "started": 31.992
+          }
+        ],
+        "processing": {
+          "highCutHz": 6500,
+          "compressor": {
+            "threshold": -20,
+            "knee": 12,
+            "ratio": 4,
+            "attack": 0.004,
+            "release": 0.16
+          },
+          "limiter": {
+            "threshold": -3,
+            "knee": 0,
+            "ratio": 20,
+            "attack": 0.001,
+            "release": 0.06
+          },
+          "sampleCeilingDb": -1
+        },
+        "duckGains": {
+          "music": 0.9998211860656738,
+          "effects": 0.7941493988037109,
+          "ui": 0.9041791558265686,
+          "voice": 1
+        },
+        "logs": [
+          {
+            "time": 0,
+            "event": "manifest-ready",
+            "detail": 22
+          },
+          {
+            "time": 0,
+            "event": "locked",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0,
+            "event": "context-created"
+          },
+          {
+            "time": 0,
+            "event": "gesture-unlocked"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-deny",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-confirm",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-click",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 1.0027773545654217,
+              "gain": 0.1588767170906067,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "roll-step",
+            "detail": {
+              "duration": 0.45,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "collar-b",
+            "detail": {
+              "duration": 1,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "impact-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-slot",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "hit-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "air-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-tab",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "earth-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-a",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "voice-collar",
+            "detail": {
+              "duration": 2.0897916666666667,
+              "channels": 1
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0039778534159771,
+              "gain": 0.2399541735649109,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "stolen",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.confirm",
+            "detail": {
+              "asset": "ui-confirm",
+              "pitch": 0.9982558261639459,
+              "gain": 0.20252592861652374,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-scene",
+            "cue": "camp:day"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "camp-day",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-play",
+            "cue": "camp-day",
+            "detail": {
+              "scene": "camp:day",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.0163125
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "voice.collar",
+            "detail": {
+              "asset": "voice-collar",
+              "pitch": 1,
+              "gain": 0.6165950298309326,
+              "bus": "voice",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0.24,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.24,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.25066666666666665,
+            "event": "music-scene",
+            "cue": "camp:dusk"
+          },
+          {
+            "time": 0.32,
+            "event": "decoded",
+            "cue": "camp-dusk",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.32,
+            "event": "music-play",
+            "cue": "camp-dusk",
+            "detail": {
+              "scene": "camp:dusk",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.3363125
+            }
+          },
+          {
+            "time": 0.352,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.352,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.48,
+            "event": "music-scene",
+            "cue": "camp:night"
+          },
+          {
+            "time": 0.5413333333333333,
+            "event": "decoded",
+            "cue": "camp-night",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.5413333333333333,
+            "event": "music-play",
+            "cue": "camp-night",
+            "detail": {
+              "scene": "camp:night",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.557645833333334
+            }
+          },
+          {
+            "time": 1.4213333333333333,
+            "event": "paused",
+            "cue": "voice.collar"
+          },
+          {
+            "time": 1.4213333333333333,
+            "event": "world-paused"
+          },
+          {
+            "time": 1.4213333333333333,
+            "event": "play",
+            "cue": "ui.tab",
+            "detail": {
+              "asset": "ui-tab",
+              "pitch": 0.9906522003954394,
+              "gain": 0.15487225353717804,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 1.4506666666666668,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0017183955907778,
+              "gain": 0.24472567439079285,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 1.4613333333333334,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.472,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.472,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.48,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.488,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.7,
+              "effects": 0.8,
+              "ui": 0.7,
+              "voice": 0.9,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.4906666666666666,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.4906666666666666,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.4906666666666666,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.8,
+              "ui": 0.7,
+              "voice": 0.9,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.496,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.5013333333333334,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.5013333333333334,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.7,
+              "voice": 0.9,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.5066666666666666,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.512,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.512,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.7,
+              "voice": 0.8,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.512,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.52,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.52,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.6,
+              "voice": 0.8,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.52,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.5306666666666666,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.5306666666666666,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.6,
+              "voice": 0.8,
+              "muted": true
+            }
+          },
+          {
+            "time": 1.5413333333333334,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.552,
+            "event": "muted",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.552,
+            "event": "muted",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.552,
+            "event": "muted",
+            "cue": "cast.fire"
+          },
+          {
+            "time": 1.56,
+            "event": "muted",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.56,
+            "event": "muted",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.56,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.6,
+              "voice": 0.8,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.5706666666666667,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.5706666666666667,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.5706666666666667,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-variation",
+              "pitch": 0.9562629652188638,
+              "gain": 0.35955309867858887,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 1.8106666666666666,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.8106666666666666,
+            "event": "play",
+            "cue": "cast.earth",
+            "detail": {
+              "asset": "earth-b",
+              "pitch": 0.9875275439978676,
+              "gain": 0.1723611056804657,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.050666666666667,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9972114256043373,
+              "gain": 0.1621742695569992,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.050666666666667,
+            "event": "play",
+            "cue": "cast.air",
+            "detail": {
+              "asset": "air-b",
+              "pitch": 1.0227927040900444,
+              "gain": 0.27405861020088196,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.28,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 2.28,
+            "event": "play",
+            "cue": "hit",
+            "detail": {
+              "asset": "hit-a",
+              "pitch": 0.9786158578994574,
+              "gain": 0.5738785266876221,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.512,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 2.512,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 0.9937734470363049,
+              "gain": 0.42341190576553345,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.7813333333333334,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9909548389865316,
+              "gain": 0.1605149209499359,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.7813333333333334,
+            "event": "play",
+            "cue": "roll",
+            "detail": {
+              "asset": "roll-step",
+              "pitch": 0.9948409399848958,
+              "gain": 0.6830046772956848,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.021333333333333,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 3.021333333333333,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1221155501753532,
+              "gain": 0.21261906623840332,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.2506666666666666,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 3.2506666666666666,
+            "event": "play",
+            "cue": "cast.fire",
+            "detail": {
+              "asset": "fire-a",
+              "pitch": 1.0447885718670586,
+              "gain": 0.1802373081445694,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.490666666666667,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0090386607278632,
+              "gain": 0.24825359880924225,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.490666666666667,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9911006126457194,
+              "gain": 0.1538790762424469,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.490666666666667,
+            "event": "play",
+            "cue": "voice.preview",
+            "detail": {
+              "asset": "voice-collar",
+              "pitch": 1,
+              "gain": 0.6165950298309326,
+              "bus": "voice",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.1706666666666665,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 0.9953707324367781,
+              "gain": 0.2403934895992279,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.1706666666666665,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9924195912637453,
+              "gain": 0.15097922086715698,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.181333333333333,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.181333333333333,
+            "event": "cooldown",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.192,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.192,
+            "event": "world-resumed"
+          },
+          {
+            "time": 4.192,
+            "event": "cooldown",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.192,
+            "event": "music-play",
+            "cue": "camp-night",
+            "detail": {
+              "scene": "camp:night",
+              "duration": 12.0163125,
+              "offset": 0.88,
+              "crossfade": 2,
+              "nextAt": 13.3283125
+            }
+          },
+          {
+            "time": 4.232,
+            "event": "paused",
+            "cue": "cast.fire"
+          },
+          {
+            "time": 4.232,
+            "event": "paused",
+            "cue": "voice.preview"
+          },
+          {
+            "time": 4.232,
+            "event": "world-paused"
+          },
+          {
+            "time": 4.232,
+            "event": "priority",
+            "cue": "ui.tab"
+          },
+          {
+            "time": 4.272,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.272,
+            "event": "music-scene",
+            "cue": "silent"
+          },
+          {
+            "time": 4.272,
+            "event": "world-resumed"
+          },
+          {
+            "time": 4.272,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.272,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.28,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.290666666666667,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.301333333333333,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.312,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.312,
+            "event": "stolen",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.312,
+            "event": "play",
+            "cue": "ui.confirm",
+            "detail": {
+              "asset": "ui-confirm",
+              "pitch": 1.007374088078473,
+              "gain": 0.19192726910114288,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.312,
+            "event": "music-scene",
+            "cue": "arena:1"
+          },
+          {
+            "time": 4.52,
+            "event": "decoded",
+            "cue": "arena-a",
+            "detail": {
+              "duration": 20.06202083333333,
+              "channels": 2
+            }
+          },
+          {
+            "time": 4.52,
+            "event": "music-play",
+            "cue": "arena-a",
+            "detail": {
+              "scene": "arena:1",
+              "duration": 20.06202083333333,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 22.58202083333333
+            }
+          },
+          {
+            "time": 4.56,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-variation",
+              "pitch": 0.9634774889085462,
+              "gain": 0.41628652811050415,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.8,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-b",
+              "pitch": 0.9965145600285349,
+              "gain": 0.25044476985931396,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 5.050666666666666,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-b",
+              "pitch": 1.0166872329192573,
+              "gain": 0.31855571269989014,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 5.050666666666666,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 0.9932046408376867,
+              "gain": 0.2915182113647461,
+              "bus": "effects",
+              "pan": 0.3055555522441864
+            }
+          },
+          {
+            "time": 5.232,
+            "event": "play",
+            "cue": "roll",
+            "detail": {
+              "asset": "roll-step",
+              "pitch": 0.9710544658434609,
+              "gain": 0.7610785961151123,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 5.301333333333333,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 1.0035375362355001,
+              "gain": 0.45350784063339233,
+              "bus": "effects",
+              "pan": 0.2738095223903656
+            }
+          },
+          {
+            "time": 5.56,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 1.0524153736933934,
+              "gain": 0.325587660074234,
+              "bus": "effects",
+              "pan": 0.1944444477558136
+            }
+          },
+          {
+            "time": 6.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1060068680893578,
+              "gain": 0.21239735186100006,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 9.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.101821671041104,
+              "gain": 0.21215979754924774,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 12.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1013718992527248,
+              "gain": 0.2039676457643509,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 13.36,
+            "event": "play",
+            "cue": "collar",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1,
+              "gain": 0.28840315341949463,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 13.36,
+            "event": "cooldown",
+            "cue": "voice.collar"
+          },
+          {
+            "time": 13.381333333333334,
+            "event": "music-scene",
+            "cue": "arena:2"
+          },
+          {
+            "time": 13.76,
+            "event": "decoded",
+            "cue": "arena-c",
+            "detail": {
+              "duration": 20.00979166666667,
+              "channels": 2
+            }
+          },
+          {
+            "time": 13.76,
+            "event": "music-play",
+            "cue": "arena-c",
+            "detail": {
+              "scene": "arena:2",
+              "duration": 20.00979166666667,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 31.76979166666667
+            }
+          },
+          {
+            "time": 15.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.127005831217565,
+              "gain": 0.2100309580564499,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 18.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1229573193923283,
+              "gain": 0.19966736435890198,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 21.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1136955462404767,
+              "gain": 0.193025141954422,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 22.36,
+            "event": "play",
+            "cue": "collar",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1,
+              "gain": 0.28840315341949463,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 22.381333333333334,
+            "event": "music-scene",
+            "cue": "arena:3"
+          },
+          {
+            "time": 22.592,
+            "event": "decoded",
+            "cue": "arena-d",
+            "detail": {
+              "duration": 20.00979166666667,
+              "channels": 2
+            }
+          },
+          {
+            "time": 22.592,
+            "event": "music-play",
+            "cue": "arena-d",
+            "detail": {
+              "scene": "arena:3",
+              "duration": 20.00979166666667,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 40.60179166666667
+            }
+          },
+          {
+            "time": 24.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1185025211612065,
+              "gain": 0.21291348338127136,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 27.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.119985301006377,
+              "gain": 0.2102714329957962,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 30.76,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.123422127637519,
+              "gain": 0.19287987053394318,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 31.36,
+            "event": "play",
+            "cue": "collar",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1,
+              "gain": 0.28840315341949463,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 31.381333333333334,
+            "event": "music-scene",
+            "cue": "arena:4"
+          },
+          {
+            "time": 31.381333333333334,
+            "event": "music-play",
+            "cue": "arena-a",
+            "detail": {
+              "scene": "arena:4",
+              "duration": 20.06202083333333,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 49.443354166666666
+            }
+          },
+          {
+            "time": 31.992,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 0.9432216988253536,
+              "gain": 0.42703473567962646,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 31.992,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1224709521658756,
+              "gain": 0.21458381414413452,
+              "bus": "effects",
+              "pan": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "height": 1440,
+      "graph": [
+        {
+          "kind": "compressor",
+          "threshold": -1,
+          "ratio": 20
+        },
+        {
+          "kind": "ceiling",
+          "ceiling": 0.8912509083747864,
+          "oversample": "4x"
+        },
+        {
+          "kind": "filter",
+          "type": "lowpass",
+          "frequency": 6500
+        },
+        {
+          "kind": "compressor",
+          "threshold": -20,
+          "ratio": 4
+        },
+        {
+          "kind": "compressor",
+          "threshold": -3,
+          "ratio": 20
+        },
+        {
+          "kind": "ceiling",
+          "ceiling": 0.8912509083747864,
+          "oversample": "4x"
+        }
+      ],
+      "ducked": {
+        "music": 0.45906826853752136,
+        "effects": 0.41157928109169006,
+        "ui": 0.714482843875885,
+        "voice": 1
+      },
+      "pause": {
+        "state": "running",
+        "settings": {
+          "master": 0.8,
+          "music": 0.7,
+          "effects": 0.8,
+          "ui": 0.7,
+          "voice": 0.9,
+          "muted": false
+        },
+        "scene": "camp:night",
+        "worldPaused": true,
+        "music": null,
+        "musicVoices": 2,
+        "active": [
+          {
+            "id": 5,
+            "cue": "ui.tab",
+            "bus": "ui",
+            "priority": 2,
+            "started": 1.672
+          }
+        ],
+        "processing": {
+          "highCutHz": 6500,
+          "compressor": {
+            "threshold": -20,
+            "knee": 12,
+            "ratio": 4,
+            "attack": 0.004,
+            "release": 0.16
+          },
+          "limiter": {
+            "threshold": -3,
+            "knee": 0,
+            "ratio": 20,
+            "attack": 0.001,
+            "release": 0.06
+          },
+          "sampleCeilingDb": -1
+        },
+        "duckGains": {
+          "music": 0.46693772077560425,
+          "effects": 0.420139342546463,
+          "ui": 0.7186363339424133,
+          "voice": 1
+        },
+        "logs": [
+          {
+            "time": 0,
+            "event": "manifest-ready",
+            "detail": 22
+          },
+          {
+            "time": 0,
+            "event": "context-created"
+          },
+          {
+            "time": 0,
+            "event": "gesture-unlocked"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-a",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-deny",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-confirm",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-click",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9946013712600049,
+              "gain": 0.1591717153787613,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "roll-step",
+            "detail": {
+              "duration": 0.45,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-slot",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "collar-b",
+            "detail": {
+              "duration": 1,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-tab",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "hit-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "earth-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "air-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "impact-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "voice-collar",
+            "detail": {
+              "duration": 2.0897916666666667,
+              "channels": 1
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0056545452026338,
+              "gain": 0.23309104144573212,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "stolen",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.confirm",
+            "detail": {
+              "asset": "ui-confirm",
+              "pitch": 0.9988502080090383,
+              "gain": 0.1932229995727539,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-scene",
+            "cue": "camp:day"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "camp-day",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-play",
+            "cue": "camp-day",
+            "detail": {
+              "scene": "camp:day",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.0163125
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "voice.collar",
+            "detail": {
+              "asset": "voice-collar",
+              "pitch": 1,
+              "gain": 0.6165950298309326,
+              "bus": "voice",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0.168,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.17066666666666666,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.17866666666666667,
+            "event": "music-scene",
+            "cue": "camp:dusk"
+          },
+          {
+            "time": 0.24,
+            "event": "decoded",
+            "cue": "camp-dusk",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.24,
+            "event": "music-play",
+            "cue": "camp-dusk",
+            "detail": {
+              "scene": "camp:dusk",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.2563125
+            }
+          },
+          {
+            "time": 0.272,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.272,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.30133333333333334,
+            "event": "music-scene",
+            "cue": "camp:night"
+          },
+          {
+            "time": 0.37066666666666664,
+            "event": "decoded",
+            "cue": "camp-night",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.37066666666666664,
+            "event": "music-play",
+            "cue": "camp-night",
+            "detail": {
+              "scene": "camp:night",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.386979166666666
+            }
+          },
+          {
+            "time": 1.672,
+            "event": "paused",
+            "cue": "voice.collar"
+          },
+          {
+            "time": 1.672,
+            "event": "world-paused"
+          },
+          {
+            "time": 1.672,
+            "event": "play",
+            "cue": "ui.tab",
+            "detail": {
+              "asset": "ui-tab",
+              "pitch": 1.001235681841881,
+              "gain": 0.16920407116413116,
+              "bus": "ui",
+              "pan": 0
+            }
+          }
+        ]
+      },
+      "settings": {
+        "master": 0.7,
+        "music": 0.6,
+        "effects": 0.7,
+        "ui": 0.6,
+        "voice": 0.8,
+        "muted": false
+      },
+      "unlockTicks": [
+        0,
+        540,
+        1080,
+        1620
+      ],
+      "perfects": 9,
+      "audio": {
+        "state": "running",
+        "settings": {
+          "master": 0.7,
+          "music": 0.6,
+          "effects": 0.7,
+          "ui": 0.6,
+          "voice": 0.8,
+          "muted": false
+        },
+        "scene": "arena:4",
+        "worldPaused": false,
+        "music": {
+          "id": "arena-a",
+          "offset": 0,
+          "duration": 20.06202083333333
+        },
+        "musicVoices": 2,
+        "active": [
+          {
+            "id": 41,
+            "cue": "collar",
+            "bus": "effects",
+            "priority": 0,
+            "started": 31.912
+          },
+          {
+            "id": 42,
+            "cue": "impact",
+            "bus": "effects",
+            "priority": 2,
+            "started": 32.792
+          },
+          {
+            "id": 43,
+            "cue": "perfect",
+            "bus": "effects",
+            "priority": 0,
+            "started": 32.792
+          }
+        ],
+        "processing": {
+          "highCutHz": 6500,
+          "compressor": {
+            "threshold": -20,
+            "knee": 12,
+            "ratio": 4,
+            "attack": 0.004,
+            "release": 0.16
+          },
+          "limiter": {
+            "threshold": -3,
+            "knee": 0,
+            "ratio": 20,
+            "attack": 0.001,
+            "release": 0.06
+          },
+          "sampleCeilingDb": -1
+        },
+        "duckGains": {
+          "music": 0.9998211860656738,
+          "effects": 0.7941493988037109,
+          "ui": 0.9072089791297913,
+          "voice": 1
+        },
+        "logs": [
+          {
+            "time": 0,
+            "event": "manifest-ready",
+            "detail": 22
+          },
+          {
+            "time": 0,
+            "event": "context-created"
+          },
+          {
+            "time": 0,
+            "event": "gesture-unlocked"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-a",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-deny",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-confirm",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-click",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9946013712600049,
+              "gain": 0.1591717153787613,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "roll-step",
+            "detail": {
+              "duration": 0.45,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-slot",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "collar-b",
+            "detail": {
+              "duration": 1,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-tab",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "hit-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "earth-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "air-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "impact-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "voice-collar",
+            "detail": {
+              "duration": 2.0897916666666667,
+              "channels": 1
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0056545452026338,
+              "gain": 0.23309104144573212,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "stolen",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.confirm",
+            "detail": {
+              "asset": "ui-confirm",
+              "pitch": 0.9988502080090383,
+              "gain": 0.1932229995727539,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-scene",
+            "cue": "camp:day"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "camp-day",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-play",
+            "cue": "camp-day",
+            "detail": {
+              "scene": "camp:day",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.0163125
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "voice.collar",
+            "detail": {
+              "asset": "voice-collar",
+              "pitch": 1,
+              "gain": 0.6165950298309326,
+              "bus": "voice",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0.168,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.17066666666666666,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.17866666666666667,
+            "event": "music-scene",
+            "cue": "camp:dusk"
+          },
+          {
+            "time": 0.24,
+            "event": "decoded",
+            "cue": "camp-dusk",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.24,
+            "event": "music-play",
+            "cue": "camp-dusk",
+            "detail": {
+              "scene": "camp:dusk",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.2563125
+            }
+          },
+          {
+            "time": 0.272,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0.272,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 0.30133333333333334,
+            "event": "music-scene",
+            "cue": "camp:night"
+          },
+          {
+            "time": 0.37066666666666664,
+            "event": "decoded",
+            "cue": "camp-night",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0.37066666666666664,
+            "event": "music-play",
+            "cue": "camp-night",
+            "detail": {
+              "scene": "camp:night",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.386979166666666
+            }
+          },
+          {
+            "time": 1.672,
+            "event": "paused",
+            "cue": "voice.collar"
+          },
+          {
+            "time": 1.672,
+            "event": "world-paused"
+          },
+          {
+            "time": 1.672,
+            "event": "play",
+            "cue": "ui.tab",
+            "detail": {
+              "asset": "ui-tab",
+              "pitch": 1.001235681841881,
+              "gain": 0.16920407116413116,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 1.7013333333333334,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0045731837851064,
+              "gain": 0.2306799739599228,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 1.7013333333333334,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.712,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.712,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.7306666666666666,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.7306666666666666,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.7,
+              "effects": 0.8,
+              "ui": 0.7,
+              "voice": 0.9,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.7306666666666666,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.7413333333333334,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.7413333333333334,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.8,
+              "ui": 0.7,
+              "voice": 0.9,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.7413333333333334,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.752,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.752,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.7,
+              "voice": 0.9,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.752,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.76,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.76,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.7,
+              "voice": 0.8,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.76,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.7706666666666666,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.7706666666666666,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.6,
+              "voice": 0.8,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.7706666666666666,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.7813333333333334,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.7813333333333334,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.6,
+              "voice": 0.8,
+              "muted": true
+            }
+          },
+          {
+            "time": 1.7813333333333334,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.8,
+            "event": "muted",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.8,
+            "event": "muted",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.8,
+            "event": "muted",
+            "cue": "cast.fire"
+          },
+          {
+            "time": 1.8106666666666666,
+            "event": "muted",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.8106666666666666,
+            "event": "muted",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.8106666666666666,
+            "event": "settings",
+            "detail": {
+              "master": 0.7,
+              "music": 0.6,
+              "effects": 0.7,
+              "ui": 0.6,
+              "voice": 0.8,
+              "muted": false
+            }
+          },
+          {
+            "time": 1.8213333333333332,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 1.8213333333333332,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 1.8213333333333332,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-variation",
+              "pitch": 0.9666390869519753,
+              "gain": 0.4503180682659149,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.0613333333333332,
+            "event": "priority",
+            "cue": "ui.click"
+          },
+          {
+            "time": 2.0613333333333332,
+            "event": "play",
+            "cue": "cast.earth",
+            "detail": {
+              "asset": "earth-b",
+              "pitch": 1.0460492600990272,
+              "gain": 0.17812606692314148,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.3013333333333335,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 1.0082699528828343,
+              "gain": 0.15016616880893707,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.3013333333333335,
+            "event": "play",
+            "cue": "cast.air",
+            "detail": {
+              "asset": "air-b",
+              "pitch": 1.040578396137513,
+              "gain": 0.20952583849430084,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.541333333333333,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 2.541333333333333,
+            "event": "play",
+            "cue": "hit",
+            "detail": {
+              "asset": "hit-a",
+              "pitch": 0.9881430759398715,
+              "gain": 0.6682670712471008,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.792,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9937118894400292,
+              "gain": 0.1482081115245819,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 2.792,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 0.9838768923338964,
+              "gain": 0.40961384773254395,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.04,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 3.04,
+            "event": "play",
+            "cue": "roll",
+            "detail": {
+              "asset": "roll-step",
+              "pitch": 0.9959808880735683,
+              "gain": 0.7238290309906006,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.272,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 3.272,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1228742849945461,
+              "gain": 0.20690487325191498,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.512,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9929542850269116,
+              "gain": 0.15648849308490753,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.512,
+            "event": "play",
+            "cue": "cast.fire",
+            "detail": {
+              "asset": "fire-variation",
+              "pitch": 0.9822515436584875,
+              "gain": 0.19235631823539734,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.76,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0085412729343854,
+              "gain": 0.24300678074359894,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 3.76,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 3.76,
+            "event": "play",
+            "cue": "voice.preview",
+            "detail": {
+              "asset": "voice-collar",
+              "pitch": 1,
+              "gain": 0.6165950298309326,
+              "bus": "voice",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.712,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 1.0035756353547876,
+              "gain": 0.23870423436164856,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.712,
+            "event": "play",
+            "cue": "ui.click",
+            "detail": {
+              "asset": "ui-click",
+              "pitch": 0.9984117449556168,
+              "gain": 0.15485620498657227,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.72,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.72,
+            "event": "cooldown",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.730666666666667,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.730666666666667,
+            "event": "world-resumed"
+          },
+          {
+            "time": 4.730666666666667,
+            "event": "cooldown",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.730666666666667,
+            "event": "music-play",
+            "cue": "camp-night",
+            "detail": {
+              "scene": "camp:night",
+              "duration": 12.0163125,
+              "offset": 1.3013333333333332,
+              "crossfade": 2,
+              "nextAt": 13.445645833333334
+            }
+          },
+          {
+            "time": 4.781333333333333,
+            "event": "paused",
+            "cue": "cast.fire"
+          },
+          {
+            "time": 4.781333333333333,
+            "event": "paused",
+            "cue": "voice.preview"
+          },
+          {
+            "time": 4.781333333333333,
+            "event": "world-paused"
+          },
+          {
+            "time": 4.781333333333333,
+            "event": "priority",
+            "cue": "ui.tab"
+          },
+          {
+            "time": 4.810666666666667,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.810666666666667,
+            "event": "music-scene",
+            "cue": "silent"
+          },
+          {
+            "time": 4.810666666666667,
+            "event": "world-resumed"
+          },
+          {
+            "time": 4.810666666666667,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.8213333333333335,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.8213333333333335,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.832,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.84,
+            "event": "concurrency",
+            "cue": "ui.click"
+          },
+          {
+            "time": 4.864,
+            "event": "concurrency",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.872,
+            "event": "stolen",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 4.872,
+            "event": "play",
+            "cue": "ui.confirm",
+            "detail": {
+              "asset": "ui-confirm",
+              "pitch": 0.9967746966749043,
+              "gain": 0.20983809232711792,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 4.88,
+            "event": "music-scene",
+            "cue": "arena:1"
+          },
+          {
+            "time": 5.04,
+            "event": "decoded",
+            "cue": "arena-a",
+            "detail": {
+              "duration": 20.06202083333333,
+              "channels": 2
+            }
+          },
+          {
+            "time": 5.04,
+            "event": "music-play",
+            "cue": "arena-a",
+            "detail": {
+              "scene": "arena:1",
+              "duration": 20.06202083333333,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 23.10202083333333
+            }
+          },
+          {
+            "time": 5.0906666666666665,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-b",
+              "pitch": 1.026311622311292,
+              "gain": 0.23626494407653809,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 5.330666666666667,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-b",
+              "pitch": 0.9737873929278499,
+              "gain": 0.24686893820762634,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 5.592,
+            "event": "play",
+            "cue": "cast.water",
+            "detail": {
+              "asset": "water-b",
+              "pitch": 0.9913779820615793,
+              "gain": 0.23152220249176025,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 5.592,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 1.0317456145862627,
+              "gain": 0.3470287621021271,
+              "bus": "effects",
+              "pan": 0.3055555522441864
+            }
+          },
+          {
+            "time": 5.741333333333333,
+            "event": "play",
+            "cue": "roll",
+            "detail": {
+              "asset": "roll-step",
+              "pitch": 0.9641745908389076,
+              "gain": 0.7685143947601318,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 5.84,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 1.01679494456435,
+              "gain": 0.3138622045516968,
+              "bus": "effects",
+              "pan": 0.26322752237319946
+            }
+          },
+          {
+            "time": 6.0906666666666665,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 0.9872433349850457,
+              "gain": 0.3921530544757843,
+              "bus": "effects",
+              "pan": 0.19236111640930176
+            }
+          },
+          {
+            "time": 7.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1239622847726383,
+              "gain": 0.21545855700969696,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 10.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.101700866348886,
+              "gain": 0.20684561133384705,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 13.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1265397507804005,
+              "gain": 0.2080855369567871,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 13.912,
+            "event": "play",
+            "cue": "collar",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1,
+              "gain": 0.28840315341949463,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 13.912,
+            "event": "cooldown",
+            "cue": "voice.collar"
+          },
+          {
+            "time": 13.92,
+            "event": "music-scene",
+            "cue": "arena:2"
+          },
+          {
+            "time": 14.04,
+            "event": "decoded",
+            "cue": "arena-c",
+            "detail": {
+              "duration": 20.00979166666667,
+              "channels": 2
+            }
+          },
+          {
+            "time": 14.04,
+            "event": "music-play",
+            "cue": "arena-c",
+            "detail": {
+              "scene": "arena:2",
+              "duration": 20.00979166666667,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 32.049791666666664
+            }
+          },
+          {
+            "time": 16.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1204895406081108,
+              "gain": 0.20200900733470917,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 19.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1122672315360507,
+              "gain": 0.19659599661827087,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 22.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1097532071730647,
+              "gain": 0.20359614491462708,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 22.912,
+            "event": "play",
+            "cue": "collar",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1,
+              "gain": 0.28840315341949463,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 22.92,
+            "event": "music-scene",
+            "cue": "arena:3"
+          },
+          {
+            "time": 23.04,
+            "event": "decoded",
+            "cue": "arena-d",
+            "detail": {
+              "duration": 20.00979166666667,
+              "channels": 2
+            }
+          },
+          {
+            "time": 23.04,
+            "event": "music-play",
+            "cue": "arena-d",
+            "detail": {
+              "scene": "arena:3",
+              "duration": 20.00979166666667,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 41.049791666666664
+            }
+          },
+          {
+            "time": 25.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.120223843505907,
+              "gain": 0.2026120275259018,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 28.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1008340929320168,
+              "gain": 0.19715090095996857,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 31.312,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1063811855164625,
+              "gain": 0.21188904345035553,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 31.912,
+            "event": "play",
+            "cue": "collar",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1,
+              "gain": 0.28840315341949463,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 31.92,
+            "event": "music-scene",
+            "cue": "arena:4"
+          },
+          {
+            "time": 31.92,
+            "event": "music-play",
+            "cue": "arena-a",
+            "detail": {
+              "scene": "arena:4",
+              "duration": 20.06202083333333,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 49.98202083333334
+            }
+          },
+          {
+            "time": 32.792,
+            "event": "play",
+            "cue": "impact",
+            "detail": {
+              "asset": "impact-a",
+              "pitch": 1.0543552473436981,
+              "gain": 0.496113121509552,
+              "bus": "effects",
+              "pan": 0
+            }
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "cooldown",
+            "cue": "impact"
+          },
+          {
+            "time": 32.792,
+            "event": "play",
+            "cue": "perfect",
+            "detail": {
+              "asset": "collar-b",
+              "pitch": 1.1204713888525546,
+              "gain": 0.2059735655784607,
+              "bus": "effects",
+              "pan": 0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "faults": [
+    {
+      "mode": "missing-all",
+      "audio": {
+        "state": "running",
+        "settings": {
+          "master": 0.8,
+          "music": 0.7,
+          "effects": 0.8,
+          "ui": 0.7,
+          "voice": 0.9,
+          "muted": false
+        },
+        "scene": "camp:dusk",
+        "worldPaused": false,
+        "music": null,
+        "musicVoices": 0,
+        "active": [],
+        "processing": {
+          "highCutHz": 6500,
+          "compressor": {
+            "threshold": -20,
+            "knee": 12,
+            "ratio": 4,
+            "attack": 0.004,
+            "release": 0.16
+          },
+          "limiter": {
+            "threshold": -3,
+            "knee": 0,
+            "ratio": 20,
+            "attack": 0.001,
+            "release": 0.06
+          },
+          "sampleCeilingDb": -1
+        },
+        "duckGains": {
+          "music": 1,
+          "effects": 1,
+          "ui": 1,
+          "voice": 1
+        },
+        "logs": [
+          {
+            "time": 0,
+            "event": "manifest-silent",
+            "detail": "TypeError: Failed to fetch"
+          },
+          {
+            "time": 0,
+            "event": "locked",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0,
+            "event": "context-created"
+          },
+          {
+            "time": 0,
+            "event": "gesture-unlocked"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "fire-a",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "fire-variation",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "water-b",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "water-variation",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "earth-b",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "air-b",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "hit-a",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "impact-a",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "roll-step",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "collar-b",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "ui-click",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "ui-confirm",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "ui-deny",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "ui-slot",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "ui-tab",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "voice-collar",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0,
+            "event": "music-scene",
+            "cue": "camp:day"
+          },
+          {
+            "time": 0.010666666666666666,
+            "event": "asset-silent",
+            "cue": "camp-day",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0.010666666666666666,
+            "event": "music-silent",
+            "cue": "camp-day"
+          },
+          {
+            "time": 0.050666666666666665,
+            "event": "music-scene",
+            "cue": "camp:dusk"
+          },
+          {
+            "time": 0.06133333333333333,
+            "event": "asset-silent",
+            "cue": "camp-dusk",
+            "detail": "Error: Unavailable asset"
+          },
+          {
+            "time": 0.06133333333333333,
+            "event": "music-silent",
+            "cue": "camp-dusk"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "corrupt-ui",
+      "audio": {
+        "state": "running",
+        "settings": {
+          "master": 0.8,
+          "music": 0.7,
+          "effects": 0.8,
+          "ui": 0.7,
+          "voice": 0.9,
+          "muted": false
+        },
+        "scene": "camp:dusk",
+        "worldPaused": false,
+        "music": {
+          "id": "camp-dusk",
+          "offset": 0,
+          "duration": 12.0163125
+        },
+        "musicVoices": 1,
+        "active": [],
+        "processing": {
+          "highCutHz": 6500,
+          "compressor": {
+            "threshold": -20,
+            "knee": 12,
+            "ratio": 4,
+            "attack": 0.004,
+            "release": 0.16
+          },
+          "limiter": {
+            "threshold": -3,
+            "knee": 0,
+            "ratio": 20,
+            "attack": 0.001,
+            "release": 0.06
+          },
+          "sampleCeilingDb": -1
+        },
+        "duckGains": {
+          "music": 1,
+          "effects": 0.7943282127380371,
+          "ui": 1,
+          "voice": 1
+        },
+        "logs": [
+          {
+            "time": 0,
+            "event": "manifest-ready",
+            "detail": 22
+          },
+          {
+            "time": 0,
+            "event": "locked",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0,
+            "event": "context-created"
+          },
+          {
+            "time": 0,
+            "event": "gesture-unlocked"
+          },
+          {
+            "time": 0,
+            "event": "asset-silent",
+            "cue": "ui-click",
+            "detail": "EncodingError: Unable to decode audio data"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "roll-step",
+            "detail": {
+              "duration": 0.45,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-slot",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-confirm",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-deny",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "collar-b",
+            "detail": {
+              "duration": 1,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "ui-tab",
+            "detail": {
+              "duration": 0.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "impact-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "hit-a",
+            "detail": {
+              "duration": 1.48,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "voice-collar",
+            "detail": {
+              "duration": 2.0897916666666667,
+              "channels": 1
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "earth-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "fire-a",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "air-b",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "water-variation",
+            "detail": {
+              "duration": 2,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.slot",
+            "detail": {
+              "asset": "ui-slot",
+              "pitch": 0.9996363419338061,
+              "gain": 0.2400159388780594,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "play",
+            "cue": "ui.confirm",
+            "detail": {
+              "asset": "ui-confirm",
+              "pitch": 1.009527701063074,
+              "gain": 0.2117600440979004,
+              "bus": "ui",
+              "pan": 0
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-scene",
+            "cue": "camp:day"
+          },
+          {
+            "time": 0,
+            "event": "cooldown",
+            "cue": "ui.slot"
+          },
+          {
+            "time": 0,
+            "event": "music-scene",
+            "cue": "camp:dusk"
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "camp-day",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "decoded",
+            "cue": "camp-dusk",
+            "detail": {
+              "duration": 12.0163125,
+              "channels": 2
+            }
+          },
+          {
+            "time": 0,
+            "event": "music-play",
+            "cue": "camp-dusk",
+            "detail": {
+              "scene": "camp:dusk",
+              "duration": 12.0163125,
+              "offset": 0,
+              "crossfade": 2,
+              "nextAt": 10.0163125
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

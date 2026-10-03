@@ -1,0 +1,69 @@
+{
+  "id": "cd5cd8b5-c335-4042-92b2-993726bb6efb",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:02:24.585Z",
+  "kind": "music",
+  "model": "music_v1",
+  "voice": null,
+  "text": "Original instrumental music for a guarded Roman-era camp of captive mages. Intimate gut-string lyre and soft breath flute, sparse human phrasing and quiet low bowed string support. DUSK: the same family grows bittersweet; a descending answer, wider spaces and a low unresolved note. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+  "seconds": 12,
+  "chars": null,
+  "out": "docs/audio/audition/r2/camp-A-dusk.mp3",
+  "request": {
+    "prompt": "Original instrumental music for a guarded Roman-era camp of captive mages. Intimate gut-string lyre and soft breath flute, sparse human phrasing and quiet low bowed string support. DUSK: the same family grows bittersweet; a descending answer, wider spaces and a low unresolved note. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+    "music_length_ms": 12000,
+    "force_instrumental": true,
+    "model_id": "music_v1"
+  },
+  "billingHeaders": {
+    "song-id": "4gGjP1KkOKZ0gEHxRQDP"
+  },
+  "bytes": 192306,
+  "sha256": "b7664bf67ed3e876b4bf6f70de5366a558c38fd453180e813a0146c6730b1e54",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:02:24.584Z",
+    "tier": "starter",
+    "used": 68827,
+    "limit": 90000,
+    "remaining": 21173,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 360,
+  "estimatedCredits": 360,
+  "documentedEstimateCredits": 180,
+  "chargedCredits": 360,
+  "measuredCredits": null,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:02:54.603Z",
+    "tier": "starter",
+    "used": 68827,
+    "limit": 90000,
+    "remaining": 21173,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-02T23:03:25.903Z",
+      "tier": "starter",
+      "used": 69187,
+      "limit": 90000,
+      "remaining": 20813,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    }
+  ],
+  "accountSettled": {
+    "observedAt": "2026-10-02T23:03:25.903Z",
+    "tier": "starter",
+    "used": 69187,
+    "limit": 90000,
+    "remaining": 20813,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "settledDelta": 360,
+  "flags": [
+    "charge_visible_only_after_settlement_wait"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

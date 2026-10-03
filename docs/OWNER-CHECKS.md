@@ -265,3 +265,26 @@ the dial's count eases during the brief spending animation. At night, check the
 low-hours warning. Try reduced motion and both resolutions from sofa distance.
 Activity costs stay inside facilities. Assess daily pacing and clock clarity;
 screenshots/emulated controls cannot certify those. See [U3b note](waves/U3b-camp-ui.md).
+
+## AU4 — listening pending
+
+Run `npm run camp`, then click or press Enter to unlock sound. Begin a Water
+story; listen through day, dusk and night. In Escape → Settings → Sound & music,
+try all volumes and mute, cycle Test effects through the four elements, hit,
+impact, the single roll step and provisional perfect accent, then Test voice.
+Use your normal speakers and headphones. Judge harshness, uneven levels,
+intelligibility, fatigue and whether the step crop still reads as one sand step.
+
+In the proving ground, cast, roll and time a perfect absorb. Listen across
+collar tier changes: arena A, C, D, then the final-tier playlist. Judge crossfade
+seams and whether music, impacts, the collar and voice remain distinct. Pause,
+resume, mute/unmute and reload settings. The kept music is still short loops;
+full-length replacements are pending. The perfect accent currently borrows
+the kept collar sound; ordinary absorb/title/crowd have no approved source.
+
+Automated checks measure context unlocking, the processing graph, events and
+limits. **Headless audio cannot be listened to**; mix quality, perceived loudness,
+true peaks, physical device latency and artistic fit are not certified. Review
+the [AU4 note](waves/AU4-audio-engine.md) and
+[event evidence](waves/AU4-evidence/browser.json). Final trims and acceptance
+await owner listening; no new audio was generated.

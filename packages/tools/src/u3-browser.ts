@@ -325,8 +325,10 @@ try {
     await shot(p, "pause", height);
     await click(p, "open-settings", "settings");
     await shot(p, "settings", height);
-    await click(p, "sound");
-    await click(p, "sound");
+    await click(p, "sound", "audio-settings");
+    await click(p, "audio-mute");
+    await click(p, "audio-mute");
+    await click(p, "back", "settings");
     await click(p, "back", "pause");
     await click(p, "open-saves", "saves");
     await shot(p, "save-load", height);
