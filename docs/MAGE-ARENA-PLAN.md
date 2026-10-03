@@ -243,6 +243,19 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 | Audio | AU2b | Regenerate the rejected categories: absorb as an energy barrier stopping and slowing an energy source (elemental, natural, not a notification, not cartoonish), the title theme (melodic like the arena music, calm), roll (single sand step), crowd (raw, bloodlust colosseum), collar rune alternative if needed | D28 | not started |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks in the kept directions, after the credit reset; camp music re-direction | account reset | blocked |
 
+## r. Owner review of the A12 plates and U4 build (2026-10-03): plates accepted, figures bigger, combat feel is the focus, sigils redone
+
+> "1. Wire the plates, it will be acceptable for now. 3. Figures are small, 50% increase of them would help. We will focus then primarily on gameplay mechanics, first how it feels on PC as I see the combat now as the weakest point. After plates guide me how to start the game, extend training mode against dummy to set one opponent too and I will go through. One piece which did not go through art transformations are sigils, they look like geometry in elementary math, not following artstyle nor any feel of magicality."
+
+Decisions: **D31** the A12 plates are accepted for now and are wired into the game (the plate-based arena with the compact-layout step, the occluder sprites with base lines, palette per tier). **D32** characters are drawn **50% larger** (figures about 5.6 percent of screen height at 1080p instead of 3.75; the scale contract is versioned, the camera distance and arena layout are re-checked so the fight still reads and the plate geometry still works; the A10 masters are 384 px so there is headroom). **D33** the primary focus becomes **combat feel on PC with mouse and keyboard** (the owner sees combat as the weakest point): a **Combat Feel Lab** training mode with a dummy and **one selectable opponent** (a mage AI of a chosen school and competence), live-tunable parameters, a reset and metrics, so the owner can play and give feedback; then the improvements it shows are needed (hit feedback, cast timing, movement, absorb feel, enemy behaviour and telegraphs). **D34** **sigils are redone as art**: the casting circles, telegraph marks (ring, cone, line, area, unblockable), the ward and absorb geometry, the perfect-absorb window mark and the rune glyphs currently read as geometry from elementary mathematics; they must follow the Covenant style and feel magical (painted rune circles with glow, wear and elemental character, animated), while the exact hit geometry stays authored in data.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Game | U5 | Wire the A12 plates (compact layout, occluders, palette per tier) and figures 50% larger (scale contract v3, camera and layout re-check) | D31, D32 | not started |
+| Game | CF1 | **Combat Feel Lab**: training mode with a dummy and one selectable opponent, live tuning, reset, metrics, replay of the last bout; the owner's start guide | U5 | not started |
+| Game | CF2 | Combat feel improvements from the Lab findings: hit feedback (hit stop, flash, shake, knockback, numbers), cast and animation timing, movement feel, absorb and perfect-absorb feel, telegraph readability, enemy behaviour; data-driven; census bands re-set where gameplay changes | CF1 | not started |
+| Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | not started |
+
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
