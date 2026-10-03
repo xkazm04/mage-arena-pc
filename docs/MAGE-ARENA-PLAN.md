@@ -100,6 +100,8 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Game [`integration`] | U3a | Data-driven hours, free travel, fixed appointments, save v2 | D25 | done; gate green | `a7a0351` | 2026-10-03 |
 | Game | U3b | Name-only places, header stat icons and daily rune dial | U3a / D26 | done; both desktop routes green | `b734332` | 2026-10-03 |
 | Game | AU4 | Kept-sample WebAudio engine, app-side calming, adaptive playback and settings | D28 / D30 | done; owner listening pending | this AU4 commit | 2026-10-03 |
+| Game | U4 | Art wiring round 2: A8 effects, A10 directional bodies/fallbacks, A11 Tideglass/stats | D26 / D27 / art session 6 | done; automated gate green, owner motion review pending | `b318fca`, `d041397`, `b19c9aa`, `7a9c71c`, U4 polish commit | 2026-10-03 |
+
 
 ## h. Wave cards
 
@@ -301,3 +303,24 @@ Design and limitations: `docs/waves/AU4-audio-engine.md`. Headless audio cannot 
 listened to; trims, seams and artistic fit are not felt. No generation, provider
 calls, pushes or core arena/census changes. Next: owner listening and subsequent
 art/audio deliveries; unapproved round-3 auditions remain excluded.
+
+**U4 session ? 2026-10-03 (GAME/integration).** Five sub-waves selectively import
+35 A8/A10/A11 delivery files with hashes/sidecars, play pooled element effects and
+contact/perfect barrier clips, animate A10 bodies with explicit same-entity
+fallbacks for all 90 absent requests, and replace camp stats/dial with A11 layers.
+F8 exposes fallback decisions; no upright figure rotation. Lossless atlas packing
+reduces A10 pages from 174.6 to 42.5 MiB; leased body/effect pages unload on exit.
+`npm run gate`: 176 TS + 11 reference tests, zero contradictions. `npm run smoke:u4`:
+both native art/stress suites and complete two-week screen routes, 117 distinct
+successful PNGs, zero page errors/overflow; 100 moving projectiles plus 12 animated
+figures sustain about 60 fps, 228.8 MiB estimated texture storage at both sizes.
+`MAGE_EVIDENCE=U4` with `u3-replay.ts`: exact prior save hash/1,300,369 bytes.
+Fresh `report:w4 -- --evidence U4-evidence --tag census`: 8,000 fights, unchanged
+digests/medians. `npm run audit:u4`: 289 accepted/production hashes and sidecars,
+unchanged core/Director/camera/ground. Report: `docs/waves/U4-report.md`; gallery:
+`docs/waves/U4-evidence/index.html`. Retained and corrected an offscreen stress
+fixture wrap. A10 missing/front-view/gait issues, procedural hound/dummy, generic
+spell choreography, authored A11 painting backlog and the old arena surface/rim
+remain explicit. No art-worktree edits, raw reads, generation, pushes or new
+human-feel claim. Next: owner motion/readability review and later plate-based
+arena delivery behind the existing loader.

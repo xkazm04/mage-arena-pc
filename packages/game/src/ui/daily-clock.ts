@@ -73,7 +73,7 @@ export class DailyClock {
       const water = this.layers.get("water");
       if (water) water.mask = this.waterMask;
     }
-    this.text = ui.text("", x - 36, y + 38, 24, colours.text, 76);
+    this.text = ui.text("", x + 55, y - 10, 24, colours.text, 76);
   }
   draw(remaining: number, now: number, hour = 8, slot = "day") {
     if (this.root.destroyed) return;
@@ -165,7 +165,7 @@ export class DailyClock {
         alpha: reduced ? 0.5 : 0.35 + Math.sin(now / 450) * 0.15,
       });
     this.text.text = `${Math.ceil(left)}h`;
-    this.text.x = this.x - this.text.width / 2;
+    this.text.x = this.x + 55;
   }
   snapshot() {
     return this.status;

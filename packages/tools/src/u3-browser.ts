@@ -48,7 +48,13 @@ type Win = Window & {
     pause(value: boolean): void;
   };
 };
-const out = resolve("docs/waves/U3-evidence");
+const evidence = process.env.MAGE_EVIDENCE === "U4" ? "U4" : "U3";
+const out = resolve(
+  `docs/waves/${evidence}-evidence/tour`.replace(
+    "U3-evidence/tour",
+    "U3-evidence",
+  ),
+);
 mkdirSync(join(out, "screens"), { recursive: true });
 const saveDirectory = mkdtempSync(join(tmpdir(), "mage-u3-browser-"));
 const server = spawn(
@@ -178,7 +184,25 @@ async function shot(p: Page, name: string, height: number) {
       `${name}: ${b.id} target too small`,
     );
   }
-  if (!["camp-map", "camp-place", "season-calendar", "hollow-board", "journal", "parley", "parley-result", "clock-after-activity", "clock-settled", "camp-dusk", "camp-night-warning", "save-load", "chapter-results"].includes(name)) return;
+  if (
+    evidence !== "U4" &&
+    ![
+      "camp-map",
+      "camp-place",
+      "season-calendar",
+      "hollow-board",
+      "journal",
+      "parley",
+      "parley-result",
+      "clock-after-activity",
+      "clock-settled",
+      "camp-dusk",
+      "camp-night-warning",
+      "save-load",
+      "chapter-results",
+    ].includes(name)
+  )
+    return;
   const filename = `${height}-${name}.png`;
   await p.screenshot({ path: join(out, "screens", filename) });
   screens.push({
@@ -295,14 +319,17 @@ try {
     await screen(p, "camp");
     await pad(p);
     await shot(p, "camp-map", height);
-    const initial=await view(p), map=await snap(p);
+    const initial = await view(p),
+      map = await snap(p);
     for (const place of initial.places) {
-      const b=map.buttons.find(b=>b.id===`place-${place.id}`)!;
-      assert.equal(b.label,place.name); assert.equal(b.disabled,!place.isOpen);
+      const b = map.buttons.find((b) => b.id === `place-${place.id}`)!;
+      assert.equal(b.label, place.name);
+      assert.equal(b.disabled, !place.isOpen);
     }
-    assert(!map.texts.some(t=>/time to reach|time slot/i.test(t.text)));
-    await visit(p,"commons"); assert.equal((await view(p)).hour,initial.hour);
-    await click(p,"nav-camp","camp");
+    assert(!map.texts.some((t) => /time to reach|time slot/i.test(t.text)));
+    await visit(p, "commons");
+    assert.equal((await view(p)).hour, initial.hour);
+    await click(p, "nav-camp", "camp");
     await click(p, "nav-calendar", "calendar");
     await shot(p, "season-calendar", height);
     await click(p, "nav-board", "board");
@@ -542,16 +569,16 @@ try {
     // Real camp commands and native listening input earn the Knowing used by Parley.
     if ((await view(p)).slot === "day") await train(p, "yard");
     if ((await view(p)).slot === "day") {
-      await shot(p,"clock-after-activity",height);
+      await shot(p, "clock-after-activity", height);
       await p.waitForTimeout(1700);
-      const remaining=(await view(p)).hoursRemaining;
-      assert((await snap(p)).texts.some(t=>t.text===`${remaining}h`));
-      await shot(p,"clock-settled",height);
-      await click(p,"wait","camp");
-      await shot(p,"camp-dusk",height);
+      const remaining = (await view(p)).hoursRemaining;
+      assert((await snap(p)).texts.some((t) => t.text === `${remaining}h`));
+      await shot(p, "clock-settled", height);
+      await click(p, "wait", "camp");
+      await shot(p, "camp-dusk", height);
     }
     if ((await view(p)).slot === "dusk") await train(p, "pit");
-    await shot(p,"camp-night-warning",height);
+    await shot(p, "camp-night-warning", height);
     await visit(p, "tent");
     await click(p, "listen", "listen");
     await shot(p, "listening", height);
@@ -643,7 +670,7 @@ try {
         await shot(p, day === 7 ? "games-victor" : "games-missio", height);
         await click(p, "return-camp", "camp");
       } else if (v.slot === "day") await train(p, "yard");
-      if ((await view(p)).slot === "day") await click(p,"wait","camp");
+      if ((await view(p)).slot === "day") await click(p, "wait", "camp");
       let n = await view(p);
       if (n.slot === "dusk") {
         if (n.day.eve) {

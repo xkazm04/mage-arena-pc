@@ -46,6 +46,7 @@ interface Slot {
 /** Fixed-capacity sprite pool; animation time follows sim ticks, never mutates them. */
 export class EffectPlayer {
   manifest?: EffectManifest;
+  elementOverrides = new Map<number, Element>();
   readonly diagnostics: string[] = [];
   readonly behind = new Container();
   readonly front = new Container();
@@ -58,7 +59,7 @@ export class EffectPlayer {
   private blocks = new Map<number, number>();
   private pending = new Map<number, PendingCast>();
   private requests = new Set<string>();
-  private started = 0;
+  private disposed = false;
   private c!: Camera;
   private tick = 0;
   private budgetExceeded = false;
@@ -73,19 +74,31 @@ export class EffectPlayer {
       const m = (await art.json("a8.manifest")) as EffectManifest;
       if (m.schemaVersion !== 1) throw Error("Unsupported effects");
       validateClips(m.pages, Object.values(m.clips));
+      if (this.disposed) return;
       this.manifest = m;
       await this.preload(["water"]);
     } catch (e) {
       this.diagnostics.push(String(e));
     }
   }
+  private loadPage(key: string) {
+    if (this.disposed) return Promise.resolve(undefined);
+    if (!this.requests.has(key)) {
+      this.requests.add(key);
+      art.retain(key);
+    }
+    return art.load(key);
+  }
   async preload(elements: Element[]) {
-    await art.preload([
-      "a8.page.barrier",
-      ...elements.map((e) => `a8.page.${e}`),
-    ]);
+    await Promise.all(
+      ["a8.page.barrier", ...elements.map((e) => `a8.page.${e}`)].map((k) =>
+        this.loadPage(k),
+      ),
+    );
   }
   element(a?: Actor): Element {
+    const override = a && this.elementOverrides.get(a.id);
+    if (override) return override;
     return a?.enemy
       ? ((policy.enemyElements[
           a.enemy.id as keyof typeof policy.enemyElements
@@ -101,7 +114,7 @@ export class EffectPlayer {
     this.counts[shot.clip] = (this.counts[shot.clip] ?? 0) + 1;
   }
   begin(state: ArenaState, c: Camera, alpha: number) {
-    this.started = performance.now();
+    const started = performance.now();
     this.budgetExceeded = false;
     this.used = 0;
     this.c = c;
@@ -114,6 +127,13 @@ export class EffectPlayer {
       this.blocks.clear();
       this.pending.clear();
     }
+    // Expire independently of visibility and budgeting. No delayed bursts.
+    this.shots = this.shots.filter((s) => {
+      const clip = this.manifest?.clips[s.clip];
+      return !clip
+        ? state.tick - s.tick < combat.simStepHz
+        : frameIndex(clip, seconds(this.tick - s.tick) * 1000) >= 0;
+    });
     for (const event of state.events.slice(this.eventIndex)) {
       const a = state.actors.find((a) => a.id === event.actorId);
       if (!a || state.tick - event.tick > combat.simStepHz) continue;
@@ -209,13 +229,7 @@ export class EffectPlayer {
         });
       this.blocks.set(a.id, a.metrics.blocks);
     }
-    // Expire independently of visibility and budgeting. No delayed bursts.
-    this.shots = this.shots.filter((s) => {
-      const clip = this.manifest?.clips[s.clip];
-      return !clip
-        ? state.tick - s.tick < combat.simStepHz
-        : frameIndex(clip, seconds(this.tick - s.tick) * 1000) >= 0;
-    });
+    this.cpuMs = performance.now() - started;
   }
   draw(
     id: string,
@@ -237,8 +251,7 @@ export class EffectPlayer {
       page = art.get(pageKey);
     if (!page) {
       if (!this.requests.has(pageKey)) {
-        this.requests.add(pageKey);
-        void art.load(pageKey);
+        void this.loadPage(pageKey);
       }
       return false;
     }
@@ -251,11 +264,9 @@ export class EffectPlayer {
       this.dropped++;
       return true;
     }
-    if (
-      (this.used & 15) === 15 &&
-      performance.now() - this.started > policy.effects.cpuBudgetMs
-    )
+    if ((this.used & 15) === 15 && this.cpuMs > policy.effects.cpuBudgetMs)
       this.budgetExceeded = true;
+    const started = performance.now();
     const frame = clip.frames[index]!,
       key = `${clip.page}:${frame.rect.join()}`;
     let texture = this.frames.get(key);
@@ -324,6 +335,7 @@ export class EffectPlayer {
       sprite.width = r * 2.7;
       sprite.height = r * 2.7;
     }
+    this.cpuMs += performance.now() - started;
     return true;
   }
   finish(state: ArenaState) {
@@ -351,7 +363,6 @@ export class EffectPlayer {
         },
       );
     }
-    this.cpuMs = performance.now() - this.started;
   }
   snapshot() {
     return {
@@ -366,8 +377,10 @@ export class EffectPlayer {
     };
   }
   dispose() {
+    this.disposed = true;
     this.behind.destroy({ children: true });
     this.front.destroy({ children: true });
     for (const t of this.frames.values()) t.destroy();
+    for (const key of this.requests) art.release(key);
   }
 }

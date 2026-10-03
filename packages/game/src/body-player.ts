@@ -42,7 +42,7 @@ export class BodyPlayer {
   }
   private async init() {
     try {
-      const m = (await art.json("a10.manifest")) as BodyManifest;
+      const m = (await art.json("a10.packed.manifest")) as BodyManifest;
       if (m.schemaVersion !== 1) throw Error("Unsupported characters");
       validateClips(
         m.pages,
@@ -93,9 +93,10 @@ export class BodyPlayer {
             Object.values(c).map((c) => c.page),
           ),
         )) {
-          const key = `a10.page.${page}`;
+          const key = `a10.packed.${page}`;
           if (!this.requests.has(key)) {
             this.requests.add(key);
+            art.retain(key);
             void art.load(key);
           }
         }
@@ -160,9 +161,9 @@ export class BodyPlayer {
       });
       return false;
     }
-    const page = art.get(`a10.page.${selected.clip.page}`);
+    const page = art.get(`a10.packed.${selected.clip.page}`);
     if (!page) {
-      if (art.snapshot().failed.includes(`a10.page.${selected.clip.page}`))
+      if (art.snapshot().failed.includes(`a10.packed.${selected.clip.page}`))
         this.fallbacks.add(`${key} → procedural (entity page failed)`);
       return false;
     }
@@ -188,6 +189,8 @@ export class BodyPlayer {
       texture = new Texture({
         source: page.source,
         frame: new Rectangle(...frame.rect),
+        orig: frame.orig ? new Rectangle(0, 0, ...frame.orig) : undefined,
+        trim: frame.trim ? new Rectangle(...frame.trim) : undefined,
       });
       this.frames.set(frameKey, texture);
     }
@@ -197,8 +200,8 @@ export class BodyPlayer {
     const scale = height / body.designBodyHeight1080;
     sprite.scale.set(
       ((selected.clip.mirrorX ? -1 : 1) * body.designSize1080[0] * scale) /
-        frame.rect[2],
-      (body.designSize1080[1] * scale) / frame.rect[3],
+        (frame.orig?.[0] ?? frame.rect[2]),
+      (body.designSize1080[1] * scale) / (frame.orig?.[1] ?? frame.rect[3]),
     );
     sprite.alpha = a.down ? policy.bodies.deathOpacity : 1;
     motion.selection = selected;
@@ -230,5 +233,6 @@ export class BodyPlayer {
     this.disposed = true;
     for (const f of this.frames.values()) f.destroy();
     this.actors.clear();
+    for (const key of this.requests) art.release(key);
   }
 }

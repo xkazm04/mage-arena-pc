@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { selectBodyClip } from "./body-policy.ts";
+import { dailyArtState } from "./ui/daily-clock.ts";
 import {
   facingFromVector,
   type BodyState,
@@ -20,6 +21,44 @@ const bodies = JSON.parse(
   readFileSync("assets/accepted/covenant/a10/characters.json", "utf8"),
 ) as BodyManifest;
 describe("delivered animation contract", () => {
+  it("preserves full master coordinates and all coverage after lossless atlas packing", () => {
+    const packed = JSON.parse(
+      readFileSync(
+        "assets/accepted/covenant/a10/packed/characters.json",
+        "utf8",
+      ),
+    ) as BodyManifest;
+    const clips = Object.values(packed.entities).flatMap((b) =>
+      Object.values(b.clips).flatMap((c) => Object.values(c)),
+    );
+    validateClips(packed.pages, clips);
+    expect(clips).toHaveLength(198);
+    expect(packed.backlog).toEqual(bodies.backlog);
+    const bytes = (m: BodyManifest) =>
+      m.pages.reduce((n, p) => n + p.size[0] * p.size[1] * 4, 0);
+    expect(bytes(packed)).toBeLessThan(bytes(bodies) * 0.25);
+    for (const c of clips)
+      for (const f of c.frames) expect(f.orig).toEqual([384, 384]);
+    const broken = structuredClone(clips[0]!);
+    broken.frames[0]!.trim![0] = 999;
+    expect(() => validateClips(packed.pages, [broken])).toThrow(
+      "Invalid packed trim",
+    );
+  });
+  it("maps hours to full/empty water and four art phases without changing the schedule", () => {
+    expect(dailyArtState(14, 14, 8, "day")).toEqual({
+      left: 14,
+      fraction: 0,
+      phase: "dawn",
+    });
+    expect(dailyArtState(10, 14, 12, "day").phase).toBe("midday");
+    expect(dailyArtState(4, 14, 18, "dusk").phase).toBe("dusk");
+    expect(dailyArtState(0, 14, 22, "night")).toEqual({
+      left: 0,
+      fraction: 1,
+      phase: "night",
+    });
+  });
   it("resolves all 90 missing requests inside the original entity, or explicitly returns no body", () => {
     let absent = 0,
       procedural = 0;

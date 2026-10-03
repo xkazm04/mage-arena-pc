@@ -3,7 +3,12 @@ export type BodyState = "idle" | "run" | "cast" | "absorb" | "hit" | "death";
 export type Element = "water" | "fire" | "earth" | "air";
 export interface Clip {
   page: string;
-  frames: { rect: [number, number, number, number]; durationMs: number }[];
+  frames: {
+    rect: [number, number, number, number];
+    durationMs: number;
+    orig?: [number, number];
+    trim?: [number, number, number, number];
+  }[];
   frameCount: number;
   loop: boolean;
   mirrorX?: boolean;
@@ -88,6 +93,25 @@ export function validateClips(pages: PageSpec[], clips: Clip[]) {
         f.durationMs <= 0
       )
         throw Error("Invalid animation frame");
+      if (f.orig || f.trim) {
+        const o = f.orig,
+          t = f.trim;
+        if (
+          !o ||
+          !t ||
+          o.length !== 2 ||
+          t.length !== 4 ||
+          ![...o, ...t].every(Number.isInteger) ||
+          o.some((n) => n <= 0) ||
+          t[0] < 0 ||
+          t[1] < 0 ||
+          t[2] !== r[2] ||
+          t[3] !== r[3] ||
+          t[0] + t[2] > o[0] ||
+          t[1] + t[3] > o[1]
+        )
+          throw Error("Invalid packed trim");
+      }
     }
   }
 }

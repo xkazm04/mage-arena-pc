@@ -79,24 +79,26 @@
     }
   ],
   "figures": {
-    "cassia": "procedural: ready/cast absent; rear run/absorb facings differ; continuity gate not passed",
-    "brennic": "procedural: four rear static keys; no other facings or gait; painterly continuity unresolved",
-    "garran": "procedural: rear static keys and approximate camera; gait/facing continuity unresolved",
-    "iskar": "procedural: strong outlined rear keys; style and gait continuity unresolved",
-    "conscript": "procedural: attack turns toward camera; rear keys lack facings and gait",
-    "shieldman": "procedural: opposite facing; sword action contradicts shield bash",
-    "slinger": "procedural: attacks excluded; moving key hides sling",
-    "netter": "procedural: raised trident is not net cast; release excluded",
-    "cinder_hound": "procedural: rear pose studies lack directional gait and death keys",
-    "mire_maw": "procedural: attack turns frontal and bakes projectile into body",
-    "thornback": "procedural: near-identical ready/move; no charge gait or directional continuity",
-    "hush_moth": "procedural: partial wing keys; no directional flight/contact sequence"
+    "cassia": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "brennic": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "garran": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "iskar": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "conscript": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "shieldman": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "slinger": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "netter": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "cinder_hound": "procedural: A10 has no accepted clip for this identity",
+    "mire_maw": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "thornback": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "hush_moth": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts"
   },
   "effects": {
-    "aura": "A3c painted water/fire/earth/air motifs plus code motes",
-    "bolt": "A3c painted water bolt with code-owned core/trail",
-    "absorb": "procedural exact 140-degree forward arc, 220-degree open rear",
-    "telegraphs": "procedural exact footprints with contrasting outlines and locator ticks",
-    "perfect": "procedural expanding white ring plus A3c painted water impact"
+    "aura": "A8 element-family animated aura behind figures",
+    "cast": "A8 event-bound cast keys",
+    "bolt": "A8 travel clip oriented in unprojected ground then projected",
+    "impact": "A8 impact/hit one-shots from combat events and spell release",
+    "absorb": "A8 hold/contact membrane clipped to data-owned 140-degree arc",
+    "telegraphs": "exact data-owned footprints; delivered raster proposals do not override hit geometry",
+    "perfect": "A8 localized perfect flare at the forward barrier contact"
   }
 }

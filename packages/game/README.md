@@ -14,15 +14,16 @@ camp allies. This chapter ends on the morning after the second Games: days 1-14
 are playable; both Games use Tiro. `npm run camp` starts development on port 5173.
 There is one root workspace and lockfile; do not install nested packages separately.
 
-Camp uses clickable places, paid travel and one activity per time slot. Listen at
-the tent flap at night: A/D or 1-3 move cover, hold Space to listen, release to hide.
-A held Knowing opens Parley with the relevant person. Offline typing uses the
-explicitly selected authored approach; its words are not interpreted by a model.
-Read the Hollow Board at dawn and the private journal for learned facts.
+Camp travel is free; actions inside facilities spend their displayed hours.
+The day runs from 08:00 to 22:00. The Tideglass drains as hours are spent,
+with dawn, midday, dusk and night art. Gold, reputation and fatigue use 32px
+header icons. Listen at the tent flap at night: A/D or 1?3 move cover, hold Space
+to listen, release to hide. A Knowing opens Parley with the relevant person.
+Offline typing uses the selected authored approach.
 
 The Tent Trials are at the Pit on days 6 and 13, at dusk. Read the rival's stance
 and choose press, brace or feint. The elder weighs the bout, favour and renown.
-The summons can escort you if travel is exhausted. Losing the entrant selection
+The summons opens at the fixed appointment hour. Losing the entrant selection
 means watching your Water rival on Games day, with no player payout.
 
 On days 7 and 14 prepare a three-line Water composition and enter the four Tiro
@@ -57,9 +58,12 @@ follows at the edges. The 192x144 m oval and combat geometry are unchanged.
 Runtime numbers live in `data/camera.json`, cross-referencing the art contract.
 D18 supersedes A4/A5: Covenant A4c maps/backdrops, A2c portraits and the A5b
 90-region atlas now supply the presentation. Missing or corrupt files fall back
-independently. Discarded A2/A3 images never enter the runtime loader. A3c figures
-remain procedural until their pose, facing and animation gates pass; per-identity
-reasons and the three Games palette assignments live in `data/covenant.json`.
+independently. Discarded A2/A3 images never enter the runtime loader. A10 supplies animated upright bodies with diagonal views and mirrored equipment.
+Missing clips use the documented same-entity direction/state policy; the cinder
+hound and training dummy retain procedural bodies. F8 opens the art fallback log;
+[ and ] page through it. The three Games palette assignments stay in
+`data/covenant.json`. A8 supplies event-driven effect clips and the held barrier;
+exact telegraph geometry remains game-owned.
 
 Keyboard menus: arrows or Tab/Shift+Tab move visible focus; Enter chooses;
 Escape backs out or pauses. Mouse targets use the same actions. Standard gamepad:
@@ -104,3 +108,28 @@ route supersedes their page navigation; pure core, save, injection and census
 gates remain active. Automated controller emulation is not physical controller
 latency, and screenshots do not certify sofa readability or desire to continue.
 [Owner checks](../../docs/OWNER-CHECKS.md) keep G1 open for the owner.
+
+U4 delivery and checks:
+
+```powershell
+npx tsx packages/tools/src/u4-assets.ts
+python packages/tools/art/pack-a10.py
+npm run gate
+npm run smoke:u4
+$env:MAGE_EVIDENCE='U4'; npx tsx packages/tools/src/u3-replay.ts
+npm --prefix packages/core run report:w4 -- --evidence U4-evidence --tag census
+npm run audit:u4
+npx tsx packages/tools/src/u4-gallery.ts
+```
+
+The importer reads only A8/A10/A11 and the extended UI kit from the adjacent
+art worktree. It preserves accepted original pages and their sidecars. The packing
+step reads only those accepted A10 files and removes transparent atlas padding,
+without resampling visible pixels; `orig`/`trim` preserve each 384px master frame
+and its baseline. Body/effect pages load on demand and unload on arena disposal.
+A11 is delivered authored compositing, not new generated painting. Optional daily
+page failure preserves the rest of the UI kit. The U4 harness covers all four
+presentation families, all body states/facings, 100 projectiles with 12 animated
+figures, camp phases, reduced motion, page failures and both full screen tours.
+Read [U4 report](../../docs/waves/U4-report.md) and the
+[native gallery](../../docs/waves/U4-evidence/index.html).

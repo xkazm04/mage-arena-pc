@@ -45,7 +45,9 @@ const record = {
   passed: true,
 };
 writeFileSync(
-  "docs/waves/U3-evidence/replay-save.json",
+  process.env.MAGE_EVIDENCE === "U4"
+    ? "docs/waves/U4-evidence/replay-save.json"
+    : "docs/waves/U3-evidence/replay-save.json",
   JSON.stringify(record, null, 2) + "\n",
 );
 first.close();

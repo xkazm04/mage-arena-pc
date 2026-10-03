@@ -38,3 +38,29 @@ asset coverage; 100 projectiles plus 12 animated figures; decoded texture memory
 and frame time; exact replay and unchanged fight census. Consider atlas packing
 and unload inactive pages if residency exceeds 300 MiB. Measurements and remaining
 placeholders go in U4-report.md; owner motion/feel remains pending.
+
+
+## Implemented decisions and evidence
+
+Selective import was cleaner than merging art's unrelated A9/provenance work.
+The source snapshot is f000c26; all 35 copied delivery files retain original
+bytes/hashes, review labels and individual sidecars. Runtime has 289 accepted
+entries including twelve derived A10 packing files. Nothing reads art/raw.
+
+The actual A10 entity table omits the hound entirely, while its backlog records
+24 absent requests. The policy treats this as no entity clip, never another
+creature. Anonymous Tiro entrants explicitly labelled Water proxies use Cassia;
+unknown named mages retain an explicit procedural fallback. All 66 other absent
+requests resolve inside their own entity. Current creatures have rear death
+clips; the held-body death policy also covers later wholly missing death states.
+
+A10's common alpha bounds occupy about a quarter of each 384px frame. Lossless
+packing removes padding, retaining `orig`/`trim` master coordinates and mirrored
+anchors. It reduces full roster pages from 174.6 to 42.5 MiB. Runtime reference
+leases unload body/effect pages on disposal and handle in-flight completion.
+A11 page failure is isolated from the existing UI kit. Noon is a presentation
+phase split only; dawn/dusk/night still follow the authoritative hour schedule.
+
+`npm run gate`, `npm run smoke:u4`, the U4-destination U3 replay, fresh four-wave
+census and `npm run audit:u4` pass. See U4-report.md for measurements, their
+limitations, retained failed fixture evidence and the honest art backlog.

@@ -189,27 +189,36 @@ export class UiKit {
       }
       const manifest = validateAtlas(await response.json());
       for (const page of manifest.pages) {
-        const r = await fetch(new URL(page.file, new URL(url, location.href)), {
-          signal: AbortSignal.timeout(8000),
-        });
-        if (!r.ok) throw Error(`Missing UI page: ${page.id}`);
-        const bytes = await r.arrayBuffer(),
-          digest = Array.from(
-            new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
-            (b) => b.toString(16).padStart(2, "0"),
-          ).join("");
-        if (digest !== page.sha256) throw Error(`UI hash mismatch: ${page.id}`);
-        const bitmap = await createImageBitmap(new Blob([bytes]), {
-          premultiplyAlpha: "premultiply",
-        });
-        if (bitmap.width !== page.size[0] || bitmap.height !== page.size[1]) {
-          bitmap.close();
-          throw Error(`UI page dimensions: ${page.id}`);
+        try {
+          const r = await fetch(
+            new URL(page.file, new URL(url, location.href)),
+            {
+              signal: AbortSignal.timeout(8000),
+            },
+          );
+          if (!r.ok) throw Error(`Missing UI page: ${page.id}`);
+          const bytes = await r.arrayBuffer(),
+            digest = Array.from(
+              new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
+              (b) => b.toString(16).padStart(2, "0"),
+            ).join("");
+          if (digest !== page.sha256)
+            throw Error(`UI hash mismatch: ${page.id}`);
+          const bitmap = await createImageBitmap(new Blob([bytes]), {
+            premultiplyAlpha: "premultiply",
+          });
+          if (bitmap.width !== page.size[0] || bitmap.height !== page.size[1]) {
+            bitmap.close();
+            throw Error(`UI page dimensions: ${page.id}`);
+          }
+          const pageTexture = Texture.from(bitmap);
+          pageTexture.source.alphaMode = "premultiplied-alpha";
+          pageTexture.source.autoGenerateMipmaps = false;
+          pages.set(page.id, pageTexture);
+        } catch (e) {
+          if (page.id !== "daily-stats") throw e;
+          this.diagnostics.push(`Optional daily art: ${String(e)}`);
         }
-        const pageTexture = Texture.from(bitmap);
-        pageTexture.source.alphaMode = "premultiplied-alpha";
-        pageTexture.source.autoGenerateMipmaps = false;
-        pages.set(page.id, pageTexture);
       }
       const staged = new Map<
         string,
@@ -221,7 +230,8 @@ export class UiKit {
         }
       >();
       for (const [id, f] of Object.entries(manifest.regions)) {
-        const texture = pages.get(f.page)!;
+        const texture = pages.get(f.page);
+        if (!texture) continue;
         staged.set(id, {
           texture: new Texture({
             source: texture.source,
@@ -234,12 +244,13 @@ export class UiKit {
       }
       for (const [id, frame] of staged) this.textures.set(id, frame);
       if (staged.size) this.source = url;
-      this.rgbaBytes = manifest.pages.reduce(
-        (n, p) => n + p.size[0] * p.size[1] * 4,
-        0,
-      );
+      this.rgbaBytes = manifest.pages
+        .filter((p) => pages.has(p.id))
+        .reduce((n, p) => n + p.size[0] * p.size[1] * 4, 0);
       if (manifest.motion) this.motion = manifest.motion;
-      this.dailyClock = manifest.components?.dailyClock;
+      this.dailyClock = pages.has("daily-stats")
+        ? manifest.components?.dailyClock
+        : undefined;
     } catch (error) {
       for (const t of pages.values()) t.destroy(true);
       this.diagnostics.push(String(error));

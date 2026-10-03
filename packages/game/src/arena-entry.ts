@@ -1,3 +1,5 @@
+import { ArtFixture } from "./art-fixture.ts";
+import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
 import { audioData } from "./audio-policy.ts";
 import { BitmapText, Graphics } from "pixi.js";
@@ -76,6 +78,7 @@ export class ArenaGame {
   private previousSlot = 0;
   private disposed = false;
   private frames: number[] = [];
+  private artFixture?: ArtFixture;
   private artDebugKey = (e: KeyboardEvent) => {
     if (e.code === "F8") {
       e.preventDefault();
@@ -129,6 +132,18 @@ export class ArenaGame {
         ...base,
         ...(params.has("harness") && !season
           ? {
+              artFixture: (kind?: Element | "stress" | "fallbacks") => {
+                this.artFixture = kind
+                  ? new ArtFixture(kind, this.camera.centre)
+                  : undefined;
+                this.scene.clips.elementOverrides =
+                  this.artFixture?.elements ?? new Map();
+                this.pause(!!kind);
+              },
+              artPose: (state: BodyState, direction: Direction) => {
+                if (this.artFixture)
+                  this.artFixture.pose = { state, direction };
+              },
               setPalette: (palette: Palette) => {
                 if (["verdigris", "rust-sand", "moonlit"].includes(palette))
                   this.scene.palette(palette);
@@ -702,9 +717,10 @@ export class ArenaGame {
       dt,
     );
     this.input.refreshAim();
+    this.artFixture?.update(dt);
     this.scene.render(
-      this.training.state,
-      this.training.player,
+      this.artFixture?.state ?? this.training.state,
+      this.artFixture?.player ?? this.training.player,
       this.camera,
       alpha,
       this.input.aim,
@@ -726,7 +742,8 @@ export class ArenaGame {
   }
   snapshot() {
     return structuredClone({
-      state: this.training.state,
+      fixture: this.artFixture?.kind,
+      state: this.artFixture?.state ?? this.training.state,
       player: this.training.player,
       slot: this.input.slot,
       aim: this.input.aim,

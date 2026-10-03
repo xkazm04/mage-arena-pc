@@ -16,7 +16,9 @@ export function bodyIdentity(a: Actor): string {
   for (const id of Object.values(policy.schoolBodies))
     if (name === id) return id;
   // Anonymous Tiro entrants are explicitly Water proxies in core.
-  return "cassia";
+  return name === "water mage" || name === "tiro entrant ? water proxy"
+    ? "cassia"
+    : "mage.unknown";
 }
 /** No access to other entities: a fallback cannot change creature identity. */
 export function selectBodyClip(

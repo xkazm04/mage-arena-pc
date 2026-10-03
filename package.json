@@ -25,7 +25,9 @@
     "smoke:u2": "npm run build:game && tsx packages/tools/src/u2-browser.ts",
     "smoke:u2:art": "npm run build:game && tsx packages/tools/src/u2-art-browser.ts",
     "smoke:u3": "npm run build:game && tsx packages/tools/src/u3-browser.ts",
-    "smoke:audio": "npm run build:game && tsx packages/tools/src/au4-browser.ts"
+    "smoke:audio": "npm run build:game && tsx packages/tools/src/au4-browser.ts",
+    "smoke:u4": "npm run build:game && tsx packages/tools/src/u4-browser.ts && tsx packages/tools/src/u4-tour.ts",
+    "audit:u4": "tsx packages/tools/src/u4-audit.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

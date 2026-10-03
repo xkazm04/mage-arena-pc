@@ -288,3 +288,30 @@ true peaks, physical device latency and artistic fit are not certified. Review
 the [AU4 note](waves/AU4-audio-engine.md) and
 [event evidence](waves/AU4-evidence/browser.json). Final trims and acceptance
 await owner listening; no new audio was generated.
+
+
+## U4 ? effects, characters and Tideglass; owner motion review pending
+
+Open the [U4 native gallery](waves/U4-evidence/index.html) and
+[report](waves/U4-report.md), then run `npm run camp`. Use 1080p and 1440p.
+The owner called the delivered effects and characters a very significant
+improvement; automated integration does not add a game-feel verdict.
+
+In the proving ground, move diagonally, turn while casting, hold the ward and
+time a perfect absorb. Judge effect scale/brightness, compression versus flare,
+open-rear clarity, body visibility during casting, front/rear identity and gait.
+Enemies now use A10 where available; the cinder hound and target dummy remain
+procedural. Missing clips hold the nearest same-entity direction/state. F8 shows
+the fallback log; [ and ] page through it. Confirm that the disclosed direction
+holds remain readable. The ground/rim is intentionally unchanged pending new art.
+
+In camp, read the 32px gold/reputation/fatigue symbols. Train twice to reach noon,
+then advance through dusk and night: inspect sky layers, falling water, orbiting
+bead and the existing final-hours warning. Try reduced motion. A11 uses delivered
+authored relief/compositing; richer painted icon/clock art remains art backlog.
+
+Both full screen tours, 100-projectile/12-figure performance checks, page failures,
+exact saves and fresh 8,000-fight census pass. Fire/Earth/Air gallery scenes are
+presentation fixtures, not newly playable schools. Judge motion, sofa legibility
+and physical input/controller feel during play; screenshots and headless checks
+cannot certify them. G1 remains open.

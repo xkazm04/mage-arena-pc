@@ -90,6 +90,7 @@ export class CovenantArt {
   private portraitFrames = new Map<string, Texture>();
   private pending = new Map<string, Promise<Texture | undefined>>();
   private failed = new Set<string>();
+  private leases = new Map<string, number>();
   private bytes = 0;
   readonly base = "/assets/accepted/covenant/";
   async init() {
@@ -105,6 +106,27 @@ export class CovenantArt {
   }
   get(key: string) {
     return this.textures.get(key);
+  }
+  retain(key: string) {
+    this.leases.set(key, (this.leases.get(key) ?? 0) + 1);
+  }
+  release(key: string) {
+    const count = Math.max(0, (this.leases.get(key) ?? 0) - 1);
+    this.leases.set(key, count);
+    const unload = () => {
+      if (this.leases.get(key)) return;
+      const texture = this.textures.get(key);
+      if (!texture) return;
+      this.bytes -= texture.source.pixelWidth * texture.source.pixelHeight * 4;
+      const bitmap = texture.source.resource as ImageBitmap;
+      texture.destroy(true);
+      bitmap.close?.();
+      this.textures.delete(key);
+    };
+    if (!count) {
+      unload();
+      void this.pending.get(key)?.then(unload);
+    }
   }
   async json(key: string): Promise<unknown> {
     const entry = this.manifest?.entries[key];
@@ -195,6 +217,7 @@ export class CovenantArt {
       failed: [...this.failed],
       pending: this.pending.size,
       diagnostics: [...this.diagnostics],
+      residentKeys: [...this.textures.keys()],
     };
   }
 }
