@@ -46,6 +46,7 @@ export class ArenaScene {
   private figures = new Container();
   private effects = new Graphics();
   readonly clips = new EffectPlayer();
+  readonly sigils = new EffectPlayer("a13");
   readonly bodies = new BodyPlayer();
   debugEnabled = false;
   debugPage = 0;
@@ -66,10 +67,12 @@ export class ArenaScene {
     this.library = new FigureLibrary(app);
     parent.addChild(
       this.floor,
+      this.sigils.behind,
       this.ground,
       this.clips.behind,
       this.figures,
       this.clips.front,
+      this.sigils.front,
       this.effects,
       this.debugPanel,
       this.debugLabel,
@@ -87,6 +90,7 @@ export class ArenaScene {
   dispose() {
     this.library.dispose();
     this.clips.dispose();
+    this.sigils.dispose();
     this.bodies.dispose();
     this.debugLabel.destroy();
     this.debugPanel.destroy();
@@ -185,6 +189,10 @@ export class ArenaScene {
     }
   }
   private area(p: Vec, radius: number, colour: number, progress: number): void {
+    this.sigils.draw("telegraph.area", progress * 1000, p, {
+      behind: true,
+      groundSize: { x: radius * 2, y: radius * 2 },
+    });
     this.circle(p, radius, colour);
     this.circle(
       p,
@@ -207,6 +215,12 @@ export class ArenaScene {
       dy = Math.sin(angle),
       w = width / 2;
     const end = { x: origin.x + dx * range, y: origin.y + dy * range };
+    this.sigils.draw(
+      "telegraph.line",
+      0,
+      { x: (origin.x + end.x) / 2, y: (origin.y + end.y) / 2 },
+      { behind: true, angle, groundSize: { x: range, y: width } },
+    );
     this.path([
       { x: origin.x - dy * w, y: origin.y + dx * w },
       { x: end.x - dy * w, y: end.y + dx * w },
@@ -236,6 +250,11 @@ export class ArenaScene {
     degrees: number,
     colour: number,
   ): void {
+    this.sigils.draw("telegraph.cone", 0, origin, {
+      behind: true,
+      angle: Math.atan2(target.y - origin.y, target.x - origin.x),
+      groundSize: { x: radius * 2, y: radius * 2 },
+    });
     this.path([
       origin,
       ...arcPoints(
@@ -267,6 +286,7 @@ export class ArenaScene {
     g.clear();
     e.clear();
     this.clips.begin(state, c, alpha);
+    this.sigils.begin(state, c, alpha);
     this.bodies.begin(state, alpha);
     this.scenery.render(c);
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
@@ -305,6 +325,12 @@ export class ArenaScene {
     }
     for (const a of state.actors) {
       if (a.pending?.kind === "spell") {
+        this.sigils.draw(
+          `casting.${this.clips.element(a)}`,
+          seconds(state.tick - a.pending.startTick + alpha) * 1000,
+          a.pos,
+          { behind: true },
+        );
         const pending = a.pending,
           s = spells.find((s) => s.id === pending.spellId)!;
         const progress =
@@ -364,7 +390,7 @@ export class ArenaScene {
       });
       this.circle(
         foot,
-        a.radius,
+        a.radius * contract.character.draw_multiplier,
         a.team === player.team ? 0x226580 : 0xe9a777,
         0.65,
       );
@@ -379,16 +405,23 @@ export class ArenaScene {
           color: 0x9de9df,
           width: m.outlinePx * 1.3,
         });
-        this.clips.draw(
+        const wardArt = this.sigils.draw(
           "absorb.hold",
           seconds(state.tick - a.absorbFreshTick + alpha) * 1000,
           foot,
-          {
-            angle,
-            barrier: true,
-            opacity: animation.effects.barrierOpacity,
-          },
+          { angle, barrier: true },
         );
+        if (!wardArt)
+          this.clips.draw(
+            "absorb.hold",
+            seconds(state.tick - a.absorbFreshTick + alpha) * 1000,
+            foot,
+            {
+              angle,
+              barrier: true,
+              opacity: animation.effects.barrierOpacity,
+            },
+          );
       }
       let view = this.actors.get(a.id);
       if (!view) {
@@ -447,13 +480,13 @@ export class ArenaScene {
           -h * 0.35,
           -h - 10 * m.resolutionScale,
           h * 0.7,
-          4 * m.resolutionScale,
+          6 * m.resolutionScale,
         ).fill(ink);
         d.rect(
           -h * 0.35,
           -h - 10 * m.resolutionScale,
           (h * 0.7 * a.hp) / a.maxHp,
-          4 * m.resolutionScale,
+          6 * m.resolutionScale,
         ).fill(a.team === player.team ? 0x78c9ca : 0xc05e46);
       }
       if (a.id === player.id) {
@@ -475,15 +508,15 @@ export class ArenaScene {
       if (
         !a.down &&
         a.team !== player.team &&
-        (q.x < 24 * m.resolutionScale ||
-          q.x > c.width - 24 * m.resolutionScale ||
+        (q.x < 26 * m.resolutionScale ||
+          q.x > c.width - 26 * m.resolutionScale ||
           q.y < 180 * m.resolutionScale ||
           q.y > c.height - 240 * m.resolutionScale)
       ) {
         const dx = q.x - c.width / 2,
           dy = q.y - c.height / 2;
         const tx =
-          (c.width / 2 - 24 * m.resolutionScale) /
+          (c.width / 2 - 26 * m.resolutionScale) /
           Math.max(0.001, Math.abs(dx));
         const ty =
           (c.height / 2 - (dy < 0 ? 180 : 240) * m.resolutionScale) /

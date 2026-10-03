@@ -315,3 +315,16 @@ exact saves and fresh 8,000-fight census pass. Fire/Earth/Air gallery scenes are
 presentation fixtures, not newly playable schools. Judge motion, sofa legibility
 and physical input/controller feel during play; screenshots and headless checks
 cannot certify them. G1 remains open.
+
+
+## U5 ? plates accepted for now, larger figures ready
+
+The A12 plates now cover a compact arena; figures are 50% larger (60.75px at
+1080p, 81px at 1440p). See [native captures](waves/U5-evidence/index.html) and
+[geometry and measurements](waves/U5-report.md). Use the proving ground to
+move to every edge, pass behind pylons, and turn the 140-degree ward. Judge
+foot aiming, larger effects, HUD coverage at the southern rim and camera
+clamps. Decorative stones are not solid obstacles. Old source-version saves
+are rejected explicitly; start a new season after rebuilding. Painted A13
+sigils are still pending behind the optional loader. CF1 adds the direct Lab
+entry and a new start guide next.

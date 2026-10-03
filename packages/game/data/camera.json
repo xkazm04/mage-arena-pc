@@ -1,52 +1,35 @@
 {
-  "version": "game-camera-u1",
+  "version": "game-camera-u5",
   "status": "D17 far fixed camera; game presentation authority",
-  "authority": "D17; art/scale-contract-v2.json authored nominal projection and dead zone, read-only 2026-10-02",
-  "reference_viewport_px": [1920, 1080],
-  "second_viewport_px": [2560, 1440],
+  "authority": "art/scale-contract-v3.json; D31/D32",
+  "reference_viewport_px": [
+    1920,
+    1080
+  ],
+  "second_viewport_px": [
+    2560,
+    1440
+  ],
   "camera": {
     "projection": "orthographic ground; hand-drawn upright billboard silhouettes",
     "elevation_above_ground_degrees": 55,
-    "elevation_range_degrees": [45, 60],
+    "elevation_range_degrees": [
+      45,
+      60
+    ],
     "standard_ground_pixels_per_metre_at_1080p": 30,
-    "zoom_range": [0.6, 0.9]
-  },
-  "character": {
-    "nominal_height_metres": 1.8,
-    "screen_height_fraction_range": [0.03, 0.045],
-    "measure": "head to sole, excluding weapon, shadow, spell and absorb"
+    "zoom_range": [
+      0.75,
+      0.75
+    ]
   },
   "distances": [
     {
-      "zoom": 0.6,
-      "screen_height_fraction": 0.03,
-      "id": "far"
-    },
-    {
       "zoom": 0.75,
-      "screen_height_fraction": 0.0375,
+      "screen_height_fraction": 0.056249999999999994,
       "id": "standard"
-    },
-    {
-      "zoom": 0.9,
-      "screen_height_fraction": 0.045,
-      "id": "near"
     }
   ],
-  "arena_metres": [192, 144],
-  "minimum_combatant_centre_separation_metres": 6,
-  "telegraph": {
-    "minimum_ground_diameter_metres": 4,
-    "minimum_outline_px_at_1080p": 3,
-    "minimum_projectile_core_px_at_1080p": 4,
-    "use_shape_plus_colour": true
-  },
-  "absorb": {
-    "angle_degrees": 140,
-    "visual_radius_metres": 2.4,
-    "rear_open_degrees": 220,
-    "note": "140-degree mechanic from W2; radius is authored visual proposal, not combat balance"
-  },
   "formulas": {
     "resolution_scale": "viewport_height / 1080",
     "ground_px_per_m_x": "30 * zoom * resolution_scale",
@@ -65,8 +48,27 @@
   ],
   "a3_gate": "art/CAMERA-OK.md supplied by owner",
   "follow": {
-    "dead_zone_normalized": [0.16, 0.18, 0.84, 0.8],
+    "dead_zone_normalized": [
+      0.16,
+      0.18,
+      0.84,
+      0.8
+    ],
     "response_per_second": 2.857142857142857,
     "max_delta_seconds": 0.05
+  },
+  "plate": {
+    "centre": [
+      16,
+      10
+    ],
+    "world_size": [
+      102.4,
+      70.31661631265986
+    ],
+    "delivery_offset": [
+      0,
+      -52
+    ]
   }
 }

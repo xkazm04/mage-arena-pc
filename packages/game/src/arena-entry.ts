@@ -11,6 +11,7 @@ import {
 } from "@mage/core";
 import {
   combat,
+  arenaGeometry,
   createTraining,
   FixedStepper,
   runtime,
@@ -41,6 +42,7 @@ import { ArenaInput } from "./input.ts";
 import {
   cameraMetrics,
   followCamera,
+  clampPlateCamera,
   groundToScreen,
   interpolate,
   makeCamera,
@@ -97,7 +99,7 @@ export class ArenaGame {
   ) {
     this.camera = makeCamera(
       { width: ui.app.screen.width, height: ui.app.screen.height },
-      this.training.player.pos,
+      arenaGeometry.centre,
     );
     this.scene = new ArenaScene(ui.app, ui.world);
     window.addEventListener("keydown", this.artDebugKey);
@@ -117,7 +119,7 @@ export class ArenaGame {
     }
     this.lastEvents = this.training.state.events.length;
     gameAudio.pauseWorld(false);
-    this.camera = makeCamera(this.camera, this.training.player.pos);
+    this.camera = makeCamera(this.camera, arenaGeometry.centre);
     this.scene.palette(
       paletteForGames(season ? season.bout.day / 7 : undefined),
     );
@@ -280,7 +282,7 @@ export class ArenaGame {
     this.lastPhase = "";
     this.camera = makeCamera(
       this.camera,
-      this.training.player.pos,
+      arenaGeometry.centre,
       this.camera.zoom,
     );
   }
@@ -291,7 +293,7 @@ export class ArenaGame {
     this.sync();
     this.camera = makeCamera(
       this.camera,
-      this.training.player.pos,
+      arenaGeometry.centre,
       this.camera.zoom,
     );
     this.hud();
@@ -349,7 +351,7 @@ export class ArenaGame {
     this.lastPhase = "";
     this.camera = makeCamera(
       this.camera,
-      this.training.player.pos,
+      arenaGeometry.centre,
       this.camera.zoom,
     );
     this.pause(false);
@@ -707,14 +709,16 @@ export class ArenaGame {
           "Checkpoint failed. Load the last accepted save to resume.",
         ),
       );
-    this.camera = followCamera(
-      this.camera,
-      interpolate(
-        this.training.player.previousPos,
-        this.training.player.pos,
-        alpha,
+    this.camera = clampPlateCamera(
+      followCamera(
+        this.camera,
+        interpolate(
+          this.training.player.previousPos,
+          this.training.player.pos,
+          alpha,
+        ),
+        dt,
       ),
-      dt,
     );
     this.input.refreshAim();
     this.artFixture?.update(dt);
@@ -754,6 +758,8 @@ export class ArenaGame {
       cameraMetrics: cameraMetrics(this.camera),
       visibleProjectiles: this.scene.visibleProjectiles,
       palette: this.scene.scenery.palette,
+      groundSource: this.scene.scenery.source,
+      groundDiagnostics: this.scene.scenery.diagnostics,
       derivedTextureBytes: this.scene.scenery.derivedBytes,
       figureSource:
         "A10 partial directional clips with explicit same-entity fallback",

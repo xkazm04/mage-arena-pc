@@ -3,11 +3,11 @@ import { addEnemy, addMage, arenaContains, arenaGeometry, constrainToArena, crea
 
 describe('the playable open oval', () => {
   it('uses the art contract and a conservative disk inset at every part of its perimeter', () => {
-    expect(arenaGeometry).toEqual({ centre: { x: 16, y: 62 }, widthM: 192, heightM: 144 });
-    expect(arenaContains({ x: -80, y: 62 })).toBe(true); expect(arenaContains({ x: 16, y: -10 })).toBe(true);
-    expect(arenaContains({ x: -80, y: -10 })).toBe(false);
+    expect(arenaGeometry).toEqual({ centre: { x: 16, y: 10 }, widthM: 94, heightM: 62 });
+    expect(arenaContains({ x: -31, y: 10 })).toBe(true); expect(arenaContains({ x: 16, y: -21 })).toBe(true);
+    expect(arenaContains({ x: -31, y: -21 })).toBe(false);
     for (let i = 0; i < 72; i++) for (const radius of [0.38, 0.7, 2]) {
-      const p = constrainToArena({ x: 16 + 200 * Math.cos(i * Math.PI / 36), y: 62 + 200 * Math.sin(i * Math.PI / 36) }, radius);
+      const p = constrainToArena({ x: 16 + 200 * Math.cos(i * Math.PI / 36), y: 10 + 200 * Math.sin(i * Math.PI / 36) }, radius);
       expect(arenaContains(p, radius)).toBe(true);
       for (let j = 0; j < 36; j++) expect(arenaContains({ x: p.x + radius * Math.cos(j * Math.PI / 18), y: p.y + radius * Math.sin(j * Math.PI / 18) })).toBe(true);
     }

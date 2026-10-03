@@ -21,7 +21,7 @@ const root = fileURLToPath(new URL('../../../', import.meta.url));
 export function sourceHash() {
   const walk = (path: string): string[] => readdirSync(resolve(root,path),{withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(`${path}/${e.name}`) : [`${path}/${e.name}`]);
   const files = ['docs/design/reconciled/data','packages/core/src','packages/director/src'].flatMap(walk).filter(p=>/\.(?:json|csv|ts)$/.test(p) && !p.endsWith('.test.ts') && !p.endsWith('.generated.ts'));
-  files.push('art/scale-contract-v1.json','packages/core/scripts/compile-arena-data.mjs');
+  files.push('art/scale-contract-v3.json','packages/core/scripts/compile-arena-data.mjs');
   return hash(files.sort().map(p=>[p,readFileSync(resolve(root,p),'utf8').replaceAll('\r\n','\n')]));
 }
 export function validatePayload(t: Tables, value: unknown): SavePayload {

@@ -7,7 +7,7 @@ const count = countIndex >= 0 ? Number(args[countIndex + 1]) : runtime.games.cen
 const tag = tagIndex >= 0 ? args[tagIndex + 1]! : 'census';
 if (!/^[a-z0-9-]+$/.test(tag) || !Number.isInteger(count) || count < 1) throw Error('Invalid report arguments');
 const directoryIndex = args.indexOf('--evidence'), evidence = directoryIndex >= 0 ? args[directoryIndex + 1]! : 'W4-evidence';
-if (!/^(?:W(?:4|4b|7)|U[124])-evidence$/.test(evidence)) throw Error('Invalid evidence directory');
+if (!/^(?:W(?:4|4b|7)|U[1245]|CF[12])-evidence$/.test(evidence)) throw Error('Invalid evidence directory');
 const destination = new URL(`../../../docs/waves/${evidence}/`, import.meta.url); mkdirSync(destination, { recursive: true });
 const quantile = (values: number[], q: number): number => [...values].sort((a, b) => a - b)[Math.min(values.length - 1, Math.floor(values.length * q))] ?? 0;
 const summary = (values: number[]) => ({ min: Math.min(...values), p10: quantile(values, 0.1), p50: quantile(values, 0.5), p90: quantile(values, 0.9), max: Math.max(...values) });
@@ -36,7 +36,7 @@ for (let wave = 0; wave < tiro.waves.length; wave++) {
   waves.push(report); writeFileSync(new URL(`${tag}-wave-${wave + 1}.json`, destination), JSON.stringify({ label: 'simulated', summary: report, fights }, null, 2) + '\n');
   console.log(JSON.stringify(report));
 }
-const report = { label: 'simulated', layout: '192 x 144 m open oval; scale-contract-v1; sparse opening separation', supplementalHashes: Object.fromEntries(['art/scale-contract-v1.json', 'packages/core/src/arena/data/runtime.json'].map(file => [file, createHash('sha256').update(readFileSync(new URL(`../../../${file}`, import.meta.url))).digest('hex')])), command: `npm --prefix packages/core run report:w4${args.length ? ` -- ${args.join(' ')}` : ''}`, countPerWave: count,
+const report = { label: 'simulated', layout: '94 x 62 m compact oval; scale-contract-v3; original opening separation', supplementalHashes: Object.fromEntries(['art/scale-contract-v3.json', 'packages/core/src/arena/data/runtime.json'].map(file => [file, createHash('sha256').update(readFileSync(new URL(`../../../${file}`, import.meta.url))).digest('hex')])), command: `npm --prefix packages/core run report:w4${args.length ? ` -- ${args.join(' ')}` : ''}`, countPerWave: count,
   seedRange: [runtime.games.censusSeedStart, runtime.games.censusSeedStart + count - 1], reference: { competence: runtime.games.referenceCompetence, preset: runtime.games.referencePreset, ranks: runtime.training.defaultRanks },
   methodology: 'Independent fresh wave starts, baseline enemy HP/counts/attacks. Both sides use fixed-step combat and resource rules; the reference player is an explicitly authored input policy. Completed-bout median includes wins and losses. No resource refill, forced outcome, duration padding, or dropped seeds. Remaining hostile hazards settle before a clear.',
   wallSecondsMeasured: (performance.now() - start) / 1000, waves, fullCensus: count === runtime.games.censusFightsPerWave, allPassed,

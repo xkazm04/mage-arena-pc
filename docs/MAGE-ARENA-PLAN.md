@@ -251,7 +251,7 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Game | U5 | Wire the A12 plates (compact layout, occluders, palette per tier) and figures 50% larger (scale contract v3, camera and layout re-check) | D31, D32 | not started |
+| Game | U5 | Wire the A12 plates (compact layout, occluders, palette per tier) and figures 50% larger (scale contract v3, camera and layout re-check) | D31, D32 | implemented; U5 report |
 | Game | CF1 | **Combat Feel Lab**: training mode with a dummy and one selectable opponent, live tuning, reset, metrics, replay of the last bout; the owner's start guide | U5 | not started |
 | Game | CF2 | Combat feel improvements from the Lab findings: hit feedback (hit stop, flash, shake, knockback, numbers), cast and animation timing, movement feel, absorb and perfect-absorb feel, telegraph readability, enemy behaviour; data-driven; census bands re-set where gameplay changes | CF1 | not started |
 | Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | not started |
@@ -263,3 +263,6 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
+
+
+**U5, 2026-10-03 (GAME).** A12 imported read-only with hashes, compact 94 x 62 m ellipse centred [16,10], fixed far camera clamped to the translated single plate, baseline overlays and tiled fallback. v3 figures 60.75/81px. Optional A13 skin boundary. `npm run gate`: 177 TS + 11 reference tests, zero contradictions. `npm run build:game`; `npx tsx packages/tools/src/u5-browser.ts`: both native resolutions, palettes/occlusion/fallbacks and performance. Fresh 2,000 fights per wave pass; boundary changes medians +0.25/+0.45/0/0 seconds; creature ceiling 46s explicitly provisional. Layout/final digests identical, presentation does not move simulation. Exact save replay passes. See U5 report/evidence. Motion, physical latency and owner feel not measured. Next CF1, then CF2.

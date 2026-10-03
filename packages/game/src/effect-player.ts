@@ -66,17 +66,21 @@ export class EffectPlayer {
   readonly counts: Record<string, number> = {};
   dropped = 0;
   cpuMs = 0;
-  constructor() {
+  constructor(private namespace: "a8" | "a13" = "a8") {
     void this.init();
   }
   private async init() {
     try {
-      const m = (await art.json("a8.manifest")) as EffectManifest;
+      if (this.namespace === "a13" && !art.manifest?.entries["a13.manifest"])
+        return;
+      const m = (await art.json(
+        `${this.namespace}.manifest`,
+      )) as EffectManifest;
       if (m.schemaVersion !== 1) throw Error("Unsupported effects");
       validateClips(m.pages, Object.values(m.clips));
       if (this.disposed) return;
       this.manifest = m;
-      await this.preload(["water"]);
+      if (this.namespace === "a8") await this.preload(["water"]);
     } catch (e) {
       this.diagnostics.push(String(e));
     }
@@ -120,6 +124,10 @@ export class EffectPlayer {
     this.c = c;
     this.tick = state.tick + alpha;
     for (const slot of this.slots) slot.root.visible = false;
+    if (this.namespace === "a13") {
+      this.cpuMs = performance.now() - started;
+      return;
+    }
     if (this.state !== state || state.events.length < this.eventIndex) {
       this.state = state;
       this.eventIndex = state.events.length;
@@ -243,11 +251,12 @@ export class EffectPlayer {
       barrier?: boolean;
       scale?: number;
       optional?: boolean;
+      groundSize?: Vec;
     } = {},
   ): boolean {
     const clip = this.manifest?.clips[id];
     if (!clip) return false;
-    const pageKey = `a8.page.${clip.page}`,
+    const pageKey = `${this.namespace}.page.${clip.page}`,
       page = art.get(pageKey);
     if (!page) {
       if (!this.requests.has(pageKey)) {
@@ -299,6 +308,10 @@ export class EffectPlayer {
     const scale = (m.figureHeightPx / 40.5) * (options.scale ?? 1);
     sprite.width = clip.designSize1080![0] * scale;
     sprite.height = clip.designSize1080![1] * scale;
+    if (options.groundSize) {
+      sprite.width = options.groundSize.x * m.pxPerMetreX;
+      sprite.height = options.groundSize.y * m.pxPerMetreY;
+    }
     sprite.blendMode = clip.blend === "lighter" ? "add" : "normal";
     sprite.alpha = options.opacity ?? policy.effects.impactOpacity;
     sprite.mask = null;

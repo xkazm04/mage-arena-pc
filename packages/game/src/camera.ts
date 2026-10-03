@@ -1,4 +1,14 @@
-import contract from "../data/camera.json" with { type: "json" };
+import cameraData from "../data/camera.json" with { type: "json" };
+import scale from "../../../art/scale-contract-v3.json" with { type: "json" };
+const contract = {
+  ...cameraData,
+  character: scale.character,
+  telegraph: scale.telegraph,
+  absorb: scale.absorb,
+  arena_metres: scale.arena_metres,
+  minimum_combatant_centre_separation_metres:
+    scale.minimum_combatant_centre_separation_metres,
+};
 export { contract };
 export interface Point {
   x: number;
@@ -101,7 +111,10 @@ export function cameraMetrics(c: Camera) {
     pxPerMetreY,
     metresPerPixelX: 1 / pxPerMetreX,
     metresPerPixelY: 1 / pxPerMetreY,
-    figureHeightPx: contract.character.nominal_height_metres * pxPerMetreX,
+    figureHeightPx:
+      contract.character.nominal_height_metres *
+      pxPerMetreX *
+      contract.character.draw_multiplier,
     visibleGroundM: { x: c.width / pxPerMetreX, y: c.height / pxPerMetreY },
     outlinePx: contract.telegraph.minimum_outline_px_at_1080p * resolutionScale,
     projectileCorePx:
@@ -113,6 +126,26 @@ export function groundToScreen(p: Point, c: Camera): Point {
   return {
     x: c.width / 2 + (p.x - c.centre.x) * m.pxPerMetreX,
     y: c.height / 2 + (p.y - c.centre.y) * m.pxPerMetreY,
+  };
+}
+/** Preserve painted coverage; extra-wide windows show a matte outside the plate. */
+export function clampPlateCamera(c: Camera): Camera {
+  const m = cameraMetrics(c),
+    [x, y] = contract.plate.centre;
+  const halfX = Math.max(
+    0,
+    (contract.plate.world_size[0]! - m.visibleGroundM.x) / 2,
+  );
+  const halfY = Math.max(
+    0,
+    (contract.plate.world_size[1]! - m.visibleGroundM.y) / 2,
+  );
+  return {
+    ...c,
+    centre: {
+      x: Math.max(x! - halfX, Math.min(x! + halfX, c.centre.x)),
+      y: Math.max(y! - halfY, Math.min(y! + halfY, c.centre.y)),
+    },
   };
 }
 export function screenToGround(p: Point, c: Camera): Point {

@@ -3,6 +3,7 @@ import {
   arcPoints,
   cameraMetrics,
   clientToGround,
+  clampPlateCamera,
   contract,
   depthOrder,
   groundToScreen,
@@ -24,11 +25,11 @@ import {
 
 describe("the confirmed camera contract", () => {
   it("pins the owner-approved scale numbers, including 1440p and the full zoom range", () => {
-    expect(contract.arena_metres).toEqual([192, 144]);
+    expect(contract.arena_metres).toEqual([94, 62]);
     expect(contract.minimum_combatant_centre_separation_metres).toBe(6);
     expect(contract.absorb).toMatchObject({
       angle_degrees: 140,
-      visual_radius_metres: 2.4,
+      visual_radius_metres: 3.6,
       rear_open_degrees: 220,
     });
     for (const height of [1080, 1440])
@@ -49,13 +50,13 @@ describe("the confirmed camera contract", () => {
           m.pxPerMetreX * Math.sin((55 * Math.PI) / 180),
           10,
         );
-        expect(m.outlinePx).toBe((height / 1080) * 3);
-        expect(m.projectileCorePx).toBe((height / 1080) * 4);
+        expect(m.outlinePx).toBe((height / 1080) * 4.5);
+        expect(m.projectileCorePx).toBe((height / 1080) * 6);
       }
     const m = cameraMetrics(
       makeCamera({ width: 1920, height: 1080 }, { x: 0, y: 0 }),
     );
-    expect(m.figureHeightPx).toBeCloseTo(40.5);
+    expect(m.figureHeightPx).toBeCloseTo(60.75);
     expect(m.visibleGroundM.x).toBeCloseTo(85.33333333);
     expect(m.visibleGroundM.y).toBeCloseTo(58.59718026054989);
     expect(m.pxPerMetreY).toBeCloseTo(18.430920996502316);
@@ -64,13 +65,13 @@ describe("the confirmed camera contract", () => {
     expect(
       cameraMetrics(makeCamera({ width: 2560, height: 1440 }, { x: 0, y: 0 }))
         .figureHeightPx,
-    ).toBeCloseTo(54);
+    ).toBeCloseTo(81);
   });
   it("clamps zoom, rejects invalid cameras and does not flatten upright figure height", () => {
     const viewport = { width: 1920, height: 1080 },
       centre = { x: 0, y: 0 };
-    expect(makeCamera(viewport, centre, 4).zoom).toBe(0.9);
-    expect(makeCamera(viewport, centre, 0).zoom).toBe(0.6);
+    expect(makeCamera(viewport, centre, 4).zoom).toBe(0.75);
+    expect(makeCamera(viewport, centre, 0).zoom).toBe(0.75);
     expect(() => makeCamera(viewport, centre, NaN)).toThrow();
     expect(() => makeCamera({ width: 0, height: 1080 }, centre)).toThrow();
     expect(() => makeCamera(viewport, centre, 1.2, 0)).toThrow();
@@ -275,6 +276,15 @@ describe("W4c: ground-plane aim and hits", () => {
 });
 
 describe("U1 fixed camera", () => {
+  it("U5 clamps all four edges to the single painted plate at both resolutions", () => {
+    for (const height of [1080, 1440]) for (const x of [-100, 100]) for (const y of [-100, 100]) {
+      const c = clampPlateCamera(makeCamera({ width: height * 16 / 9, height }, { x, y }));
+      const tl = groundToScreen({ x: -35.2, y: 10 - 70.31661631265986 / 2 }, c);
+      const br = groundToScreen({ x: 67.2, y: 10 + 70.31661631265986 / 2 }, c);
+      expect(tl.x).toBeLessThanOrEqual(1e-9); expect(tl.y).toBeLessThanOrEqual(1e-9);
+      expect(br.x).toBeGreaterThanOrEqual(c.width - 1e-9); expect(br.y).toBeGreaterThanOrEqual(c.height - 1e-9);
+    }
+  });
   it("does not track movement inside the wide dead zone", () => {
     const c = makeCamera({ width: 1920, height: 1080 }, { x: 0, y: 0 });
     for (let t = 0; t < 600; t++)

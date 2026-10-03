@@ -44,10 +44,10 @@ const record = {
   exactBytes: true,
   passed: true,
 };
+const evidence = process.env.MAGE_EVIDENCE ?? "U3";
+if (!/^(U[345]|CF[12])$/.test(evidence)) throw Error("Invalid evidence destination");
 writeFileSync(
-  process.env.MAGE_EVIDENCE === "U4"
-    ? "docs/waves/U4-evidence/replay-save.json"
-    : "docs/waves/U3-evidence/replay-save.json",
+  `docs/waves/${evidence}-evidence/replay-save.json`,
   JSON.stringify(record, null, 2) + "\n",
 );
 first.close();

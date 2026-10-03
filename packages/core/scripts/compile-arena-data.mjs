@@ -13,7 +13,7 @@ function csv(text) {
   });
 }
 const combat = JSON.parse(read('combat.json'));
-const scaleContract = JSON.parse(readFileSync(new URL('../../../art/scale-contract-v1.json', import.meta.url), 'utf8'));
+const scaleContract = JSON.parse(readFileSync(new URL('../../../art/scale-contract-v3.json', import.meta.url), 'utf8'));
 if (combat.absorb.arcDeg !== scaleContract.absorb.angle_degrees) throw Error('Absorb contract contradiction');
 if (combat.tierClock.perfectAbsorbAdvanceS !== combat.absorb.perfect.tierClockAdvanceS) throw Error('Clock reward contradiction');
 const stats = csv(read('stats.csv'));
@@ -49,7 +49,7 @@ const boltRow = rows.find(row => row.line === 'bolt');
 const bolt = { name: boltRow.name, castS: +boltRow.cast_s, cooldownS: +boltRow.cooldown_s,
   mana: +boltRow.mana, damage: +boltRow.damage, rangeM: +boltRow.range_m,
   speedMps: Number(boltRow.shape.match(/([\d.]+) m\/s/)[1]) };
-const output = '// GENERATED from reconciled arena data and art/scale-contract-v1.json. Edit the source data, never this file.\n' +
+const output = '// GENERATED from reconciled arena data and art/scale-contract-v3.json. Edit the source data, never this file.\n' +
   Object.entries({ scaleContract, combat, statRules, rankRange, trialWeights, bolt, waterRows: rows, enemyData: JSON.parse(read('enemies.json')), arenaTiers: tierData }).map(([key, value]) => `export const ${key} = ${JSON.stringify(value, null, 2)} as const;`).join('\n');
 writeFileSync(fileURLToPath(new URL('../src/arena/data.generated.ts', import.meta.url)), output + '\n');
 console.log('Arena data compiled from reconciled arena and scale contract; clock, Nerve and absorb authorities agree.');
