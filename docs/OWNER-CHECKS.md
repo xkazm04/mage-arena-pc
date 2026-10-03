@@ -125,3 +125,9 @@ Owner feel and approval remain unmeasured; the local grader may only reject or r
 [A9 owner board](../art/review/a9/index.html). A9 delivery candidate: three native-density periodic grounds, 36 keyed structures/props, 15 decals and explicit core-preserving layout. Six 1080p/1440p composites and three A6 side-by-side comparisons are on art/review/a9/index.html. Eleven serial Grok reservations; cumulative 241/300. Clipped rust banner replaced; generated letter-like decal cells and unrequested figure excluded. Rim mapping, rune stencils, matte extraction and damage feathering are labeled derived. Material detail improved; repeated stands, derived rim and less integrated atmospheric lighting mean concept equivalence remains unproven. Owner review and game integration remain open.
 
 Owner feel and approval remain unmeasured; the local grader may only reject or route.
+
+## Session 6 / A10
+
+[A10 owner board](../art/review/a10/index.html). A10 PARTIAL candidate: 198/288 state-direction clips in 11 atlases; 90 missing clips explicitly enumerated. Two generated diagonal views where available, two declared mirrored left views, six states, shared pivots and scale, canvas loader and native A9/A8 context proofs. Repeated leading-leg poses and identity differences remain; technical gates do not certify production animation. Cinder hound and Iskar front-gait repair rejected. 43 serial attempts, 44 charges: 41 generated jobs, one agy duplicate-output anomaly charged twice, one Grok HTTP 429. Both provider latches retained; cumulative 285/300. Owner review, missing animation and game integration remain open.
+
+Owner feel and approval remain unmeasured; the local grader may only reject or route.

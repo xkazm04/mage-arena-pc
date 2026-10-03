@@ -208,7 +208,7 @@ def ground_canvas(m,lay,palette,w,h,centre):
     return Image.fromarray(arr).convert('RGBA')
 
 
-def render(m,lay,palette,w,h,centre=None):
+def render(m,lay,palette,w,h,centre=None,actor_manifest=None):
     centre=centre or lay['camera']['proofCentre'];pp=22.5*h/1080;py=pp*math.sin(math.radians(55));scale=h/1080
     canvas=ground_canvas(m,lay,palette,w,h,centre);records=m['palettes'][palette]['sprites'];drawables=[]
     def screen(p):return (w/2+(p[0]-centre[0])*pp,h/2+(p[1]-centre[1])*py)
@@ -247,9 +247,22 @@ def render(m,lay,palette,w,h,centre=None):
     # Existing review keys witness body scale and sorting; A10 owns new animation.
     fm=read(ART/'delivery/a3c/figures.json')
     positions=[('brennic',[-3,24]),('cassia',[13,33]),('garran',[29,29]),('iskar',[42,24]),('conscript',[3,10]),('shieldman',[28,8]),('thornback',[34,17])]
+    if actor_manifest:
+        positions += [('slinger',[14,10]),('netter',[42,10]),('cinder_hound',[-8,16]),('mire_maw',[21,19]),('hush_moth',[48,20])]
+        actor_pages={p['id']:Image.open(ROOT/p['file']) for p in actor_manifest['pages']}
     for name,p in positions:
-        row=next(r for r in fm['frames'] if r['entity']==name);im=Image.open(ROOT/row['file']);factor=40.5*scale/160;im=im.resize((round(512*factor),round(512*factor)),Image.Resampling.LANCZOS);foot=screen(p)
-        drawables.append((p[1],im,(round(foot[0]-256*factor),round(foot[1]-400*factor))))
+        if actor_manifest:
+            body=actor_manifest['entities'].get(name)
+            facing={'brennic':'ne','cassia':'se','garran':'nw','iskar':'sw'}.get(name,'se')
+            clip=body['clips'].get('run',{}).get(facing) if body else None
+            if not clip:continue
+            x,y,fw,fh=clip['frames'][min(2,len(clip['frames'])-1)]['rect'];im=actor_pages[clip['page']].crop((x,y,x+fw,y+fh))
+            if clip['mirrorX']:im=ImageOps.mirror(im)
+            dw,dh=[round(v*scale) for v in body['designSize1080']];im=im.resize((dw,dh),Image.Resampling.LANCZOS);foot=screen(p)
+            drawables.append((p[1],im,(round(foot[0]-dw*body['anchor'][0]),round(foot[1]-dh*body['anchor'][1]))))
+        else:
+            row=next(r for r in fm['frames'] if r['entity']==name);im=Image.open(ROOT/row['file']);factor=40.5*scale/160;im=im.resize((round(512*factor),round(512*factor)),Image.Resampling.LANCZOS);foot=screen(p)
+            drawables.append((p[1],im,(round(foot[0]-256*factor),round(foot[1]-400*factor))))
     for _,im,offset in sorted(drawables,key=lambda r:r[0]):canvas.alpha_composite(im,offset)
     # Use actual A8 emission art, not procedural spell lines, in context.
     fx=read(ART/'delivery/a8/effects.json');pages={p['id']:p for p in fx['pages']}

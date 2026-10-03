@@ -2,7 +2,12 @@
   "schema": 1,
   "providers": {
     "agy": {
-      "stop": null,
+      "stop": {
+        "at": "2026-10-03T13:17:30.387432+00:00",
+        "event": "stop",
+        "job": "a10-brennic-north-agy-a01",
+        "reason": "exit=0; files=2"
+      },
       "events": [
         {
           "at": "2026-10-02T18:54:18.844923+00:00",
@@ -683,11 +688,73 @@
           "at": "2026-10-03T11:47:01.492664+00:00",
           "event": "generated",
           "job": "a8-barrier-animation-agy-a01"
+        },
+        {
+          "at": "2026-10-03T12:41:40.454353+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-locomotion-agy-a01"
+        },
+        {
+          "at": "2026-10-03T12:45:53.020797+00:00",
+          "event": "generated",
+          "job": "a10-cassia-locomotion-agy-a01"
+        },
+        {
+          "at": "2026-10-03T12:47:34.208608+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-north-agy-a01"
+        },
+        {
+          "at": "2026-10-03T12:50:05.622082+00:00",
+          "event": "generated",
+          "job": "a10-cassia-north-agy-a01"
+        },
+        {
+          "at": "2026-10-03T13:03:11.687998+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-east-agy-a03"
+        },
+        {
+          "at": "2026-10-03T13:06:47.812811+00:00",
+          "event": "generated",
+          "job": "a10-cassia-east-agy-a03"
+        },
+        {
+          "at": "2026-10-03T13:08:31.953858+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-south-agy-a03"
+        },
+        {
+          "at": "2026-10-03T13:12:41.635717+00:00",
+          "event": "generated",
+          "job": "a10-cassia-south-agy-a03"
+        },
+        {
+          "at": "2026-10-03T13:13:29.828872+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-north-agy-a01"
+        },
+        {
+          "at": "2026-10-03T13:17:30.383228+00:00",
+          "event": "error-unknown-spend",
+          "job": "a10-brennic-north-agy-a01",
+          "reason": "exit=0; files=2"
+        },
+        {
+          "at": "2026-10-03T13:17:30.387432+00:00",
+          "event": "stop",
+          "job": "a10-brennic-north-agy-a01",
+          "reason": "exit=0; files=2"
         }
       ]
     },
     "grok": {
-      "stop": null,
+      "stop": {
+        "at": "2026-10-03T14:16:21.382680+00:00",
+        "event": "stop",
+        "job": "a10-cinder_hound-ne-grok-a02",
+        "reason": "HTTP 429"
+      },
       "events": [
         {
           "at": "2026-10-02T19:04:22.020804+00:00",
@@ -828,6 +895,393 @@
           "at": "2026-10-03T12:26:06.760545+00:00",
           "event": "generated",
           "job": "a9-rust-sand-banner-grok-a01"
+        },
+        {
+          "at": "2026-10-03T12:51:41.801815+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-north-grok-a02"
+        },
+        {
+          "at": "2026-10-03T12:52:35.742964+00:00",
+          "event": "generated",
+          "job": "a10-cassia-north-grok-a02"
+        },
+        {
+          "at": "2026-10-03T12:56:04.267707+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-east-grok-a01"
+        },
+        {
+          "at": "2026-10-03T12:56:38.573241+00:00",
+          "event": "generated",
+          "job": "a10-cassia-east-grok-a01"
+        },
+        {
+          "at": "2026-10-03T12:57:06.964668+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-south-grok-a01"
+        },
+        {
+          "at": "2026-10-03T12:57:42.780578+00:00",
+          "event": "generated",
+          "job": "a10-cassia-south-grok-a01"
+        },
+        {
+          "at": "2026-10-03T12:59:04.960596+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-east-grok-a02"
+        },
+        {
+          "at": "2026-10-03T12:59:33.754426+00:00",
+          "event": "generated",
+          "job": "a10-cassia-east-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:00:02.170724+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-south-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:00:24.449943+00:00",
+          "event": "generated",
+          "job": "a10-cassia-south-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:17:30.468470+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-north-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:18:03.328877+00:00",
+          "event": "generated",
+          "job": "a10-brennic-north-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:18:45.830218+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-east-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:19:28.917522+00:00",
+          "event": "generated",
+          "job": "a10-brennic-east-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:21:48.558226+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:22:15.698322+00:00",
+          "event": "generated",
+          "job": "a10-brennic-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:24:04.159262+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:24:32.449599+00:00",
+          "event": "generated",
+          "job": "a10-brennic-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:27:52.230721+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-se-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:28:18.207017+00:00",
+          "event": "generated",
+          "job": "a10-brennic-se-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:32:48.539502+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-se-grok-a03"
+        },
+        {
+          "at": "2026-10-03T13:33:24.303263+00:00",
+          "event": "generated",
+          "job": "a10-brennic-se-grok-a03"
+        },
+        {
+          "at": "2026-10-03T13:34:25.178035+00:00",
+          "event": "reserved",
+          "job": "a10-brennic-ne-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:34:56.630928+00:00",
+          "event": "generated",
+          "job": "a10-brennic-ne-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:35:46.519568+00:00",
+          "event": "reserved",
+          "job": "a10-garran-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:36:19.224257+00:00",
+          "event": "generated",
+          "job": "a10-garran-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:37:23.529965+00:00",
+          "event": "reserved",
+          "job": "a10-garran-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:37:49.578954+00:00",
+          "event": "generated",
+          "job": "a10-garran-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:39:15.348198+00:00",
+          "event": "reserved",
+          "job": "a10-iskar-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:39:40.346221+00:00",
+          "event": "generated",
+          "job": "a10-iskar-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:39:40.503104+00:00",
+          "event": "reserved",
+          "job": "a10-iskar-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:40:06.471058+00:00",
+          "event": "generated",
+          "job": "a10-iskar-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:40:06.645843+00:00",
+          "event": "reserved",
+          "job": "a10-cassia-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:40:34.780114+00:00",
+          "event": "generated",
+          "job": "a10-cassia-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:42:08.217669+00:00",
+          "event": "reserved",
+          "job": "a10-conscript-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:42:38.468332+00:00",
+          "event": "generated",
+          "job": "a10-conscript-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:42:38.630629+00:00",
+          "event": "reserved",
+          "job": "a10-shieldman-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:43:07.797152+00:00",
+          "event": "generated",
+          "job": "a10-shieldman-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:47:43.445148+00:00",
+          "event": "reserved",
+          "job": "a10-conscript-se-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:48:11.896709+00:00",
+          "event": "generated",
+          "job": "a10-conscript-se-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:48:12.061272+00:00",
+          "event": "reserved",
+          "job": "a10-shieldman-ne-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:48:37.196416+00:00",
+          "event": "generated",
+          "job": "a10-shieldman-ne-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:50:21.561192+00:00",
+          "event": "reserved",
+          "job": "a10-conscript-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:50:49.847682+00:00",
+          "event": "generated",
+          "job": "a10-conscript-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:50:50.055540+00:00",
+          "event": "reserved",
+          "job": "a10-shieldman-ne-corrected-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:51:12.991226+00:00",
+          "event": "generated",
+          "job": "a10-shieldman-ne-corrected-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:53:38.910300+00:00",
+          "event": "reserved",
+          "job": "a10-shieldman-ne-corrected-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:54:11.521302+00:00",
+          "event": "generated",
+          "job": "a10-shieldman-ne-corrected-grok-a02"
+        },
+        {
+          "at": "2026-10-03T13:54:11.716530+00:00",
+          "event": "reserved",
+          "job": "a10-slinger-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:54:38.906896+00:00",
+          "event": "generated",
+          "job": "a10-slinger-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:54:39.092192+00:00",
+          "event": "reserved",
+          "job": "a10-netter-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:55:07.344072+00:00",
+          "event": "generated",
+          "job": "a10-netter-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:58:45.863107+00:00",
+          "event": "reserved",
+          "job": "a10-slinger-se-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:59:07.633643+00:00",
+          "event": "generated",
+          "job": "a10-slinger-se-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:59:07.796758+00:00",
+          "event": "reserved",
+          "job": "a10-netter-se-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T13:59:28.466196+00:00",
+          "event": "generated",
+          "job": "a10-netter-se-guide-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:03:04.839355+00:00",
+          "event": "reserved",
+          "job": "a10-slinger-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:03:38.387706+00:00",
+          "event": "generated",
+          "job": "a10-slinger-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:03:38.487550+00:00",
+          "event": "reserved",
+          "job": "a10-netter-se-guide-grok-a02"
+        },
+        {
+          "at": "2026-10-03T14:03:55.877589+00:00",
+          "event": "generated",
+          "job": "a10-netter-se-guide-grok-a02"
+        },
+        {
+          "at": "2026-10-03T14:05:17.329493+00:00",
+          "event": "reserved",
+          "job": "a10-cinder_hound-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:05:47.668255+00:00",
+          "event": "generated",
+          "job": "a10-cinder_hound-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:05:47.839516+00:00",
+          "event": "reserved",
+          "job": "a10-mire_maw-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:06:21.266163+00:00",
+          "event": "generated",
+          "job": "a10-mire_maw-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:06:21.461935+00:00",
+          "event": "reserved",
+          "job": "a10-thornback-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:06:49.529201+00:00",
+          "event": "generated",
+          "job": "a10-thornback-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:06:49.713387+00:00",
+          "event": "reserved",
+          "job": "a10-hush_moth-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:07:16.754443+00:00",
+          "event": "generated",
+          "job": "a10-hush_moth-ne-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:08:46.582264+00:00",
+          "event": "reserved",
+          "job": "a10-netter-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:09:19.212247+00:00",
+          "event": "generated",
+          "job": "a10-netter-se-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:14:32.343693+00:00",
+          "event": "reserved",
+          "job": "a10-garran-se-gait-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:14:57.637824+00:00",
+          "event": "generated",
+          "job": "a10-garran-se-gait-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:15:25.821824+00:00",
+          "event": "reserved",
+          "job": "a10-iskar-se-gait-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:15:52.849969+00:00",
+          "event": "generated",
+          "job": "a10-iskar-se-gait-grok-a01"
+        },
+        {
+          "at": "2026-10-03T14:16:09.100917+00:00",
+          "event": "reserved",
+          "job": "a10-cinder_hound-ne-grok-a02"
+        },
+        {
+          "at": "2026-10-03T14:16:21.378618+00:00",
+          "event": "quota-stopped",
+          "job": "a10-cinder_hound-ne-grok-a02",
+          "reason": "HTTP 429"
+        },
+        {
+          "at": "2026-10-03T14:16:21.382680+00:00",
+          "event": "stop",
+          "job": "a10-cinder_hound-ne-grok-a02",
+          "reason": "HTTP 429"
         }
       ]
     }

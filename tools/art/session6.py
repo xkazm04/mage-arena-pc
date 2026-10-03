@@ -109,6 +109,8 @@ def portable(wave):
         from restoration_effects import build
     elif wave=='A9':
         from restoration_arena import build
+    elif wave=='A10':
+        from restoration_characters import build
     else:raise ValueError('UNSUPPORTED_WAVE')
     files=[p for p in (ART/'delivery'/wave.lower()).rglob('*') if p.is_file()]
     before={relative(p):sha(p) for p in files};blocked=[];raw=(ART/'raw').resolve()

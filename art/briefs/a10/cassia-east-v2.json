@@ -1,0 +1,30 @@
+{
+  "wave": "A10",
+  "id": "cassia-east",
+  "pilot": true,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "grok"
+  ],
+  "aspect_ratio": "1:1",
+  "references": [
+    {
+      "path": "art/waves/A10/references/cassia-east-single.png",
+      "sha256": "2cf261b6e29b5905fce45ee11f445f71745dad94fb94726f76501a7ec9dbc39a",
+      "role": "authored reference collage: left Moonchalk material bar, right ONE native A3c identity crop; layout and pose are not output instructions"
+    },
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+      "role": "material painting quality, not the portrait subject"
+    },
+    {
+      "path": "art/review/sources/a3c-cassia-poses-agy-a03.png",
+      "sha256": "8ad95303358d6e6e0325dc3140c9f2aa228a44b5af09e8f0f0af55d2e3d1f3dc",
+      "role": "exact character identity, clothing, equipment and palette"
+    }
+  ],
+  "prompt": "ONE production animation sprite sheet for ONE original character. Adult woman, dark curly hair and blue hood, ivory/pale-blue split layered cloth, water glass charms, worn silver clasps, crescent orb staff. Compact mist and droplets.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nThe supplied REFERENCE COLLAGE has TWO PANELS: LEFT is only the Moonchalk painted MATERIAL QUALITY, RIGHT is the exact character IDENTITY. Create an entirely NEW spritesheet; discard the collage layout and the identity pose. Rich sculpted hand-painted material and subtle broken painted edges, NOT thick ink outlines, flat comic shading or simplified cartoon shapes. Keep clothing layers, weapon, anatomy, proportions and colours identical in all keys. The weapon remains present in EVERY pose, held in the same anatomical hand; do not omit it from idle or running.\nEXACTLY FOUR equal columns and FOUR equal rows, 16 sprites. Uniform pure MAGENTA #FF00FF. No text, labels, grid lines, floor, shadows or extra effects. Largest available square image, ideally 2048x2048.\nEvery sprite and all equipment must fit inside its own cell, central 70 percent, at least 15 percent empty magenta margin on ALL sides. No overlapping cells, no cropped tips. Fixed 55-degree elevated orthographic camera. Same figure size and foot baseline.\nEVERY SINGLE CELL faces EAST, directly screen RIGHT: rightward profile, face or muzzle and feet point RIGHT in EVERY pose. No front or back views.\nREADING ORDER, left to right then next row:\nRow 1: cells 1-2 two IDLE breathing keys; cells 3-4 RUN keys 1-2 (right foot contact then compression).\nRow 2: four RUN keys 3-6 (passing, left foot contact, compression, passing). Six total run keys make a real alternating gait in the SAME facing direction. Limbs visibly change, cloth follows, no repeated stills.\nRow 3: cells 1-2 CAST/ATTACK anticipation then release using the character's staff, weapon or natural anatomy; cells 3-4 ABSORB/BRACE anticipation then planted resisting pose. Mages extend a free palm; other characters brace their shield or body. No large spell/barrier effects.\nRow 4: cells 1-2 HIT recoil then recovery, without injury; cells 3-4 DEATH collapse then intact resting body. Non-gory, no blood, fully clothed, equipment contained. Preserve the row's facing through these actions.\nExact 16 poses, only one camera direction in this entire image. No portrait, no scene. Fine painted cloth folds, metal glints, clear joints, no noisy surface overlay. Designed for a 40px-tall figure in game. Original design, no franchise characters.\nCRITICAL CORRECTION: all sixteen poses MUST maintain the SAME requested facing, including casting, bracing, recoil and resting. Do not copy any previous sheet. No missing equipment. Absolutely no extra seventeenth figure below the grid. Keep broad empty gutters, at least 15 percent cell height ABOVE and BELOW each body. Paint rich subtle physical material without black comic outlines.",
+  "revision": 2,
+  "correction_of": "a10-cassia-east-grok-a01"
+}

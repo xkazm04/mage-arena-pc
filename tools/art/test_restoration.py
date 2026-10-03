@@ -4,12 +4,19 @@ import tempfile
 from pathlib import Path
 import numpy as np
 from PIL import Image
-from restoration_common import luminous_alpha,alpha_metrics,grid,pack_frames,adaptive_magenta,isolated_sheet
+from restoration_common import luminous_alpha,alpha_metrics,grid,pack_frames,adaptive_magenta,variable_magenta,isolated_sheet
 from restoration_arena import periodic,seam_metrics
 from restoration_effects import exact_telegraph
 
 
 class RestorationTests(unittest.TestCase):
+    def test_variable_matte_removes_dark_pink_without_erasing_blue_cloth(self):
+        a=np.zeros((80,120,3),dtype='uint8');ramp=np.linspace(60,255,120).astype('uint8')
+        a[:,:,0]=ramp;a[:,:,2]=ramp;a[20:60,40:80]=[40,60,100]
+        keyed,_=variable_magenta(Image.fromarray(a));got=np.asarray(keyed)
+        self.assertEqual(int(got[:15,:,3].max()),0)
+        np.testing.assert_array_equal(got[30,60],[40,60,100,255])
+
     def test_magenta_key_preserves_neutral_and_rejects_wrong_matte(self):
         im=Image.fromarray(np.array([[[255,0,255],[80,80,80],[255,255,255]]],dtype='uint8'))
         got,_=adaptive_magenta(im,[255,0,255])

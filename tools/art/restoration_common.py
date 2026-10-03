@@ -61,6 +61,27 @@ def adaptive_magenta(image, matte_rgb=None,minimum_matte_chroma=50):
     return Image.fromarray(np.dstack((clean,np.round(alpha*255))).astype('uint8')),matte.tolist()
 
 
+def variable_magenta(image):
+    """Nearest measured saturated matte handles provider pink lighting gradients."""
+    from scipy import ndimage
+    rgb=np.asarray(image.convert('RGB'),dtype=np.float32);lo=np.minimum(rgb[:,:,0],rgb[:,:,2]);hi=np.maximum(rgb[:,:,0],rgb[:,:,2])
+    corners=np.concatenate([rgb[:8,:8].reshape(-1,3),rgb[:8,-8:].reshape(-1,3),rgb[-8:,:8].reshape(-1,3),rgb[-8:,-8:].reshape(-1,3)])
+    reference=np.median(corners,axis=0);ref_hue=(reference[0]-reference[1])/max(float(reference[0]+reference[2]-2*reference[1]),1)
+    hue=(rgb[:,:,0]-rgb[:,:,1])/np.maximum(rgb[:,:,0]+rgb[:,:,2]-2*rgb[:,:,1],1)
+    seed=(lo>45)&(lo>hi*.5)&(rgb[:,:,1]<hi*.45)&(abs(hue-ref_hue)<.08)
+    if seed.mean()<.1:raise ValueError('INSUFFICIENT_MAGENTA_BACKGROUND')
+    _,near=ndimage.distance_transform_edt(~seed,return_indices=True)
+    matte=rgb[near[0],near[1]]
+    r=(rgb[:,:,0]-rgb[:,:,1])/np.maximum(matte[:,:,0]-matte[:,:,1],1)
+    b=(rgb[:,:,2]-rgb[:,:,1])/np.maximum(matte[:,:,2]-matte[:,:,1],1)
+    chroma=np.minimum(r,b);alpha=np.clip(1-chroma,0,1)
+    alpha[(rgb[:,:,1]>110)&(chroma<.25)]=1;alpha[chroma>.94]=0
+    clean=np.clip((rgb-(1-alpha[:,:,None])*matte)/np.maximum(alpha[:,:,None],.04),0,255)
+    spill=(alpha<.96)&(clean[:,:,0]>clean[:,:,1]+12)&(clean[:,:,2]>clean[:,:,1]+12)
+    clean[:,:,0][spill]=clean[:,:,1][spill]+5;clean[:,:,2][spill]=clean[:,:,1][spill]+5;clean[alpha==0]=0
+    return Image.fromarray(np.dstack((clean,np.round(alpha*255))).astype('uint8')),np.median(rgb[seed],axis=0).tolist()
+
+
 def separated_sheet(image, columns=3):
     """Find actual empty inter-object bands; two rows may split per column."""
     keyed,matte=adaptive_magenta(image);a=np.asarray(keyed.getchannel('A'))
@@ -82,14 +103,14 @@ def separated_sheet(image, columns=3):
     return sorted(rows,key=lambda r:(r[1],r[0]))
 
 
-def isolated_sheet(image,columns=3,excluded_indices=()):
+def isolated_sheet(image,columns=3,excluded_indices=(),row_count=2,retain_clipped_for_rejection=False,keyer=adaptive_magenta):
     """Separate complete objects even when their row bounding boxes overlap.
 
     Pixels belong to the nearest opaque connected component. Component centroids
     assign the declared six sheet slots; no semantic acceptance is inferred.
     """
     from scipy import ndimage
-    keyed,matte=adaptive_magenta(image);rgba=np.asarray(keyed).copy();alpha=rgba[:,:,3]
+    keyed,matte=keyer(image);rgba=np.asarray(keyed).copy();alpha=rgba[:,:,3]
     labels,count=ndimage.label(alpha>=200)
     areas=np.bincount(labels.ravel());valid=areas>=8;valid[0]=False
     opaque=valid[labels]
@@ -101,17 +122,17 @@ def isolated_sheet(image,columns=3,excluded_indices=()):
     for ident in np.flatnonzero(valid):
         yy,xx=np.where(labels==ident)
         col=min(columns-1,int(float(xx.mean())/image.width*columns))
-        row=min(1,int(float(yy.mean())/image.height*2))
+        row=min(row_count-1,int(float(yy.mean())/image.height*row_count))
         groups[ident]=row*columns+col+1
     assignment=groups[labels[nearest[0],nearest[1]]]
     rows=[]
-    for index in range(columns*2):
+    for index in range(columns*row_count):
         if index in excluded_indices:continue
         own=rgba.copy();own[assignment!=index+1]=0
         full=Image.fromarray(own);metric=alpha_metrics(full)
         if metric['empty']:raise ValueError('MISSING_SHEET_SUBJECT:'+str(index))
         # A global edge violation cannot be hidden by subsequent padding.
-        if metric['margin_px']<2:raise ValueError('GLOBAL_SOURCE_CLIP:'+str(index))
+        if metric['margin_px']<2 and not retain_clipped_for_rejection:raise ValueError('GLOBAL_SOURCE_CLIP:'+str(index))
         box=full.getbbox();rect=[max(0,box[0]-6),max(0,box[1]-6),min(image.width,box[2]+6),min(image.height,box[3]+6)]
         rows.append((index%columns,index//columns,rect,full.crop(rect),matte))
     return rows

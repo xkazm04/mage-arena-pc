@@ -24,6 +24,8 @@ def check(wave,page_name='motion.html'):
                 page.wait_for_function('window.__artReady===true',timeout=60000)
                 checks=page.evaluate('window.__loaderChecks || {}')
                 assert all(checks.values()),checks
+                if wave=='A10':
+                    page.wait_for_function('window.__drawnCount>0',timeout=10000)
                 before=page.locator('canvas').screenshot()
                 page.wait_for_timeout(420)
                 after=page.locator('canvas').screenshot()

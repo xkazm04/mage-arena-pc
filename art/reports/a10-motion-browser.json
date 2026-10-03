@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "wave": "A10",
+  "scope": "standalone art consumer playback and image loading, not game FPS or owner feel",
+  "results": [
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "canvas_changed": true,
+      "loader_checks": {
+        "fourVelocityDirections": true,
+        "stationaryRetains": true,
+        "axisRetainsOtherComponent": true,
+        "missingIsNull": true
+      },
+      "errors": [],
+      "failed_requests": []
+    },
+    {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "canvas_changed": true,
+      "loader_checks": {
+        "fourVelocityDirections": true,
+        "stationaryRetains": true,
+        "axisRetainsOtherComponent": true,
+        "missingIsNull": true
+      },
+      "errors": [],
+      "failed_requests": []
+    }
+  ]
+}

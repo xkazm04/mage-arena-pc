@@ -94,6 +94,8 @@ def board(wave, extras=None):
 
 def check(wave):
     rows=read(ART/'review'/wave.lower()/'manifest.json')['rows'];errors=[]
+    relocation_file=ART/'waves'/wave/'reference-relocations.json'
+    relocations=read(relocation_file)['entries'] if relocation_file.exists() else []
     for r in rows:
         path=ROOT/r['file']
         if not path.exists() or sha(path)!=r['sha256']:errors.append(r['id']+':HASH')
@@ -101,13 +103,17 @@ def check(wave):
     for j in jobs(wave):
         if digest(j['input'])!=j['input_hash']:errors.append(j['id']+':BRIEF')
         for ref in j['input'].get('references',[]):
-            if sha(ROOT/ref['path'])!=ref['sha256']:errors.append(j['id']+':REFERENCE')
+            path=ROOT/ref['path']
+            if sha(path)!=ref['sha256']:
+                relocation=next((r for r in relocations if r['job']==j['id'] and r['originalPath']==ref['path'] and r['expectedSha256']==ref['sha256']),None)
+                if relocation:path=ROOT/relocation['resolvedPath']
+                if not relocation or not path.exists() or sha(path)!=ref['sha256']:errors.append(j['id']+':REFERENCE')
         rp=ART/'waves'/wave/'reviews'/(j['id']+'.json');gp=ART/'grades'/(j['id']+'.json')
         if not rp.exists() or read(rp)['sha256']!=j['sha256']:errors.append(j['id']+':REVIEW')
         if not gp.exists() or read(gp)['image_sha256']!=j['sha256']:errors.append(j['id']+':GRADE')
     result={'wave':wave,'integrity':'fail' if errors else 'pass','errors':errors,'rows':len(rows),
        'semantic_rejects':[r['id'] for r in rows if r.get('direct',{}).get('verdict')=='reject' or r.get('local',{}).get('verdict')=='reject'],
-       'owner_accepted':False,'engine_motion_and_feel':'not measured'}
+       'owner_accepted':False,'engine_motion_and_feel':'not measured','auditedReferenceRelocations':relocations}
     write(ART/'reports'/(wave.lower()+'-covenant-check.json'),result);print(json.dumps(result));return result
 
 

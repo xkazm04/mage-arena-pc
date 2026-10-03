@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "2e6be4ce-e9db-4d11-9cca-b8d97160fa87",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-brennic-north-grok-a02\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-brennic-north-grok-a02",
+  "references": [
+    {
+      "path": "art/waves/A10/references/brennic-north-bust-v1.png",
+      "sha256": "0887ba154cbb045676cfed57b5e0cb090eeae65e975c41d8096c2c8800852444",
+      "role": "left Moonchalk material; centre A3c upper-body identity; right approved portrait when present"
+    }
+  ]
+}

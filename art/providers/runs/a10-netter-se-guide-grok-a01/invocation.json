@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "5f1234cb-0fe5-47b1-87fa-b70d3daa83fa",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-netter-se-guide-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-netter-se-guide-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/netter-se-guide-input.png",
+      "sha256": "6e3f173024b76fa1eaf8aa2dda3662c32b2ea389b0dc4af60ea3fc09bc784c50",
+      "role": "full-body A3c identity; change anatomical viewing direction only"
+    }
+  ]
+}

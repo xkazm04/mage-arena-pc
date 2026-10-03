@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "4cbe8b7b-a604-4e5d-962a-4ab12695f077",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-cassia-ne-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-cassia-ne-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/cassia-ne-square-v1.png",
+      "sha256": "5de1aa96ecccf9ef164d295aa4015f8c9b9d3713ac31533e620cb80b2e3ac927",
+      "role": "single full-body A3c identity crop on square canvas"
+    }
+  ]
+}

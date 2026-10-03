@@ -1,0 +1,47 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "d54fddef-48b0-42fd-b8f2-163c4c59cf6f",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-cassia-south-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-cassia-south-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/cassia-south.png",
+      "sha256": "e2bf1ced53917c9952eb16e6ab0dafc7400b41fb4e97d0b7d001765688051ca0",
+      "role": "authored reference collage: left Moonchalk painting bar, middle A3c identity, right reviewed north sheet when present"
+    },
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+      "role": "material painting quality, not the portrait subject"
+    },
+    {
+      "path": "art/review/sources/a3c-cassia-poses-agy-a03.png",
+      "sha256": "8ad95303358d6e6e0325dc3140c9f2aa228a44b5af09e8f0f0af55d2e3d1f3dc",
+      "role": "exact character identity, clothing, equipment and palette"
+    },
+    {
+      "path": "art/review/sources/a10-cassia-north-grok-a02.jpg",
+      "sha256": "40e3400f15ee716140c1fde9d3dedd4eeb8d8d0cbd5003ff04a1c394def0dd89",
+      "role": "keep this generated character model and material treatment"
+    }
+  ]
+}
