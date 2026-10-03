@@ -76,6 +76,16 @@ export class ArenaGame {
   private previousSlot = 0;
   private disposed = false;
   private frames: number[] = [];
+  private artDebugKey = (e: KeyboardEvent) => {
+    if (e.code === "F8") {
+      e.preventDefault();
+      this.scene.debugEnabled = !this.scene.debugEnabled;
+    }
+    if (this.scene.debugEnabled && e.code === "BracketRight")
+      this.scene.debugPage++;
+    if (this.scene.debugEnabled && e.code === "BracketLeft")
+      this.scene.debugPage--;
+  };
   constructor(
     readonly ui: CanvasUI,
     readonly settings: () => void,
@@ -87,6 +97,7 @@ export class ArenaGame {
       this.training.player.pos,
     );
     this.scene = new ArenaScene(ui.app, ui.world);
+    window.addEventListener("keydown", this.artDebugKey);
     this.input = new ArenaInput(
       ui.app.canvas,
       () => this.camera,
@@ -728,12 +739,15 @@ export class ArenaGame {
       palette: this.scene.scenery.palette,
       derivedTextureBytes: this.scene.scenery.derivedBytes,
       figureSource:
-        "Covenant procedural; A3c motion/facing continuity gates pending",
+        "A10 partial directional clips with explicit same-entity fallback",
+      animation: this.scene.bodies.snapshot(),
+      effects: this.scene.clips.snapshot(),
       depthOrder: this.scene.depthSnapshot(),
     });
   }
   dispose() {
     this.disposed = true;
+    window.removeEventListener("keydown", this.artDebugKey);
     this.input.dispose();
     this.scene.dispose();
     gameAudio.setScene("silent");

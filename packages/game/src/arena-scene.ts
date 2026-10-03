@@ -1,4 +1,10 @@
-import { Container, Graphics, Sprite, type Application } from "pixi.js";
+import {
+  BitmapText,
+  Container,
+  Graphics,
+  Sprite,
+  type Application,
+} from "pixi.js";
 import {
   arenaGeometry,
   combat,
@@ -21,6 +27,7 @@ import {
 } from "./camera.ts";
 import { FigureLibrary } from "./sprites.ts";
 import { ArenaArt, type Palette } from "./arena-art.ts";
+import { BodyPlayer } from "./body-player.ts";
 import { EffectPlayer } from "./effect-player.ts";
 import animation from "../data/animation.json" with { type: "json" };
 
@@ -39,6 +46,14 @@ export class ArenaScene {
   private figures = new Container();
   private effects = new Graphics();
   readonly clips = new EffectPlayer();
+  readonly bodies = new BodyPlayer();
+  debugEnabled = false;
+  debugPage = 0;
+  private debugLabel = new BitmapText({
+    text: "",
+    style: { fontFamily: "CovenantBody", fontSize: 20, fill: 0xffffff },
+  });
+  private debugPanel = new Graphics();
   private actors = new Map<
     number,
     { root: Container; sprite: Sprite; details: Graphics }
@@ -56,6 +71,8 @@ export class ArenaScene {
       this.figures,
       this.clips.front,
       this.effects,
+      this.debugPanel,
+      this.debugLabel,
     );
     this.figures.sortableChildren = true;
     this.buildFloor();
@@ -70,6 +87,9 @@ export class ArenaScene {
   dispose() {
     this.library.dispose();
     this.clips.dispose();
+    this.bodies.dispose();
+    this.debugLabel.destroy();
+    this.debugPanel.destroy();
     this.scenery.dispose();
     for (const c of [this.floor, this.ground, this.figures, this.effects])
       c.destroy({ children: true });
@@ -247,6 +267,7 @@ export class ArenaScene {
     g.clear();
     e.clear();
     this.clips.begin(state, c, alpha);
+    this.bodies.begin(state, alpha);
     this.scenery.render(c);
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
     this.floor.position.set(
@@ -384,7 +405,8 @@ export class ArenaScene {
       view.root.position.set(q.x, q.y);
       view.root.visible =
         q.x > -h && q.x < c.width + h && q.y > -h && q.y < c.height + h;
-      this.library.apply(view.sprite, a, player.team, h);
+      if (!this.bodies.apply(view.sprite, a, m.figureHeightPx))
+        this.library.apply(view.sprite, a, player.team, h);
       const d = view.details;
       d.clear();
       if (!a.enemy && !a.dummy && !a.down) {
@@ -534,6 +556,29 @@ export class ArenaScene {
       else e.circle(q.x, q.y, r).fill(colour);
     }
     this.clips.finish(state);
+    this.debugLabel.visible = this.debugPanel.visible = this.debugEnabled;
+    if (this.debugEnabled) {
+      const messages = [...this.bodies.fallbacks],
+        pageCount = Math.max(1, Math.ceil(messages.length / 10));
+      const page = ((this.debugPage % pageCount) + pageCount) % pageCount;
+      this.debugLabel.text =
+        `ART DEBUG ? F8 close / [ ] pages ${page + 1}/${pageCount}\nA10 fallbacks logged once: ${messages.length} / A8 sprites: ${this.clips.snapshot().active}\n` +
+        messages.slice(page * 10, page * 10 + 10).join("\n");
+      this.debugLabel.position.set(
+        100 * m.resolutionScale,
+        290 * m.resolutionScale,
+      );
+      this.debugLabel.scale.set(m.resolutionScale);
+      this.debugPanel
+        .clear()
+        .rect(
+          this.debugLabel.x - 12,
+          this.debugLabel.y - 12,
+          this.debugLabel.width + 24,
+          this.debugLabel.height + 24,
+        )
+        .fill({ color: 0x081118, alpha: 0.94 });
+    }
     const target = groundToScreen(aim, c),
       cross = 7 * m.resolutionScale;
     e.circle(target.x, target.y, cross).stroke({
