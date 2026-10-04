@@ -15,6 +15,8 @@ export class ArtFixture {
   private elapsed = 0;
   private cycle = -1;
   private hitCycle = -1;
+  private poseSince = 0;
+  private previousPose?: BodyState;
   pose?: { state: BodyState; direction: Direction };
   constructor(
     readonly kind: Element | "stress" | "fallbacks",
@@ -49,7 +51,7 @@ export class ArtFixture {
             "mire_maw",
             "thornback",
             "hush_moth",
-            "cassia",
+            "cinder_hound",
           ];
     ids.forEach((id, i) => {
       const pos = {
@@ -57,9 +59,7 @@ export class ArtFixture {
         y: centre.y + (Math.floor(i / 4) - 1) * 10,
       };
       const a =
-        i < 4 || (i === 11 && kind !== "fallbacks")
-          ? addMage(this.state, 0, pos, id)
-          : addEnemy(this.state, id, pos);
+        i < 4 ? addMage(this.state, 0, pos, id) : addEnemy(this.state, id, pos);
       this.elements.set(
         a.id,
         kind === "stress" || kind === "fallbacks"
@@ -97,6 +97,10 @@ export class ArtFixture {
       previousTick = this.state.tick;
     this.state.tick = nextTick;
     const directions = { ne: [1, -1], se: [1, 1], sw: [-1, 1], nw: [-1, -1] };
+    if (this.pose?.state !== this.previousPose) {
+      this.previousPose = this.pose?.state;
+      this.poseSince = nextTick;
+    }
     for (const [i, a] of this.state.actors.entries()) {
       const direction =
         this.pose?.direction ??
@@ -132,8 +136,8 @@ export class ArtFixture {
         state === "cast"
           ? {
               kind: "spell",
-              startTick: 0,
-              releaseTick: 1e9,
+              startTick: this.poseSince,
+              releaseTick: this.poseSince + 60,
               aim: { x: a.pos.x + dx! * 5, y: a.pos.y + dy! * 5 },
               activationId: a.id,
               spellId: "lash:1:base",
@@ -160,7 +164,7 @@ export class ArtFixture {
         p.pos.y = this.state.actors[i % 12]!.pos.y + 2;
     }
     const cycle = Math.floor(this.elapsed);
-    if (cycle !== this.cycle && this.kind !== "stress") {
+    if (cycle !== this.cycle && this.kind !== "stress" && !this.pose) {
       this.cycle = cycle;
       for (const a of this.state.actors.slice(0, 4))
         this.state.events.push({

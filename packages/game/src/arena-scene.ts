@@ -789,7 +789,7 @@ export class ArenaScene {
         pageCount = Math.max(1, Math.ceil(messages.length / 10));
       const page = ((this.debugPage % pageCount) + pageCount) % pageCount;
       this.debugLabel.text =
-        `ART DEBUG ? F8 close / [ ] pages ${page + 1}/${pageCount}\nA10 fallbacks logged once: ${messages.length} / A8 sprites: ${this.clips.snapshot().active}\n` +
+        `ART DEBUG / F8 close / [ ] pages ${page + 1}/${pageCount}\nCharacter fallbacks logged once: ${messages.length} / A8 sprites: ${this.clips.snapshot().active}\n` +
         messages.slice(page * 10, page * 10 + 10).join("\n");
       this.debugLabel.position.set(
         100 * m.resolutionScale,

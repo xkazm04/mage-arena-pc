@@ -9,6 +9,7 @@ import {
 import { art } from "./art.ts";
 import {
   bodyIdentity,
+  mothContact,
   corpseForDeath,
   selectBodyClip,
   type BodySelection,
@@ -166,17 +167,24 @@ export class BodyPlayer {
     const motion = this.actors.get(a.id)!;
     const vx = a.pos.x - a.previousPos.x,
       vy = a.pos.y - a.previousPos.y;
+    const windup = this.state?.telegraphs.find(
+      (t) => t.ownerId === a.id && !t.survivesOwner,
+    );
+    const castWindow =
+      a.pending ??
+      (windup && {
+        startTick: windup.startTick,
+        releaseTick: windup.resolveTick,
+      });
     const state: BodyState = a.tags.includes("DEFEATED")
       ? "death"
       : motion.hitElapsed < motion.hitDuration
         ? motion.hitState
         : a.absorb
           ? "absorb"
-          : a.pending ||
+          : castWindow ||
               this.tick < motion.castUntil ||
-              this.state?.telegraphs.some(
-                (t) => t.ownerId === a.id && !t.survivesOwner,
-              )
+              (this.state && mothContact(a, this.state))
             ? "cast"
             : Math.abs(vx) + Math.abs(vy) > 1e-6
               ? "run"
@@ -265,31 +273,34 @@ export class BodyPlayer {
       !selected.held;
     // A missing death holds the actual last displayed frame; other substituted
     // states hold a neutral key. All original action clips hold their last key.
+    const durationMs = selected.clip.frames.reduce(
+      (n, f) => n + f.durationMs,
+      0,
+    );
+    const elapsedMs = state.startsWith("hit")
+      ? Math.min(
+          0.999,
+          motion.hitElapsed / Math.max(0.001, motion.hitDuration),
+        ) * durationMs
+      : castWindow && state === "cast"
+        ? Math.min(
+            0.999,
+            Math.max(
+              0,
+              (this.tick - castWindow.startTick) /
+                Math.max(1, castWindow.releaseTick - castWindow.startTick),
+            ),
+          ) * durationMs
+        : state === "cast" && this.tick < motion.castUntil
+          ? durationMs
+          : state === "death"
+            ? (motion.deathElapsed ?? 0) * 1000
+            : seconds(this.tick - motion.since) * 1000;
     const index = selected.held
       ? state === "death" && selected.clip === motion.selection?.clip
         ? motion.frame
         : 0
-      : frameIndex(
-          selected.clip,
-          state.startsWith("hit")
-            ? Math.min(
-                0.999,
-                motion.hitElapsed / Math.max(0.001, motion.hitDuration),
-              ) * selected.clip.frames.reduce((n, f) => n + f.durationMs, 0)
-            : a.pending && state === "cast"
-              ? Math.min(
-                  0.999,
-                  Math.max(
-                    0,
-                    (this.tick - a.pending.startTick) /
-                      Math.max(1, a.pending.releaseTick - a.pending.startTick),
-                  ),
-                ) * selected.clip.frames.reduce((n, f) => n + f.durationMs, 0)
-              : state === "death"
-                ? (motion.deathElapsed ?? 0) * 1000
-                : seconds(this.tick - motion.since) * 1000,
-          true,
-        );
+      : frameIndex(selected.clip, elapsedMs, true);
     const frame = selected.clip.frames[index] ?? selected.clip.frames[0]!;
     const frameKey = `${selected.clip.page}:${frame.rect.join()}`;
     let texture = this.frames.get(frameKey);
@@ -328,6 +339,9 @@ export class BodyPlayer {
       anchor: draw.anchor,
       delivery: selected.clip.delivery ?? "A10",
       rotation: sprite.rotation,
+      elapsedMs,
+      durationMs,
+      page: selected.clip.page,
     });
     return true;
   }

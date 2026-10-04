@@ -1036,7 +1036,7 @@ export class ArenaGame {
       groundDiagnostics: this.scene.scenery.diagnostics,
       derivedTextureBytes: this.scene.scenery.derivedBytes,
       figureSource:
-        "A10 partial directional clips with explicit same-entity fallback",
+        "A10 + A14.3 directional clips with explicit same-entity fallback",
       animation: this.scene.bodies.snapshot(),
       effects: this.scene.clips.snapshot(),
       sigils: this.scene.sigils.snapshot(),

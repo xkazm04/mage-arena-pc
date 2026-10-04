@@ -40,3 +40,19 @@ Facing is selectable. This supports reaction/corpse inspection without modifying
 any deterministic core or save-version inputs. Existing active creature roster
 practice remains available. Prefer delivered paired collapse/corpse over legacy
 unpaired rear deaths for Maw/Thornback; retain all source clips in the manifest.
+
+
+Sub-wave 2 complete: `420d1cc`; `npm run gate` 213 tests + 11 reference checks;
+build pass. Native reaction walk subsequently passed with 276 captures at both
+sizes, including all 48 entity/direction collapse/corpse pairs and Lab choices.
+
+Sub-wave 3: all 46 additional clips fill actual A10 gaps (28 idle/run/cast,
+18 absorb). Absorb artwork does not grant an enemy a ward mechanic; Garran's
+rear ward can use its new clip and enemy resistance clips are available to
+presentation consumers/preview. Creature telegraph windups now fit the complete
+cast sequence, and release holds the last key. Hush Moth contact drain has no
+cast event, so a read-only contact predicate selects its delivered attack pose
+in active creature combat, excluding the stationary Lab target. Art fixture
+casts have finite preview windows and pose inspections exclude synthetic hits.
+The stress fixture now contains twelve distinct roster identities, including
+Cinder Hound (the previous fixture duplicated Cassia).

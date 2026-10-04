@@ -1,8 +1,29 @@
-import type { Actor } from "@mage/core/arena";
+import { runtime, type Actor, type ArenaState } from "@mage/core/arena";
 import type { Body, BodyState, Clip, Direction } from "./animation-contract.ts";
 import policy from "../data/animation.json" with { type: "json" };
 
 const directions: Direction[] = ["ne", "se", "sw", "nw"];
+/** Read-only presentation of the moth's existing contact drain; no new attack. */
+export function mothContact(a: Actor, state: ArenaState): boolean {
+  return (
+    a.enemy?.id === "hush_moth" &&
+    !state.lab &&
+    !a.tags.includes("DEFEATED") &&
+    state.tick >= (a.staggerUntil ?? 0) &&
+    state.tick >= a.enemy.stunnedUntil &&
+    state.tick >= a.water.encasedUntil &&
+    state.actors.some(
+      (target) =>
+        target.team !== a.team &&
+        !target.tags.includes("DEFEATED") &&
+        target.mana > 0 &&
+        state.tick >= target.immuneUntil &&
+        state.tick >= target.water.encasedUntil &&
+        Math.hypot(target.pos.x - a.pos.x, target.pos.y - a.pos.y) <=
+          runtime.games.contactRangeM,
+    )
+  );
+}
 export interface BodySelection {
   state: BodyState;
   direction: Direction;
