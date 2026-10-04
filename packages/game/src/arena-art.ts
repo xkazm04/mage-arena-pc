@@ -1,4 +1,5 @@
-import { Container, Sprite } from "pixi.js";
+import { Container, Sprite, Texture, Rectangle } from "pixi.js";
+import type { SigilManifest } from "./sigil-contract.ts";
 import { art } from "./art.ts";
 import {
   cameraMetrics,
@@ -47,6 +48,7 @@ export class ArenaArt {
   private leases: string[] = [];
   private fallback?: TiledArenaArt;
   private spec?: Plate;
+  private decalFrames: Texture[] = [];
   derivedBytes = 0;
   constructor(
     private floor: Container,
@@ -58,6 +60,8 @@ export class ArenaArt {
     for (const p of this.props) p.root.destroy({ children: true });
     this.props.length = 0;
     for (const child of this.plate.removeChildren()) child.destroy();
+    for (const texture of this.decalFrames) texture.destroy();
+    this.decalFrames = [];
     for (const key of this.leases) art.release(key);
     this.leases = [];
     this.fallback?.dispose();
@@ -99,6 +103,71 @@ export class ArenaArt {
       sprite.width = p.worldSizeMetres[0];
       sprite.height = p.worldSizeMetres[1];
       this.plate.addChild(sprite);
+      // A13 placements are registered in the already-projected A12 plate UVs.
+      // This container's world transform supplies the projection; do not squash twice.
+      try {
+        const [floor, sigils] = await Promise.all([
+          art.json("a13.floor") as Promise<{
+            palettes: Record<
+              Palette,
+              {
+                decals: {
+                  clip: string;
+                  centreUV: [number, number];
+                  frameSizeMasterPx: [number, number];
+                  opacity: number;
+                }[];
+              }
+            >;
+          }>,
+          art.json("a13.manifest") as Promise<SigilManifest>,
+        ]);
+        if (this.disposed || generation !== this.generation) return;
+        const decals = floor.palettes[palette].decals;
+        const floorKeys = [
+          `a13.cleanup.${palette}`,
+          `a13.page.floor.${palette}`,
+        ];
+        floorKeys.forEach((k) => {
+          this.leases.push(k);
+          art.retain(k);
+        });
+        const [cleanup, page] = await Promise.all(
+          floorKeys.map((k) => art.load(k)),
+        );
+        if (this.disposed || generation !== this.generation) return;
+        if (cleanup) {
+          const overlay = new Sprite(cleanup);
+          overlay.position.copyFrom(sprite.position);
+          overlay.width = sprite.width;
+          overlay.height = sprite.height;
+          this.plate.addChild(overlay);
+        }
+        if (page)
+          for (const decal of decals) {
+            const frame = new Texture({
+              source: page.source,
+              frame: new Rectangle(
+                ...sigils.clips[decal.clip]!.frames[0]!.rect,
+              ),
+            });
+            this.decalFrames.push(frame);
+            const mark = new Sprite(frame);
+            mark.anchor.set(0.5);
+            mark.position.set(
+              sprite.x + decal.centreUV[0] * sprite.width,
+              sprite.y + decal.centreUV[1] * sprite.height,
+            );
+            mark.width =
+              (decal.frameSizeMasterPx[0] / p.size[0]) * sprite.width;
+            mark.height =
+              (decal.frameSizeMasterPx[1] / p.size[1]) * sprite.height;
+            mark.alpha = decal.opacity;
+            this.plate.addChild(mark);
+          }
+      } catch (error) {
+        this.diagnostics.push(`Optional floor sigils: ${String(error)}`);
+      }
       for (const [i, o] of p.occluders.entries()) {
         const root = new Container(),
           sprite = new Sprite(textures[i + 1]);

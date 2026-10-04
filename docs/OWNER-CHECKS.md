@@ -476,3 +476,8 @@ clamps. Decorative stones are not solid obstacles. Old source-version saves
 are rejected explicitly; start a new season after rebuilding. Painted A13
 sigils are still pending behind the optional loader. CF1 adds the direct Lab
 entry and a new start guide next.
+
+
+## U6 ? painted sigils and complete screen pass (2026-10-04)
+
+Review [the native screenshot gallery](waves/U6-evidence/index.html). All twelve threat/element combinations, progress phases, ward/perfect window, three floor palettes and the complete screen tour are included. In the Lab check that approaching threats read before they resolve, that ward orientation is clear, and that text reads at normal TV distance. This is an owner feel/visual judgment, not a claim made by the automated checks. H1 follows next.

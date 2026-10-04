@@ -5,7 +5,7 @@ import {
   Container,
   Graphics,
   type NineSliceSprite,
-  type Sprite,
+  Sprite,
 } from "pixi.js";
 import { colours, UiKit } from "./kit.ts";
 import { installFonts, fontDiagnostics, fontTextureBytes } from "./fonts.ts";
@@ -107,7 +107,12 @@ export class CanvasUI {
         autoDensity: true,
       }),
     ]);
-    await this.kit.load();
+    await Promise.all([
+      this.kit.load(),
+      art.preload(
+        ["fire", "water", "earth", "air"].map((e) => `a13.glyph.${e}`),
+      ),
+    ]);
     this.artCursor = this.kit.cursor("cursor.pointer");
     for (const id of ["pointer", "aim", "interact", "blocked"]) {
       const s = this.kit.cursor(`cursor.${id}`);
@@ -572,6 +577,16 @@ export class CanvasUI {
     parent: Container = this.content,
     colour = colours.water,
   ) {
+    const radical = art.get(`a13.glyph.${kind}`);
+    if (radical) {
+      const sprite = new Sprite(radical);
+      sprite.anchor.set(0.5);
+      sprite.position.set(x, y);
+      const scale = (r * 2) / Math.max(sprite.width, sprite.height);
+      sprite.scale.set(scale);
+      parent.addChild(sprite);
+      return sprite;
+    }
     const delivered = this.kit.sprite(`icon.${kind}`);
     if (delivered) {
       delivered.anchor.set(0.5);
@@ -938,17 +953,25 @@ export class CanvasUI {
       this.feedback.addChild(t);
       const x = Math.min(1250, Math.max(100, target.x)),
         y = Math.max(70, Math.min(820, target.y - 125));
-      this.panel(x, y, 560, 112, "tooltip", t);
-      this.text(
+      const text = this.text(
         target.tooltip,
-        x + 22,
-        y + 19,
+        x + 38,
+        y + 32,
         26,
         colours.text,
-        516,
+        484,
         false,
         t,
       );
+      const panel = this.panel(
+        x,
+        y,
+        560,
+        Math.max(128, text.height + 64),
+        "tooltip",
+        t,
+      );
+      t.setChildIndex(panel, 0);
       this.tooltip = t;
     }
     if (

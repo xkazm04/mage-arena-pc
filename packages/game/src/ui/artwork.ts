@@ -1,7 +1,50 @@
-import { Container, Graphics, Sprite, Texture } from "pixi.js";
+import { Container, Graphics, Sprite, Texture, Rectangle } from "pixi.js";
+import type { SigilManifest } from "../sigil-contract.ts";
 import { art } from "../art.ts";
 import type { CanvasUI } from "./ui.ts";
 import { colours } from "./kit.ts";
+
+let sigilManifest: Promise<SigilManifest> | undefined;
+const sigilFrames = new Map<string, Texture>();
+/** Static painted inscription for menus; no gameplay or animation state implied. */
+export function sigil(
+  ui: CanvasUI,
+  id: string,
+  x: number,
+  y: number,
+  size: number,
+  opacity = 1,
+) {
+  const root = new Container();
+  root.position.set(x, y);
+  root.alpha = opacity;
+  ui.content.addChild(root);
+  sigilManifest ??= art.json("a13.manifest") as Promise<SigilManifest>;
+  void sigilManifest
+    .then(async (m) => {
+      const clip = m.clips[id];
+      if (!clip) return;
+      const page = await art.load(`a13.page.${clip.page}`);
+      if (!page || root.destroyed) return;
+      let texture = sigilFrames.get(id);
+      if (!texture) {
+        texture = new Texture({
+          source: page.source,
+          frame: new Rectangle(...clip.frames[0]!.rect),
+        });
+        sigilFrames.set(id, texture);
+      }
+      const sprite = new Sprite(texture);
+      sprite.anchor.set(0.5);
+      sprite.width = size;
+      sprite.height = size;
+      root.addChild(sprite);
+    })
+    .catch(() => {
+      /* The existing kit remains the missing-delivery fallback. */
+    });
+  return root;
+}
 
 /** A fixed layout box survives missing/corrupt art. Async loads never revive disposed scenes. */
 export function picture(

@@ -20,6 +20,7 @@ import type { BitmapText } from "pixi.js";
 import type { ArenaGame } from "./arena-entry.ts";
 import { colours } from "./ui/kit.ts";
 import type { CanvasUI } from "./ui/ui.ts";
+import { sigil } from "./ui/artwork.ts";
 
 const title = (s: string) => s[0]!.toUpperCase() + s.slice(1);
 /** All interaction is drawn by the canvas kit. Clipboard/drop is data transport only. */
@@ -104,9 +105,10 @@ export class LabUI {
     this.clear();
     this.u.begin(screen);
     this.u.panel(72, 40, 1776, 996, "panel.modal");
-    this.u.text("COMBAT FEEL LAB", 106, 64, 24, colours.gold);
+    this.u.text("COMBAT FEEL LAB", 120, 76, 24, colours.gold);
     this.u.text(name, 106, 106, 46, colours.text, 1650, true);
     this.u.text(subtitle, 106, 165, 24, colours.muted, 1650);
+    sigil(this.u, "inscription.wardstone", 1735, 120, 125, 0.7);
   }
   private keys = (e: KeyboardEvent) => {
     if (this.numeric || this.importing || e.repeat) return false;
@@ -525,13 +527,13 @@ export class LabUI {
             () => this.drawTuning(),
           ),
         );
-    u.panel(1300, 310, 480, 574);
+    u.panel(1300, 310, 480, 606);
     tuningPresets.forEach((p, i) =>
       u.button(
         `lab-preset-${p}`,
         p,
         1320,
-        328 + i * 72,
+        344 + i * 72,
         440,
         64,
         () => {
@@ -545,7 +547,7 @@ export class LabUI {
       "lab-tuning-live",
       this.game.paused ? "P  Run while tuning" : "P  Freeze simulation",
       1320,
-      560,
+      576,
       440,
       64,
       () => {
@@ -558,7 +560,7 @@ export class LabUI {
       "lab-export",
       "Export tuning JSON",
       1320,
-      632,
+      648,
       440,
       64,
       () => this.export(),
@@ -568,7 +570,7 @@ export class LabUI {
       "lab-import",
       "Import tuning JSON",
       1320,
-      704,
+      720,
       440,
       64,
       () => this.openImport(),
@@ -576,11 +578,11 @@ export class LabUI {
     );
     u.text(
       "Sliders: drag or Left / Right.\nClick a value to type it.\nWarnings keep their safe minimum.",
-      1320,
-      790,
+      1340,
+      806,
       23,
       colours.muted,
-      430,
+      400,
     );
     u.button("lab-tuning-close", "Return to combat", 106, 940, 390, 64, () =>
       this.close(),

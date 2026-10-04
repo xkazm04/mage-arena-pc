@@ -1,4 +1,4 @@
-import { CombatFeedback, feedbackPolicy } from "./combat-feedback.ts";
+import { CombatFeedback } from "./combat-feedback.ts";
 import { tuningFor } from "@mage/core/arena";
 import {
   BitmapText,
@@ -30,6 +30,8 @@ import { FigureLibrary } from "./sprites.ts";
 import { ArenaArt, type Palette } from "./arena-art.ts";
 import { BodyPlayer } from "./body-player.ts";
 import { EffectPlayer } from "./effect-player.ts";
+import { SigilPlayer } from "./sigil-player.ts";
+import type { Element } from "./animation-contract.ts";
 import animation from "../data/animation.json" with { type: "json" };
 
 const ink = 0x07161e;
@@ -47,7 +49,7 @@ export class ArenaScene {
   private figures = new Container();
   private effects = new Graphics();
   readonly clips = new EffectPlayer();
-  readonly sigils = new EffectPlayer("a13");
+  readonly sigils = new SigilPlayer();
   readonly bodies = new BodyPlayer();
   readonly feedback = new CombatFeedback();
   debugEnabled = false;
@@ -63,6 +65,7 @@ export class ArenaScene {
   >();
   private c!: Camera;
   private debug = false;
+  private timeMs = 0;
   visibleProjectiles = 0;
   sortedActorIds: number[] = [];
   constructor(app: Application, parent: Container = app.stage) {
@@ -201,11 +204,27 @@ export class ArenaScene {
         .stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
     }
   }
-  private area(p: Vec, radius: number, colour: number, progress: number): void {
-    this.sigils.draw("telegraph.area", progress * 1000, p, {
-      behind: true,
-      groundSize: { x: radius * 2, y: radius * 2 },
-    });
+  private area(
+    p: Vec,
+    radius: number,
+    colour: number,
+    progress: number,
+    element: Element = "water",
+    unblockable = false,
+  ): void {
+    if (
+      this.sigils.threat(
+        element,
+        p,
+        { shape: "ring", range: radius },
+        progress,
+        this.timeMs,
+        0,
+        unblockable,
+      ) &&
+      !this.debug
+    )
+      return;
     this.circle(p, radius, colour);
     this.circle(
       p,
@@ -222,18 +241,28 @@ export class ArenaScene {
     range: number,
     width: number,
     colour: number,
+    progress = 0,
+    element: Element = "water",
+    unblockable = false,
   ): void {
     const angle = Math.atan2(target.y - origin.y, target.x - origin.x),
       dx = Math.cos(angle),
       dy = Math.sin(angle),
       w = width / 2;
     const end = { x: origin.x + dx * range, y: origin.y + dy * range };
-    this.sigils.draw(
-      "telegraph.line",
-      0,
-      { x: (origin.x + end.x) / 2, y: (origin.y + end.y) / 2 },
-      { behind: true, angle, groundSize: { x: range, y: width } },
-    );
+    if (
+      this.sigils.threat(
+        element,
+        origin,
+        { shape: "line", range, width },
+        progress,
+        this.timeMs,
+        angle,
+        unblockable,
+      ) &&
+      !this.debug
+    )
+      return;
     this.path([
       { x: origin.x - dy * w, y: origin.y + dx * w },
       { x: end.x - dy * w, y: end.y + dx * w },
@@ -267,12 +296,23 @@ export class ArenaScene {
     radius: number,
     degrees: number,
     colour: number,
+    progress = 0,
+    element: Element = "water",
+    unblockable = false,
   ): void {
-    this.sigils.draw("telegraph.cone", 0, origin, {
-      behind: true,
-      angle: Math.atan2(target.y - origin.y, target.x - origin.x),
-      groundSize: { x: radius * 2, y: radius * 2 },
-    });
+    if (
+      this.sigils.threat(
+        element,
+        origin,
+        { shape: "cone", range: radius, degrees },
+        progress,
+        this.timeMs,
+        Math.atan2(target.y - origin.y, target.x - origin.x),
+        unblockable,
+      ) &&
+      !this.debug
+    )
+      return;
     this.path([
       origin,
       ...arcPoints(
@@ -303,6 +343,7 @@ export class ArenaScene {
   ): void {
     this.c = c;
     this.debug = debug;
+    this.timeMs = seconds(state.tick + alpha) * 1000;
     const m = cameraMetrics(c),
       g = this.ground,
       e = this.effects;
@@ -319,6 +360,20 @@ export class ArenaScene {
       c.height / 2 - c.centre.y * m.pxPerMetreY,
     );
     for (const z of state.zones) {
+      if (
+        this.sigils.draw(
+          `threat.${this.clips.element(state.actors.find((a) => a.id === z.ownerId))}.ring`,
+          seconds(state.tick + alpha) * 1000,
+          z.pos,
+          {
+            extent: { shape: "ring", range: z.radiusM },
+            opacity: 0.3,
+            progress: 1,
+          },
+        ) &&
+        !this.debug
+      )
+        continue;
       this.circle(
         z.pos,
         z.radiusM,
@@ -329,32 +384,66 @@ export class ArenaScene {
       this.circle(z.pos, z.radiusM, 0x39818f, 0.65);
     }
     for (const t of state.telegraphs) {
+      const element = this.clips.element(
+          state.actors.find((a) => a.id === t.ownerId),
+        ),
+        unblockable = t.family === "unblockable";
       const colour = familyColour(t.family),
         progress =
           (state.tick - t.startTick) / Math.max(1, t.resolveTick - t.startTick);
       if (t.kind === "lane" || t.kind === "charge")
-        this.lane(t.origin, t.target, t.rangeM, t.widthM, colour);
+        this.lane(
+          t.origin,
+          t.target,
+          t.rangeM,
+          t.widthM,
+          colour,
+          progress,
+          element,
+          unblockable,
+        );
       else if (t.kind === "area")
-        this.area(t.target, t.widthM, colour, progress);
+        this.area(t.target, t.widthM, colour, progress, element, unblockable);
       else if (t.kind === "melee")
-        this.sector(t.origin, t.target, t.rangeM, t.widthM, colour);
-      else {
-        this.area(t.origin, 0.8, colour, progress);
-        this.path([t.origin, t.target]).stroke({
-          color: colour,
-          width: m.outlinePx,
-          alpha: 0.3,
-        });
-      }
+        this.sector(
+          t.origin,
+          t.target,
+          t.rangeM,
+          t.widthM,
+          colour,
+          progress,
+          element,
+          unblockable,
+        );
+      else
+        this.lane(
+          t.origin,
+          t.target,
+          t.rangeM,
+          runtime.geometry.projectileRadiusM * 2,
+          colour,
+          progress,
+          element,
+          unblockable,
+        );
     }
     for (const a of state.actors) {
-      if (a.pending?.kind === "spell") {
-        this.sigils.draw(
-          `casting.${this.clips.element(a)}`,
-          seconds(state.tick - a.pending.startTick + alpha) * 1000,
-          a.pos,
-          { behind: true },
+      if (!a.pending) {
+        const tell = state.telegraphs.find(
+          (t) => t.ownerId === a.id && !t.survivesOwner,
         );
+        if (tell)
+          this.sigils.casting(a, this.clips.element(a), {
+            kind: "spell",
+            startTick: tell.startTick,
+            releaseTick: tell.resolveTick,
+            aim: tell.target,
+            activationId: tell.activationId,
+          });
+      }
+      if (a.pending?.kind === "spell") {
+        this.sigils.casting(a, this.clips.element(a));
+        const element = this.clips.element(a);
         const pending = a.pending,
           s = pending.spell ?? spells.find((s) => s.id === pending.spellId)!;
         const progress =
@@ -362,29 +451,79 @@ export class ArenaScene {
             Math.max(1, pending.releaseTick - pending.startTick),
           colour = familyColour(s.family);
         if (s.kind === "cone")
-          this.sector(a.pos, pending.aim, s.rangeM, s.arcDeg, colour);
+          this.sector(
+            a.pos,
+            pending.aim,
+            s.rangeM,
+            s.arcDeg,
+            colour,
+            progress,
+            element,
+            s.family === "unblockable",
+          );
         else if (s.kind === "ring")
-          this.area(a.pos, s.rangeM, colour, progress);
+          this.area(
+            a.pos,
+            s.rangeM,
+            colour,
+            progress,
+            element,
+            s.family === "unblockable",
+          );
         else if (s.kind === "zone")
-          this.area(pending.aim, s.radiusM, colour, progress);
+          this.area(
+            pending.aim,
+            s.radiusM,
+            colour,
+            progress,
+            element,
+            s.family === "unblockable",
+          );
         else if (s.kind === "target") {
           const target = state.actors.find(
             (candidate) => candidate.id === pending.targetId,
           );
-          if (target) this.area(target.pos, target.radius, colour, progress);
-        } else if (s.kind === "projectile" && s.family === "unblockable")
-          this.lane(
-            a.pos,
-            pending.aim,
-            s.rangeM,
-            (s.radiusM || runtime.geometry.projectileRadiusM) * 2,
-            colour,
-          );
-        else this.area(a.pos, 0.8, colour, progress);
+          if (target)
+            this.area(
+              target.pos,
+              target.radius,
+              colour,
+              progress,
+              element,
+              s.family === "unblockable",
+            );
+        } else if (s.kind === "projectile") {
+          for (let i = 0; i < s.count; i++) {
+            const angle =
+              Math.atan2(pending.aim.y - a.pos.y, pending.aim.x - a.pos.x) +
+              (s.count > 1
+                ? ((-s.spreadDeg / 2 + (i * s.spreadDeg) / (s.count - 1)) *
+                    Math.PI) /
+                  180
+                : 0);
+            this.lane(
+              a.pos,
+              { x: a.pos.x + Math.cos(angle), y: a.pos.y + Math.sin(angle) },
+              s.rangeM,
+              (s.radiusM || runtime.geometry.projectileRadiusM) * 2,
+              colour,
+              progress,
+              element,
+              s.family === "unblockable",
+            );
+          }
+        }
       }
       if (a.water.decoy) {
-        this.circle(a.water.decoy.pos, 0.6, 0x327b9d, 0.4, true);
-        this.locator(a.water.decoy.pos, 0.6, 0x327b9d);
+        if (
+          !this.sigils.draw(
+            "target",
+            seconds(state.tick + alpha) * 1000,
+            a.water.decoy.pos,
+            { radius: 0.6, opacity: 0.4 },
+          )
+        )
+          this.circle(a.water.decoy.pos, 0.6, 0x327b9d, 0.4, true);
       }
     }
     const bodies = state.actors
@@ -412,60 +551,50 @@ export class ArenaScene {
         color: ink,
         alpha: 0.2,
       });
-      this.circle(
-        foot,
-        a.radius * contract.character.draw_multiplier,
-        a.team === player.team ? 0x226580 : 0xe9a777,
-        0.65,
-      );
-      if (a.absorb) {
+      if (
+        !a.down &&
+        !this.sigils.draw(
+          a.id === player.id ? "selection" : "target",
+          seconds(state.tick + alpha) * 1000,
+          foot,
+          { radius: a.id === player.id ? 0.8 : 0.75, opacity: 0.8 },
+        )
+      )
+        this.circle(
+          foot,
+          a.radius * contract.character.draw_multiplier,
+          a.team === player.team ? 0x226580 : 0xe9a777,
+          0.65,
+        );
+      if (a.absorb && !a.down) {
         const angle = Math.atan2(a.facing.y, a.facing.x),
           radius =
             contract.absorb.visual_radius_metres *
             this.feedback.compression(a, state.tick + alpha);
-        this.path(
-          arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
-        ).stroke({
-          color: 0x205f78,
-          width: m.outlinePx * 2.6,
-        });
-        this.path(
-          arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
-        ).stroke({
-          color: 0x9de9df,
-          width: m.outlinePx * 1.3,
-        });
-        const fresh =
-          seconds(state.tick - a.absorbFreshTick + alpha) <=
-          tuningFor(state).absorbWindowS;
-        if (fresh)
+        const drawn = this.sigils.ward(a, foot, radius);
+        if (!drawn || this.debug)
           this.path(
             arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
-          ).stroke({
-            color: 0xfff9d5,
-            width: m.outlinePx * 1.9,
-            alpha: feedbackPolicy.anticipationOpacity,
-          });
-        const wardArt = this.sigils.draw(
-          "absorb.hold",
-          seconds(state.tick - a.absorbFreshTick + alpha) * 1000,
-          foot,
-          {
-            angle,
-            barrier: true,
-            scale: this.feedback.compression(a, state.tick + alpha),
-          },
-        );
-        if (!wardArt)
-          this.clips.draw(
-            "absorb.hold",
-            seconds(state.tick - a.absorbFreshTick + alpha) * 1000,
+          ).stroke({ color: 0x9de9df, width: m.outlinePx * 1.5 });
+      }
+      if (!a.down) {
+        const statuses = [
+          state.tick < a.water.slowUntil ? "slowed" : "",
+          state.tick < a.water.rootUntil ? "rooted" : "",
+          state.tick < a.water.wardUntil || state.tick < a.water.sheenUntil
+            ? "shielded"
+            : "",
+        ].filter(Boolean);
+        for (const [i, status] of statuses.entries())
+          this.sigils.draw(
+            `status.${status}`,
+            seconds(state.tick + alpha) * 1000,
             foot,
             {
-              angle,
-              barrier: true,
-              scale: this.feedback.compression(a, state.tick + alpha),
-              opacity: animation.effects.barrierOpacity,
+              behind: false,
+              lift: h + 24 * m.resolutionScale,
+              screenOffsetX:
+                (i - (statuses.length - 1) / 2) * 28 * m.resolutionScale,
             },
           );
       }
@@ -539,10 +668,11 @@ export class ArenaScene {
         ).fill(a.team === player.team ? 0x78c9ca : 0xc05e46);
       }
       if (a.id === player.id) {
-        this.path([
-          foot,
-          { x: foot.x + a.facing.x * 1.1, y: foot.y + a.facing.y * 1.1 },
-        ]).stroke({ color: 0x216780, width: m.outlinePx });
+        if (this.debug)
+          this.path([
+            foot,
+            { x: foot.x + a.facing.x * 1.1, y: foot.y + a.facing.y * 1.1 },
+          ]).stroke({ color: 0x216780, width: m.outlinePx });
         if (this.debug) {
           d.moveTo(-h * 0.55, 0)
             .lineTo(-h * 0.55, -h)
@@ -638,6 +768,7 @@ export class ArenaScene {
       else e.circle(q.x, q.y, r).fill(colour);
     }
     this.clips.finish(state);
+    this.sigils.finish();
     this.debugLabel.visible = this.debugPanel.visible = this.debugEnabled;
     if (this.debugEnabled) {
       const messages = [...this.bodies.fallbacks],
@@ -664,15 +795,22 @@ export class ArenaScene {
     this.feedback.draw(state, c, alpha);
     const target = groundToScreen(aim, c),
       cross = 7 * m.resolutionScale;
-    e.circle(target.x, target.y, cross).stroke({
-      color: 0xbce3d0,
-      width: 1.5 * m.resolutionScale,
-    });
-    e.moveTo(target.x - cross * 1.5, target.y)
-      .lineTo(target.x + cross * 1.5, target.y)
-      .moveTo(target.x, target.y - cross * 1.5)
-      .lineTo(target.x, target.y + cross * 1.5)
-      .stroke({ color: 0xbce3d0, width: m.resolutionScale });
+    if (
+      !this.sigils.draw("target", seconds(state.tick + alpha) * 1000, aim, {
+        radius: 0.4,
+        opacity: 0.85,
+      })
+    ) {
+      e.circle(target.x, target.y, cross).stroke({
+        color: 0xbce3d0,
+        width: 1.5 * m.resolutionScale,
+      });
+      e.moveTo(target.x - cross * 1.5, target.y)
+        .lineTo(target.x + cross * 1.5, target.y)
+        .moveTo(target.x, target.y - cross * 1.5)
+        .lineTo(target.x, target.y + cross * 1.5)
+        .stroke({ color: 0xbce3d0, width: m.resolutionScale });
+    }
     if (this.debug) {
       const p = interpolate(player.previousPos, player.pos, alpha);
       this.path([

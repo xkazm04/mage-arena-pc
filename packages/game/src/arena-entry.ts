@@ -1,3 +1,4 @@
+import { sigil } from "./ui/artwork.ts";
 import { ImpactClock } from "./combat-feedback.ts";
 import { LabUI } from "./lab-ui.ts";
 import { ArtFixture } from "./art-fixture.ts";
@@ -187,6 +188,82 @@ export class ArenaGame {
                 this.bot = bot;
               },
               clearInput: () => this.input.clear(),
+              sigilFixture: (
+                kind: "ring" | "cone" | "line" | "ward" | "cast" | "status",
+                element: Element = "water",
+                progress = 0.5,
+                angle = 0,
+                unblockable = false,
+              ) => {
+                this.restart();
+                this.hud();
+                this.pause(true);
+                this.input.clear();
+                const { state, player, dummy } = this.training;
+                state.tick = 120;
+                state.telegraphs = [];
+                state.projectiles = [];
+                state.events = [];
+                player.school = element;
+                dummy.school = element;
+                dummy.dummy = false;
+                player.pos = {
+                  x: arenaGeometry.centre.x - 5,
+                  y: arenaGeometry.centre.y,
+                };
+                player.previousPos = { ...player.pos };
+                dummy.pos = { x: player.pos.x + 10, y: player.pos.y };
+                dummy.previousPos = { ...dummy.pos };
+                player.facing = { x: Math.cos(angle), y: Math.sin(angle) };
+                if (kind === "ward") {
+                  player.absorb = true;
+                  player.absorbFreshTick =
+                    state.tick - Math.floor(progress * 60);
+                } else if (kind === "cast") {
+                  const spell = spellFor({ ...player, tier: 1 }, 1, state)!;
+                  player.pending = {
+                    kind: "spell",
+                    spell,
+                    spellId: spell.id,
+                    startTick: 120 - Math.floor(progress * 60),
+                    releaseTick: 180 - Math.floor(progress * 60),
+                    activationId: state.nextId++,
+                    aim: dummy.pos,
+                  };
+                } else if (kind === "status") {
+                  player.water.rootUntil = 180;
+                  player.water.slowUntil = 180;
+                  player.water.wardUntil = 180;
+                } else
+                  state.telegraphs.push({
+                    id: state.nextId++,
+                    activationId: state.nextId++,
+                    ownerId: player.id,
+                    source: player.pos,
+                    origin: player.pos,
+                    target:
+                      kind === "ring"
+                        ? player.pos
+                        : {
+                            x: player.pos.x + Math.cos(angle) * 10,
+                            y: player.pos.y + Math.sin(angle) * 10,
+                          },
+                    kind:
+                      kind === "ring"
+                        ? "area"
+                        : kind === "cone"
+                          ? "melee"
+                          : "lane",
+                    startTick: 120 - Math.floor(progress * 60),
+                    resolveTick: 180 - Math.floor(progress * 60),
+                    speedMps: 0,
+                    rangeM: kind === "cone" ? 7 : 10,
+                    widthM: kind === "ring" ? 5 : kind === "cone" ? 145 : 2,
+                    family: unblockable ? "unblockable" : "magic",
+                    tier: 1,
+                    damage: 12,
+                  });
+              },
               startGames: (seed = 4) => this.startGames(seed),
               startRoster: (id: string) => this.startRoster(id),
               setReferencePlayer: (enabled: boolean) => {
@@ -468,14 +545,14 @@ export class ArenaGame {
     u.button("pause", "Pause", 1644, 54, 180, 68, this.settings, {
       tooltip: "Escape / Start opens pause and settings.",
     });
-    u.panel(96, 824, 400, 202);
-    const hp = u.bar("VITALITY", 118, 840, 356, p.hp, p.maxHp, colours.danger),
-      mana = u.bar("MANA", 118, 898, 356, p.mana, p.maxMana, colours.water),
+    u.panel(96, 806, 400, 220);
+    const hp = u.bar("VITALITY", 132, 834, 328, p.hp, p.maxHp, colours.danger),
+      mana = u.bar("MANA", 132, 892, 328, p.mana, p.maxMana, colours.water),
       stamina = u.bar(
         "STAMINA",
-        118,
-        956,
-        356,
+        132,
+        950,
+        328,
         p.stamina,
         p.maxStamina,
         colours.gold,
@@ -487,14 +564,14 @@ export class ArenaGame {
       cooldownBars: ((value: number | null) => void)[] = [];
     for (let i = 0; i < 4; i++) {
       const x = 524 + i * 260,
-        y = 874;
+        y = 854;
       u.button(
         `slot-${i}`,
         "",
         x,
         y,
         244,
-        152,
+        172,
         () => {
           this.input.slot = i;
         },
@@ -506,10 +583,10 @@ export class ArenaGame {
         y + 41,
         24,
       );
-      labels.push(u.text("", x + 80, y + 20, 28, colours.text, 150));
-      u.text(String(i + 1), x + 31, y + 68, 24, colours.gold, 34);
-      cooldownBars.push(u.progress("cooldown", x + 76, y + 72, 146, 20));
-      detail.push(u.text("", x + 20, y + 103, 24, colours.muted, 208));
+      labels.push(u.text("", x + 70, y + 24, 26, colours.text, 150));
+      u.text(String(i + 1), x + 31, y + 92, 24, colours.gold, 34);
+      cooldownBars.push(u.progress("cooldown", x + 76, y + 96, 146, 20));
+      detail.push(u.text("", x + 28, y + 122, 23, colours.muted, 188));
       const mask = new Graphics();
       u.content.addChild(mask);
       masks.push(mask);
@@ -518,8 +595,8 @@ export class ArenaGame {
       slotFrames.push(frame);
     }
     u.panel(1584, 866, 240, 160);
-    const flow = u.text("", 1604, 895, 28, colours.water, 200),
-      tip = u.text("Alternate spells", 1604, 943, 24, colours.muted, 200);
+    const flow = u.text("", 1618, 897, 27, colours.water, 180),
+      tip = u.text("Alternate spells", 1618, 943, 24, colours.muted, 180);
     const clock = new Graphics();
     u.content.addChild(clock);
     const artClock = u.kit.source !== "procedural";
@@ -551,6 +628,7 @@ export class ArenaGame {
       return pair;
     });
     clock.visible = !artClock;
+    sigil(u, "inscription.collar", 993, 109, 122, 0.8);
     const rune = u.text("", 1064, 64, 34, colours.gold, 400, true),
       next = u.text("", 1064, 109, 26, colours.muted, 420);
     const feedback = u.text(
@@ -900,6 +978,7 @@ export class ArenaGame {
         "A10 partial directional clips with explicit same-entity fallback",
       animation: this.scene.bodies.snapshot(),
       effects: this.scene.clips.snapshot(),
+      sigils: this.scene.sigils.snapshot(),
       feedback: this.scene.feedback.snapshot(),
       impactClock: {
         stopS: this.impactClock.stopS,

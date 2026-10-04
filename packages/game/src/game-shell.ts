@@ -18,7 +18,7 @@ import { ArenaGame } from "./arena-entry.ts";
 import { request, seasonCommand, type SeasonView } from "./season-api.ts";
 import { CanvasUI } from "./ui/ui.ts";
 import { backdrop } from "./ui/backdrop.ts";
-import { picture, portrait, storyFor } from "./ui/artwork.ts";
+import { picture, portrait, storyFor, sigil } from "./ui/artwork.ts";
 import { art } from "./art.ts";
 import castData from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
 import { colours } from "./ui/kit.ts";
@@ -255,6 +255,8 @@ export class GameShell {
     this.ui.text(kicker, 96, 57, 24, colours.gold);
     this.ui.text(title, 96, 99, 58, colours.text, 1550, true);
     this.ui.line(96, 183, 1728);
+    if (!kind.startsWith("camp-") && !kind.startsWith("place-"))
+      sigil(this.ui, "inscription.collar", 1718, 118, 150, 0.7);
   }
   private back(action: () => void, label = "Back") {
     this.ui.button(
@@ -281,6 +283,7 @@ export class GameShell {
     this.ui.text("A COVENANT IN CHAINS", 112, 168, 26, colours.gold);
     this.ui.text("MAGE\nARENA", 96, 220, 112, colours.text, 860, true);
     this.ui.line(112, 501, 460, colours.gold);
+    sigil(this.ui, "inscription.collar", 795, 392, 210, 0.8);
     this.ui.text(
       "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
       112,
@@ -465,22 +468,24 @@ export class GameShell {
       this.ui.text(String(stat.value), x + 36, 87, 34, colours.text, 120);
       this.ui.text(stat.label, x - 24, 147, 24, stat.colour, 178);
     }
-    this.ui.text(
-      `${String(v.hour).padStart(2, "0")}:00 / ${friendly(v.slot)}`,
-      1320,
-      207,
-      24,
-      colours.gold,
-      310,
-    );
-    this.ui.text(
-      `${v.hoursRemaining} hours remain`,
-      1320,
-      241,
-      24,
-      colours.muted,
-      310,
-    );
+    if (id !== "camp" && id !== "visit") {
+      this.ui.text(
+        `${String(v.hour).padStart(2, "0")}:00 / ${friendly(v.slot)}`,
+        1320,
+        207,
+        24,
+        colours.gold,
+        310,
+      );
+      this.ui.text(
+        `${v.hoursRemaining} hours remain`,
+        1320,
+        241,
+        24,
+        colours.muted,
+        310,
+      );
+    }
     const names = [
       ["camp", "Camp map"],
       ["calendar", "Season"],
@@ -572,7 +577,7 @@ export class GameShell {
       !v.listening && !v.nightFinished && p.isOpen && !v.player.stocks;
     u.button(
       "visit-place",
-      p.name,
+      "Enter",
       1440,
       808,
       350,
@@ -1294,11 +1299,11 @@ export class GameShell {
     );
     this.textDisplay = u.text(
       this.parleyText || "Choose here to write your appeal…",
-      976,
-      436,
+      992,
+      446,
       32,
       colours.text,
-      784,
+      752,
     );
     u.text(
       `Speaking takes ${this.view.parleyHours} hours. Your approach carries the reply\nwhen words cannot reach the camp.`,
@@ -1644,7 +1649,7 @@ export class GameShell {
           friendly(line),
           x + 24,
           476,
-          346,
+          304,
           76,
           () => {
             const allowed = waterLines.filter(
@@ -1661,9 +1666,9 @@ export class GameShell {
         u.button(
           `inspect-${i}`,
           "Inspect",
-          x + 390,
+          x + 348,
           476,
-          142,
+          184,
           76,
           () => {
             selectedLine = i;
@@ -1699,21 +1704,21 @@ export class GameShell {
               s.tier === tier &&
               (!s.branch || branch === s.branch),
           )!;
-        u.panel(x, 695, 416, 181);
+        u.panel(x, 695, 416, 210);
         u.text(
           `${["I", "II", "III", "IV"][i]}  /  ${combat.tierClock.unlockAtSeconds[tier as 1 | 2 | 3 | 4]}s`,
           x + 24,
-          713,
+          724,
           24,
           colours.gold,
         );
-        u.text(s.name, x + 24, 754, 32, colours.text, 364);
+        u.text(s.name, x + 36, 765, 30, colours.text, 344);
         u.text(
           s.kind === "passive"
             ? "Perfect absorb counter"
             : `${s.mana} mana  /  ${s.cooldownS}s cooldown`,
-          x + 24,
-          829,
+          x + 36,
+          856,
           24,
           colours.muted,
           364,
@@ -2152,7 +2157,7 @@ export class GameShell {
     this.scene("saves", "A thread held in time", "PAUSED  /  SAVE & LOAD");
     const u = this.ui;
     u.panel(96, 252, 1728, 596);
-    u.icon("mirror", 228, 395, 70);
+    portrait(u, "cassia", "neutral", 150, 302, 174, 226);
     u.text(
       `Day ${this.view.day.day}  /  ${this.view.hour}:00  /  ${this.view.hoursRemaining} hours remain`,
       365,
