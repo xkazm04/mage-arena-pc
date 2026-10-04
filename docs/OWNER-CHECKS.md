@@ -162,3 +162,13 @@ Owner acceptance, gameplay integration and actual combat/performance remain open
 [Owner board](../art/review/a14/index.html), [combined death strips](../art/review/a14/contact-sheet.jpg), [timed playback](../art/review/a14/motion.html). PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hit-light/heavy in all directions; death plus persistent corpse in all directions except Garran ne/nw. Creature A14 generation remains missing. 21 generated sources, 24 charged attempts, total 342/450; Grok latched on HTTP 402 exhausted Build balance, agy on repeated pre-image HTTP 503. One agy extra-call driver repair/reset and one bounded preflight recovery are archived; no refunds. 88 tests, 49-product offline rebuild and five browser viewport cases pass. Existing 378 protected art files and inherited ledger prefix are unchanged. Owner animation/readability and game integration remain unmeasured.
 
 Please judge short recoil readability, stagger recovery, ground contact, cross-view costume/equipment consistency, net detail and pale-lilac matte edges. These are owner-review candidates, not an acceptance claim.
+
+## ART session 9 / A14 stage 2
+
+[Gait audit board](../art/review/a14/stage2.html) shows all 18 actual inherited
+run strips with source-key labels and per-loop findings. Repeated leading-leg
+poses cannot be corrected by safe reordering of these keys; no gait fix is
+claimed. Hush moth already has wing movement. The [remaining queue](../art/delivery/a14/stage2/backlog.json)
+keeps 68 missing priority reaction slots ahead of 58 other legacy slots.
+Generation remains blocked by both provider latches. Zero spend or changed
+animation in this stage; stage-1 delivery is preserved. Owner acceptance remains open.

@@ -18,5 +18,15 @@ Both provider latches must remain set; local remaining budget is not availabilit
 The Garran rear collapse scene has reached its three-attempt guard including
 provider failures. No refund or further call is authorized by a rebuild.
 
-Stage 2 follows as a zero-spend existing-gait audit because generation is blocked.
-Work is committed locally on art. Never pushed.
+Stage 1 is committed as `3c4f4a9`. Stage 2 is a zero-spend existing-gait audit:
+[owner board](review/a14/stage2.html), [exact queue](delivery/a14/stage2/backlog.json).
+All 18 existing ne/se run loops were inspected (14 six-key, three five-key,
+one three-key). No safe cheap alternating-stride correction was found; none is
+claimed. Hush moth already has raised/lowered wing keys. No new stage-2 clips.
+The remaining queue is 68 priority A14 slots followed by 58 other legacy slots.
+The full legacy backlog is 84, including 26 overlapping hit/death slots; do not
+sum it with 68. Creature front anatomy and Iskar front run remain missing.
+Stage-1 delivery files and both live ledgers are byte-for-byte preserved.
+Generation can resume only after actual provider availability and the retained
+guards are resolved; Garran rear collapse also reached its scene attempt cap.
+Owner acceptance and game integration remain open. Work is local on art; never pushed.

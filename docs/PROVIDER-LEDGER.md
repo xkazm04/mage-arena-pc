@@ -133,3 +133,11 @@ PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hi
 A13 extra-call diagnosis: the root forwarded an incomplete one-call constraint; the image worker made output_v2. The driver now forwards the full constraint, watches every 100ms for the first completed scoped artifact, captures it and terminates the request before critique, then audits again. An attempted direct-agent CLI flag still delegated and was removed; it is not a claimed guard. Every successful A14 agy job has exactly one completed scoped image call in the final audit. Original stops and charges are retained.
 
 Grok returned HTTP 402 before any image call; the quota detector now recognizes exhausted Build balance, and its latch remains. agy later failed its eligibility check with HTTP 503 and zero scoped calls. A read-only models probe succeeded; one explicitly documented bounded manual recovery produced Netter se. The next request repeated 503; its latch remains and no more image calls followed. This is service availability, not measured image-account quota. [Recovery evidence](../art/waves/A14/preflight-503-recovery.json), [final audit](../art/waves/A14/provider-final-audit.json), [spend](../art/delivery/a14/spend.json).
+
+### Session 9 / A14 stage 2 / 2026-10-04
+
+Zero calls and charges. Existing A10 gait audit and remaining queue only; no
+new clips or safe local gait correction. Total stays 342/450 (24 this session),
+with 56 of the 80 session reservations unused. Usage and provider-history bytes
+match stage-1 commit `3c4f4a9`; both latches remain set. No account-credit or
+availability claim follows from these unused local reservations.

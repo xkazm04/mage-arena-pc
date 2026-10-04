@@ -267,13 +267,16 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 | Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | not started |
 | Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
 | Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
-| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | PARTIAL stage 1; providers blocked; see A14.1 |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | PARTIAL; providers blocked; see A14.1 and A14.2 |
 | Art | A14.1 | Hit-light, hit-heavy, collapse and persistent lying poses | D36-D38 | 124/192 slots; 68 explicit missing; owner-review; commit containing A14-1 note |
+| Art | A14.2 | Remaining clips, creature views and cheap gait corrections | A14.1, D38 | BLOCKED generation; 18-loop audit complete, no safe correction; 58 non-reaction slots missing; zero spend |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
 
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
+
+**ART session 9 / A14 stage 2 / 2026-10-04:** Existing-pixel audit complete; generation BLOCKED. Inspected all 18 inherited ne/se run strips (14 six-key, three five-key, one three-key). No safe cheap opposite-stride correction exists in the inspected keys; Hush moth already has raised/lowered wing poses. No animation changed. Exact queue: 68 priority A14 slots, then 58 other legacy slots; the full 84-slot legacy backlog overlaps 26 priority hit/death slots. Creature front views remain missing. Zero calls/charges, total still 342/450; both latches retained. `python tools/art/a14_gait_audit.py` verifies 73 stage-1 delivery/ledger files unchanged and produces the [owner board](../art/review/a14/stage2.html), findings and queue. Stage-2 browser checks cover 1920, 2560 and 390px widths. Owner animation quality, game integration and provider account allowance remain unmeasured. Stage 1 committed as `3c4f4a9`; this stage has its own local commit. Next: restore provider availability under the retained guards, then finish priority reactions before other clips; no push.
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
