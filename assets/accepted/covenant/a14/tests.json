@@ -1,6 +1,9 @@
 {
+  "status": "pass",
+  "session": 10,
+  "stage": 3,
+  "tests": 90,
   "command": "python -m unittest discover -s tools/art -p test_*.py",
-  "exitCode": 0,
-  "summary": "........................................................................................\n----------------------------------------------------------------------\nRan 88 tests in 3.578s\n\nOK\n",
-  "scope": "offline pipeline and contract tests; mocked quota/refusal incidents are not live calls"
+  "providerCalls": 0,
+  "note": "Provider errors in test output are simulated."
 }
