@@ -1,0 +1,50 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU3",
+  "file": "audition/r4/arena-C-reed-oath/section-5-climax.wav",
+  "sha256": "4e5a9473d2ae566f4a57e0863efb59fd820f56cd5e98fb765fa5ae157938364a",
+  "source": "audition/r4/arena-C-reed-oath.mp3",
+  "sourceSha256": "e5cf5f788a7277b8bb1f173f56b9be78a7ed3f039151697258da4868ee5233b5",
+  "sourceSidecar": "audition/r4/arena-C-reed-oath.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-C-reed-oath",
+  "processing": {
+    "name": "Climax",
+    "startSeconds": 105.0,
+    "endSeconds": 135.0,
+    "startSample": 5040000,
+    "endSample": 6480000,
+    "file": "audition/r4/arena-C-reed-oath/section-5-climax.wav",
+    "boundaryStatus": "requested composition timing, not verified musical boundary"
+  },
+  "measurement": {
+    "file": "audition/r4/arena-C-reed-oath/section-5-climax.wav",
+    "sha256": "4e5a9473d2ae566f4a57e0863efb59fd820f56cd5e98fb765fa5ae157938364a",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 1440000,
+    "decodedSeconds": 30.0,
+    "containerSeconds": 30.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -23.99,
+    "truePeakDbTP": -13.52,
+    "loudnessRangeLU": 2.9,
+    "samplePeakDbFS": -13.518,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-23.99",
+      "input_tp": "-13.52",
+      "input_lra": "2.90",
+      "input_thresh": "-33.99",
+      "output_i": "-25.26",
+      "output_tp": "-13.07",
+      "output_lra": "2.70",
+      "output_thresh": "-35.26",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.74"
+    }
+  },
+  "note": "PCM derived from lossy provider MP3; no claim of native lossless master. Paid generation ledger records the original only."
+}

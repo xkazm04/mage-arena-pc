@@ -1,5 +1,17 @@
 # Owner checks
 
+## AU3 full arena scores — 2026-10-04
+
+Open [round 4](audio/audition/r4/index.html): complete 150 s Reed oath and Lyre under iron, all six section cuts, kept short references, sustain and 5 s wave-end candidates. All new picks start blank; notes and Markdown export persist independently of rounds 1–3. [Updated proof](audio/PROOF-REPORT.html) records measured costs, long-form limitations and the investment recommendation.
+
+Listen to each complete score twice, once quietly with representative combat feedback. Score melodic recall, development, fatigue and space for gameplay separately. Confirm the kept theme family, no accidental vocals, all six musical phases and a real resolved release. The original audition melody was not audio-conditioned or transcribed, so exact motif preservation is unverified. Tension sections are not strongly quieter in the energy measurements; judge whether their harmony/orchestration produces the intended contrast.
+
+For adaptive use, identify the true first downbeat and all 15 s phrase boundaries; the numerical onset screen passes but does not establish bars. Audition the separate sustain loop across at least three passes and every intended tier jump for harmony, fill repetition, missed/doubled attacks and gaps. Judge the sting's thematic identity and release-fragment join. The [manifest](audio/manifest-au3.json) deliberately leaves `adaptiveReady`, loop/sting approval and allowed transitions disabled/pending. Full scores play linearly and are not loops. AU4 must also test wave resets, early endings, long fights, perfect-accelerated unlocks, pause/resume, speech ducking and the 32-voice mix.
+
+Technical gates pass: -26 LUFS working copies, true peaks well below -1 dBTP, no clipped samples, exact section reconstruction, sample-indexed cells, browser playback and provenance. No auditory review occurred in this environment. These technical passes are not owner keeps.
+
+Spent 9,000/10,000; last observed shared balance 1,689. Hide and iron remains ungenerated because neither 150 s nor the authorized 90 s fallback fits the remaining job cap and floor. No retry, camp, Google or round-3 generation. Existing owner picks are unchanged.
+
 ## AU2b + AU3 preparation — 2026-10-03
 
 Open [round 3 triage](audio/audition/r3/index.html). Kept round-1/2 originals are at the top; the new directions have blank keep/maybe/reject controls, notes and Markdown export. Round-2 results are now in the [current proof](audio/PROOF-REPORT.html); the [old proof](audio/PROOF-REPORT-r2.html) preserves its pre-owner-review state.

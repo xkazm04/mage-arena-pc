@@ -1,6 +1,30 @@
 # Mage Arena audio tooling
 
-## Current handoff: AU2b / session 3
+## Current handoff: AU3 / session 4
+
+**Closed-owner-review.** Reed oath and Lyre under iron each received one six-section 150 s `music_v1` render, in D39 order. Total **9,000/10,000 conservative credits**, final observed shared balance **1,689**, floor **1,000**. The old reserve/reset gate was explicitly superseded for this job. A at 150 s (4,500) or its authorized 90 s fallback (2,700) cannot fit the remaining 1,000 job credits or 689 account headroom; no A/retry/camp/Google/round-3 calls. C and D have separate commits, followed by the final review handoff.
+
+`run-r4.mjs <explicit-track-id>` is the dedicated structured launcher; it refuses this closed budget. It uses the common API lock/pacing/journals, exact locally extracted six-section plans, live preflight balance, durable reservation and a bounded 20-minute compose timeout. First real GET or POST quota/429 latches without retry. A reset renews the account epoch but never the job cap or allowed track list. Legacy short-audition generation is explicitly blocked under AU3. No automatic production retry, upload or stem endpoint is enabled. A fresh subscription read plus conservative local epoch accounting protects lagging balances; another project's concurrent calls cannot be controlled atomically.
+
+Offline reproduction, preserving raw bytes:
+
+```
+node --test tools/audio/guard.test.mjs tools/audio/guard-r4.test.mjs
+python tools/audio/plan-r4.py
+python tools/audio/process-r4.py arena-C-reed-oath
+python tools/audio/process-r4.py arena-D-lyre-under-iron
+python tools/audio/evidence-r4.py
+python tools/audio/build-reports.py
+python tools/audio/check-reports.py
+```
+
+28 guard tests; 73 original hash/sidecar/ledger matches; 18 measured offline derivatives; exact section reconstruction; 48 kHz / 150 s masters at -26 LUFS with true-peak limit; sample indices and numerical three-repeat seams; portable browser playback, triage and export on desktop/phone light/dark. Evidence is in `docs/audio/evidence/r4/`, including preserved loudnorm logs and cost audit. The old budget/state is archived in `evidence/r3-final`; historical original files and ledger rows remain unchanged.
+
+The DSP uses numpy/scipy and ffmpeg; it does not depend on librosa/numba. `process-r4.py` rebuilds derived WAVs only. Near-silent provider overrun may be trimmed; no tempo warping, silent padding or full-score tiling. `evidence-r4.py` adds derivative sidecars, explicitly free offline provenance and final runtime constraints. `build-reports.py` and `check-reports.py` dispatch to AU3 while this budget is current. The original API contract was saved after a documentation-only fetch, not a paid capability probe.
+
+Review: `docs/audio/audition/r4/index.html` and `docs/audio/PROOF-REPORT.html`. Engine: `docs/audio/manifest-au3.json`, [handoff](../../docs/audio/AU3-ENGINE-HANDOFF.md). The manifest supplies exact cell times and tier vocabulary but sets adaptive/loop approval false: numerical attacks near cell boundaries do not certify true downbeats, six-bar phrases or harmonic compatibility. Exact kept melody, no vocals, development and real release require listening. Full linear files are available; no accepted owner verdict or finished adaptive implementation is claimed.
+
+## Historical handoff: AU2b / session 3
 
 AU2b is now **closed-owner-review**: 13 new files, 2,325/3,000 conservative credits, 675 unused; final observed shared balance 16,089. The hard floor for this round is **13,000** and reserve **8,000**. AU2's closed 4,995/5,000 budget and state are preserved in `docs/audio/evidence/r2-final`; the combined ledger remains append-only. The previous 14,000 floor below describes historical AU2, not AU2b.
 

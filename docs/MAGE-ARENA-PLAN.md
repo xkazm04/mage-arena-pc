@@ -97,6 +97,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
 | Art | A5 | Icons, HUD, spell-line icons | A1 owner choice | not planned | | |
+| Audio [`audio`] | AU3 | Full arena scores C and D, normalized copies, section/cell indices, sustain/sting candidates and r4 proof | D39 | delivered for review; adaptive musical gates pending; A deferred by cap/floor | 7e7a9ed, 3b304b8 + final handoff | 2026-10-04 |
 
 ## h. Wave cards
 
@@ -268,11 +269,17 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 | Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
 | Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
 | Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | not started |
-| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
+| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | C/D 150 s generated; technical gates pass, listening/grid-downbeat approval pending. A deferred: 9,000/10,000 job credits used, balance 1,689. [r4 triage](audio/audition/r4/index.html), [manifest](audio/manifest-au3.json) |
 
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
+
+**AU3 / AUDIO session 4 — 2026-10-04:** D39 executed now, without waiting for reset: one 150 s six-section music_v1 composition each for Reed oath then Lyre under iron. Raw MP3s remain untouched; 48 kHz PCM derivatives are exactly 150 s at -25.99/-26.00 LUFS, below -1 dBTP, with no clipped samples. Delivered six section cuts, ten cell indices and tier map per track, 15 s sustain candidates and 5 s sting candidates, full provenance, r4 triage, updated investment proof and engine manifest. Separate commits: `7e7a9ed` C, `3b304b8` D; final handoff follows. No push.
+
+Cost: 4,500 per track, observed shared immediate/settled deltas matching 30 credits/requested second; **9,000/10,000**, last balance **1,689**, floor **1,000**. Nine HTTP requests all succeeded, minimum pacing 8.004 s, no 429/quota error or pending reservation. Budget closed. A cannot fit at 150 s (4,500) or 90 s (2,700): 1,000 job credits and 689 balance headroom remain. No retry, camp, Google or round-3 generation. Choices updated only with generation facts.
+
+Gates: `node --test tools/audio/guard.test.mjs tools/audio/guard-r4.test.mjs` 28/28; `python tools/audio/process-r4.py <track-id>` both tracks; `python tools/audio/evidence-r4.py` 18 measured/provenanced derivatives; `python tools/audio/build-reports.py`; `python tools/audio/check-reports.py` passes 73 original hash/sidecar/ledger checks, exact section reconstruction, mastering, ten-cell indices, numerical three-repeat seams, and desktop/phone light/dark browser playback/triage/export with no overflow or JS errors. Evidence: `docs/audio/evidence/r4/validation.json`. Both internal-boundary attack screens pass 9/9 at <=10 ms; onset periodicity estimates 96.021 and 95.999 BPM. These are not true-downbeat certification. Musical acceptance remains **not measured**: no listening model available, so motif identity, vocal absence, six-phase development, real harmonic release, fatigue, masking, mono/small speakers and transition harmony remain owner checks. Adaptive playback defaults disabled. Next: owner r4/r3 triage and AU4 integration/acceptance; A needs a future budget authorization, camp/Google remain separate.
 
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 

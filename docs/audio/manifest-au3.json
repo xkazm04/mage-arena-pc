@@ -22,7 +22,10 @@
     "criticalFeedback": "immediate, unquantized",
     "mixTargetLufs": -20,
     "mixTruePeakDbTP": -1,
-    "crossfadeHeadroomDb": 6
+    "crossfadeHeadroomDb": 6,
+    "maxSimultaneousFullMixes": 2,
+    "fullMixLayering": "Horizontal playback only; do not stack separately generated full mixes as stems.",
+    "maximumMusicBusGainDb": 0
   },
   "tracks": [
     {
@@ -384,7 +387,7 @@
         }
       },
       "analysis": {
-        "method": "scipy STFT positive log spectral flux at 10 ms resolution; strongest autocorrelation peak in 60â€“200 BPM range, not a downbeat or melody transcription. Tempo aliases and missed/extra attacks possible.",
+        "method": "scipy STFT positive log spectral flux at 10 ms resolution; strongest autocorrelation peak in 60Ă˘â‚¬â€ś200 BPM range, not a downbeat or melody transcription. Tempo aliases and missed/extra attacks possible.",
         "estimatedBpm": 96.0210897303399,
         "requestedBpm": 96,
         "firstDetectedOnsetSeconds": 0.94,
@@ -769,7 +772,20 @@
         "sharedImmediateDelta": 4500,
         "sharedSettledDelta": 4500,
         "creditsPerRequestedSecond": 30.0
-      }
+      },
+      "productionApproved": false,
+      "linearPlaybackReadyMeaning": "Technical decode/mastering readiness only; owner approval is separate.",
+      "assetSidecars": [
+        "audition/r4/arena-C-reed-oath/master-48k.wav.json",
+        "audition/r4/arena-C-reed-oath/section-1-entrance.wav.json",
+        "audition/r4/arena-C-reed-oath/section-2-theme-statement.wav.json",
+        "audition/r4/arena-C-reed-oath/section-3-development.wav.json",
+        "audition/r4/arena-C-reed-oath/section-4-tension.wav.json",
+        "audition/r4/arena-C-reed-oath/section-5-climax.wav.json",
+        "audition/r4/arena-C-reed-oath/section-6-release.wav.json",
+        "audition/r4/arena-C-reed-oath/sting-5s.wav.json",
+        "audition/r4/arena-C-reed-oath/sustain.wav.json"
+      ]
     },
     {
       "id": "arena-D-lyre-under-iron",
@@ -1130,7 +1146,7 @@
         }
       },
       "analysis": {
-        "method": "scipy STFT positive log spectral flux at 10 ms resolution; strongest autocorrelation peak in 60–200 BPM range, not a downbeat or melody transcription. Tempo aliases and missed/extra attacks possible.",
+        "method": "scipy STFT positive log spectral flux at 10 ms resolution; strongest autocorrelation peak in 60â€“200 BPM range, not a downbeat or melody transcription. Tempo aliases and missed/extra attacks possible.",
         "estimatedBpm": 95.99883596687326,
         "requestedBpm": 96,
         "firstDetectedOnsetSeconds": 0.01,
@@ -1515,7 +1531,27 @@
         "sharedImmediateDelta": 4500,
         "sharedSettledDelta": 4500,
         "creditsPerRequestedSecond": 30.0
-      }
+      },
+      "productionApproved": false,
+      "linearPlaybackReadyMeaning": "Technical decode/mastering readiness only; owner approval is separate.",
+      "assetSidecars": [
+        "audition/r4/arena-D-lyre-under-iron/master-48k.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/section-1-entrance.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/section-2-theme-statement.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/section-3-development.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/section-4-tension.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/section-5-climax.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/section-6-release.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/sting-5s.wav.json",
+        "audition/r4/arena-D-lyre-under-iron/sustain.wav.json"
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "id": "arena-A-hide-and-iron",
+      "reason": "150 s estimate 4500 and 90 s fallback 2700 exceed remaining job cap 1000 and final observed balance headroom 689.",
+      "generated": false
     }
   ]
 }

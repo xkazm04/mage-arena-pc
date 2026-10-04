@@ -1,0 +1,62 @@
+[mp3 @ 00000204e5a76180] Estimating duration from bitrate, this may be inaccurate
+
+Input #0, mp3, from 'C:\Users\kazda\kiro\mage-arena-audio\docs\audio\audition\r4\arena-C-reed-oath.mp3':
+
+  Metadata:
+
+    encoder         : Lavf60.16.101
+
+  Duration: 00:02:30.05, start: 0.000000, bitrate: 128 kb/s
+
+  Stream #0:0: Audio: mp3 (mp3float), 44100 Hz, stereo, fltp, 128 kb/s
+
+Stream mapping:
+
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> pcm_s16le (native))
+
+Output #0, null, to 'pipe:':
+
+  Metadata:
+
+    encoder         : Lavf61.9.107
+
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+
+    Metadata:
+
+      encoder         : Lavc61.33.102 pcm_s16le
+
+size=N/A time=00:00:25.10 bitrate=N/A speed=48.8x
+size=N/A time=00:00:51.70 bitrate=N/A speed=50.4x
+size=N/A time=00:01:18.30 bitrate=N/A speed=  51x
+size=N/A time=00:01:45.70 bitrate=N/A speed=51.4x
+size=N/A time=00:02:12.00 bitrate=N/A speed=51.4x
+[Parsed_loudnorm_0 @ 00000204e42917c0]
+
+{
+
+	"input_i" : "-13.59",
+
+	"input_tp" : "-1.00",
+
+	"input_lra" : "8.40",
+
+	"input_thresh" : "-23.97",
+
+	"output_i" : "-23.82",
+
+	"output_tp" : "-9.28",
+
+	"output_lra" : "5.20",
+
+	"output_thresh" : "-34.04",
+
+	"normalization_type" : "dynamic",
+
+	"target_offset" : "-2.18"
+
+}
+
+[out#0/null @ 00000204e5a76600] video:0KiB audio:112536KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+
+size=N/A time=00:02:30.10 bitrate=N/A speed=51.6x

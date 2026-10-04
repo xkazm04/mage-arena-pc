@@ -1,5 +1,7 @@
 # AU3 — full tracks after the reset
 
+**Execution update, 2026-10-04 / D39:** the owner superseded this plan's old reserve, reset wait and order. C then D were generated immediately as the exact six-section 150 s v1 plans below, 4,500 credits each. The job cap is 10,000 and floor 1,000; final observed balance 1,689. A's 150 s and 90 s fallback both exceed the remaining cap/floor allowance, so A was not generated. No retry, camp or Google call. [Round 4](audition/r4/index.html), [cost evidence](evidence/r4/COST-MODEL.md), [engine manifest](manifest-au3.json). Technical gates pass; owner listening and musical grid/transition approval remain pending. The original planning text below is retained as authoring provenance, not current authorization.
+
 Prepared 2026-10-03; **planning only, no full tracks or Google audio generated**. [Owner choices](CHOICES.md), D28–D30 and the current session instruction outrank the original bible. Arena A **Hide and iron**, C **Reed oath** and D **Lyre under iron** are kept directions for complete 2–3 minute tracks. Camp A is a kept short direction with an explicit long-form weakness, not permission to stretch those twelve-second clips.
 
 ## Decision and order

@@ -7,6 +7,9 @@ from urllib.parse import unquote, urlsplit
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[2]
+if json.loads((ROOT/'tools/audio/budget.json').read_text())['wave']=='AU3':
+    runpy.run_path(str(Path(__file__).with_name('check-r4-reports.py')),run_name='__main__')
+    raise SystemExit(0)
 if json.loads((ROOT/'tools/audio/budget.json').read_text())['wave']=='AU2b':
     runpy.run_path(str(Path(__file__).with_name('check-r3-reports.py')),run_name='__main__')
     raise SystemExit(0)

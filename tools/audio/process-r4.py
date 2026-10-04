@@ -11,6 +11,8 @@ def run(args):
     return subprocess.run([str(a) for a in args],check=True,capture_output=True)
 def ff(args): return run(['ffmpeg','-hide_banner','-nostdin','-y',*args])
 def save(path,obj): path.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+def write_log(path,text):
+    path.write_text('\n'.join(line.rstrip() for line in text.splitlines()).rstrip()+'\n',encoding='utf-8',newline='\n')
 def rel(path): return path.relative_to(ROOT/'docs/audio').as_posix()
 def db(x): return round(float(20*np.log10(max(float(x),1e-12))),3)
 def pcm(path,rate=RATE,channels=2):
@@ -20,7 +22,7 @@ def meter(path, label):
     stream=probe['streams'][0]; rate=int(stream['sample_rate']); channels=int(stream['channels'])
     x=pcm(path,rate,channels)
     result=ff(['-i',path,'-af','loudnorm=I=-26:TP=-1:LRA=50:print_format=json','-f','null','-']).stderr.decode(errors='replace')
-    (E/f'{label}-loudnorm.log').write_text(result,encoding='utf-8')
+    write_log(E/f'{label}-loudnorm.log',result)
     m=json.loads(re.findall(r'\{[^{}]+\}',result,re.S)[-1])
     return dict(file=rel(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest(),sampleRate=rate,channels=channels,sampleCount=len(x),decodedSeconds=len(x)/rate,containerSeconds=float(probe['format']['duration']),codec=stream['codec_name'],integratedLufs=float(m['input_i']),truePeakDbTP=float(m['input_tp']),loudnessRangeLU=float(m['input_lra']),samplePeakDbFS=db(np.max(np.abs(x))),samplesAtOrAboveFullScale=int(np.sum(np.abs(x)>=1)),loudnorm=m)
 def analysis(source,identity):
@@ -67,7 +69,7 @@ def analysis(source,identity):
     similarity=float(np.dot(chroma,rc)/(np.linalg.norm(chroma)*np.linalg.norm(rc)))
     return dict(method='scipy STFT positive log spectral flux at 10 ms resolution; strongest autocorrelation peak in 60–200 BPM range, not a downbeat or melody transcription. Tempo aliases and missed/extra attacks possible.',estimatedBpm=bpm,requestedBpm=96,firstDetectedOnsetSeconds=float(peaks[0]) if len(peaks) else None,firstTrueDownbeatSeconds=None,boundaries=cells,windows=windows,gridVerified=False,gridStatus='not certified: detected attacks are not identified downbeats; no warp applied',literalRepeatScreen=dict(max15SecondBlockCorrelation=max(p['correlation'] for p in pairs),max5SecondBlockCorrelation=float(np.max(c5)),pairs=pairs,scope='Aligned waveform blocks only; excludes neither shifted reuse nor repeated musical phrases. No source audio was tiled by this pipeline.'),referenceChromaCosine=similarity,referenceChromaCaveat='Pitch-class distribution similarity is not melodic identity; exact kept motif was not transcribed or used as an audio reference.',tailRmsDbFS=tail,vocals='not assessed by listening; empty lyric lines and instrumental styles are requests, not evidence',release='tail envelope measured; musical resolution requires listening',listening='not performed by this execution environment; no auditory quality verdict claimed')
 def process(identity):
-    source=OUT/f'{identity}.mp3'; side=json.loads(source.with_suffix('.mp3.json').read_text())
+    source=OUT/f'{identity}.mp3'; side=json.loads(source.with_suffix('.mp3.json').read_text(encoding='utf-8'))
     assert hashlib.sha256(source.read_bytes()).hexdigest()==side['sha256']
     dest=OUT/identity; dest.mkdir(exist_ok=True)
     raw=meter(source,identity+'-raw'); m=raw['loudnorm']
@@ -80,7 +82,7 @@ def process(identity):
         end=pcm(source)[150*RATE:]
         if len(end) and db(np.max(np.abs(end)))<=-60: trim=',atrim=end=150'
     log=ff(['-i',source,'-af',filt+trim,'-ar',RATE,'-c:a','pcm_s16le',master]).stderr.decode(errors='replace')
-    (E/f'{identity}-master-render.log').write_text(log,encoding='utf-8')
+    write_log(E/f'{identity}-master-render.log',log)
     normalized=meter(master,identity+'-master'); assert abs(normalized['integratedLufs']+26)<=.3 and normalized['truePeakDbTP']<=-1 and normalized['samplesAtOrAboveFullScale']==0
     # Fixed-grid *indices*, no copied/tiled score or claimed time correction.
     sections=[]; start=0
@@ -115,7 +117,7 @@ def process(identity):
     for i in range(10):
         section=next(s['name'] for s in sections if s['startSeconds']<=i*15<s['endSeconds'])
         cells.append(dict(index=i,startSeconds=i*15,endSeconds=min((i+1)*15,normalized['decodedSeconds']),startSample=i*15*RATE,endSample=min((i+1)*15*RATE,normalized['sampleCount']),section=section,arrangementTier=tier[i],musicalBoundaryVerified=False))
-    track=dict(id=identity,title=next(t['title'] for t in json.loads((ROOT/'tools/audio/composition-plan-r4.json').read_text())['tracks'] if t['id']==identity),rawFile=rel(source),sidecar=rel(source)+'.json',file=rel(master),provenance='48 kHz PCM decoded/resampled from original lossy MP3; not a native lossless provider master',sampleRate=RATE,sampleCount=normalized['sampleCount'],durationSeconds=normalized['decodedSeconds'],ownerChoice=None,linearPlaybackReady=True,adaptiveReady=False,requestedBpm=96,verifiedBpm=None,downbeatOffsetSeconds=None,gridMode='unverified; use linear playback until approved',sectionMap=sections,cells=cells,tierMap={'1':[0],'2':[1],'3':[2,5],'4':[3,4,6,7,8]},tierMapNote='Arrangement vocabulary only; later sparse material never lowers confirmed gameplay tier. No transitions approved.',allowedTransitions=[],sustainLoop=loopmeta,sting=dict(file=rel(sting),durationSeconds=sm['decodedSeconds'],sourceRangesSeconds=[[135,138],[147.5,150]],crossfadeSeconds=.5,approved=False,note='Release-fragment plus source decay; musical continuity and theme recognition pending listening.',measurement=sm),releaseTail=dict(file=rel(master),startSeconds=147.5,endSeconds=normalized['decodedSeconds'],loop=False),mastering=dict(targetLufs=-26,truePeakLimitDbTP=-1,method='ffmpeg two-pass loudnorm, linear gain if possible; PCM16 dither/quantization; no time warp, padding or repeated audio block',nominalGainDb=round(-26-raw['integratedLufs'],2),measurement=normalized),rawMeasurement=raw,analysis=a,cost=dict(requestedSeconds=side['seconds'],chargedCredits=side['chargedCredits'],sharedImmediateDelta=side['accountDelta'],sharedSettledDelta=side['settledDelta'],creditsPerRequestedSecond=side['chargedCredits']/side['seconds']))
+    track=dict(id=identity,title=next(t['title'] for t in json.loads((ROOT/'tools/audio/composition-plan-r4.json').read_text(encoding='utf-8'))['tracks'] if t['id']==identity),rawFile=rel(source),sidecar=rel(source)+'.json',file=rel(master),provenance='48 kHz PCM decoded/resampled from original lossy MP3; not a native lossless provider master',sampleRate=RATE,sampleCount=normalized['sampleCount'],durationSeconds=normalized['decodedSeconds'],ownerChoice=None,linearPlaybackReady=True,adaptiveReady=False,requestedBpm=96,verifiedBpm=None,downbeatOffsetSeconds=None,gridMode='unverified; use linear playback until approved',sectionMap=sections,cells=cells,tierMap={'1':[0],'2':[1],'3':[2,5],'4':[3,4,6,7,8]},tierMapNote='Arrangement vocabulary only; later sparse material never lowers confirmed gameplay tier. No transitions approved.',allowedTransitions=[],sustainLoop=loopmeta,sting=dict(file=rel(sting),durationSeconds=sm['decodedSeconds'],sourceRangesSeconds=[[135,138],[147.5,150]],crossfadeSeconds=.5,approved=False,note='Release-fragment plus source decay; musical continuity and theme recognition pending listening.',measurement=sm),releaseTail=dict(file=rel(master),startSeconds=147.5,endSeconds=normalized['decodedSeconds'],loop=False),mastering=dict(targetLufs=-26,truePeakLimitDbTP=-1,method='ffmpeg two-pass loudnorm, linear gain if possible; PCM16 dither/quantization; no time warp, padding or repeated audio block',nominalGainDb=round(-26-raw['integratedLufs'],2),measurement=normalized),rawMeasurement=raw,analysis=a,cost=dict(requestedSeconds=side['seconds'],chargedCredits=side['chargedCredits'],sharedImmediateDelta=side['accountDelta'],sharedSettledDelta=side['settledDelta'],creditsPerRequestedSecond=side['chargedCredits']/side['seconds']))
     internal=[v for v in a['boundaries'] if 0<v['requestedSeconds']<150]
     a['internalBoundaryScreen']=dict(toleranceMs=20,passed=sum(v['errorMs'] is not None and abs(v['errorMs'])<=20 for v in internal),total=len(internal),caveat='Nearby attacks, not identified bar downbeats; does not certify beat drift or musical phrase completion.')
     track['mastering']['tailTrimSeconds']=overrun if trim else 0
@@ -123,7 +125,7 @@ def process(identity):
     save(E/f'{identity}-analysis.json',track)
     save(dest/'segments.json',dict(file=rel(master),sampleRate=RATE,cells=cells,sectionMap=sections,tierMap=track['tierMap'],adaptiveReady=False,loop=loopmeta))
     manifestpath=ROOT/'docs/audio/manifest-au3.json'
-    manifest=json.loads(manifestpath.read_text()) if manifestpath.exists() else dict(schemaVersion=1,wave='AU3',baseUrl='./',pathResolution='All files relative to this manifest in docs/audio/',status='technical delivery; owner listening pending',runtimeContract=dict(mode='linear until adaptiveReady and transitions approved',fullScoreLoop=False,musicVoicesMax=8,totalVoicesMax=32,nominalTierUnlockSeconds=[0,15,30,45],perfectAdvanceSeconds=2,minUnlockGapSeconds=6,pause='freeze transport and gameplay',waveReset='entrance',criticalFeedback='immediate, unquantized',mixTargetLufs=-20,mixTruePeakDbTP=-1,crossfadeHeadroomDb=6),tracks=[])
+    manifest=json.loads(manifestpath.read_text(encoding='utf-8')) if manifestpath.exists() else dict(schemaVersion=1,wave='AU3',baseUrl='./',pathResolution='All files relative to this manifest in docs/audio/',status='technical delivery; owner listening pending',runtimeContract=dict(mode='linear until adaptiveReady and transitions approved',fullScoreLoop=False,musicVoicesMax=8,totalVoicesMax=32,nominalTierUnlockSeconds=[0,15,30,45],perfectAdvanceSeconds=2,minUnlockGapSeconds=6,pause='freeze transport and gameplay',waveReset='entrance',criticalFeedback='immediate, unquantized',mixTargetLufs=-20,mixTruePeakDbTP=-1,crossfadeHeadroomDb=6),tracks=[])
     manifest['tracks']=[t for t in manifest['tracks'] if t['id']!=identity]+[track]
     save(manifestpath,manifest)
     print(json.dumps(dict(id=identity,duration=normalized['decodedSeconds'],rawLufs=raw['integratedLufs'],masterLufs=normalized['integratedLufs'],estimatedBpm=a['estimatedBpm'],boundaryErrorsMs=[v['errorMs'] for v in a['boundaries']],tail=a['tailRmsDbFS'],loopNumericalPass=loopmeta['numericalScreenPass'],stingSeconds=sm['decodedSeconds'])))

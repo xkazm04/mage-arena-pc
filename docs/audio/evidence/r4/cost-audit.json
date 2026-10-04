@@ -1,0 +1,83 @@
+{
+  "jobCap": 10000,
+  "floor": 1000,
+  "totalConservativeCredits": 9000,
+  "totalRequestedSeconds": 300,
+  "httpCount": 9,
+  "paidPosts": 2,
+  "statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "minimumRequestGapSeconds": 8.004,
+  "perCall": [
+    {
+      "id": "arena-C-reed-oath",
+      "before": {
+        "observedAt": "2026-10-04T09:19:48.030Z",
+        "tier": "starter",
+        "used": 79311,
+        "limit": 90000,
+        "remaining": 10689,
+        "resetsAt": "2026-10-04T19:31:41.000Z"
+      },
+      "after": {
+        "observedAt": "2026-10-04T09:20:30.276Z",
+        "tier": "starter",
+        "used": 83811,
+        "limit": 90000,
+        "remaining": 6189,
+        "resetsAt": "2026-10-04T19:31:41.000Z"
+      },
+      "settled": {
+        "observedAt": "2026-10-04T09:21:01.577Z",
+        "tier": "starter",
+        "used": 83811,
+        "limit": 90000,
+        "remaining": 6189,
+        "resetsAt": "2026-10-04T19:31:41.000Z"
+      },
+      "debit": 4500,
+      "estimate": 4500,
+      "rate": 30.0
+    },
+    {
+      "id": "arena-D-lyre-under-iron",
+      "before": {
+        "observedAt": "2026-10-04T09:26:43.544Z",
+        "tier": "starter",
+        "used": 83811,
+        "limit": 90000,
+        "remaining": 6189,
+        "resetsAt": "2026-10-04T19:31:41.000Z"
+      },
+      "after": {
+        "observedAt": "2026-10-04T09:27:38.052Z",
+        "tier": "starter",
+        "used": 88311,
+        "limit": 90000,
+        "remaining": 1689,
+        "resetsAt": "2026-10-04T19:31:41.000Z"
+      },
+      "settled": {
+        "observedAt": "2026-10-04T09:28:10.042Z",
+        "tier": "starter",
+        "used": 88311,
+        "limit": 90000,
+        "remaining": 1689,
+        "resetsAt": "2026-10-04T19:31:41.000Z"
+      },
+      "debit": 4500,
+      "estimate": 4500,
+      "rate": 30.0
+    }
+  ],
+  "pending": null
+}
