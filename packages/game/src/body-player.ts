@@ -43,6 +43,7 @@ interface Motion {
 export class BodyPlayer {
   manifest?: BodyManifest;
   readonly fallbacks = new Set<string>();
+  private fallbackKeys = new Set<string>();
   readonly diagnostics: string[] = [];
   private frames = new Map<string, Texture>();
   private actors = new Map<number, Motion>();
@@ -208,12 +209,14 @@ export class BodyPlayer {
     } else motion.angle = targetAngle;
     motion.lastTick = this.tick;
     const direction =
-      smoothed ??
-      (state === "run"
-        ? facingFromVector(vx, vy, motion.direction)
-        : state === "cast" || state === "absorb" || state.startsWith("hit")
-          ? facingFromVector(a.facing.x, a.facing.y, motion.direction)
-          : motion.direction);
+      state === "death"
+        ? facingFromVector(a.facing.x, a.facing.y, motion.direction)
+        : (smoothed ??
+          (state === "run"
+            ? facingFromVector(vx, vy, motion.direction)
+            : state === "cast" || state === "absorb" || state.startsWith("hit")
+              ? facingFromVector(a.facing.x, a.facing.y, motion.direction)
+              : motion.direction));
     if (state !== motion.state) {
       motion.since = this.tick;
       motion.state = state;
@@ -232,8 +235,7 @@ export class BodyPlayer {
     const key = `${motion.entity}:${state}:${direction}`;
     motion.deathClip = false;
     if (!selected || !body) {
-      if (this.manifest)
-        this.fallbacks.add(`${key} → procedural (no entity clip)`);
+      if (this.manifest) this.logFallback(key, "procedural (no entity clip)");
       this.displayed.push({
         id: a.id,
         entity: motion.entity,
@@ -246,7 +248,7 @@ export class BodyPlayer {
     const page = art.get(`a10.packed.${selected.clip.page}`);
     if (!page) {
       if (art.snapshot().failed.includes(`a10.packed.${selected.clip.page}`))
-        this.fallbacks.add(`${key} → procedural (entity page failed)`);
+        this.logFallback(key, "procedural (entity page failed)");
       return false;
     }
     if (
@@ -254,8 +256,9 @@ export class BodyPlayer {
         !(state === "death" && selected.state === "corpse")) ||
       selected.direction !== direction
     )
-      this.fallbacks.add(
-        `${key} → ${selected.state}:${selected.direction}${selected.held ? " (held)" : ""}`,
+      this.logFallback(
+        `${motion.entity}:${selected.state === "corpse" ? "corpse" : state}:${direction}`,
+        `${selected.state}:${selected.direction}${selected.held ? " (held)" : ""}`,
       );
     motion.deathClip =
       (selected.state === "death" || selected.state === "corpse") &&
@@ -331,6 +334,11 @@ export class BodyPlayer {
   deathAge(a: Actor) {
     return this.actors.get(a.id)?.deathElapsed ?? 0;
   }
+  private logFallback(key: string, selected: string) {
+    if (this.fallbackKeys.has(key)) return;
+    this.fallbackKeys.add(key);
+    this.fallbacks.add(`${key} → ${selected}`);
+  }
   /** Apply after either atlas selection or the procedural figure fallback. */
   settle(sprite: Sprite, a: Actor, height: number, reduced: boolean) {
     if (!a.tags.includes("DEFEATED")) return;
@@ -368,6 +376,9 @@ export class BodyPlayer {
         scaleY: sprite.scale.y,
         alpha: sprite.alpha,
         flashing: !!sprite.filters?.length,
+        groundDepth: sprite.parent?.zIndex,
+        groundX: sprite.parent?.x,
+        groundY: sprite.parent?.y,
       });
   }
   snapshot() {

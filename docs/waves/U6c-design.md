@@ -28,3 +28,15 @@ priority slots and 46 extra clips, with 12 priority and 12 other slots missing.
 Mire Maw rear hits ARE delivered. Standalone corpse PNGs are already mirrored;
 the runtime uses atlas clips and their mirrorX flag exactly once. H1 defeat and
 cleanup remain authoritative; all clip choice/timing is presentation only.
+
+
+Sub-wave 1 complete: `df6587a`; `npm run gate` 211 tests + 11 reference checks,
+zero contradictions; `npm run build:game` pass. Imported 122 delivery files,
+45 packed pages / 68.839 MiB. All 226 clips merged without loader code changes.
+
+Sub-wave 2 decision: use stationary creature targets, explicitly labelled in
+Lab setup, with roster health and authored poise multiplied by the Lab override.
+Facing is selectable. This supports reaction/corpse inspection without modifying
+any deterministic core or save-version inputs. Existing active creature roster
+practice remains available. Prefer delivered paired collapse/corpse over legacy
+unpaired rear deaths for Maw/Thornback; retain all source clips in the manifest.

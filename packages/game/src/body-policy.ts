@@ -29,8 +29,20 @@ export function selectBodyClip(
   previous?: BodySelection,
 ): BodySelection | undefined {
   if (!body) return;
+  // Prefer a delivered collapse/corpse pair over an inherited unpaired death.
+  // This only affects the missing A14 rear slots; the A10 data stays intact.
+  const pairedDeath =
+    state === "death" &&
+    directions.some(
+      (d) =>
+        body.clips.death?.[d]?.delivery === "A14" && body.clips.corpse?.[d],
+    );
+  const usable = (d: Direction) =>
+    !pairedDeath ||
+    (body.clips.death?.[d]?.delivery === "A14" && !!body.clips.corpse?.[d]);
   const direct = body.clips[state]?.[direction];
-  if (direct) return { state, direction, clip: direct, held: false };
+  if (direct && usable(direction))
+    return { state, direction, clip: direct, held: false };
   const distance = (d: Direction) => {
     const n = Math.abs(directions.indexOf(direction) - directions.indexOf(d));
     return Math.min(n, 4 - n);
@@ -42,7 +54,7 @@ export function selectBodyClip(
   );
   for (const d of ordered) {
     const clip = body.clips[state]?.[d];
-    if (clip) return { state, direction: d, clip, held: false };
+    if (clip && usable(d)) return { state, direction: d, clip, held: false };
   }
   if ((state === "death" || state === "corpse") && previous)
     return { ...previous, held: true };

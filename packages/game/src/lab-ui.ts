@@ -1,5 +1,4 @@
 import {
-  changeLabTuning,
   exportTuning,
   importTuning,
   labReplay,
@@ -12,7 +11,6 @@ import {
   tuningFields,
   tuningPresets,
   type ArenaState,
-  type LabConfig,
   type TuningKey,
   type SpellOverride,
 } from "@mage/core/arena";
@@ -21,13 +19,19 @@ import type { ArenaGame } from "./arena-entry.ts";
 import { colours } from "./ui/kit.ts";
 import type { CanvasUI } from "./ui/ui.ts";
 import { sigil } from "./ui/artwork.ts";
+import {
+  changeLabSetupTuning as changeLabTuning,
+  creatureTargets,
+  creatureName,
+  type LabSetup,
+} from "./lab-setup.ts";
 
 const title = (s: string) => s[0]!.toUpperCase() + s.slice(1);
 /** All interaction is drawn by the canvas kit. Clipboard/drop is data transport only. */
 export class LabUI {
   private page = "Movement";
   private tuningSubpage = 0;
-  private draft!: LabConfig;
+  private draft!: LabSetup;
   private numeric?: {
     text: string;
     label: string;
@@ -239,11 +243,16 @@ export class LabUI {
       );
     choose(
       "opponent",
-      `Target: ${c.opponent === "dummy" ? "Dummy" : "Mage AI"}`,
+      `Target: ${c.creature ? creatureName(c.creature) + " (still)" : c.opponent === "dummy" ? "Dummy" : "Mage AI"}`,
       106,
       228,
       () => {
-        c.opponent = this.cycle(["dummy", "mage"], c.opponent);
+        const next = this.cycle(
+          ["dummy", "mage", ...creatureTargets] as const,
+          c.creature ?? c.opponent,
+        );
+        c.creature = next === "dummy" || next === "mage" ? undefined : next;
+        c.opponent = next === "mage" ? "mage" : "dummy";
       },
     );
     choose(
@@ -257,22 +266,38 @@ export class LabUI {
     );
     choose(
       "school",
-      `Opponent school: ${title(c.opponentSchool)}`,
+      c.creature
+        ? `Creature facing: ${(c.creatureFacing ?? "se").toUpperCase()}`
+        : `Opponent school: ${title(c.opponentSchool)}`,
       106,
       320,
       () => {
-        c.opponentSchool = this.cycle(schools, c.opponentSchool);
+        if (c.creature)
+          c.creatureFacing = this.cycle(
+            ["se", "sw", "nw", "ne"] as const,
+            c.creatureFacing ?? "se",
+          );
+        else c.opponentSchool = this.cycle(schools, c.opponentSchool);
       },
     );
     choose("competence", `Competence: ${c.competence} / 4`, 980, 320, () => {
       c.competence = (c.competence % 4) + 1;
     });
-    choose("dummy", `Dummy action: ${title(c.dummyAttack)}`, 106, 412, () => {
-      c.dummyAttack = this.cycle(
-        ["still", "magic", "physical", "charge"],
-        c.dummyAttack,
-      );
-    });
+    choose(
+      "dummy",
+      c.creature
+        ? "Creature target: stationary hit / death practice"
+        : `Dummy action: ${title(c.dummyAttack)}`,
+      106,
+      412,
+      () => {
+        if (c.creature) return;
+        c.dummyAttack = this.cycle(
+          ["still", "magic", "physical", "charge"],
+          c.dummyAttack,
+        );
+      },
+    );
     choose(
       "random",
       `Seed mode: ${c.randomSeed ? "New random seed on reset" : "Fixed / repeatable"}`,
@@ -344,7 +369,9 @@ export class LabUI {
       { fontSize: 26 },
     );
     u.text(
-      "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
+      c.creature
+        ? "Creature targets stay still with roster health and poise. Choose their facing to inspect hits and defeat.\nCompetence, aggression and dummy action apply only to other target types. R resets; G revives."
+        : "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
       106,
       817,
       24,

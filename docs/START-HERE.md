@@ -30,7 +30,8 @@ paused; Continue season returns to the accepted checkpoint. Direct route:
 ## Choose an experiment
 
 Click each setup button to cycle it. Choose **Dummy** (Still, Magic, Physical,
-Charge) or **Mage AI**: there is exactly ONE opponent. Choose the opponent's
+Charge), **Mage AI**, or a **stationary creature target**: there is exactly ONE opponent.
+The Target button cycles Dummy, Mage AI, Cinder Hound, Mire Maw, Thornback and Hush Moth. Choose the opponent's
 school, competence 1–4, aggression (0 cautious to 1 eager), distance in metres,
 and fixed/random seed. A fixed seed repeats on reset; random mode samples and
 displays a new seed each reset. A higher competence improves decisions/reactions,
@@ -179,9 +180,9 @@ prevent both damage and stun; a later hit can stop the unprotected end of a roll
    that flash/edge cue and the final corpse still explain what happened.
 4. Defeat the opponent, then stop touching controls. The body falls and stays on
    the ground; it has no targeting ring, health bar or AI and cannot take another
-   hit. Walk/aim across it where play continues. A10 death clips hold their last
-   frame; delivered A14 collapse clips settle to matching persistent corpse keys.
-   Missing A14 clips retain the same-entity A10/procedural fallback.
+   hit. Walk/aim across it where play continues. A14 collapse clips settle to
+   matching persistent corpse keys. Missing rear collapse directions use the
+   same creature's delivered front pair.
 5. Let your own vitality reach zero. In ordinary practice/Games, the results panel
    leaves the body visible on the arena floor. In the Lab the DEFEATED label
    keeps the experiment inspectable. **G** refills and revives; **R** makes a new
@@ -197,9 +198,9 @@ parameters. [H1 measurements and limitations](waves/H1-report.md) and
 
 The four mages and four soldiers now use A14 light/heavy hits in all directions.
 The heavy threshold is 18 actual damage (presentation policy); the entire clip
-is fitted to the visual flinch time. New death/corpse pairs cover those figures
-except Garran's rear directions, which retain their original A10 death keys.
-Creature A14 reactions are still missing; their same-entity fallback remains.
+is fitted to the visual flinch time. U6c completes all humanoid and Hound/Moth reaction directions. Mire Maw and
+Thornback use the nearest delivered front collapse/corpse for missing rear views;
+Thornback also uses front hits for rear requests.
 Watch the feet/ground anchor and figure size when changing from walking to a hit,
 then watch the death settle without a direction jump. Left-facing clips mirror once.
 
@@ -215,3 +216,45 @@ payoff; technical measurements do not decide your musical preference.
 
 [Delivery audit and remaining work](waves/U6b-report.md),
 [native reaction gallery](waves/U6b-evidence/index.html).
+
+
+## U6c: creature reactions in the Combat Feel Lab
+
+Open **Combat Feel Lab**, press **L**, and click **Target** to cycle these setups:
+
+| Target choice | Spawned opponent | Behavior |
+|---|---|---|
+| Dummy | Training dummy | Selected Still/Magic/Physical/Charge action |
+| Mage AI | Mage of the selected school | Selected competence and aggression |
+| Cinder Hound (still) | One Cinder Hound | Stationary roster target |
+| Mire Maw (still) | One Mire Maw | Stationary roster target |
+| Thornback (still) | One Thornback | Stationary roster target |
+| Hush Moth (still) | One Hush Moth | Stationary roster target |
+
+For a creature, the school button becomes **Creature facing**; click to cycle
+SE, SW, NW, NE. Start/reset applies the setup. Creature targets have their roster
+health and poise (Hound/Moth 1, Maw 2, Thornback 2.3); Opponent poise in Hit tuning
+multiplies that value. They stay still for inspection. Competence, aggression and
+Dummy action apply only to other targets. These setups do not exercise creature
+AI; ordinary creature roster practice remains the place to fight active creatures.
+
+Use **Water / Rotation**, fixed seed 7331, distance 5?10, damage **ON**. Aim at
+the creature's ground point and fire. Below 18 actual HP lost uses hit-light;
+18 or more uses hit-heavy. Use a stronger charged spell for the heavy reaction.
+Defeat it, let the .6-second collapse finish, and leave the body visible. The
+lying sprite persists until **G** revives it or **R** resets the bout. Use **V**
+to replay recorded live hits; **P** and period freeze/step the simulation. The
+presentation still finishes hit/death clips while the simulation is frozen.
+
+All four humanoid and Hound/Moth facings have delivered light/heavy hits and
+collapse/corpse pairs. Maw rear hits are delivered too. Missing Maw rear
+collapse/corpse and Thornback rear hits/collapse/corpse use their own front view
+on the same left/right side. These twelve priority fallbacks are visible in
+**F8** art debug, with **[ / ]** paging; each missing slot logs once per arena
+scene. The remaining twelve legacy motion/brace requests retain same-entity
+fallbacks. The guide's earlier U6b missing-art list is superseded by
+[the U6c report](waves/U6c-report.md) and [native evidence](waves/U6c-evidence/index.html).
+
+Check silhouette, size, feet/pivot, left equipment mirroring and whether the
+settled pose reads as lying on the floor. Native browser checks are technical
+measurements; owner acceptance of the animation and creature identities remains open.

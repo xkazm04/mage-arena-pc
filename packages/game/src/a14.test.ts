@@ -33,7 +33,9 @@ describe("U6c additive A14.3 loader", () => {
       for (const state of ["idle", "run", "cast", "absorb"] as BodyState[])
         for (const d of dirs)
           if (!delivery.entities[id]?.clips[state]?.[d])
-            expect(merged.entities[id]!.clips[state]?.[d]).toEqual(b.clips[state]?.[d]);
+            expect(merged.entities[id]!.clips[state]?.[d]).toEqual(
+              b.clips[state]?.[d],
+            );
   });
   it("matches body size across legacy and new v3 clips without applying the owner scale twice", () => {
     const b = merged.entities.cassia!;
@@ -82,9 +84,15 @@ describe("U6c additive A14.3 loader", () => {
   it("selects delivered reactions for every identity and holds only the twelve missing priority directions", () => {
     const missing: string[] = [];
     for (const [id, body] of Object.entries(delivery.entities))
-      for (const state of ["hit-light", "hit-heavy", "death", "corpse"] as BodyState[])
+      for (const state of [
+        "hit-light",
+        "hit-heavy",
+        "death",
+        "corpse",
+      ] as BodyState[])
         for (const d of dirs) {
           const selected = selectBodyClip(merged.entities[id], state, d)!;
+          expect(selected.clip.delivery).toBe("A14");
           expect(selected.clip.page).toContain(id);
           if (!body.clips[state]?.[d]) missing.push(`${id}:${state}:${d}`);
           else {
@@ -95,6 +103,17 @@ describe("U6c additive A14.3 loader", () => {
     const queue = read("a14/session10/backlog.json");
     expect(missing.sort()).toEqual(queue.priority.sort());
     expect(missing).toHaveLength(12);
+    for (const id of ["mire_maw", "thornback"])
+      for (const d of ["ne", "nw"] as Direction[]) {
+        const death = selectBodyClip(merged.entities[id], "death", d)!;
+        const corpse = corpseForDeath(merged.entities[id], death);
+        expect(death.direction).toBe(d === "ne" ? "se" : "sw");
+        expect(corpse.state).toBe("corpse");
+        expect(corpse.direction).toBe(death.direction);
+        expect(corpse.clip.frames[0]!.rect).toEqual(
+          death.clip.frames.at(-1)!.rect,
+        );
+      }
   });
   it("rejects malformed placement metadata at the loader boundary", () => {
     const c = merged.entities.cassia!.clips["hit-light"]!.se!;

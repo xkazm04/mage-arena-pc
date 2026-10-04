@@ -1,6 +1,7 @@
 import { sigil } from "./ui/artwork.ts";
 import { ImpactClock } from "./combat-feedback.ts";
 import { LabUI } from "./lab-ui.ts";
+import { createLabSetup, type LabSetup, type LabSession } from "./lab-setup.ts";
 import { ArtFixture } from "./art-fixture.ts";
 import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
@@ -16,12 +17,9 @@ import {
   combat,
   idleInput,
   resolveHit,
-  createLab,
   defaultLabConfig,
   stepLab,
   tuningFor,
-  type CombatLab,
-  type LabConfig,
   arenaGeometry,
   createTraining,
   FixedStepper,
@@ -75,7 +73,7 @@ export class ArenaGame {
   camera: Camera;
   training = createTraining();
   games?: Games;
-  lab?: CombatLab;
+  lab?: LabSession;
   labUI?: LabUI;
   composition: Composition = structuredClone(presets[0]!);
   mode: "training" | "roster" | "tiro" | "lab" = "training";
@@ -481,10 +479,10 @@ export class ArenaGame {
     this.hud();
     this.labUI.openSetup();
   }
-  resetLab(config: LabConfig) {
+  resetLab(config: LabSetup) {
     const previous = this.lab;
     this.restart();
-    this.lab = createLab(
+    this.lab = createLabSetup(
       config,
       previous?.training.state.tuning,
       previous?.tuningName,
