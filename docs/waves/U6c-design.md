@@ -56,3 +56,26 @@ in active creature combat, excluding the stationary Lab target. Art fixture
 casts have finite preview windows and pose inspections exclude synthetic hits.
 The stress fixture now contains twelve distinct roster identities, including
 Cinder Hound (the previous fixture duplicated Cassia).
+
+
+Sub-wave 3 complete: `d5c626f`; gate 215 tests + 11 reference checks, build pass.
+Extra playback passes at both sizes. Stress after the full extra walk measured
+60.002/60.003 fps, frame p95 16.8 ms, CPU p95 2.6/2.2 ms, 325.716 MiB decoded
+textures. Existing arena teardown releases character atlas pages; below 330 MiB,
+no additional eviction is needed in this delivery.
+
+Sub-wave 4 verification adjustments: disable periodic synthetic hit injection
+while a fixture explicitly previews another pose; allow the real-input basic
+needle test up to 90 seconds (Thornback's authored bolt resistance makes this
+stationary test take about 43 seconds, with mana regeneration and no refill).
+Capture collapse at 430 ms so the 390 ms contact effect has cleared. These are
+verification choices; no gameplay values or source artwork were changed.
+
+Sub-wave 4 complete: the final main browser walk passes (286 captures), the clear
+collapse/active-Moth supplement passes (98 captures, 96 replacing earlier fall
+shots), and the extra/performance walk passes (38 captures). The final gallery
+contains 326 images. `u6c-verify.ts` rechecks 122 source/destination file hashes,
+192 native collapse/corpse images, all 8,000 unchanged fight rows, unchanged
+save/replay hash and clean art/audio worktrees. Final `npm run gate`: 215 tests,
+11 reference checks, zero contradictions; game build pass. Full commands,
+measurements, remaining 24 art slots and owner limits are in the U6c report.

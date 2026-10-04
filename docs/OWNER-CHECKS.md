@@ -504,3 +504,16 @@ long stable tier as well as tier transitions and pause/resume. The art/audio
 streams' technical passes are preserved separately from owner acceptance.
 Missing clips, full A and adaptive musical certification are enumerated in
 [the U6b report](waves/U6b-report.md). No new generation was requested by GAME.
+
+
+## U6c - creature reactions and persistent lying poses (2026-10-04)
+
+Follow [the creature Lab guide](START-HERE.md#u6c-creature-reactions-in-the-combat-feel-lab).
+Cycle Target to Cinder Hound, Mire Maw, Thornback or Hush Moth; choose all four
+facings. These are explicitly stationary inspection targets with roster health
+and poise. Hit, defeat, leave the corpse visible, then G revive / R reset. Judge
+silhouette, struggle, pivot/size continuity, left mirroring and settled ground
+pose. Specifically inspect the Maw front face, Hound gait, Moth antennae/eyes
+and subtle resistance motion flagged by ART. Use [native evidence](waves/U6c-evidence/index.html)
+for comparison. The [report](waves/U6c-report.md) distinguishes delivered views
+from 12 priority + 12 legacy fallbacks; technical passes do not declare approval.

@@ -45,7 +45,7 @@ const record = {
   passed: true,
 };
 const evidence = process.env.MAGE_EVIDENCE ?? "U3";
-if (!/^(U[3456]|CF[12]|H1|U6b)$/.test(evidence)) throw Error("Invalid evidence destination");
+if (!/^(U[3456]|CF[12]|H1|U6b|U6c)$/.test(evidence)) throw Error("Invalid evidence destination");
 writeFileSync(
   `docs/waves/${evidence}-evidence/replay-save.json`,
   JSON.stringify(record, null, 2) + "\n",

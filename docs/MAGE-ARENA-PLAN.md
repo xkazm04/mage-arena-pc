@@ -267,7 +267,8 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 | Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | complete; U6 report and evidence |
 | Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | complete; H1 report and evidence |
 | Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | complete for landed gated deliveries; U6b report lists pending assets |
-| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | 124 priority slots delivered; 68 blocked, read-only A14 audit in U6b |
+| Game | U6c | Rewire A14.3 reactions, persistent corpses, extra motion and creature Lab targets | A14.3, H1 | complete for landed delivery; U6c report/evidence and exact remaining fallback table |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | A14.3: 180 priority + 46 additional clips integrated in U6c; 12 priority + 12 other gaps remain |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | full C/D delivered; A and adaptive certification pending, U6b audit |
 
 ## l. Session log
@@ -307,3 +308,21 @@ save/replay are recorded in [U6b report](waves/U6b-report.md). No upstream edits
 generation or push. Owner feel/listening/TV acceptance is not measured. Remaining
 work: 68 priority A14 slots plus 58 other legacy requests, full A, and verified
 adaptive musical boundaries/approval when those deliveries become available.
+
+
+### 2026-10-04 - GAME U6c
+
+Read-only A14.3 audit at art 82f5bc4. Four sub-waves: verified additive import,
+paired collapse/corpse selection and stationary creature Lab targets, all 46
+extra motion clips with creature attack presentation, then native verification.
+All twelve roster bodies use delivered reactions and persistent lying sprites;
+12 priority directions and 12 other motion/brace slots use explicit same-entity
+fallbacks. F8 logs missing slots once. No core/director combat implementation,
+combat data, tuning or save-version changes. Gate: 215 tests + 11 reference
+checks, zero contradictions; game build pass. Full 8,000-fight records and
+save/replay bytes equal H1. Native 1080p/1440p walks and 100-projectile/12-figure
+stress: 60 fps, 325.716 MiB decoded textures. [U6c report](waves/U6c-report.md)
+and [gallery](waves/U6c-evidence/index.html). Art/audio worktrees unchanged;
+no generation or push. Owner animation/identity/TV/feel acceptance is not
+measured. Next: the exact 24 missing slots listed in the report, then owner
+creature reaction review using the new Lab selector.

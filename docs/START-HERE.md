@@ -220,6 +220,8 @@ payoff; technical measurements do not decide your musical preference.
 
 ## U6c: creature reactions in the Combat Feel Lab
 
+U6c preserves U6b season-save compatibility; combat source-version inputs are unchanged.
+
 Open **Combat Feel Lab**, press **L**, and click **Target** to cycle these setups:
 
 | Target choice | Spawned opponent | Behavior |
@@ -246,8 +248,8 @@ lying sprite persists until **G** revives it or **R** resets the bout. Use **V**
 to replay recorded live hits; **P** and period freeze/step the simulation. The
 presentation still finishes hit/death clips while the simulation is frozen.
 
-All four humanoid and Hound/Moth facings have delivered light/heavy hits and
-collapse/corpse pairs. Maw rear hits are delivered too. Missing Maw rear
+All eight humanoids and Hound/Moth have delivered light/heavy hits and
+collapse/corpse pairs in all four facings. Maw rear hits are delivered too. Missing Maw rear
 collapse/corpse and Thornback rear hits/collapse/corpse use their own front view
 on the same left/right side. These twelve priority fallbacks are visible in
 **F8** art debug, with **[ / ]** paging; each missing slot logs once per arena
