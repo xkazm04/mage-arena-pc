@@ -32,6 +32,9 @@ interface Motion {
   frame: number;
   angle?: number;
   lastTick?: number;
+  deathElapsed?: number;
+  deathTick?: number;
+  deathClip?: boolean;
 }
 export class BodyPlayer {
   manifest?: BodyManifest;
@@ -71,10 +74,13 @@ export class BodyPlayer {
       this.diagnostics.push(String(e));
     }
   }
-  begin(state: ArenaState, alpha: number) {
+  begin(state: ArenaState, alpha: number, dt = 1 / 60) {
     if (this.state !== state || state.events.length < this.eventIndex) {
       this.state = state;
-      this.eventIndex = state.events.length;
+      this.eventIndex = Math.max(
+        0,
+        state.events.findIndex((e) => e.tick >= state.tick - 1),
+      );
       this.actors.clear();
     }
     this.tick = state.tick + alpha;
@@ -94,6 +100,21 @@ export class BodyPlayer {
         };
         this.actors.set(a.id, motion);
       }
+      if (a.tags.includes("DEFEATED")) {
+        if (
+          motion.deathElapsed === undefined ||
+          motion.deathTick !== a.defeatedTick
+        ) {
+          motion.deathElapsed = Math.max(
+            0,
+            seconds(state.tick - (a.defeatedTick ?? state.tick)),
+          );
+          motion.deathTick = a.defeatedTick;
+        } else motion.deathElapsed += Math.min(0.1, dt);
+      } else {
+        motion.deathElapsed = undefined;
+        motion.deathTick = undefined;
+      }
       const body = this.manifest?.entities[entity];
       if (body)
         for (const page of new Set(
@@ -111,10 +132,18 @@ export class BodyPlayer {
     }
     for (const e of state.events.slice(this.eventIndex)) {
       const m = this.actors.get(e.actorId);
-      if (!m) continue;
+      if (!m || state.tick - e.tick > 60) continue;
       if (e.kind === "hit" && e.value > 0)
         m.hitUntil =
-          e.tick + (policy.bodies.hitHoldMs / 1000) * combat.simStepHz;
+          e.tick +
+          Math.max(
+            tuningFor(state).hitRecoilS,
+            seconds(
+              (state.actors.find((a) => a.id === e.actorId)?.staggerUntil ??
+                e.tick) - e.tick,
+            ),
+          ) *
+            combat.simStepHz;
       if (e.kind === "release")
         m.castUntil =
           e.tick + (policy.bodies.castHoldMs / 1000) * combat.simStepHz;
@@ -128,7 +157,7 @@ export class BodyPlayer {
     const motion = this.actors.get(a.id)!;
     const vx = a.pos.x - a.previousPos.x,
       vy = a.pos.y - a.previousPos.y;
-    const state: BodyState = a.down
+    const state: BodyState = a.tags.includes("DEFEATED")
       ? "death"
       : this.tick < motion.hitUntil
         ? "hit"
@@ -185,6 +214,7 @@ export class BodyPlayer {
     const body = this.manifest?.entities[motion.entity];
     const selected = selectBodyClip(body, state, direction, motion.selection);
     const key = `${motion.entity}:${state}:${direction}`;
+    motion.deathClip = false;
     if (!selected || !body) {
       if (this.manifest)
         this.fallbacks.add(`${key} → procedural (no entity clip)`);
@@ -207,6 +237,7 @@ export class BodyPlayer {
       this.fallbacks.add(
         `${key} → ${selected.state}:${selected.direction}${selected.held ? " (held)" : ""}`,
       );
+    motion.deathClip = selected.state === "death" && !selected.held;
     // A missing death holds the actual last displayed frame; other substituted
     // states hold a neutral key. All original action clips hold their last key.
     const index = selected.held
@@ -224,7 +255,9 @@ export class BodyPlayer {
                     Math.max(1, a.pending.releaseTick - a.pending.startTick),
                 ),
               ) * selected.clip.frames.reduce((n, f) => n + f.durationMs, 0)
-            : seconds(this.tick - motion.since) * 1000,
+            : state === "death"
+              ? (motion.deathElapsed ?? 0) * 1000
+              : seconds(this.tick - motion.since) * 1000,
           true,
         );
     const frame = selected.clip.frames[index] ?? selected.clip.frames[0]!;
@@ -248,7 +281,7 @@ export class BodyPlayer {
         (frame.orig?.[0] ?? frame.rect[2]),
       (body.designSize1080[1] * scale) / (frame.orig?.[1] ?? frame.rect[3]),
     );
-    sprite.alpha = a.down ? policy.bodies.deathOpacity : 1;
+    sprite.alpha = 1;
     motion.selection = selected;
     motion.frame = index;
     this.displayed.push({
@@ -265,6 +298,48 @@ export class BodyPlayer {
       rotation: sprite.rotation,
     });
     return true;
+  }
+  deathAge(a: Actor) {
+    return this.actors.get(a.id)?.deathElapsed ?? 0;
+  }
+  /** Apply after either atlas selection or the procedural figure fallback. */
+  settle(sprite: Sprite, a: Actor, height: number, reduced: boolean) {
+    if (!a.tags.includes("DEFEATED")) return;
+    const motion = this.actors.get(a.id),
+      tune = tuningFor(this.state!);
+    if (!motion?.deathClip) {
+      const t = reduced ? 1 : Math.min(1, this.deathAge(a) / tune.deathFallS);
+      const eased = 1 - Math.pow(1 - t, 3),
+        sign = (a.defeatDirection?.x ?? a.facing.x) < 0 ? -1 : 1;
+      sprite.rotation = sign * Math.PI * 0.5 * eased;
+      sprite.scale.y *= 1 - 0.38 * eased;
+      sprite.y += height * 0.06 * eased;
+    }
+    sprite.alpha = 0.9;
+    const shown = this.displayed.find((d) => d.id === a.id);
+    if (shown)
+      Object.assign(shown, {
+        corpse: true,
+        deathAge: this.deathAge(a),
+        proceduralFall: !motion?.deathClip,
+        rotation: sprite.rotation,
+        settled: motion?.deathClip
+          ? undefined
+          : this.deathAge(a) >= tune.deathFallS,
+      });
+  }
+  recordPose(a: Actor, sprite: Sprite) {
+    const shown = this.displayed.find((d) => d.id === a.id);
+    if (shown)
+      Object.assign(shown, {
+        offsetX: sprite.x,
+        offsetY: sprite.y,
+        rotation: sprite.rotation,
+        scaleX: sprite.scale.x,
+        scaleY: sprite.scale.y,
+        alpha: sprite.alpha,
+        flashing: !!sprite.filters?.length,
+      });
   }
   snapshot() {
     return {

@@ -109,7 +109,7 @@ describe("Combat Feel Lab", () => {
       source: dummy.pos,
     });
     expect(player.pos.x).toBeLessThan(before);
-    expect(player.staggerUntil).toBe(state.tick + ticks(0.1));
+    expect(player.staggerUntil).toBe(state.tick + ticks(0.13));
   });
   it("snapshots active spells while new casts use edited cast, cooldown and speed", () => {
     const l = createLab({ ...defaultLabConfig, dummyAttack: "still" }),

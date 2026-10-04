@@ -17,7 +17,7 @@ export interface Actor {
   school?: School; velocity?: Vec; staggerUntil?: number; staggerImmuneUntil?: number; rollRecoveryUntil?: number;
   id: number; team: number; label: string; pos: Vec; previousPos: Vec; facing: Vec; radius: number;
   ranks: Ranks; hp: number; maxHp: number; mana: number; maxMana: number; stamina: number; maxStamina: number;
-  down: boolean; dummy: boolean; absorb: boolean; absorbFreshTick: number; releaseTick: number; absorbExhausted: boolean;
+  tags: ('DEFEATED' | 'STAGGERED')[]; poise: number; defeatedTick?: number; defeatDirection?: Vec; dummy: boolean; absorb: boolean; absorbFreshTick: number; releaseTick: number; absorbExhausted: boolean;
   water: WaterState;
   enemy?: EnemyBrain; mageAI?: MageBrain; speedMps?: number;
   lastInput: InputFrame; rollUntil: number; immuneUntil: number; recoveryUntil: number; rollDirection: Vec;
@@ -28,7 +28,7 @@ export interface Actor {
 export interface Projectile extends Hit { id: number; pos: Vec; previousPos: Vec; velocity: Vec; radius: number; remainingM: number; hitIds: number[]; burstRadiusM?: number; piercing?: boolean; reflected?: boolean }
 export interface Zone { id: number; ownerId: number; pos: Vec; radiusM: number; until: number; kind: 'slow' | 'fog'; slowMult: number }
 export interface Telegraph extends Hit { id: number; kind: 'projectile' | 'lane' | 'melee' | 'area' | 'charge'; origin: Vec; target: Vec; resolveTick: number; startTick: number; speedMps: number; rangeM: number; widthM: number; rootS?: number; pullM?: number; survivesOwner?: boolean; wallStunS?: number }
-export interface ArenaEvent { spellId?: string; at?: Vec; family?: Family; contactDamage?: number; guarded?: boolean; activationId?: number; tick: number; kind: 'perfect' | 'hit' | 'cast' | 'release' | 'down' | 'unlock' | 'interrupt' | 'roll'; actorId: number; targetId?: number; value: number }
+export interface ArenaEvent { direction?: Vec; spellId?: string; at?: Vec; family?: Family; contactDamage?: number; guarded?: boolean; activationId?: number; tick: number; kind: 'perfect' | 'hit' | 'cast' | 'release' | 'down' | 'unlock' | 'interrupt' | 'roll' | 'stagger'; actorId: number; targetId?: number; value: number }
 export interface RandomDraw { tick: number; purpose: string; value: number }
 export interface ArenaState {
   tuning?: CombatTuning; lab?: { damageEnabled: boolean };
@@ -36,3 +36,7 @@ export interface ArenaState {
   telegraphs: Telegraph[]; zones: Zone[]; events: ArenaEvent[]; randomLog: RandomDraw[];
 }
 export const idleInput = (aim: Vec = { x: 32, y: 10 }): InputFrame => ({ move: { x: 0, y: 0 }, aim, slot: 0, cast: false, absorb: false, roll: false, sprint: false });
+
+export const isDefeated = (a: Actor): boolean => a.tags.includes("DEFEATED");
+export const activationBlockedTags = ["DEFEATED", "STAGGERED"] as const;
+export const activationBlocked = (a: Actor): boolean => activationBlockedTags.some(tag => a.tags.includes(tag));

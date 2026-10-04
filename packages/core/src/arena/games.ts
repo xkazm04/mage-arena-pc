@@ -51,11 +51,11 @@ export function gamesResult(g: Games): GamesResult {
 export function stepGames(g: Games, playerInput?: InputFrame): void {
   if (g.phase !== 'active') return;
   const inputs = enemyInputs(g.state);
-  for (const a of g.state.actors) if (a.mageAI && !a.down) inputs[a.id] = mageInput(g.state, a);
+  for (const a of g.state.actors) if (a.mageAI && !a.tags.includes("DEFEATED")) inputs[a.id] = mageInput(g.state, a);
   if (playerInput) inputs[g.player.id] = playerInput;
   stepArena(g.state, inputs); queueDeathEffects(g.state);
-  if (g.player.down) { g.phase = 'lost'; gamesResult(g); return; }
-  const enemyAlive = g.state.actors.some(a => a.team !== g.player.team && !a.down);
+  if (g.player.tags.includes("DEFEATED")) { g.phase = 'lost'; gamesResult(g); return; }
+  const enemyAlive = g.state.actors.some(a => a.team !== g.player.team && !a.tags.includes("DEFEATED"));
   const enemyHazards = g.state.telegraphs.some(t => t.ownerId !== g.player.id) || g.state.projectiles.some(p => p.ownerId !== g.player.id);
   if (!enemyAlive && !enemyHazards) {
     g.wavesCleared = g.wave + 1; g.phase = g.wave === tiro.waves.length - 1 ? 'complete' : 'intermission';

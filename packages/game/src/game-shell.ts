@@ -1866,18 +1866,18 @@ export class GameShell {
       u = this.ui,
       intermission = g?.phase === "intermission";
     u.begin("results");
-    u.panel(358, 245, 1204, 610, "panel.modal");
+    u.panel(1080, 270, 750, 650, "panel.modal");
     u.text(
       intermission
         ? "THE NEXT GATE WAITS"
         : g?.result?.finalWon
           ? "THE TIRO GAMES ARE YOURS"
           : "THE CROWD GRANTS YOUR LIFE",
-      420,
+      1130,
       290,
       26,
       colours.gold,
-      1080,
+      650,
     );
     u.text(
       intermission
@@ -1885,25 +1885,25 @@ export class GameShell {
         : g?.result?.finalWon
           ? "Tiro victor"
           : "Missio",
-      420,
+      1130,
       353,
-      76,
+      60,
       colours.text,
-      1070,
+      650,
       true,
     );
-    u.icon("water", 1400, 399, 64);
+    u.icon("water", 1710, 399, 52);
     u.text(
       intermission
         ? "Recover, then take your place beyond the next grille."
         : g?.result
           ? `${g.result.wavesCleared} bouts won  /  ${g.result.gold} gold  /  ${g.result.renown} renown`
           : "The ward yields. Take what you learned back to the proving ground.",
-      420,
+      1130,
       482,
-      36,
+      30,
       colours.text,
-      1070,
+      650,
     );
     u.text(
       a.season?.bout.spectator
@@ -1911,11 +1911,11 @@ export class GameShell {
         : intermission
           ? "The next bout resets mana, stamina and the collar."
           : "Your life is spared. The camp will hear of this.",
-      420,
+      1130,
       590,
       30,
       colours.muted,
-      1070,
+      650,
     );
     u.button(
       intermission ? "next-bout" : a.season ? "return-camp" : "return-training",
@@ -1924,10 +1924,10 @@ export class GameShell {
         : a.season
           ? "Return to camp"
           : "Return to practice",
-      420,
+      1130,
       710,
-      600,
-      88,
+      650,
+      76,
       () =>
         void this.run(async () => {
           if (intermission) await a.next();
@@ -1944,10 +1944,10 @@ export class GameShell {
     u.button(
       "result-settings",
       "Save / settings",
-      1050,
-      710,
-      450,
-      88,
+      1130,
+      812,
+      650,
+      76,
       () => void this.pause(),
     );
     u.onBack = () => void this.pause();

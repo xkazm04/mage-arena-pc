@@ -340,6 +340,7 @@ export class ArenaScene {
     aim: Vec,
     _lastPerfect: number,
     debug: boolean,
+    dt = 1 / 60,
   ): void {
     this.c = c;
     this.debug = debug;
@@ -349,10 +350,10 @@ export class ArenaScene {
       e = this.effects;
     g.clear();
     e.clear();
-    this.clips.begin(state, c, alpha);
+    this.clips.begin(state, c, alpha, dt);
     this.sigils.begin(state, c, alpha);
-    this.bodies.begin(state, alpha);
-    this.feedback.begin(state);
+    this.bodies.begin(state, alpha, dt);
+    this.feedback.begin(state, dt);
     this.scenery.render(c);
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
     this.floor.position.set(
@@ -530,7 +531,9 @@ export class ArenaScene {
       .map((a) => ({
         id: a.id,
         a,
-        foot: a.down ? a.pos : interpolate(a.previousPos, a.pos, alpha),
+        foot: a.tags.includes("DEFEATED")
+          ? a.pos
+          : interpolate(a.previousPos, a.pos, alpha),
       }))
       .sort(depthOrder);
     this.sortedActorIds = bodies.map((b) => b.id);
@@ -552,7 +555,7 @@ export class ArenaScene {
         alpha: 0.2,
       });
       if (
-        !a.down &&
+        !a.tags.includes("DEFEATED") &&
         !this.sigils.draw(
           a.id === player.id ? "selection" : "target",
           seconds(state.tick + alpha) * 1000,
@@ -566,18 +569,17 @@ export class ArenaScene {
           a.team === player.team ? 0x226580 : 0xe9a777,
           0.65,
         );
-      if (a.absorb && !a.down) {
+      if (a.absorb && !a.tags.includes("DEFEATED")) {
         const angle = Math.atan2(a.facing.y, a.facing.x),
           radius =
-            contract.absorb.visual_radius_metres *
-            this.feedback.compression(a, state.tick + alpha);
+            contract.absorb.visual_radius_metres * this.feedback.compression(a);
         const drawn = this.sigils.ward(a, foot, radius);
         if (!drawn || this.debug)
           this.path(
             arcPoints(foot, radius, angle, tuningFor(state).absorbArcDeg),
           ).stroke({ color: 0x9de9df, width: m.outlinePx * 1.5 });
       }
-      if (!a.down) {
+      if (!a.tags.includes("DEFEATED")) {
         const statuses = [
           state.tick < a.water.slowUntil ? "slowed" : "",
           state.tick < a.water.rootUntil ? "rooted" : "",
@@ -613,14 +615,26 @@ export class ArenaScene {
       view.root.position.set(q.x, q.y);
       view.root.visible =
         q.x > -h && q.x < c.width + h && q.y > -h && q.y < c.height + h;
+      view.sprite.position.set(0, 0);
+      view.sprite.rotation = 0;
       if (!this.bodies.apply(view.sprite, a, m.figureHeightPx))
         this.library.apply(view.sprite, a, player.team, h);
-      view.sprite.filters = this.feedback.flash(a, state.tick + alpha)
+      const reduced = localStorage.getItem("mage-motion") === "reduced";
+      this.feedback.recoil(view.sprite, a, c, reduced);
+      this.bodies.settle(view.sprite, a, m.figureHeightPx, reduced);
+      view.sprite.filters = this.feedback.flash(a)
         ? [this.feedback.white]
         : null;
+      this.bodies.recordPose(a, view.sprite);
       const d = view.details;
       d.clear();
-      if (!a.enemy && !a.dummy && !a.down) {
+      const auraFade = a.tags.includes("DEFEATED")
+        ? Math.max(
+            0,
+            1 - this.bodies.deathAge(a) / tuningFor(state).deathAuraFadeS,
+          )
+        : 1;
+      if (!a.enemy && !a.dummy && auraFade > 0) {
         this.clips.draw(
           `${this.clips.element(a)}.aura`,
           seconds(state.tick + alpha) * 1000,
@@ -628,7 +642,7 @@ export class ArenaScene {
           {
             behind: true,
             lift: h * 0.36,
-            opacity: animation.effects.auraOpacity,
+            opacity: animation.effects.auraOpacity * auraFade,
             optional: true,
           },
         );
@@ -653,7 +667,7 @@ export class ArenaScene {
           color: 0xfffbdd,
           width: m.outlinePx,
         });
-      if (a.hp < a.maxHp && !a.down) {
+      if (a.hp < a.maxHp && !a.tags.includes("DEFEATED")) {
         d.rect(
           -h * 0.35,
           -h - 10 * m.resolutionScale,
@@ -685,7 +699,7 @@ export class ArenaScene {
       }
       // Keep distant enemies locatable when the follow camera or HUD hides their feet.
       if (
-        !a.down &&
+        !a.tags.includes("DEFEATED") &&
         a.team !== player.team &&
         (q.x < 26 * m.resolutionScale ||
           q.x > c.width - 26 * m.resolutionScale ||
@@ -792,7 +806,7 @@ export class ArenaScene {
         )
         .fill({ color: 0x081118, alpha: 0.94 });
     }
-    this.feedback.draw(state, c, alpha);
+    this.feedback.draw(state, c, player);
     const target = groundToScreen(aim, c),
       cross = 7 * m.resolutionScale;
     if (

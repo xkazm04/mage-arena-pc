@@ -1,4 +1,4 @@
-# U6 ? painted sigils and complete screen pass
+# U6 - painted sigils and complete screen pass
 
 2026-10-04. GAME / integration. Design: [U6-design.md](U6-design.md).
 

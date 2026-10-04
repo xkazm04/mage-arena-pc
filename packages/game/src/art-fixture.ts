@@ -119,7 +119,13 @@ export class ArtFixture {
         a.pos.x += ((dx! * (nextTick - previousTick)) / 60) * 0.7;
         a.pos.y += ((dy! * (nextTick - previousTick)) / 60) * 0.7;
       }
-      a.down = state === "death";
+      if (state === "death") {
+        if (!a.tags.includes("DEFEATED")) a.defeatedTick = this.state.tick;
+        a.tags = ["DEFEATED"];
+      } else {
+        a.tags = [];
+        delete a.defeatedTick;
+      }
       a.absorb = state === "absorb";
       a.absorbFreshTick = 0;
       a.pending =

@@ -31,6 +31,8 @@ import {
 import policy from "../data/animation.json" with { type: "json" };
 
 interface Shot {
+  bornS?: number;
+  contact?: boolean;
   clip: string;
   at: Vec;
   tick: number;
@@ -62,6 +64,7 @@ export class EffectPlayer {
   private disposed = false;
   private c!: Camera;
   private tick = 0;
+  private clock = 0;
   private budgetExceeded = false;
   readonly counts: Record<string, number> = {};
   dropped = 0;
@@ -115,11 +118,14 @@ export class EffectPlayer {
       this.dropped++;
       return;
     }
+    shot.bornS =
+      this.clock - seconds((this.state?.tick ?? shot.tick) - shot.tick);
     this.shots.push(shot);
     this.counts[shot.clip] = (this.counts[shot.clip] ?? 0) + 1;
   }
-  begin(state: ArenaState, c: Camera, alpha: number) {
+  begin(state: ArenaState, c: Camera, alpha: number, dt = 1 / 60) {
     const started = performance.now();
+    this.clock += Math.min(0.1, dt);
     this.budgetExceeded = false;
     this.used = 0;
     this.c = c;
@@ -144,7 +150,7 @@ export class EffectPlayer {
       const clip = this.manifest?.clips[s.clip];
       return !clip
         ? state.tick - s.tick < combat.simStepHz
-        : frameIndex(clip, seconds(this.tick - s.tick) * 1000) >= 0;
+        : frameIndex(clip, (this.clock - (s.bornS ?? this.clock)) * 1000) >= 0;
     });
     for (const event of state.events.slice(this.eventIndex)) {
       const a = state.actors.find((a) => a.id === event.actorId);
@@ -176,6 +182,7 @@ export class EffectPlayer {
           });
         this.shot({
           clip: `${this.element(source)}.impact`,
+          contact: true,
           at: { ...a.pos },
           tick: event.tick,
         });
@@ -339,7 +346,7 @@ export class EffectPlayer {
       if (s.barrier && !actor?.absorb) continue;
       this.draw(
         s.clip,
-        seconds(this.tick - s.tick) * 1000,
+        (this.clock - (s.bornS ?? this.clock)) * 1000,
         actor?.pos ?? s.at,
         {
           angle:
@@ -351,7 +358,13 @@ export class EffectPlayer {
             s.clip.endsWith(".hit") || s.clip.endsWith(".cast")
               ? cameraMetrics(this.c).figureHeightPx * 0.5
               : 0,
-          scale: s.clip === "absorb.perfect" ? 0.52 : 1,
+          scale:
+            s.clip === "absorb.perfect"
+              ? 0.52
+              : s.contact
+                ? policy.effects.contactImpactScale
+                : 1,
+          opacity: s.contact ? policy.effects.contactImpactOpacity : 1,
         },
       );
     }

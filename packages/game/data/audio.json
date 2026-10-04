@@ -260,6 +260,17 @@
       "pitch": [1, 1],
       "volumeVariationDb": 0,
       "spatial": false
+    },
+    "stagger": {
+      "bus": "effects",
+      "assets": ["hit-a"],
+      "priority": 1,
+      "concurrency": 2,
+      "cooldownMs": 180,
+      "gainDb": -5,
+      "pitch": [0.88, 0.94],
+      "volumeVariationDb": 1,
+      "spatial": true
     }
   }
 }

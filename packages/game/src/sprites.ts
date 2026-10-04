@@ -73,7 +73,7 @@ export class FigureLibrary {
     sprite.texture = entry.texture;
     sprite.anchor.set(placement.anchorX, placement.anchorY);
     sprite.scale.set(placement.scale);
-    sprite.alpha = a.down ? 0.4 : 1;
+    sprite.alpha = a.tags.includes("DEFEATED") ? 0.4 : 1;
   }
   private procedural(key: string): Entry {
     const existing = this.fallback.get(key);

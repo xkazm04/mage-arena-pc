@@ -7,7 +7,7 @@ const count = countIndex >= 0 ? Number(args[countIndex + 1]) : runtime.games.cen
 const tag = tagIndex >= 0 ? args[tagIndex + 1]! : 'census';
 if (!/^[a-z0-9-]+$/.test(tag) || !Number.isInteger(count) || count < 1) throw Error('Invalid report arguments');
 const directoryIndex = args.indexOf('--evidence'), evidence = directoryIndex >= 0 ? args[directoryIndex + 1]! : 'W4-evidence';
-if (!/^(?:W(?:4|4b|7)|U[1245]|CF[12])-evidence$/.test(evidence)) throw Error('Invalid evidence directory');
+if (!/^(?:W(?:4|4b|7)|U[12456]|CF[12]|H1)-evidence$/.test(evidence)) throw Error('Invalid evidence directory');
 const destination = new URL(`../../../docs/waves/${evidence}/`, import.meta.url); mkdirSync(destination, { recursive: true });
 const quantile = (values: number[], q: number): number => [...values].sort((a, b) => a - b)[Math.min(values.length - 1, Math.floor(values.length * q))] ?? 0;
 const summary = (values: number[]) => ({ min: Math.min(...values), p10: quantile(values, 0.1), p50: quantile(values, 0.5), p90: quantile(values, 0.9), max: Math.max(...values) });

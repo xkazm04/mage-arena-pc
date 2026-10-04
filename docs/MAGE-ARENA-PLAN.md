@@ -265,7 +265,7 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
 | Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | complete; U6 report and evidence |
-| Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
+| Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | complete; H1 report and evidence |
 | Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
 | Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | not started |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
@@ -279,6 +279,17 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
 
 
-### 2026-10-04 ? GAME U6
+### 2026-10-04 - GAME U6
 
 A13 imported through the verified loader; pooled painted cast, threat/progress, ward, selection/status and floor decals. Complete native 1080p/1440p screen walk, consistent school radicals/inscriptions and corrected frame insets. Geometry coverage witnesses and fallback retained. Commands/results and measured GPU texture/performance evidence: [U6 report](waves/U6-report.md). Owner visual/TV judgment remains unmeasured. Next: H1 hit reactivity and persistent defeat.
+
+
+### 2026-10-04 - GAME H1
+
+Damage-scaled .10-.20 s stagger, immunity tail, authored poise and paid-cast cancellation
+now apply to every combatant. DEFEATED is the shared serialized state tag across
+activation, movement, targeting, effects, AI, projectiles and HUD. A10 reaction
+selection, procedural recoil/fall, persistent corpses, audio hooks and paged Lab
+Hit controls are wired. Owner guide extended. Full census, seeded before/after
+metrics, save/replay and native browser captures: [H1 report](waves/H1-report.md).
+Human feel and art acceptance remain unmeasured. Next: U6b fresh delivery audit.

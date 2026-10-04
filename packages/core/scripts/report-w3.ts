@@ -11,7 +11,7 @@ function probe(composition: Composition, scenario: 'magic dummy' | 'stationary s
   const t = createTraining('magic', 3103); t.player.water = newWaterState(composition); t.player.hp -= 40;
   t.dummy.pos = { x: t.player.pos.x + runtime.water.reportRangeM, y: t.player.pos.y };
   if (scenario === 'stationary soldiers') {
-    t.state.actors = [t.player]; t.dummy.down = true;
+    t.state.actors = [t.player]; t.dummy.tags = ["DEFEATED"];
     let index = 0;
     for (const spawn of arenaTiers.tiers[0].waves[0].spawns) {
       const spec = enemyData.soldiers.find(s => s.id === spawn.enemy)!;
@@ -24,7 +24,7 @@ function probe(composition: Composition, scenario: 'magic dummy' | 'stationary s
   const windows: { fromS: number; toS: number; damage: number; dps: number; healing: number; mana: number; flow: number; crests: number }[] = [];
   let lastDamage = 0, lastHealing = 0, firstClearS: number | null = null, cycles = 0, decisions = 0;
   for (let i = 0; i < ticks(runtime.water.reportDurationS); i++) {
-    const target = t.state.actors.find(a => a.team !== t.player.team && !a.down);
+    const target = t.state.actors.find(a => a.team !== t.player.team && !a.tags.includes("DEFEATED"));
     const input = scenario === 'magic dummy' ? timingBot(t, 'perfect') : idleInput(target?.pos);
     if (target) input.aim = { ...target.pos };
     if (!input.absorb && i % ticks(runtime.water.reportCastCadenceS) === 0) {
@@ -33,10 +33,10 @@ function probe(composition: Composition, scenario: 'magic dummy' | 'stationary s
       if (slot !== undefined) { input.slot = slot; input.cast = true; }
     }
     stepTraining(t, input);
-    if (!t.state.actors.some(a => a.team !== t.player.team && !a.down)) {
+    if (!t.state.actors.some(a => a.team !== t.player.team && !a.tags.includes("DEFEATED"))) {
       firstClearS ??= seconds(t.state.tick); cycles++;
       // Continuous target-range probe, never a claimed enemy fight: re-rack the stationary formation.
-      for (const a of t.state.actors.filter(a => a.team !== t.player.team)) { a.down = false; a.hp = a.maxHp; }
+      for (const a of t.state.actors.filter(a => a.team !== t.player.team)) { a.tags = []; a.hp = a.maxHp; }
     }
     if (t.state.tick % ticks(combat.tierClock.unlockAtSeconds[2]) === 0) {
       const damage = t.player.metrics.damageDealt - lastDamage, healing = t.player.water.healing - lastHealing;
@@ -44,7 +44,7 @@ function probe(composition: Composition, scenario: 'magic dummy' | 'stationary s
       lastDamage = t.player.metrics.damageDealt; lastHealing = t.player.water.healing;
     }
   }
-  return { composition: composition.name, scenario, windows, firstClearS, cycles, down: t.player.down, damage: t.player.metrics.damageDealt, healing: t.player.water.healing, controlTicks: t.player.water.controlTicks, perfects: t.player.metrics.perfects, manaReturned: t.player.metrics.manaReturned, finalMana: t.player.mana };
+  return { composition: composition.name, scenario, windows, firstClearS, cycles, down: t.player.tags.includes("DEFEATED"), damage: t.player.metrics.damageDealt, healing: t.player.water.healing, controlTicks: t.player.water.controlTicks, perfects: t.player.metrics.perfects, manaReturned: t.player.metrics.manaReturned, finalMana: t.player.mana };
 }
 const probes = presets.flatMap(c => [probe(c, 'magic dummy'), probe(c, 'stationary soldiers')]);
 // Compare capabilities as well as damage: Mire control, Mend sustain, Mirror counters are different axes.

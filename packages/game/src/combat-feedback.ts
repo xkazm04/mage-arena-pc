@@ -1,5 +1,16 @@
-import { BitmapText, ColorMatrixFilter, Container } from "pixi.js";
-import { seconds, type ArenaState, type Actor } from "@mage/core/arena";
+import {
+  BitmapText,
+  ColorMatrixFilter,
+  Container,
+  Graphics,
+  type Sprite,
+} from "pixi.js";
+import {
+  tuningFor,
+  seconds,
+  type ArenaState,
+  type Actor,
+} from "@mage/core/arena";
 import { groundToScreen, cameraMetrics, type Camera } from "./camera.ts";
 import policy from "../data/combat-feedback.json" with { type: "json" };
 export { policy as feedbackPolicy };
@@ -59,12 +70,18 @@ export class ImpactClock {
 }
 interface NumberView {
   text: BitmapText;
-  tick: number;
+  bornS: number;
   at: { x: number; y: number };
 }
 export class CombatFeedback {
   readonly layer = new Container();
   readonly white = new ColorMatrixFilter();
+  private clock = 0;
+  private cue = new Graphics();
+  private reactions = new Map<
+    number,
+    { bornS: number; direction: { x: number; y: number }; damage: number }
+  >();
   private state?: ArenaState;
   private eventIndex = 0;
   private active: NumberView[] = [];
@@ -72,11 +89,13 @@ export class CombatFeedback {
   private flashes = new Map<number, number>();
   private compressions = new Map<number, number>();
   constructor() {
+    this.layer.addChild(this.cue);
     this.white.matrix = [
       0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,
     ];
   }
-  begin(state: ArenaState) {
+  begin(state: ArenaState, dt = 1 / 60) {
+    this.clock += Math.min(0.1, dt);
     if (this.state !== state || state.events.length < this.eventIndex) {
       this.state = state;
       this.eventIndex = Math.max(
@@ -84,6 +103,7 @@ export class CombatFeedback {
         state.events.findIndex((e) => e.tick >= state.tick - 1),
       );
       this.flashes.clear();
+      this.reactions.clear();
       this.compressions.clear();
       for (const n of this.active) {
         n.text.visible = false;
@@ -94,10 +114,21 @@ export class CombatFeedback {
     for (const e of state.events.slice(this.eventIndex)) {
       const actor = state.actors.find((a) => a.id === e.actorId);
       if (!actor || state.tick - e.tick > 60) continue;
-      if (e.kind === "perfect") this.compressions.set(actor.id, e.tick);
+      if (e.kind === "perfect")
+        this.compressions.set(
+          actor.id,
+          this.clock - seconds(state.tick - e.tick),
+        );
       const damage = e.contactDamage ?? e.value;
-      if (e.kind === "hit" && damage > 0 && !e.guarded)
-        this.flashes.set(actor.id, e.tick);
+      if (e.kind === "hit" && e.value > 0) {
+        const bornS = this.clock - seconds(state.tick - e.tick);
+        this.flashes.set(actor.id, bornS);
+        this.reactions.set(actor.id, {
+          bornS,
+          direction: e.direction ?? { x: -actor.facing.x, y: -actor.facing.y },
+          damage: e.value,
+        });
+      }
       if (
         e.kind !== "perfect" &&
         (e.kind !== "hit" || damage < policy.minimumNumberDamage)
@@ -123,27 +154,48 @@ export class CombatFeedback {
             : 0xfff4d0;
       text.anchor.set(0.5, 1);
       text.visible = true;
-      this.active.push({ text, tick: e.tick, at: e.at ?? { ...actor.pos } });
+      this.active.push({
+        text,
+        bornS: this.clock - seconds(state.tick - e.tick),
+        at: e.at ?? { ...actor.pos },
+      });
     }
     this.eventIndex = state.events.length;
   }
-  flash(a: Actor, tick: number) {
+  flash(a: Actor) {
     return (
-      seconds(tick - (this.flashes.get(a.id) ?? -1e9)) < policy.whiteFlashS
+      !a.tags.includes("DEFEATED") &&
+      this.clock - (this.flashes.get(a.id) ?? -1e9) <
+        tuningFor(this.state!).hitFlashS
     );
   }
-  compression(a: Actor, tick: number) {
+  compression(a: Actor) {
     const t =
-      seconds(tick - (this.compressions.get(a.id) ?? -1e9)) /
+      (this.clock - (this.compressions.get(a.id) ?? -1e9)) /
       policy.perfectCompressionS;
     return t >= 0 && t < 1
       ? 1 - (1 - policy.wardCompressionScale) * Math.sin(t * Math.PI)
       : 1;
   }
-  draw(state: ArenaState, c: Camera, alpha: number) {
+  draw(state: ArenaState, c: Camera, player: Actor) {
     const m = cameraMetrics(c);
+    this.cue.clear();
+    this.cue.position.set(
+      -(this.layer.parent?.x ?? 0),
+      -(this.layer.parent?.y ?? 0),
+    );
+    const reaction = this.reactions.get(player.id),
+      duration = tuningFor(state).playerHitCueS;
+    if (reaction && this.clock - reaction.bornS < duration) {
+      const opacity = 0.5 * (1 - (this.clock - reaction.bornS) / duration);
+      this.cue.rect(0, 0, c.width, c.height).stroke({
+        color: 0xd45e46,
+        alpha: opacity,
+        width: 18 * m.resolutionScale,
+      });
+    }
     this.active = this.active.filter((n) => {
-      const age = seconds(state.tick + alpha - n.tick);
+      const age = this.clock - n.bornS;
       if (age > policy.numbersS) {
         n.text.visible = false;
         this.pool.push(n.text);
@@ -164,11 +216,34 @@ export class CombatFeedback {
       return true;
     });
   }
+  recoil(sprite: Sprite, a: Actor, c: Camera, reduced: boolean) {
+    const r = this.reactions.get(a.id);
+    if (!r || a.tags.includes("DEFEATED") || reduced) return;
+    const tune = tuningFor(this.state!),
+      age = this.clock - r.bornS;
+    if (age < 0 || age >= tune.hitRecoilS) return;
+    const t = age / tune.hitRecoilS,
+      pulse = Math.sin(Math.PI * t),
+      m = cameraMetrics(c);
+    const distance =
+      tune.hitRecoilM * Math.min(1.5, 0.6 + r.damage / 30) * pulse;
+    sprite.x +=
+      r.direction.x * distance * m.pxPerMetreX +
+      Math.sin(age * 120) * tune.hitShakePx * m.resolutionScale * (1 - t);
+    sprite.y += r.direction.y * distance * m.pxPerMetreY;
+    sprite.scale.x *= 1 + tune.hitSquash * pulse;
+    sprite.scale.y *= 1 - tune.hitSquash * pulse;
+  }
   snapshot() {
     return {
       numbers: this.active.length,
       allocated: this.active.length + this.pool.length,
       flashes: this.flashes.size,
+      reactions: [...this.reactions].map(([id, r]) => ({
+        id,
+        age: this.clock - r.bornS,
+        direction: r.direction,
+      })),
     };
   }
   dispose() {

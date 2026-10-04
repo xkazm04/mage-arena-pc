@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { applyBoutInput, authoredParley, boutHash, bridgeRules, type BoutInput } from '@mage/core';
-import { presets } from '@mage/core/arena';
+import { idleInput, presets } from '@mage/core/arena';
 import { CostGuard, decodeSave, encodeSave, hash, restoreSave, SaveStore, SeasonService, type ProviderResult } from '@mage/director';
 import { campDay, fixtureService, fourteenDays, trialPolicy } from './season-fixtures.ts';
 import { knowingFixture } from './parley-fixtures.ts';
@@ -34,6 +34,30 @@ describe('season save', () => {
       original.close(); loaded.close();
     }
   });
+  it('round trips an active stagger and a defeated corpse through the full validated season envelope', async () => {
+    const original=await gamesMorning();
+    original.seasonCommand({type:'prepare',composition:presets[2]!},original.session.revision);
+    original.seasonCommand({type:'start'},original.session.revision);
+    let checkedStagger=false;
+    while(original.progress.bout!.phase!=='terminal') {
+      const b=structuredClone(original.progress.bout!), entries:BoutInput[]=[];
+      for(let i=0;i<bridgeRules.limits.batchTicks && b.phase!=='terminal';i++) {
+        const g=b.games!, entry:BoutInput={type:'tick',tick:g.state.tick,input:idleInput()};
+        applyBoutInput(b,entry);entries.push(entry);
+        if(!checkedStagger && g.player.tags.includes('STAGGERED')) break;
+      }
+      original.boutInputs(b.id,entries,boutHash(b));
+      if(!checkedStagger && b.games!.player.tags.includes('STAGGERED')) {
+        const loaded=clone(original);expect(loaded.progress.bout!.games!.player.tags).toContain('STAGGERED');
+        expect(loaded.progress.bout!.games!.player.staggerImmuneUntil).toBe(b.games!.player.staggerImmuneUntil);loaded.close();checkedStagger=true;
+      }
+      expect(b.games!.state.tick).toBeLessThan(18000);
+    }
+    expect(checkedStagger).toBe(true);const loaded=clone(original), corpse=loaded.progress.bout!.games!.player;
+    expect(corpse.tags).toEqual(['DEFEATED']);expect(corpse.defeatedTick).toBeDefined();expect(corpse.hp).toBe(0);
+    expect(loaded.progress.bout!.games!.state.actors).toContain(corpse);expect(encodeSave(loaded)).toEqual(encodeSave(original));
+    original.close();loaded.close();
+  },30000);
   it('resumes the same next day', async () => {
     const original=fixtureService(), loaded=fixtureService();
     restoreSave(loaded, decodeSave(loaded.tables, JSON.stringify(encodeSave(original)))); loaded.paused=false;

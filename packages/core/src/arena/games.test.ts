@@ -38,9 +38,9 @@ describe('the full roster on common damage and movement rules', () => {
     const state = createArena(), player = addMage(state, 0, { x: 10, y: 10 });
     const pack = [addEnemy(state, 'cinder_hound', { x: 11, y: 10 }), addEnemy(state, 'cinder_hound', { x: 10, y: 11 }), addEnemy(state, 'cinder_hound', { x: 9, y: 10 })];
     enemyInputs(state); expect(state.telegraphs.filter(t => t.kind === 'melee')).toHaveLength(2);
-    pack[0]!.down = true; pack[0]!.hp = 0; state.telegraphs = []; queueDeathEffects(state);
+    pack[0]!.tags = ["DEFEATED"]; pack[0]!.hp = 0; state.telegraphs = []; queueDeathEffects(state);
     expect(state.telegraphs).toHaveLength(1); expect(state.telegraphs[0]!.survivesOwner).toBe(true);
-    for (const a of pack.slice(1)) { a.down = true; a.enemy!.deathQueued = true; }
+    for (const a of pack.slice(1)) { a.tags = ["DEFEATED"]; a.enemy!.deathQueued = true; }
     for (let i = 0; i < ticks(0.6); i++) stepArena(state, { [player.id]: { ...idleInput(pack[0]!.pos), absorb: i >= ticks(0.5) } });
     expect(player.metrics.perfects).toBe(1); expect(player.hp).toBe(player.maxHp);
   });
@@ -98,20 +98,20 @@ describe('Tiro lifecycle and replay', () => {
   });
   it('advances only on clear, heals missing HP once, resets resources and collar', () => {
     const g = createGames(3); expect(() => advanceGames(g)).toThrow(); g.player.hp = 45; g.player.mana = 2;
-    for (const a of g.state.actors.slice(1)) { a.down = true; a.hp = 0; }
+    for (const a of g.state.actors.slice(1)) { a.tags = ["DEFEATED"]; a.hp = 0; }
     stepGames(g, idleInput()); expect(g.phase).toBe('intermission'); const hp = g.player.hp;
     advanceGames(g); expect(g.player.hp).toBe(hp + (g.player.maxHp - hp) * 0.3); expect(g.player.mana).toBe(g.player.maxMana); expect(g.player.tier).toBe(1);
     expect(g.state.actors.filter(a => a.enemy?.id === 'cinder_hound')).toHaveLength(3); expect(g.state.actors.filter(a => a.enemy?.id === 'mire_maw')).toHaveLength(1); expect(() => advanceGames(g)).toThrow();
   });
   it('simultaneous Down loses, cannot advance, and payout is idempotent', () => {
-    const g = createGames(3); g.wavesCleared = 2; for (const a of g.state.actors) { a.down = true; a.hp = 0; } stepGames(g);
+    const g = createGames(3); g.wavesCleared = 2; for (const a of g.state.actors) { a.tags = ["DEFEATED"]; a.hp = 0; } stepGames(g);
     expect(g.phase).toBe('lost'); expect(() => advanceGames(g)).toThrow(); const result = gamesResult(g); expect(gamesResult(g)).toBe(result);
     expect(result.gold).toBe(tiro.payoutGold[1]); expect(result.renown).toBe(tiro.renown[1]);
   });
   it('all four clears yield one final reward, not a sum of payouts', () => {
     const g = createGames(3);
     for (let wave = 0; wave < 4; wave++) {
-      for (const a of g.state.actors.slice(1)) { a.down = true; a.hp = 0; if (a.enemy) a.enemy.deathQueued = true; }
+      for (const a of g.state.actors.slice(1)) { a.tags = ["DEFEATED"]; a.hp = 0; if (a.enemy) a.enemy.deathQueued = true; }
       g.state.projectiles = []; g.state.telegraphs = []; stepGames(g, idleInput());
       if (wave < 3) advanceGames(g);
     }

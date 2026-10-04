@@ -20,6 +20,9 @@ const rows: (LabMetrics & {
   seed: number;
   outcome: string;
   durationS: number;
+  staggers: number;
+  cancelledCasts: number;
+  hitsToDefeat: number | null;
   hash: string;
 })[] = [];
 for (const school of schools)
@@ -29,14 +32,40 @@ for (const school of schools)
       makeTuning(),
     );
     const { state, player, dummy } = l.training;
+    let staggers = 0;
     attachMageAI(player, 3);
-    while (state.tick < 7200 && !player.tags.includes("DEFEATED") && !dummy.tags.includes("DEFEATED"))
+    while (
+      state.tick < 7200 &&
+      !player.tags.includes("DEFEATED") &&
+      !dummy.tags.includes("DEFEATED")
+    ) {
+      const previous = state.actors.map((a) => a.staggerUntil ?? 0);
       stepLab(l, mageInput(state, player), false);
+      staggers += state.actors.filter(
+        (a, i) => (a.staggerUntil ?? 0) > previous[i]!,
+      ).length;
+    }
     rows.push({
       school,
       seed,
-      outcome: dummy.tags.includes("DEFEATED") ? "win" : player.tags.includes("DEFEATED") ? "loss" : "timeout",
+      outcome: dummy.tags.includes("DEFEATED")
+        ? "win"
+        : player.tags.includes("DEFEATED")
+          ? "loss"
+          : "timeout",
       durationS: seconds(state.tick),
+      staggers,
+      cancelledCasts: state.events.filter((e) => e.kind === "interrupt").length,
+      hitsToDefeat:
+        player.tags.includes("DEFEATED") || dummy.tags.includes("DEFEATED")
+          ? state.events.filter(
+              (e) =>
+                e.kind === "hit" &&
+                e.value > 0 &&
+                e.actorId ===
+                  (dummy.tags.includes("DEFEATED") ? dummy.id : player.id),
+            ).length
+          : null,
       ...l.metrics,
       hash: stateHash(state),
     });
@@ -51,6 +80,11 @@ const summary = schools.map((school) => {
     wins: r.filter((r) => r.outcome === "win").length,
     timeouts: r.filter((r) => r.outcome === "timeout").length,
     durationMedianS: median(r.map((r) => r.durationS)),
+    hitsToDefeatMedian: median(
+      r.flatMap((r) => (r.hitsToDefeat === null ? [] : [r.hitsToDefeat])),
+    ),
+    staggersTotal: r.reduce((n, r) => n + r.staggers, 0),
+    cancelledCastsTotal: r.reduce((n, r) => n + r.cancelledCasts, 0),
     winningTTKMedianS: median(
       r.flatMap((r) => (r.timeToKillS === null ? [] : [r.timeToKillS])),
     ),
@@ -60,7 +94,7 @@ const summary = schools.map((school) => {
     perfectTotal: r.reduce((a, r) => a + r.perfects, 0),
   };
 });
-const out = resolve("docs/waves/CF2-evidence");
+const out = resolve("docs/waves/H1-evidence");
 mkdirSync(out, { recursive: true });
 const report = {
   label: "headless simulation, not human play",

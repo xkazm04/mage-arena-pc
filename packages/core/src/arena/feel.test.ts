@@ -100,7 +100,7 @@ describe("shipping combat commitments", () => {
     expect(player.velocity!.x).toBeLessThanOrEqual(makeTuning().walkMps * 0.5);
     expect(player.recoveryUntil).toBeGreaterThan(state.tick);
   });
-  it("resists fan stunlock, preserves guarding, and resets residual movement/stagger", () => {
+  it("resists fan stunlock, staggers guarded chip, and resets residual movement/stagger", () => {
     const { state, player, dummy } = setup();
     const hit = {
       ownerId: dummy.id,
@@ -119,7 +119,7 @@ describe("shipping combat commitments", () => {
     player.absorb = true;
     player.absorbFreshTick = -100;
     resolveHit(state, player, { ...hit, activationId: 113 });
-    expect(player.staggerUntil).toBe(until);
+    expect(player.staggerUntil).toBeGreaterThan(until!);
     resetWave(state, player);
     expect(player.velocity).toEqual({ x: 0, y: 0 });
     expect(player.staggerUntil).toBe(state.tick);

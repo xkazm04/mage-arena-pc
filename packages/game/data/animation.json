@@ -8,7 +8,9 @@
     "castOpacity": 0.58,
     "impactOpacity": 0.65,
     "hitOpacity": 0.7,
-    "barrierOpacity": 0.68
+    "barrierOpacity": 0.68,
+    "contactImpactScale": 0.65,
+    "contactImpactOpacity": 0.72
   },
   "bodies": {
     "hitHoldMs": 100,
@@ -32,48 +34,12 @@
     "netter": "water"
   },
   "compatibleStates": {
-    "idle": [
-      "absorb",
-      "run",
-      "cast",
-      "hit",
-      "death"
-    ],
-    "run": [
-      "idle",
-      "absorb",
-      "cast",
-      "hit",
-      "death"
-    ],
-    "cast": [
-      "absorb",
-      "idle",
-      "hit",
-      "run",
-      "death"
-    ],
-    "absorb": [
-      "idle",
-      "cast",
-      "hit",
-      "run",
-      "death"
-    ],
-    "hit": [
-      "idle",
-      "absorb",
-      "cast",
-      "run",
-      "death"
-    ],
-    "death": [
-      "hit",
-      "idle",
-      "absorb",
-      "cast",
-      "run"
-    ]
+    "idle": ["absorb", "run", "cast", "hit", "death"],
+    "run": ["idle", "absorb", "cast", "hit", "death"],
+    "cast": ["absorb", "idle", "hit", "run", "death"],
+    "absorb": ["idle", "cast", "hit", "run", "death"],
+    "hit": ["idle", "absorb", "cast", "run", "death"],
+    "death": ["hit", "idle", "absorb", "cast", "run"]
   },
   "dailyClock": {
     "middayArtHour": 12,

@@ -1,4 +1,4 @@
-import { addMage, createArena, random, runtime, ticks, seconds, spawnProjectile, stepArena, stateHash, combat } from './kernel.ts';
+import { reviveActor, addMage, createArena, random, runtime, ticks, seconds, spawnProjectile, stepArena, stateHash, combat } from './kernel.ts';
 import { distance, sub, unit } from './math.ts';
 import { idleInput, type Actor, type ArenaState, type InputFrame } from './types.ts';
 export type TrainingKind = 'magic' | 'physical' | 'flanker' | 'charge' | 'stream' | 'performance';
@@ -13,7 +13,7 @@ export function createTraining(kind: TrainingKind = 'magic', seed = 1): Training
 }
 export function scheduleTraining(t: Training): void {
   const { state, dummy, player } = t;
-  if (dummy.down || player.down) return;
+  if (dummy.tags.includes("DEFEATED") || player.tags.includes("DEFEATED")) return;
   if (t.kind === 'performance') {
     const field = runtime.training.performanceField;
     while (state.projectiles.length < runtime.training.performanceProjectiles) {
@@ -69,7 +69,7 @@ export function runTimingBot(kind: BotKind, durationS = runtime.training.reportD
   let downs = 0; const manaCurve: { second: number; mana: number; perfects: number }[] = [];
   for (let i = 0; i < ticks(durationS); i++) {
     stepTraining(t, timingBot(t, kind, leadTicks));
-    if (t.player.down) { downs++; t.player.down = false; t.player.hp = t.player.maxHp; }
+    if (t.player.tags.includes("DEFEATED")) { downs++; reviveActor(t.state, t.player); t.player.hp = t.player.maxHp; }
     if (t.state.tick % combat.simStepHz === 0) manaCurve.push({ second: seconds(t.state.tick), mana: t.player.mana, perfects: t.player.metrics.perfects });
   }
   return { kind, durationS, leadTicks: leadTicks ?? (kind === 'perfect' ? ticks(runtime.training.perfectBotLeadS) : kind === 'late' ? ticks(runtime.training.lateBotLeadS) : null),

@@ -1,9 +1,9 @@
-import { profileFor, tuningFor } from './tuning.ts';
+import { feelPolicy, profileFor, tuningFor } from './tuning.ts';
 import { combat, statRules, bolt, rankRange } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
 import { constrainToArena } from './geometry.ts';
 import { distance, inArc, length, segmentHit, sub, unit, type Vec } from './math.ts';
-import { idleInput, type Actor, type ArenaState, type Hit, type InputFrame, type Projectile, type Ranks } from './types.ts';
+import { activationBlocked, idleInput, type Actor, type ArenaState, type Hit, type InputFrame, type Projectile, type Ranks } from './types.ts';
 import { newWaterState } from './catalog.ts';
 import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, updateWater, wardDrainMult, waterAbsorbed } from './water.ts';
 import { enemySpec } from './enemies.ts';
@@ -33,7 +33,7 @@ export function addMage(state: ArenaState, team: number, pos: Vec, label = 'Wate
     ranks: { ...ranks }, hp: maximum(statRules.hp, ranks.vigor), maxHp: maximum(statRules.hp, ranks.vigor),
     mana: maximum(statRules.mana, ranks.focus), maxMana: maximum(statRules.mana, ranks.focus),
     stamina: maximum(statRules.stamina, ranks.vigor), maxStamina: maximum(statRules.stamina, ranks.vigor),
-    down: false, dummy: false, absorb: false, absorbFreshTick: -1e9, releaseTick: -1e9, absorbExhausted: false, water: newWaterState(),
+    tags: [], poise: feelPolicy.poise.mage, dummy: false, absorb: false, absorbFreshTick: -1e9, releaseTick: -1e9, absorbExhausted: false, water: newWaterState(),
     lastInput: idleInput(), rollUntil: 0, immuneUntil: 0, recoveryUntil: 0, rollDirection: { x: 1, y: 0 },
     staminaUsedTick: -1e9, cooldownUntil: 0, waveStartTick: state.tick, tier: 1, lastUnlockTick: state.tick,
     clockAdvanceTicks: 0, unlockTicks: [state.tick],
@@ -49,8 +49,25 @@ export function interrupt(state: ArenaState, actor: Actor): void {
   actor.pending = undefined; state.telegraphs = state.telegraphs.filter(t => t.ownerId !== actor.id);
   if (hadCast) emit(state, 'interrupt', actor);
 }
+/** Atomically establish defeat before cancelling commitments. Costs remain spent. */
+export function defeatActor(state: ArenaState, actor: Actor, direction: Vec = actor.facing): void {
+  if (actor.tags.includes('DEFEATED')) return;
+  actor.tags = ['DEFEATED']; actor.hp = 0; actor.defeatedTick = state.tick; actor.defeatDirection = {...direction};
+  actor.velocity = {x:0,y:0}; actor.previousPos = {...actor.pos}; actor.absorb = false;
+  actor.rollUntil = state.tick; actor.immuneUntil = state.tick;
+  emit(state, 'down', actor); interrupt(state, actor);
+  for (const other of state.actors) if (other.pending?.targetId === actor.id) interrupt(state, other);
+}
+/** Explicit Lab/refill revival; ordinary healing never clears defeat. */
+export function reviveActor(state: ArenaState, actor: Actor): void {
+  actor.tags = []; delete actor.defeatedTick; delete actor.defeatDirection;
+  actor.hp = actor.maxHp; actor.velocity = {x:0,y:0}; actor.previousPos = {...actor.pos};
+  actor.staggerUntil = actor.staggerImmuneUntil = state.tick;
+  actor.rollUntil = actor.immuneUntil = actor.recoveryUntil = state.tick;
+  actor.absorb = false; actor.pending = undefined;
+}
 export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean } {
-  if (target.down || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
+  if (target.tags.includes("DEFEATED") || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
   const tune = tuningFor(state);
   const spec = target.enemy ? enemySpec(target) : undefined;
   const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
@@ -74,11 +91,23 @@ export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage
   if (owner) owner.metrics.damageDealt += hpRemoved;
   target.metrics.hits++; emit(state, 'hit', target, hpRemoved, hit.ownerId);
   Object.assign(state.events.at(-1)!, { family: hit.family, contactDamage: damage, guarded: guarded && reduction > 0, activationId: hit.activationId, at: {...target.pos} });
-  if (damage > 0 && !perfect) {
-    if (!guarded && tune.hitStunS > 0 && state.tick >= (target.staggerImmuneUntil ?? 0)) { target.staggerImmuneUntil = state.tick + ticks(tune.hitStunS + tune.hitStunGraceS); target.staggerUntil = Math.max(target.staggerUntil ?? 0, state.tick + ticks(tune.hitStunS)); interrupt(state, target); }
-    if (tune.knockbackM > 0) { const d = unit(sub(target.pos, hit.source)), amount = tune.knockbackM * Math.min(2, damage / 10); target.pos = constrainToArena({ x: target.pos.x + d.x * amount, y: target.pos.y + d.y * amount }, target.radius); }
+  const direction = unit(sub(target.pos, hit.source), target.facing);
+  Object.assign(state.events.at(-1)!, { direction });
+  if (hpRemoved > 0) {
+    if (tune.hitStunS + tune.hitStunPerDamageS > 0 && state.tick >= (target.staggerImmuneUntil ?? 0)) {
+      const poise = Math.max(0.1, target.poise * tune.poiseScale);
+      const duration = Math.min(tune.hitStunMaxS, Math.max(tune.hitStunS, (tune.hitStunS + hpRemoved * tune.hitStunPerDamageS) / poise));
+      target.staggerUntil = state.tick + ticks(duration);
+      target.staggerImmuneUntil = target.staggerUntil + ticks(tune.hitStunGraceS);
+      if (!target.tags.includes('STAGGERED')) target.tags.push('STAGGERED');
+      target.velocity = {x:0,y:0}; target.rollUntil = state.tick;
+      interrupt(state, target);
+      emit(state, 'stagger', target, seconds(ticks(duration)), hit.ownerId);
+      Object.assign(state.events.at(-1)!, { direction });
+    }
+    if (tune.knockbackM > 0) { const amount = tune.knockbackM * Math.min(2, hpRemoved / 10) / Math.max(1,target.poise); target.pos = constrainToArena({ x: target.pos.x + direction.x * amount, y: target.pos.y + direction.y * amount }, target.radius); }
   }
-  if (target.hp === 0) { target.down = true; target.absorb = false; interrupt(state, target); emit(state, 'down', target); }
+  if (target.hp === 0) defeatActor(state, target, unit(sub(target.pos, hit.source)));
   return { damage, perfect };
 }
 export function spawnProjectile(state: ArenaState, hit: Hit, origin: Vec, direction: Vec, speedMps: number, rangeM: number, radius = runtime.geometry.projectileRadiusM): Projectile {
@@ -104,6 +133,7 @@ function updateWard(state: ArenaState, a: Actor, input: InputFrame): void {
   }
 }
 function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
+  if (activationBlocked(a)) return;
   a.previousPos = { ...a.pos };
   const tune = tuningFor(state);
   const canCancel = !a.pending || tune.castCommitFraction >= 1 || state.tick < a.pending.startTick + Math.ceil((a.pending.releaseTick - a.pending.startTick) * tune.castCommitFraction);
@@ -141,6 +171,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   a.pos = constrainToArena({ x: a.pos.x + velocity.x * DT, y: a.pos.y + velocity.y * DT }, a.radius);
 }
 function releaseCast(state: ArenaState, a: Actor): void {
+  if (activationBlocked(a)) return;
   const pending = a.pending; if (!pending || state.tick < pending.releaseTick) return;
   if (pending.kind === 'spell') { releaseSpell(state, a); return; }
   a.pending = undefined;
@@ -151,16 +182,15 @@ function releaseCast(state: ArenaState, a: Actor): void {
       a.pos, direction, bolt.speedMps, bolt.rangeM);
   } else {
     for (const target of state.actors) {
-      if (target.team === a.team || target.down || distance(a.pos, target.pos) > combat.staffStrike.rangeM || !inArc(direction, sub(target.pos, a.pos), runtime.geometry.staffArcDeg)) continue;
-      const hit = resolveHit(state, target, { ownerId: a.id, activationId: pending.activationId, damage: combat.staffStrike.damage, family: 'physical', tier: 0, source: { ...a.pos }, delivery: 'melee' });
-      if (hit.damage > 0 && combat.staffStrike.interruptsCasts) interrupt(state, target);
+      if (target.team === a.team || target.tags.includes("DEFEATED") || distance(a.pos, target.pos) > combat.staffStrike.rangeM || !inArc(direction, sub(target.pos, a.pos), runtime.geometry.staffArcDeg)) continue;
+      resolveHit(state, target, { ownerId: a.id, activationId: pending.activationId, damage: combat.staffStrike.damage, family: 'physical', tier: 0, source: { ...a.pos }, delivery: 'melee' });
     }
     a.recoveryUntil = state.tick + ticks(combat.staffStrike.recoveryS);
   }
 }
 function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
-  if (!input.cast || a.pending || a.absorb || state.tick < a.rollUntil || state.tick < a.recoveryUntil) return;
-  const nearby = input.slot === 0 && state.actors.some(t => t.team !== a.team && !t.down && distance(a.pos, t.pos) <= combat.staffStrike.rangeM && inArc(a.facing, sub(t.pos, a.pos), runtime.geometry.staffArcDeg));
+  if (activationBlocked(a) || !input.cast || a.pending || a.absorb || state.tick < a.rollUntil || state.tick < a.recoveryUntil) return;
+  const nearby = input.slot === 0 && state.actors.some(t => t.team !== a.team && !t.tags.includes("DEFEATED") && distance(a.pos, t.pos) <= combat.staffStrike.rangeM && inArc(a.facing, sub(t.pos, a.pos), runtime.geometry.staffArcDeg));
   if (nearby) {
     if (a.stamina < combat.staffStrike.staminaCost || state.tick < a.cooldownUntil) return;
     a.stamina -= combat.staffStrike.staminaCost; a.staminaUsedTick = state.tick;
@@ -176,21 +206,21 @@ function updateTelegraphs(state: ArenaState): void {
   const due = state.telegraphs.filter(t => t.resolveTick <= state.tick);
   state.telegraphs = state.telegraphs.filter(t => t.resolveTick > state.tick);
   for (const t of due) {
-    const owner = state.actors.find(a => a.id === t.ownerId); if (!owner || (owner.down && !t.survivesOwner) || (!t.survivesOwner && state.tick < owner.water.encasedUntil)) continue;
+    const owner = state.actors.find(a => a.id === t.ownerId); if (!owner || (owner.tags.includes("DEFEATED") && !t.survivesOwner) || (!t.survivesOwner && (activationBlocked(owner) || state.tick < owner.water.encasedUntil))) continue;
     emit(state, 'release', owner, t.tier); Object.assign(state.events.at(-1)!, {activationId:t.activationId, at:{...t.origin}});
     const direction = unit(sub(t.target, t.origin));
     if (t.kind === 'projectile') spawnProjectile(state, t, t.origin, direction, t.speedMps, t.rangeM);
     else {
       const end = { x: t.origin.x + direction.x * t.rangeM, y: t.origin.y + direction.y * t.rangeM };
       for (const target of state.actors) {
-        if (target.team === owner.team || target.down) continue;
+        if (target.team === owner.team || target.tags.includes("DEFEATED")) continue;
         const inShape = t.kind === 'area' ? distance(t.target, target.pos) <= t.widthM + target.radius
           : t.kind === 'melee' ? distance(t.origin, target.pos) <= t.rangeM + target.radius && inArc(direction, sub(target.pos, t.origin), t.widthM)
           : segmentHit(t.origin, end, target.pos, t.widthM / 2 + target.radius) !== undefined;
         if (!inShape) continue;
         const immune = state.tick < target.immuneUntil || state.tick < target.water.encasedUntil;
         const result = resolveHit(state, target, { ...t, source: t.kind === 'area' ? { ...t.target } : t.source, delivery: t.kind === 'melee' ? 'melee' : 'area' });
-        if (!immune && !result.perfect && !target.down) {
+        if (!immune && !result.perfect && !target.tags.includes("DEFEATED")) {
           if (t.rootS) target.water.rootUntil = Math.max(target.water.rootUntil, state.tick + ticks(t.rootS));
           if (t.pullM) {
             const direction = unit(sub(owner.pos, target.pos)), amount = Math.min(t.pullM, Math.max(0, distance(owner.pos, target.pos) - owner.radius - target.radius));
@@ -215,7 +245,7 @@ function updateProjectiles(state: ArenaState): void {
     const owner = state.actors.find(a => a.id === p.ownerId);
     let first: Actor | undefined, firstT = Infinity;
     for (const a of state.actors) {
-      if (a.down || a.team === owner?.team || a.id === p.ownerId || p.hitIds.includes(a.id)) continue;
+      if (a.tags.includes("DEFEATED") || a.team === owner?.team || a.id === p.ownerId || p.hitIds.includes(a.id)) continue;
       const t = segmentHit(p.pos, end, a.pos, a.radius + p.radius);
       if (t !== undefined && t < firstT) { firstT = t; first = a; }
     }
@@ -224,7 +254,7 @@ function updateProjectiles(state: ArenaState): void {
       p.source = { ...p.pos }; const result = resolveHit(state, first, { ...p, delivery: p.burstRadiusM || p.piercing ? 'area' : 'projectile' }); p.hitIds.push(first.id);
       if (result.perfect) reflectProjectile(state, first, p);
       if (p.burstRadiusM && !result.perfect) {
-        for (const target of state.actors) if (!target.down && target.team !== owner?.team && !p.hitIds.includes(target.id) && distance(target.pos, first.pos) <= p.burstRadiusM) {
+        for (const target of state.actors) if (!target.tags.includes("DEFEATED") && target.team !== owner?.team && !p.hitIds.includes(target.id) && distance(target.pos, first.pos) <= p.burstRadiusM) {
           resolveHit(state, target, { ...p, source: { ...first.pos }, delivery: 'area' }); p.hitIds.push(target.id);
         }
       }
@@ -245,21 +275,23 @@ export function updateClock(state: ArenaState, a: Actor): void {
 export function stepArena(state: ArenaState, inputs: Readonly<Record<number, InputFrame>> = {}): void {
   state.tick++;
   for (const a of state.actors) {
-    if (a.down) continue;
+    if (a.tags.includes("DEFEATED")) continue;
+    if (state.tick >= (a.staggerUntil ?? 0)) a.tags = a.tags.filter(tag => tag !== "STAGGERED");
     updateWater(state, a);
     a.mana = Math.min(a.maxMana, a.mana + maximum(statRules.manaRegen, a.ranks.focus) * tuningFor(state).manaRegenScale * DT);
     if (state.tick - a.staminaUsedTick >= ticks(combat.stamina.regenDelayS)) a.stamina = Math.min(a.maxStamina, a.stamina + combat.stamina.regenPerSecond * DT);
     if (state.tick < a.water.encasedUntil) { a.previousPos = { ...a.pos }; continue; }
-    if (state.tick < (a.staggerUntil ?? 0)) { a.previousPos = { ...a.pos }; a.absorb = false; if (a.velocity) a.velocity = { x: 0, y: 0 }; continue; }
+    if (state.tick < (a.staggerUntil ?? 0)) { a.previousPos = { ...a.pos }; updateWard(state, a, inputs[a.id] ?? idleInput()); if (a.velocity) a.velocity = { x: 0, y: 0 }; continue; }
     const input = inputs[a.id] ?? idleInput({ x: a.pos.x + a.facing.x, y: a.pos.y + a.facing.y });
     a.facing = unit(sub(input.aim, a.pos), a.facing);
     updateWard(state, a, input); moveActor(state, a, input); releaseCast(state, a); startCast(state, a, input);
     a.lastInput = { ...input, move: { ...input.move }, aim: { ...input.aim } };
   }
   updateTelegraphs(state); updateProjectiles(state); state.zones = state.zones.filter(z => z.until > state.tick);
-  for (const a of state.actors) if (!a.down) updateClock(state, a);
+  for (const a of state.actors) if (!a.tags.includes("DEFEATED")) updateClock(state, a);
 }
 export function resetWave(state: ArenaState, actor: Actor): void {
+  actor.tags = []; delete actor.defeatedTick; delete actor.defeatDirection;
   actor.hp += (actor.maxHp - actor.hp) * combat.betweenWaves.healFractionOfMissingHp;
   actor.mana = actor.maxMana * combat.betweenWaves.manaRefill; actor.stamina = actor.maxStamina * combat.betweenWaves.staminaRefill;
   actor.tier = 1; actor.waveStartTick = state.tick; actor.lastUnlockTick = state.tick; actor.clockAdvanceTicks = 0; actor.unlockTicks = [state.tick];

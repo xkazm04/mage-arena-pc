@@ -1,7 +1,7 @@
 import { newWaterState, presets, validateComposition } from "./catalog.ts";
 import { attachMageAI, mageInput } from "./mage-ai.ts";
 import { createTraining, scheduleTraining, type Training } from "./training.ts";
-import { combat, seconds, stepArena } from "./kernel.ts";
+import { combat, seconds, stepArena, reviveActor } from "./kernel.ts";
 import {
   makeTuning,
   schools,
@@ -36,6 +36,9 @@ export const defaultLabConfig: LabConfig = {
   composition: structuredClone(presets[2]!),
 };
 export interface LabMetrics {
+  staggersReceived: number;
+  staggersDealt: number;
+  castInterrupts: number;
   landed: number;
   taken: number;
   incomingMagic: number;
@@ -100,6 +103,7 @@ export function createLab(
   dummy.pos = { x: 16 + c.distanceM / 2, y: 10 };
   dummy.previousPos = { ...dummy.pos };
   dummy.facing = { x: -1, y: 0 };
+  player.poise = tuning.playerPoise; dummy.poise = tuning.opponentPoise;
   player.school = c.playerSchool;
   player.label = `${c.playerSchool} practice mage`;
   player.water = newWaterState(c.composition);
@@ -117,6 +121,7 @@ export function createLab(
     training,
     tuningName,
     metrics: {
+      staggersReceived: 0, staggersDealt: 0, castInterrupts: 0,
       landed: 0,
       taken: 0,
       incomingMagic: 0,
@@ -171,7 +176,7 @@ export function stepLab(
   record = true,
 ): void {
   const { state, player, dummy } = lab.training;
-  if (player.down || dummy.down) return;
+  if (player.tags.includes("DEFEATED") || dummy.tags.includes("DEFEATED")) return;
   const first = state.events.length;
   if (lab.config.opponent === "dummy" && lab.config.dummyAttack !== "still")
     scheduleTraining(lab.training);
@@ -180,6 +185,8 @@ export function stepLab(
     ...(dummy.mageAI ? { [dummy.id]: mageInput(state, dummy) } : {}),
   });
   for (const e of state.events.slice(first)) {
+    if (e.kind === "stagger") { if (e.actorId === player.id) lab.metrics.staggersReceived++; else lab.metrics.staggersDealt++; }
+    if (e.kind === "interrupt" && e.actorId === player.id) lab.metrics.castInterrupts++;
     if (e.kind === "hit") {
       if (e.actorId === dummy.id && (e.contactDamage ?? e.value) > 0) {
         lab.metrics.landed++;
@@ -209,6 +216,7 @@ export function changeLabTuning(
   name: string,
 ) {
   lab.training.state.tuning = validateTuning(tuning);
+  lab.training.player.poise = tuning.playerPoise; lab.training.dummy.poise = tuning.opponentPoise;
   lab.tuningName = name;
   lab.metrics.mixed ||= lab.training.state.tick > 0;
   lab.changes.push({ tick: lab.training.state.tick, kind: `tuning:${name}` });
@@ -218,7 +226,7 @@ export function replenishLab(lab: CombatLab) {
     a.hp = a.maxHp;
     a.mana = a.maxMana;
     a.stamina = a.maxStamina;
-    a.down = false;
+    reviveActor(lab.training.state, a);
   }
   lab.metrics.mixed = true;
   lab.changes.push({ tick: lab.training.state.tick, kind: "replenish" });

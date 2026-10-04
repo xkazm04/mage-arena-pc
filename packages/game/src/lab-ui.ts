@@ -26,6 +26,7 @@ const title = (s: string) => s[0]!.toUpperCase() + s.slice(1);
 /** All interaction is drawn by the canvas kit. Clipboard/drop is data transport only. */
 export class LabUI {
   private page = "Movement";
+  private tuningSubpage = 0;
   private draft!: LabConfig;
   private numeric?: {
     text: string;
@@ -171,9 +172,9 @@ export class LabUI {
   installHUD() {
     this.clear();
     const u = this.u;
-    u.panel(96, 168, 1728, 112);
-    this.metricsText = u.text("", 118, 184, 23, colours.text, 1684);
-    this.statusText = u.text("", 118, 225, 22, colours.gold, 1684);
+    u.panel(96, 168, 1728, 128);
+    this.metricsText = u.text("", 132, 198, 24, colours.text, 1650);
+    this.statusText = u.text("", 132, 240, 24, colours.gold, 1650);
     const actions: [string, string, () => void][] = [
       ["setup", "L  Setup", () => this.openSetup()],
       ["tuning", "T  Tune", () => this.openTuning()],
@@ -185,7 +186,7 @@ export class LabUI {
       ["replay", "V  Replay", () => this.toggleReplay()],
     ];
     actions.forEach(([id, label, action], i) =>
-      u.button(`lab-${id}`, label, 96 + i * 218, 280, 202, 64, action, {
+      u.button(`lab-${id}`, label, 96 + i * 218, 310, 202, 64, action, {
         fontSize: 22,
       }),
     );
@@ -476,6 +477,9 @@ export class LabUI {
   private setTuning(key: TuningKey, value: number) {
     const next = structuredClone(this.tune);
     next[key] = value;
+    if (key === "hitStunS")
+      next.hitStunMaxS = Math.max(next.hitStunMaxS, value);
+    if (key === "hitStunMaxS") next.hitStunS = Math.min(next.hitStunS, value);
     if (key === "rollDurationS")
       next.rollIFramesS = Math.min(next.rollIFramesS, value);
     if (key === "rollIFramesS")
@@ -504,15 +508,17 @@ export class LabUI {
         64,
         () => {
           this.page = page;
+          this.tuningSubpage = 0;
           this.drawTuning();
         },
         { kind: "tab", selected: this.page === page, fontSize: 23 },
       ),
     );
+    const pageFields = tuningFields.filter((f) => f.group === this.page);
     if (this.page === "Spells") this.spellRows();
     else
-      tuningFields
-        .filter((f) => f.group === this.page)
+      pageFields
+        .slice(this.tuningSubpage * 6, (this.tuningSubpage + 1) * 6)
         .forEach((f, i) =>
           this.row(
             f.key,
@@ -527,6 +533,25 @@ export class LabUI {
             () => this.drawTuning(),
           ),
         );
+    if (pageFields.length > 6) {
+      const count = Math.ceil(pageFields.length / 6);
+      u.button("lab-hit-prev", "Previous", 120, 850, 300, 64, () => {
+        this.tuningSubpage = (this.tuningSubpage + count - 1) % count;
+        this.drawTuning();
+      });
+      u.text(
+        `${this.page} ${this.tuningSubpage + 1} / ${count}`,
+        464,
+        868,
+        26,
+        colours.gold,
+        320,
+      );
+      u.button("lab-hit-next", "Next", 900, 850, 360, 64, () => {
+        this.tuningSubpage = (this.tuningSubpage + 1) % count;
+        this.drawTuning();
+      });
+    }
     u.panel(1300, 310, 480, 606);
     tuningPresets.forEach((p, i) =>
       u.button(
@@ -579,8 +604,8 @@ export class LabUI {
     u.text(
       "Sliders: drag or Left / Right.\nClick a value to type it.\nWarnings keep their safe minimum.",
       1340,
-      806,
-      23,
+      786,
+      24,
       colours.muted,
       400,
     );
@@ -798,8 +823,16 @@ export class LabUI {
     if (this.u.screen === "arena" && this.metricsText && this.statusText) {
       const m = this.lab.metrics,
         n = m.incomingMagic;
-      this.metricsText.text = `Hits ${m.landed} landed / ${m.taken} taken     Absorb ${m.absorbs}/${n} ${n ? ((100 * m.absorbs) / n).toFixed(0) : "—"}%     Perfect ${m.perfects}/${n} ${n ? ((100 * m.perfects) / n).toFixed(0) : "—"}%     Damage/mana ${m.manaSpent ? (m.practiceDamage / m.manaSpent).toFixed(2) : "—"}     TTK ${m.timeToKillS === null ? "—" : m.timeToKillS.toFixed(2) + "s"}`;
-      this.statusText.text = `${this.replayState ? `REPLAY ${seconds(this.replayState.tick).toFixed(1)}s / V returns live` : this.game.paused ? "FROZEN / . advances one tick" : "LIVE"}  •  ${this.lab.tuningName}  •  seed ${this.lab.config.seed}  •  HP damage ${this.lab.training.state.lab!.damageEnabled ? "ON" : "OFF"}  •  ${seconds(this.lab.training.state.tick).toFixed(1)}s${m.mixed ? "  •  MIXED: reset for a clean comparison" : ""}`;
+      this.metricsText.text = `Hits ${m.landed}/${m.taken}   Absorb ${m.absorbs}/${n}   Perfect ${m.perfects}/${n}   Staggers dealt/taken ${m.staggersDealt}/${m.staggersReceived}   Cancels ${m.castInterrupts}   Damage/mana ${m.manaSpent ? (m.practiceDamage / m.manaSpent).toFixed(2) : "--"}   TTK ${m.timeToKillS === null ? "--" : m.timeToKillS.toFixed(2) + "s"}`;
+      const actors = this.lab.training,
+        phase = actors.player.tags.includes("DEFEATED")
+          ? "DEFEATED / G refill, R reset"
+          : actors.dummy.tags.includes("DEFEATED")
+            ? "TARGET DEFEATED / G refill, R reset"
+            : this.game.paused
+              ? "FROZEN / . one tick"
+              : "LIVE";
+      this.statusText.text = `${this.replayState ? `REPLAY ${seconds(this.replayState.tick).toFixed(1)}s / V returns live` : phase}  /  ${this.lab.tuningName}  /  seed ${this.lab.config.seed}  /  HP damage ${actors.state.lab!.damageEnabled ? "ON" : "OFF"}  /  ${seconds(actors.state.tick).toFixed(1)}s${m.mixed ? "  /  MIXED" : ""}`;
     }
     return this.replayState;
   }

@@ -79,7 +79,7 @@ describe('movement, actions and clock', () => {
     const hit = { ownerId: 99, activationId: 1, damage: 10, family: 'unblockable' as const, tier: 4, source: { x: 20, y: 10 } };
     expect(resolveHit(s, a, hit).damage).toBe(0);
     s.tick = a.immuneUntil; expect(resolveHit(s, a, hit).damage).toBe(10);
-    expect(s.tick).toBeLessThan(a.rollUntil);
+    expect(a.rollUntil).toBe(s.tick); expect(a.tags).toContain("STAGGERED");
   });
   it('sweeps fast projectiles and consumes them after one hit', () => {
     const s = createArena(), a = addMage(s, 0, { x: 5, y: 10 }), b = addMage(s, 1, { x: 10, y: 10 });

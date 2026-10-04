@@ -111,8 +111,21 @@ export const tuningFields: TuningField[] = [
     "Casting",
   ),
   field("castRecoveryS", "Spell recovery", "s", 0, 0.5, 0.01, "Casting"),
-  field("hitStunS", "Hit stagger duration", "s", 0, 0.3, 0.01, "Impact"),
-  field("knockbackM", "Knockback at 10 damage", "m", 0, 2, 0.05, "Impact"),
+  field("hitStunMaxS", "Maximum stun", "s", 0.01, 0.4, 0.01, "Hit"),
+  field("hitStunPerDamageS", "Stun per damage", "s/HP", 0, 0.02, 0.001, "Hit"),
+  field("poiseScale", "Poise multiplier", "x", 0.25, 4, 0.05, "Hit"),
+  field("playerPoise", "Your poise", "x", 0.25, 4, 0.05, "Hit"),
+  field("opponentPoise", "Opponent poise", "x", 0.25, 4, 0.05, "Hit"),
+  field("hitRecoilM", "Visual recoil distance", "m", 0, 1, 0.05, "Hit"),
+  field("hitRecoilS", "Recoil / flinch time", "s", 0.05, 0.5, 0.01, "Hit"),
+  field("hitSquash", "Recoil squash", "fraction", 0, 0.4, 0.01, "Hit"),
+  field("hitShakePx", "Sprite shake", "px", 0, 8, 0.5, "Hit"),
+  field("hitFlashS", "White flash", "s", 0.02, 0.15, 0.005, "Hit"),
+  field("playerHitCueS", "Player edge cue", "s", 0.05, 0.5, 0.01, "Hit"),
+  field("deathFallS", "Fallback fall time", "s", 0.2, 1, 0.05, "Hit"),
+  field("deathAuraFadeS", "Death aura fade", "s", 0.05, 0.8, 0.05, "Hit"),
+  field("hitStunS", "Minimum stun", "s", 0, 0.3, 0.01, "Hit"),
+  field("knockbackM", "Knockback at 10 damage", "m", 0, 2, 0.05, "Hit"),
   field(
     "absorbWindowS",
     "Perfect absorb window",
@@ -184,7 +197,7 @@ export const tuningFields: TuningField[] = [
     0,
     0.6,
     0.01,
-    "Impact",
+    "Hit",
   ),
   field(
     "rollRecoveryMoveMultiplier",
@@ -196,6 +209,34 @@ export const tuningFields: TuningField[] = [
     "Roll",
   ),
 ];
+const hitOrder: TuningKey[] = [
+  "hitStunS",
+  "hitStunMaxS",
+  "hitStunPerDamageS",
+  "hitStunGraceS",
+  "poiseScale",
+  "knockbackM",
+  "playerPoise",
+  "opponentPoise",
+  "hitRecoilM",
+  "hitRecoilS",
+  "hitSquash",
+  "hitShakePx",
+  "hitFlashS",
+  "playerHitCueS",
+  "deathFallS",
+  "deathAuraFadeS",
+];
+const hitFields = tuningFields
+  .filter((f) => f.group === "Hit")
+  .sort((a, b) => hitOrder.indexOf(a.key) - hitOrder.indexOf(b.key));
+const hitIndex = tuningFields.findIndex((f) => f.group === "Hit");
+tuningFields.splice(
+  0,
+  tuningFields.length,
+  ...tuningFields.filter((f) => f.group !== "Hit"),
+);
+tuningFields.splice(hitIndex, 0, ...hitFields);
 export const tuningPresets = Object.keys(
   data.presets,
 ) as (keyof typeof data.presets)[];
@@ -263,6 +304,8 @@ export function validateTuning(value: unknown): CombatTuning {
       (v[f.key] as number) > f.max
     )
       throw Error(`${f.key}: expected ${f.min}–${f.max} ${f.unit}.`);
+  if ((v.hitStunS as number) > (v.hitStunMaxS as number))
+    throw Error("Minimum stun cannot exceed maximum stun.");
   if ((v.rollIFramesS as number) > (v.rollDurationS as number))
     throw Error("rollIFramesS cannot exceed rollDurationS.");
   if (
@@ -304,7 +347,7 @@ export function exportTuning(tuning: CombatTuning, name: string): string {
   return JSON.stringify(
     {
       format: "mage-arena-tuning",
-      version: 2,
+      version: 3,
       name,
       tuning: validateTuning(tuning),
     },
@@ -320,13 +363,23 @@ export function importTuning(text: string): {
   const v = JSON.parse(text);
   if (
     v?.format !== "mage-arena-tuning" ||
-    ![1, 2].includes(v.version) ||
+    ![1, 2, 3].includes(v.version) ||
     typeof v.name !== "string" ||
     v.name.length > 80 ||
     Object.keys(v).sort().join() !== "format,name,tuning,version"
   )
-    throw Error("Expected a version 1 or 2 Mage Arena tuning export.");
+    throw Error("Expected a version 1, 2 or 3 Mage Arena tuning export.");
   if (v.version === 1 && v.tuning && typeof v.tuning === "object")
     v.tuning = { hitStunGraceS: 0, rollRecoveryMoveMultiplier: 1, ...v.tuning };
+  if (v.version < 3 && v.tuning && typeof v.tuning === "object") {
+    v.tuning = {
+      ...defaultTuning,
+      ...v.tuning,
+      hitStunMaxS: v.tuning.hitStunS,
+      hitStunPerDamageS: 0,
+    };
+    // Old zero-stun experiments use a zero floor and one-tick ceiling, with zero slope.
+    v.tuning.hitStunMaxS = Math.max(0.01, v.tuning.hitStunMaxS);
+  }
   return { name: v.name, tuning: validateTuning(v.tuning) };
 }

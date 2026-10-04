@@ -1,12 +1,12 @@
 {
-  "version": 2,
+  "version": 3,
   "defaults": {
     "accelerationMps2": 60,
     "decelerationMps2": 90,
     "castTimeScale": 1,
     "cooldownScale": 1,
     "projectileSpeedScale": 1,
-    "hitStunS": 0.05,
+    "hitStunS": 0.1,
     "knockbackM": 0.16,
     "absorbDrainScale": 1,
     "perfectRefundScale": 1,
@@ -17,8 +17,21 @@
     "castRecoveryS": 0.05,
     "castMoveMultiplier": 0.75,
     "turnResponse": 24,
-    "hitStunGraceS": 0.16,
-    "rollRecoveryMoveMultiplier": 0.5
+    "hitStunGraceS": 0.18,
+    "rollRecoveryMoveMultiplier": 0.5,
+    "hitStunMaxS": 0.2,
+    "hitStunPerDamageS": 0.003,
+    "poiseScale": 1,
+    "hitRecoilM": 0.35,
+    "hitRecoilS": 0.2,
+    "hitSquash": 0.18,
+    "hitShakePx": 3,
+    "hitFlashS": 0.065,
+    "playerHitCueS": 0.22,
+    "deathFallS": 0.55,
+    "deathAuraFadeS": 0.3,
+    "playerPoise": 1,
+    "opponentPoise": 1
   },
   "presets": {
     "Current": {},
@@ -31,8 +44,10 @@
       "projectileSpeedScale": 1.25,
       "rollDurationS": 0.28,
       "rollRecoveryS": 0.1,
-      "hitStunS": 0.05,
-      "knockbackM": 0.15
+      "hitStunS": 0.1,
+      "knockbackM": 0.15,
+      "hitStunMaxS": 0.15,
+      "hitRecoilS": 0.15
     },
     "Heavier": {
       "accelerationMps2": 30,
@@ -44,7 +59,9 @@
       "rollDurationS": 0.4,
       "rollRecoveryS": 0.22,
       "hitStunS": 0.12,
-      "knockbackM": 0.5
+      "knockbackM": 0.5,
+      "hitStunMaxS": 0.2,
+      "hitRecoilM": 0.5
     }
   },
   "ai": {
@@ -52,5 +69,9 @@
     "spacingVariationM": 1.5,
     "spellVarietyWeight": 8,
     "reactionCastSafetyS": 0.05
+  },
+  "poise": {
+    "mage": 1,
+    "dummy": 1
   }
 }

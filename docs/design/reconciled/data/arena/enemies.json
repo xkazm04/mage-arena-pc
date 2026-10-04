@@ -17,7 +17,8 @@
         }
       ],
       "behaviour": "approach with stamina-costed sprint, lunge, back off 1 s",
-      "teaches": "roll timing"
+      "teaches": "roll timing",
+      "poise": 1
     },
     {
       "id": "shieldman",
@@ -37,7 +38,8 @@
         }
       ],
       "behaviour": "advance in pairs, shields facing the player",
-      "teaches": "flank, pierce (Brand Lance), or area damage"
+      "teaches": "flank, pierce (Brand Lance), or area damage",
+      "poise": 1.8
     },
     {
       "id": "slinger",
@@ -59,7 +61,8 @@
         }
       ],
       "behaviour": "kite at range",
-      "teaches": "closing distance; priority targets"
+      "teaches": "closing distance; priority targets",
+      "poise": 1
     },
     {
       "id": "netter",
@@ -78,7 +81,8 @@
         }
       ],
       "behaviour": "net, then conscripts converge",
-      "teaches": "rolling out of a telegraph"
+      "teaches": "rolling out of a telegraph",
+      "poise": 1
     }
   ],
   "creatures": [
@@ -106,7 +110,8 @@
         "delayS": 0.6
       },
       "behaviour": "pack uses 2 engagement slots around the player; the third circles",
-      "teaches": "perfect absorb on death bursts"
+      "teaches": "perfect absorb on death bursts",
+      "poise": 1
     },
     {
       "id": "mire_maw",
@@ -132,7 +137,8 @@
         }
       ],
       "behaviour": "stationary artillery; pulls players who stand in line",
-      "teaches": "absorb a slow projectile; leave a line telegraph"
+      "teaches": "absorb a slow projectile; leave a line telegraph",
+      "poise": 2
     },
     {
       "id": "thornback",
@@ -151,7 +157,8 @@
         }
       ],
       "behaviour": "charges along a lane; stunned if it hits a wall",
-      "teaches": "unblockable: leave the lane, punish the stun"
+      "teaches": "unblockable: leave the lane, punish the stun",
+      "poise": 2.3
     },
     {
       "id": "hush_moth",
@@ -169,7 +176,8 @@
         }
       ],
       "behaviour": "drift toward whoever holds absorb",
-      "teaches": "absorb is not always the answer; area spells"
+      "teaches": "absorb is not always the answer; area spells",
+      "poise": 1
     }
   ],
   "mages": {

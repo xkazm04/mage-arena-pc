@@ -14,6 +14,7 @@ import {
 } from "@mage/core";
 import {
   combat,
+  idleInput,
   resolveHit,
   createLab,
   defaultLabConfig,
@@ -292,6 +293,55 @@ export class ArenaGame {
                   stepArena(this.training.state, {
                     [this.training.player.id]: this.input.frame(),
                   });
+              },
+              hitFixture: (
+                kind:
+                  "player" | "opponent" | "defeat-player" | "defeat-opponent",
+                entity?: string,
+              ) => {
+                const config = this.lab?.config;
+                if (config) this.resetLab(config);
+                else this.restart();
+                this.hud();
+                this.pause(true);
+                const { state, player, dummy } = this.training;
+                state.tick = 30;
+                const target = kind.endsWith("opponent") ? dummy : player;
+                dummy.pos = { x: player.pos.x + 5, y: player.pos.y };
+                dummy.previousPos = { ...dummy.pos };
+                if (entity) {
+                  target.dummy = false;
+                  target.enemy = {
+                    id: entity,
+                    readyTick: 0,
+                    backoffUntil: 0,
+                    stunnedUntil: 0,
+                    attackIndex: 0,
+                    deathQueued: false,
+                  };
+                } else if (target === dummy) {
+                  dummy.dummy = false;
+                  dummy.school = "fire";
+                }
+                const source = target === player ? dummy : player;
+                target.velocity = { x: 3, y: 0 };
+                stepArena(state, {
+                  [target.id]: {
+                    ...idleInput(source.pos),
+                    cast: true,
+                    slot: 1,
+                  },
+                });
+                resolveHit(state, target, {
+                  ownerId: source.id,
+                  activationId: state.nextId++,
+                  family: kind.startsWith("defeat")
+                    ? "unblockable"
+                    : "physical",
+                  tier: 1,
+                  damage: kind.startsWith("defeat") ? 10000 : 18,
+                  source: source.pos,
+                });
               },
               feedbackFixture: (
                 kind: "hit" | "perfect" | "cast" | "warning",
@@ -634,7 +684,7 @@ export class ArenaGame {
     const feedback = u.text(
       "",
       650,
-      this.lab ? 365 : 220,
+      this.lab ? 390 : 220,
       32,
       colours.water,
       1000,
@@ -677,7 +727,7 @@ export class ArenaGame {
         : "";
       heading.text =
         this.mode === "tiro"
-          ? `${state.actors.filter((a) => a.team !== player.team && !a.down).length} opponents remain`
+          ? `${state.actors.filter((a) => a.team !== player.team && !a.tags.includes("DEFEATED")).length} opponents remain`
           : this.lab
             ? `${this.lab.config.playerSchool.toUpperCase()} / practice mage`
             : "Cassia of the Tide";
@@ -823,7 +873,7 @@ export class ArenaGame {
       !this.labUI?.replayState &&
       !this.pending &&
       !this.syncError &&
-      !this.training.player.down &&
+      !this.training.player.tags.includes("DEFEATED") &&
       !document.hidden
     )
       alpha = this.clock.advance(simulationDt, () => {
@@ -893,10 +943,12 @@ export class ArenaGame {
       this.input.aim,
       this.lastPerfect,
       false,
+      dt,
     );
     this.hudUpdate();
     const phase =
-      this.games?.phase ?? (this.training.player.down ? "failed" : "active");
+      this.games?.phase ??
+      (this.training.player.tags.includes("DEFEATED") ? "failed" : "active");
     if (
       !this.lab &&
       phase !== "active" &&
@@ -946,7 +998,8 @@ export class ArenaGame {
           ...spatial,
           gain: spatial.gain * Math.min(1, 0.45 + damage / 25),
         });
-      } else if (e.kind === "roll") void gameAudio.play("roll", spatial);
+      } else if (e.kind === "stagger") void gameAudio.play("stagger", spatial);
+      else if (e.kind === "roll") void gameAudio.play("roll", spatial);
     }
     this.lastEvents = this.training.state.events.length;
   }

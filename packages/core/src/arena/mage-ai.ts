@@ -36,7 +36,7 @@ function threats(state: ArenaState, a: Actor): Threat[] {
     result.push({ id: t.activationId, family: t.family, origin: t.origin, impactTick: t.resolveTick + (t.kind === 'projectile' ? ticks(distance(t.origin, a.pos) / t.speedMps) : 0), aimedAtUs });
   }
   for (const enemy of state.actors) {
-    if (enemy.team === a.team || enemy.down || !enemy.pending || !hasLineOfSight(state, a.pos, enemy.pos)) continue;
+    if (enemy.team === a.team || enemy.tags.includes("DEFEATED") || !enemy.pending || !hasLineOfSight(state, a.pos, enemy.pos)) continue;
     const p = enemy.pending;
     const s = p.spell ?? spells.find(s => s.id === p.spellId);
     if (s?.kind === 'self' || s?.kind === 'passive') continue;
@@ -51,10 +51,10 @@ function threats(state: ArenaState, a: Actor): Threat[] {
   return result;
 }
 export function mageInput(state: ArenaState, a: Actor): InputFrame {
-  const brain = a.mageAI; if (!brain || a.down) return idleInput();
+  const brain = a.mageAI; if (!brain || a.tags.includes("DEFEATED")) return idleInput();
   const tune = tuningFor(state), baseProfile = competence(brain.competence);
   const profile = { ...baseProfile, reactionDelayS: Math.max(enemyData.mages.caps.reactionDelayMinS, baseProfile.reactionDelayS * tune.enemyReactionScale), aimErrorDeg: baseProfile.aimErrorDeg * tune.enemyAimErrorScale };
-  const target = state.actors.filter(t => t.team !== a.team && !t.down && hasLineOfSight(state, a.pos, t.pos)).sort((x, y) => distance(a.pos, x.pos) - distance(a.pos, y.pos) || x.id - y.id)[0];
+  const target = state.actors.filter(t => t.team !== a.team && !t.tags.includes("DEFEATED") && hasLineOfSight(state, a.pos, t.pos)).sort((x, y) => distance(a.pos, x.pos) - distance(a.pos, y.pos) || x.id - y.id)[0];
   const seen = threats(state, a);
   for (const threat of seen) {
     let memory = brain.observed.find(m => m.id === threat.id);

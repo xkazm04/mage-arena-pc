@@ -81,7 +81,7 @@ Click its numeric value, type a number, Enter applies, Escape cancels. Tabs:
 - Casting: cast/cooldown/projectile multipliers, commit fraction, recovery. A roll
   can cancel before the commit point; 1 preserves cancellation through windup.
   Cancelling keeps the mana cost and cooldown already spent.
-- Impact: stagger duration, immunity tail against repeated stagger, and knockback
+- Hit: damage-scaled stun, immunity tail, poise, knockback, recoil, flash and defeat timing (three pages)
   distance at 10 damage.
 - Absorb: perfect window, arc angle, drain and perfect-refund multipliers.
 - Resources: mana regeneration and seconds between collar tiers.
@@ -104,7 +104,7 @@ and travelling projectiles retain launch speed. Dangerous warning floors remain
 resumes. Export tuning downloads JSON. Import opens a canvas panel: paste JSON
 with Ctrl+V or drop that file on the canvas, then Enter validates/applies. Invalid
 values/unknown parameters are rejected without altering the current tuning.
-Version 2 exports can import older version 1 tuning files too.
+Version 3 exports also import version 1/2 files; their old constant stun duration is preserved. New H1 parameters take defaults. Re-export to keep an experiment current.
 Exports contain tuning and preset name; record school/loadout/seed separately.
 
 HUD counts damaging contacts landed/taken, ward successes per incoming magic
@@ -138,3 +138,56 @@ that exposed it. Example: “1080p, Water Rotation vs Water level 2, .75 aggress
 roll recovery feels heavy; incoming orb was unreadable behind the south HUD.”
 Attach tuning JSON and a clip/screenshot when useful. Simulations verify rules;
 only your hands can judge responsiveness, sound payoff, fairness and legibility.
+
+
+## H1: feel-test the hit reactions and defeat
+
+Start a fresh season after rebuilding: source-versioned older season saves are rejected.
+Open Combat Feel Lab, choose Water / Rotation, one Mage AI (Water, competence 2,
+aggression .75, distance 10), fixed seed 7331, Current and **damage ON**. The
+reaction needs actual HP loss; damage OFF counts practice contacts but does not
+stun. Press T and choose **Hit**. Previous/Next select three pages:
+
+| Parameter | Current | What to look for |
+|---|---:|---|
+| Minimum / maximum stun | .10 / .20 s | A brief stop, with control returning promptly |
+| Stun per damage | .003 s/HP | Larger damaging hits hold longer, within the bounds |
+| Stagger immunity after hit | .18 s after stun | Repeated bolts cannot keep renewing the same stun |
+| Poise multiplier | 1 | Scales authored poise for all bodies |
+| Your / opponent poise | 1 / 1 | Independent Lab values; try opponent 2.3 for a heavy target |
+| Knockback at 10 damage | .16 m | Actual displacement in core, reduced by heavy poise |
+| Visual recoil / flinch | .35 m / .20 s | The sprite recoils away from contact and returns to its feet |
+| Recoil squash / sprite shake | .18 / 3 px | A readable struggle without losing the silhouette |
+| White flash / player edge cue | .065 / .22 s | The struck figure and your own damage are easy to identify |
+| Fallback fall / aura fade | .55 / .30 s | Missing death clips settle flat; aura fades away |
+
+The formula is `(minimum + HP removed * per-damage) / effective poise`, clamped
+to minimum/maximum, then rounded up to a 60 Hz tick. Heavy shipped poise is
+shieldman 1.8, mire maw 2, thornback 2.3; other actors 1. The explicit immunity
+tail protects movement and a fresh cast from repeated interruption; damage and
+visual flinch still happen during it. Ward chip can stagger, but holding your
+ward never grants a fresh perfect window because of that stagger. Roll i-frames
+prevent both damage and stun; a later hit can stop the unprotected end of a roll.
+
+1. Move sideways while charging Bubble Shot. Take a hit: movement stops briefly,
+   the charge disappears and the spell never releases. Mana and cooldown stay
+   spent. The HUD shows stagger counts (dealt/taken) and your cancelled casts.
+2. Keep moving into a stream. There must be a short recovery opportunity between
+   stuns. Raise opponent poise, reset with R, and compare the same seed. Change
+   only one parameter at a time; live changes mark the comparison MIXED.
+3. Strike the opponent repeatedly. Look for flinch, away-from-hit recoil, squash,
+   white flash, sound and the damage number. Reduce motion in Settings to check
+   that flash/edge cue and the final corpse still explain what happened.
+4. Defeat the opponent, then stop touching controls. The body falls and stays on
+   the ground; it has no targeting ring, health bar or AI and cannot take another
+   hit. Walk/aim across it where play continues. A10 death clips hold their last
+   frame; missing clips use an explicit lying fallback until A14 is integrated.
+5. Let your own vitality reach zero. In ordinary practice/Games, the results panel
+   leaves the body visible on the arena floor. In the Lab the DEFEATED label
+   keeps the experiment inspectable. **G** refills and revives; **R** makes a new
+   bout. The bout reset removes old corpses. **V** replays the recent sequence.
+
+Export the chosen tuning JSON. Report whether the stop is too long, recoil too
+small, repeated hits unfair, or the fall unclear, with the seed and exact changed
+parameters. [H1 measurements and limitations](waves/H1-report.md) and
+[native evidence](waves/H1-evidence/index.html) accompany this build.

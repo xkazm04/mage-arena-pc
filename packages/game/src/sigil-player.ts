@@ -141,7 +141,7 @@ export class SigilPlayer {
     for (const a of state.actors) {
       const old = this.wards.get(a.id),
         angle = Math.atan2(a.facing.y, a.facing.x);
-      if (old?.active && !a.absorb && !a.down)
+      if (old?.active && !a.absorb && !a.tags.includes("DEFEATED"))
         this.shots.push({
           clip: "ward.release",
           tick: state.tick,
@@ -317,7 +317,7 @@ export class SigilPlayer {
     return drawn;
   }
   casting(a: Actor, element: Element, timing = a.pending) {
-    if (!timing || a.down) return;
+    if (!timing || a.tags.includes("DEFEATED")) return;
     this.elements.set(a.id, element);
     const duration = Math.max(1, timing.releaseTick - timing.startTick),
       elapsed = this.tick - timing.startTick;
@@ -377,7 +377,7 @@ export class SigilPlayer {
   finish() {
     for (const s of this.shots) {
       const actor = this.state?.actors.find((a) => a.id === s.actorId);
-      if (actor?.down) continue;
+      if (actor?.tags.includes("DEFEATED")) continue;
       const elapsed = seconds(this.tick - s.tick) * 1000,
         blend = clampProgress(elapsed / policy.releaseCrossfadeMs);
       if (s.holdMs !== undefined && blend < 1)

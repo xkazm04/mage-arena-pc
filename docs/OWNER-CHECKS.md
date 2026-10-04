@@ -83,7 +83,7 @@ Click its numeric value, type a number, Enter applies, Escape cancels. Tabs:
 - Casting: cast/cooldown/projectile multipliers, commit fraction, recovery. A roll
   can cancel before the commit point; 1 preserves cancellation through windup.
   Cancelling keeps the mana cost and cooldown already spent.
-- Impact: stagger duration, immunity tail against repeated stagger, and knockback
+- Hit: stun, immunity tail, poise, recoil and defeat timing; see the updated START-HERE guide.
   distance at 10 damage.
 - Absorb: perfect window, arc angle, drain and perfect-refund multipliers.
 - Resources: mana regeneration and seconds between collar tiers.
@@ -106,7 +106,7 @@ and travelling projectiles retain launch speed. Dangerous warning floors remain
 resumes. Export tuning downloads JSON. Import opens a canvas panel: paste JSON
 with Ctrl+V or drop that file on the canvas, then Enter validates/applies. Invalid
 values/unknown parameters are rejected without altering the current tuning.
-Version 2 exports can import older version 1 tuning files too.
+Version 3 exports import version 1/2 experiments with explicit legacy timing migration.
 Exports contain tuning and preset name; record school/loadout/seed separately.
 
 HUD counts damaging contacts landed/taken, ward successes per incoming magic
@@ -478,6 +478,17 @@ sigils are still pending behind the optional loader. CF1 adds the direct Lab
 entry and a new start guide next.
 
 
-## U6 ? painted sigils and complete screen pass (2026-10-04)
+## U6 - painted sigils and complete screen pass (2026-10-04)
 
 Review [the native screenshot gallery](waves/U6-evidence/index.html). All twelve threat/element combinations, progress phases, ward/perfect window, three floor palettes and the complete screen tour are included. In the Lab check that approaching threats read before they resolve, that ward orientation is clear, and that text reads at normal TV distance. This is an owner feel/visual judgment, not a claim made by the automated checks. H1 follows next.
+
+
+## H1 - reactions and persistent defeat (2026-10-04)
+
+Follow [START-HERE: H1 feel-test](START-HERE.md#h1-feel-test-the-hit-reactions-and-defeat).
+The owner judgments are interruption length, visible struggle, recovery under a
+stream, hit/stagger sound payoff, and whether the body clearly lies down and stays.
+Check Current and one exported variation with the same school/loadout/seed. The
+[H1 report](waves/H1-report.md) records deterministic checks, full census and
+before/after numbers. Browser proof is in [the gallery](waves/H1-evidence/index.html).
+These checks do not declare the owner's acceptance of feel or art.
