@@ -1,6 +1,8 @@
 {
   "status": "pass",
-  "clips": 180,
+  "clips": 226,
+  "priorityClips": 180,
+  "additionalClips": 46,
   "requiredStage1Clips": 192,
   "missing": [
     "mire_maw:death:ne",
@@ -17,14 +19,14 @@
     "thornback:corpse:nw"
   ],
   "complete": false,
-  "projectCharges": 364,
-  "sessionCharges": 22,
+  "projectCharges": 382,
+  "sessionCharges": 40,
   "protectedFilesUnchanged": 378,
   "owner_accepted": false,
   "session": 10,
-  "stage": "stage2",
+  "stage": "stage3",
   "inheritedCharges": 342,
-  "generatedSources": 22,
+  "generatedSources": 40,
   "sessionCap": 40,
   "providerJobs": [
     {
@@ -202,6 +204,150 @@
       "status": "generated",
       "archive": "art/review/sources/a14-hush_moth-ne-hits-agy-a01.jpg",
       "sha256": "e763077697eaa22de4f00c3b2c305fcacf296d286e15acb9861c3f2b0a7ec815"
+    },
+    {
+      "job": "a14-cinder_hound-se-motion-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-cinder_hound-se-motion-agy-a01.jpg",
+      "sha256": "629f013e42e3624bb5c6651194cdadea4d66de35535aa81a61d6a8ab98a333fc"
+    },
+    {
+      "job": "a14-cinder_hound-ne-motion-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-cinder_hound-ne-motion-agy-a01.jpg",
+      "sha256": "e2539fd7d01e66bac5250054dd848fbcdcc9404f75de25194835afdb5b64e30f"
+    },
+    {
+      "job": "a14-mire_maw-se-motion-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-mire_maw-se-motion-agy-a01.jpg",
+      "sha256": "4fe560fa3980ebd3b58f2349a0a96c0ff94f46b109444dfc0c698028e4a1cfdd"
+    },
+    {
+      "job": "a14-cinder_hound-ne-motion-agy-a02",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-cinder_hound-ne-motion-agy-a02.jpg",
+      "sha256": "adacf9414c9f8cb1dd7e52a08ba6b6daaddc55df89062505439c9658cd8290dd"
+    },
+    {
+      "job": "a14-mire_maw-se-motion-agy-a02",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-mire_maw-se-motion-agy-a02.jpg",
+      "sha256": "b566d001b8fae2b25cd1492f42822b987bbc5892be822240e0f1ad83d4d9fc7e"
+    },
+    {
+      "job": "a14-thornback-se-motion-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-thornback-se-motion-agy-a01.jpg",
+      "sha256": "6b768e349e3c3938eb9ed86b5d40fc9786dc60f597fe6985179c974689a9c733"
+    },
+    {
+      "job": "a14-hush_moth-se-motion-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-hush_moth-se-motion-agy-a01.jpg",
+      "sha256": "1f058364283c6f0ad14a7ec93f9cde2cf35f06e48ba21742c9ae525b6103a821"
+    },
+    {
+      "job": "a14-thornback-se-motion-agy-a02",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-thornback-se-motion-agy-a02.jpg",
+      "sha256": "1415ca55c8ae767c91eb372ac4650ec5796182729a4db2fe853edf2695d16ad8"
+    },
+    {
+      "job": "a14-hush_moth-ne-combat-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-hush_moth-ne-combat-agy-a01.jpg",
+      "sha256": "cb2fd570474ff9408e6010e7b1e1e15fc8935935a4370af1d4e2325cfd511f5e"
+    },
+    {
+      "job": "a14-cinder_hound-se-defense-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-cinder_hound-se-defense-agy-a01.jpg",
+      "sha256": "8d6489e4a353604e4f898150f09cc95e3a6fd1d1f44d766af397a9a5f1f941fd"
+    },
+    {
+      "job": "a14-cinder_hound-ne-defense-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-cinder_hound-ne-defense-agy-a01.jpg",
+      "sha256": "6a8ce4928419f5575fe31c0a94c2ecbbcb612db582952580f82a092ee3020ab7"
+    },
+    {
+      "job": "a14-mire_maw-se-defense-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-mire_maw-se-defense-agy-a01.jpg",
+      "sha256": "67afd3cf5075202bbb4150c549a8015ca19a39adf1e8c33b7ef29968f6db8b68"
+    },
+    {
+      "job": "a14-cinder_hound-ne-defense-agy-a02",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-cinder_hound-ne-defense-agy-a02.jpg",
+      "sha256": "1703d7f7ffd945b4f5c185a956726460bf4d7aaa1efa11bc241cf77d8db3c01a"
+    },
+    {
+      "job": "a14-mire_maw-ne-defense-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-mire_maw-ne-defense-agy-a01.jpg",
+      "sha256": "72e7cbfaed739a90ae57bdb6045f9a08f3a82c858d2276696c26ad029f117b27"
+    },
+    {
+      "job": "a14-thornback-se-defense-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-thornback-se-defense-agy-a01.jpg",
+      "sha256": "2750336d16c5d6f77cc06ef5dacfca4bf95d562f59f6334bb046f21fcd98ece5"
+    },
+    {
+      "job": "a14-hush_moth-se-defense-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-hush_moth-se-defense-agy-a01.jpg",
+      "sha256": "e64f363af5deacfde0b722516dd3a1d28f1bc5af07ea7acd25acf8c644252e45"
+    },
+    {
+      "job": "a14-garran-ne-defense-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-garran-ne-defense-agy-a01.jpg",
+      "sha256": "b9c691beb9879d75f34198b5b1fef965da5dacd7c2f8d0e289d6ef08dfec5d69"
+    },
+    {
+      "job": "a14-shieldman-ne-combat-agy-a01",
+      "calls": 1,
+      "charged": 1,
+      "status": "generated",
+      "archive": "art/review/sources/a14-shieldman-ne-combat-agy-a01.jpg",
+      "sha256": "256e2d2259b1f60ca2d1d5035bc53de9e5b3b5c93527456228c2caff51709de0"
     }
   ],
   "providerLatches": {
@@ -213,6 +359,7 @@
       "reason": "exit=1; files=0"
     }
   },
+  "priorStageImagesUnchanged": 75,
   "actualAccountAllowance": "not measured",
   "push": false
 }

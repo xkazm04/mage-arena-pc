@@ -15,7 +15,9 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
         refs[1]=ART/'review/sources'/f'a3c-{entity}-poses-agy-a01.png'
     subject=('This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. ' if creature else 'Keep the same face, headwear, clothes and single set of equipment. ')
     if entity=='hush_moth':subject+='Four moth wings, one thorax and two antennae. Reaction bends thorax and sweeps wings; collapse folds intact wings low against the ground. No human limbs. '
-    if direction=='ne':subject+='For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. '
+    if direction=='ne':
+        subject+='For ALL poses the camera sees BACK surfaces. Keep head and torso aimed upper-right away from viewer. Never turn to face the viewer. '
+        if kind in ('collapse','reaction'):subject+='During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and face HIDDEN. Never roll onto the back. '
     if kind=='reaction':
         content=('Exactly FOUR columns and FOUR rows, 16 separate complete poses of ONE SAME character. Read left to right, top to bottom. '
         'Row 1: four keys of a QUICK FLINCH AND RECOVERY: 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled BACK by one head-width and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. These four poses MUST visibly differ, not four standing duplicates. '
@@ -53,6 +55,22 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
             'Keep FOUR animal feet and natural creature anatomy, no rearing, no human arms. No falling or lying poses in this sheet. '
             'The difference between ready and peak recoil must read at small game size. Wide empty gutters, no clipped parts. ')
         if entity=='hush_moth':content=content.replace('legs catch balance','wings counter-sweep to catch balance').replace('legs splay and bend to catch weight','wings sweep low to catch descent').replace('varied leg support','varied wing sweeps').replace('Keep FOUR animal feet and natural creature anatomy, no rearing, no human arms.','Four moth wings, six fine insect legs, thorax and two antennae. Keep hovering throughout, wing sweeps and thorax recoil, no human anatomy.')
+    elif kind in ('motion','run','defense','combat'):
+        gait=('Six distinct locomotion keys in order: opposite diagonal leg pairs alternate support; reach, contact, gather, opposite reach, opposite contact, gather. Show clearly different left/right paw placement, not six copies with one leading leg. ')
+        if entity=='mire_maw':gait='Six distinct natural frog hopping keys: crouch; hind legs extend to push; body travels forward legs extended; legs tuck under airborne body; front feet contact; hind feet settle into crouch. No human running. '
+        if entity=='hush_moth':gait='Six distinct forward-flight wingbeat keys: four wings raised high; broad downstroke; wings lowered; narrow recovery; wings raised again; opening wings. Thorax leans forward and six fine legs trail. No humanoid or quadruped legs. '
+        if not creature:gait='Six genuine running keys: left-foot contact/right leg back; left support/right passing; right knee forward; right-foot contact/left leg back; right support/left passing; left knee forward. Alternate the leading foot, keep the same single staff. '
+        attack={'cinder_hound':'ready, head lowers, jaw opens, short canine forward lunge, jaw closes, ready recovery',
+                'mire_maw':'ready, turquoise throat inflates, head draws back, mouth opens to project forward, throat deflates, ready recovery; no projectile in this body sheet',
+                'thornback':'ready, armored head lowers, weight gathers onto hind feet, brief forward horn shove, forefeet brace, ready recovery',
+                'hush_moth':'hover ready, wings gather, thorax draws back, all four wings sweep forward in a buffet, wings counter-sweep, hover ready'}.get(entity,'ready, equipment draws back, attack windup, equipment thrust forward, withdrawal, ready recovery')
+        brace=('Six resistance poses: ready, lower body braces, forelimbs plant or moth wings fold forward, body withstands force, small effort variation, steady braced hold. No injury or collapse, no shield object or magic effect added to an animal.' if creature else
+               'Six defensive resistance poses: ready, feet brace, hands and equipment lift forward to block, torso leans into resistance, slightly recoils while keeping guard, steady forward guard hold. No glowing effect, keep exactly the reference equipment.')
+        if kind=='motion':content='Exactly FOUR columns by FOUR rows, SIXTEEN complete isolated poses. Keys 1-4: four subtle ready IDLE poses with breathing and small natural shifts. Keys 5-10: '+gait+'Keys 11-16: six ATTACK poses, '+attack+'. '
+        elif kind=='run':content='Exactly THREE columns by TWO rows, SIX complete RUN poses. '+gait
+        elif kind=='defense':content='Exactly THREE columns by TWO rows, SIX complete poses. '+brace
+        else:content='Exactly FOUR columns by THREE rows, TWELVE complete poses. First six ATTACK: '+attack+'. Last six DEFENSE: '+brace
+        content+='All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. '
     else:raise ValueError(kind)
     if creature and kind=='reaction':
         if entity=='hush_moth':
@@ -87,6 +105,7 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
         'referenceConsumption':'agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual'}
     if creature:spec['references'][1]['role']='approved Covenant creature anatomy, palette and style'
     if kind=='hits':spec['grid']=[5,2]
+    if kind in ('motion','run','defense','combat'):spec['grid']={'motion':[4,4],'run':[3,2],'defense':[3,2],'combat':[4,3]}[kind]
     if revision:
         old=[j for j in read(ART/'usage.json')['jobs'] if j.get('wave')=='A14' and j['scene']==spec['id']]
         spec['correction_of']=old[-1]['id'];spec['prompt']+=' CORRECTION: '+revision

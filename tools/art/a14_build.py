@@ -8,6 +8,7 @@ from restoration_common import isolated_sheet,variable_magenta,alpha_metrics,pac
 OUT=ART/'delivery/a14'
 STATES={'hit-light':([0,1,2,3],[30,45,45,40]),'hit-heavy':([4,5,6,7,8,9],[30,40,50,45,40,35]),'death':([10,11,12,13,14,15],[70,80,90,100,120,140])}
 MIRROR={'ne':'nw','se':'sw'}
+EXTRA_STATES={'motion':{'idle':(list(range(4)),[180]*4),'run':(list(range(4,10)),[75]*6),'cast':(list(range(10,16)),[90]*6)},'run':{'run':(list(range(6)),[75]*6)},'defense':{'absorb':(list(range(6)),[100]*6)},'combat':{'cast':(list(range(6)),[90]*6),'absorb':(list(range(6,12)),[100]*6)}}
 
 def extract(job,obs):
     if obs['sha256']!=job['sha256']:raise ValueError('STALE_OBSERVATION')
@@ -76,7 +77,7 @@ def build():
         if p.exists() and read(p)['verdict']!='reject':selected[(job['input']['entity'],job['input']['direction'],job['input']['kind'])]=(job,read(p))
     for entity,design in roster.items():
         clips={};sources=[]
-        for direction,kind in [(d,k) for d in ('ne','se') for k in ('reaction','collapse','hits')]:
+        for direction,kind in [(d,k) for d in ('ne','se') for k in ('reaction','collapse','hits','motion','run','defense','combat')]:
             if (entity,direction,kind) not in selected:continue
             job,obs=selected[(entity,direction,kind)]
             grade=read(ART/'grades'/(job['id']+'.json'))
@@ -96,14 +97,18 @@ def build():
             sources.append({'source':job['archive'],'sha256':job['sha256'],'job':job['id'],'observation':relative(ART/'waves/A14/observations'/(job['id']+'.json')),'bodyHeightSourcePx':obs['bodyHeightSourcePx'],'facing':direction,'nativeBodyPixelsPerDisplayPixel1440':obs['bodyHeightSourcePx']/81,'limitations':obs['note']})
             layout=STATES if kind=='reaction' else {'death':(list(range(6)),STATES['death'][1])}
             if kind=='hits':layout={k:v for k,v in STATES.items() if k.startswith('hit-')}
+            if kind in EXTRA_STATES:layout=EXTRA_STATES[kind]
             for state,(default_indices,durations) in layout.items():
+                if state in obs.get('excludedStates',[]):continue
                 indices=obs.get('selections',{}).get(state,default_indices)
                 durations=obs.get('durations',{}).get(state,durations)
                 if len(indices)!=len(durations):raise ValueError('TIMING_COUNT')
                 if any(i not in maps for i in indices):backlog.append(f'{entity}:{state}:{direction}:source-gate');continue
                 clip={'page':pid,'frames':[{'rect':rects[maps[i]],'durationMs':durations[k]} for k,i in enumerate(indices)],'frameCount':len(indices),'loop':False,'mirrorX':False,'anchor':[.5,300/384],'sourceIndices':indices,'source':job['archive'],'sourceSha256':job['sha256'],'origin':'generated pose keys; locally keyed, uniformly scaled and pivot-aligned','suggestedDurationMs':sum(durations),'owner_accepted':False}
                 clip['selectionNote']='authored pose-key reselection; see hash-bound source observation' if state in obs.get('selections',{}) else 'requested generated state sequence'
+                if obs.get('excludedStates'):clip['selectionNote']='partial source salvage; rejected states: '+', '.join(obs['excludedStates'])+'; only directly gated keys for this state delivered'
                 clip['uniqueGeneratedKeys']=len(set(indices))
+                if state in ('idle','run','absorb'):clip['loop']=True
                 if obs.get('scaleFactors'):
                     clip['sourceScaleFactors']=[obs['scaleFactors'].get(str(i),1) for i in indices]
                     clip['scaleNormalizationNote']='Authored uniform whole-body scale per source key/group, measured from repeated ready anatomy; no limb reshaping.'
@@ -121,7 +126,7 @@ def build():
         if clips:entities[entity]={'kind':design['kind'],'clips':clips,'anchor':[.5,300/384],'bodyHeightMasterPx':160,'designBodyHeight1080':60.75,'designSize1080':[145.8,145.8],'scaleContract':'scale-contract-v3','sources':sources,'owner_accepted':False}
     missing=[f'{e}:{s}:{d}' for e in roster for s in ['hit-light','hit-heavy','death','corpse'] for d in ['ne','se','sw','nw'] if d not in entities.get(e,{}).get('clips',{}).get(s,{})]
     m={'schemaVersion':1,'id':'covenant-characters-a14','status':'owner-review' if not missing else 'partial-owner-review','baseManifest':'art/delivery/a10/characters.json','paths':'repository-root-relative','pages':pages,'entities':entities,'directions':['ne','se','sw','nw'],'cameraElevationDegrees':55,'backlog':missing,'rejectedCandidateClips':backlog,'owner_accepted':False,'merge':'Replace only present entity/state/direction clips. Honour clip anchor and A14 scale v3; see loader.js. Do not apply 1.5 twice.','aliases':{'hit':'hit-light'},'gameBoundary':'Simulation owns hit stun, interruption, immunity, collision, targetability and bout cleanup. No gameplay mechanics in this delivery.'}
-    write(OUT/'characters.json',m);write(OUT/'source-gates.json',{'frames':gates,'backlog':missing,'thresholds':{'marginPx':3,'paletteMeanRGB':55,'referencePaletteMeanRGB':70,'silhouetteMassRatio':[.30,2.4]},'facingGate':'hash-bound direct per-key observations; not a statistical proof of anatomical direction','owner_accepted':False})
+    write(OUT/'characters.json',m);write(OUT/'source-gates.json',{'frames':gates,'backlog':missing,'thresholds':{'marginPx':3,'paletteMeanRGB':55,'referencePaletteMeanRGB':70,'silhouetteMassRatio':[.30,2.4],'approvedCreaturePaletteMeanRGB':50,'approvedCreatureValueRatio':[.60,1.65]},'facingGate':'hash-bound direct per-key observations; not a statistical proof of anatomical direction','owner_accepted':False})
     print('A14:',sum(len(ds) for b in entities.values() for ds in b['clips'].values()),'clips;',len(missing),'missing')
     return m
 

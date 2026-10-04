@@ -1,0 +1,87 @@
+{
+  "id": "a14-shieldman-ne-combat-agy-a01",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "shieldman-ne-combat",
+  "attempt": 1,
+  "input": {
+    "wave": "A14",
+    "id": "shieldman-ne-combat",
+    "pilot": true,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/references/shieldman-ne.png",
+        "sha256": "62520c5ba743045e2d0d8a76dc78ba5e0910b5d1883befd6a82bab815b7e02c6",
+        "role": "identity"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Moonchalk painting bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. Keep head and torso aimed upper-right away from viewer. Never turn to face the viewer. Non-magical Roman legion heavy shield bearer, worn helmet and segmented iron torso plates, huge battered rectangular curved dark red shield with plain metal boss, short sword, leather sandals. Broad shield silhouette; no magic. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns by THREE rows, TWELVE complete poses. First six ATTACK: ready, equipment draws back, attack windup, equipment thrust forward, withdrawal, ready recovery. Last six DEFENSE: Six defensive resistance poses: ready, feet brace, hands and equipment lift forward to block, torso leans into resistance, slightly recoils while keeping guard, steady forward guard hold. No glowing effect, keep exactly the reference equipment.All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+    "entity": "shieldman",
+    "direction": "ne",
+    "kind": "combat",
+    "grid": [
+      4,
+      3
+    ],
+    "referenceConsumption": "agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual",
+    "session": 10
+  },
+  "input_hash": "1ea207d9850dea21b59ffb172d077fb9a948e174e030fe894d9140177224efc0",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. Keep head and torso aimed upper-right away from viewer. Never turn to face the viewer. Non-magical Roman legion heavy shield bearer, worn helmet and segmented iron torso plates, huge battered rectangular curved dark red shield with plain metal boss, short sword, leather sandals. Broad shield silhouette; no magic. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns by THREE rows, TWELVE complete poses. First six ATTACK: ready, equipment draws back, attack windup, equipment thrust forward, withdrawal, ready recovery. Last six DEFENSE: Six defensive resistance poses: ready, feet brace, hands and equipment lift forward to block, torso leans into resistance, slightly recoils while keeping guard, steady forward guard hold. No glowing effect, keep exactly the reference equipment.All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "b44dc33d-fe7a-4e1b-b139-6037d3eae154",
+  "at": "2026-10-04T15:45:02.048229+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 53.031,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T15:45:16Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "shieldman_ne_combat_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-shieldman-ne-combat-agy-a01\\Reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-shieldman-ne-combat-agy-a01\\Reference-2.png"
+        ],
+        "Prompt": "A 4x3 character sprite animation sheet arranged in a 4-column by 3-row grid with 12 distinct action poses on a solid uniform vivid magenta background (#FF00FF). Character identity matches Reference-1.png: a non-magical Roman legion heavy shield bearer wearing a worn legionary helmet, segmented iron lorica segmentata torso armor, pteruges, leather sandals, wielding a huge battered rectangular curved dark red scutum shield with a central metal boss, and a short gladius sword. Broad shield silhouette, strictly non-magical. Art style matches Reference-2.png: sculpted painterly dark fantasy digital painting, broken confident contours, sharp silver highlights on worn iron metal, pale layered cloth, material wear on physical edges, smooth opaque paint, no heavy cartoon outlines, no 3D render, no canvas texture. Perspective and camera: Elevated 55-degree orthographic angle viewing the character from the REAR-RIGHT three-quarter perspective (facing northeast / diagonally away from the viewer towards upper right). The character's back, back of the helmet, and rear armor plates are visible in all poses; torso and head are aimed upper-right away from the viewer. Layout and animation poses: Exactly 4 columns and 3 rows (12 poses total), perfectly aligned on wide empty magenta (#FF00FF) gutters. First 6 poses (Attack): 1. combat ready stance, 2. equipment drawing back, 3. attack windup, 4. equipment thrust forward, 5. withdrawal, 6. ready recovery. Last 6 poses (Defense): 7. ready, 8. feet brace, 9. hands and equipment lift forward to block, 10. torso leans into resistance, 11. slightly recoils while keeping guard, 12. steady forward guard hold. Every figure is fully enclosed within its cell's middle 60%, identical anatomical scale throughout, no touching cell boundaries, no text, no grid lines, no borders, no ground shadows, solid pure magenta background.",
+        "toolAction": "Generating image",
+        "toolSummary": "Generate animation sheet"
+      },
+      "conversation": "c341af42-452b-4ce0-af3b-8294cedfa280"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "256e2d2259b1f60ca2d1d5035bc53de9e5b3b5c93527456228c2caff51709de0",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\abc836e7-690e-4eb2-b00b-07370dcefe46\\shieldman_ne_combat_sheet_1791128753638.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-shieldman-ne-combat-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a14-shieldman-ne-combat-agy-a01.jpg",
+  "sha256": "256e2d2259b1f60ca2d1d5035bc53de9e5b3b5c93527456228c2caff51709de0",
+  "invocation_evidence": "art/providers/runs/a14-shieldman-ne-combat-agy-a01"
+}

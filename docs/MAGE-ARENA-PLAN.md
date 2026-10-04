@@ -217,6 +217,7 @@ Pattern to follow (read-only): `C:\Users\kazda\kiro\garden-vr\docs\audio\` (`AUD
 |---|---|---|---|---|
 | Audio [`audio`] | AU1 | **Philosophy and audition round 1**: audio bible (pillars, palette of sound, mix and priority rules, adaptive music design tied to the collar clock, loudness targets); the project ElevenLabs tool with ledger and credit guard; about 30 to 40 samples across directions and themes; the audition report; stop for the owner | D21-D24 | not started |
 | Audio | AU2 | Round 2 refinement of the chosen directions (variants inside the chosen family), narration or bark voice if wanted | AU1 owner choice | blocked |
+| Art | A14.3-3 | Session 10 creature motion and remaining legacy clips | D38, A14.3-2 | 226 clips: 180 priority + 46 other; 12 + 12 explicit gaps; 40 session charges, 382 total; gates pass; owner-review |
 | Audio | AU3 | Production set: the full effect list per element and event, the music set (title, camp day/dusk/night, arena per palette, win and loss stingers, adaptive layers), UI sounds, ambiences; loudness-normalised, loop-checked, sidecars and ledger | AU2 | blocked |
 | Game | AU4 | In-game audio engine: WebAudio mixer with buses, priority, cooldown and concurrency limits, ducking, adaptive music following the collar tiers and absorb events, UI sounds from the UI kit, volume and mute settings, tests for the priority table | AU3 or placeholders | not started |
 
@@ -241,6 +242,7 @@ Decisions: **D25** the camp time model becomes **hours**: a day has a number of 
 | Game | U3 | **Time model in hours (D25), camp UI changes (D26)**: core data and tests, replayer fixtures regenerated, Director inputs in hours, place buttons by name only, header with the stat icons (placeholder until A11) and the rendered clock | D25, D26 | not started |
 | Game | AU4 | **Audio engine** with buses, priority, concurrency and cooldown limits, ducking, the app-side calming of effects (D30), music playback with crossfades and the collar-tier adaptive layers, UI sounds, volume settings; uses the kept samples through a manifest | D28, D30 | not started |
 | Audio | AU2b | Regenerate the rejected categories: absorb as an energy barrier stopping and slowing an energy source (elemental, natural, not a notification, not cartoonish), the title theme (melodic like the arena music, calm), roll (single sand step), crowd (raw, bloodlust colosseum), collar rune alternative if needed | D28 | not started |
+| Art | A14.3-3 | Session 10 creature motion and remaining legacy clips | D38, A14.3-2 | 226 clips: 180 priority + 46 other; 12 + 12 explicit gaps; 40 session charges, 382 total; gates pass; owner-review |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks in the kept directions, after the credit reset; camp music re-direction | account reset | blocked |
 
 ## r. Owner review of the A12 plates and U4 build (2026-10-03): plates accepted, figures bigger, combat feel is the focus, sigils redone
@@ -267,11 +269,12 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 | Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | not started |
 | Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
 | Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
-| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | PARTIAL; session 10 agy restored; 180/192 priority slots; see A14.3 stages |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | PARTIAL; session 10 cap reached; 180/192 priority + 46 other slots; 12 + 12 gaps; see A14.3 stages |
 | Art | A14.1 | Hit-light, hit-heavy, collapse and persistent lying poses | D36-D38 | 124/192 slots; 68 explicit missing; owner-review; commit containing A14-1 note |
 | Art | A14.2 | Remaining clips, creature views and cheap gait corrections | A14.1, D38 | BLOCKED generation; 18-loop audit complete, no safe correction; 58 non-reaction slots missing; zero spend |
 | Art | A14.3-1 | Session 10 humanoid completion | D36-D38 | 128/192 total; all humanoid priority slots present; gates pass; 2 new charges, 344 total; owner-review |
 | Art | A14.3-2 | Session 10 creature collapse and reactions | D36-D38 | 180/192 priority slots; 12 bounded-attempt gaps; 22 session charges, 364 total; owner-review |
+| Art | A14.3-3 | Session 10 creature motion and remaining legacy clips | D38, A14.3-2 | 226 clips: 180 priority + 46 other; 12 + 12 explicit gaps; 40 session charges, 382 total; gates pass; owner-review |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
 
 ## l. Session log
@@ -291,3 +294,6 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 
 
 **ART session 10 / A14.3 stage 2 / 2026-10-04:** Added 52 creature priority slots; total 180/192. Twelve rear Mire Maw/Thornback slots remain missing after two attempts per source slot. Twenty stage calls, 22 session calls/images/charges, project 364; agy clear, Grok unused and latched. Original Covenant creature images passed on every call, explicit crop/selection/scale/pivot records and local reject-or-owner grading. Standalone corpse overwrite detected and fixed by persistence checks; final delivery, 77-product portable checks and all 90 tests pass. Browser five cases/44 persistent atlas corpses pass. Design: docs/waves/A14-3-stage2-creatures.md. Owner animation and game integration unmeasured. Next: budgeted remaining creature motion and legacy queue; no push.
+
+
+**ART session 10 / A14.3 stage 3 / 2026-10-04:** Added 46 motion/attack/resistance slots; A14 now has 226 clips (180/192 priority plus 46 other), with 12 priority and 12 other legacy slots still missing. Eighteen stage calls bring session 10 to 40 agy calls/images/charges, project 382; allowance exhausted, Grok unused, old latches and ledger evidence retained. Thornback front run/attack failed both attempts; Shieldman attack failed crop/equipment continuity and only brace keys survive. All 90 tests, 91-product byte-identical offline rebuild and seven browser cases pass (44 persistent corpses and 46 added clips at both native sizes). All 378 earlier protected files, 75 stage-2 atlas/corpse images and inherited ledger rows unchanged. Owner feel, game integration and actual shared-account allowance remain unmeasured. Design: docs/waves/A14-3-stage3-motion.md. Commands: python tools/art/a14_build.py, a14_board.py, a14_extra_board.py, a14_portable.py, a14_browser.py; python tools/art/a14_session10.py audit stage3; python -m unittest discover -s tools/art -p test_*.py. Exact queue and loader note in art/SESSION-10-HANDOFF.md. Stopped at the session cap; no push.

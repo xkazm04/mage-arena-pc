@@ -48,6 +48,9 @@ def call(entity,direction,kind,revision=None):
         spec['prompt']=spec['prompt'].split(' Reference-3.png supplies')[0]
         spec['prompt']+=' CORRECTION: '+str(revision)
     spec['session']=10
+    if entity=='cinder_hound' and direction=='ne' and kind=='defense' and revision:
+        spec['prompt']=spec['prompt'].replace('THREE columns by TWO rows','TWO columns by THREE rows')
+        spec['grid']=[2,3]
     write(ART/'briefs/a14/session10'/(scene+('-retry' if revision else '')+'.json'),spec)
     job=generate(spec)
     if job['status']=='generated':
@@ -83,17 +86,22 @@ def audit(stage):
         require(len(calls)<=j['charged_images'],'UNCHARGED_LATE_CALL')
         if j['status']=='generated':require(len(calls)==j['charged_images']==j['unique_output_images']==1,'NOT_ONE_CALL_ONE_CHARGE')
         evidence.append({'job':j['id'],'calls':len(calls),'charged':j['charged_images'],'status':j['status'],'archive':j.get('archive'),'sha256':j.get('sha256')})
-    report={**result,'session':10,'stage':stage,'inheritedCharges':start['charged'],'sessionCharges':charges,'generatedSources':sum(j['status']=='generated' for j in recent),'sessionCap':40,'providerJobs':evidence,'providerLatches':{k:v['stop'] for k,v in read(ART/'providers/history.json')['providers'].items()},'actualAccountAllowance':'not measured','owner_accepted':False,'push':False}
+    prior=BASE/'stage2-protected.json';prior_count=0
+    if stage=='stage3' and prior.exists():
+        for path,hash_ in read(prior).items():require(sha(ROOT/path)==hash_,'STAGE2_IMAGE_CHANGED:'+path)
+        prior_count=len(read(prior))
+    report={**result,'session':10,'stage':stage,'inheritedCharges':start['charged'],'sessionCharges':charges,'generatedSources':sum(j['status']=='generated' for j in recent),'sessionCap':40,'providerJobs':evidence,'providerLatches':{k:v['stop'] for k,v in read(ART/'providers/history.json')['providers'].items()},'priorStageImagesUnchanged':prior_count,'actualAccountAllowance':'not measured','owner_accepted':False,'push':False}
     write(ART/'delivery/a14/session10'/f'{stage}-audit.json',report)
     write(ART/'delivery/a14/session10/current.json',report)
     write(ART/'delivery/a14/spend.json',report)
+    write(ART/'delivery/a14/session-audit.json',report)
     manifest=read(ART/'delivery/a14/characters.json')
     old=read(ART/'delivery/a14/stage2/backlog.json')['priority2NonReactionLegacySlots']
     remaining=[]
     for slot in old:
         e,s,d=slot.split(':')[:3]
         if d not in manifest['entities'].get(e,{}).get('clips',{}).get(s,{}):remaining.append(slot)
-    write(ART/'delivery/a14/session10/backlog.json',{'priority':manifest['backlog'],'otherLegacy':remaining,'priorityMissing':len(manifest['backlog']),'otherMissing':len(remaining),'owner_accepted':False,'boundedAttemptFailures':'Mire Maw rear collapse, Thornback rear collapse and hits each used both session attempts; no third attempt authorized.'})
+    write(ART/'delivery/a14/session10/backlog.json',{'priority':manifest['backlog'],'otherLegacy':remaining,'priorityMissing':len(manifest['backlog']),'otherMissing':len(remaining),'owner_accepted':False,'boundedAttemptFailures':'Mire Maw rear collapse, Thornback rear collapse/hits and front motion each used both session attempts; no third attempt authorized. Shieldman rear attack failed crop/equipment continuity on its first sheet; no allowance remained for correction. Iskar front run and Slinger/Netter rear absorb were not reached within the session cap.'})
     print('Session 10',stage,':',charges,'charges;',result['projectCharges'],'project;',result['clips'],'slots')
 
 if __name__=='__main__':

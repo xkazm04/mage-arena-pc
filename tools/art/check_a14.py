@@ -21,8 +21,8 @@ def check(manifest=None,complete=False,save=True):
             obs=read(ROOT/source['observation']);require(obs['sha256']==source['sha256'] and obs['verdict']!='reject','SOURCE_REVIEW')
         for state,dirs in body['clips'].items():
             for direction,clip in dirs.items():
-                count+=1;require(not clip['loop'],'UNEXPECTED_LOOP');require(clip['frameCount']==len(clip['frames']),'FRAME_COUNT')
-                require(clip['frameCount'] in {'hit-light':[3,4],'hit-heavy':[5,6],'death':[4,6,7,8],'corpse':[1]}[state],'STATE_FRAME_COUNT')
+                count+=1;require(clip['loop']==(state in ('idle','run','absorb')),'UNEXPECTED_LOOP');require(clip['frameCount']==len(clip['frames']),'FRAME_COUNT')
+                require(clip['frameCount'] in {'hit-light':[3,4],'hit-heavy':[5,6],'death':[4,6,7,8],'corpse':[1],'idle':[2,3,4],'run':[4,5,6,7,8],'cast':[4,5,6],'absorb':[3,4,5,6]}[state],'STATE_FRAME_COUNT')
                 require(clip['mirrorX']==(direction in ['nw','sw']),'MIRROR_RULE')
                 im=cache[clip['page']]
                 for f in clip['frames']:
@@ -44,7 +44,8 @@ def check(manifest=None,complete=False,save=True):
     start=read(ART/'waves/A14/start-snapshot.json');usage=read(ART/'usage.json');require(digest(usage['jobs'][:start['jobs']])==start['jobsDigest'],'HISTORY_CHANGED')
     for path,hash_ in start['protected'].items():require(sha(ROOT/path)==hash_,'PROTECTED_CHANGED:'+path)
     charges=sum(j['charged_images'] for j in usage['jobs']);require(charges<=450 and charges-start['charged']<=80,'SPEND_CAP')
-    report={'status':'pass','clips':count,'requiredStage1Clips':192,'missing':missing,'complete':not missing,'projectCharges':charges,'sessionCharges':charges-start['charged'],'protectedFilesUnchanged':len(start['protected']),'owner_accepted':False}
+    priority=sum(len(ds) for b in m['entities'].values() for s,ds in b['clips'].items() if s in ('hit-light','hit-heavy','death','corpse'))
+    report={'status':'pass','clips':count,'priorityClips':priority,'additionalClips':count-priority,'requiredStage1Clips':192,'missing':missing,'complete':not missing,'projectCharges':charges,'sessionCharges':charges-start['charged'],'protectedFilesUnchanged':len(start['protected']),'owner_accepted':False}
     if save:write(ART/'delivery/a14/checks.json',report)
     return report
 
