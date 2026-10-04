@@ -1,0 +1,31 @@
+{
+  "wave": "A14",
+  "id": "hush_moth-se-reaction",
+  "pilot": false,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "agy"
+  ],
+  "aspect_ratio": "1:1",
+  "references": [
+    {
+      "path": "art/waves/A14/references/hush_moth-se.png",
+      "sha256": "7adb76f10ac81fc507f27f46b9d034285f8b76160ab0d7e1d15fe469d61bb470",
+      "role": "identity"
+    },
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+      "role": "Moonchalk painting bar"
+    }
+  ],
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. Four moth wings, one thorax and two antennae. Reaction bends thorax and sweeps wings; collapse folds intact wings low against the ground. No human limbs. Raw magical oversized moth, four ragged triangular midnight-blue wings, pale silver wing veins and moonlike empty markings, small dark segmented body and fine antennae, restrained lilac wisps. Clear wing silhouette, no human face. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns by FOUR rows, 16 complete poses of the SAME MOTH. Row 1 quick recoil: 1 hovering ready with four wings open; 2 thorax jerks back and wings sweep forward; 3 wings counter-sweep to catch balance; 4 hovering ready recovered. Row 2 heavy struggle first four keys: 5 hovering ready; 6 thorax bends sharply backward and wings crumple inward; 7 deepest thorax recoil, four wings visibly folded inward; 8 forceful low wing sweep catches descent. Row 3: 9 opening wings and lifting thorax; 10 recovered hover. Begin descent: 11 hovering ready; 12 loses lift and sinks, wings droop. Row 4 collapse: 13 thorax drops very low; 14 thorax contacts ground with wings half-folded; 15 abdomen and thorax REST FLAT on ground, four wings folded low beside them; 16 fully still resting moth, body and wings lying flat on ground. The last two keys cannot hover. Keep six fine insect legs, four intact wings, two antennae. No person, face, hands, human arms, weapon or garment. Intact non-graphic animal, no blood, gore or injury detail. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "entity": "hush_moth",
+  "direction": "se",
+  "kind": "reaction",
+  "grid": [
+    4,
+    4
+  ],
+  "referenceConsumption": "agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual"
+}

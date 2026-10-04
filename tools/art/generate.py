@@ -10,7 +10,7 @@ from pathlib import Path
 from common import ART, ROOT, config, digest, get_style, input_matches_current, input_record, lock, now, read, relative, sha, source_path, week, write
 
 # Match errors, not bare token counts, prompt text or image dimensions.
-QUOTA = re.compile(r'(?i)(rate[ _-]?limit(?:ed| exceeded| reached| error)|quota.{0,60}(?:exceed|exhaust|reach|deplet)|too many requests|(?:HTTP(?:/\d(?:\.\d)?)?\s*|status(?:_code| code)?["\s:=]*|error["\s:=]*)429\b|\b429\s+(?:too many|rate limit)|usage limit.{0,40}(?:exceed|reach)|insufficient.{0,15}credits|resource_exhausted)')
+QUOTA = re.compile(r'(?i)(rate[ _-]?limit(?:ed| exceeded| reached| error)|quota.{0,60}(?:exceed|exhaust|reach|deplet)|too many requests|(?:HTTP(?:/\d(?:\.\d)?)?\s*|status(?:_code| code)?["\s:=]*|error["\s:=]*)429\b|\b429\s+(?:too many|rate limit)|usage limit.{0,40}(?:exceed|reach)|usage balance exhausted|402 Payment Required|insufficient.{0,15}credits|resource_exhausted)')
 
 
 def moderation_evidence(results):

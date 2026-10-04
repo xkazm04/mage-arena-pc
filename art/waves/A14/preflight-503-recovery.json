@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-04T09:53:22.144237+00:00",
+  "originalStop": {
+    "at": "2026-10-04T09:51:08.200960+00:00",
+    "event": "stop",
+    "job": "a14-netter-se-reaction-agy-a01",
+    "reason": "UNVERIFIED_AGY_IMAGE_CALL_COUNT"
+  },
+  "authorization": "Executing-agent bounded recovery under owner session 9 instruction to diagnose/fix agy and clear latch with evidence; no quota/rate or extra-call event. One recovery only.",
+  "error": "error: failed to send message: send failed; already reported to the user: Eligibility check failed: failed to get load code assist response: UNAVAILABLE (code 503): The service is currently unavailable.",
+  "outputSha256": "2669bc6683e9f90e673c14ff0a4034cc16ac704263a9fff0e2a7bb3880accac8",
+  "scopedEvidence": {
+    "conversations": [],
+    "imageCalls": []
+  },
+  "readOnlyProbe": "agy models succeeded after outage; eligibility itself still requires the one bounded image proof",
+  "offlineTests": "11 provider guard tests pass",
+  "chargesPreserved": true,
+  "noAutomaticRetryOrReset": true,
+  "driverSha256": "aa4a1ec8ebd3e31211aa6233ec85734b4e31269736efb66241f94bc9501e0989"
+}

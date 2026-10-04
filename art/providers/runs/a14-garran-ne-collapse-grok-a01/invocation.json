@@ -1,0 +1,37 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "db3aa15e-f687-45b1-a786-5657318c7030",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-garran-ne-collapse-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-garran-ne-collapse-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A14/references/garran-ne.png",
+      "sha256": "76e7cde21aac3979713abe2840c62c6682bd01ddbaccdaddef208c7b384ce8c9",
+      "role": "identity"
+    },
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+      "role": "Moonchalk painting bar"
+    }
+  ]
+}

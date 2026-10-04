@@ -92,6 +92,12 @@ def distinct_outputs(files):
     return selected, evidence
 
 
+def agy_preflight_unavailable(output, calls):
+    """Specific pre-image eligibility failure; still latches, never auto-retries."""
+    return (not calls and 'Eligibility check failed' in output and
+            'UNAVAILABLE (code 503)' in output and 'service is currently unavailable' in output)
+
+
 def invoke(provider, spec, folder, record):
     cfg = config(); prompt = spec['prompt']; refs = []
     for i, ref in enumerate(spec.get('references', [])):
@@ -99,8 +105,11 @@ def invoke(provider, spec, folder, record):
         shutil.copy2(ROOT / ref['path'], target); refs.append(target)
     if provider == 'agy':
         exe = r'C:\Users\kazda\AppData\Local\agy\bin\agy.exe'
-        request = ('Generate exactly ONE image using your image generation tool. Save it as output.png in the current directory. '
-                   'Do not retry, make additional images, delegate, or run other generation tools. '
+        request = ('Generate exactly ONE image using generate_image. The driver archives the tool output automatically; do not copy or save it again. '
+                   'Do not retry, make additional images, or run other generation tools. '
+                   'Use the built-in image-generator capability immediately; do not inspect sibling folders, histories, driver code or CLI help. '
+                   'If the capability requires an image-generator worker, pass this ENTIRE request including the one-call limit unchanged to that worker. '
+                   'Return the FIRST result even if imperfect. Do not critique, inspect, refine, or repair the generated result. '
                    'Do not make source.png or any backup/preview/copy of the output. '
                    'If generation fails, report the exact error and stop. '
                    'The reference files named below are already in the current directory. '
@@ -120,6 +129,7 @@ def invoke(provider, spec, folder, record):
     log = folder / 'cli-output.txt'; started = time.monotonic(); proc = None
     agy_audit = AgyEvidence(request) if provider == 'agy' else None
     calls = []; results = []; quota = None; error = None; fields = {}; raw_file_count = 0
+    driver_completed=False; completed=[]
     try:
         with log.open('w', encoding='utf-8') as out:
             proc = subprocess.Popen(command, cwd=folder, stdout=out, stderr=subprocess.STDOUT,
@@ -133,24 +143,36 @@ def invoke(provider, spec, folder, record):
                 if quota or len(calls) > 1 or time.monotonic() - started > 600:
                     error = quota or ('EXTRA_TOOL_CALL' if len(calls) > 1 else 'TIMEOUT_UNKNOWN_SPEND')
                     kill_tree(proc); break
-                time.sleep(1)
+                if agy_audit and len(calls)==1:
+                    completed=agy_audit.completed_images()
+                    if len(completed)==1:
+                        # Image is complete, so stop before the worker's next
+                        # model turn. A final audit still rejects late calls.
+                        with Image.open(completed[0]) as image:image.verify()
+                        driver_completed=True
+                        kill_tree(proc); break
+                time.sleep(.1 if agy_audit else 1)
         if provider == 'grok':
             calls, results, files, histories = session_evidence(record['session_id'])
             for p in histories: shutil.copy2(p, folder / 'chat_history.jsonl')
         else:
             files = [p for p in folder.rglob('*') if p.suffix.lower() in ('.png', '.jpg', '.jpeg', '.webp') and not p.name.startswith('reference-') and '_driver' not in p.relative_to(folder).parts]
             calls, results, evidence = agy_audit.collect()
+            completed=agy_audit.completed_images()
+            files=list(set(files+completed))
             write(folder / 'agy-tool-evidence.json',{'conversations':sorted(agy_audit.owned),'imageCalls':evidence})
             results += [log.read_text(encoding='utf-8', errors='replace')]
             if len(calls)>1: error='EXTRA_TOOL_CALL'
+            elif agy_preflight_unavailable(results[-1],calls):error='PREFLIGHT_SERVICE_UNAVAILABLE_503'
             elif len(calls)!=1: error=error or 'UNVERIFIED_AGY_IMAGE_CALL_COUNT'
         raw_file_count = len(files)
         files, output_evidence = distinct_outputs(files)
         quota = quota or output_quota(log, results)
         fields = {'elapsed_seconds': round(time.monotonic() - started, 3), 'returncode': proc.returncode,
-                  'tool_calls': calls, 'charged_images': max(1, len(calls), raw_file_count),
+                  'tool_calls': calls, 'charged_images': max(1, len(calls), len(files)),
                   'output_files': output_evidence, 'unique_output_images': len(files),
-                  'charge_basis': 'conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations',
+                  'charge_basis': 'max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows',
+                  'driver_stopped_after_first_completed_image':driver_completed,
                   'prompt_verbatim_verified': provider == 'grok' and len(calls) == 1 and calls[0]['arguments'].get('prompt') == prompt,
                   'tool_input_visibility': 'session tool history' if provider == 'grok' else 'exact-request-linked agy parent/worker transcripts; image call arguments archived'}
         if quota:
@@ -159,7 +181,7 @@ def invoke(provider, spec, folder, record):
             fields.update(status='error-unknown-spend', error=error)
         elif not files and moderation_evidence(results):
             fields.update(status='moderation-refused', error='Explicit moderation; one rewritten retry only')
-        elif proc.returncode == 0 and len(files) == 1 and (provider != 'grok' or fields['prompt_verbatim_verified']):
+        elif (proc.returncode == 0 or driver_completed) and len(files) == 1 and (provider != 'grok' or fields['prompt_verbatim_verified']):
             if sha(files[0]) in {sha(p) for p in refs}:
                 raise RuntimeError('UNCHANGED_REFERENCE_RETURNED')
             target = folder / '_driver' / ('source' + files[0].suffix.lower())
@@ -185,6 +207,9 @@ def generate(spec):
     validate_spec(spec)
     with lock(ART / '.run.lock'):
         budget = Budget(); pb = ProviderBudget(); usage = budget.load()
+        wave_cap=budget.policy.get('wave_image_caps',{}).get(spec['wave'])
+        if wave_cap is not None and sum(j['charged_images'] for j in usage['jobs'] if j.get('wave')==spec['wave'])>=wave_cap:
+            raise RuntimeError('WAVE_IMAGE_CAP')
         old = [j for j in usage['jobs'] if j.get('wave') == spec['wave'] and j['scene'] == spec['id']]
         refused = [j for j in old if j['status'] == 'moderation-refused']
         if refused:

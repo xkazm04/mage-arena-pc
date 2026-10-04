@@ -1,5 +1,6 @@
 """Read only transcripts causally tied to this exact image request."""
 import json
+import re
 from pathlib import Path
 
 BRAIN=Path.home()/'.gemini/antigravity-cli/brain'
@@ -52,3 +53,22 @@ class AgyEvidence:
                     # Only structured error detection consumes these response texts.
                     results.append(content)
         return calls,results,evidence
+
+    def completed_images(self):
+        """Only tool-reported output paths inside exact-request-owned folders.
+
+        Collect the first completed image before an autonomous refinement can
+        start. Never scan unrelated conversations or treat a reference as output.
+        """
+        found=[]
+        for ident in sorted(self.owned):
+            path=self.brain/ident/'.system_generated/logs/transcript_full.jsonl'
+            for line in path.read_text(encoding='utf-8').splitlines():
+                try:event=json.loads(line)
+                except ValueError:continue
+                if event.get('type')!='GENERIC':continue
+                for match in re.finditer(r'Generated image is saved at (.+?\.(?:png|jpg|jpeg|webp))(?=[.\s]|$)',event.get('content',''),re.I):
+                    candidate=Path(match.group(1)).resolve()
+                    if any(candidate.is_relative_to((self.brain/owner).resolve()) for owner in self.owned) and candidate.is_file():
+                        found.append(candidate)
+        return sorted(set(found))

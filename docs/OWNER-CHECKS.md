@@ -156,3 +156,9 @@ Generated paint and authored animation/masks are labelled. Hold motion is
 subtle; shared construction, small modifiers and floor cleanup softness remain
 explicit findings. Technical gates and the local grader do not accept art.
 Owner acceptance, gameplay integration and actual combat/performance remain open.
+
+## ART session 9 / A14 stage 1
+
+[Owner board](../art/review/a14/index.html), [combined death strips](../art/review/a14/contact-sheet.jpg), [timed playback](../art/review/a14/motion.html). PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hit-light/heavy in all directions; death plus persistent corpse in all directions except Garran ne/nw. Creature A14 generation remains missing. 21 generated sources, 24 charged attempts, total 342/450; Grok latched on HTTP 402 exhausted Build balance, agy on repeated pre-image HTTP 503. One agy extra-call driver repair/reset and one bounded preflight recovery are archived; no refunds. 88 tests, 49-product offline rebuild and five browser viewport cases pass. Existing 378 protected art files and inherited ledger prefix are unchanged. Owner animation/readability and game integration remain unmeasured.
+
+Please judge short recoil readability, stagger recovery, ground contact, cross-view costume/equipment consistency, net detail and pale-lilac matte edges. These are owner-review candidates, not an acceptance claim.

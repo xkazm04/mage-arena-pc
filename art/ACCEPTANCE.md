@@ -1,3 +1,9 @@
+# Session 9 / A14 stage 1 partial candidate
+
+PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hit-light/heavy in all directions; death plus persistent corpse in all directions except Garran ne/nw. Creature A14 generation remains missing. 21 generated sources, 24 charged attempts, total 342/450; Grok latched on HTTP 402 exhausted Build balance, agy on repeated pre-image HTTP 503. One agy extra-call driver repair/reset and one bounded preflight recovery are archived; no refunds. 88 tests, 49-product offline rebuild and five browser viewport cases pass. Existing 378 protected art files and inherited ledger prefix are unchanged. Owner animation/readability and game integration remain unmeasured.
+
+[Owner board](review/a14/index.html), [handoff](SESSION-9-HANDOFF.md), [loader](delivery/a14/README.md).
+
 # Session 8 / A13 current candidate
 
 [Owner board](review/a13/index.html), [contact sheet](review/a13/contact-sheet.jpg),

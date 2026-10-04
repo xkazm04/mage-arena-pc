@@ -1,0 +1,88 @@
+{
+  "id": "a14-netter-se-reaction-agy-a02",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "netter-se-reaction",
+  "attempt": 2,
+  "input": {
+    "wave": "A14",
+    "id": "netter-se-reaction",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/references/netter-se.png",
+        "sha256": "589173e3c6d21bc5e57c22c1fb76397e6f175d20a33a006b1358be43a2a2ff50",
+        "role": "identity"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Moonchalk painting bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns and FOUR rows, 16 separate complete poses of ONE SAME character. Read left to right, top to bottom. Row 1: four keys of a QUICK FLINCH AND RECOVERY: 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled BACK by one head-width and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. These four poses MUST visibly differ, not four standing duplicates. Row 2: first four keys of a BIGGER STAGGER: 5 upright ready; 6 abrupt backward bend of upper body; 7 deepest backward bend, arms pulled close, balance visibly lost; 8 lower body catches the weight, bent knees or legs. Row 3: 9 pushing back upright, visibly struggling; 10 upright recovered. Then begin COLLAPSE: 11 ready upright; 12 legs buckle and body drops. Row 4: continue COLLAPSE: 13 body very low, leaning toward ground; 14 torso falls sideways nearly horizontal; 15 body settles FULLY LYING on its side, head and entire torso on ground; 16 body completely still FULLY LYING ON GROUND, legs extended or naturally folded, equipment resting beside it. The final TWO poses must be completely horizontal resting bodies, never crouching, kneeling, sitting or getting back up. Treat collapse as a harmless theatrical fall/rest pose, fully intact. No blood, gore, wounds or injury detail. No attacker, impact flash or effects. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+    "entity": "netter",
+    "direction": "se",
+    "kind": "reaction",
+    "grid": [
+      4,
+      4
+    ],
+    "referenceConsumption": "agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual",
+    "correction_of": "a14-netter-se-reaction-agy-a01",
+    "recoveryEvidence": "art/waves/A14/preflight-503-recovery.json"
+  },
+  "input_hash": "bf636ac8e48a40948d0d8c387eb79d4ce0ffe38b98cf0a5695d2a5f19d518f71",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns and FOUR rows, 16 separate complete poses of ONE SAME character. Read left to right, top to bottom. Row 1: four keys of a QUICK FLINCH AND RECOVERY: 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled BACK by one head-width and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. These four poses MUST visibly differ, not four standing duplicates. Row 2: first four keys of a BIGGER STAGGER: 5 upright ready; 6 abrupt backward bend of upper body; 7 deepest backward bend, arms pulled close, balance visibly lost; 8 lower body catches the weight, bent knees or legs. Row 3: 9 pushing back upright, visibly struggling; 10 upright recovered. Then begin COLLAPSE: 11 ready upright; 12 legs buckle and body drops. Row 4: continue COLLAPSE: 13 body very low, leaning toward ground; 14 torso falls sideways nearly horizontal; 15 body settles FULLY LYING on its side, head and entire torso on ground; 16 body completely still FULLY LYING ON GROUND, legs extended or naturally folded, equipment resting beside it. The final TWO poses must be completely horizontal resting bodies, never crouching, kneeling, sitting or getting back up. Treat collapse as a harmless theatrical fall/rest pose, fully intact. No blood, gore, wounds or injury detail. No attacker, impact flash or effects. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "54c81331-073f-4fc2-bc70-388afcd8a6be",
+  "at": "2026-10-04T09:53:22.195568+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 40.047,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T09:53:33Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "netter_se_reaction_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-netter-se-reaction-agy-a02\\Reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-netter-se-reaction-agy-a02\\Reference-2.png"
+        ],
+        "Prompt": "Original hand-painted digital dark fantasy game character ANIMATION SHEET on a solid uniform vivid MAGENTA #FF00FF background. Character identity, face, clothes, and equipment strictly matching Reference-1.png: a non-magical Roman arena net fighter (retiarius), wearing a dark ochre short tunic, worn single metal shoulder guard (galerus) on left shoulder, holding a short three-pronged trident in right hand and a coiled rope net with visibly open rope lattice in left hand. No magic. Painting style strictly matching Reference-2.png: sculpted painterly volume, broken confident contours, sharply selected highlights, worn dark metal, smooth opaque paint, cool upper-left lighting. Camera angle is elevated 55-degree orthographic view (isometric high angle, not eye-level). Character shown in FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD the viewer and image RIGHT, face and front surfaces visible across all poses.\n\nArranged in an exact 4x4 grid of 16 separate poses of the ONE SAME character, read left to right, top to bottom:\n- Row 1 (Quick flinch and recovery): Pose 1 is ready upright pose; Pose 2 is a sharp unmistakable recoil with shoulders and head pulled back by one head-width and torso bent back 25 degrees; Pose 3 is shoulders returning forward with braced bent legs; Pose 4 is upright recovered ready pose.\n- Row 2 (Bigger stagger): Pose 5 is upright ready pose; Pose 6 is an abrupt backward bend of upper body; Pose 7 is deepest backward bend with arms pulled close and balance visibly lost; Pose 8 is lower body catching the weight on bent knees.\n- Row 3 (Stagger recovery and collapse initiation): Pose 9 is pushing back upright, visibly struggling; Pose 10 is upright recovered pose; Pose 11 is ready upright pose; Pose 12 is legs buckling and body dropping low.\n- Row 4 (Collapse to lying flat): Pose 13 is body very low leaning toward the ground; Pose 14 is torso falling sideways nearly horizontal; Pose 15 is body settled FULLY LYING on its side, head and entire torso flat on the ground; Pose 16 is body completely still FULLY LYING FLAT ON THE GROUND, horizontal resting body, legs extended or naturally folded, trident and net resting beside the body.\n\nThe final two poses (15 and 16) are fully horizontal lying on the ground, theatrical rest, intact body, no blood, no gore, no wounds, no attacker. Each cell contains exactly ONE full body at identical scale within the middle 60% of the cell. Wide clean empty vivid magenta #FF00FF gutters between cells. No borders, gridlines, labels, text, or floor textures.",
+        "toolAction": "Generating animation sheet",
+        "toolSummary": "Character animation sheet generation"
+      },
+      "conversation": "4188ab77-23d6-43da-b839-c07d560619b6"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "4dd31472b69b030ea8fb1c6d7a04667892bb585a03da154928f24375bbc6ae61",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\570348a6-815f-410b-81e4-b88b580abb9d\\netter_se_reaction_sheet_1791107642082.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-netter-se-reaction-agy-a02/_driver/source.jpg",
+  "archive": "art/review/sources/a14-netter-se-reaction-agy-a02.jpg",
+  "sha256": "4dd31472b69b030ea8fb1c6d7a04667892bb585a03da154928f24375bbc6ae61",
+  "invocation_evidence": "art/providers/runs/a14-netter-se-reaction-agy-a02"
+}

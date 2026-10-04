@@ -125,3 +125,11 @@ The history of 296 earlier job rows and 280 protected asset files is unchanged.
 [Final audit](../art/waves/A13/provider-final-audit.json),
 [spend](../art/delivery/a13/spend.json),
 [all attempts](../art/review/a13/attempts.html).
+
+### Session 9 / A14 stage 1 / 2026-10-04
+
+PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hit-light/heavy in all directions; death plus persistent corpse in all directions except Garran ne/nw. Creature A14 generation remains missing. 21 generated sources, 24 charged attempts, total 342/450; Grok latched on HTTP 402 exhausted Build balance, agy on repeated pre-image HTTP 503. One agy extra-call driver repair/reset and one bounded preflight recovery are archived; no refunds. 88 tests, 49-product offline rebuild and five browser viewport cases pass. Existing 378 protected art files and inherited ledger prefix are unchanged. Owner animation/readability and game integration remain unmeasured.
+
+A13 extra-call diagnosis: the root forwarded an incomplete one-call constraint; the image worker made output_v2. The driver now forwards the full constraint, watches every 100ms for the first completed scoped artifact, captures it and terminates the request before critique, then audits again. An attempted direct-agent CLI flag still delegated and was removed; it is not a claimed guard. Every successful A14 agy job has exactly one completed scoped image call in the final audit. Original stops and charges are retained.
+
+Grok returned HTTP 402 before any image call; the quota detector now recognizes exhausted Build balance, and its latch remains. agy later failed its eligibility check with HTTP 503 and zero scoped calls. A read-only models probe succeeded; one explicitly documented bounded manual recovery produced Netter se. The next request repeated 503; its latch remains and no more image calls followed. This is service availability, not measured image-account quota. [Recovery evidence](../art/waves/A14/preflight-503-recovery.json), [final audit](../art/waves/A14/provider-final-audit.json), [spend](../art/delivery/a14/spend.json).

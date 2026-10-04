@@ -3,10 +3,10 @@
   "providers": {
     "agy": {
       "stop": {
-        "at": "2026-10-03T21:42:56.595941+00:00",
+        "at": "2026-10-04T09:55:25.290678+00:00",
         "event": "stop",
-        "job": "a13-casting-fire-agy-a01",
-        "reason": "EXTRA_TOOL_CALL"
+        "job": "a14-garran-ne-collapse-agy-a03",
+        "reason": "PREFLIGHT_SERVICE_UNAVAILABLE_503"
       },
       "events": [
         {
@@ -854,11 +854,272 @@
           "event": "stop",
           "job": "a13-casting-fire-agy-a01",
           "reason": "EXTRA_TOOL_CALL"
+        },
+        {
+          "at": "2026-10-04T09:18:23.381034+00:00",
+          "event": "owner-authorized-reset",
+          "job": "a13-casting-fire-agy-a01",
+          "reason": "A14 driver repair and archived scoped evidence; live proof required"
+        },
+        {
+          "at": "2026-10-04T09:19:12.007465+00:00",
+          "event": "reserved",
+          "job": "a14-cassia-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:20:48.925203+00:00",
+          "event": "generated",
+          "job": "a14-cassia-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:22:58.187899+00:00",
+          "event": "reserved",
+          "job": "a14-cassia-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:24:13.650079+00:00",
+          "event": "generated",
+          "job": "a14-cassia-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:24:28.006489+00:00",
+          "event": "reserved",
+          "job": "a14-brennic-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:25:30.333484+00:00",
+          "event": "generated",
+          "job": "a14-brennic-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:25:34.568360+00:00",
+          "event": "reserved",
+          "job": "a14-brennic-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:26:38.053172+00:00",
+          "event": "generated",
+          "job": "a14-brennic-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:26:42.202747+00:00",
+          "event": "reserved",
+          "job": "a14-garran-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:27:52.156377+00:00",
+          "event": "generated",
+          "job": "a14-garran-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:27:56.084465+00:00",
+          "event": "reserved",
+          "job": "a14-garran-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:28:50.319906+00:00",
+          "event": "generated",
+          "job": "a14-garran-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:28:54.754885+00:00",
+          "event": "reserved",
+          "job": "a14-iskar-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:30:03.921364+00:00",
+          "event": "generated",
+          "job": "a14-iskar-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:30:08.137010+00:00",
+          "event": "reserved",
+          "job": "a14-iskar-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:31:48.528500+00:00",
+          "event": "generated",
+          "job": "a14-iskar-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:32:31.795953+00:00",
+          "event": "reserved",
+          "job": "a14-cassia-ne-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:34:02.608929+00:00",
+          "event": "generated",
+          "job": "a14-cassia-ne-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:34:07.697898+00:00",
+          "event": "reserved",
+          "job": "a14-garran-ne-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:35:32.431615+00:00",
+          "event": "generated",
+          "job": "a14-garran-ne-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:35:37.556552+00:00",
+          "event": "reserved",
+          "job": "a14-iskar-ne-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:37:30.590631+00:00",
+          "event": "generated",
+          "job": "a14-iskar-ne-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:38:38.239110+00:00",
+          "event": "reserved",
+          "job": "a14-garran-ne-collapse-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:39:49.572373+00:00",
+          "event": "generated",
+          "job": "a14-garran-ne-collapse-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:39:55.030555+00:00",
+          "event": "reserved",
+          "job": "a14-iskar-ne-collapse-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:41:20.610598+00:00",
+          "event": "generated",
+          "job": "a14-iskar-ne-collapse-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:41:24.708925+00:00",
+          "event": "reserved",
+          "job": "a14-conscript-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:42:58.322952+00:00",
+          "event": "generated",
+          "job": "a14-conscript-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:43:02.843498+00:00",
+          "event": "reserved",
+          "job": "a14-conscript-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:44:10.252756+00:00",
+          "event": "generated",
+          "job": "a14-conscript-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:44:14.237226+00:00",
+          "event": "reserved",
+          "job": "a14-shieldman-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:45:01.950183+00:00",
+          "event": "generated",
+          "job": "a14-shieldman-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:45:06.464132+00:00",
+          "event": "reserved",
+          "job": "a14-shieldman-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:46:01.084908+00:00",
+          "event": "generated",
+          "job": "a14-shieldman-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:46:06.391038+00:00",
+          "event": "reserved",
+          "job": "a14-slinger-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:47:12.142833+00:00",
+          "event": "generated",
+          "job": "a14-slinger-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:47:17.011771+00:00",
+          "event": "reserved",
+          "job": "a14-slinger-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:48:05.674641+00:00",
+          "event": "generated",
+          "job": "a14-slinger-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:48:09.783138+00:00",
+          "event": "reserved",
+          "job": "a14-netter-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:49:56.118233+00:00",
+          "event": "generated",
+          "job": "a14-netter-ne-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:50:01.386184+00:00",
+          "event": "reserved",
+          "job": "a14-netter-se-reaction-agy-a01"
+        },
+        {
+          "at": "2026-10-04T09:51:08.196369+00:00",
+          "event": "error-unknown-spend",
+          "job": "a14-netter-se-reaction-agy-a01",
+          "reason": "UNVERIFIED_AGY_IMAGE_CALL_COUNT"
+        },
+        {
+          "at": "2026-10-04T09:51:08.200960+00:00",
+          "event": "stop",
+          "job": "a14-netter-se-reaction-agy-a01",
+          "reason": "UNVERIFIED_AGY_IMAGE_CALL_COUNT"
+        },
+        {
+          "at": "2026-10-04T09:53:22.146238+00:00",
+          "event": "manual-bounded-preflight-recovery",
+          "job": "a14-netter-se-reaction-agy-a01",
+          "reason": "Explicit pre-generation 503, zero scoped calls, read-only models probe recovered; one bounded retry under session 9 repair authorization; no refund"
+        },
+        {
+          "at": "2026-10-04T09:53:22.239459+00:00",
+          "event": "reserved",
+          "job": "a14-netter-se-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:54:02.421645+00:00",
+          "event": "generated",
+          "job": "a14-netter-se-reaction-agy-a02"
+        },
+        {
+          "at": "2026-10-04T09:54:21.923963+00:00",
+          "event": "reserved",
+          "job": "a14-garran-ne-collapse-agy-a03"
+        },
+        {
+          "at": "2026-10-04T09:55:25.283822+00:00",
+          "event": "error-unknown-spend",
+          "job": "a14-garran-ne-collapse-agy-a03",
+          "reason": "PREFLIGHT_SERVICE_UNAVAILABLE_503"
+        },
+        {
+          "at": "2026-10-04T09:55:25.290678+00:00",
+          "event": "stop",
+          "job": "a14-garran-ne-collapse-agy-a03",
+          "reason": "PREFLIGHT_SERVICE_UNAVAILABLE_503"
         }
       ]
     },
     "grok": {
-      "stop": null,
+      "stop": {
+        "at": "2026-10-04T09:37:55.916360+00:00",
+        "event": "stop",
+        "job": "a14-garran-ne-collapse-grok-a01",
+        "reason": "exit=1; files=0"
+      },
       "events": [
         {
           "at": "2026-10-02T19:04:22.020804+00:00",
@@ -1618,6 +1879,29 @@
           "at": "2026-10-03T21:53:50.579893+00:00",
           "event": "generated",
           "job": "a13-floor-wreaths-grok-a02"
+        },
+        {
+          "at": "2026-10-04T09:37:48.109209+00:00",
+          "event": "reserved",
+          "job": "a14-garran-ne-collapse-grok-a01"
+        },
+        {
+          "at": "2026-10-04T09:37:55.911683+00:00",
+          "event": "error-unknown-spend",
+          "job": "a14-garran-ne-collapse-grok-a01",
+          "reason": "exit=1; files=0"
+        },
+        {
+          "at": "2026-10-04T09:37:55.916360+00:00",
+          "event": "stop",
+          "job": "a14-garran-ne-collapse-grok-a01",
+          "reason": "exit=1; files=0"
+        },
+        {
+          "at": "2026-10-04T09:38:38.087854+00:00",
+          "event": "diagnosis",
+          "job": "a14-garran-ne-collapse-grok-a01",
+          "reason": "HTTP 402 Payment Required: Grok Build usage balance exhausted; zero visible image calls; reservation stays charged; latch remains set"
         }
       ]
     }
