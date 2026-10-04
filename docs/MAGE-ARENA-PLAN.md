@@ -256,6 +256,20 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 | Game | CF2 | Combat feel improvements from the Lab findings: hit feedback (hit stop, flash, shake, knockback, numbers), cast and animation timing, movement feel, absorb and perfect-absorb feel, telegraph readability, enemy behaviour; data-driven; census bands re-set where gameplay changes | CF1 | not started |
 | Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | not started |
 
+## s. Owner review after the Combat Feel Lab build (2026-10-04): sigils wired, hit reactions, defeat, full-length tracks
+
+> "2. Wire the sigils, together with other screens on board we improved significantly. ... Next step would be to introduce reactivity after hits, the characters will need to visibly struggle, any hit interrupting cast and movement for very quick moment, prepared audio tracks, we should still have some credits and you can charge above your threshold together with point 3. If character defeated it also needs animation to lay down and stay there."
+
+Decisions: **D35** the A13 sigils (casting circles, threat decals with progress fill, the ward and absorb rune work, the perfect-window ring, floor decals, selection and status sigils) are wired into the game behind the loader boundary, and every screen is brought up to the level of the improved boards (use all delivered art consistently: plates, effects, characters, clock, icons, sigils, portraits). **D36** **hit reactivity**: any hit that deals damage **interrupts casting and movement for a very short moment** (data-driven hit stun, about 0.10 to 0.20 s, scaled by damage with a floor and a ceiling, a stagger-immunity tail so there is no stun-lock, roll invulnerability respected, heavy enemies with more poise), with a **visible struggle** (flinch and stagger animation, recoil offset, flash, sound hook), for the player and every opponent; cancelled casts keep the spent mana and cooldown as the Lab already records. **D37** **defeat**: a defeated figure plays a death animation, **lies down and stays there** for the rest of the bout (a persistent corpse pose, drawn on the ground, depth-sorted, no collision, no targeting, no AI), as a state tag read by every system. **D38** the missing character clips are generated, hit and death first (all entities, all directions, including a lying final pose). **D39** the owner authorises the **full-length arena tracks now** and **spending the shared ElevenLabs credits below the earlier 8,000 reserve** (the account was 10,689 at 11:13 on 2026-10-04 and resets at 19:31 UTC the same day); keep a floor of 1,000 credits; Reed oath (arena C) first, then Lyre under iron (arena D), then Hide and iron (arena A) if credits remain; the camp tracks and the round-3 picks stay open.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | not started |
+| Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
+| Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | not started |
+| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
+
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
