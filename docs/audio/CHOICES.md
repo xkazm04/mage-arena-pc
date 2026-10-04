@@ -33,3 +33,7 @@ Overall: arena tracks are high quality and must escape the loop; camp tracks are
 ## Round 3 (AU2b) — awaiting owner triage, 2026-10-03
 
 [Round 3](audition/r3/index.html) contains three physical absorb normal/perfect pairs, two 30 s title themes, two single sand-contact roll variants, two 3 s colosseum crowds and one optional collar alternative. New votes start blank. No round-3 keeps or successful repairs have been inferred by the executing agent. All round-1/2 owner choices above retain their authority. Full-track production and the proposed Google comparison were not generated in this session.
+
+## Round 4 (AU3) — generation facts, 2026-10-04
+
+D39 authorizes full tracks now, with a 1,000-credit account floor and 10,000-credit job cap, in order C, D, A. One 150 s six-section **Reed oath** composition was generated for 4,500 conservative credits. Raw source, normalized 48 kHz derivative, section cuts, segment index, sustain-loop candidate and 5 s sting candidate are delivered. Technical evidence is in [the take decision](evidence/r4/arena-C-reed-oath-decision.md). This records generation, not a new owner choice or production approval. Full-track listening and adaptive musical validation remain pending.

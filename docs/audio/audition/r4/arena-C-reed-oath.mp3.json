@@ -1,0 +1,163 @@
+{
+  "id": "a2d5326e-696d-412c-892f-5df09d3cf25a",
+  "wave": "AU3",
+  "trackId": "arena-C-reed-oath",
+  "kind": "music",
+  "out": "docs/audio/audition/r4/arena-C-reed-oath.mp3",
+  "reservedCredits": 4500,
+  "startedAt": "2026-10-04T09:19:48.031Z",
+  "ts": "2026-10-04T09:19:48.031Z",
+  "seconds": 150,
+  "model": "music_v1",
+  "request": {
+    "model_id": "music_v1",
+    "respect_sections_durations": true,
+    "store_for_inpainting": true,
+    "composition_plan": {
+      "positive_global_styles": [
+        "Original Roman-era elemental arena instrumental; 96 BPM; strict 4/4; sixty bars in 150 seconds; Dorian modal harmony; dramatic physical entrance and memorable human melody; acoustic hide percussion and bowed low strings; clear midrange space for combat feedback; a new phrase boundary every six bars; complete through-composed dramatic arc; keep the theme recognizable while changing its harmony, register and accompaniment; no repeated audio block; instrumental throughout.",
+        "Dark courage carried by a clearly audible intimate double-reed solo: a five-note rising then falling Dorian melody, answered with two gut-string lyre notes. Deep hide drum and tense low bowed strings give arena weight. Proposed D Dorian centre. Keep the reed's breath and melodic articulation clear; it leads the drama, never dissolves into an ambient pad."
+      ],
+      "negative_global_styles": [
+        "Vocals",
+        "spoken words",
+        "choir",
+        "pop drum kit",
+        "electronic dance beat",
+        "trailer risers",
+        "notification tones",
+        "bells",
+        "texture-only drone",
+        "constant maximum density",
+        "abrupt sectional cut",
+        "tempo change",
+        "fade before the release",
+        "repeated short loop"
+      ],
+      "sections": [
+        {
+          "section_name": "Entrance",
+          "duration_ms": 15000,
+          "positive_local_styles": [
+            "One deep hide drum and tense low strings open on the downbeat. The double reed begins its rising then falling five-note motif within two seconds. Across six bars, let two plucked lyre notes answer once, with enough silence to hear the reed breathe. End on a poised open modal harmony."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Theme statement",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar seven, the double reed states a complete memorable melody built from the opening five notes. The lyre answers phrase endings only. At bar thirteen, restate with a small upward answer while adding quiet frame-drum detail. The second phrase completes the thought without a final cadence."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Development",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar nineteen, move the reed tune to a higher register and let low bowed strings supply a contrasting descending counterline. At bar twenty-five, the lyre briefly carries the theme's rhythm while the reed answers in longer notes. Maintain a single recognizable theme over two distinct six-bar phrases."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Tension",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar thirty-one, strip back the drums and let the reed hold a vulnerable note over moving suspended low strings. At bar thirty-seven, bring back the five-note contour in shorter breaths, with a contained hide-drum pulse gathering force. Preserve 96 BPM and clear phrase-end space."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Climax",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar forty-three, the reed gives the fullest complete theme with bowed strings supporting its final notes, not masking it. At bar forty-nine, the lyre answer becomes a clear counter-melody while hide drums reach their strongest pattern. Keep the reed recognizable and the sound acoustic, courageous and dangerous."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Release",
+          "duration_ms": 15000,
+          "positive_local_styles": [
+            "At bar fifty-five, reduce to reed, two lyre notes and a low held string. The reed gives a calmer falling answer to the opening rise. Resolve deliberately over six bars; the final breath and string decay fit inside bar sixty. Finish the story rather than fading a repeated loop."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        }
+      ]
+    }
+  },
+  "text": "Original Roman-era elemental arena instrumental; 96 BPM; strict 4/4; sixty bars in 150 seconds; Dorian modal harmony; dramatic physical entrance and memorable human melody; acoustic hide percussion and bowed low strings; clear midrange space for combat feedback; a new phrase boundary every six bars; complete through-composed dramatic arc; keep the theme recognizable while changing its harmony, register and accompaniment; no repeated audio block; instrumental throughout.\nDark courage carried by a clearly audible intimate double-reed solo: a five-note rising then falling Dorian melody, answered with two gut-string lyre notes. Deep hide drum and tense low bowed strings give arena weight. Proposed D Dorian centre. Keep the reed's breath and melodic articulation clear; it leads the drama, never dissolves into an ambient pad.",
+  "bytes": 2400802,
+  "sha256": "e5cf5f788a7277b8bb1f173f56b9be78a7ed3f039151697258da4868ee5233b5",
+  "billingHeaders": {
+    "date": "Sun, 04 Oct 2026 09:19:58 GMT",
+    "song-id": "vJQQQ8Pj7HQzwji0Iaif"
+  },
+  "accountBefore": {
+    "observedAt": "2026-10-04T09:19:48.030Z",
+    "tier": "starter",
+    "used": 79311,
+    "limit": 90000,
+    "remaining": 10689,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "estimatedCredits": 4500,
+  "documentedEstimateCredits": 4500,
+  "chargedCredits": 4500,
+  "costBasis": "max-shared-delta-estimate-header",
+  "flags": [],
+  "accountAfter": {
+    "observedAt": "2026-10-04T09:20:30.276Z",
+    "tier": "starter",
+    "used": 83811,
+    "limit": 90000,
+    "remaining": 6189,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 4500,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-04T09:21:01.577Z",
+      "tier": "starter",
+      "used": 83811,
+      "limit": 90000,
+      "remaining": 6189,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    }
+  ],
+  "accountSettled": {
+    "observedAt": "2026-10-04T09:21:01.577Z",
+    "tier": "starter",
+    "used": 83811,
+    "limit": 90000,
+    "remaining": 6189,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "settledDelta": 4500,
+  "measuredCredits": null,
+  "deltaBasis": "Shared-account upper-bound proxy; may include garden-vr or delayed usage, not exclusive invoice attribution."
+}

@@ -1,0 +1,233 @@
+{
+  "file": "audition/r4/arena-C-reed-oath/master-48k.wav",
+  "sampleRate": 48000,
+  "cells": [
+    {
+      "index": 0,
+      "startSeconds": 0,
+      "endSeconds": 15,
+      "startSample": 0,
+      "endSample": 720000,
+      "section": "Entrance",
+      "arrangementTier": 1,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 1,
+      "startSeconds": 15,
+      "endSeconds": 30,
+      "startSample": 720000,
+      "endSample": 1440000,
+      "section": "Theme statement",
+      "arrangementTier": 2,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 2,
+      "startSeconds": 30,
+      "endSeconds": 45,
+      "startSample": 1440000,
+      "endSample": 2160000,
+      "section": "Theme statement",
+      "arrangementTier": 3,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 3,
+      "startSeconds": 45,
+      "endSeconds": 60,
+      "startSample": 2160000,
+      "endSample": 2880000,
+      "section": "Development",
+      "arrangementTier": 4,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 4,
+      "startSeconds": 60,
+      "endSeconds": 75,
+      "startSample": 2880000,
+      "endSample": 3600000,
+      "section": "Development",
+      "arrangementTier": 4,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 5,
+      "startSeconds": 75,
+      "endSeconds": 90,
+      "startSample": 3600000,
+      "endSample": 4320000,
+      "section": "Tension",
+      "arrangementTier": 3,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 6,
+      "startSeconds": 90,
+      "endSeconds": 105,
+      "startSample": 4320000,
+      "endSample": 5040000,
+      "section": "Tension",
+      "arrangementTier": 4,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 7,
+      "startSeconds": 105,
+      "endSeconds": 120,
+      "startSample": 5040000,
+      "endSample": 5760000,
+      "section": "Climax",
+      "arrangementTier": 4,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 8,
+      "startSeconds": 120,
+      "endSeconds": 135,
+      "startSample": 5760000,
+      "endSample": 6480000,
+      "section": "Climax",
+      "arrangementTier": 4,
+      "musicalBoundaryVerified": false
+    },
+    {
+      "index": 9,
+      "startSeconds": 135,
+      "endSeconds": 150,
+      "startSample": 6480000,
+      "endSample": 7200000,
+      "section": "Release",
+      "arrangementTier": null,
+      "musicalBoundaryVerified": false
+    }
+  ],
+  "sectionMap": [
+    {
+      "name": "Entrance",
+      "startSeconds": 0,
+      "endSeconds": 15.0,
+      "startSample": 0,
+      "endSample": 720000,
+      "file": "audition/r4/arena-C-reed-oath/section-1-entrance.wav",
+      "boundaryStatus": "requested composition timing, not verified musical boundary"
+    },
+    {
+      "name": "Theme statement",
+      "startSeconds": 15.0,
+      "endSeconds": 45.0,
+      "startSample": 720000,
+      "endSample": 2160000,
+      "file": "audition/r4/arena-C-reed-oath/section-2-theme-statement.wav",
+      "boundaryStatus": "requested composition timing, not verified musical boundary"
+    },
+    {
+      "name": "Development",
+      "startSeconds": 45.0,
+      "endSeconds": 75.0,
+      "startSample": 2160000,
+      "endSample": 3600000,
+      "file": "audition/r4/arena-C-reed-oath/section-3-development.wav",
+      "boundaryStatus": "requested composition timing, not verified musical boundary"
+    },
+    {
+      "name": "Tension",
+      "startSeconds": 75.0,
+      "endSeconds": 105.0,
+      "startSample": 3600000,
+      "endSample": 5040000,
+      "file": "audition/r4/arena-C-reed-oath/section-4-tension.wav",
+      "boundaryStatus": "requested composition timing, not verified musical boundary"
+    },
+    {
+      "name": "Climax",
+      "startSeconds": 105.0,
+      "endSeconds": 135.0,
+      "startSample": 5040000,
+      "endSample": 6480000,
+      "file": "audition/r4/arena-C-reed-oath/section-5-climax.wav",
+      "boundaryStatus": "requested composition timing, not verified musical boundary"
+    },
+    {
+      "name": "Release",
+      "startSeconds": 135.0,
+      "endSeconds": 150.0,
+      "startSample": 6480000,
+      "endSample": 7200000,
+      "file": "audition/r4/arena-C-reed-oath/section-6-release.wav",
+      "boundaryStatus": "requested composition timing, not verified musical boundary"
+    }
+  ],
+  "tierMap": {
+    "1": [
+      0
+    ],
+    "2": [
+      1
+    ],
+    "3": [
+      2,
+      5
+    ],
+    "4": [
+      3,
+      4,
+      6,
+      7,
+      8
+    ]
+  },
+  "adaptiveReady": false,
+  "loop": {
+    "file": "audition/r4/arena-C-reed-oath/sustain.wav",
+    "startSample": 0,
+    "endSample": 720000,
+    "startSeconds": 0,
+    "endSeconds": 15.0,
+    "sourceRangeSeconds": [
+      117.5,
+      135
+    ],
+    "crossfadeSeconds": 2.5,
+    "crossfadeCurves": "equal-power sine",
+    "rotationSamples": 90257,
+    "sourceEntrySeconds": 121.88035416666666,
+    "threeRepeatJoinJumpsDbFS": [
+      -240.0,
+      -240.0
+    ],
+    "adjacentHalfSecondRmsDifferenceDb": 0.699,
+    "numericalScreenPass": true,
+    "approved": false,
+    "enabled": false,
+    "reason": "Unverified harmonic/beat seam and conspicuous fill; rotation removes mathematical click but is not a beat alignment. Three-repeat listening pending.",
+    "measurement": {
+      "file": "audition/r4/arena-C-reed-oath/sustain.wav",
+      "sha256": "c01fad97eaca9b475c22c1e48a5a37f8a67f605704fb47a2f8b310d7dbb2dff4",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleCount": 720000,
+      "decodedSeconds": 15.0,
+      "containerSeconds": 15.0,
+      "codec": "pcm_s16le",
+      "integratedLufs": -23.83,
+      "truePeakDbTP": -11.71,
+      "loudnessRangeLU": 1.7,
+      "samplePeakDbFS": -11.721,
+      "samplesAtOrAboveFullScale": 0,
+      "loudnorm": {
+        "input_i": "-23.83",
+        "input_tp": "-11.71",
+        "input_lra": "1.70",
+        "input_thresh": "-33.83",
+        "output_i": "-26.31",
+        "output_tp": "-14.08",
+        "output_lra": "1.70",
+        "output_thresh": "-36.31",
+        "normalization_type": "dynamic",
+        "target_offset": "0.31"
+      }
+    }
+  }
+}

@@ -1,27 +1,27 @@
 {
   "project": "mage-arena",
-  "wave": "AU2b",
-  "capCredits": 3000,
-  "reserveCredits": 8000,
+  "wave": "AU3",
+  "capCredits": 10000,
+  "reserveCredits": 1000,
   "initialOwnerSnapshot": {
-    "date": "2026-10-03",
+    "date": "2026-10-04T11:13:00+02:00",
     "tier": "starter",
-    "remaining": 18473,
+    "remaining": 10689,
     "limit": 90000,
     "reset": "2026-10-04T19:31:41Z"
   },
-  "status": "closed-owner-review",
+  "status": "production",
   "bounds": {
     "sfxPerSecond": 20,
     "sfxMinimum": 0,
     "musicPerSecond": 30,
     "ttsPerCharacter": 1
   },
-  "note": "AU2b debit only: max(immediate shared delta, music settled shared delta, conservative estimate, exact header). SFX estimate remains 20/s versus observed 10/s; music 30/s supported by AU2 and AU2b paired reads. Never automatically retry paid POST. First read-only 429 waits >=60s and raises request gap to 15s; second 429 latches. Normal gap >=8s after complete response.",
+  "note": "AU3 only. Conservative max(shared delta, 30 credits/requested second, billing header). Serial >=8 s pacing, immediate live preflight, first 429 stops, no paid automatic retry. Reset changes account epoch, not cap. Shared concurrent spend cannot be locked across projects.",
   "documentedBounds": {
     "sfxPerSecond": 20,
     "sfxMinimum": 0,
-    "musicPerSecond": 15,
+    "musicPerSecond": 30,
     "ttsPerCharacter": 1
   },
   "sources": {
@@ -29,10 +29,10 @@
     "musicAndVoice": "https://elevenlabs.io/pricing",
     "retrieved": "2026-10-03"
   },
-  "stopBelowCredits": 13000,
+  "stopBelowCredits": 1000,
   "minRequestGapMs": 8000,
   "musicSettlementMs": 30000,
-  "authorization": "Owner session 3: separate AU2b 3000 cap; reserve 8000; stop below 13000 regardless of spender. Rejected categories only, 30 s title sketches; optional collar last. No production or Google generation.",
+  "authorization": "D39 + owner 2026-10-04 11:15 local: full tracks now, C then D then A; cap 10000, floor 1000 replaces reserve; first quota/rate error stops; reset may increase balance for these tracks only.",
   "roundHistory": [
     {
       "wave": "AU1",
@@ -57,19 +57,5 @@
       "status": "closed-owner-review",
       "chargedCredits": 2325
     }
-  ],
-  "closedAt": "2026-10-03T11:35:44.769174+00:00",
-  "finalDebitCredits": 2325,
-  "unusedCredits": 675,
-  "closeReason": "All 12 required samples and optional collar rendered. No extra variations, full tracks, production or Google calls.",
-  "finalAccountSnapshot": {
-    "ts": "2026-10-03T11:35:16.637Z",
-    "wave": "AU2b",
-    "observedAt": "2026-10-03T11:35:16.636Z",
-    "tier": "starter",
-    "used": 73911,
-    "limit": 90000,
-    "remaining": 16089,
-    "resetsAt": "2026-10-04T19:31:41.000Z"
-  }
+  ]
 }
