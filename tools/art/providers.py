@@ -134,21 +134,29 @@ def invoke(provider, spec, folder, record):
         with log.open('w', encoding='utf-8') as out:
             proc = subprocess.Popen(command, cwd=folder, stdout=out, stderr=subprocess.STDOUT,
                                     creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-            while proc.poll() is None:
+            while proc.poll() is None or agy_audit:
                 if provider == 'grok':
                     calls, results, _, _ = session_evidence(record['session_id'])
                 else:
                     calls, results, _ = agy_audit.collect()
                 quota = output_quota(log, results)
+                if agy_audit and proc.poll() is not None and agy_preflight_unavailable(log.read_text(encoding='utf-8', errors='replace'),calls):
+                    error='PREFLIGHT_SERVICE_UNAVAILABLE_503'; break
                 if quota or len(calls) > 1 or time.monotonic() - started > 600:
                     error = quota or ('EXTRA_TOOL_CALL' if len(calls) > 1 else 'TIMEOUT_UNKNOWN_SPEND')
                     kill_tree(proc); break
                 if agy_audit and len(calls)==1:
                     completed=agy_audit.completed_images()
+                    # Background workers now also write directly into the unique
+                    # invocation cwd. A root exit is not worker completion.
+                    completed=list(set(completed+[p for p in folder.rglob('*') if p.suffix.lower() in ('.png','.jpg','.jpeg','.webp') and not p.name.startswith('reference-') and '_driver' not in p.relative_to(folder).parts]))
                     if len(completed)==1:
                         # Image is complete, so stop before the worker's next
                         # model turn. A final audit still rejects late calls.
-                        with Image.open(completed[0]) as image:image.verify()
+                        try:
+                            with Image.open(completed[0]) as image:image.verify()
+                        except (OSError, SyntaxError):
+                            time.sleep(.2); continue  # file may still be writing
                         driver_completed=True
                         kill_tree(proc); break
                 time.sleep(.1 if agy_audit else 1)

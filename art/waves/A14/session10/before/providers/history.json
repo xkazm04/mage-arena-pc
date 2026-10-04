@@ -2,7 +2,12 @@
   "schema": 1,
   "providers": {
     "agy": {
-      "stop": null,
+      "stop": {
+        "at": "2026-10-04T09:55:25.290678+00:00",
+        "event": "stop",
+        "job": "a14-garran-ne-collapse-agy-a03",
+        "reason": "PREFLIGHT_SERVICE_UNAVAILABLE_503"
+      },
       "events": [
         {
           "at": "2026-10-02T18:54:18.844923+00:00",
@@ -1105,32 +1110,6 @@
           "event": "stop",
           "job": "a14-garran-ne-collapse-agy-a03",
           "reason": "PREFLIGHT_SERVICE_UNAVAILABLE_503"
-        },
-        {
-          "at": "2026-10-04T14:34:45.246170+00:00",
-          "event": "owner-authorized-reset",
-          "job": "a14-garran-ne-collapse-agy-a03",
-          "reason": "Host successful models and one-image probe at 15:32 2026-10-04; old latch in session10/agy-latch-session9.json"
-        },
-        {
-          "at": "2026-10-04T14:34:59.659971+00:00",
-          "event": "reserved",
-          "job": "a14-garran-ne-collapse-agy-a04"
-        },
-        {
-          "at": "2026-10-04T14:36:06.792375+00:00",
-          "event": "generated",
-          "job": "a14-garran-ne-collapse-agy-a04"
-        },
-        {
-          "at": "2026-10-04T14:36:57.276470+00:00",
-          "event": "reserved",
-          "job": "a14-garran-ne-collapse-agy-a05"
-        },
-        {
-          "at": "2026-10-04T14:37:46.172942+00:00",
-          "event": "generated",
-          "job": "a14-garran-ne-collapse-agy-a05"
         }
       ]
     },

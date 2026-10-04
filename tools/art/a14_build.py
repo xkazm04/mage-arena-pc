@@ -19,7 +19,9 @@ def extract(job,obs):
     else:pieces=isolated_sheet(source,columns=cols,row_count=rows,retain_clipped_for_rejection=True,keyer=variable_magenta)
     records=[]
     for x,y,rect,im,matte in pieces:
-        index=y*cols+x;metric=alpha_metrics(im);a=np.asarray(im);mask=a[:,:,3]>200
+        index=y*cols+x
+        for region in obs.get('foreignPixelMasks',{}).get(str(index),[]):im.paste((0,0,0,0),tuple(region))
+        metric=alpha_metrics(im);a=np.asarray(im);mask=a[:,:,3]>200
         pigment=np.median(a[:,:,:3][mask],axis=0) if mask.any() else np.zeros(3)
         errors=[]
         if metric['empty'] or metric['margin_px']<3:errors.append('SOURCE_CROP')
@@ -32,6 +34,12 @@ def extract(job,obs):
     if sha(refpath)!=identity['sha256']:raise ValueError('IDENTITY_REFERENCE_HASH')
     refim,_=variable_magenta(Image.open(refpath));refarray=np.asarray(refim);refmask=refarray[:,:,3]>200
     refpigment=np.median(refarray[:,:,:3][refmask],axis=0)
+    approved=None
+    if job['input'].get('session')==10 and any('approved Covenant creature' in ref.get('role','') for ref in job['input']['references']):
+        ref=next(ref for ref in job['input']['references'] if 'approved Covenant creature' in ref.get('role',''))
+        if sha(ROOT/ref['path'])!=ref['sha256']:raise ValueError('CREATURE_REFERENCE_HASH')
+        im,_=variable_magenta(Image.open(ROOT/ref['path']));a=np.asarray(im)
+        approved=np.median(a[:,:,:3][a[:,:,3]>200],axis=0)
     for r in records:
         drift=float(abs(np.array(r['pigmentRGB'])-baseline).mean());ratio=r['metrics']['mass']/mass
         reference_drift=float(abs(np.array(r['pigmentRGB'])-refpigment).mean())
@@ -39,6 +47,11 @@ def extract(job,obs):
         if drift>55:r['errors'].append('PALETTE_DRIFT')
         if reference_drift>70:r['errors'].append('REFERENCE_PALETTE_DRIFT')
         if not .30<ratio<2.4:r['errors'].append('SILHOUETTE_DRIFT')
+        if approved is not None:
+            drift=float(abs(np.array(r['pigmentRGB'])-approved).mean())
+            value=float(np.dot(r['pigmentRGB'],[.2126,.7152,.0722])/np.dot(approved,[.2126,.7152,.0722]))
+            r.update(approvedCreaturePaletteDriftMeanRGB=round(drift,3),approvedCreatureValueRatio=round(value,4))
+            if drift>50 or not .60<value<1.65:r['errors'].append('APPROVED_CREATURE_STYLE_VALUE_DRIFT')
     return by
 
 def normalized(record,obs,index):

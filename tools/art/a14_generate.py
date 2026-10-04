@@ -11,6 +11,8 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
     facing=('REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible' if direction=='ne' else
             'FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible')
     creature=design['kind']=='creature'
+    if creature:
+        refs[1]=ART/'review/sources'/f'a3c-{entity}-poses-agy-a01.png'
     subject=('This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. ' if creature else 'Keep the same face, headwear, clothes and single set of equipment. ')
     if entity=='hush_moth':subject+='Four moth wings, one thorax and two antennae. Reaction bends thorax and sweeps wings; collapse folds intact wings low against the ground. No human limbs. '
     if direction=='ne':subject+='For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. '
@@ -28,6 +30,20 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
         'Row 2: 4 torso falls forward or sideways, nearly horizontal; 5 entire torso and head touch ground; 6 completely still fully LYING ON GROUND with equipment resting beside the body. '
         'Last pose must be fully lying, never sitting, crouching or kneeling. A harmless theatrical fall/rest, intact body, no blood, gore, wounds or injury detail. '
         'Each complete pose occupies ONLY HALF its spacious cell. Entire feet, staff and all equipment stay far from the image boundary. ')
+        if creature:
+            content=('Exactly THREE columns by TWO rows, SIX complete sequential poses of the same creature. '
+                'Row 1: 1 ready animal stance; 2 legs fold and chest lowers; 3 belly and chest very low. '
+                'Row 2: 4 creature tips gently onto its side; 5 head, chest and belly touch the ground; 6 fully still LYING FLAT ON ITS SIDE, head resting on ground, legs relaxed. '
+                'Keep its intact animal anatomy, no human posture or equipment. The final body lies on the ground, never standing, crouching or sitting. '
+                'Non-graphic creature collapsing and lying on the ground, no gore, no blood, no injury detail. '
+                'Each complete creature occupies only HALF its spacious cell, with all tail, horns, antennae and wings inside wide empty gutters. ')
+            if entity=='hush_moth':
+                content=('Exactly THREE columns by TWO rows, SIX complete sequential poses of the same MOTH. '
+                    '1 hovering with wings open; 2 loses lift, wings droop; 3 sinks very low; 4 thorax reaches ground, wings half folded; '
+                    '5 thorax and abdomen rest flat on ground; 6 completely still body resting flat with all four wings folded LOW beside body. '
+                    'Final body and wings must rest ON the ground, no hovering. Six fine insect legs, two antennae, four intact wings. '
+                    'Non-graphic creature collapsing and lying on the ground, no gore, no blood, no injury detail. '
+                    'Each entire moth occupies only HALF its spacious cell; very wide empty magenta gutters.')
     else:raise ValueError(kind)
     if creature and kind=='reaction':
         if entity=='hush_moth':
@@ -53,9 +69,13 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
         +bible['style_block']+' Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.')
     if len(refs)>2:
         prompt+=' Reference-3.png supplies the final LYING BODY posture only: torso and head resting completely against ground. Keep reference-1 identity and requested rear view. Lay the staff down too. Use this fully grounded endpoint to guide the last two keys, no hovering or propping torso up.'
+    if creature:
+        prompt=prompt.replace('Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose.',
+            'Reference-2.png is the APPROVED COVENANT CREATURE SOURCE, the authority for anatomy, palette and painting style. Use BOTH references visually. Match its lighter stylized painted values and simple sculpted shapes exactly; do not darken into realistic horror, add photoreal skin or fur, or add black shadows. Reference-1 is an A10 master or a crop of that approved source. Generate the requested anatomical view even if the reference is a rear view.')
     spec={'wave':'A14','id':f'{entity}-{direction}-{kind}','pilot':pilot,'style_hash':sha(ART/'style-covenant.json'),
         'providers':[provider],'aspect_ratio':'1:1','references':[{'path':relative(p),'sha256':sha(p),'role':['identity','Moonchalk painting bar','lying posture endpoint'][i]} for i,p in enumerate(refs)],'prompt':prompt,'entity':entity,'direction':direction,'kind':kind,'grid':[3,2] if kind=='collapse' else [4,4],
-        'referenceConsumption':'agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual'}
+        'referenceConsumption':'agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual'}
+    if creature:spec['references'][1]['role']='approved Covenant creature anatomy, palette and style'
     if revision:
         old=[j for j in read(ART/'usage.json')['jobs'] if j.get('wave')=='A14' and j['scene']==spec['id']]
         spec['correction_of']=old[-1]['id'];spec['prompt']+=' CORRECTION: '+revision

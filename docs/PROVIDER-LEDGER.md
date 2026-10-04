@@ -141,3 +141,6 @@ new clips or safe local gait correction. Total stays 342/450 (24 this session),
 with 56 of the 80 session reservations unused. Usage and provider-history bytes
 match stage-1 commit `3c4f4a9`; both latches remain set. No account-credit or
 availability claim follows from these unused local reservations.
+
+
+**ART session 10 / A14.3 stage 1 / 2026-10-04:** Garran rear collapse and persistent corpse delivered; all eight humanoids complete, 128/192 priority slots. Two fresh agy calls/images/charges, one reject, project 344; old latch and failure records preserved, Grok unavailable. Source/delivery gates, 52-product byte-identical rebuild, five browser cases and 16 targeted tests pass. All 378 protected art files and inherited ledger rows unchanged. Design: docs/waves/A14-3-stage1-garran.md. Owner feel and game integration unmeasured. Next: reference-guided creature collapse, then reactions; no push.

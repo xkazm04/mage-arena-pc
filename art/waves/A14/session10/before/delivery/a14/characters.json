@@ -56,16 +56,6 @@
       "id": "a14-garran-ne-reaction"
     },
     {
-      "file": "art/delivery/a14/atlases/garran-ne-collapse.png",
-      "sha256": "f7365764710a814976422dab8da23bc90a9cf2d78175dcd491351b245a8ec78a",
-      "size": [
-        1552,
-        776
-      ],
-      "gutter": 2,
-      "id": "a14-garran-ne-collapse"
-    },
-    {
       "file": "art/delivery/a14/atlases/garran-se-reaction.png",
       "sha256": "1eb700eee587be5fa39fe88a6aca3677ab1e906d210dad68be6322c6fda86fcb",
       "size": [
@@ -3041,176 +3031,6 @@
           }
         },
         "death": {
-          "ne": {
-            "page": "a14-garran-ne-collapse",
-            "frames": [
-              {
-                "rect": [
-                  2,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 70
-              },
-              {
-                "rect": [
-                  390,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 80
-              },
-              {
-                "rect": [
-                  778,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 90
-              },
-              {
-                "rect": [
-                  1166,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 100
-              },
-              {
-                "rect": [
-                  2,
-                  390,
-                  384,
-                  384
-                ],
-                "durationMs": 120
-              },
-              {
-                "rect": [
-                  390,
-                  390,
-                  384,
-                  384
-                ],
-                "durationMs": 140
-              }
-            ],
-            "frameCount": 6,
-            "loop": false,
-            "mirrorX": false,
-            "anchor": [
-              0.5,
-              0.78125
-            ],
-            "sourceIndices": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ],
-            "source": "art/review/sources/a14-garran-ne-collapse-agy-a05.jpg",
-            "sourceSha256": "71062e4c486ba458c29569edcf0817914f87ff92755e3afe41a5c5d17ee01c8f",
-            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
-            "suggestedDurationMs": 600,
-            "owner_accepted": false,
-            "selectionNote": "requested generated state sequence",
-            "uniqueGeneratedKeys": 6,
-            "holdLastFrame": true,
-            "nextState": "corpse",
-            "persistent": true,
-            "sortAnchor": "body centre on ground at final key"
-          },
-          "nw": {
-            "page": "a14-garran-ne-collapse",
-            "frames": [
-              {
-                "rect": [
-                  2,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 70
-              },
-              {
-                "rect": [
-                  390,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 80
-              },
-              {
-                "rect": [
-                  778,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 90
-              },
-              {
-                "rect": [
-                  1166,
-                  2,
-                  384,
-                  384
-                ],
-                "durationMs": 100
-              },
-              {
-                "rect": [
-                  2,
-                  390,
-                  384,
-                  384
-                ],
-                "durationMs": 120
-              },
-              {
-                "rect": [
-                  390,
-                  390,
-                  384,
-                  384
-                ],
-                "durationMs": 140
-              }
-            ],
-            "frameCount": 6,
-            "loop": false,
-            "mirrorX": true,
-            "anchor": [
-              0.5,
-              0.78125
-            ],
-            "sourceIndices": [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5
-            ],
-            "source": "art/review/sources/a14-garran-ne-collapse-agy-a05.jpg",
-            "sourceSha256": "71062e4c486ba458c29569edcf0817914f87ff92755e3afe41a5c5d17ee01c8f",
-            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
-            "suggestedDurationMs": 600,
-            "owner_accepted": false,
-            "selectionNote": "requested generated state sequence",
-            "uniqueGeneratedKeys": 6,
-            "holdLastFrame": true,
-            "nextState": "corpse",
-            "persistent": true,
-            "sortAnchor": "body centre on ground at final key"
-          },
           "se": {
             "page": "a14-garran-se-reaction",
             "frames": [
@@ -3383,98 +3203,6 @@
           }
         },
         "corpse": {
-          "ne": {
-            "page": "a14-garran-ne-collapse",
-            "frames": [
-              {
-                "rect": [
-                  390,
-                  390,
-                  384,
-                  384
-                ],
-                "durationMs": 1000
-              }
-            ],
-            "frameCount": 1,
-            "loop": false,
-            "mirrorX": false,
-            "anchor": [
-              0.5,
-              0.78125
-            ],
-            "sourceIndices": [
-              5
-            ],
-            "source": "art/review/sources/a14-garran-ne-collapse-agy-a05.jpg",
-            "sourceSha256": "71062e4c486ba458c29569edcf0817914f87ff92755e3afe41a5c5d17ee01c8f",
-            "origin": "derived from exact last generated collapse key",
-            "suggestedDurationMs": null,
-            "owner_accepted": false,
-            "selectionNote": "exact final collapse key reused as a persistent static sprite",
-            "uniqueGeneratedKeys": 1,
-            "holdLastFrame": true,
-            "nextState": null,
-            "persistent": true,
-            "sortAnchor": "body centre on ground at final key",
-            "additionalGeneratedImages": 0,
-            "static": true,
-            "standalone": {
-              "file": "art/delivery/a14/corpses/garran-ne.png",
-              "sha256": "217594c934ce5183b5b6b910f64da42e86f58bb2ac4723d6e956100ce97376f8",
-              "mirrorAlreadyApplied": false,
-              "anchor": [
-                0.5,
-                0.78125
-              ]
-            }
-          },
-          "nw": {
-            "page": "a14-garran-ne-collapse",
-            "frames": [
-              {
-                "rect": [
-                  390,
-                  390,
-                  384,
-                  384
-                ],
-                "durationMs": 1000
-              }
-            ],
-            "frameCount": 1,
-            "loop": false,
-            "mirrorX": true,
-            "anchor": [
-              0.5,
-              0.78125
-            ],
-            "sourceIndices": [
-              5
-            ],
-            "source": "art/review/sources/a14-garran-ne-collapse-agy-a05.jpg",
-            "sourceSha256": "71062e4c486ba458c29569edcf0817914f87ff92755e3afe41a5c5d17ee01c8f",
-            "origin": "derived from exact last generated collapse key; horizontal mirror",
-            "suggestedDurationMs": null,
-            "owner_accepted": false,
-            "selectionNote": "exact final collapse key reused as a persistent static sprite",
-            "uniqueGeneratedKeys": 1,
-            "holdLastFrame": true,
-            "nextState": null,
-            "persistent": true,
-            "sortAnchor": "body centre on ground at final key",
-            "additionalGeneratedImages": 0,
-            "static": true,
-            "standalone": {
-              "file": "art/delivery/a14/corpses/garran-nw.png",
-              "sha256": "e0b134116e4f973cb5fcc9b021313d2691df179fcab90a97f60bd69c1e2a687f",
-              "mirrorAlreadyApplied": true,
-              "anchor": [
-                0.5,
-                0.78125
-              ]
-            }
-          },
           "se": {
             "page": "a14-garran-se-reaction",
             "frames": [
@@ -3590,16 +3318,6 @@
           "facing": "ne",
           "nativeBodyPixelsPerDisplayPixel1440": 2.7777777777777777,
           "limitations": "Partial selection: hit/light-heavy keys only. Collapse keys 12/13 clipped and full death excluded; a separate roomier collapse source is required. Rear-facing reaction and uniform identity preserved."
-        },
-        {
-          "source": "art/review/sources/a14-garran-ne-collapse-agy-a05.jpg",
-          "sha256": "71062e4c486ba458c29569edcf0817914f87ff92755e3afe41a5c5d17ee01c8f",
-          "job": "a14-garran-ne-collapse-agy-a05",
-          "observation": "art/waves/A14/observations/a14-garran-ne-collapse-agy-a05.json",
-          "bodyHeightSourcePx": 350,
-          "facing": "ne",
-          "nativeBodyPixelsPerDisplayPixel1440": 4.320987654320987,
-          "limitations": "Rear view retained through final prone pose; face down, back visible, staff rests beside body. First three keys lower only subtly, fall concentrates in last three. Authored unequal source rectangles preserve complete anatomy; key 4 mask excludes detached neighboring staff tip only. Owner review for timing and scale. Masks on key 3 remove neighboring foot only; on key 4 remove neighboring staff only. Crop margins measured after declared isolation, no body reconstruction."
         },
         {
           "source": "art/review/sources/a14-garran-se-reaction-agy-a01.jpg",
@@ -9348,6 +9066,10 @@
   ],
   "cameraElevationDegrees": 55,
   "backlog": [
+    "garran:death:ne",
+    "garran:death:nw",
+    "garran:corpse:ne",
+    "garran:corpse:nw",
     "cinder_hound:hit-light:ne",
     "cinder_hound:hit-light:se",
     "cinder_hound:hit-light:sw",

@@ -1,5 +1,12 @@
 # A14 additive character clips
 
+Session 10 stage 1: 128/192 slots. Garran ne/nw collapse and corpse are present;
+all eight humanoids have all four priority states in all directions. Two new
+agy images were charged (one rejected), project total 344. Creature work follows.
+The schema and merge procedure are unchanged; merging this updated manifest
+adds the clips without consumer code changes. `session10/current.json` records
+current counts and provider state. The session-9 boundary below is historical.
+
 `characters.json` follows the A10 `schemaVersion:1` page/entity/clip/frame schema.
 Merge present entity/state/direction entries over A10; preserve its other clips.
 Page IDs are prefixed `a14-` to avoid collisions. `loader.js` is a working merge
