@@ -1,0 +1,1175 @@
+{
+  "passed": true,
+  "command": "npm run build:game && npx tsx packages/tools/src/u6b-performance.ts",
+  "runs": [
+    {
+      "height": 1080,
+      "fps": 60.00300015000751,
+      "frameP95": 16.700000000000728,
+      "cpuP95": 2.600000023841858,
+      "decodedTextureBytes": 308423284,
+      "decodedTextureMiB": 294.1353645324707,
+      "heap": {
+        "usedSize": 26540876,
+        "totalSize": 83451904,
+        "embedderHeapUsedSize": 98456152,
+        "backingStorageSize": 1672781
+      },
+      "art": {
+        "textures": 48,
+        "rgbaBytes": 195177076,
+        "rgbaMiB": 186.1353645324707,
+        "failed": [],
+        "pending": 0,
+        "diagnostics": [],
+        "residentKeys": [
+          "a13.glyph.earth",
+          "a13.glyph.fire",
+          "a13.glyph.water",
+          "a13.glyph.air",
+          "portrait.cassia.neutral",
+          "place.door",
+          "a12.occluder.verdigris.southwest-pylon",
+          "a12.occluder.verdigris.southeast-pylon",
+          "a8.page.barrier",
+          "a13.page.inscription.collar",
+          "a13.page.inscription.wardstone",
+          "a8.page.water",
+          "a10.packed.a14-cassia-se-reaction",
+          "a10.packed.a14-cassia-ne-reaction",
+          "a13.page.selection",
+          "a13.page.target",
+          "a10.packed.cassia",
+          "a12.plate.verdigris",
+          "a13.page.floor.verdigris",
+          "a13.cleanup.verdigris",
+          "a10.packed.brennic",
+          "a10.packed.a14-brennic-ne-reaction",
+          "a10.packed.a14-garran-ne-reaction",
+          "a10.packed.a14-brennic-se-reaction",
+          "a10.packed.garran",
+          "a10.packed.a14-garran-se-reaction",
+          "a10.packed.a14-iskar-ne-reaction",
+          "a10.packed.a14-iskar-se-reaction",
+          "a10.packed.a14-iskar-ne-collapse",
+          "a10.packed.iskar",
+          "a10.packed.a14-conscript-ne-reaction",
+          "a10.packed.conscript",
+          "a10.packed.a14-conscript-se-reaction",
+          "a10.packed.a14-shieldman-se-reaction",
+          "a10.packed.a14-shieldman-ne-reaction",
+          "a10.packed.shieldman",
+          "a10.packed.a14-slinger-se-reaction",
+          "a10.packed.slinger",
+          "a10.packed.a14-netter-ne-reaction",
+          "a10.packed.a14-slinger-ne-reaction",
+          "a10.packed.a14-netter-se-reaction",
+          "a10.packed.hush_moth",
+          "a10.packed.thornback",
+          "a10.packed.mire_maw",
+          "a10.packed.netter",
+          "a8.page.air",
+          "a8.page.fire",
+          "a8.page.earth"
+        ]
+      },
+      "sigils": {
+        "active": 13,
+        "allocated": 13,
+        "pages": 2,
+        "cpuMs": 0.09999996423721313,
+        "clips": [
+          "selection",
+          "target"
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "height": 1440,
+      "fps": 60.00300015000751,
+      "frameP95": 16.799999999999272,
+      "cpuP95": 2.600000023841858,
+      "decodedTextureBytes": 308423284,
+      "decodedTextureMiB": 294.1353645324707,
+      "heap": {
+        "usedSize": 46239668,
+        "totalSize": 89481216,
+        "embedderHeapUsedSize": 99205112,
+        "backingStorageSize": 17342894
+      },
+      "art": {
+        "textures": 48,
+        "rgbaBytes": 195177076,
+        "rgbaMiB": 186.1353645324707,
+        "failed": [],
+        "pending": 0,
+        "diagnostics": [],
+        "residentKeys": [
+          "a13.glyph.fire",
+          "a13.glyph.earth",
+          "a13.glyph.water",
+          "a13.glyph.air",
+          "portrait.cassia.neutral",
+          "place.door",
+          "a8.page.barrier",
+          "a12.occluder.verdigris.southwest-pylon",
+          "a12.occluder.verdigris.southeast-pylon",
+          "a13.page.inscription.collar",
+          "a13.page.inscription.wardstone",
+          "a8.page.water",
+          "a10.packed.a14-cassia-se-reaction",
+          "a10.packed.a14-cassia-ne-reaction",
+          "a10.packed.cassia",
+          "a13.page.target",
+          "a13.page.selection",
+          "a12.plate.verdigris",
+          "a13.page.floor.verdigris",
+          "a13.cleanup.verdigris",
+          "a10.packed.a14-garran-ne-reaction",
+          "a10.packed.a14-garran-se-reaction",
+          "a10.packed.a14-brennic-se-reaction",
+          "a10.packed.a14-brennic-ne-reaction",
+          "a10.packed.garran",
+          "a10.packed.brennic",
+          "a10.packed.a14-iskar-ne-reaction",
+          "a10.packed.a14-iskar-ne-collapse",
+          "a10.packed.a14-iskar-se-reaction",
+          "a10.packed.iskar",
+          "a10.packed.a14-conscript-ne-reaction",
+          "a10.packed.conscript",
+          "a10.packed.a14-conscript-se-reaction",
+          "a10.packed.a14-shieldman-se-reaction",
+          "a10.packed.a14-shieldman-ne-reaction",
+          "a10.packed.a14-slinger-se-reaction",
+          "a10.packed.a14-slinger-ne-reaction",
+          "a10.packed.slinger",
+          "a10.packed.shieldman",
+          "a10.packed.a14-netter-ne-reaction",
+          "a10.packed.a14-netter-se-reaction",
+          "a10.packed.hush_moth",
+          "a10.packed.thornback",
+          "a10.packed.mire_maw",
+          "a10.packed.netter",
+          "a8.page.earth",
+          "a8.page.fire",
+          "a8.page.air"
+        ]
+      },
+      "sigils": {
+        "active": 13,
+        "allocated": 13,
+        "pages": 2,
+        "cpuMs": 0.09999996423721313,
+        "clips": [
+          "selection",
+          "target"
+        ],
+        "diagnostics": []
+      }
+    }
+  ],
+  "screens": [
+    {
+      "file": "1080-lab-setup.png",
+      "screen": "lab-setup",
+      "texts": [
+        {
+          "text": "COMBAT FEEL LAB",
+          "x": 120,
+          "y": 76,
+          "w": 182.7363624572754,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Choose your experiment",
+          "x": 106,
+          "y": 106,
+          "w": 617.7526288032532,
+          "h": 56.12,
+          "size": 46
+        },
+        {
+          "text": "Exactly one target. Setup and loadout changes begin a fresh bout; tuning stays selected.",
+          "x": 106,
+          "y": 165,
+          "w": 870.325080871582,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Target: Dummy",
+          "x": 144,
+          "y": 247.14,
+          "w": 166.06680011749268,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Your school: Water",
+          "x": 1018,
+          "y": 247.14,
+          "w": 199.9992380142212,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Opponent school: Fire",
+          "x": 144,
+          "y": 339.14,
+          "w": 239.8499231338501,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Competence: 2 / 4",
+          "x": 1018,
+          "y": 339.14,
+          "w": 194.2326464653015,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Dummy action: Magic",
+          "x": 144,
+          "y": 431.14,
+          "w": 233.09288024902344,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Seed mode: Fixed / repeatable",
+          "x": 1018,
+          "y": 431.14,
+          "w": 326.72963094711304,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Aggression",
+          "x": 120,
+          "y": 518,
+          "w": 113.6999785900116,
+          "h": 30.5,
+          "size": 25
+        },
+        {
+          "text": "",
+          "x": 644,
+          "y": 524.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "",
+          "x": 1038,
+          "y": 524.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "0.75 fraction",
+          "x": 1042,
+          "y": 528,
+          "w": 123.97533988952637,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Starting distance",
+          "x": 120,
+          "y": 618,
+          "w": 174.99896883964539,
+          "h": 30.5,
+          "size": 25
+        },
+        {
+          "text": "",
+          "x": 644,
+          "y": 624.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "",
+          "x": 1038,
+          "y": 624.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 m",
+          "x": 1042,
+          "y": 628,
+          "w": 48.55199432373047,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Seed: 7331",
+          "x": 144,
+          "y": 739.14,
+          "w": 116.94797277450562,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Choose the four spell slots",
+          "x": 1018,
+          "y": 739.14,
+          "w": 284.4319987297058,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
+          "x": 106,
+          "y": 817,
+          "w": 1178.8409385681152,
+          "h": 58.56,
+          "size": 24
+        },
+        {
+          "text": "Back",
+          "x": 144,
+          "y": 954.92,
+          "w": 56.41731262207032,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Start / reset bout",
+          "x": 1378,
+          "y": 954.92,
+          "w": 195.76743793487552,
+          "h": 34.160000000000004,
+          "size": 28
+        }
+      ]
+    },
+    {
+      "file": "1080-stress-100-projectiles.png",
+      "screen": "arena",
+      "texts": [
+        {
+          "text": "COMBAT FEEL LAB",
+          "x": 96,
+          "y": 58,
+          "w": 182.7363624572754,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "WATER / practice mage",
+          "x": 96,
+          "y": 94,
+          "w": 438.88802433013916,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1682,
+          "y": 70.92,
+          "w": 69.61805534362793,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 132,
+          "y": 834,
+          "w": 160.91902542114258,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  95 / 95",
+          "x": 132,
+          "y": 892,
+          "w": 134.35197257995605,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 132,
+          "y": 950,
+          "w": 164.44892120361328,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "",
+          "x": 562,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 594,
+          "y": 878,
+          "w": 130.2162914276123,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "1",
+          "x": 555,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 552,
+          "y": 976,
+          "w": 150.5119595527649,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "",
+          "x": 822,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 854,
+          "y": 878,
+          "w": 133.4662914276123,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "2",
+          "x": 815,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 812,
+          "y": 976,
+          "w": 161.9429590702057,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "",
+          "x": 1082,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1114,
+          "y": 878,
+          "w": 103.66197490692139,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "3",
+          "x": 1075,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1072,
+          "y": 976,
+          "w": 150.5119595527649,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "",
+          "x": 1342,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1374,
+          "y": 878,
+          "w": 68.04198408126831,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "4",
+          "x": 1335,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1332,
+          "y": 976,
+          "w": 150.5119595527649,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1618,
+          "y": 897,
+          "w": 122.62274265289308,
+          "h": 32.94,
+          "size": 27
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1618,
+          "y": 943,
+          "w": 153.65199279785156,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 173.51902866363525,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 14.8s",
+          "x": 1064,
+          "y": 109,
+          "w": 191.69692516326904,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "",
+          "x": 650,
+          "y": 390,
+          "w": 0,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 769.5768527984619,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "",
+          "x": 524,
+          "y": 750,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Hits 0/0   Absorb 0/0   Perfect 0/0   Staggers dealt/taken 0/0   Cancels 0   Damage/mana --   TTK --",
+          "x": 132,
+          "y": 198,
+          "w": 940.700345993042,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FROZEN / . one tick  /  Current  /  seed 7331  /  HP damage ON  /  0.2s",
+          "x": 132,
+          "y": 240,
+          "w": 667.1761779785156,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "L  Setup",
+          "x": 134,
+          "y": 328.58,
+          "w": 73.02501821517944,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "T  Tune",
+          "x": 352,
+          "y": 328.58,
+          "w": 66.85798501968384,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "R  Reset",
+          "x": 570,
+          "y": 328.58,
+          "w": 71.7930235862732,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "P  Freeze",
+          "x": 788,
+          "y": 328.58,
+          "w": 80.7399754524231,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": ".  Step",
+          "x": 1006,
+          "y": 328.58,
+          "w": 55.76206588745117,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "G  Refill",
+          "x": 1224,
+          "y": 328.58,
+          "w": 68.44197511672974,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "H  Damage",
+          "x": 1442,
+          "y": 328.58,
+          "w": 98.43045425415039,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "V  Replay",
+          "x": 1660,
+          "y": 328.58,
+          "w": 82.08197784423828,
+          "h": 26.840000000000003,
+          "size": 22
+        }
+      ]
+    },
+    {
+      "file": "1440-lab-setup.png",
+      "screen": "lab-setup",
+      "texts": [
+        {
+          "text": "COMBAT FEEL LAB",
+          "x": 120,
+          "y": 76,
+          "w": 182.7363624572754,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Choose your experiment",
+          "x": 106,
+          "y": 106,
+          "w": 617.7526288032532,
+          "h": 56.12,
+          "size": 46
+        },
+        {
+          "text": "Exactly one target. Setup and loadout changes begin a fresh bout; tuning stays selected.",
+          "x": 106,
+          "y": 165,
+          "w": 870.325080871582,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Target: Dummy",
+          "x": 144,
+          "y": 247.14,
+          "w": 166.06680011749268,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Your school: Water",
+          "x": 1018,
+          "y": 247.14,
+          "w": 199.9992380142212,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Opponent school: Fire",
+          "x": 144,
+          "y": 339.14,
+          "w": 239.8499231338501,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Competence: 2 / 4",
+          "x": 1018,
+          "y": 339.14,
+          "w": 194.2326464653015,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Dummy action: Magic",
+          "x": 144,
+          "y": 431.14,
+          "w": 233.09288024902344,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Seed mode: Fixed / repeatable",
+          "x": 1018,
+          "y": 431.14,
+          "w": 326.72963094711304,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Aggression",
+          "x": 120,
+          "y": 518,
+          "w": 113.6999785900116,
+          "h": 30.5,
+          "size": 25
+        },
+        {
+          "text": "",
+          "x": 644,
+          "y": 524.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "",
+          "x": 1038,
+          "y": 524.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "0.75 fraction",
+          "x": 1042,
+          "y": 528,
+          "w": 123.97533988952637,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Starting distance",
+          "x": 120,
+          "y": 618,
+          "w": 174.99896883964539,
+          "h": 30.5,
+          "size": 25
+        },
+        {
+          "text": "",
+          "x": 644,
+          "y": 624.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "",
+          "x": 1038,
+          "y": 624.92,
+          "w": 0,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "10 m",
+          "x": 1042,
+          "y": 628,
+          "w": 48.55199432373047,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Seed: 7331",
+          "x": 144,
+          "y": 739.14,
+          "w": 116.94797277450562,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Choose the four spell slots",
+          "x": 1018,
+          "y": 739.14,
+          "w": 284.4319987297058,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
+          "x": 106,
+          "y": 817,
+          "w": 1178.8409385681152,
+          "h": 58.56,
+          "size": 24
+        },
+        {
+          "text": "Back",
+          "x": 144,
+          "y": 954.92,
+          "w": 56.41731262207032,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "Start / reset bout",
+          "x": 1378,
+          "y": 954.92,
+          "w": 195.76743793487552,
+          "h": 34.160000000000004,
+          "size": 28
+        }
+      ]
+    },
+    {
+      "file": "1440-stress-100-projectiles.png",
+      "screen": "arena",
+      "texts": [
+        {
+          "text": "COMBAT FEEL LAB",
+          "x": 96,
+          "y": 58,
+          "w": 182.7363624572754,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "WATER / practice mage",
+          "x": 96,
+          "y": 94,
+          "w": 438.88802433013916,
+          "h": 43.92,
+          "size": 36
+        },
+        {
+          "text": "Pause",
+          "x": 1682,
+          "y": 70.92,
+          "w": 69.61805534362793,
+          "h": 34.160000000000004,
+          "size": 28
+        },
+        {
+          "text": "VITALITY  95 / 95",
+          "x": 132,
+          "y": 834,
+          "w": 160.91902542114258,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "MANA  95 / 95",
+          "x": 132,
+          "y": 892,
+          "w": 134.35197257995605,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "STAMINA  70 / 70",
+          "x": 132,
+          "y": 950,
+          "w": 164.44892120361328,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "",
+          "x": 562,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Rain Needle",
+          "x": 594,
+          "y": 878,
+          "w": 130.2162914276123,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "1",
+          "x": 555,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "3 mana  /  Tier 1",
+          "x": 552,
+          "y": 976,
+          "w": 150.5119595527649,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "",
+          "x": 822,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Bubble Shot",
+          "x": 854,
+          "y": 878,
+          "w": 133.4662914276123,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "2",
+          "x": 815,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "10 mana  /  Tier 1",
+          "x": 812,
+          "y": 976,
+          "w": 161.9429590702057,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "",
+          "x": 1082,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Tide Lash",
+          "x": 1114,
+          "y": 878,
+          "w": 103.66197490692139,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "3",
+          "x": 1075,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1072,
+          "y": 976,
+          "w": 150.5119595527649,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "",
+          "x": 1342,
+          "y": 925.36,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Sheen",
+          "x": 1374,
+          "y": 878,
+          "w": 68.04198408126831,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "4",
+          "x": 1335,
+          "y": 946,
+          "w": 11.927999496459961,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "8 mana  /  Tier 1",
+          "x": 1332,
+          "y": 976,
+          "w": 150.5119595527649,
+          "h": 28.06,
+          "size": 23
+        },
+        {
+          "text": "FLOW  0 / 5",
+          "x": 1618,
+          "y": 897,
+          "w": 122.62274265289308,
+          "h": 32.94,
+          "size": 27
+        },
+        {
+          "text": "Alternate spells",
+          "x": 1618,
+          "y": 943,
+          "w": 153.65199279785156,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "COLLAR  I",
+          "x": 1064,
+          "y": 64,
+          "w": 173.51902866363525,
+          "h": 41.480000000000004,
+          "size": 34
+        },
+        {
+          "text": "Next rune in 14.8s",
+          "x": 1064,
+          "y": 109,
+          "w": 191.69692516326904,
+          "h": 31.720000000000002,
+          "size": 26
+        },
+        {
+          "text": "",
+          "x": 650,
+          "y": 390,
+          "w": 0,
+          "h": 39.04,
+          "size": 32
+        },
+        {
+          "text": "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+          "x": 524,
+          "y": 824,
+          "w": 769.5768527984619,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "",
+          "x": 524,
+          "y": 750,
+          "w": 0,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "Hits 0/0   Absorb 0/0   Perfect 0/0   Staggers dealt/taken 0/0   Cancels 0   Damage/mana --   TTK --",
+          "x": 132,
+          "y": 198,
+          "w": 940.700345993042,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "FROZEN / . one tick  /  Current  /  seed 7331  /  HP damage ON  /  0.2s",
+          "x": 132,
+          "y": 240,
+          "w": 667.1761779785156,
+          "h": 29.28,
+          "size": 24
+        },
+        {
+          "text": "L  Setup",
+          "x": 134,
+          "y": 328.58,
+          "w": 73.02501821517944,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "T  Tune",
+          "x": 352,
+          "y": 328.58,
+          "w": 66.85798501968384,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "R  Reset",
+          "x": 570,
+          "y": 328.58,
+          "w": 71.7930235862732,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "P  Freeze",
+          "x": 788,
+          "y": 328.58,
+          "w": 80.7399754524231,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": ".  Step",
+          "x": 1006,
+          "y": 328.58,
+          "w": 55.76206588745117,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "G  Refill",
+          "x": 1224,
+          "y": 328.58,
+          "w": 68.44197511672974,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "H  Damage",
+          "x": 1442,
+          "y": 328.58,
+          "w": 98.43045425415039,
+          "h": 26.840000000000003,
+          "size": 22
+        },
+        {
+          "text": "V  Replay",
+          "x": 1660,
+          "y": 328.58,
+          "w": 82.08197784423828,
+          "h": 26.840000000000003,
+          "size": 22
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

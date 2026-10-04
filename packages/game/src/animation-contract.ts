@@ -1,11 +1,21 @@
 export type Direction = "ne" | "se" | "sw" | "nw";
-export type BodyState = "idle" | "run" | "cast" | "absorb" | "hit" | "death";
+export type BodyState =
+  | "idle"
+  | "run"
+  | "cast"
+  | "absorb"
+  | "hit"
+  | "hit-light"
+  | "hit-heavy"
+  | "death"
+  | "corpse";
 export type Element = "water" | "fire" | "earth" | "air";
 export interface Clip {
   page: string;
   frames: {
     rect: [number, number, number, number];
     durationMs: number;
+    anchor?: [number, number];
     orig?: [number, number];
     trim?: [number, number, number, number];
   }[];
@@ -14,6 +24,8 @@ export interface Clip {
   mirrorX?: boolean;
   anchor?: [number, number];
   designSize1080?: [number, number];
+  designBodyHeight1080?: number;
+  delivery?: string;
   blend?: "lighter" | "source-over";
 }
 export interface PageSpec {
@@ -77,7 +89,22 @@ export function validateClips(pages: PageSpec[], clips: Clip[]) {
       typeof c.loop !== "boolean"
     )
       throw Error("Invalid animation clip");
+    const anchorValid = (a: number[] | undefined) =>
+      a === undefined ||
+      (a.length === 2 &&
+        a.every((n) => Number.isFinite(n) && n >= 0 && n <= 1));
+    if (
+      !anchorValid(c.anchor) ||
+      (c.designSize1080 !== undefined &&
+        (c.designSize1080.length !== 2 ||
+          !c.designSize1080.every((n) => Number.isFinite(n) && n > 0))) ||
+      (c.designBodyHeight1080 !== undefined &&
+        (!Number.isFinite(c.designBodyHeight1080) ||
+          c.designBodyHeight1080 <= 0))
+    )
+      throw Error("Invalid clip placement");
     for (const f of c.frames) {
+      if (!anchorValid(f.anchor)) throw Error("Invalid frame anchor");
       const r = f.rect;
       if (
         !Array.isArray(r) ||
@@ -114,4 +141,21 @@ export function validateClips(pages: PageSpec[], clips: Clip[]) {
       }
     }
   }
+}
+
+/** Per-clip A14 v3 size takes precedence; inherited A10 sizes retain their original nominal height. */
+export function bodyDrawSpec(
+  body: Body,
+  clip: Clip,
+  frame: Clip["frames"][number],
+  height: number,
+) {
+  const size = clip.designSize1080 ?? body.designSize1080;
+  const scale =
+    height / (clip.designBodyHeight1080 ?? body.designBodyHeight1080);
+  return {
+    anchor: frame.anchor ?? clip.anchor ?? body.anchor,
+    width: size[0] * scale,
+    height: size[1] * scale,
+  };
 }

@@ -298,6 +298,8 @@ export class ArenaGame {
                 kind:
                   "player" | "opponent" | "defeat-player" | "defeat-opponent",
                 entity?: string,
+                direction?: "ne" | "se" | "sw" | "nw",
+                damage = 18,
               ) => {
                 const config = this.lab?.config;
                 if (config) this.resetLab(config);
@@ -332,14 +334,20 @@ export class ArenaGame {
                     slot: 1,
                   },
                 });
+                if (direction)
+                  target.facing = {
+                    x: direction[1] === "e" ? 1 : -1,
+                    y: direction[0] === "s" ? 1 : -1,
+                  };
                 resolveHit(state, target, {
                   ownerId: source.id,
                   activationId: state.nextId++,
-                  family: kind.startsWith("defeat")
-                    ? "unblockable"
-                    : "physical",
+                  family:
+                    direction || kind.startsWith("defeat")
+                      ? "unblockable"
+                      : "physical",
                   tier: 1,
-                  damage: kind.startsWith("defeat") ? 10000 : 18,
+                  damage: kind.startsWith("defeat") ? 10000 : damage,
                   source: source.pos,
                 });
               },
@@ -452,6 +460,8 @@ export class ArenaGame {
     this.reference = false;
     this.training = createTraining(kind);
     this.training.player.water = newWaterState(this.composition);
+    if (gameAudio.snapshot().scene.startsWith("arena:"))
+      gameAudio.setScene("arena:1", true);
     this.clock = new FixedStepper();
     this.input.clear();
     this.paused = false;

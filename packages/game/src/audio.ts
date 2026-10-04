@@ -40,6 +40,10 @@ export class AudioLoader {
   manifest?: AudioManifest;
   private loading?: Promise<void>;
   private buffers = new Map<string, Promise<AudioBuffer | null>>();
+  readonly decoded = new Map<
+    string,
+    { duration: number; channels: number; sampleRate: number; bytes: number }
+  >();
   constructor(
     private readonly log: (
       event: string,
@@ -96,10 +100,14 @@ export class AudioLoader {
               Math.abs(buffer.duration - asset.duration) > 0.2
             )
               throw Error("Asset duration mismatch");
-            this.log("decoded", id, {
+            const info = {
               duration: buffer.duration,
               channels: buffer.numberOfChannels,
-            });
+              sampleRate: buffer.sampleRate,
+              bytes: buffer.length * buffer.numberOfChannels * 4,
+            };
+            this.decoded.set(id, info);
+            this.log("decoded", id, info);
             return buffer;
           } catch (e) {
             this.log("asset-silent", id, String(e));
@@ -362,8 +370,8 @@ export class GameAudio {
     this.log(reason, s.cue);
     this.duck();
   }
-  setScene(scene: string) {
-    if (scene === this.scene) return;
+  setScene(scene: string, restart = false) {
+    if (scene === this.scene && !restart) return;
     this.scene = scene;
     this.playlistIndex = 0;
     this.pausedMusic = undefined;
@@ -516,6 +524,11 @@ export class GameAudio {
           }
         : null,
       musicVoices: this.musicVoices.size,
+      decodedBuffers: Object.fromEntries(this.loader.decoded),
+      decodedAudioBytes: [...this.loader.decoded.values()].reduce(
+        (n, b) => n + b.bytes,
+        0,
+      ),
       active: [...this.sounds.values()].map(
         ({ id, cue, bus, priority, started }) => ({
           id,

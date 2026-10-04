@@ -25,7 +25,10 @@ describe("AU4 owner-kept audio contract", () => {
         new URL(`../public/audio/${a.file}`, import.meta.url),
       );
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(a.sha256);
-      expect(a.trimDb).toBeLessThanOrEqual(-3);
+      expect(a.trimDb).toBeLessThanOrEqual(
+        a.file.endsWith("-full.wav") ? 0 : -3,
+      );
+      expect(bytes.length).toBeLessThanOrEqual(audioData.limits.maxAssetBytes);
     }
     expect(manifest.assets["roll-step"]!.duration).toBe(0.45);
     expect(
@@ -143,5 +146,33 @@ describe("AU4 owner-kept audio contract", () => {
       muted: true,
     });
     expect(settingsFrom(null)).toEqual(audioData.defaults);
+  });
+});
+
+describe("U6b full-track delivery", () => {
+  it("uses the measured 150-second masters once at unity trim and keeps unverified adaptive features off", () => {
+    for (const id of ["arena-c", "arena-d"] as const) {
+      const asset = manifestData.assets[id];
+      const side = JSON.parse(
+        readFileSync(
+          new URL(`../public/audio/${asset.file}.json`, import.meta.url),
+          "utf8",
+        ),
+      );
+      expect(asset.duration).toBe(150);
+      expect(asset.trimDb).toBe(0);
+      expect(side.measurement.sha256).toBe(asset.sha256);
+      expect(side.measurement.sampleCount).toBe(7200000);
+      expect(side.measurement.channels).toBe(2);
+      expect(side.measurement.integratedLufs).toBeCloseTo(-26, 1);
+      expect(side.measurement.truePeakDbTP).toBeLessThanOrEqual(-1);
+      const delivered = manifestData.u6b.tracks.find((t) => t.id === id)!;
+      expect(delivered.linearPlaybackReady).toBe(true);
+      expect(delivered.adaptiveReady).toBe(false);
+      expect(delivered.productionApproved).toBe(false);
+    }
+    expect(playlistFor("arena:2")).toEqual(["arena-c", "arena-d"]);
+    expect(playlistFor("arena:3")).toEqual(["arena-d", "arena-c"]);
+    expect(manifestData.assets["arena-a"].duration).toBeLessThan(150);
   });
 });

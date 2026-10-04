@@ -9,10 +9,12 @@ import {
 import { art } from "./art.ts";
 import {
   bodyIdentity,
+  corpseForDeath,
   selectBodyClip,
   type BodySelection,
 } from "./body-policy.ts";
 import {
+  bodyDrawSpec,
   facingFromVector,
   frameIndex,
   validateClips,
@@ -26,7 +28,9 @@ interface Motion {
   state: BodyState;
   direction: Direction;
   since: number;
-  hitUntil: number;
+  hitElapsed: number;
+  hitDuration: number;
+  hitState: "hit-light" | "hit-heavy";
   castUntil: number;
   selection?: BodySelection;
   frame: number;
@@ -92,14 +96,17 @@ export class BodyPlayer {
         motion = {
           entity,
           state: "idle",
-          direction: "se",
+          direction: facingFromVector(a.facing.x, a.facing.y, "se"),
           since: state.tick,
-          hitUntil: 0,
+          hitElapsed: 1e9,
+          hitDuration: 0,
+          hitState: "hit-light",
           castUntil: 0,
           frame: 0,
         };
         this.actors.set(a.id, motion);
       }
+      motion.hitElapsed += Math.min(0.1, dt);
       if (a.tags.includes("DEFEATED")) {
         if (
           motion.deathElapsed === undefined ||
@@ -133,17 +140,18 @@ export class BodyPlayer {
     for (const e of state.events.slice(this.eventIndex)) {
       const m = this.actors.get(e.actorId);
       if (!m || state.tick - e.tick > 60) continue;
-      if (e.kind === "hit" && e.value > 0)
-        m.hitUntil =
-          e.tick +
-          Math.max(
-            tuningFor(state).hitRecoilS,
-            seconds(
-              (state.actors.find((a) => a.id === e.actorId)?.staggerUntil ??
-                e.tick) - e.tick,
-            ),
-          ) *
-            combat.simStepHz;
+      if (e.kind === "hit" && e.value > 0) {
+        m.hitElapsed = Math.max(0, seconds(state.tick - e.tick));
+        m.hitDuration = Math.max(
+          tuningFor(state).hitRecoilS,
+          seconds(
+            (state.actors.find((a) => a.id === e.actorId)?.staggerUntil ??
+              e.tick) - e.tick,
+          ),
+        );
+        m.hitState =
+          e.value >= policy.bodies.heavyHitDamage ? "hit-heavy" : "hit-light";
+      }
       if (e.kind === "release")
         m.castUntil =
           e.tick + (policy.bodies.castHoldMs / 1000) * combat.simStepHz;
@@ -159,8 +167,8 @@ export class BodyPlayer {
       vy = a.pos.y - a.previousPos.y;
     const state: BodyState = a.tags.includes("DEFEATED")
       ? "death"
-      : this.tick < motion.hitUntil
-        ? "hit"
+      : motion.hitElapsed < motion.hitDuration
+        ? motion.hitState
         : a.absorb
           ? "absorb"
           : a.pending ||
@@ -203,7 +211,7 @@ export class BodyPlayer {
       smoothed ??
       (state === "run"
         ? facingFromVector(vx, vy, motion.direction)
-        : state === "cast" || state === "absorb" || state === "hit"
+        : state === "cast" || state === "absorb" || state.startsWith("hit")
           ? facingFromVector(a.facing.x, a.facing.y, motion.direction)
           : motion.direction);
     if (state !== motion.state) {
@@ -212,7 +220,15 @@ export class BodyPlayer {
     }
     motion.direction = direction;
     const body = this.manifest?.entities[motion.entity];
-    const selected = selectBodyClip(body, state, direction, motion.selection);
+    let selected = selectBodyClip(body, state, direction, motion.selection);
+    if (
+      state === "death" &&
+      selected?.state === "death" &&
+      this.deathAge(a) * 1000 >=
+        selected.clip.frames.reduce((n, f) => n + f.durationMs, 0)
+    ) {
+      selected = corpseForDeath(body, selected);
+    }
     const key = `${motion.entity}:${state}:${direction}`;
     motion.deathClip = false;
     if (!selected || !body) {
@@ -233,11 +249,17 @@ export class BodyPlayer {
         this.fallbacks.add(`${key} → procedural (entity page failed)`);
       return false;
     }
-    if (selected.state !== state || selected.direction !== direction)
+    if (
+      (selected.state !== state &&
+        !(state === "death" && selected.state === "corpse")) ||
+      selected.direction !== direction
+    )
       this.fallbacks.add(
         `${key} → ${selected.state}:${selected.direction}${selected.held ? " (held)" : ""}`,
       );
-    motion.deathClip = selected.state === "death" && !selected.held;
+    motion.deathClip =
+      (selected.state === "death" || selected.state === "corpse") &&
+      !selected.held;
     // A missing death holds the actual last displayed frame; other substituted
     // states hold a neutral key. All original action clips hold their last key.
     const index = selected.held
@@ -246,18 +268,23 @@ export class BodyPlayer {
         : 0
       : frameIndex(
           selected.clip,
-          a.pending && state === "cast"
+          state.startsWith("hit")
             ? Math.min(
                 0.999,
-                Math.max(
-                  0,
-                  (this.tick - a.pending.startTick) /
-                    Math.max(1, a.pending.releaseTick - a.pending.startTick),
-                ),
+                motion.hitElapsed / Math.max(0.001, motion.hitDuration),
               ) * selected.clip.frames.reduce((n, f) => n + f.durationMs, 0)
-            : state === "death"
-              ? (motion.deathElapsed ?? 0) * 1000
-              : seconds(this.tick - motion.since) * 1000,
+            : a.pending && state === "cast"
+              ? Math.min(
+                  0.999,
+                  Math.max(
+                    0,
+                    (this.tick - a.pending.startTick) /
+                      Math.max(1, a.pending.releaseTick - a.pending.startTick),
+                  ),
+                ) * selected.clip.frames.reduce((n, f) => n + f.durationMs, 0)
+              : state === "death"
+                ? (motion.deathElapsed ?? 0) * 1000
+                : seconds(this.tick - motion.since) * 1000,
           true,
         );
     const frame = selected.clip.frames[index] ?? selected.clip.frames[0]!;
@@ -273,13 +300,13 @@ export class BodyPlayer {
       this.frames.set(frameKey, texture);
     }
     sprite.texture = texture;
-    sprite.anchor.set(...body.anchor);
+    const draw = bodyDrawSpec(body, selected.clip, frame, height);
+    sprite.anchor.set(...draw.anchor);
     sprite.rotation = 0;
-    const scale = height / body.designBodyHeight1080;
     sprite.scale.set(
-      ((selected.clip.mirrorX ? -1 : 1) * body.designSize1080[0] * scale) /
+      ((selected.clip.mirrorX ? -1 : 1) * draw.width) /
         (frame.orig?.[0] ?? frame.rect[2]),
-      (body.designSize1080[1] * scale) / (frame.orig?.[1] ?? frame.rect[3]),
+      draw.height / (frame.orig?.[1] ?? frame.rect[3]),
     );
     sprite.alpha = 1;
     motion.selection = selected;
@@ -294,7 +321,9 @@ export class BodyPlayer {
       held: selected.held,
       frame: index,
       source: "A10",
-      fullFramePx: body.designSize1080[1] * scale,
+      fullFramePx: draw.height,
+      anchor: draw.anchor,
+      delivery: selected.clip.delivery ?? "A10",
       rotation: sprite.rotation,
     });
     return true;

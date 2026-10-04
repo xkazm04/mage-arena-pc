@@ -9,18 +9,18 @@
       "kind": "loop"
     },
     "arena-c": {
-      "file": "arena-c.mp3",
-      "sha256": "12ddcb982f86b2b7ba500490ce020b21bd4060db57b59c71c21f674e6915b20a",
-      "duration": 20.00975,
-      "trimDb": -13.6,
-      "kind": "loop"
+      "file": "arena-c-full.wav",
+      "sha256": "5806a141fbcdb2672a988ddfe5700a24b4a36ffdbd7d1779a63ce09a2539ffca",
+      "duration": 150,
+      "trimDb": 0,
+      "kind": "track"
     },
     "arena-d": {
-      "file": "arena-d.mp3",
-      "sha256": "ea5a7ca651b5874636422025b6a3316e771d6f66821d068880e1ce9a63912085",
-      "duration": 20.00975,
-      "trimDb": -13.6,
-      "kind": "loop"
+      "file": "arena-d-full.wav",
+      "sha256": "f1ce636acb2d1ea35578feb72e1cbd48e3b5055376e9c18f03df3b03e7ed16a3",
+      "duration": 150,
+      "trimDb": 0,
+      "kind": "track"
     },
     "camp-day": {
       "file": "camp-day.mp3",
@@ -155,5 +155,38 @@
       "trimDb": -3,
       "kind": "one-shot"
     }
+  },
+  "u6b": {
+    "sourceCommit": "8e8ab42a722afe0a681911fffd9655ba583afc36",
+    "status": "technical linear-playback integration; owner/adaptive acceptance open",
+    "tracks": [
+      {
+        "id": "arena-c",
+        "title": "Reed oath",
+        "file": "arena-c-full.wav",
+        "sha256": "5806a141fbcdb2672a988ddfe5700a24b4a36ffdbd7d1779a63ce09a2539ffca",
+        "linearPlaybackReady": true,
+        "adaptiveReady": false,
+        "productionApproved": false,
+        "sourceFile": "audition/r4/arena-C-reed-oath/master-48k.wav"
+      },
+      {
+        "id": "arena-d",
+        "title": "Lyre under iron",
+        "file": "arena-d-full.wav",
+        "sha256": "f1ce636acb2d1ea35578feb72e1cbd48e3b5055376e9c18f03df3b03e7ed16a3",
+        "linearPlaybackReady": true,
+        "adaptiveReady": false,
+        "productionApproved": false,
+        "sourceFile": "audition/r4/arena-D-lyre-under-iron/master-48k.wav"
+      }
+    ],
+    "deferred": [
+      {
+        "id": "arena-A-hide-and-iron",
+        "reason": "150 s estimate 4500 and 90 s fallback 2700 exceed remaining job cap 1000 and final observed balance headroom 689.",
+        "generated": false
+      }
+    ]
   }
 }

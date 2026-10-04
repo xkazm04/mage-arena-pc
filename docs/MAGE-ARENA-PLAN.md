@@ -266,9 +266,9 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 |---|---|---|---|---|
 | Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | complete; U6 report and evidence |
 | Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | complete; H1 report and evidence |
-| Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
-| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | not started |
-| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
+| Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | complete for landed gated deliveries; U6b report lists pending assets |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | 124 priority slots delivered; 68 blocked, read-only A14 audit in U6b |
+| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | full C/D delivered; A and adaptive certification pending, U6b audit |
 
 ## l. Session log
 
@@ -293,3 +293,17 @@ selection, procedural recoil/fall, persistent corpses, audio hooks and paged Lab
 Hit controls are wired. Owner guide extended. Full census, seeded before/after
 metrics, save/replay and native browser captures: [H1 report](waves/H1-report.md).
 Human feel and art acceptance remain unmeasured. Next: U6b fresh delivery audit.
+
+
+### 2026-10-04 - GAME U6b
+
+Read-only upstream audit: art 74b3d56, audio 8e8ab42. Imported 124 A14 reaction
+slots additively with lossless packing, per-clip anchors/scale and exact-facing
+persistent corpse keys. Wired full 150-second AU3 C/D masters through the audio
+manifest and tier playlists; retained A preview and nonquantized whole-track
+crossfades while certified adaptive transitions are unavailable. Native reaction
+and audio walks, real full-track progression, performance/memory, final gate and
+save/replay are recorded in [U6b report](waves/U6b-report.md). No upstream edits,
+generation or push. Owner feel/listening/TV acceptance is not measured. Remaining
+work: 68 priority A14 slots plus 58 other legacy requests, full A, and verified
+adaptive musical boundaries/approval when those deliveries become available.

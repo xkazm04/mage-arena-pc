@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "integration": "U2 + U4 + U5 + U6",
+  "integration": "U2 + U4 + U5 + U6 + U6b",
   "ownerAccepted": false,
   "entries": {
     "arena-verdigris-1920": {
@@ -2180,8 +2180,8 @@
       ]
     },
     "a10.packed.manifest": {
-      "file": "a10/packed/characters.json",
-      "sha256": "7959cf3600f02b92f2562666b1cd928d8e62ad4a6f0e6e2187595e9e98402f8d"
+      "file": "a14/packed/characters.json",
+      "sha256": "6ded697b18f3a93320a9bef371c2e38054b2a2884728ce5b242fa2b3fe0a7d73"
     },
     "a12.manifest": {
       "file": "a12/arena-plates.json",
@@ -2754,6 +2754,142 @@
     "a13.RUNIC-LANGUAGE.md": {
       "file": "a13/RUNIC-LANGUAGE.md",
       "sha256": "a6fc20326a031c46261b0726aeb26e39b5795a314b332db1d89f17cf01adf0e2"
+    },
+    "a10.packed.a14-cassia-ne-reaction": {
+      "file": "a14/packed/a14-cassia-ne-reaction.png",
+      "size": [
+        1456,
+        446
+      ],
+      "sha256": "e0d3d634ee4c8a2d3f88ea6d72a757599bf6e57446391aec0bcc31a3289f20ca"
+    },
+    "a10.packed.a14-cassia-se-reaction": {
+      "file": "a14/packed/a14-cassia-se-reaction.png",
+      "size": [
+        1592,
+        428
+      ],
+      "sha256": "685351fef156fe00d427c14c1baff0ecbfa523a0788c9dfe4f19ea4d91db2973"
+    },
+    "a10.packed.a14-brennic-ne-reaction": {
+      "file": "a14/packed/a14-brennic-ne-reaction.png",
+      "size": [
+        1432,
+        434
+      ],
+      "sha256": "d1cb09551b8c219c9168b97a45a1fb9e82795a10a624554dfb09063921b16d00"
+    },
+    "a10.packed.a14-brennic-se-reaction": {
+      "file": "a14/packed/a14-brennic-se-reaction.png",
+      "size": [
+        1560,
+        450
+      ],
+      "sha256": "22e18ddc1d16112b2569306d2e1a2e21868bcefe9a3f918e7f7510f1a6632db0"
+    },
+    "a10.packed.a14-garran-ne-reaction": {
+      "file": "a14/packed/a14-garran-ne-reaction.png",
+      "size": [
+        1288,
+        384
+      ],
+      "sha256": "cc69a8080f7e95ce73d759d2f6f25c79b07744e239f0a2fa7cab3f4b92d7a983"
+    },
+    "a10.packed.a14-garran-se-reaction": {
+      "file": "a14/packed/a14-garran-se-reaction.png",
+      "size": [
+        1552,
+        478
+      ],
+      "sha256": "108df646de9a4bb32a1992156a0eeea8f273fa2490dea6ed448d183f489921da"
+    },
+    "a10.packed.a14-iskar-ne-reaction": {
+      "file": "a14/packed/a14-iskar-ne-reaction.png",
+      "size": [
+        968,
+        177
+      ],
+      "sha256": "465e8110c3f007d791e635b1150453d9b4b4cee628723c3a83dc007501e864e1"
+    },
+    "a10.packed.a14-iskar-ne-collapse": {
+      "file": "a14/packed/a14-iskar-ne-collapse.png",
+      "size": [
+        1274,
+        210
+      ],
+      "sha256": "80be2bfec183e5885f638a600554f0ec22594e1212cf7cabf9405084d6884a2f"
+    },
+    "a10.packed.a14-iskar-se-reaction": {
+      "file": "a14/packed/a14-iskar-se-reaction.png",
+      "size": [
+        1352,
+        414
+      ],
+      "sha256": "cdd5d4b29f19a2c455b6da34bb9fcb134ff12ee081182d6fb396e795b6d4285d"
+    },
+    "a10.packed.a14-conscript-ne-reaction": {
+      "file": "a14/packed/a14-conscript-ne-reaction.png",
+      "size": [
+        1424,
+        450
+      ],
+      "sha256": "dc4af2aa4d2ccf807b07cfead467b9f183ce590625efe90ed8afdb0926ad1d94"
+    },
+    "a10.packed.a14-conscript-se-reaction": {
+      "file": "a14/packed/a14-conscript-se-reaction.png",
+      "size": [
+        1440,
+        438
+      ],
+      "sha256": "60594f4a385153dda0b378dd5f57c4923d3493451ef56a4a38a9d85241d401b4"
+    },
+    "a10.packed.a14-shieldman-ne-reaction": {
+      "file": "a14/packed/a14-shieldman-ne-reaction.png",
+      "size": [
+        1360,
+        442
+      ],
+      "sha256": "df70e0315528166b803267cc6e8f1041c2221308c8c4a2aa264a1b6578cf0c57"
+    },
+    "a10.packed.a14-shieldman-se-reaction": {
+      "file": "a14/packed/a14-shieldman-se-reaction.png",
+      "size": [
+        1432,
+        444
+      ],
+      "sha256": "1f2fee9f33d98f96ab06f4f76967c2d12f6fd72c229a0b51d88278c04d6dbcee"
+    },
+    "a10.packed.a14-slinger-ne-reaction": {
+      "file": "a14/packed/a14-slinger-ne-reaction.png",
+      "size": [
+        1304,
+        452
+      ],
+      "sha256": "9c7ddbb05ae9d22d5132ef0fa74ebed825a456aed7e09e509f348409ad540c34"
+    },
+    "a10.packed.a14-slinger-se-reaction": {
+      "file": "a14/packed/a14-slinger-se-reaction.png",
+      "size": [
+        1424,
+        412
+      ],
+      "sha256": "39f183cb196807d69abbe6f75ee3f5ccfe0a84eebb5baae9b1da6abbda8e0ed6"
+    },
+    "a10.packed.a14-netter-ne-reaction": {
+      "file": "a14/packed/a14-netter-ne-reaction.png",
+      "size": [
+        1344,
+        440
+      ],
+      "sha256": "b58d8f3fd81ca0db933e9adb14c16f5b90fba27dc1f52b5f75d47a9fc8a1ba08"
+    },
+    "a10.packed.a14-netter-se-reaction": {
+      "file": "a14/packed/a14-netter-se-reaction.png",
+      "size": [
+        1368,
+        440
+      ],
+      "sha256": "f9fedc014c26b819589704400733223fe22e3f8fdae3c8ef31a50940bf3f324e"
     }
   },
   "places": [

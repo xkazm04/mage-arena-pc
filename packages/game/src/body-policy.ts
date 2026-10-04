@@ -44,11 +44,23 @@ export function selectBodyClip(
     const clip = body.clips[state]?.[d];
     if (clip) return { state, direction: d, clip, held: false };
   }
-  if (state === "death" && previous) return { ...previous, held: true };
+  if ((state === "death" || state === "corpse") && previous)
+    return { ...previous, held: true };
   for (const fallback of policy.compatibleStates[state] as BodyState[])
     for (const d of ordered) {
       const clip = body.clips[fallback]?.[d];
       if (clip) return { state: fallback, direction: d, clip, held: true };
     }
   return;
+}
+
+/** A corpse must match the death's facing; a nearest-direction lookup would pop at settle. */
+export function corpseForDeath(
+  body: Body | undefined,
+  death: BodySelection,
+): BodySelection {
+  const clip = body?.clips.corpse?.[death.direction];
+  return death.state === "death" && !death.held && clip
+    ? { state: "corpse", direction: death.direction, clip, held: false }
+    : death;
 }

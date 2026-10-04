@@ -81,8 +81,7 @@ Click its numeric value, type a number, Enter applies, Escape cancels. Tabs:
 - Casting: cast/cooldown/projectile multipliers, commit fraction, recovery. A roll
   can cancel before the commit point; 1 preserves cancellation through windup.
   Cancelling keeps the mana cost and cooldown already spent.
-- Hit: damage-scaled stun, immunity tail, poise, knockback, recoil, flash and defeat timing (three pages)
-  distance at 10 damage.
+- Hit: damage-scaled stun, immunity tail, poise, knockback, recoil, flash and defeat timing (three pages).
 - Absorb: perfect window, arc angle, drain and perfect-refund multipliers.
 - Resources: mana regeneration and seconds between collar tiers.
 - Opponent: reaction-delay and aim-error multipliers. Reaction has a 250 ms floor.
@@ -181,7 +180,8 @@ prevent both damage and stun; a later hit can stop the unprotected end of a roll
 4. Defeat the opponent, then stop touching controls. The body falls and stays on
    the ground; it has no targeting ring, health bar or AI and cannot take another
    hit. Walk/aim across it where play continues. A10 death clips hold their last
-   frame; missing clips use an explicit lying fallback until A14 is integrated.
+   frame; delivered A14 collapse clips settle to matching persistent corpse keys.
+   Missing A14 clips retain the same-entity A10/procedural fallback.
 5. Let your own vitality reach zero. In ordinary practice/Games, the results panel
    leaves the body visible on the arena floor. In the Lab the DEFEATED label
    keeps the experiment inspectable. **G** refills and revives; **R** makes a new
@@ -191,3 +191,27 @@ Export the chosen tuning JSON. Report whether the stop is too long, recoil too
 small, repeated hits unfair, or the fall unclear, with the seed and exact changed
 parameters. [H1 measurements and limitations](waves/H1-report.md) and
 [native evidence](waves/H1-evidence/index.html) accompany this build.
+
+
+## U6b: delivered reactions and full arena music
+
+The four mages and four soldiers now use A14 light/heavy hits in all directions.
+The heavy threshold is 18 actual damage (presentation policy); the entire clip
+is fitted to the visual flinch time. New death/corpse pairs cover those figures
+except Garran's rear directions, which retain their original A10 death keys.
+Creature A14 reactions are still missing; their same-entity fallback remains.
+Watch the feet/ground anchor and figure size when changing from walking to a hit,
+then watch the death settle without a direction jump. Left-facing clips mirror once.
+
+With Music enabled, collar II starts the full 150-second **Reed oath (C)**;
+III starts **Lyre under iron (D)**. At a stable tier, these advance through the
+whole track and crossfade to the other track near its end. I/IV still start the
+previous short **Hide and iron (A)** preview; full-length A was deferred upstream.
+Tier changes use two-second whole-track crossfades from the entrance. Pause/resume
+keeps the current position; resetting a bout starts its entrance again. These
+are not beat/bar section transitions: verified downbeats and approved sustain
+loops have not landed. Listen for music under spells, hit/stagger cues and collar
+payoff; technical measurements do not decide your musical preference.
+
+[Delivery audit and remaining work](waves/U6b-report.md),
+[native reaction gallery](waves/U6b-evidence/index.html).

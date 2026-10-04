@@ -11,7 +11,7 @@
     },
     "logEntries": 512,
     "fetchTimeoutMs": 5000,
-    "maxAssetBytes": 16777216,
+    "maxAssetBytes": 33554432,
     "maxDurationSeconds": 240,
     "lateCueMs": 500,
     "stealFadeSeconds": 0.02
@@ -63,8 +63,8 @@
     "crossfadeSeconds": 2,
     "arena": {
       "1": ["arena-a"],
-      "2": ["arena-c"],
-      "3": ["arena-d"],
+      "2": ["arena-c", "arena-d"],
+      "3": ["arena-d", "arena-c"],
       "4": ["arena-a", "arena-d", "arena-c"]
     },
     "camp": {
@@ -77,7 +77,8 @@
       "2": -2,
       "3": -1,
       "4": 0
-    }
+    },
+    "deliveryMode": "AU3 linear whole-track tier crossfades; section/beat jumps and sustain loops disabled pending delivery gates"
   },
   "spatial": {
     "rangeM": 36,

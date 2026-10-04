@@ -492,3 +492,15 @@ Check Current and one exported variation with the same school/loadout/seed. The
 [H1 report](waves/H1-report.md) records deterministic checks, full census and
 before/after numbers. Browser proof is in [the gallery](waves/H1-evidence/index.html).
 These checks do not declare the owner's acceptance of feel or art.
+
+
+## U6b - landed A14 and AU3 deliveries (2026-10-04)
+
+Use [the updated start guide](START-HERE.md#u6b-delivered-reactions-and-full-arena-music)
+to compare light/heavy hits, death-to-corpse continuity and full C/D arena tracks.
+Check that the figure keeps its size and ground anchor as its clip changes, and
+that a corpse stays settled after the results panel opens. Listen through a
+long stable tier as well as tier transitions and pause/resume. The art/audio
+streams' technical passes are preserved separately from owner acceptance.
+Missing clips, full A and adaptive musical certification are enumerated in
+[the U6b report](waves/U6b-report.md). No new generation was requested by GAME.
