@@ -33,15 +33,37 @@ def call(entity,direction,kind,revision=None):
     scene=f'{entity}-{direction}-{kind}'
     recent=[j for j in usage['jobs'][start['jobs']:] if j['scene']==scene]
     if len(recent)>=2:raise RuntimeError('SESSION10_SLOT_TWO_ATTEMPTS')
+    if kind!='collapse' or direction=='ne':
+        design=read(ART/'covenant-battle-roster.json')['entities'][entity]
+        if design['kind']=='creature':
+            proof=read(BASE/'proofs'/f'{entity}.json')
+            if proof['verdict']!='technical-continuation-only' or sha(ROOT/proof['source'])!=proof['sha256']:raise RuntimeError('ENTITY_PROOF_REQUIRED')
     first=not any(j['input'].get('entity')==entity and j['status']=='generated' for j in usage['jobs'][start['jobs']:])
     spec=make(entity,direction,kind=kind,pilot=first,provider='agy',revision=revision)
+    front=BASE/'references'/f'{entity}-{direction}.png'
+    if kind!='collapse' and front.exists():
+        spec['references'][0]={'path':relative(front),'sha256':sha(front),'role':'locally gated front proof derived crop; original approved creature source remains reference 2'}
     if entity=='garran' and recent:
         spec['references']=spec['references'][:2]
         spec['prompt']=spec['prompt'].split(' Reference-3.png supplies')[0]
         spec['prompt']+=' CORRECTION: '+str(revision)
     spec['session']=10
     write(ART/'briefs/a14/session10'/(scene+('-retry' if revision else '')+'.json'),spec)
-    return generate(spec)
+    job=generate(spec)
+    if job['status']=='generated':
+        from covenant import inspect
+        inspect(job)
+    return job
+
+def proof(entity):
+    from a14_build import extract
+    jobs=[j for j in read(ART/'usage.json')['jobs'] if j['scene']==f'{entity}-se-collapse' and j['status']=='generated']
+    j=jobs[-1];obs=read(ART/'waves/A14/observations'/(j['id']+'.json'));grade=read(ART/'grades'/(j['id']+'.json'))
+    assert obs['verdict']!='reject' and grade['status']=='graded' and grade['verdict']!='reject'
+    records=extract(j,obs)
+    assert all(not records[i]['errors'] for i in obs.get('selections',{}).get('death',range(6)))
+    write(BASE/'proofs'/f'{entity}.json',{'verdict':'technical-continuation-only','source':j['archive'],'sha256':j['sha256'],'style_hash':sha(ART/'style-covenant.json'),'owner_accepted':False,'note':'Direct inspection, local grader route and deterministic extraction gates permit siblings, never approve art.'})
+    print(entity,'proof permits siblings')
 
 def audit(stage):
     from check_a14 import check, require
@@ -65,10 +87,18 @@ def audit(stage):
     write(ART/'delivery/a14/session10'/f'{stage}-audit.json',report)
     write(ART/'delivery/a14/session10/current.json',report)
     write(ART/'delivery/a14/spend.json',report)
+    manifest=read(ART/'delivery/a14/characters.json')
+    old=read(ART/'delivery/a14/stage2/backlog.json')['priority2NonReactionLegacySlots']
+    remaining=[]
+    for slot in old:
+        e,s,d=slot.split(':')[:3]
+        if d not in manifest['entities'].get(e,{}).get('clips',{}).get(s,{}):remaining.append(slot)
+    write(ART/'delivery/a14/session10/backlog.json',{'priority':manifest['backlog'],'otherLegacy':remaining,'priorityMissing':len(manifest['backlog']),'otherMissing':len(remaining),'owner_accepted':False,'boundedAttemptFailures':'Mire Maw rear collapse, Thornback rear collapse and hits each used both session attempts; no third attempt authorized.'})
     print('Session 10',stage,':',charges,'charges;',result['projectCharges'],'project;',result['clips'],'slots')
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('entity');p.add_argument('direction',nargs='?');p.add_argument('--kind',default='collapse');p.add_argument('--revision');a=p.parse_args()
     if a.entity=='prepare':prepare()
     elif a.entity=='audit':audit(a.direction)
+    elif a.entity=='proof':proof(a.direction)
     else:call(a.entity,a.direction,a.kind,a.revision)

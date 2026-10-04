@@ -1,0 +1,33 @@
+{
+  "wave": "A14",
+  "id": "thornback-se-collapse",
+  "pilot": false,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "agy"
+  ],
+  "aspect_ratio": "1:1",
+  "references": [
+    {
+      "path": "art/waves/A14/references/thornback-se.png",
+      "sha256": "c4b275b9aa03015232a2ebe38ed630b93b7af69b41ed9aaee9de406d5ae8b014",
+      "role": "identity"
+    },
+    {
+      "path": "art/review/sources/a3c-thornback-poses-agy-a01.png",
+      "sha256": "3c347da56718cf5bc40de09caefb8f97d6237d2eefac690f0ef77b74ad4c14ca",
+      "role": "approved Covenant creature anatomy, palette and style"
+    }
+  ],
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is the APPROVED COVENANT CREATURE SOURCE, the authority for anatomy, palette and painting style. Use BOTH references visually. Match its lighter stylized painted values and simple sculpted shapes exactly; do not darken into realistic horror, add photoreal skin or fur, or add black shadows. Reference-1 is an A10 master or a crop of that approved source. Generate the requested anatomical view even if the reference is a rear view. This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. Raw magical heavy four-legged stone beast, squat broad body, blunt mineral horns and tall angular thorn-like back plates, ochre mineral seams, heavy blunt feet, small armored head. Charging wedge silhouette; no gore. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete sequential poses of the same creature. Row 1: 1 ready animal stance; 2 legs fold and chest lowers; 3 belly and chest very low. Row 2: 4 creature tips gently onto its side; 5 head, chest and belly touch the ground; 6 fully still LYING FLAT ON ITS SIDE, head resting on ground, legs relaxed. Keep its intact animal anatomy, no human posture or equipment. The final body lies on the ground, never standing, crouching or sitting. Non-graphic creature collapsing and lying on the ground, no gore, no blood, no injury detail. Each complete creature occupies only HALF its spacious cell, with all tail, horns, antennae and wings inside wide empty gutters. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only. Keep the approved BLUE illuminated mineral seams as well as ochre cracks. The approved image outranks any conflicting written color description. CORRECTION: All poses face FRONT-RIGHT, show face and chest from first pose. Do not copy rear-facing reference stance. Six poses ONLY, three columns two rows. Pose 4 beast tips ONTO ITS SIDE. Poses 5 and 6 lie ON SIDE with flank and side of head flat against ground and FOUR LIMBS extended sideways relaxed, never underneath supporting its weight. Back plates tilt sideways with torso. Clear side-lying final silhouette, not a crouching or kneeling charging beast. No text or labels.",
+  "entity": "thornback",
+  "direction": "se",
+  "kind": "collapse",
+  "grid": [
+    3,
+    2
+  ],
+  "referenceConsumption": "agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual",
+  "correction_of": "a14-thornback-se-collapse-agy-a01",
+  "session": 10
+}

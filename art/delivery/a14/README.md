@@ -1,11 +1,14 @@
 # A14 additive character clips
 
-Session 10 stage 1: 128/192 slots. Garran ne/nw collapse and corpse are present;
-all eight humanoids have all four priority states in all directions. Two new
-agy images were charged (one rejected), project total 344. Creature work follows.
-The schema and merge procedure are unchanged; merging this updated manifest
-adds the clips without consumer code changes. `session10/current.json` records
-current counts and provider state. The session-9 boundary below is historical.
+Session 10 stage 2: **180/192 priority slots**. All humanoids are complete.
+Cinder hound and Hush Moth have all four priority states in four directions;
+Mire Maw lacks rear death/corpse, and Thornback lacks rear hits/death/corpse.
+Those twelve slots failed their two-attempt bounds and remain absent. The
+session used 22 agy calls/images/charges (project 364), Grok unused. Current
+counts and exact remaining queue are in `session10/current.json` and
+`session10/backlog.json`. The schema and merge procedure remain unchanged:
+merge these entries over A10 without consumer code changes. Historical
+session-9 notes below are retained as history.
 
 `characters.json` follows the A10 `schemaVersion:1` page/entity/clip/frame schema.
 Merge present entity/state/direction entries over A10; preserve its other clips.
@@ -14,7 +17,7 @@ and canvas consumer, including atlas hash checks. Paths are repository-relative.
 Missing/rejected clips remain explicit; the consumer returns false for them.
 
 States: `hit-light` (four keys, 160ms), `hit-heavy` (six keys, 240ms suggested
-visual recovery), `death` (six or seven keys, 600ms), `corpse` (one static key, indefinite).
+visual recovery), `death` (four, six or seven keys, 600ms), `corpse` (one static key, indefinite).
 Legacy `hit` aliases `hit-light`. The game may retime playback to its stun data;
 art does not prolong the simulation's interruption. Both hit clips recover.
 Every damaging hit, casting cancellation, poise, immunity and recoil mechanics

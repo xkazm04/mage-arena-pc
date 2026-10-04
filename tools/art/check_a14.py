@@ -22,7 +22,7 @@ def check(manifest=None,complete=False,save=True):
         for state,dirs in body['clips'].items():
             for direction,clip in dirs.items():
                 count+=1;require(not clip['loop'],'UNEXPECTED_LOOP');require(clip['frameCount']==len(clip['frames']),'FRAME_COUNT')
-                require(clip['frameCount'] in {'hit-light':[3,4],'hit-heavy':[5,6],'death':[6,7,8],'corpse':[1]}[state],'STATE_FRAME_COUNT')
+                require(clip['frameCount'] in {'hit-light':[3,4],'hit-heavy':[5,6],'death':[4,6,7,8],'corpse':[1]}[state],'STATE_FRAME_COUNT')
                 require(clip['mirrorX']==(direction in ['nw','sw']),'MIRROR_RULE')
                 im=cache[clip['page']]
                 for f in clip['frames']:

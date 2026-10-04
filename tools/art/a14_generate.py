@@ -44,6 +44,15 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
                     'Final body and wings must rest ON the ground, no hovering. Six fine insect legs, two antennae, four intact wings. '
                     'Non-graphic creature collapsing and lying on the ground, no gore, no blood, no injury detail. '
                     'Each entire moth occupies only HALF its spacious cell; very wide empty magenta gutters.')
+    elif kind=='hits':
+        content=('Exactly FIVE columns and TWO rows: TEN complete poses, same anatomical scale, no text. '
+            'Read left to right: poses 1-4 QUICK FLINCH: 1 ready; 2 head and shoulders jerk backward visibly; 3 legs catch balance; 4 fully recovered ready. '
+            'Poses 5-10 HEAVY STAGGER: 5 ready; 6 abrupt head and torso recoil; 7 deepest hunched recoil and visibly lost balance; '
+            '8 legs splay and bend to catch weight; 9 pushing back toward ready; 10 fully recovered ready. '
+            'Show clear torso articulation and varied leg support; not repeated standing duplicates. '
+            'Keep FOUR animal feet and natural creature anatomy, no rearing, no human arms. No falling or lying poses in this sheet. '
+            'The difference between ready and peak recoil must read at small game size. Wide empty gutters, no clipped parts. ')
+        if entity=='hush_moth':content=content.replace('legs catch balance','wings counter-sweep to catch balance').replace('legs splay and bend to catch weight','wings sweep low to catch descent').replace('varied leg support','varied wing sweeps').replace('Keep FOUR animal feet and natural creature anatomy, no rearing, no human arms.','Four moth wings, six fine insect legs, thorax and two antennae. Keep hovering throughout, wing sweeps and thorax recoil, no human anatomy.')
     else:raise ValueError(kind)
     if creature and kind=='reaction':
         if entity=='hush_moth':
@@ -72,10 +81,12 @@ def make(entity,direction,kind='reaction',pilot=False,provider='agy',revision=No
     if creature:
         prompt=prompt.replace('Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose.',
             'Reference-2.png is the APPROVED COVENANT CREATURE SOURCE, the authority for anatomy, palette and painting style. Use BOTH references visually. Match its lighter stylized painted values and simple sculpted shapes exactly; do not darken into realistic horror, add photoreal skin or fur, or add black shadows. Reference-1 is an A10 master or a crop of that approved source. Generate the requested anatomical view even if the reference is a rear view.')
+        if entity=='thornback':prompt+=' Keep the approved BLUE illuminated mineral seams as well as ochre cracks. The approved image outranks any conflicting written color description.'
     spec={'wave':'A14','id':f'{entity}-{direction}-{kind}','pilot':pilot,'style_hash':sha(ART/'style-covenant.json'),
         'providers':[provider],'aspect_ratio':'1:1','references':[{'path':relative(p),'sha256':sha(p),'role':['identity','Moonchalk painting bar','lying posture endpoint'][i]} for i,p in enumerate(refs)],'prompt':prompt,'entity':entity,'direction':direction,'kind':kind,'grid':[3,2] if kind=='collapse' else [4,4],
         'referenceConsumption':'agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual'}
     if creature:spec['references'][1]['role']='approved Covenant creature anatomy, palette and style'
+    if kind=='hits':spec['grid']=[5,2]
     if revision:
         old=[j for j in read(ART/'usage.json')['jobs'] if j.get('wave')=='A14' and j['scene']==spec['id']]
         spec['correction_of']=old[-1]['id'];spec['prompt']+=' CORRECTION: '+revision

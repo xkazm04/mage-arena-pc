@@ -103,7 +103,7 @@ def separated_sheet(image, columns=3):
     return sorted(rows,key=lambda r:(r[1],r[0]))
 
 
-def isolated_sheet(image,columns=3,excluded_indices=(),row_count=2,retain_clipped_for_rejection=False,keyer=adaptive_magenta):
+def isolated_sheet(image,columns=3,excluded_indices=(),row_count=2,retain_clipped_for_rejection=False,keyer=adaptive_magenta,slot_centers=None):
     """Separate complete objects even when their row bounding boxes overlap.
 
     Pixels belong to the nearest opaque connected component. Component centroids
@@ -123,10 +123,10 @@ def isolated_sheet(image,columns=3,excluded_indices=(),row_count=2,retain_clippe
         yy,xx=np.where(labels==ident)
         col=min(columns-1,int(float(xx.mean())/image.width*columns))
         row=min(row_count-1,int(float(yy.mean())/image.height*row_count))
-        groups[ident]=row*columns+col+1
+        groups[ident]=(min(range(len(slot_centers)),key=lambda i:(float(xx.mean())-slot_centers[i][0])**2+(float(yy.mean())-slot_centers[i][1])**2)+1 if slot_centers else row*columns+col+1)
     assignment=groups[labels[nearest[0],nearest[1]]]
     rows=[]
-    for index in range(columns*row_count):
+    for index in range(len(slot_centers) if slot_centers else columns*row_count):
         if index in excluded_indices:continue
         own=rgba.copy();own[assignment!=index+1]=0
         full=Image.fromarray(own);metric=alpha_metrics(full)

@@ -267,10 +267,11 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 | Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | not started |
 | Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
 | Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
-| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | PARTIAL; providers blocked; see A14.1 and A14.2 |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | PARTIAL; session 10 agy restored; 180/192 priority slots; see A14.3 stages |
 | Art | A14.1 | Hit-light, hit-heavy, collapse and persistent lying poses | D36-D38 | 124/192 slots; 68 explicit missing; owner-review; commit containing A14-1 note |
 | Art | A14.2 | Remaining clips, creature views and cheap gait corrections | A14.1, D38 | BLOCKED generation; 18-loop audit complete, no safe correction; 58 non-reaction slots missing; zero spend |
 | Art | A14.3-1 | Session 10 humanoid completion | D36-D38 | 128/192 total; all humanoid priority slots present; gates pass; 2 new charges, 344 total; owner-review |
+| Art | A14.3-2 | Session 10 creature collapse and reactions | D36-D38 | 180/192 priority slots; 12 bounded-attempt gaps; 22 session charges, 364 total; owner-review |
 | Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
 
 ## l. Session log
@@ -287,3 +288,6 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 
 
 **ART session 10 / A14.3 stage 1 / 2026-10-04:** Garran rear collapse and persistent corpse delivered; all eight humanoids complete, 128/192 priority slots. Two fresh agy calls/images/charges, one reject, project 344; old latch and failure records preserved, Grok unavailable. Source/delivery gates, 52-product byte-identical rebuild, five browser cases and 16 targeted tests pass. All 378 protected art files and inherited ledger rows unchanged. Design: docs/waves/A14-3-stage1-garran.md. Owner feel and game integration unmeasured. Next: reference-guided creature collapse, then reactions; no push.
+
+
+**ART session 10 / A14.3 stage 2 / 2026-10-04:** Added 52 creature priority slots; total 180/192. Twelve rear Mire Maw/Thornback slots remain missing after two attempts per source slot. Twenty stage calls, 22 session calls/images/charges, project 364; agy clear, Grok unused and latched. Original Covenant creature images passed on every call, explicit crop/selection/scale/pivot records and local reject-or-owner grading. Standalone corpse overwrite detected and fixed by persistence checks; final delivery, 77-product portable checks and all 90 tests pass. Browser five cases/44 persistent atlas corpses pass. Design: docs/waves/A14-3-stage2-creatures.md. Owner animation and game integration unmeasured. Next: budgeted remaining creature motion and legacy queue; no push.

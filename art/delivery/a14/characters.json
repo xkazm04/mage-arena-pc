@@ -184,6 +184,136 @@
       ],
       "gutter": 2,
       "id": "a14-netter-se-reaction"
+    },
+    {
+      "file": "art/delivery/a14/atlases/cinder_hound-ne-collapse.png",
+      "sha256": "fa4bd7eb148cb6dc4ed068df64c41e3b2c9dcfc2209546ffc915746f16f1b926",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-cinder_hound-ne-collapse"
+    },
+    {
+      "file": "art/delivery/a14/atlases/cinder_hound-ne-hits.png",
+      "sha256": "b3e8af594ccad39b8113099fddba50cadbee52cdc3078661d0f3b38a63944c16",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-cinder_hound-ne-hits"
+    },
+    {
+      "file": "art/delivery/a14/atlases/cinder_hound-se-collapse.png",
+      "sha256": "f11b359f7eae59ffe4327e02776cc2154e837a1a726e143842d2894e3279d381",
+      "size": [
+        1552,
+        1164
+      ],
+      "gutter": 2,
+      "id": "a14-cinder_hound-se-collapse"
+    },
+    {
+      "file": "art/delivery/a14/atlases/cinder_hound-se-hits.png",
+      "sha256": "ccf8b716489cd7950979f4195259f26b83eaf75906e60edbe5a2b4215564ee06",
+      "size": [
+        1552,
+        1164
+      ],
+      "gutter": 2,
+      "id": "a14-cinder_hound-se-hits"
+    },
+    {
+      "file": "art/delivery/a14/atlases/mire_maw-ne-hits.png",
+      "sha256": "af51a0fa77988abce2beff4adb8854c8d5c0fb9dd9a444840a1311648183fd8a",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-mire_maw-ne-hits"
+    },
+    {
+      "file": "art/delivery/a14/atlases/mire_maw-se-collapse.png",
+      "sha256": "9313a2cf72fa6e85e591fd93656260648748b25a651b5e198051048fa90f687c",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-mire_maw-se-collapse"
+    },
+    {
+      "file": "art/delivery/a14/atlases/mire_maw-se-hits.png",
+      "sha256": "8b0a436c346981e144ef309d0e5dd40b366841376531c646952ecb59f2017fe4",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-mire_maw-se-hits"
+    },
+    {
+      "file": "art/delivery/a14/atlases/thornback-se-collapse.png",
+      "sha256": "380879200ba1531adef5214a221104719340a3555a5e0d243c4b736e0b22be7a",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-thornback-se-collapse"
+    },
+    {
+      "file": "art/delivery/a14/atlases/thornback-se-hits.png",
+      "sha256": "2774966f69cf33e3874159feb489b781970ea3ee6a32e054130455666b38bb02",
+      "size": [
+        1552,
+        1164
+      ],
+      "gutter": 2,
+      "id": "a14-thornback-se-hits"
+    },
+    {
+      "file": "art/delivery/a14/atlases/hush_moth-ne-collapse.png",
+      "sha256": "f5f206537a89c3da0df53813b6fd2310e5dd5b01900d8fedff42345c6b525a0d",
+      "size": [
+        1552,
+        1164
+      ],
+      "gutter": 2,
+      "id": "a14-hush_moth-ne-collapse"
+    },
+    {
+      "file": "art/delivery/a14/atlases/hush_moth-ne-hits.png",
+      "sha256": "a0ebb938b8e75b654f519ee950997b47ff59e2eb98dbe608cb35be7f7bf815f3",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-hush_moth-ne-hits"
+    },
+    {
+      "file": "art/delivery/a14/atlases/hush_moth-se-collapse.png",
+      "sha256": "2873dbbde6865e7f1c0e134de2d5a8ab71daa8c9d6793ff853046959dc101c87",
+      "size": [
+        1552,
+        388
+      ],
+      "gutter": 2,
+      "id": "a14-hush_moth-se-collapse"
+    },
+    {
+      "file": "art/delivery/a14/atlases/hush_moth-se-hits.png",
+      "sha256": "290b74f0d87d2a346c7bbaeffaf0bb2abc24c4462433606dc3d805d4e3b1dc54",
+      "size": [
+        1552,
+        776
+      ],
+      "gutter": 2,
+      "id": "a14-hush_moth-se-hits"
     }
   ],
   "entities": {
@@ -9338,6 +9468,3816 @@
         }
       ],
       "owner_accepted": false
+    },
+    "cinder_hound": {
+      "kind": "creature",
+      "clips": {
+        "death": {
+          "ne": {
+            "page": "a14-cinder_hound-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 100
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 120
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 140
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              4,
+              5,
+              6
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "85108ca8b010fda3e8d33a17defe3779d9eb9f5e2cc041b68ff87c53118030fc",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "nw": {
+            "page": "a14-cinder_hound-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 100
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 120
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 140
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              4,
+              5,
+              6
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "85108ca8b010fda3e8d33a17defe3779d9eb9f5e2cc041b68ff87c53118030fc",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "se": {
+            "page": "a14-cinder_hound-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 100
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 120
+              },
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 140
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              4,
+              5,
+              7,
+              8
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-collapse-agy-a01.jpg",
+            "sourceSha256": "38a28e47a697a67295e6445ed6301bcb8a1c62f841987c6aa7eccc7ec6937e72",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "sw": {
+            "page": "a14-cinder_hound-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 100
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 120
+              },
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 140
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              4,
+              5,
+              7,
+              8
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-collapse-agy-a01.jpg",
+            "sourceSha256": "38a28e47a697a67295e6445ed6301bcb8a1c62f841987c6aa7eccc7ec6937e72",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          }
+        },
+        "corpse": {
+          "ne": {
+            "page": "a14-cinder_hound-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              6
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "85108ca8b010fda3e8d33a17defe3779d9eb9f5e2cc041b68ff87c53118030fc",
+            "origin": "derived from exact last generated collapse key",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/cinder_hound-ne.png",
+              "sha256": "d00a106948a29267ada08216cb02c38fc0eddfb96af5ea6aabd842575bb1df46",
+              "mirrorAlreadyApplied": false,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "nw": {
+            "page": "a14-cinder_hound-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              6
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "85108ca8b010fda3e8d33a17defe3779d9eb9f5e2cc041b68ff87c53118030fc",
+            "origin": "derived from exact last generated collapse key; horizontal mirror",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/cinder_hound-nw.png",
+              "sha256": "9f5c61f81b47a6775d7db6804f962bbbc6ea26c711ce7642b006fe14673a2702",
+              "mirrorAlreadyApplied": true,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "se": {
+            "page": "a14-cinder_hound-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              8
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-collapse-agy-a01.jpg",
+            "sourceSha256": "38a28e47a697a67295e6445ed6301bcb8a1c62f841987c6aa7eccc7ec6937e72",
+            "origin": "derived from exact last generated collapse key",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/cinder_hound-se.png",
+              "sha256": "35a9af66abcdf791ece4d8e270b77bf1e14ead7227ce881901bbb2025d06be98",
+              "mirrorAlreadyApplied": false,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "sw": {
+            "page": "a14-cinder_hound-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              8
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-collapse-agy-a01.jpg",
+            "sourceSha256": "38a28e47a697a67295e6445ed6301bcb8a1c62f841987c6aa7eccc7ec6937e72",
+            "origin": "derived from exact last generated collapse key; horizontal mirror",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/cinder_hound-sw.png",
+              "sha256": "ff1d0a5f76fcfa1b8f625637cee9b3155ca67c023cb5dc02afd4c41014a4c63d",
+              "mirrorAlreadyApplied": true,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          }
+        },
+        "hit-light": {
+          "ne": {
+            "page": "a14-cinder_hound-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              3,
+              6,
+              7,
+              11
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-hits-agy-a01.jpg",
+            "sourceSha256": "2261407f7c0605c2134ab10516dcc73a67f8c4f6be7430610a295fe49a389bd1",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "nw": {
+            "page": "a14-cinder_hound-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              3,
+              6,
+              7,
+              11
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-hits-agy-a01.jpg",
+            "sourceSha256": "2261407f7c0605c2134ab10516dcc73a67f8c4f6be7430610a295fe49a389bd1",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "se": {
+            "page": "a14-cinder_hound-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-hits-agy-a01.jpg",
+            "sourceSha256": "8c681f0171ec544925501ea5cc31211c3c5a998013e95010abed273d35de8333",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "requested generated state sequence",
+            "uniqueGeneratedKeys": 4
+          },
+          "sw": {
+            "page": "a14-cinder_hound-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-hits-agy-a01.jpg",
+            "sourceSha256": "8c681f0171ec544925501ea5cc31211c3c5a998013e95010abed273d35de8333",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "requested generated state sequence",
+            "uniqueGeneratedKeys": 4
+          }
+        },
+        "hit-heavy": {
+          "ne": {
+            "page": "a14-cinder_hound-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              3,
+              6,
+              7,
+              8,
+              9,
+              11
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-hits-agy-a01.jpg",
+            "sourceSha256": "2261407f7c0605c2134ab10516dcc73a67f8c4f6be7430610a295fe49a389bd1",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "nw": {
+            "page": "a14-cinder_hound-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              3,
+              6,
+              7,
+              8,
+              9,
+              11
+            ],
+            "source": "art/review/sources/a14-cinder_hound-ne-hits-agy-a01.jpg",
+            "sourceSha256": "2261407f7c0605c2134ab10516dcc73a67f8c4f6be7430610a295fe49a389bd1",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "se": {
+            "page": "a14-cinder_hound-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              4,
+              5,
+              6,
+              7,
+              9
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-hits-agy-a01.jpg",
+            "sourceSha256": "8c681f0171ec544925501ea5cc31211c3c5a998013e95010abed273d35de8333",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "sw": {
+            "page": "a14-cinder_hound-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              4,
+              5,
+              6,
+              7,
+              9
+            ],
+            "source": "art/review/sources/a14-cinder_hound-se-hits-agy-a01.jpg",
+            "sourceSha256": "8c681f0171ec544925501ea5cc31211c3c5a998013e95010abed273d35de8333",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          }
+        }
+      },
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "bodyHeightMasterPx": 160,
+      "designBodyHeight1080": 60.75,
+      "designSize1080": [
+        145.8,
+        145.8
+      ],
+      "scaleContract": "scale-contract-v3",
+      "sources": [
+        {
+          "source": "art/review/sources/a14-cinder_hound-ne-collapse-agy-a01.jpg",
+          "sha256": "85108ca8b010fda3e8d33a17defe3779d9eb9f5e2cc041b68ff87c53118030fc",
+          "job": "a14-cinder_hound-ne-collapse-agy-a01",
+          "observation": "art/waves/A14/observations/a14-cinder_hound-ne-collapse-agy-a01.json",
+          "bodyHeightSourcePx": 340,
+          "facing": "ne",
+          "nativeBodyPixelsPerDisplayPixel1440": 4.197530864197531,
+          "limitations": "Seven irregularly spaced poses, selected six progressive rear-right collapse keys. Final body and muzzle rest low with limbs relaxed on side; back planes remain visible. Approved charcoal plates and ember seams retained. Unequal row layout cropped explicitly; late keys appear somewhat larger, owner review for anatomical scale in motion."
+        },
+        {
+          "source": "art/review/sources/a14-cinder_hound-ne-hits-agy-a01.jpg",
+          "sha256": "2261407f7c0605c2134ab10516dcc73a67f8c4f6be7430610a295fe49a389bd1",
+          "job": "a14-cinder_hound-ne-hits-agy-a01",
+          "observation": "art/waves/A14/observations/a14-cinder_hound-ne-hits-agy-a01.json",
+          "bodyHeightSourcePx": 260,
+          "facing": "ne",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.2098765432098766,
+          "limitations": "Twelve poses in 4/2/3/3 layout. Top ready duplicates excluded; both hit clips select a clear lifted-neck recoil and braced recovery from later stronger keys. Rear dorsal plates retained. Some keys resemble a bark/lunge, owner review for hit readability. Authored component centres isolate the irregular layout without cutting overlapping pose bounding boxes; no body reconstruction."
+        },
+        {
+          "source": "art/review/sources/a14-cinder_hound-se-collapse-agy-a01.jpg",
+          "sha256": "38a28e47a697a67295e6445ed6301bcb8a1c62f841987c6aa7eccc7ec6937e72",
+          "job": "a14-cinder_hound-se-collapse-agy-a01",
+          "observation": "art/waves/A14/observations/a14-cinder_hound-se-collapse-agy-a01.json",
+          "bodyHeightSourcePx": 300,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.7037037037037037,
+          "limitations": "Nine poses supplied instead of six. Front-right chest and muzzle anatomy retained; selected progressive lowering then side-lying endpoint. Body intact, canine only; angular charcoal plates and orange seams match approved Covenant source. Flame tail persists as identity. Owner review for front-angle strength and timing."
+        },
+        {
+          "source": "art/review/sources/a14-cinder_hound-se-hits-agy-a01.jpg",
+          "sha256": "8c681f0171ec544925501ea5cc31211c3c5a998013e95010abed273d35de8333",
+          "job": "a14-cinder_hound-se-hits-agy-a01",
+          "observation": "art/waves/A14/observations/a14-cinder_hound-se-hits-agy-a01.json",
+          "bodyHeightSourcePx": 240,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 2.962962962962963,
+          "limitations": "Ten poses arranged 4/3/3. Clear neck recoil and stronger animal balance loss; heavy keys reselected to start and finish ready. Forelegs lift in recoil despite grounded-paw prompt; remains quadruped anatomy. Some purple matte spill within dark plates; local keying and approved palette gate applied, owner review for pigment continuity."
+        }
+      ],
+      "owner_accepted": false
+    },
+    "mire_maw": {
+      "kind": "creature",
+      "clips": {
+        "hit-light": {
+          "ne": {
+            "page": "a14-mire_maw-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              5,
+              4,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e5cf894f50fa63900c2c1aa2407f0b59801c969803f75694d526663917615809",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "nw": {
+            "page": "a14-mire_maw-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              5,
+              4,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e5cf894f50fa63900c2c1aa2407f0b59801c969803f75694d526663917615809",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "se": {
+            "page": "a14-mire_maw-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              3,
+              7,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-hits-agy-a01.jpg",
+            "sourceSha256": "f8806efb86f688d134110aebd9ab1ac7ef756543a7193eb57246b70f3e6c4808",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "sw": {
+            "page": "a14-mire_maw-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              3,
+              7,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-hits-agy-a01.jpg",
+            "sourceSha256": "f8806efb86f688d134110aebd9ab1ac7ef756543a7193eb57246b70f3e6c4808",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          }
+        },
+        "hit-heavy": {
+          "ne": {
+            "page": "a14-mire_maw-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              5,
+              4,
+              3,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e5cf894f50fa63900c2c1aa2407f0b59801c969803f75694d526663917615809",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "nw": {
+            "page": "a14-mire_maw-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              5,
+              4,
+              3,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e5cf894f50fa63900c2c1aa2407f0b59801c969803f75694d526663917615809",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "se": {
+            "page": "a14-mire_maw-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 60
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              }
+            ],
+            "frameCount": 5,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              5,
+              6,
+              7,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-hits-agy-a01.jpg",
+            "sourceSha256": "f8806efb86f688d134110aebd9ab1ac7ef756543a7193eb57246b70f3e6c4808",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 5
+          },
+          "sw": {
+            "page": "a14-mire_maw-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 60
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              }
+            ],
+            "frameCount": 5,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              5,
+              6,
+              7,
+              8
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-hits-agy-a01.jpg",
+            "sourceSha256": "f8806efb86f688d134110aebd9ab1ac7ef756543a7193eb57246b70f3e6c4808",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 5
+          }
+        },
+        "death": {
+          "se": {
+            "page": "a14-mire_maw-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 60
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 65
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 110
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 125
+              }
+            ],
+            "frameCount": 7,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-collapse-agy-a01.jpg",
+            "sourceSha256": "4729ecdde19d9504afd430e3b306721b5d16a9f50988d4b4ca63c65168439693",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 7,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "sw": {
+            "page": "a14-mire_maw-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 60
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 65
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 110
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 125
+              }
+            ],
+            "frameCount": 7,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-collapse-agy-a01.jpg",
+            "sourceSha256": "4729ecdde19d9504afd430e3b306721b5d16a9f50988d4b4ca63c65168439693",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 7,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          }
+        },
+        "corpse": {
+          "se": {
+            "page": "a14-mire_maw-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              6
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-collapse-agy-a01.jpg",
+            "sourceSha256": "4729ecdde19d9504afd430e3b306721b5d16a9f50988d4b4ca63c65168439693",
+            "origin": "derived from exact last generated collapse key",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/mire_maw-se.png",
+              "sha256": "f9eda304587495d87f76352b439d99a2199d78c457c910cc6b7e55e11478aed3",
+              "mirrorAlreadyApplied": false,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "sw": {
+            "page": "a14-mire_maw-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              6
+            ],
+            "source": "art/review/sources/a14-mire_maw-se-collapse-agy-a01.jpg",
+            "sourceSha256": "4729ecdde19d9504afd430e3b306721b5d16a9f50988d4b4ca63c65168439693",
+            "origin": "derived from exact last generated collapse key; horizontal mirror",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/mire_maw-sw.png",
+              "sha256": "bc250473082547b16112cdc5a27527020c423db2ed8fe9104199b025a56a3d03",
+              "mirrorAlreadyApplied": true,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          }
+        }
+      },
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "bodyHeightMasterPx": 160,
+      "designBodyHeight1080": 60.75,
+      "designSize1080": [
+        145.8,
+        145.8
+      ],
+      "scaleContract": "scale-contract-v3",
+      "sources": [
+        {
+          "source": "art/review/sources/a14-mire_maw-ne-hits-agy-a01.jpg",
+          "sha256": "e5cf894f50fa63900c2c1aa2407f0b59801c969803f75694d526663917615809",
+          "job": "a14-mire_maw-ne-hits-agy-a01",
+          "observation": "art/waves/A14/observations/a14-mire_maw-ne-hits-agy-a01.json",
+          "bodyHeightSourcePx": 240,
+          "facing": "ne",
+          "nativeBodyPixelsPerDisplayPixel1440": 2.962962962962963,
+          "limitations": "Nine poses supplied. Front-facing keys 6 and 7 excluded. Rear keys retain mossy back; strongest recoil tucks the hind leg and lifts the torso like a small startled hop, then settles ready. Light/heavy share generated keys with different reselection and timing. No invented extra frames; owner review for subtle hit silhouette."
+        },
+        {
+          "source": "art/review/sources/a14-mire_maw-se-collapse-agy-a01.jpg",
+          "sha256": "4729ecdde19d9504afd430e3b306721b5d16a9f50988d4b4ca63c65168439693",
+          "job": "a14-mire_maw-se-collapse-agy-a01",
+          "observation": "art/waves/A14/observations/a14-mire_maw-se-collapse-agy-a01.json",
+          "bodyHeightSourcePx": 280,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.45679012345679,
+          "limitations": "Seven poses in a 3/2/2 layout. Front-right face and turquoise throat remain visible while chest and jaw descend. Final closed-eye amphibian lies flat on its belly with relaxed splayed limbs; no hovering or crouched torso. Approved moss-green volume and cyan throat retained. Late poses somewhat broader; owner motion review remains open."
+        },
+        {
+          "source": "art/review/sources/a14-mire_maw-se-hits-agy-a01.jpg",
+          "sha256": "f8806efb86f688d134110aebd9ab1ac7ef756543a7193eb57246b70f3e6c4808",
+          "job": "a14-mire_maw-se-hits-agy-a01",
+          "observation": "art/waves/A14/observations/a14-mire_maw-se-hits-agy-a01.json",
+          "bodyHeightSourcePx": 285,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.5185185185185186,
+          "limitations": "Nine generated front poses. Decorative motion-mark key 1 excluded. Short reaction uses head/chest drop then braced recovery; heavy uses deeper foreleg catch and throat/head lean. Clips share some keys and differ in selection and timing; no claim of ten distinct requested keys. Moss-green and turquoise anatomy retained, recoil strength requires owner motion review."
+        }
+      ],
+      "owner_accepted": false
+    },
+    "thornback": {
+      "kind": "creature",
+      "clips": {
+        "death": {
+          "se": {
+            "page": "a14-thornback-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 60
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 65
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 110
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 125
+              }
+            ],
+            "frameCount": 7,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "source": "art/review/sources/a14-thornback-se-collapse-agy-a02.jpg",
+            "sourceSha256": "ba989575ff241c8e801d0f19f584e758c24ce2b5a7b2a0bce07c3d424987ee38",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 7,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "sw": {
+            "page": "a14-thornback-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 60
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 65
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 110
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 125
+              }
+            ],
+            "frameCount": 7,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "source": "art/review/sources/a14-thornback-se-collapse-agy-a02.jpg",
+            "sourceSha256": "ba989575ff241c8e801d0f19f584e758c24ce2b5a7b2a0bce07c3d424987ee38",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 7,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          }
+        },
+        "corpse": {
+          "se": {
+            "page": "a14-thornback-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              6
+            ],
+            "source": "art/review/sources/a14-thornback-se-collapse-agy-a02.jpg",
+            "sourceSha256": "ba989575ff241c8e801d0f19f584e758c24ce2b5a7b2a0bce07c3d424987ee38",
+            "origin": "derived from exact last generated collapse key",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/thornback-se.png",
+              "sha256": "3528855c97ebc1808a00ea9e85b30a556378f186293f13d1540768cd4f1025aa",
+              "mirrorAlreadyApplied": false,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "sw": {
+            "page": "a14-thornback-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              6
+            ],
+            "source": "art/review/sources/a14-thornback-se-collapse-agy-a02.jpg",
+            "sourceSha256": "ba989575ff241c8e801d0f19f584e758c24ce2b5a7b2a0bce07c3d424987ee38",
+            "origin": "derived from exact last generated collapse key; horizontal mirror",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/thornback-sw.png",
+              "sha256": "0c1185d68f097f15946b2175f4a14eff8919c2479496782003c482ee58af9366",
+              "mirrorAlreadyApplied": true,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          }
+        },
+        "hit-light": {
+          "se": {
+            "page": "a14-thornback-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "source": "art/review/sources/a14-thornback-se-hits-agy-a01.jpg",
+            "sourceSha256": "212c3e0a3b913c5e159805280d58d7f0c4fe804d64b8d788d5ecfbee065fa277",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "requested generated state sequence",
+            "uniqueGeneratedKeys": 4,
+            "sourceScaleFactors": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scaleNormalizationNote": "Authored uniform whole-body scale per source key/group, measured from repeated ready anatomy; no limb reshaping."
+          },
+          "sw": {
+            "page": "a14-thornback-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "source": "art/review/sources/a14-thornback-se-hits-agy-a01.jpg",
+            "sourceSha256": "212c3e0a3b913c5e159805280d58d7f0c4fe804d64b8d788d5ecfbee065fa277",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "requested generated state sequence",
+            "uniqueGeneratedKeys": 4,
+            "sourceScaleFactors": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scaleNormalizationNote": "Authored uniform whole-body scale per source key/group, measured from repeated ready anatomy; no limb reshaping."
+          }
+        },
+        "hit-heavy": {
+          "se": {
+            "page": "a14-thornback-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "source": "art/review/sources/a14-thornback-se-hits-agy-a01.jpg",
+            "sourceSha256": "212c3e0a3b913c5e159805280d58d7f0c4fe804d64b8d788d5ecfbee065fa277",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "requested generated state sequence",
+            "uniqueGeneratedKeys": 6,
+            "sourceScaleFactors": [
+              0.84,
+              0.84,
+              0.84,
+              0.84,
+              0.84,
+              0.84
+            ],
+            "scaleNormalizationNote": "Authored uniform whole-body scale per source key/group, measured from repeated ready anatomy; no limb reshaping."
+          },
+          "sw": {
+            "page": "a14-thornback-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "source": "art/review/sources/a14-thornback-se-hits-agy-a01.jpg",
+            "sourceSha256": "212c3e0a3b913c5e159805280d58d7f0c4fe804d64b8d788d5ecfbee065fa277",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "requested generated state sequence",
+            "uniqueGeneratedKeys": 6,
+            "sourceScaleFactors": [
+              0.84,
+              0.84,
+              0.84,
+              0.84,
+              0.84,
+              0.84
+            ],
+            "scaleNormalizationNote": "Authored uniform whole-body scale per source key/group, measured from repeated ready anatomy; no limb reshaping."
+          }
+        }
+      },
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "bodyHeightMasterPx": 160,
+      "designBodyHeight1080": 60.75,
+      "designSize1080": [
+        145.8,
+        145.8
+      ],
+      "scaleContract": "scale-contract-v3",
+      "sources": [
+        {
+          "source": "art/review/sources/a14-thornback-se-collapse-agy-a02.jpg",
+          "sha256": "ba989575ff241c8e801d0f19f584e758c24ce2b5a7b2a0bce07c3d424987ee38",
+          "job": "a14-thornback-se-collapse-agy-a02",
+          "observation": "art/waves/A14/observations/a14-thornback-se-collapse-agy-a02.json",
+          "bodyHeightSourcePx": 290,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.580246913580247,
+          "limitations": "Corrected front-right stance through all seven poses. Final heavy torso and head settle against ground, rear limb extended sideways, front limbs relaxed low; a belly/side rest rather than a dramatic roll. Blue seams and broad faceted stone planes match approved source. Subtle first keys and tight vertical spacing remain owner-review findings."
+        },
+        {
+          "source": "art/review/sources/a14-thornback-se-hits-agy-a01.jpg",
+          "sha256": "212c3e0a3b913c5e159805280d58d7f0c4fe804d64b8d788d5ecfbee065fa277",
+          "job": "a14-thornback-se-hits-agy-a01",
+          "observation": "art/waves/A14/observations/a14-thornback-se-hits-agy-a01.json",
+          "bodyHeightSourcePx": 240,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 2.962962962962963,
+          "limitations": "Ten front-right poses in 4/3/3 layout. Light recoil lifts head and shoulders; heavy drops and braces front legs before recovering. Faceted grey stone, blue seams and thorn crown retained. Heavy rows are drawn larger: ready-body span about 285px versus 240px in light row. Entire heavy group uniformly scaled by 0.84; recorded per key, no limb reshaping."
+        }
+      ],
+      "owner_accepted": false
+    },
+    "hush_moth": {
+      "kind": "creature",
+      "clips": {
+        "death": {
+          "ne": {
+            "page": "a14-hush_moth-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 100
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 120
+              },
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 140
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              3,
+              4,
+              6,
+              8
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "5865581b181a8c62a5845fa50b52d91c8e917b0bf830f2f6b07c7ec277540874",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "nw": {
+            "page": "a14-hush_moth-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 70
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 80
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 100
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 120
+              },
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 140
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              1,
+              3,
+              4,
+              6,
+              8
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "5865581b181a8c62a5845fa50b52d91c8e917b0bf830f2f6b07c7ec277540874",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "se": {
+            "page": "a14-hush_moth-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 130
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 160
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 220
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-collapse-agy-a01.jpg",
+            "sourceSha256": "c576f96961b284ec75921f2f1430e0927369fd14725f2d05eb2cee6f7acddbfe",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          },
+          "sw": {
+            "page": "a14-hush_moth-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 90
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 130
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 160
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 220
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-collapse-agy-a01.jpg",
+            "sourceSha256": "c576f96961b284ec75921f2f1430e0927369fd14725f2d05eb2cee6f7acddbfe",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 600,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4,
+            "holdLastFrame": true,
+            "nextState": "corpse",
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key"
+          }
+        },
+        "corpse": {
+          "ne": {
+            "page": "a14-hush_moth-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              8
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "5865581b181a8c62a5845fa50b52d91c8e917b0bf830f2f6b07c7ec277540874",
+            "origin": "derived from exact last generated collapse key",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/hush_moth-ne.png",
+              "sha256": "d8811c58b56e3508f77d37e781aab75e565a60d09e98276f7f65a5101c22201a",
+              "mirrorAlreadyApplied": false,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "nw": {
+            "page": "a14-hush_moth-ne-collapse",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  778,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              8
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-collapse-agy-a01.jpg",
+            "sourceSha256": "5865581b181a8c62a5845fa50b52d91c8e917b0bf830f2f6b07c7ec277540874",
+            "origin": "derived from exact last generated collapse key; horizontal mirror",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/hush_moth-nw.png",
+              "sha256": "79b45a564e8635ee1b4806ef3417c5684fe4a7bb4611112659489b4d84130106",
+              "mirrorAlreadyApplied": true,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "se": {
+            "page": "a14-hush_moth-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              5
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-collapse-agy-a01.jpg",
+            "sourceSha256": "c576f96961b284ec75921f2f1430e0927369fd14725f2d05eb2cee6f7acddbfe",
+            "origin": "derived from exact last generated collapse key",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/hush_moth-se.png",
+              "sha256": "8a91ea2775d1d8e4f8cb611455a62d6422c1d5c4bdd34b0f998ade0299d639ff",
+              "mirrorAlreadyApplied": false,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          },
+          "sw": {
+            "page": "a14-hush_moth-se-collapse",
+            "frames": [
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 1000
+              }
+            ],
+            "frameCount": 1,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              5
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-collapse-agy-a01.jpg",
+            "sourceSha256": "c576f96961b284ec75921f2f1430e0927369fd14725f2d05eb2cee6f7acddbfe",
+            "origin": "derived from exact last generated collapse key; horizontal mirror",
+            "suggestedDurationMs": null,
+            "owner_accepted": false,
+            "selectionNote": "exact final collapse key reused as a persistent static sprite",
+            "uniqueGeneratedKeys": 1,
+            "holdLastFrame": true,
+            "nextState": null,
+            "persistent": true,
+            "sortAnchor": "body centre on ground at final key",
+            "additionalGeneratedImages": 0,
+            "static": true,
+            "standalone": {
+              "file": "art/delivery/a14/corpses/hush_moth-sw.png",
+              "sha256": "4848a2316e3d3981e8053bd50aab0cbfe019b64aea20bbad9d04c4d3b2e67819",
+              "mirrorAlreadyApplied": true,
+              "anchor": [
+                0.5,
+                0.78125
+              ]
+            }
+          }
+        },
+        "hit-light": {
+          "ne": {
+            "page": "a14-hush_moth-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              5,
+              1,
+              3
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e763077697eaa22de4f00c3b2c305fcacf296d286e15acb9861c3f2b0a7ec815",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "nw": {
+            "page": "a14-hush_moth-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              0,
+              5,
+              1,
+              3
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e763077697eaa22de4f00c3b2c305fcacf296d286e15acb9861c3f2b0a7ec815",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "se": {
+            "page": "a14-hush_moth-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              1,
+              3,
+              2,
+              4
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-hits-agy-a01.jpg",
+            "sourceSha256": "3259b12a2cc0cdc44eecb707a49e992b84cced0cbf3c2f09cd72decc25f0a601",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          },
+          "sw": {
+            "page": "a14-hush_moth-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              }
+            ],
+            "frameCount": 4,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              1,
+              3,
+              2,
+              4
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-hits-agy-a01.jpg",
+            "sourceSha256": "3259b12a2cc0cdc44eecb707a49e992b84cced0cbf3c2f09cd72decc25f0a601",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 160,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 4
+          }
+        },
+        "hit-heavy": {
+          "ne": {
+            "page": "a14-hush_moth-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              4,
+              1,
+              5,
+              6,
+              2,
+              8
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e763077697eaa22de4f00c3b2c305fcacf296d286e15acb9861c3f2b0a7ec815",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "nw": {
+            "page": "a14-hush_moth-ne-hits",
+            "frames": [
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  778,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              4,
+              1,
+              5,
+              6,
+              2,
+              8
+            ],
+            "source": "art/review/sources/a14-hush_moth-ne-hits-agy-a01.jpg",
+            "sourceSha256": "e763077697eaa22de4f00c3b2c305fcacf296d286e15acb9861c3f2b0a7ec815",
+            "origin": "derived horizontal mirror of ne; equipment handedness also mirrors",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "se": {
+            "page": "a14-hush_moth-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": false,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              2
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-hits-agy-a01.jpg",
+            "sourceSha256": "3259b12a2cc0cdc44eecb707a49e992b84cced0cbf3c2f09cd72decc25f0a601",
+            "origin": "generated pose keys; locally keyed, uniformly scaled and pivot-aligned",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          },
+          "sw": {
+            "page": "a14-hush_moth-se-hits",
+            "frames": [
+              {
+                "rect": [
+                  1166,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 30
+              },
+              {
+                "rect": [
+                  2,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 50
+              },
+              {
+                "rect": [
+                  778,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 45
+              },
+              {
+                "rect": [
+                  1166,
+                  390,
+                  384,
+                  384
+                ],
+                "durationMs": 40
+              },
+              {
+                "rect": [
+                  390,
+                  2,
+                  384,
+                  384
+                ],
+                "durationMs": 35
+              }
+            ],
+            "frameCount": 6,
+            "loop": false,
+            "mirrorX": true,
+            "anchor": [
+              0.5,
+              0.78125
+            ],
+            "sourceIndices": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              2
+            ],
+            "source": "art/review/sources/a14-hush_moth-se-hits-agy-a01.jpg",
+            "sourceSha256": "3259b12a2cc0cdc44eecb707a49e992b84cced0cbf3c2f09cd72decc25f0a601",
+            "origin": "derived horizontal mirror of se; equipment handedness also mirrors",
+            "suggestedDurationMs": 240,
+            "owner_accepted": false,
+            "selectionNote": "authored pose-key reselection; see hash-bound source observation",
+            "uniqueGeneratedKeys": 6
+          }
+        }
+      },
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "bodyHeightMasterPx": 160,
+      "designBodyHeight1080": 60.75,
+      "designSize1080": [
+        145.8,
+        145.8
+      ],
+      "scaleContract": "scale-contract-v3",
+      "sources": [
+        {
+          "source": "art/review/sources/a14-hush_moth-ne-collapse-agy-a01.jpg",
+          "sha256": "5865581b181a8c62a5845fa50b52d91c8e917b0bf830f2f6b07c7ec277540874",
+          "job": "a14-hush_moth-ne-collapse-agy-a01",
+          "observation": "art/waves/A14/observations/a14-hush_moth-ne-collapse-agy-a01.json",
+          "bodyHeightSourcePx": 290,
+          "facing": "ne",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.580246913580247,
+          "limitations": "Nine rear/dorsal moth poses; six selected from wing-open hover through descent and progressively folded ground rest. Dorsal abdomen and upper wing surfaces remain visible; lying head shows a lateral eye. End body and wings lie flat, legs no longer support hover. Owner review for oblique heading readability at the small endpoint."
+        },
+        {
+          "source": "art/review/sources/a14-hush_moth-ne-hits-agy-a01.jpg",
+          "sha256": "e763077697eaa22de4f00c3b2c305fcacf296d286e15acb9861c3f2b0a7ec815",
+          "job": "a14-hush_moth-ne-hits-agy-a01",
+          "observation": "art/waves/A14/observations/a14-hush_moth-ne-hits-agy-a01.json",
+          "bodyHeightSourcePx": 250,
+          "facing": "ne",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.0864197530864197,
+          "limitations": "Nine rear/dorsal poses. Front-turn key 7 excluded. Quick clip selects a sharp folded-wing recoil and return; heavy sweeps four wings and bends thorax then recovers. Pale generated sweep wisps remain around some keys as localized motion paint, not labels. No claim that every requested pose or grid was followed; owner review for recoil versus ordinary wingbeat."
+        },
+        {
+          "source": "art/review/sources/a14-hush_moth-se-collapse-agy-a01.jpg",
+          "sha256": "c576f96961b284ec75921f2f1430e0927369fd14725f2d05eb2cee6f7acddbfe",
+          "job": "a14-hush_moth-se-collapse-agy-a01",
+          "observation": "art/waves/A14/observations/a14-hush_moth-se-collapse-agy-a01.json",
+          "bodyHeightSourcePx": 285,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 3.5185185185185186,
+          "limitations": "Four usable generated front-right keys: source 2 hovers front-on, 3 descends, 4 folds wings low, 5 rests thorax and folded wings against ground. First two rear-facing keys excluded. Honest four-key collapse, no duplicate keys added. Midnight-blue wings, silver veins and intact insect anatomy retained; subtle body altitude is owner-review."
+        },
+        {
+          "source": "art/review/sources/a14-hush_moth-se-hits-agy-a01.jpg",
+          "sha256": "3259b12a2cc0cdc44eecb707a49e992b84cced0cbf3c2f09cd72decc25f0a601",
+          "job": "a14-hush_moth-se-hits-agy-a01",
+          "observation": "art/waves/A14/observations/a14-hush_moth-se-hits-agy-a01.json",
+          "bodyHeightSourcePx": 240,
+          "facing": "se",
+          "nativeBodyPixelsPerDisplayPixel1440": 2.962962962962963,
+          "limitations": "Nine front moth poses. Short clip flares and counter-sweeps wings then returns to folded hover. Heavy clip turns thorax, folds wings unevenly and catches balance before recovering. Four-wing silhouette, silver veins and midnight pigment retained; eyes are brighter violet than original and route to owner for identity review. No ground poses used in hits."
+        }
+      ],
+      "owner_accepted": false
     }
   },
   "directions": [
@@ -9348,70 +13288,18 @@
   ],
   "cameraElevationDegrees": 55,
   "backlog": [
-    "cinder_hound:hit-light:ne",
-    "cinder_hound:hit-light:se",
-    "cinder_hound:hit-light:sw",
-    "cinder_hound:hit-light:nw",
-    "cinder_hound:hit-heavy:ne",
-    "cinder_hound:hit-heavy:se",
-    "cinder_hound:hit-heavy:sw",
-    "cinder_hound:hit-heavy:nw",
-    "cinder_hound:death:ne",
-    "cinder_hound:death:se",
-    "cinder_hound:death:sw",
-    "cinder_hound:death:nw",
-    "cinder_hound:corpse:ne",
-    "cinder_hound:corpse:se",
-    "cinder_hound:corpse:sw",
-    "cinder_hound:corpse:nw",
-    "mire_maw:hit-light:ne",
-    "mire_maw:hit-light:se",
-    "mire_maw:hit-light:sw",
-    "mire_maw:hit-light:nw",
-    "mire_maw:hit-heavy:ne",
-    "mire_maw:hit-heavy:se",
-    "mire_maw:hit-heavy:sw",
-    "mire_maw:hit-heavy:nw",
     "mire_maw:death:ne",
-    "mire_maw:death:se",
-    "mire_maw:death:sw",
     "mire_maw:death:nw",
     "mire_maw:corpse:ne",
-    "mire_maw:corpse:se",
-    "mire_maw:corpse:sw",
     "mire_maw:corpse:nw",
     "thornback:hit-light:ne",
-    "thornback:hit-light:se",
-    "thornback:hit-light:sw",
     "thornback:hit-light:nw",
     "thornback:hit-heavy:ne",
-    "thornback:hit-heavy:se",
-    "thornback:hit-heavy:sw",
     "thornback:hit-heavy:nw",
     "thornback:death:ne",
-    "thornback:death:se",
-    "thornback:death:sw",
     "thornback:death:nw",
     "thornback:corpse:ne",
-    "thornback:corpse:se",
-    "thornback:corpse:sw",
-    "thornback:corpse:nw",
-    "hush_moth:hit-light:ne",
-    "hush_moth:hit-light:se",
-    "hush_moth:hit-light:sw",
-    "hush_moth:hit-light:nw",
-    "hush_moth:hit-heavy:ne",
-    "hush_moth:hit-heavy:se",
-    "hush_moth:hit-heavy:sw",
-    "hush_moth:hit-heavy:nw",
-    "hush_moth:death:ne",
-    "hush_moth:death:se",
-    "hush_moth:death:sw",
-    "hush_moth:death:nw",
-    "hush_moth:corpse:ne",
-    "hush_moth:corpse:se",
-    "hush_moth:corpse:sw",
-    "hush_moth:corpse:nw"
+    "thornback:corpse:nw"
   ],
   "rejectedCandidateClips": [
     "garran:death:ne:source-gate",

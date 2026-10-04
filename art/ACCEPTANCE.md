@@ -1,3 +1,7 @@
+# Session 10 stage 2
+
+**ART session 10 / A14.3 stage 2 / 2026-10-04:** Added 52 creature priority slots; total 180/192. Twelve rear Mire Maw/Thornback slots remain missing after two attempts per source slot. Twenty stage calls, 22 session calls/images/charges, project 364; agy clear, Grok unused and latched. Original Covenant creature images passed on every call, explicit crop/selection/scale/pivot records and local reject-or-owner grading. Standalone corpse overwrite detected and fixed by persistence checks; final delivery, 77-product portable checks and all 90 tests pass. Browser five cases/44 persistent atlas corpses pass. Design: docs/waves/A14-3-stage2-creatures.md. Owner animation and game integration unmeasured. Next: budgeted remaining creature motion and legacy queue; no push.
+
 # Session 10 stage 1
 
 **ART session 10 / A14.3 stage 1 / 2026-10-04:** Garran rear collapse and persistent corpse delivered; all eight humanoids complete, 128/192 priority slots. Two fresh agy calls/images/charges, one reject, project 344; old latch and failure records preserved, Grok unavailable. Source/delivery gates, 52-product byte-identical rebuild, five browser cases and 16 targeted tests pass. All 378 protected art files and inherited ledger rows unchanged. Design: docs/waves/A14-3-stage1-garran.md. Owner feel and game integration unmeasured. Next: reference-guided creature collapse, then reactions; no push.

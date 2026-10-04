@@ -16,7 +16,7 @@ def extract(job,obs):
         keyed,matte=variable_magenta(source)
         for rect in obs.get('backgroundRuleBands',[]):keyed.paste((0,0,0,0),tuple(rect))
         pieces=[(i,0,rect,keyed.crop(rect),matte) for i,rect in enumerate(obs['regions'])]
-    else:pieces=isolated_sheet(source,columns=cols,row_count=rows,retain_clipped_for_rejection=True,keyer=variable_magenta)
+    else:pieces=isolated_sheet(source,columns=cols,row_count=rows,retain_clipped_for_rejection=True,keyer=variable_magenta,slot_centers=obs.get('componentCenters'))
     records=[]
     for x,y,rect,im,matte in pieces:
         index=y*cols+x
@@ -55,7 +55,7 @@ def extract(job,obs):
     return by
 
 def normalized(record,obs,index):
-    im=record['image'];box=record['metrics']['bbox'];scale=160/obs['bodyHeightSourcePx']
+    im=record['image'];box=record['metrics']['bbox'];scale=160/obs['bodyHeightSourcePx']*obs.get('scaleFactors',{}).get(str(index),1)
     if obs.get('mirrorSource'):im=ImageOps.mirror(im);box=alpha_metrics(im)['bbox']
     # An authored per-key ground pivot follows the fall toward the body centre.
     # Positions are fractions of the full subject box and explicitly reviewable.
@@ -76,13 +76,17 @@ def build():
         if p.exists() and read(p)['verdict']!='reject':selected[(job['input']['entity'],job['input']['direction'],job['input']['kind'])]=(job,read(p))
     for entity,design in roster.items():
         clips={};sources=[]
-        for direction,kind in [(d,k) for d in ('ne','se') for k in ('reaction','collapse')]:
+        for direction,kind in [(d,k) for d in ('ne','se') for k in ('reaction','collapse','hits')]:
             if (entity,direction,kind) not in selected:continue
             job,obs=selected[(entity,direction,kind)]
             grade=read(ART/'grades'/(job['id']+'.json'))
             if grade['verdict']=='reject':backlog.append(job['id']+':local-reject');continue
             records=extract(job,obs);frames=[];maps={}
             for idx,r in records.items():
+                if job['input'].get('session')==10:
+                    r['wholeBodyScaleFactor']=obs.get('scaleFactors',{}).get(str(idx),1)
+                    r['nominalBodySourcePx']=obs['bodyHeightSourcePx']
+                    r['groundPivotFraction']=obs.get('pivotFractions',{}).get(str(idx),[.5,1])
                 if not r['errors']:
                     try:maps[idx]=len(frames);frames.append(normalized(r,obs,idx))
                     except ValueError as exc:r['errors'].append(str(exc))
@@ -91,6 +95,7 @@ def build():
             pid=f'a14-{entity}-{direction}-{kind}';page,rects=pack_frames(frames,OUT/'atlases'/f'{entity}-{direction}-{kind}.png',cols=4,cell=384);page['id']=pid;pages.append(page)
             sources.append({'source':job['archive'],'sha256':job['sha256'],'job':job['id'],'observation':relative(ART/'waves/A14/observations'/(job['id']+'.json')),'bodyHeightSourcePx':obs['bodyHeightSourcePx'],'facing':direction,'nativeBodyPixelsPerDisplayPixel1440':obs['bodyHeightSourcePx']/81,'limitations':obs['note']})
             layout=STATES if kind=='reaction' else {'death':(list(range(6)),STATES['death'][1])}
+            if kind=='hits':layout={k:v for k,v in STATES.items() if k.startswith('hit-')}
             for state,(default_indices,durations) in layout.items():
                 indices=obs.get('selections',{}).get(state,default_indices)
                 durations=obs.get('durations',{}).get(state,durations)
@@ -99,11 +104,14 @@ def build():
                 clip={'page':pid,'frames':[{'rect':rects[maps[i]],'durationMs':durations[k]} for k,i in enumerate(indices)],'frameCount':len(indices),'loop':False,'mirrorX':False,'anchor':[.5,300/384],'sourceIndices':indices,'source':job['archive'],'sourceSha256':job['sha256'],'origin':'generated pose keys; locally keyed, uniformly scaled and pivot-aligned','suggestedDurationMs':sum(durations),'owner_accepted':False}
                 clip['selectionNote']='authored pose-key reselection; see hash-bound source observation' if state in obs.get('selections',{}) else 'requested generated state sequence'
                 clip['uniqueGeneratedKeys']=len(set(indices))
+                if obs.get('scaleFactors'):
+                    clip['sourceScaleFactors']=[obs['scaleFactors'].get(str(i),1) for i in indices]
+                    clip['scaleNormalizationNote']='Authored uniform whole-body scale per source key/group, measured from repeated ready anatomy; no limb reshaping.'
                 if state=='death':clip.update(holdLastFrame=True,nextState='corpse',persistent=True,sortAnchor='body centre on ground at final key')
                 clips.setdefault(state,{})[direction]=clip
                 clips[state][MIRROR[direction]]={**copy.deepcopy(clip),'mirrorX':True,'origin':'derived horizontal mirror of '+direction+'; equipment handedness also mirrors'}
             death=clips.get('death',{}).get(direction)
-            if death:
+            if death and 'death' in layout:
                 last=death['sourceIndices'][-1];sprite=frames[maps[last]]
                 for facing,mirror in [(direction,False),(MIRROR[direction],True)]:
                     output=ImageOps.mirror(sprite) if mirror else sprite
