@@ -10,7 +10,7 @@
     "limit": 90000,
     "reset": "2026-10-04T19:31:41Z"
   },
-  "status": "production",
+  "status": "closed-owner-review",
   "bounds": {
     "sfxPerSecond": 20,
     "sfxMinimum": 0,
@@ -57,5 +57,19 @@
       "status": "closed-owner-review",
       "chargedCredits": 2325
     }
-  ]
+  ],
+  "finalDebitCredits": 9000,
+  "unusedCredits": 1000,
+  "closedAt": "2026-10-04T09:30:08.875507+00:00",
+  "closeReason": "C and D generated, 9000 conservative credits. A 150 s (4500) and 90 s (2700) both exceed remaining job cap 1000 and last account headroom 689; no more paid calls.",
+  "finalAccountSnapshot": {
+    "ts": "2026-10-04T09:28:10.042Z",
+    "wave": "AU3",
+    "observedAt": "2026-10-04T09:28:10.042Z",
+    "tier": "starter",
+    "used": 88311,
+    "limit": 90000,
+    "remaining": 1689,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  }
 }
