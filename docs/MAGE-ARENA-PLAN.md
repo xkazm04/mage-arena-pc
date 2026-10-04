@@ -254,7 +254,21 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 | Game | U5 | Wire the A12 plates (compact layout, occluders, palette per tier) and figures 50% larger (scale contract v3, camera and layout re-check) | D31, D32 | not started |
 | Game | CF1 | **Combat Feel Lab**: training mode with a dummy and one selectable opponent, live tuning, reset, metrics, replay of the last bout; the owner's start guide | U5 | not started |
 | Game | CF2 | Combat feel improvements from the Lab findings: hit feedback (hit stop, flash, shake, knockback, numbers), cast and animation timing, movement feel, absorb and perfect-absorb feel, telegraph readability, enemy behaviour; data-driven; census bands re-set where gameplay changes | CF1 | not started |
-| Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | delivery candidate complete: 44 clips / 305 frame references; [board](../art/review/a13/index.html), [contract](../art/delivery/a13/README.md); owner review and game integration open |
+| Art | A13 | **Sigils and telegraphs as art** (D34): casting circles per element, telegraph marks, the absorb and ward rune geometry, the perfect-absorb mark, rune glyph alphabet, animated decal sheets | D34 | not started |
+
+## s. Owner review after the Combat Feel Lab build (2026-10-04): sigils wired, hit reactions, defeat, full-length tracks
+
+> "2. Wire the sigils, together with other screens on board we improved significantly. ... Next step would be to introduce reactivity after hits, the characters will need to visibly struggle, any hit interrupting cast and movement for very quick moment, prepared audio tracks, we should still have some credits and you can charge above your threshold together with point 3. If character defeated it also needs animation to lay down and stay there."
+
+Decisions: **D35** the A13 sigils (casting circles, threat decals with progress fill, the ward and absorb rune work, the perfect-window ring, floor decals, selection and status sigils) are wired into the game behind the loader boundary, and every screen is brought up to the level of the improved boards (use all delivered art consistently: plates, effects, characters, clock, icons, sigils, portraits). **D36** **hit reactivity**: any hit that deals damage **interrupts casting and movement for a very short moment** (data-driven hit stun, about 0.10 to 0.20 s, scaled by damage with a floor and a ceiling, a stagger-immunity tail so there is no stun-lock, roll invulnerability respected, heavy enemies with more poise), with a **visible struggle** (flinch and stagger animation, recoil offset, flash, sound hook), for the player and every opponent; cancelled casts keep the spent mana and cooldown as the Lab already records. **D37** **defeat**: a defeated figure plays a death animation, **lies down and stays there** for the rest of the bout (a persistent corpse pose, drawn on the ground, depth-sorted, no collision, no targeting, no AI), as a state tag read by every system. **D38** the missing character clips are generated, hit and death first (all entities, all directions, including a lying final pose). **D39** the owner authorises the **full-length arena tracks now** and **spending the shared ElevenLabs credits below the earlier 8,000 reserve** (the account was 10,689 at 11:13 on 2026-10-04 and resets at 19:31 UTC the same day); keep a floor of 1,000 credits; Reed oath (arena C) first, then Lyre under iron (arena D), then Hide and iron (arena A) if credits remain; the camp tracks and the round-3 picks stay open.
+
+| Stream | Id | Wave | Depends on | Status |
+|---|---|---|---|---|
+| Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | not started |
+| Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
+| Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | not started |
+| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
 
 ## l. Session log
 
@@ -263,27 +277,3 @@ Decisions: **D31** the A12 plates are accepted for now and are wired into the ga
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
-
-### ART session 8 / A13 / 2026-10-03 to 2026-10-04
-
-Delivered [painted sigils and telegraphs](../art/review/a13/index.html): twelve
-canonical radicals, 44 clips / 305 frame references, four schools with casting
-phases and progress threats, common and UNBLOCKABLE warnings, ward and separate
-perfect-window/success cues, floor inscriptions, selection/target and five
-statuses. Generated paint versus authored glyph assembly, timing, UV warp,
-progress masks and floor reconstruction are explicit. Before/after witnesses on
-three A12 plates use A10 figures at 1.5 size, 60.75px at 1080p; old asset bytes
-are unchanged. Ten selected generated sources; nineteen archived images from
-twenty jobs, 21 charges. Project 318/345; agy latched on EXTRA_TOOL_CALL, Grok
-clear; no resets, refunds or push. Provider transcript evidence is scoped to
-these exact requests and checked for late extra calls.
-
-Commands: `a13_build.py`, `a13_floor.py`, `check_a13.py`, `a13_audit.py`,
-`a13_board.py` and `a13_browser.py` pass (five viewport cases, sixteen native
-captures). `a13_portable.py`: 74 products byte-identical with raw/provider access
-and network blocked. `python -m unittest discover -s tools/art -p "test_*.py"`:
-81 pass. The installed SciPy/NumPy compatibility warning is disclosed. Owner
-acceptance, game integration, GPU performance and combat/controller feel are
-not measured. Shared hold construction, subtle motion, small modifiers and
-floor reconstruction softness remain review findings. Next: owner visual review
-and game-side integration per [handoff](../art/SESSION-8-HANDOFF.md).
