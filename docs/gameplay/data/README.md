@@ -52,10 +52,10 @@ Source: `docs/design/reconciled/data/`.
 
 ## Re-copy command
 
-From the main worktree, with the integration worktree at `../mage-arena-int`:
+From the repository root. Since 2026-10-07 the sources are in this same repository, so `S=.`; these copies can drift from them and should be re-copied or replaced by links:
 
 ```bash
-S=../mage-arena-int; D=docs/gameplay/data
+S=.; D=docs/gameplay/data
 cp $S/docs/design/reconciled/data/arena/* $D/arena-design/
 cp $S/packages/core/src/arena/data/*.json $D/arena-runtime/
 for f in camera combat-feedback animation ui sigils; do cp $S/packages/game/data/$f.json $D/presentation/; done

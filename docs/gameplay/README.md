@@ -112,6 +112,7 @@ The calendar, hours and settlement rules belong to the campaign: see [../campaig
 ## Provenance
 
 - Source repository: local git, branch `integration`, worktree `mage-arena-int`, commit `b1efd46` ("U6c.4 verify native reactions, performance and unchanged simulation", 2026-10-04).
+- Since 2026-10-07 the integration work is on `main` of this repository (`mage-arena-tv`); `b1efd46` is `1ccfd04` after the history rewrite (`docs/REPO-LAYOUT.md`).
 - Sources read: `docs/START-HERE.md`, `docs/OWNER-CHECKS.md`, `docs/MAGE-ARENA-PLAN.md`, wave notes W2–W7, U1, U3a/b, U4, U5, U6/U6b/U6c, CF1/CF2, H1, the reconciled design data, `packages/core/src/arena/*`, `packages/core/src/season.ts`, `packages/game/data/*`, `packages/game/src/game-shell.ts`, `art/scale-contract-v3.json`.
 - The integration worktree also has uncommitted quest work (`packages/core/src/quest*.ts`, `story/`). It is not covered here; see [../campaign/quests-and-story.md](../campaign/quests-and-story.md).
 - Owner direction and decision numbers (D1–D39) come from `docs/MAGE-ARENA-PLAN.md` on `main`.

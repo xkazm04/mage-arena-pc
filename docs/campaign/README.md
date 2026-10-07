@@ -11,7 +11,7 @@ Status: the camp simulation, the Director, Parley and weeks 1-2 (Tent Trials and
 | Item | Value |
 |---|---|
 | Exported | 2026-10-07 |
-| Source repository | `mage-arena`, branch `integration` (worktree `mage-arena-int`), commit `b1efd46` |
+| Source repository | `mage-arena`, branch `integration` (worktree `mage-arena-int`), commit `b1efd46`. Since 2026-10-07 that work is on `main` of `mage-arena-tv`; after the history rewrite `b1efd46` is `1ccfd04` (see `docs/REPO-LAYOUT.md`) |
 | Uncommitted source included | Quest runtime (`packages/core/src/quest.ts`, `quest-lint.ts`, `quest.md`) and the story dialogue pack (`story/dialogue/`), all work in progress on the integration worktree |
 | Authority rule | **The data files win over prose.** If a sentence here contradicts a file in `data/`, the file is right and the sentence is a defect. |
 | Source paths | Paths in backticks such as `docs/design/reconciled/data/rules.json` are relative to the integration repository. The same files are copied into `./data/` |

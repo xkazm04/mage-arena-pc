@@ -1,10 +1,10 @@
 # START GUIDE — Mage Arena Combat Feel Lab
 
-Use Windows PowerShell in the GAME worktree. Install Node.js 24 or newer first.
+Use Windows PowerShell in the repository root. Install Node.js 24 or newer first.
 Run these commands exactly (the last command keeps the local server running):
 
 ```powershell
-Set-Location C:\Users\kazda\kiro\mage-arena-int
+Set-Location C:\Users\kazda\kiro\mage-arena-tv
 npm ci
 npm run gate
 npm run build:game
