@@ -1,0 +1,92 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU3",
+  "file": "audition/r4/arena-C-reed-oath/sustain.wav",
+  "sha256": "c01fad97eaca9b475c22c1e48a5a37f8a67f605704fb47a2f8b310d7dbb2dff4",
+  "source": "audition/r4/arena-C-reed-oath.mp3",
+  "sourceSha256": "e5cf5f788a7277b8bb1f173f56b9be78a7ed3f039151697258da4868ee5233b5",
+  "sourceSidecar": "audition/r4/arena-C-reed-oath.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-C-reed-oath",
+  "processing": {
+    "file": "audition/r4/arena-C-reed-oath/sustain.wav",
+    "startSample": 0,
+    "endSample": 720000,
+    "startSeconds": 0,
+    "endSeconds": 15.0,
+    "sourceRangeSeconds": [
+      117.5,
+      135
+    ],
+    "crossfadeSeconds": 2.5,
+    "crossfadeCurves": "equal-power sine",
+    "rotationSamples": 90257,
+    "sourceEntrySeconds": 121.88035416666666,
+    "threeRepeatJoinJumpsDbFS": [
+      -240.0,
+      -240.0
+    ],
+    "adjacentHalfSecondRmsDifferenceDb": 0.699,
+    "numericalScreenPass": true,
+    "approved": false,
+    "enabled": false,
+    "reason": "Unverified harmonic/beat seam and conspicuous fill; rotation removes mathematical click but is not a beat alignment. Three-repeat listening pending.",
+    "measurement": {
+      "file": "audition/r4/arena-C-reed-oath/sustain.wav",
+      "sha256": "c01fad97eaca9b475c22c1e48a5a37f8a67f605704fb47a2f8b310d7dbb2dff4",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleCount": 720000,
+      "decodedSeconds": 15.0,
+      "containerSeconds": 15.0,
+      "codec": "pcm_s16le",
+      "integratedLufs": -23.83,
+      "truePeakDbTP": -11.71,
+      "loudnessRangeLU": 1.7,
+      "samplePeakDbFS": -11.721,
+      "samplesAtOrAboveFullScale": 0,
+      "loudnorm": {
+        "input_i": "-23.83",
+        "input_tp": "-11.71",
+        "input_lra": "1.70",
+        "input_thresh": "-33.83",
+        "output_i": "-26.31",
+        "output_tp": "-14.08",
+        "output_lra": "1.70",
+        "output_thresh": "-36.31",
+        "normalization_type": "dynamic",
+        "target_offset": "0.31"
+      }
+    }
+  },
+  "measurement": {
+    "file": "audition/r4/arena-C-reed-oath/sustain.wav",
+    "sha256": "c01fad97eaca9b475c22c1e48a5a37f8a67f605704fb47a2f8b310d7dbb2dff4",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 720000,
+    "decodedSeconds": 15.0,
+    "containerSeconds": 15.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -23.83,
+    "truePeakDbTP": -11.71,
+    "loudnessRangeLU": 1.7,
+    "samplePeakDbFS": -11.721,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-23.83",
+      "input_tp": "-11.71",
+      "input_lra": "1.70",
+      "input_thresh": "-33.83",
+      "output_i": "-26.31",
+      "output_tp": "-14.08",
+      "output_lra": "1.70",
+      "output_thresh": "-36.31",
+      "normalization_type": "dynamic",
+      "target_offset": "0.31"
+    }
+  },
+  "note": "PCM derived from lossy provider MP3; no claim of native lossless master. Paid generation ledger records the original only."
+}

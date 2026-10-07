@@ -1,0 +1,83 @@
+{
+  "project": "mage-arena",
+  "wave": "AU3",
+  "capCredits": 10000,
+  "reserveCredits": 1000,
+  "initialOwnerSnapshot": {
+    "date": "2026-10-04T11:13:00+02:00",
+    "tier": "starter",
+    "remaining": 10689,
+    "limit": 90000,
+    "reset": "2026-10-04T19:31:41Z"
+  },
+  "status": "closed-owner-review",
+  "bounds": {
+    "sfxPerSecond": 20,
+    "sfxMinimum": 0,
+    "musicPerSecond": 30,
+    "ttsPerCharacter": 1
+  },
+  "note": "AU3 only. Conservative max(shared delta, 30 credits/requested second, billing header). Serial >=8 s pacing, immediate live preflight, first 429 stops, no paid automatic retry. Reset changes account epoch, not cap. Shared concurrent spend cannot be locked across projects.",
+  "documentedBounds": {
+    "sfxPerSecond": 20,
+    "sfxMinimum": 0,
+    "musicPerSecond": 30,
+    "ttsPerCharacter": 1
+  },
+  "sources": {
+    "sfx": "https://help.elevenlabs.io/hc/en-us/articles/25735337678481-How-much-does-it-cost-to-generate-sound-effects",
+    "musicAndVoice": "https://elevenlabs.io/pricing",
+    "retrieved": "2026-10-03"
+  },
+  "stopBelowCredits": 1000,
+  "minRequestGapMs": 8000,
+  "musicSettlementMs": 30000,
+  "authorization": "D39 + owner 2026-10-04 11:15 local: full tracks now, C then D then A; cap 10000, floor 1000 replaces reserve; first quota/rate error stops; reset may increase balance for these tracks only.",
+  "roundHistory": [
+    {
+      "wave": "AU1",
+      "capCredits": 4000,
+      "chargedCredits": 1852,
+      "status": "closed-after-429-and-owner-triage",
+      "evidence": "docs/audio/evidence/r1-final"
+    },
+    {
+      "wave": "AU2",
+      "capCredits": 5000,
+      "authorizationDate": "2026-10-03",
+      "scope": "audition refinement, not production",
+      "chargedCredits": 4995,
+      "status": "closed-owner-review"
+    },
+    {
+      "wave": "AU2b",
+      "capCredits": 3000,
+      "authorizationDate": "2026-10-03",
+      "scope": "rejected-category audition; no production",
+      "status": "closed-owner-review",
+      "chargedCredits": 2325
+    },
+    {
+      "wave": "AU3",
+      "capCredits": 10000,
+      "authorizationDate": "2026-10-04",
+      "scope": "D39 arena C then D then A; floor 1000; no camp or round-3 generation",
+      "status": "closed-owner-review",
+      "chargedCredits": 9000
+    }
+  ],
+  "finalDebitCredits": 9000,
+  "unusedCredits": 1000,
+  "closedAt": "2026-10-04T09:30:08.875507+00:00",
+  "closeReason": "C and D generated, 9000 conservative credits. A 150 s (4500) and 90 s (2700) both exceed remaining job cap 1000 and last account headroom 689; no more paid calls.",
+  "finalAccountSnapshot": {
+    "ts": "2026-10-04T09:28:10.042Z",
+    "wave": "AU3",
+    "observedAt": "2026-10-04T09:28:10.042Z",
+    "tier": "starter",
+    "used": 88311,
+    "limit": 90000,
+    "remaining": 1689,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  }
+}

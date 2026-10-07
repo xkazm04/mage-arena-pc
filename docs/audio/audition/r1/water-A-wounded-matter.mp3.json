@@ -1,0 +1,50 @@
+{
+  "id": "5beb290c-ece4-4c65-b0ef-3aeacceed942",
+  "ts": "2026-10-02T21:01:29.704Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One water spell cast: taut compressed water whip, bead click and dense short spray. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r1/water-A-wounded-matter.mp3",
+  "request": {
+    "text": "One water spell cast: taut compressed water whip, bead click and dense short spray. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 33062,
+  "sha256": "c21c787519d813d54d2fee0c46854f2a624ccdcd1baf8bb999c8572c08eddf14",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:01:29.704Z",
+    "tier": "starter",
+    "used": 65128,
+    "limit": 90000,
+    "remaining": 24872,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 40,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:01:32.754Z",
+    "tier": "starter",
+    "used": 65128,
+    "limit": 90000,
+    "remaining": 24872,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

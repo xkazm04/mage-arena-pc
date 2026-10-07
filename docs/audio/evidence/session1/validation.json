@@ -1,0 +1,108 @@
+{
+  "status": "pass",
+  "generatedSamples": 2,
+  "plannedSamples": 40,
+  "coverageGate": "incomplete: generation latched after two proofs",
+  "relativeReferences": "all exist",
+  "sidecarsAndLedger": "one per original; exact match; hashes verified",
+  "budgetDebit": 1220,
+  "cap": 12000,
+  "reserve": 8000,
+  "browserErrors": [],
+  "checks": [
+    {
+      "page": "docs/audio/audition/r1/index.html",
+      "viewport": "desktop",
+      "media": [
+        {
+          "src": "arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.111459,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109908,
+          "volume": 0.31622776601683794
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/PROOF-REPORT.html",
+      "viewport": "desktop",
+      "media": [
+        {
+          "src": "audition/r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.110694,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "audition/r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.111242,
+          "volume": 0.31622776601683794
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/audition/r1/index.html",
+      "viewport": "phone",
+      "media": [
+        {
+          "src": "arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.110193,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.109724,
+          "volume": 0.31622776601683794
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    },
+    {
+      "page": "docs/audio/PROOF-REPORT.html",
+      "viewport": "phone",
+      "media": [
+        {
+          "src": "audition/r1/arena-A-hide-and-iron.mp3",
+          "duration": 20.062,
+          "currentTime": 0.110926,
+          "volume": 0.3311311214825911
+        },
+        {
+          "src": "audition/r1/fire-A-wounded-matter.mp3",
+          "duration": 2.037551,
+          "currentTime": 0.110182,
+          "volume": 0.31622776601683794
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "noOverflow": true
+    }
+  ],
+  "persistenceAndExport": "pass: radio, multiline note, pipe escape, reload, copy/fallback, loop toggle",
+  "ownerListening": "not measured"
+}

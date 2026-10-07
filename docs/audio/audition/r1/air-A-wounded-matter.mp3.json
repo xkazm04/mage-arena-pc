@@ -1,0 +1,50 @@
+{
+  "id": "e28a7c23-c569-42c9-a23b-26a4cfea99c4",
+  "ts": "2026-10-02T21:01:55.456Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One air spell cast: compressed breath snapping past coarse cloth with a pressure flick. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r1/air-A-wounded-matter.mp3",
+  "request": {
+    "text": "One air spell cast: compressed breath snapping past coarse cloth with a pressure flick. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 33062,
+  "sha256": "b0363163780392d21a5892401db48cbd2157dcb76f995ace36c82ac59a9a85b9",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:01:55.455Z",
+    "tier": "starter",
+    "used": 65188,
+    "limit": 90000,
+    "remaining": 24812,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 40,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:01:59.635Z",
+    "tier": "starter",
+    "used": 65188,
+    "limit": 90000,
+    "remaining": 24812,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

@@ -1,0 +1,50 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU3",
+  "file": "audition/r4/arena-D-lyre-under-iron/section-6-release.wav",
+  "sha256": "b2f48c8896d190df40772bae71b2eb3d4f9e2c305aa12b7285e7af5298343e56",
+  "source": "audition/r4/arena-D-lyre-under-iron.mp3",
+  "sourceSha256": "c418d1e8eff50249d1df299126939afecee49ece352a2f934c8b44ab7f58d410",
+  "sourceSidecar": "audition/r4/arena-D-lyre-under-iron.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-D-lyre-under-iron",
+  "processing": {
+    "name": "Release",
+    "startSeconds": 135.0,
+    "endSeconds": 150.0,
+    "startSample": 6480000,
+    "endSample": 7200000,
+    "file": "audition/r4/arena-D-lyre-under-iron/section-6-release.wav",
+    "boundaryStatus": "requested composition timing, not verified musical boundary"
+  },
+  "measurement": {
+    "file": "audition/r4/arena-D-lyre-under-iron/section-6-release.wav",
+    "sha256": "b2f48c8896d190df40772bae71b2eb3d4f9e2c305aa12b7285e7af5298343e56",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 720000,
+    "decodedSeconds": 15.0,
+    "containerSeconds": 15.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -25.84,
+    "truePeakDbTP": -12.75,
+    "loudnessRangeLU": 14.3,
+    "samplePeakDbFS": -12.778,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-25.84",
+      "input_tp": "-12.75",
+      "input_lra": "14.30",
+      "input_thresh": "-37.93",
+      "output_i": "-28.06",
+      "output_tp": "-14.74",
+      "output_lra": "11.90",
+      "output_thresh": "-39.92",
+      "normalization_type": "dynamic",
+      "target_offset": "2.06"
+    }
+  },
+  "note": "PCM derived from lossy provider MP3; no claim of native lossless master. Paid generation ledger records the original only."
+}

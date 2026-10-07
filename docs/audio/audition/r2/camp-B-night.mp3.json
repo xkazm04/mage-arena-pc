@@ -1,0 +1,69 @@
+{
+  "id": "77785d83-5536-4141-baf0-e2b47c8c57e6",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:09:49.436Z",
+  "kind": "music",
+  "model": "music_v1",
+  "voice": null,
+  "text": "Original instrumental music for a guarded Roman-era camp of captive mages. Soft bowed viola and plucked low strings, an exposed memorable melody with a tiny resonant ceramic-bell answer. NIGHT: secretive and still, a few separated melodic notes with a quiet distant sustained answer; no horror drone or jump scare. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+  "seconds": 12,
+  "chars": null,
+  "out": "docs/audio/audition/r2/camp-B-night.mp3",
+  "request": {
+    "prompt": "Original instrumental music for a guarded Roman-era camp of captive mages. Soft bowed viola and plucked low strings, an exposed memorable melody with a tiny resonant ceramic-bell answer. NIGHT: secretive and still, a few separated melodic notes with a quiet distant sustained answer; no horror drone or jump scare. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+    "music_length_ms": 12000,
+    "force_instrumental": true,
+    "model_id": "music_v1"
+  },
+  "billingHeaders": {
+    "song-id": "VU2MLpxnGVjPbnKARfIr"
+  },
+  "bytes": 192306,
+  "sha256": "aff7e67664b87435b7d1c797f7133ccfd8fee84d1f7135fea2a16d7cde74b05e",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:09:49.435Z",
+    "tier": "starter",
+    "used": 70307,
+    "limit": 90000,
+    "remaining": 19693,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 360,
+  "estimatedCredits": 360,
+  "documentedEstimateCredits": 180,
+  "chargedCredits": 360,
+  "measuredCredits": null,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:10:12.145Z",
+    "tier": "starter",
+    "used": 70307,
+    "limit": 90000,
+    "remaining": 19693,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-02T23:10:43.466Z",
+      "tier": "starter",
+      "used": 70667,
+      "limit": 90000,
+      "remaining": 19333,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    }
+  ],
+  "accountSettled": {
+    "observedAt": "2026-10-02T23:10:43.466Z",
+    "tier": "starter",
+    "used": 70667,
+    "limit": 90000,
+    "remaining": 19333,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "settledDelta": 360,
+  "flags": [
+    "charge_visible_only_after_settlement_wait"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

@@ -1,0 +1,67 @@
+{
+  "id": "e375c596-eba5-4aac-9bae-97e93229b259",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:01:16.908Z",
+  "kind": "music",
+  "model": "music_v1",
+  "voice": null,
+  "text": "Original instrumental music for a guarded Roman-era camp of captive mages. Intimate gut-string lyre and soft breath flute, sparse human phrasing and quiet low bowed string support. DAY: fragile warmth under restraint; a gently rising modal phrase, a light slow pulse and room for conversation. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+  "seconds": 12,
+  "chars": null,
+  "out": "docs/audio/audition/r2/camp-A-day.mp3",
+  "request": {
+    "prompt": "Original instrumental music for a guarded Roman-era camp of captive mages. Intimate gut-string lyre and soft breath flute, sparse human phrasing and quiet low bowed string support. DAY: fragile warmth under restraint; a gently rising modal phrase, a light slow pulse and room for conversation. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+    "music_length_ms": 12000,
+    "force_instrumental": true,
+    "model_id": "music_v1"
+  },
+  "billingHeaders": {
+    "song-id": "RWJJgUYaZGSAPxf2n4Zk"
+  },
+  "bytes": 192306,
+  "sha256": "df34dea6a7fc85d1d0b1aec1780fae0eaf20f9d3520916bf365df1b70913ac08",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:01:16.907Z",
+    "tier": "starter",
+    "used": 68427,
+    "limit": 90000,
+    "remaining": 21573,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 360,
+  "estimatedCredits": 360,
+  "documentedEstimateCredits": 180,
+  "chargedCredits": 400,
+  "measuredCredits": null,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:01:42.984Z",
+    "tier": "starter",
+    "used": 68827,
+    "limit": 90000,
+    "remaining": 21173,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 400,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-02T23:02:15.168Z",
+      "tier": "starter",
+      "used": 68827,
+      "limit": 90000,
+      "remaining": 21173,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    }
+  ],
+  "accountSettled": {
+    "observedAt": "2026-10-02T23:02:15.168Z",
+    "tier": "starter",
+    "used": 68827,
+    "limit": 90000,
+    "remaining": 21173,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "settledDelta": 400,
+  "flags": [],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

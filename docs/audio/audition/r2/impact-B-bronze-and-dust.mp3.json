@@ -1,0 +1,51 @@
+{
+  "id": "0d6bd59a-883a-4509-a2de-c484424f073e",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:14:27.484Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One hard impact against worn masonry and bronze: a crisp hollow tick into sandy falling fragments, short and spatially compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.5,
+  "chars": null,
+  "out": "docs/audio/audition/r2/impact-B-bronze-and-dust.mp3",
+  "request": {
+    "text": "One hard impact against worn masonry and bronze: a crisp hollow tick into sandy falling fragments, short and spatially compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "15"
+  },
+  "bytes": 24703,
+  "sha256": "13fe1e35903b2bfd4919a0959f816eb6b59c69923f61c4b8657c13526a24202c",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:14:27.480Z",
+    "tier": "starter",
+    "used": 71312,
+    "limit": 90000,
+    "remaining": 18688,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 30,
+  "estimatedCredits": 30,
+  "documentedEstimateCredits": 30,
+  "chargedCredits": 30,
+  "measuredCredits": 15,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:14:48.444Z",
+    "tier": "starter",
+    "used": 71312,
+    "limit": 90000,
+    "remaining": 18688,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

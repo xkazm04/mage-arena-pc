@@ -1,0 +1,57 @@
+[aist#0:0/pcm_s16le @ 000001f4b9347f80] Guessed Channel Layout: stereo
+
+Input #0, wav, from 'C:\Users\kazda\kiro\mage-arena-audio\docs\audio\audition\r4\arena-C-reed-oath\section-1-entrance.wav':
+
+  Metadata:
+
+    encoder         : Lavf61.9.107
+
+  Duration: 00:00:15.00, bitrate: 1536 kb/s
+
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+
+Stream mapping:
+
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+
+Output #0, null, to 'pipe:':
+
+  Metadata:
+
+    encoder         : Lavf61.9.107
+
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+
+    Metadata:
+
+      encoder         : Lavc61.33.102 pcm_s16le
+
+[Parsed_loudnorm_0 @ 000001f4b7b517c0]
+
+{
+
+	"input_i" : "-31.83",
+
+	"input_tp" : "-17.60",
+
+	"input_lra" : "10.70",
+
+	"input_thresh" : "-42.35",
+
+	"output_i" : "-23.93",
+
+	"output_tp" : "-10.30",
+
+	"output_lra" : "2.60",
+
+	"output_thresh" : "-34.26",
+
+	"normalization_type" : "dynamic",
+
+	"target_offset" : "-2.07"
+
+}
+
+[out#0/null @ 000001f4b93a4a40] video:0KiB audio:11250KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+
+size=N/A time=00:00:15.00 bitrate=N/A speed=49.7x
