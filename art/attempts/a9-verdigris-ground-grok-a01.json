@@ -1,0 +1,55 @@
+{
+  "id": "a9-verdigris-ground-grok-a01",
+  "wave": "A9",
+  "style_id": "covenant",
+  "scene": "verdigris-ground",
+  "attempt": 1,
+  "input": {
+    "wave": "A9",
+    "id": "verdigris-ground",
+    "pilot": true,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok",
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+        "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+        "role": "approved arena material, light and detail reference"
+      }
+    ],
+    "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: deep dark green-gray basalt, subdued oxidized verdigris in recesses, cool gray stone edges, sparse old bronze.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE square seamless bare arena FLOOR TEXTURE, viewed flat perpendicular to the surface for mapping onto an oblique game ground. Edge-to-edge material, no perspective scene, no horizon, no border, no vignette.\nLarge irregular worn flagstone slabs, fractured mineral layers, sparse small mortar seams, varied subtle stone colour, restrained areas of eroded stone. Fine painted detail and physical surface richness as in the reference. The whole square has even lighting and equal sharpness.\nNo runes, circles, glyphs, pylons, props, plants, people, shadows from objects or active effects. No central focal object. Seamless left/right and top/bottom by design; all edges should join. 1024x1024 or larger. Never bake a camera projection into the texture."
+  },
+  "input_hash": "16b7864ca17e9839ff74e4893fe846cfbd1257a96c95011a7a1aca3d4cf8c320",
+  "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: deep dark green-gray basalt, subdued oxidized verdigris in recesses, cool gray stone edges, sparse old bronze.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE square seamless bare arena FLOOR TEXTURE, viewed flat perpendicular to the surface for mapping onto an oblique game ground. Edge-to-edge material, no perspective scene, no horizon, no border, no vignette.\nLarge irregular worn flagstone slabs, fractured mineral layers, sparse small mortar seams, varied subtle stone colour, restrained areas of eroded stone. Fine painted detail and physical surface richness as in the reference. The whole square has even lighting and equal sharpness.\nNo runes, circles, glyphs, pylons, props, plants, people, shadows from objects or active effects. No central focal object. Seamless left/right and top/bottom by design; all edges should join. 1024x1024 or larger. Never bake a camera projection into the texture.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "010962b3-be2d-4d39-a5d9-12924e00d5cf",
+  "at": "2026-10-03T11:57:53.448183+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 31.609,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Original hand-painted dark magical arena art. Use the supplied reference only for its rich physical MATERIAL PAINTING and colour, not its composition. Palette: deep dark green-gray basalt, subdued oxidized verdigris in recesses, cool gray stone edges, sparse old bronze.\nMatch the approved reference's high detail: chipped stratified stone, mineral colour variation, thin fissures, sharp selectively lit edges, real mass and age. Broad surfaces still contain natural painted mineral variation. Do NOT simplify to flat colour polygons or smooth vector/cartoon art. No photographic rendering, 3D, paper/canvas grain, text, letters, watermarks or UI. Top-left diffuse light.\nCreate ONE square seamless bare arena FLOOR TEXTURE, viewed flat perpendicular to the surface for mapping onto an oblique game ground. Edge-to-edge material, no perspective scene, no horizon, no border, no vignette.\nLarge irregular worn flagstone slabs, fractured mineral layers, sparse small mortar seams, varied subtle stone colour, restrained areas of eroded stone. Fine painted detail and physical surface richness as in the reference. The whole square has even lighting and equal sharpness.\nNo runes, circles, glyphs, pylons, props, plants, people, shadows from objects or active effects. No central focal object. Seamless left/right and top/bottom by design; all edges should join. 1024x1024 or larger. Never bake a camera projection into the texture.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a9-verdigris-ground-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a9-verdigris-ground-grok-a01/source.jpg",
+  "archive": "art/review/sources/a9-verdigris-ground-grok-a01.jpg",
+  "sha256": "1b4bbc563b442209f75c7503277345c82b4f6081d32b7a0656f816b97ac64466",
+  "invocation_evidence": "art/providers/runs/a9-verdigris-ground-grok-a01"
+}

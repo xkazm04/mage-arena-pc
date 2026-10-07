@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "87a25b4c-e910-4fe4-9b15-53171ad6278b",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-hush_moth-ne-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-hush_moth-ne-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/hush_moth-ne-square-v1.png",
+      "sha256": "f336a9e58dcd2337aea7c152b64b9718f426d80381c683ed9794e13d5a44a725",
+      "role": "single full-body A3c identity crop or reviewed direction guide on square canvas"
+    }
+  ]
+}

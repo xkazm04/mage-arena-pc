@@ -517,3 +517,66 @@ pose. Specifically inspect the Maw front face, Hound gait, Moth antennae/eyes
 and subtle resistance motion flagged by ART. Use [native evidence](waves/U6c-evidence/index.html)
 for comparison. The [report](waves/U6c-report.md) distinguishes delivered views
 from 12 priority + 12 legacy fallbacks; technical passes do not declare approval.
+The [handoff](../art/SESSION-5-HANDOFF.md) gives loader entry points, measured checks,
+223/240 spend and remaining backlog. A3c pose/camera/animation continuity remains
+the main unfinished art work. Current integrity passes do not erase historical
+failures or establish game feel. No push.
+
+## Session 6 / A8
+
+[A8 owner board](../art/review/a8/index.html). Delivered 35 effect clips, nine RGBA pages, 134 unique painted keys plus 64 authored telegraph keys; explicit pivots, timing, blend hints and loop flags. Seven calls, cumulative 230/300. Delivery/source/browser/portable gates and 65 tests pass; one rejected correction and partial-cell exclusions retained. Owner motion/fidelity, game integration and performance not measured. Next A9.
+
+Owner feel and approval remain unmeasured; the local grader may only reject or route.
+
+## Session 6 / A9
+
+[A9 owner board](../art/review/a9/index.html). A9 delivery candidate: three native-density periodic grounds, 36 keyed structures/props, 15 decals and explicit core-preserving layout. Six 1080p/1440p composites and three A6 side-by-side comparisons are on art/review/a9/index.html. Eleven serial Grok reservations; cumulative 241/300. Clipped rust banner replaced; generated letter-like decal cells and unrequested figure excluded. Rim mapping, rune stencils, matte extraction and damage feathering are labeled derived. Material detail improved; repeated stands, derived rim and less integrated atmospheric lighting mean concept equivalence remains unproven. Owner review and game integration remain open.
+
+Owner feel and approval remain unmeasured; the local grader may only reject or route.
+
+## Session 6 / A10
+
+[A10 owner board](../art/review/a10/index.html). A10 PARTIAL candidate: 198/288 state-direction clips in 11 atlases; 90 missing clips explicitly enumerated. Two generated diagonal views where available, two declared mirrored left views, six states, shared pivots and scale, canvas loader and native A9/A8 context proofs. Repeated leading-leg poses and identity differences remain; technical gates do not certify production animation. Cinder hound and Iskar front-gait repair rejected. 43 serial attempts, 44 charges: 41 generated jobs, one agy duplicate-output anomaly charged twice, one Grok HTTP 429. Both provider latches retained; cumulative 285/300. Owner review, missing animation and game integration remain open.
+
+Owner feel and approval remain unmeasured; the local grader may only reject or route.
+
+## Session 6 / A11
+
+[A11 owner board](../art/review/a11/index.html). A11 PARTIAL / generation blocked: Tideglass daily clock with four light states and independent water, meniscus, rim, glass, marks, mist and rotating bead; gold/reputation/fatigue design symbols at header and large sizes. Eighteen new UI regions on one separate page preserve all 90 A5b regions and both original pages. Zero new generated images: A5b rim/A8 mist reused, other geometry and shading authored. Local review flags the regular icon bevels and geometric sky below the painted Covenant bar. Prepared briefs remain unsubmitted. Both provider latches retained at 285/300; 15 local reservations do not establish provider availability. Owner board and session-6 combined contact sheet delivered; new painting, owner acceptance and game integration remain open.
+
+## Session 7 / A12
+
+[A12 owner board](../art/review/a12/index.html) · [contact sheet](../art/review/a12/contact-sheet.jpg) · [camera/occlusion consumer](../art/review/a12/canvas-demo.html). Three coherent A6-guided arena paintings replace the assembled A9 method for this candidate; seven foreground pylon overlays are cut from the same painting. The board includes equal-size concept/plate views, 1:1 floor and structure crops at 1080p/1440p, and actual A10/A8 composites at the v2 camera scale. The native sources are 1376×768; the 3072×1728 masters use disclosed local upscaling. Fine cracks, runes and some pylon modelling remain below or different from the references, and overscan architecture is inferred. Only owner review can accept cohesion and atmosphere. The proposed compact 94×62m arena requires game boundary/spawn migration; gameplay integration and performance are unmeasured. Provider audit/repair, 11 new images and one historical reconciliation are documented at 297/345; both original latch files are preserved. Camp and portraits remain unchanged.
+
+Owner feel and approval remain unmeasured; the local grader may only reject or route.
+
+## Session 8 / A13
+
+[Owner board](../art/review/a13/index.html),
+[motion and charge progress](../art/review/a13/motion.html),
+[combined contact sheet](../art/review/a13/contact-sheet.jpg).
+The review candidate replaces geometric visible sigils with painted contours
+and twelve canonical radicals. Inspect the three native arena comparisons at
+1.5-size figures: magical character, school identity, charging time, common
+warning versus UNBLOCKABLE, forward-only ward and bright inner perfect window.
+Also inspect tiny status distinctions and the quieter new floor inscriptions.
+Generated paint and authored animation/masks are labelled. Hold motion is
+subtle; shared construction, small modifiers and floor cleanup softness remain
+explicit findings. Technical gates and the local grader do not accept art.
+Owner acceptance, gameplay integration and actual combat/performance remain open.
+
+## ART session 9 / A14 stage 1
+
+[Owner board](../art/review/a14/index.html), [combined death strips](../art/review/a14/contact-sheet.jpg), [timed playback](../art/review/a14/motion.html). PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hit-light/heavy in all directions; death plus persistent corpse in all directions except Garran ne/nw. Creature A14 generation remains missing. 21 generated sources, 24 charged attempts, total 342/450; Grok latched on HTTP 402 exhausted Build balance, agy on repeated pre-image HTTP 503. One agy extra-call driver repair/reset and one bounded preflight recovery are archived; no refunds. 88 tests, 49-product offline rebuild and five browser viewport cases pass. Existing 378 protected art files and inherited ledger prefix are unchanged. Owner animation/readability and game integration remain unmeasured.
+
+Please judge short recoil readability, stagger recovery, ground contact, cross-view costume/equipment consistency, net detail and pale-lilac matte edges. These are owner-review candidates, not an acceptance claim.
+
+## ART session 9 / A14 stage 2
+
+[Gait audit board](../art/review/a14/stage2.html) shows all 18 actual inherited
+run strips with source-key labels and per-loop findings. Repeated leading-leg
+poses cannot be corrected by safe reordering of these keys; no gait fix is
+claimed. Hush moth already has wing movement. The [remaining queue](../art/delivery/a14/stage2/backlog.json)
+keeps 68 missing priority reaction slots ahead of 58 other legacy slots.
+Generation remains blocked by both provider latches. Zero spend or changed
+animation in this stage; stage-1 delivery is preserved. Owner acceptance remains open.

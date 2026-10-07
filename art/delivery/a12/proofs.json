@@ -1,0 +1,1520 @@
+[
+  {
+    "palette": "verdigris",
+    "viewportPx": [
+      1920,
+      1080
+    ],
+    "cameraCentre": [
+      16,
+      62
+    ],
+    "actors": [
+      {
+        "entity": "brennic",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.2916666666666667,
+          0.5333333333333333
+        ],
+        "positionMetres": [
+          -5.333333333333332,
+          64.343887210422
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "cassia",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ],
+        "positionMetres": [
+          6.61333333333333,
+          72.54749244689899
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "garran",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.625,
+          0.6666666666666667
+        ],
+        "positionMetres": [
+          28.799999999999997,
+          73.71943605210998
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            2,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "iskar",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.75,
+          0.55
+        ],
+        "positionMetres": [
+          41.60000000000001,
+          65.515830815633
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "conscript",
+        "state": "run",
+        "facing": "se",
+        "frame": 2,
+        "footUV": [
+          0.39999999999999997,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          5.759999999999998,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            778,
+            384,
+            384
+          ],
+          "durationMs": 100
+        }
+      },
+      {
+        "entity": "shieldman",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.5166666666666667,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          17.70666666666667,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "slinger",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.6333333333333334,
+          0.325
+        ],
+        "positionMetres": [
+          29.653333333333336,
+          49.694592145284524
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            1166,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "thornback",
+        "state": "idle",
+        "facing": "nw",
+        "frame": 0,
+        "footUV": [
+          0.5666666666666667,
+          0.45
+        ],
+        "positionMetres": [
+          22.826666666666668,
+          58.484169184367005
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            2,
+            2,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      }
+    ],
+    "effects": [
+      {
+        "clip": "fire.cast",
+        "frame": 3,
+        "footUV": [
+          0.3025,
+          0.5183333333333334
+        ]
+      },
+      {
+        "clip": "water.cast",
+        "frame": 3,
+        "footUV": [
+          0.42249999999999993,
+          0.6358333333333335
+        ]
+      },
+      {
+        "clip": "earth.cast",
+        "frame": 3,
+        "footUV": [
+          0.6166666666666667,
+          0.6558333333333335
+        ]
+      },
+      {
+        "clip": "air.cast",
+        "frame": 3,
+        "footUV": [
+          0.7433333333333334,
+          0.5333333333333333
+        ]
+      },
+      {
+        "clip": "water.aura",
+        "frame": 2,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ]
+      }
+    ],
+    "nativeCropSizePx": [
+      640,
+      352
+    ],
+    "composite": "art/delivery/a12/proofs/verdigris-composite-1080.png",
+    "source": "A10 characters and A8 effects loaded from delivery manifests"
+  },
+  {
+    "palette": "verdigris",
+    "viewportPx": [
+      2560,
+      1440
+    ],
+    "cameraCentre": [
+      16,
+      62
+    ],
+    "actors": [
+      {
+        "entity": "brennic",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.2916666666666667,
+          0.5333333333333333
+        ],
+        "positionMetres": [
+          -5.333333333333332,
+          64.343887210422
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "cassia",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ],
+        "positionMetres": [
+          6.61333333333333,
+          72.54749244689899
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "garran",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.625,
+          0.6666666666666667
+        ],
+        "positionMetres": [
+          28.799999999999997,
+          73.71943605210998
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            2,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "iskar",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.75,
+          0.55
+        ],
+        "positionMetres": [
+          41.60000000000001,
+          65.515830815633
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "conscript",
+        "state": "run",
+        "facing": "se",
+        "frame": 2,
+        "footUV": [
+          0.39999999999999997,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          5.759999999999998,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            778,
+            384,
+            384
+          ],
+          "durationMs": 100
+        }
+      },
+      {
+        "entity": "shieldman",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.5166666666666667,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          17.70666666666667,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "slinger",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.6333333333333334,
+          0.325
+        ],
+        "positionMetres": [
+          29.653333333333336,
+          49.694592145284524
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            1166,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "thornback",
+        "state": "idle",
+        "facing": "nw",
+        "frame": 0,
+        "footUV": [
+          0.5666666666666667,
+          0.45
+        ],
+        "positionMetres": [
+          22.826666666666668,
+          58.484169184367005
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            2,
+            2,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      }
+    ],
+    "effects": [
+      {
+        "clip": "fire.cast",
+        "frame": 3,
+        "footUV": [
+          0.3025,
+          0.5183333333333334
+        ]
+      },
+      {
+        "clip": "water.cast",
+        "frame": 3,
+        "footUV": [
+          0.42249999999999993,
+          0.6358333333333335
+        ]
+      },
+      {
+        "clip": "earth.cast",
+        "frame": 3,
+        "footUV": [
+          0.6166666666666667,
+          0.6558333333333335
+        ]
+      },
+      {
+        "clip": "air.cast",
+        "frame": 3,
+        "footUV": [
+          0.7433333333333334,
+          0.5333333333333333
+        ]
+      },
+      {
+        "clip": "water.aura",
+        "frame": 2,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ]
+      }
+    ],
+    "nativeCropSizePx": [
+      640,
+      352
+    ],
+    "composite": "art/delivery/a12/proofs/verdigris-composite-1440.png",
+    "source": "A10 characters and A8 effects loaded from delivery manifests"
+  },
+  {
+    "palette": "rust-sand",
+    "viewportPx": [
+      1920,
+      1080
+    ],
+    "cameraCentre": [
+      16,
+      62
+    ],
+    "actors": [
+      {
+        "entity": "brennic",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.2916666666666667,
+          0.5333333333333333
+        ],
+        "positionMetres": [
+          -5.333333333333332,
+          64.343887210422
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "cassia",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ],
+        "positionMetres": [
+          6.61333333333333,
+          72.54749244689899
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "garran",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.625,
+          0.6666666666666667
+        ],
+        "positionMetres": [
+          28.799999999999997,
+          73.71943605210998
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            2,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "iskar",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.75,
+          0.55
+        ],
+        "positionMetres": [
+          41.60000000000001,
+          65.515830815633
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "conscript",
+        "state": "run",
+        "facing": "se",
+        "frame": 2,
+        "footUV": [
+          0.39999999999999997,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          5.759999999999998,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            778,
+            384,
+            384
+          ],
+          "durationMs": 100
+        }
+      },
+      {
+        "entity": "shieldman",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.5166666666666667,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          17.70666666666667,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "slinger",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.6333333333333334,
+          0.325
+        ],
+        "positionMetres": [
+          29.653333333333336,
+          49.694592145284524
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            1166,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "thornback",
+        "state": "idle",
+        "facing": "nw",
+        "frame": 0,
+        "footUV": [
+          0.5666666666666667,
+          0.45
+        ],
+        "positionMetres": [
+          22.826666666666668,
+          58.484169184367005
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            2,
+            2,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      }
+    ],
+    "effects": [
+      {
+        "clip": "fire.cast",
+        "frame": 3,
+        "footUV": [
+          0.3025,
+          0.5183333333333334
+        ]
+      },
+      {
+        "clip": "water.cast",
+        "frame": 3,
+        "footUV": [
+          0.42249999999999993,
+          0.6358333333333335
+        ]
+      },
+      {
+        "clip": "earth.cast",
+        "frame": 3,
+        "footUV": [
+          0.6166666666666667,
+          0.6558333333333335
+        ]
+      },
+      {
+        "clip": "air.cast",
+        "frame": 3,
+        "footUV": [
+          0.7433333333333334,
+          0.5333333333333333
+        ]
+      },
+      {
+        "clip": "water.aura",
+        "frame": 2,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ]
+      }
+    ],
+    "nativeCropSizePx": [
+      640,
+      352
+    ],
+    "composite": "art/delivery/a12/proofs/rust-sand-composite-1080.png",
+    "source": "A10 characters and A8 effects loaded from delivery manifests"
+  },
+  {
+    "palette": "rust-sand",
+    "viewportPx": [
+      2560,
+      1440
+    ],
+    "cameraCentre": [
+      16,
+      62
+    ],
+    "actors": [
+      {
+        "entity": "brennic",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.2916666666666667,
+          0.5333333333333333
+        ],
+        "positionMetres": [
+          -5.333333333333332,
+          64.343887210422
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "cassia",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ],
+        "positionMetres": [
+          6.61333333333333,
+          72.54749244689899
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "garran",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.625,
+          0.6666666666666667
+        ],
+        "positionMetres": [
+          28.799999999999997,
+          73.71943605210998
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            2,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "iskar",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.75,
+          0.55
+        ],
+        "positionMetres": [
+          41.60000000000001,
+          65.515830815633
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "conscript",
+        "state": "run",
+        "facing": "se",
+        "frame": 2,
+        "footUV": [
+          0.39999999999999997,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          5.759999999999998,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            778,
+            384,
+            384
+          ],
+          "durationMs": 100
+        }
+      },
+      {
+        "entity": "shieldman",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.5166666666666667,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          17.70666666666667,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "slinger",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.6333333333333334,
+          0.325
+        ],
+        "positionMetres": [
+          29.653333333333336,
+          49.694592145284524
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            1166,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "thornback",
+        "state": "idle",
+        "facing": "nw",
+        "frame": 0,
+        "footUV": [
+          0.5666666666666667,
+          0.45
+        ],
+        "positionMetres": [
+          22.826666666666668,
+          58.484169184367005
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            2,
+            2,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      }
+    ],
+    "effects": [
+      {
+        "clip": "fire.cast",
+        "frame": 3,
+        "footUV": [
+          0.3025,
+          0.5183333333333334
+        ]
+      },
+      {
+        "clip": "water.cast",
+        "frame": 3,
+        "footUV": [
+          0.42249999999999993,
+          0.6358333333333335
+        ]
+      },
+      {
+        "clip": "earth.cast",
+        "frame": 3,
+        "footUV": [
+          0.6166666666666667,
+          0.6558333333333335
+        ]
+      },
+      {
+        "clip": "air.cast",
+        "frame": 3,
+        "footUV": [
+          0.7433333333333334,
+          0.5333333333333333
+        ]
+      },
+      {
+        "clip": "water.aura",
+        "frame": 2,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ]
+      }
+    ],
+    "nativeCropSizePx": [
+      640,
+      352
+    ],
+    "composite": "art/delivery/a12/proofs/rust-sand-composite-1440.png",
+    "source": "A10 characters and A8 effects loaded from delivery manifests"
+  },
+  {
+    "palette": "moonlit",
+    "viewportPx": [
+      1920,
+      1080
+    ],
+    "cameraCentre": [
+      16,
+      62
+    ],
+    "actors": [
+      {
+        "entity": "brennic",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.2916666666666667,
+          0.5333333333333333
+        ],
+        "positionMetres": [
+          -5.333333333333332,
+          64.343887210422
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "cassia",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ],
+        "positionMetres": [
+          6.61333333333333,
+          72.54749244689899
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "garran",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.625,
+          0.6666666666666667
+        ],
+        "positionMetres": [
+          28.799999999999997,
+          73.71943605210998
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            2,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "iskar",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.75,
+          0.55
+        ],
+        "positionMetres": [
+          41.60000000000001,
+          65.515830815633
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "conscript",
+        "state": "run",
+        "facing": "se",
+        "frame": 2,
+        "footUV": [
+          0.39999999999999997,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          5.759999999999998,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            778,
+            384,
+            384
+          ],
+          "durationMs": 100
+        }
+      },
+      {
+        "entity": "shieldman",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.5166666666666667,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          17.70666666666667,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "slinger",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.6333333333333334,
+          0.325
+        ],
+        "positionMetres": [
+          29.653333333333336,
+          49.694592145284524
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            1166,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "thornback",
+        "state": "idle",
+        "facing": "nw",
+        "frame": 0,
+        "footUV": [
+          0.5666666666666667,
+          0.45
+        ],
+        "positionMetres": [
+          22.826666666666668,
+          58.484169184367005
+        ],
+        "bodyHeightPx": 40.5,
+        "atlasFrame": {
+          "rect": [
+            2,
+            2,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      }
+    ],
+    "effects": [
+      {
+        "clip": "fire.cast",
+        "frame": 3,
+        "footUV": [
+          0.3025,
+          0.5183333333333334
+        ]
+      },
+      {
+        "clip": "water.cast",
+        "frame": 3,
+        "footUV": [
+          0.42249999999999993,
+          0.6358333333333335
+        ]
+      },
+      {
+        "clip": "earth.cast",
+        "frame": 3,
+        "footUV": [
+          0.6166666666666667,
+          0.6558333333333335
+        ]
+      },
+      {
+        "clip": "air.cast",
+        "frame": 3,
+        "footUV": [
+          0.7433333333333334,
+          0.5333333333333333
+        ]
+      },
+      {
+        "clip": "water.aura",
+        "frame": 2,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ]
+      }
+    ],
+    "nativeCropSizePx": [
+      640,
+      352
+    ],
+    "composite": "art/delivery/a12/proofs/moonlit-composite-1080.png",
+    "source": "A10 characters and A8 effects loaded from delivery manifests"
+  },
+  {
+    "palette": "moonlit",
+    "viewportPx": [
+      2560,
+      1440
+    ],
+    "cameraCentre": [
+      16,
+      62
+    ],
+    "actors": [
+      {
+        "entity": "brennic",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.2916666666666667,
+          0.5333333333333333
+        ],
+        "positionMetres": [
+          -5.333333333333332,
+          64.343887210422
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "cassia",
+        "state": "cast",
+        "facing": "ne",
+        "frame": 1,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ],
+        "positionMetres": [
+          6.61333333333333,
+          72.54749244689899
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "garran",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.625,
+          0.6666666666666667
+        ],
+        "positionMetres": [
+          28.799999999999997,
+          73.71943605210998
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            2,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "iskar",
+        "state": "cast",
+        "facing": "nw",
+        "frame": 1,
+        "footUV": [
+          0.75,
+          0.55
+        ],
+        "positionMetres": [
+          41.60000000000001,
+          65.515830815633
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 160
+        }
+      },
+      {
+        "entity": "conscript",
+        "state": "run",
+        "facing": "se",
+        "frame": 2,
+        "footUV": [
+          0.39999999999999997,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          5.759999999999998,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            778,
+            384,
+            384
+          ],
+          "durationMs": 100
+        }
+      },
+      {
+        "entity": "shieldman",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.5166666666666667,
+          0.3166666666666667
+        ],
+        "positionMetres": [
+          17.70666666666667,
+          49.10862034267903
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            390,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "slinger",
+        "state": "idle",
+        "facing": "se",
+        "frame": 0,
+        "footUV": [
+          0.6333333333333334,
+          0.325
+        ],
+        "positionMetres": [
+          29.653333333333336,
+          49.694592145284524
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            1166,
+            390,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      },
+      {
+        "entity": "thornback",
+        "state": "idle",
+        "facing": "nw",
+        "frame": 0,
+        "footUV": [
+          0.5666666666666667,
+          0.45
+        ],
+        "positionMetres": [
+          22.826666666666668,
+          58.484169184367005
+        ],
+        "bodyHeightPx": 54.0,
+        "atlasFrame": {
+          "rect": [
+            2,
+            2,
+            384,
+            384
+          ],
+          "durationMs": 450
+        }
+      }
+    ],
+    "effects": [
+      {
+        "clip": "fire.cast",
+        "frame": 3,
+        "footUV": [
+          0.3025,
+          0.5183333333333334
+        ]
+      },
+      {
+        "clip": "water.cast",
+        "frame": 3,
+        "footUV": [
+          0.42249999999999993,
+          0.6358333333333335
+        ]
+      },
+      {
+        "clip": "earth.cast",
+        "frame": 3,
+        "footUV": [
+          0.6166666666666667,
+          0.6558333333333335
+        ]
+      },
+      {
+        "clip": "air.cast",
+        "frame": 3,
+        "footUV": [
+          0.7433333333333334,
+          0.5333333333333333
+        ]
+      },
+      {
+        "clip": "water.aura",
+        "frame": 2,
+        "footUV": [
+          0.4083333333333333,
+          0.6500000000000001
+        ]
+      }
+    ],
+    "nativeCropSizePx": [
+      640,
+      352
+    ],
+    "composite": "art/delivery/a12/proofs/moonlit-composite-1440.png",
+    "source": "A10 characters and A8 effects loaded from delivery manifests"
+  }
+]

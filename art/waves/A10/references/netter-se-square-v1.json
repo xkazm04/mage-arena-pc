@@ -1,0 +1,22 @@
+{
+  "source": "art/review/sources/a3c-netter-poses-agy-a01.png",
+  "sourceSha256": "a288536214b3bd9df7ee54ecef5839ed70359a7240b239c46dea6012fd101890",
+  "crop": [
+    0,
+    0,
+    512,
+    512
+  ],
+  "origin": "single native full-body identity crop on authored square magenta canvas; resampling only",
+  "styleAuthority": {
+    "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+    "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+  },
+  "styleUse": "author-reviewed painting bar and prompt guidance; Grok sees only this single full-body reference",
+  "override": {
+    "source": "art/review/sources/a10-netter-se-guide-grok-a02.jpg",
+    "sha256": "4828b10b696524315a08ed083b165ab883756dbb6d6b8b5251661bcc984d295d",
+    "mirrorX": false,
+    "reason": "reviewed single-facing full-body identity guide; normalize observed left-facing guides by explicit mirror"
+  }
+}

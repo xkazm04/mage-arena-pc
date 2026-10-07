@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A12 camera and occlusion proof</title><style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080d13;color:#e8dfc8;font:16px Georgia}
+canvas{display:block;width:100%;height:100%;object-fit:contain}nav{position:absolute;top:12px;left:12px;padding:10px 14px;background:#101922df;border:1px solid #667478;border-radius:3px;max-width:90vw}
+button,a{font:inherit;color:#e6d9b5;background:#24343b;border:1px solid #677479;padding:6px 12px;cursor:pointer;text-decoration:none}p{margin:9px 0 0;font-size:14px}#status{color:#afc9cd}</style>
+<canvas id="scene"></canvas><nav><a href="index.html">Board</a> <button data-palette="verdigris">Verdigris</button> <button data-palette="rust-sand">Rust &amp; sand</button> <button data-palette="moonlit">Moonlit</button> <button id="depth">Walk behind pylon</button> <button id="reset">Reset</button><p>WASD: move Cassia. Camera follows only at view edge. Space: pause. Static art consumer, not gameplay.</p><p id="status">Loading plates, A10 bodies and A8 effects…</p></nav>
+<script type="module">
+import {loadArenaPlates} from '../../delivery/a12/loader.js';
+const assets=await loadArenaPlates();const witnesses=await(await fetch('../../waves/A12/proof-witnesses.json')).json();
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d');
+let palette='moonlit',centre=[16,62],time=0,last=performance.now(),paused=false,depth=false,controlled=false,facing='se',player=assets.uvToWorld([.41,.65]),report=null;
+const pressed=new Set();
+function resize(){const h=innerHeight;canvas.width=Math.round(h*16/9);canvas.height=h;}resize();addEventListener('resize',resize);
+function frame(dt){
+  const p=assets.manifest.palettes[palette];let actors=witnesses.actors.map(({frame,...a})=>({...a})),effects=witnesses.effects.map(({frame,...a})=>({...a}));
+  if(depth){const o=p.occluders[0];centre=assets.clampCamera(o.baseWorldMetres);player=[o.baseWorldMetres[0]+Math.sin(time/900)*1.6,o.baseWorldMetres[1]+Math.sin(time/1600)*1.5];actors=[{entity:'cassia',state:'run',facing:Math.sin(time/1600)>0?'se':'nw',positionMetres:player}];effects=[];}
+  else if(controlled){
+    const x=Number(pressed.has('d'))-Number(pressed.has('a')),y=Number(pressed.has('s'))-Number(pressed.has('w'));
+    const n=Math.hypot(x,y)||1;player=[player[0]+x/n*8*dt,player[1]+y/n*8*dt];
+    const dx=(player[0]-16)/47,dy=(player[1]-62)/31,k=Math.max(1,Math.hypot(dx,dy));player=[16+(player[0]-16)/k,62+(player[1]-62)/k];
+    if(x||y)facing=y<0?(x<0?'nw':'ne'):(x<0?'sw':'se');
+    actors=actors.filter(a=>a.entity!=='cassia');actors.push({entity:'cassia',state:x||y?'run':'idle',facing,positionMetres:player});
+    centre=assets.followCamera(centre,player,dt,canvas.width,canvas.height);
+  }
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  report=assets.render(ctx,palette,{width:canvas.width,height:canvas.height,centre},actors,effects,time);
+  document.querySelector('#status').textContent=`${palette} · ${canvas.width}×${canvas.height} · body ${report.characterNominalPx.toFixed(1)}px · camera ${centre.map(v=>v.toFixed(1)).join(', ')} · ${depth?'occlusion witness':'A10 + A8'}`;
+}
+function tick(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(!paused)time+=dt*1000;frame(paused?0:dt);requestAnimationFrame(tick);}requestAnimationFrame(tick);
+document.querySelectorAll('[data-palette]').forEach(b=>b.onclick=()=>{palette=b.dataset.palette;centre=[16,62]});
+document.querySelector('#depth').onclick=()=>{depth=!depth;centre=[16,62]};
+document.querySelector('#reset').onclick=()=>{depth=false;controlled=false;centre=[16,62];player=assets.uvToWorld([.41,.65])};
+addEventListener('keydown',e=>{if(e.key===' '){if(!e.repeat)paused=!paused;e.preventDefault()}const k=e.key.toLowerCase();if('wasd'.includes(k)&&k.length===1){pressed.add(k);controlled=true;depth=false}});
+addEventListener('keyup',e=>pressed.delete(e.key.toLowerCase()));addEventListener('blur',()=>pressed.clear());
+window.a12Demo={ready:true,assets,setPalette(v){palette=v},setDepth(v){depth=v},setCamera(v){centre=v},renderAt(t){paused=true;time=t;frame(0);return report},get report(){return report},get player(){return [...player]}};
+</script></html>

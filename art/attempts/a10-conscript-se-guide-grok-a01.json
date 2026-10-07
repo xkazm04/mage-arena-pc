@@ -1,0 +1,54 @@
+{
+  "id": "a10-conscript-se-guide-grok-a01",
+  "wave": "A10",
+  "style_id": "covenant",
+  "scene": "conscript-se-guide",
+  "attempt": 1,
+  "input": {
+    "wave": "A10",
+    "id": "conscript-se-guide",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A10/references/conscript-se-guide-input.png",
+        "sha256": "e8fe7be1f8aa16f27dff39db98a153d15098f6ae53b10a91d99fa403a2d8b6cb",
+        "role": "full-body A3c identity; change anatomical viewing direction only"
+      }
+    ],
+    "prompt": "Create ONE new full-body direction reference of this SAME original character. Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura.\nRepaint the character from a different viewing direction: FRONT-RIGHT three-quarter view, FACE and CHEST FRONT clearly visible, toward viewer and right. Show the actual front surfaces of clothing or creature anatomy. This is a new anatomical view in three-dimensional space, NOT rotation of the flat image. The upright body remains vertical in the picture. Camera fixed elevated 55-degree orthographic.\nONE complete figure only, relaxed planted ready stance, both feet on ground (creature all supporting feet planted; moth wings spread in hovering rest). Keep identical clothes, equipment, headwear, proportions and colours. Preserve exactly one weapon and correct anatomy. No action, no attack, no magic effect, no duplicate object, no other characters.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Refined physical painted volume and cloth folds, no heavy comic outline. Fine detail at worn edges.\nPure uniform MAGENTA #FF00FF background. Whole body including feet, weapon, wings and tail fits within middle 65 percent of image. At least 15 percent completely blank margin on every side. No floor, shadow, text, labels, panels or frame. Square image. Do not copy the reference facing if it differs from the requested new view."
+  },
+  "input_hash": "ab8fc54612338c2076047b09bb917cc28e5165908623507471ee8af0421393a8",
+  "prompt": "Create ONE new full-body direction reference of this SAME original character. Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura.\nRepaint the character from a different viewing direction: FRONT-RIGHT three-quarter view, FACE and CHEST FRONT clearly visible, toward viewer and right. Show the actual front surfaces of clothing or creature anatomy. This is a new anatomical view in three-dimensional space, NOT rotation of the flat image. The upright body remains vertical in the picture. Camera fixed elevated 55-degree orthographic.\nONE complete figure only, relaxed planted ready stance, both feet on ground (creature all supporting feet planted; moth wings spread in hovering rest). Keep identical clothes, equipment, headwear, proportions and colours. Preserve exactly one weapon and correct anatomy. No action, no attack, no magic effect, no duplicate object, no other characters.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Refined physical painted volume and cloth folds, no heavy comic outline. Fine detail at worn edges.\nPure uniform MAGENTA #FF00FF background. Whole body including feet, weapon, wings and tail fits within middle 65 percent of image. At least 15 percent completely blank margin on every side. No floor, shadow, text, labels, panels or frame. Square image. Do not copy the reference facing if it differs from the requested new view.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "0f6c8e2b-8a0c-4b39-a45d-c5e6caa7bea6",
+  "at": "2026-10-03T13:47:43.415957+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 28.359,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Create ONE new full-body direction reference of this SAME original character. Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura.\nRepaint the character from a different viewing direction: FRONT-RIGHT three-quarter view, FACE and CHEST FRONT clearly visible, toward viewer and right. Show the actual front surfaces of clothing or creature anatomy. This is a new anatomical view in three-dimensional space, NOT rotation of the flat image. The upright body remains vertical in the picture. Camera fixed elevated 55-degree orthographic.\nONE complete figure only, relaxed planted ready stance, both feet on ground (creature all supporting feet planted; moth wings spread in hovering rest). Keep identical clothes, equipment, headwear, proportions and colours. Preserve exactly one weapon and correct anatomy. No action, no attack, no magic effect, no duplicate object, no other characters.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Refined physical painted volume and cloth folds, no heavy comic outline. Fine detail at worn edges.\nPure uniform MAGENTA #FF00FF background. Whole body including feet, weapon, wings and tail fits within middle 65 percent of image. At least 15 percent completely blank margin on every side. No floor, shadow, text, labels, panels or frame. Square image. Do not copy the reference facing if it differs from the requested new view.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-conscript-se-guide-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a10-conscript-se-guide-grok-a01/source.jpg",
+  "archive": "art/review/sources/a10-conscript-se-guide-grok-a01.jpg",
+  "sha256": "dd2af7826ec149bc1ef2844fdd0ced25c748148a5d6540b33860a4a657ea0da4",
+  "invocation_evidence": "art/providers/runs/a10-conscript-se-guide-grok-a01"
+}

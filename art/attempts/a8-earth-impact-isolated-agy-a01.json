@@ -1,0 +1,49 @@
+{
+  "id": "a8-earth-impact-isolated-agy-a01",
+  "wave": "A8",
+  "style_id": "covenant",
+  "scene": "earth-impact-isolated",
+  "attempt": 1,
+  "input": {
+    "wave": "A8",
+    "id": "earth-impact-isolated",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "3:2",
+    "references": [
+      {
+        "path": "art/review/sources/a8-earth-animation-agy-a01.png",
+        "sha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+        "role": "earth palette and rock/dust material"
+      },
+      {
+        "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+        "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f",
+        "role": "painted stone and dust fidelity"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. A replacement six-frame EARTH IMPACT animation sheet.\nReference-1.png supplies the ochre stone, golden energy and dust style. Its impact bursts clipped their cells; fix that technical defect here. Reference-2.png supplies painted material richness.\nONE image, EXACTLY THREE equal columns and TWO equal rows. Six chronological frames in reading order, each isolated on uniform pure BLACK #000000. No text or dividers.\nEach effect MUST remain within the central 55 PERCENT of its cell, at least 22 percent empty BLACK margin on EVERY side, including dust. All six centers and canvas scales consistent. Ideally 1536x1024.\nFrame 1 tiny earth contact spark; frame 2 bright fissure-like compression; frame 3 peak sharp angular fragments and ochre dust burst; frame 4 outward fragment spray; frame 5 settling translucent dust and a few fading motes; frame 6 faint residual dust.\nOriginal finely hand-painted digital dark fantasy, physical angular stone splinters, smoky natural dust, thin sharp ivory-gold light, no cartoon outline, no smooth vector symbols, no physical ground or environment. Oblique view 55 degrees. No people or objects except the impact fragments. Absolutely no cropping or overlapping adjacent effects."
+  },
+  "input_hash": "afb442db4788d8057d5b56de7a20475c3d816fc92650ca615f279e5de91f3425",
+  "prompt": "Use case: stylized-concept. A replacement six-frame EARTH IMPACT animation sheet.\nReference-1.png supplies the ochre stone, golden energy and dust style. Its impact bursts clipped their cells; fix that technical defect here. Reference-2.png supplies painted material richness.\nONE image, EXACTLY THREE equal columns and TWO equal rows. Six chronological frames in reading order, each isolated on uniform pure BLACK #000000. No text or dividers.\nEach effect MUST remain within the central 55 PERCENT of its cell, at least 22 percent empty BLACK margin on EVERY side, including dust. All six centers and canvas scales consistent. Ideally 1536x1024.\nFrame 1 tiny earth contact spark; frame 2 bright fissure-like compression; frame 3 peak sharp angular fragments and ochre dust burst; frame 4 outward fragment spray; frame 5 settling translucent dust and a few fading motes; frame 6 faint residual dust.\nOriginal finely hand-painted digital dark fantasy, physical angular stone splinters, smoky natural dust, thin sharp ivory-gold light, no cartoon outline, no smooth vector symbols, no physical ground or environment. Oblique view 55 degrees. No people or objects except the impact fragments. Absolutely no cropping or overlapping adjacent effects.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "b2d52527-f7f4-4b03-880e-7d574e1db7d8",
+  "at": "2026-10-03T11:37:41.932898+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 187.282,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a8-earth-impact-isolated-agy-a01/source.png",
+  "archive": "art/review/sources/a8-earth-impact-isolated-agy-a01.png",
+  "sha256": "09fd78e1bea56a824fe9cbe9ddeb284b537eeda7f60674f0fd29075a2e1466a5",
+  "invocation_evidence": "art/providers/runs/a8-earth-impact-isolated-agy-a01"
+}

@@ -1,0 +1,71 @@
+{
+  "id": "a13-casting-fire-grok-a03",
+  "wave": "A13",
+  "style_id": "covenant",
+  "scene": "casting-fire",
+  "attempt": 3,
+  "input": {
+    "wave": "A13",
+    "id": "casting-fire",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "4:3",
+    "references": [
+      {
+        "path": "art/waves/A13/references/painted-ring-key.png",
+        "sha256": "c2815d56e2d12404971b80e63999ae43f1a7af2874d1696a9b5cfa299310c038",
+        "role": "ONE painted cracked brush circle; keep pigment texture, transform element"
+      }
+    ],
+    "sheet": {
+      "columns": 3,
+      "rows": 2,
+      "kind": "casting-hold"
+    },
+    "prompt": "Paint ONE sprite sheet, exactly THREE columns by TWO rows, SIX animation keys of the SAME FIRE enchanted ground circle. Reference-1.png is ONE brush-painted circle, use its BROAD PAINTERLY STROKES and irregular cracked pigment as the visual anchor. Transform the medium into ember-orange broken flame ribbons, dark charcoal seams, small orange cinders and hot selected ivory cuts. No solid metal object: these are luminous painted incisions and elemental energy on an invisible ground plane. Richly brushed dark-fantasy painting, irregular thickness, broken layered stroke edges, strong dark paint crevices, small selected glow. Each key shows the entire identical centred enchantment at fixed radius: outer shape stable while different small flames/drops/grains/wisps travel around the strokes. Leave six asymmetrical open gaps in the painted circle for separate glyph inlays. DO NOT paint ANY letters, runes, words, symbols, squiggle-writing or emblems. Glyphs will be composited separately from the canonical alphabet. All six cells are HOLD frames, not emergence or dissipation. No copying of glyph sheets. The empty centre is at least 55 percent of diameter. Flat orthographic TOP view, circles round not perspective ovals. Exactly 3x2, pure black background, no panels or grid lines. Each complete shape including glow fits in the middle 65 percent of its cell. Large EMPTY gutters and outer margins. No paper/canvas/noise overlays, clip art, clean vector linework, smooth neon tubes, people, objects, text or watermarks. Original magical art only.",
+    "correction_of": "a13-casting-fire-grok-a02"
+  },
+  "input_hash": "137b6b663d87822ccc073ae71ecd997941237aa04172570d40c2c9f4e7878480",
+  "prompt": "Paint ONE sprite sheet, exactly THREE columns by TWO rows, SIX animation keys of the SAME FIRE enchanted ground circle. Reference-1.png is ONE brush-painted circle, use its BROAD PAINTERLY STROKES and irregular cracked pigment as the visual anchor. Transform the medium into ember-orange broken flame ribbons, dark charcoal seams, small orange cinders and hot selected ivory cuts. No solid metal object: these are luminous painted incisions and elemental energy on an invisible ground plane. Richly brushed dark-fantasy painting, irregular thickness, broken layered stroke edges, strong dark paint crevices, small selected glow. Each key shows the entire identical centred enchantment at fixed radius: outer shape stable while different small flames/drops/grains/wisps travel around the strokes. Leave six asymmetrical open gaps in the painted circle for separate glyph inlays. DO NOT paint ANY letters, runes, words, symbols, squiggle-writing or emblems. Glyphs will be composited separately from the canonical alphabet. All six cells are HOLD frames, not emergence or dissipation. No copying of glyph sheets. The empty centre is at least 55 percent of diameter. Flat orthographic TOP view, circles round not perspective ovals. Exactly 3x2, pure black background, no panels or grid lines. Each complete shape including glow fits in the middle 65 percent of its cell. Large EMPTY gutters and outer margins. No paper/canvas/noise overlays, clip art, clean vector linework, smooth neon tubes, people, objects, text or watermarks. Original magical art only.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "282471cc-fb67-43f6-9ee6-287fc9b94fc2",
+  "at": "2026-10-03T21:49:13.223332+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 28.954,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Paint ONE sprite sheet, exactly THREE columns by TWO rows, SIX animation keys of the SAME FIRE enchanted ground circle. Reference-1.png is ONE brush-painted circle, use its BROAD PAINTERLY STROKES and irregular cracked pigment as the visual anchor. Transform the medium into ember-orange broken flame ribbons, dark charcoal seams, small orange cinders and hot selected ivory cuts. No solid metal object: these are luminous painted incisions and elemental energy on an invisible ground plane. Richly brushed dark-fantasy painting, irregular thickness, broken layered stroke edges, strong dark paint crevices, small selected glow. Each key shows the entire identical centred enchantment at fixed radius: outer shape stable while different small flames/drops/grains/wisps travel around the strokes. Leave six asymmetrical open gaps in the painted circle for separate glyph inlays. DO NOT paint ANY letters, runes, words, symbols, squiggle-writing or emblems. Glyphs will be composited separately from the canonical alphabet. All six cells are HOLD frames, not emergence or dissipation. No copying of glyph sheets. The empty centre is at least 55 percent of diameter. Flat orthographic TOP view, circles round not perspective ovals. Exactly 3x2, pure black background, no panels or grid lines. Each complete shape including glow fits in the middle 65 percent of its cell. Large EMPTY gutters and outer margins. No paper/canvas/noise overlays, clip art, clean vector linework, smooth neon tubes, people, objects, text or watermarks. Original magical art only.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-casting-fire-grok-a03\\reference-1.png"
+        ],
+        "aspect_ratio": "4:3"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "90242ce2694a188f309018c76c77e9b6369ac55e4e7df9ccf3112abeb8e2d2a8",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca13-casting-fire-grok-a03\\282471cc-fb67-43f6-9ee6-287fc9b94fc2\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a13-casting-fire-grok-a03/_driver/source.jpg",
+  "archive": "art/review/sources/a13-casting-fire-grok-a03.jpg",
+  "sha256": "90242ce2694a188f309018c76c77e9b6369ac55e4e7df9ccf3112abeb8e2d2a8",
+  "invocation_evidence": "art/providers/runs/a13-casting-fire-grok-a03"
+}

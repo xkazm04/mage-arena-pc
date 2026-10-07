@@ -1,0 +1,87 @@
+{
+  "id": "a14-thornback-se-motion-agy-a01",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "thornback-se-motion",
+  "attempt": 1,
+  "input": {
+    "wave": "A14",
+    "id": "thornback-se-motion",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/session10/references/thornback-se.png",
+        "sha256": "05cbc92e574f57dceacd1084d0bbbbe2bf5b908894703e8fdd6dd3bfe0e2df7e",
+        "role": "locally gated front proof derived crop; original approved creature source remains reference 2"
+      },
+      {
+        "path": "art/review/sources/a3c-thornback-poses-agy-a01.png",
+        "sha256": "3c347da56718cf5bc40de09caefb8f97d6237d2eefac690f0ef77b74ad4c14ca",
+        "role": "approved Covenant creature anatomy, palette and style"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is the APPROVED COVENANT CREATURE SOURCE, the authority for anatomy, palette and painting style. Use BOTH references visually. Match its lighter stylized painted values and simple sculpted shapes exactly; do not darken into realistic horror, add photoreal skin or fur, or add black shadows. Reference-1 is an A10 master or a crop of that approved source. Generate the requested anatomical view even if the reference is a rear view. This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. Raw magical heavy four-legged stone beast, squat broad body, blunt mineral horns and tall angular thorn-like back plates, ochre mineral seams, heavy blunt feet, small armored head. Charging wedge silhouette; no gore. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns by FOUR rows, SIXTEEN complete isolated poses. Keys 1-4: four subtle ready IDLE poses with breathing and small natural shifts. Keys 5-10: Six distinct locomotion keys in order: opposite diagonal leg pairs alternate support; reach, contact, gather, opposite reach, opposite contact, gather. Show clearly different left/right paw placement, not six copies with one leading leg. Keys 11-16: six ATTACK poses, ready, armored head lowers, weight gathers onto hind feet, brief forward horn shove, forefeet brace, ready recovery. All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only. Keep the approved BLUE illuminated mineral seams as well as ochre cracks. The approved image outranks any conflicting written color description.",
+    "entity": "thornback",
+    "direction": "se",
+    "kind": "motion",
+    "grid": [
+      4,
+      4
+    ],
+    "referenceConsumption": "agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual",
+    "session": 10
+  },
+  "input_hash": "e4db6403e9dc3616dcff8ce6437c540b0b05e5b65856e3c421cdd3b4d02f4c54",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is the APPROVED COVENANT CREATURE SOURCE, the authority for anatomy, palette and painting style. Use BOTH references visually. Match its lighter stylized painted values and simple sculpted shapes exactly; do not darken into realistic horror, add photoreal skin or fur, or add black shadows. Reference-1 is an A10 master or a crop of that approved source. Generate the requested anatomical view even if the reference is a rear view. This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. Raw magical heavy four-legged stone beast, squat broad body, blunt mineral horns and tall angular thorn-like back plates, ochre mineral seams, heavy blunt feet, small armored head. Charging wedge silhouette; no gore. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns by FOUR rows, SIXTEEN complete isolated poses. Keys 1-4: four subtle ready IDLE poses with breathing and small natural shifts. Keys 5-10: Six distinct locomotion keys in order: opposite diagonal leg pairs alternate support; reach, contact, gather, opposite reach, opposite contact, gather. Show clearly different left/right paw placement, not six copies with one leading leg. Keys 11-16: six ATTACK poses, ready, armored head lowers, weight gathers onto hind feet, brief forward horn shove, forefeet brace, ready recovery. All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only. Keep the approved BLUE illuminated mineral seams as well as ochre cracks. The approved image outranks any conflicting written color description.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "05684cfc-8752-4a6c-aeff-0b30f54cd1d4",
+  "at": "2026-10-04T15:19:46.992344+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 48.734,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T15:19:59Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "thornback_se_motion_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-thornback-se-motion-agy-a01\\Reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-thornback-se-motion-agy-a01\\Reference-2.png"
+        ],
+        "Prompt": "Stylized digital game animation sprite sheet on a solid, uniform vivid MAGENTA (#FF00FF) background. Exactly 4 columns by 4 rows grid containing exactly 16 complete isolated creature poses with wide empty magenta gutters between every cell.\n\nSubject & Creature Identity:\nReferencing Reference-1.png and Reference-2.png: A raw magical heavy four-legged quadruped stone beast, squat broad body, blunt mineral stone horns, tall angular thorn-like mineral back plates, ochre mineral cracks, glowing blue illuminated mineral seams, heavy blunt stone feet, armored head. Wedge charging silhouette. Quadruped animal creature ONLY, no human features, no weapons, no rider, no clothing, no wings, no hands. Match the stylized hand-painted values, clean sculpted planes, and lighter palette of Reference-2.png. Cool upper-left directional lighting with silver edge highlights and small contact shadows directly beneath feet.\n\nView & Angle:\nFront-right three-quarter perspective (facing diagonally toward viewer and image-right, showing head, chest, right flank, and face clearly). High 55-degree orthographic isometric angle for all poses consistently across the sheet.\n\nGrid Layout (4x4 Grid = 16 Distinct Poses):\nEach pose is entirely contained within the middle 60% of its cell at the exact same anatomical scale.\n- Row 1 (Poses 1-4, IDLE): Subtle breathing and ready shifts, weight shifting gently across four sturdy legs while maintaining alert stance.\n- Row 2 & Row 3 first two cells (Poses 5-10, LOCOMOTION RUN/TROT CYCLE): 6 sequential locomotion phases showing opposite diagonal leg pairs alternating: 5 reach, 6 contact, 7 gather, 8 opposite reach, 9 opposite contact, 10 gather. Asymmetric footwork and clear paw placements.\n- Row 3 last two cells & Row 4 (Poses 11-16, ATTACK SEQUENCE): 6 sequential combat keys: 11 ready windup, 12 armored head lowers and hunches, 13 weight coils onto hind legs, 14 explosive forward horn thrust/shove, 15 heavy forefeet ground brace impact, 16 recovery back to ready stance.\n\nStylistic execution:\nHand-painted digital dark fantasy concept art, sculpted painterly forms, sharp planar definition, blue illuminated energy seams and ochre rock strata, smooth opaque rendering, clean silhouettes. No text, no numbers, no grid lines, no frames, no ground textures, no motion blur, no background elements besides pure flat magenta #FF00FF.",
+        "toolAction": "Generating image",
+        "toolSummary": "Generate animation sheet"
+      },
+      "conversation": "ae549ffb-ea8b-452f-b46e-476f9300c6ae"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "6b768e349e3c3938eb9ed86b5d40fc9786dc60f597fe6985179c974689a9c733",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\b3796958-ee7f-445a-b5d1-2c6fbd1f38c4\\thornback_se_motion_sheet_1791127235491.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-thornback-se-motion-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a14-thornback-se-motion-agy-a01.jpg",
+  "sha256": "6b768e349e3c3938eb9ed86b5d40fc9786dc60f597fe6985179c974689a9c733",
+  "invocation_evidence": "art/providers/runs/a14-thornback-se-motion-agy-a01"
+}

@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "41bcba61-161b-4c36-ab1d-3a6eaae77e04",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-brennic-ne-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-brennic-ne-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/brennic-ne-bust-v1.png",
+      "sha256": "0887ba154cbb045676cfed57b5e0cb090eeae65e975c41d8096c2c8800852444",
+      "role": "left Moonchalk material; centre A3c upper-body identity; right approved portrait when present"
+    }
+  ]
+}

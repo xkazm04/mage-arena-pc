@@ -1,0 +1,48 @@
+{
+  "inheritedCharges": 318,
+  "sessionCharges": 24,
+  "sessionJobs": 24,
+  "generatedSourceImages": 21,
+  "projectCharges": 342,
+  "combinedCap": 450,
+  "combinedLocalRemainder": 108,
+  "sessionWorkingCap": 80,
+  "sessionWorkingRemainder": 56,
+  "providers": {
+    "agy": {
+      "projectCharges": 108,
+      "knownExternalCharges": 4,
+      "localGuard": 500,
+      "localRemainder": 388
+    },
+    "grok": {
+      "projectCharges": 207,
+      "knownExternalCharges": 0,
+      "localGuard": 450,
+      "localRemainder": 243
+    }
+  },
+  "providerLatches": {
+    "agy": {
+      "at": "2026-10-04T09:55:25.290678+00:00",
+      "event": "stop",
+      "job": "a14-garran-ne-collapse-agy-a03",
+      "reason": "PREFLIGHT_SERVICE_UNAVAILABLE_503"
+    },
+    "grok": {
+      "at": "2026-10-04T09:37:55.916360+00:00",
+      "event": "stop",
+      "job": "a14-garran-ne-collapse-grok-a01",
+      "reason": "exit=1; files=0"
+    }
+  },
+  "actualAccountAllowance": "not measured",
+  "imageMonetaryCost": "not measured",
+  "refunds": 0,
+  "latchRecoveries": {
+    "initialOwnerAuthorizedExtraCallRepair": 1,
+    "boundedManualPreflight503Recovery": 1,
+    "repeated503LatchRetained": true
+  },
+  "serial": true
+}

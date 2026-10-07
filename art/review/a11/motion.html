@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>A11 Tideglass and stats review</title>
+<style>@font-face{font-family:Source;src:url('../../ui/fonts/SourceSans3.ttf')}@font-face{font-family:Cinzel;src:url('../../ui/fonts/Cinzel.ttf')}*{box-sizing:border-box}html,body{margin:0;background:#101922;color:#eee8d6;font:17px Source,serif}header{padding:10px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid #64726e}select,button,input{font:inherit;background:#22343c;color:inherit;border:1px solid #738d8a;padding:5px}a{color:#a9d8df}canvas{display:block;width:100vw;height:calc(100vh - 100px);min-height:600px}p{margin:7px 18px;color:#bcc9cb}</style>
+<header><a href="index.html">A11 board</a><button id="pause">Pause</button><label>Hour <input id="hour" type="range" min="0" max="24" step=".01" value="4"></label><label>Phase <select id="phase"><option value="auto">Demo day cycle</option><option>dawn</option><option>midday</option><option>dusk</option><option>night</option></select></label><label><input id="reduced" type="checkbox">Reduced motion</label><label>Layer <select id="layer"><option value="">All layers</option><option value="rim">Hide rim</option><option value="water">Hide water</option><option value="mist">Hide mist</option><option value="glass">Hide glass</option></select></label></header>
+<p>Partial authored/composited design · existing generated silver rim and mist · new generated paintings still pending</p><canvas></canvas>
+<script type="module">
+import {loadDailyArt,clockState,drawDailyClock,drawStat} from '../../delivery/a11/canvas-loader.js';
+const art=await loadDailyArt(new URL('../../../',location.href));await document.fonts.load('24px Source');await document.fonts.load('24px Cinzel');
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d'),hour=document.querySelector('#hour'),phase=document.querySelector('#phase'),reduced=document.querySelector('#reduced'),layer=document.querySelector('#layer');
+let time=4000,last=performance.now(),paused=false;
+document.querySelector('#pause').onclick=()=>{paused=!paused;document.querySelector('#pause').textContent=paused?'Play':'Pause'};
+hour.oninput=()=>{time=Number(hour.value)*1000;paused=true;document.querySelector('#pause').textContent='Play'};
+const phases=['dawn','midday','dusk','night'];
+function text(s,x,y,size=24,colour='#eee8d6',font='Source'){ctx.font=`${size}px ${font}`;ctx.fillStyle=colour;ctx.fillText(s,x,y)}
+function stateFor(t){const p=paused?Math.max(0,Math.min(1,t/24000)):(t%24000)/24000;if(phase.value!=='auto')return clockState(p,phase.value);const q=p*4,i=Math.min(3,Math.floor(q)),mix=Math.max(0,Math.min(1,(q-i-.80)/.20));return clockState(p,phases[i],phases[(i+1)%4],mix)}
+let invalidRejected=false;try{clockState(NaN,'dawn')}catch{invalidRejected=true}
+window.__loaderChecks={fullAtStart:clockState(0,'dawn').cut===307,emptyAtEnd:clockState(1,'night').cut===411,clamp:clockState(2,'night').fraction===1,invalidRejected,allPhases:phases.every(p=>art.kit.regions['clock.daily.face.'+p]),stats:['gold','reputation','fatigue'].every(s=>['header','large'].every(v=>art.kit.regions[`icon.stat.${s}.${v}`]))};
+function draw(now){if(!paused)time+=Math.min(60,now-last);last=now;window.__artTime=time;hour.value=paused?Math.min(24,time/1000):(time%24000)/1000;
+ const w=innerWidth,h=Math.max(650,innerHeight-100);canvas.width=w;canvas.height=h;const scale=Math.min(w/1920,h/980);ctx.save();ctx.scale(scale,scale);const dw=w/scale,dh=h/scale;
+ ctx.fillStyle='#101a23';ctx.fillRect(0,0,dw,dh);ctx.fillStyle='#1b2931';ctx.fillRect(48,24,dw-96,124);ctx.strokeStyle='#66736e';ctx.lineWidth=1;ctx.strokeRect(48,24,dw-96,124);
+ text('THE COVENANT',82,91,30,'#eee8d6','Cinzel');
+ const values=['248','Honoured','38 / 100'];for(let i=0;i<3;i++){const x=530+i*280;drawStat(ctx,art,['gold','reputation','fatigue'][i],'header',x,84,32);text(values[i],x+32,94,28)}
+ const s=stateFor(time);drawDailyClock(ctx,art,s,dw-140,84,96,{reducedMotion:reduced.checked,elapsedMs:time,hide:layer.value?[layer.value]:[]});
+ text('Tideglass',90,238,45,'#eee8d6','Cinzel');text('Water drains; the silver bead marks the passing day.',90,280,26,'#bcc9cb');
+ drawDailyClock(ctx,art,s,300,500,340,{reducedMotion:reduced.checked,elapsedMs:time,hide:layer.value?[layer.value]:[]});
+ text(`${(s.fraction*24).toFixed(1)} hours / ${s.phaseFrom}`,150,726,26);
+ for(let i=0;i<3;i++){const x=700+i*320;drawStat(ctx,art,['gold','reputation','fatigue'][i],'large',x,425,128);text(['Gold','Reputation','Fatigue'][i],x-60,550,28,'#eee8d6','Cinzel');drawStat(ctx,art,['gold','reputation','fatigue'][i],'header',x,610,32);text('32 px header',x-63,659,23,'#aebec0')}
+ for(let i=0;i<4;i++){const x=690+i*260;drawDailyClock(ctx,art,clockState([.05,.4,.72,.94][i],phases[i]),x,800,160,{reducedMotion:true});text(phases[i],x-33,906,23,'#c8d6d4')}
+ ctx.restore();requestAnimationFrame(draw)}
+window.__artReady=true;requestAnimationFrame(draw);
+</script></html>

@@ -1,0 +1,50 @@
+{
+  "inheritedProjectCharges": 285,
+  "newImageReservations": 11,
+  "newImageJobs": 11,
+  "historicalReconciliationCharges": 1,
+  "projectTotal": 297,
+  "projectCeiling": 345,
+  "providerProjectCharges": {
+    "agy": 81,
+    "grok": 189
+  },
+  "providerPolicy": {
+    "schema": 1,
+    "project_budget": "../budget.json",
+    "providers": {
+      "agy": {
+        "weekly_image_cap": 400,
+        "external_known_charges": {
+          "2026-W40": 4
+        },
+        "note": "Four known probe outputs from provider ledger, outside project charges. Total account spend and actual quota unknown; local guard only."
+      },
+      "grok": {
+        "weekly_image_cap": 330,
+        "note": "Includes inherited grok-cli jobs; shared subscription allowance unknown."
+      }
+    },
+    "max_parallel_images": 1,
+    "automatic_stop_reset": false,
+    "host_raise_2026_10_03": "host raised agy to 400 and Grok to 330 for A12 arena round after the owner confirmed effects and characters and asked for the arena to reach reference quality; latches are cleared by the executing agent after diagnosis; real allowances unknown"
+  },
+  "remainingUnderLocalGuards": {
+    "agy": 315,
+    "grok": 141
+  },
+  "newImagesByProvider": {
+    "agy": 6,
+    "grok": 5
+  },
+  "providerStops": {
+    "agy": null,
+    "grok": null
+  },
+  "moneyCost": "subscription/account image price not measured; CLI token cost is not image-generation cost",
+  "actualAccountAllowance": "unknown; local caps are not account balance",
+  "localUpscalePasses": 3,
+  "grokProbe": "one successful image after old temporarily-at-capacity HTTP 429; consistent with transient capacity, not proof of allowance type",
+  "agyDiagnosis": "old provider explicitly copied output.png to source.png; hidden worker made three image calls. Old two charges preserved; missing third charged in separate audit entry.",
+  "newAgyGuard": "exact-request-linked transcript monitoring; second image call or first quota/rate error stops; duplicate file aliases recorded separately from distinct output hashes"
+}

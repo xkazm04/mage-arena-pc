@@ -1,0 +1,71 @@
+{
+  "id": "a13-casting-earth-grok-a02",
+  "wave": "A13",
+  "style_id": "covenant",
+  "scene": "casting-earth",
+  "attempt": 2,
+  "input": {
+    "wave": "A13",
+    "id": "casting-earth",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "4:3",
+    "references": [
+      {
+        "path": "art/waves/A13/references/painted-ring-key.png",
+        "sha256": "c2815d56e2d12404971b80e63999ae43f1a7af2874d1696a9b5cfa299310c038",
+        "role": "ONE painted cracked brush circle; keep pigment texture, transform element"
+      }
+    ],
+    "sheet": {
+      "columns": 3,
+      "rows": 2,
+      "kind": "casting-hold"
+    },
+    "prompt": "Paint ONE sprite sheet, exactly THREE columns by TWO rows, SIX animation keys of the SAME EARTH enchanted ground circle. Reference-1.png is ONE brush-painted circle, use its BROAD PAINTERLY STROKES and irregular cracked pigment as the visual anchor. Transform the medium into ochre and weathered pale gold mineral-pigment strokes, root-like broken tips, small angular stone and dust flecks. No solid metal object: these are luminous painted incisions and elemental energy on an invisible ground plane. Richly brushed dark-fantasy painting, irregular thickness, broken layered stroke edges, strong dark paint crevices, small selected glow. Each key shows the entire identical centred enchantment at fixed radius: outer shape stable while different small flames/drops/grains/wisps travel around the strokes. Leave six asymmetrical open gaps in the painted circle for separate glyph inlays. DO NOT paint ANY letters, runes, words, symbols, squiggle-writing or emblems. Glyphs will be composited separately from the canonical alphabet. All six cells are HOLD frames, not emergence or dissipation. No copying of glyph sheets. The empty centre is at least 55 percent of diameter. Flat orthographic TOP view, circles round not perspective ovals. Exactly 3x2, pure black background, no panels or grid lines. Each complete shape including glow fits in the middle 65 percent of its cell. Large EMPTY gutters and outer margins. No paper/canvas/noise overlays, clip art, clean vector linework, smooth neon tubes, people, objects, text or watermarks. Original magical art only.",
+    "correction_of": "a13-casting-earth-grok-a01"
+  },
+  "input_hash": "62d8b7e27628fa7a8365f7533c643d8511a85aa63a9ee9719664f4ee953d4a55",
+  "prompt": "Paint ONE sprite sheet, exactly THREE columns by TWO rows, SIX animation keys of the SAME EARTH enchanted ground circle. Reference-1.png is ONE brush-painted circle, use its BROAD PAINTERLY STROKES and irregular cracked pigment as the visual anchor. Transform the medium into ochre and weathered pale gold mineral-pigment strokes, root-like broken tips, small angular stone and dust flecks. No solid metal object: these are luminous painted incisions and elemental energy on an invisible ground plane. Richly brushed dark-fantasy painting, irregular thickness, broken layered stroke edges, strong dark paint crevices, small selected glow. Each key shows the entire identical centred enchantment at fixed radius: outer shape stable while different small flames/drops/grains/wisps travel around the strokes. Leave six asymmetrical open gaps in the painted circle for separate glyph inlays. DO NOT paint ANY letters, runes, words, symbols, squiggle-writing or emblems. Glyphs will be composited separately from the canonical alphabet. All six cells are HOLD frames, not emergence or dissipation. No copying of glyph sheets. The empty centre is at least 55 percent of diameter. Flat orthographic TOP view, circles round not perspective ovals. Exactly 3x2, pure black background, no panels or grid lines. Each complete shape including glow fits in the middle 65 percent of its cell. Large EMPTY gutters and outer margins. No paper/canvas/noise overlays, clip art, clean vector linework, smooth neon tubes, people, objects, text or watermarks. Original magical art only.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "92cebe79-635c-4b44-8544-c908e2a3776b",
+  "at": "2026-10-03T21:50:08.385198+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 22.578,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Paint ONE sprite sheet, exactly THREE columns by TWO rows, SIX animation keys of the SAME EARTH enchanted ground circle. Reference-1.png is ONE brush-painted circle, use its BROAD PAINTERLY STROKES and irregular cracked pigment as the visual anchor. Transform the medium into ochre and weathered pale gold mineral-pigment strokes, root-like broken tips, small angular stone and dust flecks. No solid metal object: these are luminous painted incisions and elemental energy on an invisible ground plane. Richly brushed dark-fantasy painting, irregular thickness, broken layered stroke edges, strong dark paint crevices, small selected glow. Each key shows the entire identical centred enchantment at fixed radius: outer shape stable while different small flames/drops/grains/wisps travel around the strokes. Leave six asymmetrical open gaps in the painted circle for separate glyph inlays. DO NOT paint ANY letters, runes, words, symbols, squiggle-writing or emblems. Glyphs will be composited separately from the canonical alphabet. All six cells are HOLD frames, not emergence or dissipation. No copying of glyph sheets. The empty centre is at least 55 percent of diameter. Flat orthographic TOP view, circles round not perspective ovals. Exactly 3x2, pure black background, no panels or grid lines. Each complete shape including glow fits in the middle 65 percent of its cell. Large EMPTY gutters and outer margins. No paper/canvas/noise overlays, clip art, clean vector linework, smooth neon tubes, people, objects, text or watermarks. Original magical art only.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-casting-earth-grok-a02\\reference-1.png"
+        ],
+        "aspect_ratio": "4:3"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "b0eb0043541d8dd5de6eb0ff3be76b0f60075a8d5b4b3cec2a3bf09764c5f1f7",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca13-casting-earth-grok-a02\\92cebe79-635c-4b44-8544-c908e2a3776b\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a13-casting-earth-grok-a02/_driver/source.jpg",
+  "archive": "art/review/sources/a13-casting-earth-grok-a02.jpg",
+  "sha256": "b0eb0043541d8dd5de6eb0ff3be76b0f60075a8d5b4b3cec2a3bf09764c5f1f7",
+  "invocation_evidence": "art/providers/runs/a13-casting-earth-grok-a02"
+}

@@ -1,0 +1,394 @@
+{
+  "status": "blocked-providers",
+  "newImageCalls": 0,
+  "newClips": 0,
+  "gaitCorrections": 0,
+  "priority1": {
+    "status": "blocked-providers",
+    "stage1Missing": [
+      "garran:death:ne",
+      "garran:death:nw",
+      "garran:corpse:ne",
+      "garran:corpse:nw",
+      "cinder_hound:hit-light:ne",
+      "cinder_hound:hit-light:se",
+      "cinder_hound:hit-light:sw",
+      "cinder_hound:hit-light:nw",
+      "cinder_hound:hit-heavy:ne",
+      "cinder_hound:hit-heavy:se",
+      "cinder_hound:hit-heavy:sw",
+      "cinder_hound:hit-heavy:nw",
+      "cinder_hound:death:ne",
+      "cinder_hound:death:se",
+      "cinder_hound:death:sw",
+      "cinder_hound:death:nw",
+      "cinder_hound:corpse:ne",
+      "cinder_hound:corpse:se",
+      "cinder_hound:corpse:sw",
+      "cinder_hound:corpse:nw",
+      "mire_maw:hit-light:ne",
+      "mire_maw:hit-light:se",
+      "mire_maw:hit-light:sw",
+      "mire_maw:hit-light:nw",
+      "mire_maw:hit-heavy:ne",
+      "mire_maw:hit-heavy:se",
+      "mire_maw:hit-heavy:sw",
+      "mire_maw:hit-heavy:nw",
+      "mire_maw:death:ne",
+      "mire_maw:death:se",
+      "mire_maw:death:sw",
+      "mire_maw:death:nw",
+      "mire_maw:corpse:ne",
+      "mire_maw:corpse:se",
+      "mire_maw:corpse:sw",
+      "mire_maw:corpse:nw",
+      "thornback:hit-light:ne",
+      "thornback:hit-light:se",
+      "thornback:hit-light:sw",
+      "thornback:hit-light:nw",
+      "thornback:hit-heavy:ne",
+      "thornback:hit-heavy:se",
+      "thornback:hit-heavy:sw",
+      "thornback:hit-heavy:nw",
+      "thornback:death:ne",
+      "thornback:death:se",
+      "thornback:death:sw",
+      "thornback:death:nw",
+      "thornback:corpse:ne",
+      "thornback:corpse:se",
+      "thornback:corpse:sw",
+      "thornback:corpse:nw",
+      "hush_moth:hit-light:ne",
+      "hush_moth:hit-light:se",
+      "hush_moth:hit-light:sw",
+      "hush_moth:hit-light:nw",
+      "hush_moth:hit-heavy:ne",
+      "hush_moth:hit-heavy:se",
+      "hush_moth:hit-heavy:sw",
+      "hush_moth:hit-heavy:nw",
+      "hush_moth:death:ne",
+      "hush_moth:death:se",
+      "hush_moth:death:sw",
+      "hush_moth:death:nw",
+      "hush_moth:corpse:ne",
+      "hush_moth:corpse:se",
+      "hush_moth:corpse:sw",
+      "hush_moth:corpse:nw"
+    ],
+    "creatureBriefs": [
+      "art/briefs/a14/cinder_hound-ne-reaction.json",
+      "art/briefs/a14/cinder_hound-se-reaction.json",
+      "art/briefs/a14/hush_moth-ne-reaction.json",
+      "art/briefs/a14/hush_moth-se-reaction.json",
+      "art/briefs/a14/mire_maw-ne-reaction.json",
+      "art/briefs/a14/mire_maw-se-reaction.json",
+      "art/briefs/a14/thornback-ne-reaction.json",
+      "art/briefs/a14/thornback-se-reaction.json"
+    ],
+    "garranRepair": "art/briefs/a14/garran-ne-collapse-revision.json",
+    "note": "No further calls while either relevant provider is latched. Garran collapse scene has reached its three-attempt cap including two provider failures; any future cap change requires explicit recorded authorization.",
+    "owner_accepted": false
+  },
+  "priority2NonReactionLegacySlots": [
+    "garran:absorb:ne:missing",
+    "garran:absorb:nw:missing",
+    "iskar:run:se:missing",
+    "iskar:run:sw:missing",
+    "shieldman:cast:ne:missing",
+    "shieldman:cast:nw:missing",
+    "shieldman:absorb:ne:missing",
+    "shieldman:absorb:nw:missing",
+    "slinger:absorb:ne:missing",
+    "slinger:absorb:nw:missing",
+    "netter:absorb:ne:missing",
+    "netter:absorb:nw:missing",
+    "cinder_hound:idle:ne:missing",
+    "cinder_hound:idle:se:missing",
+    "cinder_hound:idle:sw:missing",
+    "cinder_hound:idle:nw:missing",
+    "cinder_hound:run:ne:missing",
+    "cinder_hound:run:se:missing",
+    "cinder_hound:run:sw:missing",
+    "cinder_hound:run:nw:missing",
+    "cinder_hound:cast:ne:missing",
+    "cinder_hound:cast:se:missing",
+    "cinder_hound:cast:sw:missing",
+    "cinder_hound:cast:nw:missing",
+    "cinder_hound:absorb:ne:missing",
+    "cinder_hound:absorb:se:missing",
+    "cinder_hound:absorb:sw:missing",
+    "cinder_hound:absorb:nw:missing",
+    "mire_maw:idle:se:missing",
+    "mire_maw:idle:sw:missing",
+    "mire_maw:run:se:missing",
+    "mire_maw:run:sw:missing",
+    "mire_maw:cast:se:missing",
+    "mire_maw:cast:sw:missing",
+    "mire_maw:absorb:ne:missing",
+    "mire_maw:absorb:se:missing",
+    "mire_maw:absorb:sw:missing",
+    "mire_maw:absorb:nw:missing",
+    "thornback:idle:se:missing",
+    "thornback:idle:sw:missing",
+    "thornback:run:se:missing",
+    "thornback:run:sw:missing",
+    "thornback:cast:se:missing",
+    "thornback:cast:sw:missing",
+    "thornback:absorb:se:missing",
+    "thornback:absorb:sw:missing",
+    "hush_moth:idle:se:missing",
+    "hush_moth:idle:sw:missing",
+    "hush_moth:run:se:missing",
+    "hush_moth:run:sw:missing",
+    "hush_moth:cast:ne:missing",
+    "hush_moth:cast:se:missing",
+    "hush_moth:cast:sw:missing",
+    "hush_moth:cast:nw:missing",
+    "hush_moth:absorb:ne:missing",
+    "hush_moth:absorb:se:missing",
+    "hush_moth:absorb:sw:missing",
+    "hush_moth:absorb:nw:missing"
+  ],
+  "legacyA10MissingAfterMerge": [
+    "garran:absorb:ne:missing",
+    "garran:absorb:nw:missing",
+    "iskar:run:se:missing",
+    "iskar:run:sw:missing",
+    "shieldman:cast:ne:missing",
+    "shieldman:cast:nw:missing",
+    "shieldman:absorb:ne:missing",
+    "shieldman:absorb:nw:missing",
+    "slinger:absorb:ne:missing",
+    "slinger:absorb:nw:missing",
+    "netter:absorb:ne:missing",
+    "netter:absorb:nw:missing",
+    "cinder_hound:idle:ne:missing",
+    "cinder_hound:idle:se:missing",
+    "cinder_hound:idle:sw:missing",
+    "cinder_hound:idle:nw:missing",
+    "cinder_hound:run:ne:missing",
+    "cinder_hound:run:se:missing",
+    "cinder_hound:run:sw:missing",
+    "cinder_hound:run:nw:missing",
+    "cinder_hound:cast:ne:missing",
+    "cinder_hound:cast:se:missing",
+    "cinder_hound:cast:sw:missing",
+    "cinder_hound:cast:nw:missing",
+    "cinder_hound:absorb:ne:missing",
+    "cinder_hound:absorb:se:missing",
+    "cinder_hound:absorb:sw:missing",
+    "cinder_hound:absorb:nw:missing",
+    "cinder_hound:hit:ne:missing",
+    "cinder_hound:hit:se:missing",
+    "cinder_hound:hit:sw:missing",
+    "cinder_hound:hit:nw:missing",
+    "cinder_hound:death:ne:missing",
+    "cinder_hound:death:se:missing",
+    "cinder_hound:death:sw:missing",
+    "cinder_hound:death:nw:missing",
+    "mire_maw:idle:se:missing",
+    "mire_maw:idle:sw:missing",
+    "mire_maw:run:se:missing",
+    "mire_maw:run:sw:missing",
+    "mire_maw:cast:se:missing",
+    "mire_maw:cast:sw:missing",
+    "mire_maw:absorb:ne:missing",
+    "mire_maw:absorb:se:missing",
+    "mire_maw:absorb:sw:missing",
+    "mire_maw:absorb:nw:missing",
+    "mire_maw:hit:ne:missing",
+    "mire_maw:hit:se:missing",
+    "mire_maw:hit:sw:missing",
+    "mire_maw:hit:nw:missing",
+    "mire_maw:death:se:missing",
+    "mire_maw:death:sw:missing",
+    "thornback:idle:se:missing",
+    "thornback:idle:sw:missing",
+    "thornback:run:se:missing",
+    "thornback:run:sw:missing",
+    "thornback:cast:se:missing",
+    "thornback:cast:sw:missing",
+    "thornback:absorb:se:missing",
+    "thornback:absorb:sw:missing",
+    "thornback:hit:ne:missing",
+    "thornback:hit:se:missing",
+    "thornback:hit:sw:missing",
+    "thornback:hit:nw:missing",
+    "thornback:death:se:missing",
+    "thornback:death:sw:missing",
+    "hush_moth:idle:se:missing",
+    "hush_moth:idle:sw:missing",
+    "hush_moth:run:se:missing",
+    "hush_moth:run:sw:missing",
+    "hush_moth:cast:ne:missing",
+    "hush_moth:cast:se:missing",
+    "hush_moth:cast:sw:missing",
+    "hush_moth:cast:nw:missing",
+    "hush_moth:absorb:ne:missing",
+    "hush_moth:absorb:se:missing",
+    "hush_moth:absorb:sw:missing",
+    "hush_moth:absorb:nw:missing",
+    "hush_moth:hit:ne:missing",
+    "hush_moth:hit:se:missing",
+    "hush_moth:hit:sw:missing",
+    "hush_moth:hit:nw:missing",
+    "hush_moth:death:se:missing",
+    "hush_moth:death:sw:missing"
+  ],
+  "legacyCounts": {
+    "absorb": 22,
+    "run": 12,
+    "cast": 14,
+    "idle": 10,
+    "hit": 16,
+    "death": 10
+  },
+  "missingByEntity": {
+    "garran": {
+      "absorb": [
+        "ne",
+        "nw"
+      ]
+    },
+    "iskar": {
+      "run": [
+        "se",
+        "sw"
+      ]
+    },
+    "shieldman": {
+      "cast": [
+        "ne",
+        "nw"
+      ],
+      "absorb": [
+        "ne",
+        "nw"
+      ]
+    },
+    "slinger": {
+      "absorb": [
+        "ne",
+        "nw"
+      ]
+    },
+    "netter": {
+      "absorb": [
+        "ne",
+        "nw"
+      ]
+    },
+    "cinder_hound": {
+      "idle": [
+        "ne",
+        "se",
+        "sw",
+        "nw"
+      ],
+      "run": [
+        "ne",
+        "se",
+        "sw",
+        "nw"
+      ],
+      "cast": [
+        "ne",
+        "se",
+        "sw",
+        "nw"
+      ],
+      "absorb": [
+        "ne",
+        "se",
+        "sw",
+        "nw"
+      ]
+    },
+    "mire_maw": {
+      "idle": [
+        "se",
+        "sw"
+      ],
+      "run": [
+        "se",
+        "sw"
+      ],
+      "cast": [
+        "se",
+        "sw"
+      ],
+      "absorb": [
+        "ne",
+        "se",
+        "sw",
+        "nw"
+      ]
+    },
+    "thornback": {
+      "idle": [
+        "se",
+        "sw"
+      ],
+      "run": [
+        "se",
+        "sw"
+      ],
+      "cast": [
+        "se",
+        "sw"
+      ],
+      "absorb": [
+        "se",
+        "sw"
+      ]
+    },
+    "hush_moth": {
+      "idle": [
+        "se",
+        "sw"
+      ],
+      "run": [
+        "se",
+        "sw"
+      ],
+      "cast": [
+        "ne",
+        "se",
+        "sw",
+        "nw"
+      ],
+      "absorb": [
+        "ne",
+        "se",
+        "sw",
+        "nw"
+      ]
+    }
+  },
+  "missingCreatureGeneratedViews": {
+    "cinder_hound": [
+      "ne",
+      "se"
+    ],
+    "mire_maw": [
+      "se"
+    ],
+    "thornback": [
+      "se"
+    ],
+    "hush_moth": [
+      "se"
+    ]
+  },
+  "rules": [
+    "Finish missing A14 reactions before spending on priority 2.",
+    "A10 cast means attack for enemies; absorb means brace and grants no new gameplay ability.",
+    "Generate ne/se anatomy; derive nw/sw by whole-body mirroring only.",
+    "Use Moonchalk and A10 identity references, or approved A3c identity when no A10 body exists.",
+    "Use a proof sheet first, serial calls and unchanged deterministic gates; no latch bypass.",
+    "Humanoid gait needs opposite support and passing phases; creature movement needs species-specific anatomy.",
+    "Garran rear collapse has reached its existing three-attempt guard; rebuilding is not renewed generation authority."
+  ],
+  "overlapNote": "84 missing legacy slots include 26 hit/death slots already represented in the 68-slot A14 priority queue; do not add the counts. Priority 2 contains 58 other slots.",
+  "owner_accepted": false
+}

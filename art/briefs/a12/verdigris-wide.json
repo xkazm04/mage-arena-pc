@@ -1,0 +1,19 @@
+{
+  "wave": "A12",
+  "id": "verdigris-wide",
+  "pilot": false,
+  "providers": [
+    "agy",
+    "grok"
+  ],
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "aspect_ratio": "16:9",
+  "references": [
+    {
+      "path": "art/waves/A12/references/verdigris-overscan-guide.png",
+      "sha256": "cb4a4ed8ec4e74f1e5a97920b2574d8fc59fee111ab92a00a74a4686fcdffbcf",
+      "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+    }
+  ],
+  "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result."
+}

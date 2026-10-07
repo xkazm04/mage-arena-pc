@@ -1,0 +1,72 @@
+{
+  "id": "a12-rust-sand-wide-agy-a01",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "rust-sand-wide",
+  "attempt": 1,
+  "input": {
+    "wave": "A12",
+    "id": "rust-sand-wide",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/waves/A12/references/rust-sand-overscan-guide.png",
+        "sha256": "d204922272f3071dd04f9f67ad7711752c1d596414f9ea5aa168bae88a7a58e6",
+        "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+      }
+    ],
+    "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result."
+  },
+  "input_hash": "b506671d4484b01529c880cf620ecf535c6abb2d371ceba309bb30cf3ea091bd",
+  "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "1a6f2256-5c9c-49f4-9e05-518121ccd8f7",
+  "at": "2026-10-03T15:50:15.753456+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 110.938,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "at": "2026-10-03T15:50:49Z",
+      "step": 3,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "output",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-wide-agy-a01\\reference-1.png"
+        ],
+        "Prompt": "This is an environment outpainting task extending input_file_0.png. The reference image has a hand-painted fantasy battle arena in the central region surrounded by flat grey border margins on all four sides. Seamlessly outpaint and fill ONLY the grey borders to complete the full 16:9 frame, continuing the exact scene naturally to the outer edges. Do not crop or zoom the existing central scene; keep all elements of input_file_0.png in their exact locations, proportions, and scale. Keep all five stone pylons / obelisks exactly as they appear, intact and undamaged, without duplicating or adding any new pylons in the margins. Extend the cracked sandstone ground, sandy earth, and dark blue slate floor tiles smoothly outward across the left, right, and bottom edges to fill the grey bands completely. Extend the back stone arena wall, wooden scaffolding/stakes, weathered blue and red banners/flags, and dark shadowy perimeter naturally upward across the top edge. Ensure flawless blending across former grey boundaries with identical painterly texture, weathered stone cracks, dust, lighting from the upper right/diffuse overhead, palette of warm ochre/sand and cool slate blue, and elevated 55-degree oblique isometric perspective. Remove all solid grey margins completely. No borders, no frames, no grey bars, no figures, no characters, no monsters, no weapons, no text, no UI.",
+        "toolAction": "Outpainting arena borders",
+        "toolSummary": "Outpaint arena image"
+      },
+      "conversation": "71e62ac7-f188-437c-888f-9eda8758a773"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "c831f7467608bc117d54495749e920aba830439500b5252317953157e3c7c9da",
+      "paths": [
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-wide-agy-a01\\output.png"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a12-rust-sand-wide-agy-a01/_driver/source.png",
+  "archive": "art/review/sources/a12-rust-sand-wide-agy-a01.png",
+  "sha256": "c831f7467608bc117d54495749e920aba830439500b5252317953157e3c7c9da",
+  "invocation_evidence": "art/providers/runs/a12-rust-sand-wide-agy-a01"
+}

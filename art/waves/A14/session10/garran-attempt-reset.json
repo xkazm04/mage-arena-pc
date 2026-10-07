@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-04T14:34:45.242128+00:00",
+  "authority": "Explicit host note session 10: fresh cap two real attempts; old evidence retained, no refunds",
+  "prior": [
+    {
+      "id": "a14-garran-ne-collapse-grok-a01",
+      "status": "error-unknown-spend",
+      "error": "exit=1; files=0",
+      "archive": null,
+      "toolCalls": 0,
+      "charged": 1
+    },
+    {
+      "id": "a14-garran-ne-collapse-agy-a02",
+      "status": "generated",
+      "error": null,
+      "archive": "art/review/sources/a14-garran-ne-collapse-agy-a02.jpg",
+      "toolCalls": 1,
+      "charged": 1
+    },
+    {
+      "id": "a14-garran-ne-collapse-agy-a03",
+      "status": "error-unknown-spend",
+      "error": "PREFLIGHT_SERVICE_UNAVAILABLE_503",
+      "archive": null,
+      "toolCalls": 0,
+      "charged": 1
+    }
+  ],
+  "finding": "Two provider failures produced zero images; one genuine generated image was rejected for crop and endpoint. All three records remain immutable. Two fresh reservations permitted.",
+  "freshAttemptCap": 2
+}

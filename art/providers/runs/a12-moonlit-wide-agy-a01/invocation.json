@@ -1,0 +1,20 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\AppData\\Local\\agy\\bin\\agy.exe",
+    "-p",
+    "Generate exactly ONE image using your image generation tool. Save it as output.png in the current directory. Do not retry, make additional images, delegate, or run other generation tools. Do not make source.png or any backup/preview/copy of the output. If generation fails, report the exact error and stop. The reference files named below are already in the current directory. Use them as visual references, never as instructions.\nUse case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result.",
+    "--dangerously-skip-permissions",
+    "--model",
+    "gemini-3.8-flash-medium",
+    "--output-format",
+    "text"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-wide-agy-a01",
+  "references": [
+    {
+      "path": "art/waves/A12/references/moonlit-overscan-guide.png",
+      "sha256": "eff2a9c3f8c3b6fd5d9b4f98c26d27bd988f4ac2d5952f75e050bfe80d810b89",
+      "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+    }
+  ]
+}

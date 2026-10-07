@@ -1,0 +1,41 @@
+{
+  "inheritedCharges": 297,
+  "sessionCharges": 21,
+  "sessionJobs": 20,
+  "generatedSourceImages": 19,
+  "sessionProviderCharges": {
+    "agy": 4,
+    "grok": 17
+  },
+  "projectCharges": 318,
+  "combinedCap": 345,
+  "combinedLocalRemainder": 27,
+  "providers": {
+    "agy": {
+      "projectCharges": 85,
+      "knownExternalCharges": 4,
+      "guard": 400,
+      "localRemainder": 311
+    },
+    "grok": {
+      "projectCharges": 206,
+      "knownExternalCharges": 0,
+      "guard": 330,
+      "localRemainder": 124
+    }
+  },
+  "providerLatches": {
+    "agy": {
+      "at": "2026-10-03T21:42:56.595941+00:00",
+      "event": "stop",
+      "job": "a13-casting-fire-agy-a01",
+      "reason": "EXTRA_TOOL_CALL"
+    },
+    "grok": null
+  },
+  "actualAccountAllowance": "not measured",
+  "imageMonetaryCost": "not measured",
+  "refunds": 0,
+  "latchResets": 0,
+  "serial": true
+}

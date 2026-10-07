@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "1bc3fec9-7cba-4044-94c0-386624152262",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-garran-ne-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-garran-ne-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/garran-ne-square-v1.png",
+      "sha256": "93b4e8ae5c42120e146dd1230dd03d384704b2afd4c3f220eb9f68cfd6ed439f",
+      "role": "single full-body A3c identity crop on square canvas"
+    }
+  ]
+}

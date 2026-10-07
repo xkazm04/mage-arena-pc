@@ -1,0 +1,41 @@
+{
+  "status": "pass",
+  "wave": "A11",
+  "scope": "standalone art consumer playback and image loading, not game FPS or owner feel",
+  "results": [
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "canvas_changed": true,
+      "loader_checks": {
+        "fullAtStart": true,
+        "emptyAtEnd": true,
+        "clamp": true,
+        "invalidRejected": true,
+        "allPhases": true,
+        "stats": true
+      },
+      "errors": [],
+      "failed_requests": []
+    },
+    {
+      "viewport": [
+        2560,
+        1440
+      ],
+      "canvas_changed": true,
+      "loader_checks": {
+        "fullAtStart": true,
+        "emptyAtEnd": true,
+        "clamp": true,
+        "invalidRejected": true,
+        "allPhases": true,
+        "stats": true
+      },
+      "errors": [],
+      "failed_requests": []
+    }
+  ]
+}

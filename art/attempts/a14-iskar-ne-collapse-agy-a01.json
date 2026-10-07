@@ -1,0 +1,86 @@
+{
+  "id": "a14-iskar-ne-collapse-agy-a01",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "iskar-ne-collapse",
+  "attempt": 1,
+  "input": {
+    "wave": "A14",
+    "id": "iskar-ne-collapse",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/references/iskar-ne.png",
+        "sha256": "8cb66a404dc1f4385df960520473bf392747eeb176d66d0d68d490cb0104e3a7",
+        "role": "identity"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Moonchalk painting bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. Lean adult man, copper skin, long black hair tied high behind swept pale lilac hood, ivory layered cloth with two narrow trailing lilac panels, silver wire charms and belt tools, slender bifurcated silver-bound staff. Sparse wind wisps and tiny branching lightning. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete sequential poses of this same figure collapsing. Row 1: 1 upright ready; 2 knees/legs buckle, torso drops; 3 body low and leaning to the ground. Row 2: 4 torso falls forward or sideways, nearly horizontal; 5 entire torso and head touch ground; 6 completely still fully LYING ON GROUND with equipment resting beside the body. Last pose must be fully lying, never sitting, crouching or kneeling. A harmless theatrical fall/rest, intact body, no blood, gore, wounds or injury detail. Each complete pose occupies ONLY HALF its spacious cell. Entire feet, staff and all equipment stay far from the image boundary. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+    "entity": "iskar",
+    "direction": "ne",
+    "kind": "collapse",
+    "grid": [
+      3,
+      2
+    ],
+    "referenceConsumption": "agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual"
+  },
+  "input_hash": "13cf5a163fb9e5ce58cede3a80052565eaf2851b409aacba6b4b47675ecb17ea",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. Lean adult man, copper skin, long black hair tied high behind swept pale lilac hood, ivory layered cloth with two narrow trailing lilac panels, silver wire charms and belt tools, slender bifurcated silver-bound staff. Sparse wind wisps and tiny branching lightning. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete sequential poses of this same figure collapsing. Row 1: 1 upright ready; 2 knees/legs buckle, torso drops; 3 body low and leaning to the ground. Row 2: 4 torso falls forward or sideways, nearly horizontal; 5 entire torso and head touch ground; 6 completely still fully LYING ON GROUND with equipment resting beside the body. Last pose must be fully lying, never sitting, crouching or kneeling. A harmless theatrical fall/rest, intact body, no blood, gore, wounds or injury detail. Each complete pose occupies ONLY HALF its spacious cell. Entire feet, staff and all equipment stay far from the image boundary. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "0d95b864-814a-4d2d-a866-ce1dbb1aa824",
+  "at": "2026-10-04T09:39:54.976709+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 85.437,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T09:40:33Z",
+      "step": 5,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "iskar_ne_collapse_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-iskar-ne-collapse-agy-a01\\Reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-iskar-ne-collapse-agy-a01\\Reference-2.png"
+        ],
+        "Prompt": "Original hand-painted game character animation sprite sheet on flat solid uniform vivid MAGENTA background (#FF00FF). Visual Reference-1 provides the exact character identity, costume, and equipment: lean adult man with copper skin, long black hair tied high behind a swept pale lilac hood, ivory layered cloth robes with two narrow trailing lilac sash panels, leather belt with silver wire charms and belt tools, slender bifurcated silver-bound staff. Visual Reference-2 provides the digital painting style ONLY (sculpted painterly volume, confident brushwork, cool upper-left lighting, selected silver highlights, smooth opaque rendering, dark fantasy aesthetic; do not copy Reference-2's person or framing). Layout: Exactly 3 columns by 2 rows (3x2 grid of 6 equal cells), sheet aspect 1:1, on uniform vivid pure MAGENTA (#FF00FF). Wide empty magenta gutters between cells. No grid lines, borders, labels, numbers, text, floor, or background scene. Perspective: Elevated 55-degree orthographic view, REAR-RIGHT three-quarter view throughout (facing diagonally away from camera towards upper right, back surfaces visible). Falls forward away from camera, ending face-down with back uppermost and face hidden. Never turns to face viewer, never rolls onto back. Row 1: Pose 1 upright ready; Pose 2 knees buckle, torso drops; Pose 3 body low and leaning to ground. Row 2: Pose 4 torso falls forward, nearly horizontal; Pose 5 torso and head touch ground; Pose 6 completely still fully lying flat on ground face-down with staff resting beside body. Identical anatomical scale across all 6 poses, each pose fitting in middle 60% of cell with generous empty magenta space around it. Harmless theatrical collapse, intact body, no injury or blood.",
+        "toolAction": "Generating collapse animation sheet",
+        "toolSummary": "Generate collapse animation sheet"
+      },
+      "conversation": "fc66b6e4-405e-4660-bc9d-3105db6b4ab2"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "d4a6bbf72c4349fc55a012bd01a4fd8c3e1df8a7bf81d8bd5e8a38610810b7f6",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\898615a2-4e90-42c6-9ce4-04bc7f79a15a\\iskar_ne_collapse_sheet_1791106880283.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-iskar-ne-collapse-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a14-iskar-ne-collapse-agy-a01.jpg",
+  "sha256": "d4a6bbf72c4349fc55a012bd01a4fd8c3e1df8a7bf81d8bd5e8a38610810b7f6",
+  "invocation_evidence": "art/providers/runs/a14-iskar-ne-collapse-agy-a01"
+}

@@ -1,3 +1,57 @@
+# Session 10 final stage
+
+**ART session 10 / A14.3 stage 3 / 2026-10-04:** Added 46 motion/attack/resistance slots; A14 now has 226 clips (180/192 priority plus 46 other), with 12 priority and 12 other legacy slots still missing. Eighteen stage calls bring session 10 to 40 agy calls/images/charges, project 382; allowance exhausted, Grok unused, old latches and ledger evidence retained. Thornback front run/attack failed both attempts; Shieldman attack failed crop/equipment continuity and only brace keys survive. All 90 tests, 91-product byte-identical offline rebuild and seven browser cases pass (44 persistent corpses and 46 added clips at both native sizes). All 378 earlier protected files, 75 stage-2 atlas/corpse images and inherited ledger rows unchanged. Owner feel, game integration and actual shared-account allowance remain unmeasured. Design: docs/waves/A14-3-stage3-motion.md. Commands: python tools/art/a14_build.py, a14_board.py, a14_extra_board.py, a14_portable.py, a14_browser.py; python tools/art/a14_session10.py audit stage3; python -m unittest discover -s tools/art -p test_*.py. Exact queue and loader note in art/SESSION-10-HANDOFF.md. Stopped at the session cap; no push.
+
+# Session 10 stage 2
+
+**ART session 10 / A14.3 stage 2 / 2026-10-04:** Added 52 creature priority slots; total 180/192. Twelve rear Mire Maw/Thornback slots remain missing after two attempts per source slot. Twenty stage calls, 22 session calls/images/charges, project 364; agy clear, Grok unused and latched. Original Covenant creature images passed on every call, explicit crop/selection/scale/pivot records and local reject-or-owner grading. Standalone corpse overwrite detected and fixed by persistence checks; final delivery, 77-product portable checks and all 90 tests pass. Browser five cases/44 persistent atlas corpses pass. Design: docs/waves/A14-3-stage2-creatures.md. Owner animation and game integration unmeasured. Next: budgeted remaining creature motion and legacy queue; no push.
+
+# Session 10 stage 1
+
+**ART session 10 / A14.3 stage 1 / 2026-10-04:** Garran rear collapse and persistent corpse delivered; all eight humanoids complete, 128/192 priority slots. Two fresh agy calls/images/charges, one reject, project 344; old latch and failure records preserved, Grok unavailable. Source/delivery gates, 52-product byte-identical rebuild, five browser cases and 16 targeted tests pass. All 378 protected art files and inherited ledger rows unchanged. Design: docs/waves/A14-3-stage1-garran.md. Owner feel and game integration unmeasured. Next: reference-guided creature collapse, then reactions; no push.
+
+# Session 9 / A14 stage 1 partial candidate
+
+PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hit-light/heavy in all directions; death plus persistent corpse in all directions except Garran ne/nw. Creature A14 generation remains missing. 21 generated sources, 24 charged attempts, total 342/450; Grok latched on HTTP 402 exhausted Build balance, agy on repeated pre-image HTTP 503. One agy extra-call driver repair/reset and one bounded preflight recovery are archived; no refunds. 88 tests, 49-product offline rebuild and five browser viewport cases pass. Existing 378 protected art files and inherited ledger prefix are unchanged. Owner animation/readability and game integration remain unmeasured.
+
+[Owner board](review/a14/index.html), [handoff](SESSION-9-HANDOFF.md), [loader](delivery/a14/README.md).
+
+# Session 8 / A13 current candidate
+
+[Owner board](review/a13/index.html), [contact sheet](review/a13/contact-sheet.jpg),
+[handoff](SESSION-8-HANDOFF.md). A13 replaces the visible geometric sigil approach
+with generated painted pigment and twelve shared canonical radicals: 44 clips,
+305 frame references, four-school casting phases and progress telegraphs,
+distinct UNBLOCKABLE, ward/window/perfect cues, floor, selection/target and five
+statuses. Generated keys versus authored assembly, masking, UV mapping and
+floor reconstruction are labelled. Three arena comparisons use 1.5-size A10
+figures at native 1080p/1440p. Integrity, browser, 74-product offline rebuild
+and 81 tests pass. The local grader may reject or route only.
+
+Shared hold construction, subtle motion, small status modifiers and softened
+floor-cleanup patches remain owner-review findings. Engine integration, runtime
+performance and combat/sofa feel remain unmeasured. Prior A8/A10/A12, camp,
+portraits and UI bytes are preserved. Twenty jobs / 21 charges / nineteen source
+images; total 318/345. agy latched on an extra-call anomaly; Grok clear; no reset.
+
+# Session 6 / A11 partial design
+
+A11 PARTIAL / generation blocked: Tideglass daily clock with four light states and independent water, meniscus, rim, glass, marks, mist and rotating bead; gold/reputation/fatigue design symbols at header and large sizes. Eighteen new UI regions on one separate page preserve all 90 A5b regions and both original pages. Zero new generated images: A5b rim/A8 mist reused, other geometry and shading authored. Local review flags the regular icon bevels and geometric sky below the painted Covenant bar. Prepared briefs remain unsubmitted. Both provider latches retained at 285/300; 15 local reservations do not establish provider availability. Owner board and session-6 combined contact sheet delivered; new painting, owner acceptance and game integration remain open.
+
+# Session 6 / A10 partial candidate
+
+A10 PARTIAL candidate: 198/288 state-direction clips in 11 atlases; 90 missing clips explicitly enumerated. Two generated diagonal views where available, two declared mirrored left views, six states, shared pivots and scale, canvas loader and native A9/A8 context proofs. Repeated leading-leg poses and identity differences remain; technical gates do not certify production animation. Cinder hound and Iskar front-gait repair rejected. 43 serial attempts, 44 charges: 41 generated jobs, one agy duplicate-output anomaly charged twice, one Grok HTTP 429. Both provider latches retained; cumulative 285/300. Owner review, missing animation and game integration remain open.
+
+# Session 6 / A9 candidate
+
+A9 delivery candidate: three native-density periodic grounds, 36 keyed structures/props, 15 decals and explicit core-preserving layout. Six 1080p/1440p composites and three A6 side-by-side comparisons are on art/review/a9/index.html. Eleven serial Grok reservations; cumulative 241/300. Clipped rust banner replaced; generated letter-like decal cells and unrequested figure excluded. Rim mapping, rune stencils, matte extraction and damage feathering are labeled derived. Material detail improved; repeated stands, derived rim and less integrated atmospheric lighting mean concept equivalence remains unproven. Owner review and game integration remain open.
+
+# Session 6 / A8
+
+[Owner board](review/a8/index.html), [loading contract](delivery/a8/README.md). Delivered 35 effect clips, nine RGBA pages, 134 unique painted keys plus 64 authored telegraph keys; explicit pivots, timing, blend hints and loop flags. Seven calls, cumulative 230/300. Delivery/source/browser/portable gates and 65 tests pass; one rejected correction and partial-cell exclusions retained. Owner motion/fidelity, game integration and performance not measured. Next A9.
+
+Historical failures below remain unchanged.
+
 # Session 5 final boundary
 
 [Combined board](review/covenant/index.html), [contact sheet](review/covenant/contact-sheet.jpg),

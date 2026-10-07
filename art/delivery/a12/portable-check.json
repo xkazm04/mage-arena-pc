@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "scope": "disposable minimal checkout; no ignored art/raw, provider credentials, GPU model weights or paid calls",
+  "copiedFiles": 253,
+  "identicalProducts": 46,
+  "rawAbsent": true,
+  "modelWeightsAbsent": true,
+  "generationCalls": 0,
+  "commands": [
+    {
+      "script": "arena_plates.py",
+      "exitCode": 0,
+      "stdout": "{\"palettes\": [\"verdigris\", \"rust-sand\", \"moonlit\"], \"occluders\": 7, \"proofs\": 6}\n",
+      "stderr": ""
+    },
+    {
+      "script": "check_a12.py",
+      "exitCode": 0,
+      "stdout": "A12 technical gates pass; owner review remains open.\n",
+      "stderr": ""
+    },
+    {
+      "script": "a12_board.py",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "fontDependency": "Windows Segoe UI for proof labels; image masters do not depend on font rendering"
+}

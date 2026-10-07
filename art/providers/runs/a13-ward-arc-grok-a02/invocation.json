@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "3ee3fa90-d8cf-4af8-957a-f416afaf3c3f",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-ward-arc-grok-a02\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-ward-arc-grok-a02",
+  "references": [
+    {
+      "path": "art/waves/A13/references/painted-right-half-guide.png",
+      "sha256": "5b06479a270802c951e826a4811237abb339afe0c707248d584e271fa6b8738d",
+      "role": "generated painted pigment; arc has explicitly authored half-mask"
+    }
+  ]
+}

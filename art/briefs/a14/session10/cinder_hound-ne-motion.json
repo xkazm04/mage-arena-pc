@@ -1,0 +1,32 @@
+{
+  "wave": "A14",
+  "id": "cinder_hound-ne-motion",
+  "pilot": false,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "agy"
+  ],
+  "aspect_ratio": "1:1",
+  "references": [
+    {
+      "path": "art/waves/A14/references/cinder_hound-ne.png",
+      "sha256": "23c2680c4e567fff82fca856972b64714569b079bd787befe4df102be5c4720b",
+      "role": "identity"
+    },
+    {
+      "path": "art/review/sources/a3c-cinder_hound-poses-agy-a01.png",
+      "sha256": "25915ce606f575ae7d9d0775232f539b62f07a175723b1de01ad9e2827b2257f",
+      "role": "approved Covenant creature anatomy, palette and style"
+    }
+  ],
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is the APPROVED COVENANT CREATURE SOURCE, the authority for anatomy, palette and painting style. Use BOTH references visually. Match its lighter stylized painted values and simple sculpted shapes exactly; do not darken into realistic horror, add photoreal skin or fur, or add black shadows. Reference-1 is an A10 master or a crop of that approved source. Generate the requested anatomical view even if the reference is a rear view. This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. Raw magical low lean canine made of charcoal-black cracked stone hide, ember seams, angular pointed ears, long jointed legs, compact flame tail. Four legs and distinct lean hound muzzle; no gore. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns by FOUR rows, SIXTEEN complete isolated poses. Keys 1-4: four subtle ready IDLE poses with breathing and small natural shifts. Keys 5-10: Six distinct locomotion keys in order: opposite diagonal leg pairs alternate support; reach, contact, gather, opposite reach, opposite contact, gather. Show clearly different left/right paw placement, not six copies with one leading leg. Keys 11-16: six ATTACK poses, ready, head lowers, jaw opens, short canine forward lunge, jaw closes, ready recovery. All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "entity": "cinder_hound",
+  "direction": "ne",
+  "kind": "motion",
+  "grid": [
+    4,
+    4
+  ],
+  "referenceConsumption": "agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual",
+  "session": 10
+}

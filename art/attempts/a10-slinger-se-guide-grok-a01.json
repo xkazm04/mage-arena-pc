@@ -1,0 +1,54 @@
+{
+  "id": "a10-slinger-se-guide-grok-a01",
+  "wave": "A10",
+  "style_id": "covenant",
+  "scene": "slinger-se-guide",
+  "attempt": 1,
+  "input": {
+    "wave": "A10",
+    "id": "slinger-se-guide",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A10/references/slinger-se-guide-input.png",
+        "sha256": "5ca81bc329306b36c39e47ca47e1091ac4c08920c40fe1414fdf1d52d874c129",
+        "role": "full-body A3c identity; change anatomical viewing direction only"
+      }
+    ],
+    "prompt": "Create ONE new full-body direction reference of this SAME original character. Non-magical Roman auxiliary slinger, plain head wrap, dull sand short tunic, leather sling visibly extended, stone pouch on hip, no helmet, compact light human silhouette; no magical aura.\nRepaint the character from a different viewing direction: FRONT-RIGHT three-quarter view, FACE and CHEST FRONT clearly visible, toward viewer and right. Show the actual front surfaces of clothing or creature anatomy. This is a new anatomical view in three-dimensional space, NOT rotation of the flat image. The upright body remains vertical in the picture. Camera fixed elevated 55-degree orthographic.\nONE complete figure only, relaxed planted ready stance, both feet on ground (creature all supporting feet planted; moth wings spread in hovering rest). Keep identical clothes, equipment, headwear, proportions and colours. Preserve exactly one weapon and correct anatomy. No action, no attack, no magic effect, no duplicate object, no other characters.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Refined physical painted volume and cloth folds, no heavy comic outline. Fine detail at worn edges.\nPure uniform MAGENTA #FF00FF background. Whole body including feet, weapon, wings and tail fits within middle 65 percent of image. At least 15 percent completely blank margin on every side. No floor, shadow, text, labels, panels or frame. Square image. Do not copy the reference facing if it differs from the requested new view."
+  },
+  "input_hash": "950e2d138652c77005e77407f85c32171f8a1a965a6429655e01ceb4bb0d8227",
+  "prompt": "Create ONE new full-body direction reference of this SAME original character. Non-magical Roman auxiliary slinger, plain head wrap, dull sand short tunic, leather sling visibly extended, stone pouch on hip, no helmet, compact light human silhouette; no magical aura.\nRepaint the character from a different viewing direction: FRONT-RIGHT three-quarter view, FACE and CHEST FRONT clearly visible, toward viewer and right. Show the actual front surfaces of clothing or creature anatomy. This is a new anatomical view in three-dimensional space, NOT rotation of the flat image. The upright body remains vertical in the picture. Camera fixed elevated 55-degree orthographic.\nONE complete figure only, relaxed planted ready stance, both feet on ground (creature all supporting feet planted; moth wings spread in hovering rest). Keep identical clothes, equipment, headwear, proportions and colours. Preserve exactly one weapon and correct anatomy. No action, no attack, no magic effect, no duplicate object, no other characters.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Refined physical painted volume and cloth folds, no heavy comic outline. Fine detail at worn edges.\nPure uniform MAGENTA #FF00FF background. Whole body including feet, weapon, wings and tail fits within middle 65 percent of image. At least 15 percent completely blank margin on every side. No floor, shadow, text, labels, panels or frame. Square image. Do not copy the reference facing if it differs from the requested new view.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "ef738c47-cfec-4b9f-98bb-0a874787e1bd",
+  "at": "2026-10-03T13:58:45.826156+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 21.657,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Create ONE new full-body direction reference of this SAME original character. Non-magical Roman auxiliary slinger, plain head wrap, dull sand short tunic, leather sling visibly extended, stone pouch on hip, no helmet, compact light human silhouette; no magical aura.\nRepaint the character from a different viewing direction: FRONT-RIGHT three-quarter view, FACE and CHEST FRONT clearly visible, toward viewer and right. Show the actual front surfaces of clothing or creature anatomy. This is a new anatomical view in three-dimensional space, NOT rotation of the flat image. The upright body remains vertical in the picture. Camera fixed elevated 55-degree orthographic.\nONE complete figure only, relaxed planted ready stance, both feet on ground (creature all supporting feet planted; moth wings spread in hovering rest). Keep identical clothes, equipment, headwear, proportions and colours. Preserve exactly one weapon and correct anatomy. No action, no attack, no magic effect, no duplicate object, no other characters.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Refined physical painted volume and cloth folds, no heavy comic outline. Fine detail at worn edges.\nPure uniform MAGENTA #FF00FF background. Whole body including feet, weapon, wings and tail fits within middle 65 percent of image. At least 15 percent completely blank margin on every side. No floor, shadow, text, labels, panels or frame. Square image. Do not copy the reference facing if it differs from the requested new view.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-slinger-se-guide-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a10-slinger-se-guide-grok-a01/source.jpg",
+  "archive": "art/review/sources/a10-slinger-se-guide-grok-a01.jpg",
+  "sha256": "2c15f5377bf0dbae30b626cef009c4829d921214ad1ab411f745ea0ea92c5a36",
+  "invocation_evidence": "art/providers/runs/a10-slinger-se-guide-grok-a01"
+}

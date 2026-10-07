@@ -1,0 +1,161 @@
+{
+  "scope": "measured crop failures, not erased by delivery integrity",
+  "sources": [
+    {
+      "job": "a8-earth-animation-agy-a01",
+      "source": "art/review/sources/a8-earth-animation-agy-a01.png",
+      "sha256": "a4e2be0522f5295433038f98a98cb29d6ce97ee86bb2f582b2e8c79f7f51f62f",
+      "rejectedCells": [
+        {
+          "columnZeroBased": 2,
+          "rowZeroBased": 2,
+          "sourceCrop": [
+            400,
+            358,
+            600,
+            538
+          ],
+          "metrics": {
+            "empty": false,
+            "bbox": [
+              0,
+              4,
+              200,
+              172
+            ],
+            "margin_px": 0,
+            "coverage": 0.62631,
+            "mass": 13593.62
+          }
+        },
+        {
+          "columnZeroBased": 3,
+          "rowZeroBased": 2,
+          "sourceCrop": [
+            600,
+            358,
+            800,
+            538
+          ],
+          "metrics": {
+            "empty": false,
+            "bbox": [
+              0,
+              8,
+              199,
+              165
+            ],
+            "margin_px": 0,
+            "coverage": 0.53667,
+            "mass": 8685.06
+          }
+        },
+        {
+          "columnZeroBased": 4,
+          "rowZeroBased": 2,
+          "sourceCrop": [
+            800,
+            358,
+            1000,
+            538
+          ],
+          "metrics": {
+            "empty": false,
+            "bbox": [
+              0,
+              14,
+              197,
+              160
+            ],
+            "margin_px": 0,
+            "coverage": 0.44439,
+            "mass": 4321.0
+          }
+        }
+      ],
+      "rule": "alpha greater than 24 must have at least 2 source pixels margin"
+    },
+    {
+      "job": "a8-air-animation-agy-a01",
+      "source": "art/review/sources/a8-air-animation-agy-a01.png",
+      "sha256": "32f3a7998f9489d94b3ee3907ae2c14f7e829dc40ffd88e6bf6ba0545e3e97b5",
+      "rejectedCells": [
+        {
+          "columnZeroBased": 0,
+          "rowZeroBased": 1,
+          "sourceCrop": [
+            0,
+            179,
+            200,
+            358
+          ],
+          "metrics": {
+            "empty": false,
+            "bbox": [
+              0,
+              58,
+              189,
+              120
+            ],
+            "margin_px": 0,
+            "coverage": 0.19785,
+            "mass": 3814.58
+          }
+        },
+        {
+          "columnZeroBased": 3,
+          "rowZeroBased": 1,
+          "sourceCrop": [
+            600,
+            179,
+            800,
+            358
+          ],
+          "metrics": {
+            "empty": false,
+            "bbox": [
+              0,
+              59,
+              190,
+              120
+            ],
+            "margin_px": 0,
+            "coverage": 0.20039,
+            "mass": 3912.33
+          }
+        }
+      ],
+      "rule": "alpha greater than 24 must have at least 2 source pixels margin"
+    },
+    {
+      "job": "a8-earth-impact-isolated-agy-a01",
+      "source": "art/review/sources/a8-earth-impact-isolated-agy-a01.png",
+      "sha256": "09fd78e1bea56a824fe9cbe9ddeb284b537eeda7f60674f0fd29075a2e1466a5",
+      "rejectedCells": [
+        {
+          "columnZeroBased": 2,
+          "rowZeroBased": 0,
+          "sourceCrop": [
+            843,
+            0,
+            1264,
+            424
+          ],
+          "metrics": {
+            "empty": false,
+            "bbox": [
+              1,
+              26,
+              421,
+              369
+            ],
+            "margin_px": 0,
+            "coverage": 0.3954,
+            "mass": 44061.09
+          }
+        }
+      ],
+      "rule": "alpha greater than 24 must have at least 2 source pixels margin"
+    }
+  ]
+}

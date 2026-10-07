@@ -1,0 +1,25 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>A8 / Covenant effects in motion</title>
+<style>body{margin:0;background:#080e15;color:#eee5d5;font:18px Georgia}header{padding:16px 24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center}button,select{font:inherit;background:#22323d;color:#eee5d5;border:1px solid #7a969b;padding:8px}canvas{display:block;width:100%;height:auto}p{margin:12px 24px;max-width:1100px}a{color:#9be3e0}</style>
+<header><b>A8 · Covenant / motion review</b><button id="pause">Pause</button><select id="palette"><option>verdigris</option><option>rust-sand</option><option>moonlit</option></select><label>Body scale <select id="scale"><option value=".03">3%</option><option value=".0375" selected>3.75%</option><option value=".045">4.5%</option></select></label><a href="index.html">Sources and findings</a></header>
+<canvas width="1920" height="1080"></canvas>
+<p>Art consumer, not gameplay. Top rows: cast, projectile, impact, hit, aura. Bottom: membrane hold, energy compression, perfect flare and exact telegraphs. Timing and source-frame blends are authored. Camp and portraits are preserved.</p>
+<script type="module">
+import {loadEffects,drawEffect,frameAt} from '../../../art/delivery/a8/canvas-loader.js';
+const root='../../../',art=await loadEffects(root),m=art.manifest,images=Object.fromEntries(art.pages);
+async function load(url){const i=new Image();i.src=root+url;await i.decode();return i}
+const backgrounds={};for(const p of ['verdigris','rust-sand','moonlit'])backgrounds[p]=await load('art/delivery/a7/arena-'+p+'-1920.png');
+const figures={};for(const [s,e] of Object.entries({fire:'brennic',water:'cassia',earth:'garran',air:'iskar'}))figures[s]=await load('art/delivery/a3c/frames/'+e+'-'+(e==='cassia'?'run':'ready')+'.png');
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d');let paused=false,time=0,last=0;
+document.querySelector('#pause').onclick=()=>{paused=!paused;document.querySelector('#pause').textContent=paused?'Play':'Pause'};
+function clip(id,x,y,t,size=1){const c=m.clips[id];if(!c)return;const total=c.frames.reduce((a,b)=>a+b.durationMs,0);drawEffect(ctx,art,id,t%total,x,y,size,id.endsWith('.aura')?.65:1)}
+window.__loaderChecks={oneShotStops:frameAt(m.clips['water.cast'],99999)===null,loopContinues:frameAt(m.clips['water.travel'],99999)!==null,negativeTimeHidden:frameAt(m.clips['water.cast'],-1)===null};
+function body(s,x,y){const h=1080*Number(document.querySelector('#scale').value),k=h/160;ctx.drawImage(figures[s],x-256*k,y-400*k,512*k,512*k)}
+function label(s,x,y){ctx.fillStyle='#f3eee1';ctx.font='25px Georgia';ctx.fillText(s,x,y)}
+function draw(t){if(!paused)time+=Math.min(50,t-last||0);last=t;ctx.clearRect(0,0,1920,1080);ctx.drawImage(backgrounds[document.querySelector('#palette').value],0,0,1920,1080);ctx.fillStyle='#07101bab';ctx.fillRect(0,0,1920,1080);
+ const schools=['fire','water','earth','air'],kinds=['cast','travel','impact','hit','aura'];
+ for(let r=0;r<4;r++){const school=schools[r],y=150+r*175;label(school.toUpperCase(),55,y);for(let col=0;col<5;col++){const x=350+col*310;if(r===0)label(kinds[col],x-70,50);if(kinds[col]==='aura')clip(school+'.aura',x,y+7,time);body(school,x,y+13);if(kinds[col]!=='aura')clip(school+'.'+kinds[col],x+30,y-18,time);}}
+ for(let i=0;i<3;i++){const x=330+i*450;label(['Barrier / hold','Absorb / compression','Perfect / flare'][i],x-130,870);body('water',x,982);clip(['absorb.hold','absorb.contact','absorb.perfect'][i],x+20,959,time)}
+ clip('water.telegraph.ring',1700,945,time,1.5);label('Exact geometry',1600,870);
+ window.__artReady=true;window.__artTime=time;window.__artManifest=m.id;requestAnimationFrame(draw)}requestAnimationFrame(draw);
+</script>

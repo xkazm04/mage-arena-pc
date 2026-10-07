@@ -1,0 +1,56 @@
+{
+  "id": "a10-brennic-ne-grok-a01",
+  "wave": "A10",
+  "style_id": "covenant",
+  "scene": "brennic-ne",
+  "attempt": 1,
+  "input": {
+    "wave": "A10",
+    "id": "brennic-ne",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A10/references/brennic-ne-bust-v1.png",
+        "sha256": "0887ba154cbb045676cfed57b5e0cb090eeae65e975c41d8096c2c8800852444",
+        "role": "left Moonchalk material; centre A3c upper-body identity; right approved portrait when present"
+      }
+    ],
+    "prompt": "Create an entirely NEW full-body game animation spritesheet. The reference collage contains only upper-body IDENTITY and painted MATERIAL references, not a layout or pose to copy. Character: Adult broad-shouldered man, shaved dark head and short copper beard, pale warm ivory layered battle cloth with burnt-orange split sash, dark short shoulder mantle, ember jars and hammered rings on belt, forked charred staff cradling an ember. Compact embers and heat.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. High fidelity painted cloth and worn metal, rich sculpted volume, small sharp highlights, no black comic outlines. Keep the SAME headwear, clothing, weapon and hand in EVERY pose. For a hooded mage the hood remains UP over the head in all sixteen keys; the face is visible only when physically facing viewer.\nONE uniform magenta #FF00FF image, EXACTLY 4 columns by 4 rows, 16 fully isolated whole figures. No text, dividers, floor, shadow, magic trails or portrait panels. Each figure is SMALL within its cell, only HALF the cell height, at least 20 percent blank magenta above/below/sides. Leave a broad completely empty magenta border around the ENTIRE image, especially below the last row. All weapons and resting bodies fit their cells. Largest square output.\nFixed elevated 55-degree orthographic camera. Every pose faces THREE-QUARTER REAR RIGHT, diagonally AWAY and RIGHT: back of head/hood and back of torso visible, nose/muzzle points upper-right, no chest front. Maintain this rear-right view in idle, running and every action. This entire sheet has only this ONE facing. Never switch direction or camera during any action. Weapon present in ALL keys. Same body size and ground contact baseline.\nRow 1: idle breath A, idle breath B, run right-contact, run compression.\nRow 2: run passing, run left-contact, run compression, run passing. Six total run keys visibly alternate feet and counter-swing arms in the specified facing.\nRow 3: cast/attack preparation, cast/attack release, absorb/brace preparation, absorb/brace resisting. Use actual staff, weapon or creature anatomy. Keep the same facing.\nRow 4: hit recoil, hit recovery, collapse onto knees/limbs, fully resting intact body. No injury, blood or gore. Keep the same identity and headwear, even at rest.\nNo extra figures. Do not copy a running pose from any reference. No effects beyond a tiny staff-tip glint. Original character design only.",
+    "revision": 1
+  },
+  "input_hash": "a9589954a29cd1094063b9515575be83c868217016b894c8d03bb4377577374d",
+  "prompt": "Create an entirely NEW full-body game animation spritesheet. The reference collage contains only upper-body IDENTITY and painted MATERIAL references, not a layout or pose to copy. Character: Adult broad-shouldered man, shaved dark head and short copper beard, pale warm ivory layered battle cloth with burnt-orange split sash, dark short shoulder mantle, ember jars and hammered rings on belt, forked charred staff cradling an ember. Compact embers and heat.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. High fidelity painted cloth and worn metal, rich sculpted volume, small sharp highlights, no black comic outlines. Keep the SAME headwear, clothing, weapon and hand in EVERY pose. For a hooded mage the hood remains UP over the head in all sixteen keys; the face is visible only when physically facing viewer.\nONE uniform magenta #FF00FF image, EXACTLY 4 columns by 4 rows, 16 fully isolated whole figures. No text, dividers, floor, shadow, magic trails or portrait panels. Each figure is SMALL within its cell, only HALF the cell height, at least 20 percent blank magenta above/below/sides. Leave a broad completely empty magenta border around the ENTIRE image, especially below the last row. All weapons and resting bodies fit their cells. Largest square output.\nFixed elevated 55-degree orthographic camera. Every pose faces THREE-QUARTER REAR RIGHT, diagonally AWAY and RIGHT: back of head/hood and back of torso visible, nose/muzzle points upper-right, no chest front. Maintain this rear-right view in idle, running and every action. This entire sheet has only this ONE facing. Never switch direction or camera during any action. Weapon present in ALL keys. Same body size and ground contact baseline.\nRow 1: idle breath A, idle breath B, run right-contact, run compression.\nRow 2: run passing, run left-contact, run compression, run passing. Six total run keys visibly alternate feet and counter-swing arms in the specified facing.\nRow 3: cast/attack preparation, cast/attack release, absorb/brace preparation, absorb/brace resisting. Use actual staff, weapon or creature anatomy. Keep the same facing.\nRow 4: hit recoil, hit recovery, collapse onto knees/limbs, fully resting intact body. No injury, blood or gore. Keep the same identity and headwear, even at rest.\nNo extra figures. Do not copy a running pose from any reference. No effects beyond a tiny staff-tip glint. Original character design only.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "41bcba61-161b-4c36-ab1d-3a6eaae77e04",
+  "at": "2026-10-03T13:21:48.514683+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 27.015,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Create an entirely NEW full-body game animation spritesheet. The reference collage contains only upper-body IDENTITY and painted MATERIAL references, not a layout or pose to copy. Character: Adult broad-shouldered man, shaved dark head and short copper beard, pale warm ivory layered battle cloth with burnt-orange split sash, dark short shoulder mantle, ember jars and hammered rings on belt, forked charred staff cradling an ember. Compact embers and heat.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. High fidelity painted cloth and worn metal, rich sculpted volume, small sharp highlights, no black comic outlines. Keep the SAME headwear, clothing, weapon and hand in EVERY pose. For a hooded mage the hood remains UP over the head in all sixteen keys; the face is visible only when physically facing viewer.\nONE uniform magenta #FF00FF image, EXACTLY 4 columns by 4 rows, 16 fully isolated whole figures. No text, dividers, floor, shadow, magic trails or portrait panels. Each figure is SMALL within its cell, only HALF the cell height, at least 20 percent blank magenta above/below/sides. Leave a broad completely empty magenta border around the ENTIRE image, especially below the last row. All weapons and resting bodies fit their cells. Largest square output.\nFixed elevated 55-degree orthographic camera. Every pose faces THREE-QUARTER REAR RIGHT, diagonally AWAY and RIGHT: back of head/hood and back of torso visible, nose/muzzle points upper-right, no chest front. Maintain this rear-right view in idle, running and every action. This entire sheet has only this ONE facing. Never switch direction or camera during any action. Weapon present in ALL keys. Same body size and ground contact baseline.\nRow 1: idle breath A, idle breath B, run right-contact, run compression.\nRow 2: run passing, run left-contact, run compression, run passing. Six total run keys visibly alternate feet and counter-swing arms in the specified facing.\nRow 3: cast/attack preparation, cast/attack release, absorb/brace preparation, absorb/brace resisting. Use actual staff, weapon or creature anatomy. Keep the same facing.\nRow 4: hit recoil, hit recovery, collapse onto knees/limbs, fully resting intact body. No injury, blood or gore. Keep the same identity and headwear, even at rest.\nNo extra figures. Do not copy a running pose from any reference. No effects beyond a tiny staff-tip glint. Original character design only.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-brennic-ne-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a10-brennic-ne-grok-a01/source.jpg",
+  "archive": "art/review/sources/a10-brennic-ne-grok-a01.jpg",
+  "sha256": "3f664876e9be66acd34e955e79e1e326a1382da64f81f7550995971e2abbaa52",
+  "invocation_evidence": "art/providers/runs/a10-brennic-ne-grok-a01"
+}

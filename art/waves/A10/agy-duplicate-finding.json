@@ -1,0 +1,20 @@
+{
+  "job": "a10-brennic-north-agy-a01",
+  "files": [
+    {
+      "path": "art/raw/a10-brennic-north-agy-a01/output.png",
+      "sha256": "ba906082d6fef716c611637fc4f68535a3f31ef5a75333f27433da93977d24a7"
+    },
+    {
+      "path": "art/raw/a10-brennic-north-agy-a01/source.png",
+      "sha256": "ba906082d6fef716c611637fc4f68535a3f31ef5a75333f27433da93977d24a7"
+    }
+  ],
+  "uniqueHashes": 1,
+  "archivedFinding": "art/review/sources/a10-brennic-north-agy-duplicate-finding.png",
+  "archiveSha256": "ba906082d6fef716c611637fc4f68535a3f31ef5a75333f27433da93977d24a7",
+  "chargedImagesRetained": 2,
+  "providerLatch": "retained, no reset",
+  "runtimeConsumed": false,
+  "finding": "Two byte-identical PNG saves; wrapper counted two output files. This verifies duplicate bytes, not hidden provider tool-call count. No refund and no automatic retry."
+}
