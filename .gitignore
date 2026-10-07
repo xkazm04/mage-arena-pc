@@ -21,3 +21,28 @@ art/review/browser/
 .env.*
 tools/audio/.generation.lock
 tools/audio/*.tmp
+
+# Review evidence media lives in the outside archive (kiro/mage-arena-archive/tv), not in git.
+# Reports (.md, .json, .html) stay tracked and refer to it by path. W6 media is byte-checked by a test.
+docs/waves/**/*.png
+docs/waves/**/*.jpg
+docs/waves/**/*.jpeg
+docs/waves/**/*.webp
+docs/waves/**/*.gz
+!docs/waves/W6-evidence/**
+docs/audio/audition/**/*.mp3
+docs/audio/audition/**/*.wav
+docs/audio/evidence/**/*.mp3
+docs/audio/evidence/**/*.wav
+docs/audio/evidence/**/*.png
+art/review/**/*.png
+art/review/**/*.jpg
+art/review/**/*.webp
+art/waves/**/*.png
+art/waves/**/*.jpg
+art/waves/**/*.webp
+**/proofs/**/*.png
+**/proofs/**/*.jpg
+
+# Short-lived parallel worktrees (replace the old long-lived lane folders)
+.worktrees/
