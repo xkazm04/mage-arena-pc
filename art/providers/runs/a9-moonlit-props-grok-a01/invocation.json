@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "4601ab5e-8006-4848-abdf-bcbec957d8ec",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a9-moonlit-props-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a9-moonlit-props-grok-a01",
+  "references": [
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+      "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+      "role": "approved arena material, light and detail reference"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "wave": "A13",
+  "id": "ward-arc",
+  "pilot": false,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "agy",
+    "grok"
+  ],
+  "aspect_ratio": "4:3",
+  "references": [
+    {
+      "path": "art/waves/A13/references/painted-right-half-guide.png",
+      "sha256": "5b06479a270802c951e826a4811237abb339afe0c707248d584e271fa6b8738d",
+      "role": "generated painted pigment; arc has explicitly authored half-mask"
+    }
+  ],
+  "sheet": {
+    "columns": 3,
+    "rows": 2,
+    "kind": "ward"
+  },
+  "prompt": "Original painted dark-fantasy game decal animation sheet. Reference-1.png is the ONLY style/composition guide. Exactly THREE columns by TWO rows, SIX distinct hold keys of this RIGHT HALF ARC. Preserve the reference open-left semicircle: there must be NO paint anywhere in the left half of each cell except the top and bottom tips. A crescent facing RIGHT with opening to LEFT, like a closing parenthesis. Weathered luminous blue-silver brush pigment, broken uneven contours and six generous dark glyph gaps; no solid polished metal. Small energy filaments move along the arc in each key. Keep fixed centre and radius and gentle brightness. Do NOT complete it into a ring. No circle, oval or bubble.  Flat TOP view before game projection. Pure black background with no panels, grid lines, text, symbols or glyphs; canonical glyphs are added separately. Each whole shape including glow must fit the middle 60 percent of its cell. Very large empty gutters and margins. Exactly 3x2. Rich uneven painterly strokes and localized wear, not vectors, neon tubes, photorealism, 3D render or paper noise.",
+  "correction_of": "a13-ward-arc-grok-a01"
+}

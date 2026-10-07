@@ -1,0 +1,103 @@
+{
+  "artifact": "a3-owner",
+  "at": "2026-10-02T11:39:40.858072+00:00",
+  "input_hash": "44a9ee4e1c144b7f1bbcbcfba764830a9b598e8ff29b61ed813d997e24b16ffd",
+  "source": "art/review/a3/owner-1920.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "e6be72536d71830fcc62232347230e01a5fe327ba32117fd6101baccf56ada20",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Owner board for explicitly INCOMPLETE A3. Spending latched and missing creatures disclosed. Native-size Cassia absorb preview, controls and links. Inspect legibility, overlap and colour separation. Text is authored; no gameplay claim.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The UI is a clean, authored HTML/SVG overlay on a game art background. The header 'Figures in the open oval' and subtext are clearly legible against the dark green background. The two status boxes ('This session: 37 charged image calls...' and 'A3 INCOMPLETE: SPENDING LATCHED...') are well-formatted with clear text and distinct borders, ensuring the incomplete status and spending latch are prominently disclosed. The 'Native-scale pose and timing study' section contains a row of dropdowns (Figure, Pose, Resolution basis, Distance, Surface, Effect) and a 'Play study' button, all of which are visible, unobscured, and properly aligned. The background art shows an overhead view of a sandy arena with characters and effects, consistent with the 'overhead_view' expectation for UI framing. The color palette of the UI (cream text, dark green, beige boxes) aligns with the 'chalk-lime, umber, terracotta and mineral blue' style match, though the background art itself uses more vibrant blues and reds. There are no watermarks, logos, or photographic inserts that would constitute forbidden rendering. All text is sharp and readable, with no overlap or obscured controls. The layout is structured and professional, effectively communicating the project's incomplete state and available controls.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The UI is a clean, authored HTML/SVG overlay on a game art background. The header 'Figures in the open oval' and subtext are clearly legible against the dark green background. The two status boxes ('This session: 37 charged image calls...' and 'A3 INCOMPLETE: SPENDING LATCHED...') are well-formatted with clear text and distinct borders, ensuring the incomplete status and spending latch are prominently disclosed. The 'Native-scale pose and timing study' section contains a row of dropdowns (Figure, Pose, Resolution basis, Distance, Surface, Effect) and a 'Play study' button, all of which are visible, unobscured, and properly aligned. The background art shows an overhead view of a sandy arena with characters and effects, consistent with the 'overhead_view' expectation for UI framing. The color palette of the UI (cream text, dark green, beige boxes) aligns with the 'chalk-lime, umber, terracotta and mineral blue' style match, though the background art itself uses more vibrant blues and reds. There are no watermarks, logos, or photographic inserts that would constitute forbidden rendering. All text is sharp and readable, with no overlap or obscured controls. The layout is structured and professional, effectively communicating the project's incomplete state and available controls."
+  },
+  "eval_count": 341,
+  "elapsed_seconds": 12.046,
+  "verdict": "owner-review",
+  "codes": [
+    "OWNER_CHOICE_PENDING"
+  ],
+  "owner_accepted": false
+}

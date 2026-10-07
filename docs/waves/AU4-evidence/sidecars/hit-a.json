@@ -1,0 +1,51 @@
+{
+  "id": "2c37c9a8-3d1d-45b9-93b5-8f0f42e911a4",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:13:00.693Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A compact padded leather-and-linen body hit with a low soft weight and quick cloth compression; physical damage, no magical chime. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.5,
+  "chars": null,
+  "out": "docs/audio/audition/r2/hit-A-hide-and-slate.mp3",
+  "request": {
+    "text": "A compact padded leather-and-linen body hit with a low soft weight and quick cloth compression; physical damage, no magical chime. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "15"
+  },
+  "bytes": 24703,
+  "sha256": "8ed1bce8baf0e6b395457f5b1abb829e26ae8a37b60db3194f5790d2b4f40902",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:13:00.692Z",
+    "tier": "starter",
+    "used": 71267,
+    "limit": 90000,
+    "remaining": 18733,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 30,
+  "estimatedCredits": 30,
+  "documentedEstimateCredits": 30,
+  "chargedCredits": 30,
+  "measuredCredits": 15,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:13:19.907Z",
+    "tier": "starter",
+    "used": 71267,
+    "limit": 90000,
+    "remaining": 18733,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

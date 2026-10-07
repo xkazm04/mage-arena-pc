@@ -1,0 +1,66 @@
+{
+  "id": "a12-rust-sand-clean-grok-a02",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "rust-sand-clean",
+  "attempt": 2,
+  "input": {
+    "wave": "A12",
+    "id": "rust-sand-clean",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/review/sources/a12-rust-sand-clean-grok-a01.jpg",
+        "sha256": "71dc188d955643291f97bc76214d09a5e92cc2baa0c62bc42b2b7a812ca9432f",
+        "role": "edit target; remaining floating magic stones at lower middle-right"
+      }
+    ],
+    "prompt": "Precisely clean this environment painting. Remove the entire cluster of floating brown pebble-like stones, their little shadows and the pale golden spell haze at x=62 percent from the left and y=70 percent from the top (just LEFT of the lower-right reddish scorch patch). These airborne stones are magical combat effects, not terrain. Paint flat continuous weathered pale warm sand and worn limestone in their place, matching the neighbouring ground. No isolated hovering rocks remain. Preserve the five tall existing cloth-wrapped pylons, all floor sun-circle geometrical designs, irregular broad slate patches, existing rear walls and banners, elevated oblique camera, framing, diffuse light and subtle physical cracks. No new objects. No changes elsewhere. Empty arena: zero people, animals, stone creatures, warriors, staffs, projectiles, personal auras or combat effects. One coherent detailed painting. No text, lettering, logo, border, UI or all-over texture overlay. Original designs. Landscape 16:9.",
+    "correction_of": "a12-rust-sand-clean-grok-a01",
+    "revision": 2
+  },
+  "input_hash": "7f016e0fd8291d512ec22d2b3f86af69da19df7f10367ded01b89c8270e88500",
+  "prompt": "Precisely clean this environment painting. Remove the entire cluster of floating brown pebble-like stones, their little shadows and the pale golden spell haze at x=62 percent from the left and y=70 percent from the top (just LEFT of the lower-right reddish scorch patch). These airborne stones are magical combat effects, not terrain. Paint flat continuous weathered pale warm sand and worn limestone in their place, matching the neighbouring ground. No isolated hovering rocks remain. Preserve the five tall existing cloth-wrapped pylons, all floor sun-circle geometrical designs, irregular broad slate patches, existing rear walls and banners, elevated oblique camera, framing, diffuse light and subtle physical cracks. No new objects. No changes elsewhere. Empty arena: zero people, animals, stone creatures, warriors, staffs, projectiles, personal auras or combat effects. One coherent detailed painting. No text, lettering, logo, border, UI or all-over texture overlay. Original designs. Landscape 16:9.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "c7a6b977-1d6e-4e12-a4ff-7fff75c2263e",
+  "at": "2026-10-03T15:27:39.099855+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 22.484,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-rust-sand-clean-grok-a02\\reference-1.jpg"
+        ],
+        "prompt": "Precisely clean this environment painting. Remove the entire cluster of floating brown pebble-like stones, their little shadows and the pale golden spell haze at x=62 percent from the left and y=70 percent from the top (just LEFT of the lower-right reddish scorch patch). These airborne stones are magical combat effects, not terrain. Paint flat continuous weathered pale warm sand and worn limestone in their place, matching the neighbouring ground. No isolated hovering rocks remain. Preserve the five tall existing cloth-wrapped pylons, all floor sun-circle geometrical designs, irregular broad slate patches, existing rear walls and banners, elevated oblique camera, framing, diffuse light and subtle physical cracks. No new objects. No changes elsewhere. Empty arena: zero people, animals, stone creatures, warriors, staffs, projectiles, personal auras or combat effects. One coherent detailed painting. No text, lettering, logo, border, UI or all-over texture overlay. Original designs. Landscape 16:9.",
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "ff232961319b2ccb224f7ff8ecbfdacd01a184693c68d6b746da24a05dd64275",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-rust-sand-clean-grok-a02\\c7a6b977-1d6e-4e12-a4ff-7fff75c2263e\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a12-rust-sand-clean-grok-a02/_driver/source.jpg",
+  "archive": "art/review/sources/a12-rust-sand-clean-grok-a02.jpg",
+  "sha256": "ff232961319b2ccb224f7ff8ecbfdacd01a184693c68d6b746da24a05dd64275",
+  "invocation_evidence": "art/providers/runs/a12-rust-sand-clean-grok-a02"
+}

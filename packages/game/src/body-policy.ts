@@ -1,0 +1,99 @@
+import { runtime, type Actor, type ArenaState } from "@mage/core/arena";
+import type { Body, BodyState, Clip, Direction } from "./animation-contract.ts";
+import policy from "../data/animation.json" with { type: "json" };
+
+const directions: Direction[] = ["ne", "se", "sw", "nw"];
+/** Read-only presentation of the moth's existing contact drain; no new attack. */
+export function mothContact(a: Actor, state: ArenaState): boolean {
+  return (
+    a.enemy?.id === "hush_moth" &&
+    !state.lab &&
+    !a.tags.includes("DEFEATED") &&
+    state.tick >= (a.staggerUntil ?? 0) &&
+    state.tick >= a.enemy.stunnedUntil &&
+    state.tick >= a.water.encasedUntil &&
+    state.actors.some(
+      (target) =>
+        target.team !== a.team &&
+        !target.tags.includes("DEFEATED") &&
+        target.mana > 0 &&
+        state.tick >= target.immuneUntil &&
+        state.tick >= target.water.encasedUntil &&
+        Math.hypot(target.pos.x - a.pos.x, target.pos.y - a.pos.y) <=
+          runtime.games.contactRangeM,
+    )
+  );
+}
+export interface BodySelection {
+  state: BodyState;
+  direction: Direction;
+  clip: Clip;
+  held: boolean;
+}
+export function bodyIdentity(a: Actor): string {
+  if (a.enemy) return a.enemy.id;
+  if (a.dummy) return "dummy";
+  if (a.school) return policy.schoolBodies[a.school];
+  const name = a.label.toLowerCase();
+  for (const id of Object.values(policy.schoolBodies))
+    if (name === id) return id;
+  // Anonymous Tiro entrants are explicitly Water proxies in core.
+  return name === "water mage" || name === "tiro entrant ? water proxy"
+    ? "cassia"
+    : "mage.unknown";
+}
+/** No access to other entities: a fallback cannot change creature identity. */
+export function selectBodyClip(
+  body: Body | undefined,
+  state: BodyState,
+  direction: Direction,
+  previous?: BodySelection,
+): BodySelection | undefined {
+  if (!body) return;
+  // Prefer a delivered collapse/corpse pair over an inherited unpaired death.
+  // This only affects the missing A14 rear slots; the A10 data stays intact.
+  const pairedDeath =
+    state === "death" &&
+    directions.some(
+      (d) =>
+        body.clips.death?.[d]?.delivery === "A14" && body.clips.corpse?.[d],
+    );
+  const usable = (d: Direction) =>
+    !pairedDeath ||
+    (body.clips.death?.[d]?.delivery === "A14" && !!body.clips.corpse?.[d]);
+  const direct = body.clips[state]?.[direction];
+  if (direct && usable(direction))
+    return { state, direction, clip: direct, held: false };
+  const distance = (d: Direction) => {
+    const n = Math.abs(directions.indexOf(direction) - directions.indexOf(d));
+    return Math.min(n, 4 - n);
+  };
+  const ordered = [...directions].sort(
+    (a, b) =>
+      distance(a) - distance(b) ||
+      Number(b === previous?.direction) - Number(a === previous?.direction),
+  );
+  for (const d of ordered) {
+    const clip = body.clips[state]?.[d];
+    if (clip && usable(d)) return { state, direction: d, clip, held: false };
+  }
+  if ((state === "death" || state === "corpse") && previous)
+    return { ...previous, held: true };
+  for (const fallback of policy.compatibleStates[state] as BodyState[])
+    for (const d of ordered) {
+      const clip = body.clips[fallback]?.[d];
+      if (clip) return { state: fallback, direction: d, clip, held: true };
+    }
+  return;
+}
+
+/** A corpse must match the death's facing; a nearest-direction lookup would pop at settle. */
+export function corpseForDeath(
+  body: Body | undefined,
+  death: BodySelection,
+): BodySelection {
+  const clip = body?.clips.corpse?.[death.direction];
+  return death.state === "death" && !death.held && clip
+    ? { state: "corpse", direction: death.direction, clip, held: false }
+    : death;
+}

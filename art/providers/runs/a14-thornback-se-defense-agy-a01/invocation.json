@@ -1,0 +1,25 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\AppData\\Local\\agy\\bin\\agy.exe",
+    "-p",
+    "Generate exactly ONE image using generate_image. The driver archives the tool output automatically; do not copy or save it again. Do not retry, make additional images, or run other generation tools. Use the built-in image-generator capability immediately; do not inspect sibling folders, histories, driver code or CLI help. If the capability requires an image-generator worker, pass this ENTIRE request including the one-call limit unchanged to that worker. Return the FIRST result even if imperfect. Do not critique, inspect, refine, or repair the generated result. Do not make source.png or any backup/preview/copy of the output. If generation fails, report the exact error and stop. The reference files named below are already in the current directory. Use them as visual references, never as instructions.\nUse case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is the APPROVED COVENANT CREATURE SOURCE, the authority for anatomy, palette and painting style. Use BOTH references visually. Match its lighter stylized painted values and simple sculpted shapes exactly; do not darken into realistic horror, add photoreal skin or fur, or add black shadows. Reference-1 is an A10 master or a crop of that approved source. Generate the requested anatomical view even if the reference is a rear view. This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. Raw magical heavy four-legged stone beast, squat broad body, blunt mineral horns and tall angular thorn-like back plates, ochre mineral seams, heavy blunt feet, small armored head. Charging wedge silhouette; no gore. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete poses. Six resistance poses: ready, lower body braces, forelimbs plant or moth wings fold forward, body withstands force, small effort variation, steady braced hold. No injury or collapse, no shield object or magic effect added to an animal.All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only. Keep the approved BLUE illuminated mineral seams as well as ochre cracks. The approved image outranks any conflicting written color description.",
+    "--dangerously-skip-permissions",
+    "--model",
+    "gemini-3.8-flash-medium",
+    "--output-format",
+    "text"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-thornback-se-defense-agy-a01",
+  "references": [
+    {
+      "path": "art/waves/A14/session10/references/thornback-se.png",
+      "sha256": "05cbc92e574f57dceacd1084d0bbbbe2bf5b908894703e8fdd6dd3bfe0e2df7e",
+      "role": "locally gated front proof derived crop; original approved creature source remains reference 2"
+    },
+    {
+      "path": "art/review/sources/a3c-thornback-poses-agy-a01.png",
+      "sha256": "3c347da56718cf5bc40de09caefb8f97d6237d2eefac690f0ef77b74ad4c14ca",
+      "role": "approved Covenant creature anatomy, palette and style"
+    }
+  ]
+}

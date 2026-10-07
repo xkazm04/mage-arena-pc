@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "1b46d80b-b3a8-475e-961a-451365c2ac66",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-shieldman-ne-corrected-grok-a02\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-shieldman-ne-corrected-grok-a02",
+  "references": [
+    {
+      "path": "art/waves/A10/references/shieldman-ne-square-v2.png",
+      "sha256": "e3eafa4242e2581032f8b0923bef1d7c33fd08d2d98a2e5e111b5d9673ab8e0f",
+      "role": "single full-body A3c identity crop or reviewed direction guide on square canvas"
+    }
+  ]
+}

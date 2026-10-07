@@ -1,0 +1,26 @@
+# Accepted delivery hashes describe bytes; never rewrite their line endings.
+assets/accepted/** -text
+docs/waves/W5-evidence/art-provenance/** -text
+docs/waves/W6-evidence/** -text
+
+# Preserve evidence bytes, including original CRLF, without treating CR as spaces.
+art/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tools/art/*.py text eol=lf
+docs/waves/A1* text eol=lf
+# Reconciled combat sources retain the pinned Git blob bytes on Windows too.
+docs/design/reconciled/data/arena/* text eol=lf
+# Preserve the explicitly archived stop evidence byte-for-byte on every host.
+docs/audio/evidence/r1-final/STOP.json -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+*.flac filter=lfs diff=lfs merge=lfs -text
+*.ttf filter=lfs diff=lfs merge=lfs -text
+*.otf filter=lfs diff=lfs merge=lfs -text
+*.woff filter=lfs diff=lfs merge=lfs -text
+*.woff2 filter=lfs diff=lfs merge=lfs -text

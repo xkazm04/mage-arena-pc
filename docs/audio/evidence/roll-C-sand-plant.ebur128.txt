@@ -1,0 +1,38 @@
+Input #0, mp3, from 'C:\Users\kazda\kiro\mage-arena-audio\docs\audio\audition\r3\roll-C-sand-plant.mp3':
+  Metadata:
+    encoder         : Lavf60.16.101
+  Duration: 00:00:00.73, start: 0.025057, bitrate: 133 kb/s
+  Stream #0:0: Audio: mp3 (mp3float), 44100 Hz, stereo, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavf
+Stream mapping:
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+[Parsed_ebur128 @ ADDRESS] t: 0.0999773  TARGET:-23 LUFS    M:-120.7 S:-120.7     I: -70.0 LUFS       LRA:   0.0 LU  FTPK: -10.5 -11.0 dBFS  TPK: -10.5 -11.0 dBFS
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf61.9.107
+  Stream #0:0: Audio: pcm_s16le, 44100 Hz, stereo, s16, 1411 kb/s
+    Metadata:
+      encoder         : Lavc61.33.102 pcm_s16le
+[Parsed_ebur128 @ ADDRESS] t: 0.199977   TARGET:-23 LUFS    M:-120.7 S:-120.7     I: -70.0 LUFS       LRA:   0.0 LU  FTPK: -16.8 -16.7 dBFS  TPK: -10.5 -11.0 dBFS
+[Parsed_ebur128 @ ADDRESS] t: 0.299977   TARGET:-23 LUFS    M:-120.7 S:-120.7     I: -70.0 LUFS       LRA:   0.0 LU  FTPK: -17.0 -17.1 dBFS  TPK: -10.5 -11.0 dBFS
+[Parsed_ebur128 @ ADDRESS] t: 0.399977   TARGET:-23 LUFS    M: -27.7 S:-120.7     I: -27.7 LUFS       LRA:   0.0 LU  FTPK: -20.6 -20.9 dBFS  TPK: -10.5 -11.0 dBFS
+[Parsed_ebur128 @ ADDRESS] t: 0.499977   TARGET:-23 LUFS    M: -34.0 S:-120.7     I: -29.8 LUFS       LRA:   0.0 LU  FTPK: -17.8 -17.7 dBFS  TPK: -10.5 -11.0 dBFS
+[Parsed_ebur128 @ ADDRESS] t: 0.599977   TARGET:-23 LUFS    M: -36.1 S:-120.7     I: -31.1 LUFS       LRA:   0.0 LU  FTPK: -38.7 -38.7 dBFS  TPK: -10.5 -11.0 dBFS
+[Parsed_ebur128 @ ADDRESS] Summary:
+
+  Integrated loudness:
+    I:         -31.1 LUFS
+    Threshold: -41.1 LUFS
+
+  Loudness range:
+    LRA:         0.0 LU
+    Threshold:   0.0 LUFS
+    LRA low:     0.0 LUFS
+    LRA high:    0.0 LUFS
+
+  True peak:
+    Peak:      -10.5 dBFS
+[out#0/null @ 000001562aa06540] video:0KiB audio:117KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:00.68 bitrate=N/A speed=83.2x

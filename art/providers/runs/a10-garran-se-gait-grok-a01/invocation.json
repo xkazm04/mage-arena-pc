@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "3ee0bdf5-0791-418a-9427-9e38a99152f5",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-garran-se-gait-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-garran-se-gait-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/garran-se-gait.png",
+      "sha256": "7df1995678f6de392304cc0fc2765e5a032499946ae6a280298814e342839141",
+      "role": "complete reviewed front-right body key; preserve viewing direction and identity"
+    }
+  ]
+}

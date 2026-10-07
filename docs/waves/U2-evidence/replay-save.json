@@ -1,0 +1,139 @@
+{
+  "label": "simulated seed 73 and ordinary input policy; exact deterministic bytes measured",
+  "command": "npx tsx packages/tools/src/u2-replay.ts",
+  "sourceHash": "931f4320344ec58ae1772b0cac2320f0120bf36b147ed1908d4b30ca98d642e4",
+  "policyHash": "1b6fd027be14b58b833de1570a2735ce147fe8aba4ff7989d7e6f627869c9615",
+  "firstHash": "a344b92d448a932148f292ac69a8c5e47e9c479214336ca0544c67bbadcdfacd",
+  "secondHash": "a344b92d448a932148f292ac69a8c5e47e9c479214336ca0544c67bbadcdfacd",
+  "loadedHash": "a344b92d448a932148f292ac69a8c5e47e9c479214336ca0544c67bbadcdfacd",
+  "bytes": 1296151,
+  "day": 15,
+  "receipts": [
+    {
+      "id": "trial:73:6",
+      "day": 6,
+      "kind": "trial",
+      "entrant": "cassia",
+      "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.17500000000000002],\"entrant\":\"cassia\"}",
+      "trace": [
+        {
+          "path": "trust/nysa>cassia",
+          "before": -15,
+          "after": -12,
+          "rule": "season-bridge/trial/respectTrust"
+        }
+      ]
+    },
+    {
+      "id": "games:73:7",
+      "day": 7,
+      "kind": "games",
+      "entrant": "cassia",
+      "result": {
+        "kind": "champion",
+        "wavesCleared": 4,
+        "gold": 100,
+        "renown": 25,
+        "finalReached": true,
+        "finalWon": true
+      },
+      "hash": "complete:3:4:64a85773",
+      "trace": [
+        {
+          "path": "characters/cassia/gold",
+          "before": 10,
+          "after": 110,
+          "rule": "arena/arena-tiers/tiro/gold"
+        },
+        {
+          "path": "characters/cassia/renown",
+          "before": 5,
+          "after": 30,
+          "rule": "arena/arena-tiers/tiro/renown"
+        },
+        {
+          "path": "trust/brennic>cassia",
+          "before": 15,
+          "after": 18,
+          "rule": "season-bridge/aftermath"
+        },
+        {
+          "path": "trust/garran>cassia",
+          "before": 33,
+          "after": 36,
+          "rule": "season-bridge/aftermath"
+        },
+        {
+          "path": "trust/iskar>cassia",
+          "before": 10,
+          "after": 13,
+          "rule": "season-bridge/aftermath"
+        }
+      ]
+    },
+    {
+      "id": "trial:73:13",
+      "day": 13,
+      "kind": "trial",
+      "entrant": "cassia",
+      "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[84,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[32,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[46,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6200000000000001,0.301],\"entrant\":\"cassia\"}",
+      "trace": [
+        {
+          "path": "trust/nysa>cassia",
+          "before": -19,
+          "after": -16,
+          "rule": "season-bridge/trial/respectTrust"
+        }
+      ]
+    },
+    {
+      "id": "games:73:14",
+      "day": 14,
+      "kind": "games",
+      "entrant": "cassia",
+      "result": {
+        "kind": "missio",
+        "wavesCleared": 0,
+        "gold": 0,
+        "renown": 0,
+        "finalReached": false,
+        "finalWon": false
+      },
+      "hash": "lost:0:0:bbb712cf",
+      "trace": [
+        {
+          "path": "characters/cassia/gold",
+          "before": 110,
+          "after": 110,
+          "rule": "arena/arena-tiers/tiro/gold"
+        },
+        {
+          "path": "characters/cassia/renown",
+          "before": 30,
+          "after": 30,
+          "rule": "arena/arena-tiers/tiro/renown"
+        },
+        {
+          "path": "trust/brennic>cassia",
+          "before": 18,
+          "after": 19,
+          "rule": "season-bridge/aftermath"
+        },
+        {
+          "path": "trust/garran>cassia",
+          "before": 48,
+          "after": 49,
+          "rule": "season-bridge/aftermath"
+        },
+        {
+          "path": "trust/iskar>cassia",
+          "before": 13,
+          "after": 14,
+          "rule": "season-bridge/aftermath"
+        }
+      ]
+    }
+  ],
+  "exactBytes": true,
+  "passed": true
+}

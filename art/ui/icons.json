@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "icons": {
+    "fire": {
+      "region": "icon.fire",
+      "origin": "original native geometry"
+    },
+    "water": {
+      "region": "icon.water",
+      "origin": "original native geometry"
+    },
+    "earth": {
+      "region": "icon.earth",
+      "origin": "original native geometry"
+    },
+    "air": {
+      "region": "icon.air",
+      "origin": "original native geometry"
+    },
+    "hp": {
+      "region": "icon.hp",
+      "origin": "original native geometry"
+    },
+    "mana": {
+      "region": "icon.mana",
+      "origin": "original native geometry"
+    },
+    "stamina": {
+      "region": "icon.stamina",
+      "origin": "original native geometry"
+    },
+    "heat": {
+      "region": "icon.heat",
+      "origin": "original native geometry"
+    },
+    "flow": {
+      "region": "icon.flow",
+      "origin": "original native geometry"
+    },
+    "footing": {
+      "region": "icon.footing",
+      "origin": "original native geometry"
+    },
+    "momentum": {
+      "region": "icon.momentum",
+      "origin": "original native geometry"
+    },
+    "water-bolt": {
+      "region": "icon.water-bolt",
+      "origin": "original native geometry"
+    },
+    "water-tide-orb": {
+      "region": "icon.water-tide-orb",
+      "origin": "original native geometry"
+    },
+    "water-lash": {
+      "region": "icon.water-lash",
+      "origin": "original native geometry"
+    },
+    "water-mire": {
+      "region": "icon.water-mire",
+      "origin": "original native geometry"
+    },
+    "water-mend": {
+      "region": "icon.water-mend",
+      "origin": "original native geometry"
+    },
+    "water-mirror": {
+      "region": "icon.water-mirror",
+      "origin": "original native geometry"
+    },
+    "inventory": {
+      "region": "icon.inventory",
+      "origin": "original native geometry"
+    },
+    "journal": {
+      "region": "icon.journal",
+      "origin": "original native geometry"
+    },
+    "knowing": {
+      "region": "icon.knowing",
+      "origin": "original native geometry"
+    },
+    "trust": {
+      "region": "icon.trust",
+      "origin": "original native geometry"
+    },
+    "gold": {
+      "region": "icon.gold",
+      "origin": "original native geometry"
+    },
+    "food": {
+      "region": "icon.food",
+      "origin": "original native geometry"
+    },
+    "day": {
+      "region": "icon.day",
+      "origin": "original native geometry"
+    },
+    "dusk": {
+      "region": "icon.dusk",
+      "origin": "original native geometry"
+    },
+    "night": {
+      "region": "icon.night",
+      "origin": "original native geometry"
+    },
+    "calendar": {
+      "region": "icon.calendar",
+      "origin": "original native geometry"
+    },
+    "camp": {
+      "region": "icon.camp",
+      "origin": "original native geometry"
+    },
+    "arena": {
+      "region": "icon.arena",
+      "origin": "original native geometry"
+    },
+    "save": {
+      "region": "icon.save",
+      "origin": "original native geometry"
+    },
+    "load": {
+      "region": "icon.load",
+      "origin": "original native geometry"
+    },
+    "pause": {
+      "region": "icon.pause",
+      "origin": "original native geometry"
+    },
+    "settings": {
+      "region": "icon.settings",
+      "origin": "original native geometry"
+    },
+    "back": {
+      "region": "icon.back",
+      "origin": "original native geometry"
+    },
+    "next": {
+      "region": "icon.next",
+      "origin": "original native geometry"
+    },
+    "close": {
+      "region": "icon.close",
+      "origin": "original native geometry"
+    },
+    "lock": {
+      "region": "icon.lock",
+      "origin": "original native geometry"
+    },
+    "check": {
+      "region": "icon.check",
+      "origin": "original native geometry"
+    },
+    "warning": {
+      "region": "icon.warning",
+      "origin": "original native geometry"
+    },
+    "absorb": {
+      "region": "icon.absorb",
+      "origin": "original native geometry"
+    },
+    "perfect": {
+      "region": "icon.perfect",
+      "origin": "original native geometry"
+    },
+    "staff": {
+      "region": "icon.staff",
+      "origin": "original native geometry"
+    },
+    "wardstone": {
+      "region": "icon.wardstone",
+      "origin": "original native geometry"
+    },
+    "map": {
+      "region": "icon.map",
+      "origin": "original native geometry"
+    },
+    "parley": {
+      "region": "icon.parley",
+      "origin": "original native geometry"
+    },
+    "results": {
+      "region": "icon.results",
+      "origin": "original native geometry"
+    },
+    "keyboard": {
+      "region": "icon.keyboard",
+      "origin": "original native geometry"
+    },
+    "gamepad": {
+      "region": "icon.gamepad",
+      "origin": "original native geometry"
+    },
+    "mouse": {
+      "region": "icon.mouse",
+      "origin": "original native geometry"
+    },
+    "stat.gold": {
+      "region": "icon.stat.gold.header",
+      "largeRegion": "icon.stat.gold.large",
+      "origin": "authored A11 candidate; requested generated painting remains backlog"
+    },
+    "stat.reputation": {
+      "region": "icon.stat.reputation.header",
+      "largeRegion": "icon.stat.reputation.large",
+      "origin": "authored A11 candidate; requested generated painting remains backlog"
+    },
+    "stat.fatigue": {
+      "region": "icon.stat.fatigue.header",
+      "largeRegion": "icon.stat.fatigue.large",
+      "origin": "authored A11 candidate; requested generated painting remains backlog"
+    }
+  },
+  "waterSpells": [
+    {
+      "line": "bolt",
+      "tier": "0",
+      "branch": "",
+      "name": "Rain Needle",
+      "region": "icon.water-bolt"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "1",
+      "branch": "",
+      "name": "Bubble Shot",
+      "region": "icon.water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "2",
+      "branch": "",
+      "name": "Crash Orb",
+      "region": "icon.water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "3",
+      "branch": "",
+      "name": "Twin Tides",
+      "region": "icon.water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "4",
+      "branch": "A",
+      "name": "Leviathan Orb",
+      "region": "icon.water-tide-orb"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "4",
+      "branch": "B",
+      "name": "Rain of Orbs",
+      "region": "icon.water-tide-orb"
+    },
+    {
+      "line": "lash",
+      "tier": "1",
+      "branch": "",
+      "name": "Tide Lash",
+      "region": "icon.water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": "2",
+      "branch": "A",
+      "name": "Undertow",
+      "region": "icon.water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": "2",
+      "branch": "B",
+      "name": "Riptide",
+      "region": "icon.water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": "3",
+      "branch": "",
+      "name": "Maelstrom Lash",
+      "region": "icon.water-lash"
+    },
+    {
+      "line": "lash",
+      "tier": "4",
+      "branch": "",
+      "name": "Drown Coil",
+      "region": "icon.water-lash"
+    },
+    {
+      "line": "mire",
+      "tier": "1",
+      "branch": "",
+      "name": "Puddle",
+      "region": "icon.water-mire"
+    },
+    {
+      "line": "mire",
+      "tier": "2",
+      "branch": "",
+      "name": "Fog Bank",
+      "region": "icon.water-mire"
+    },
+    {
+      "line": "mire",
+      "tier": "3",
+      "branch": "",
+      "name": "Freeze Field",
+      "region": "icon.water-mire"
+    },
+    {
+      "line": "mire",
+      "tier": "4",
+      "branch": "",
+      "name": "Glacier Tomb",
+      "region": "icon.water-mire"
+    },
+    {
+      "line": "mend",
+      "tier": "1",
+      "branch": "",
+      "name": "Cool Draught",
+      "region": "icon.water-mend"
+    },
+    {
+      "line": "mend",
+      "tier": "2",
+      "branch": "",
+      "name": "Tide Ward",
+      "region": "icon.water-mend"
+    },
+    {
+      "line": "mend",
+      "tier": "3",
+      "branch": "",
+      "name": "Spring",
+      "region": "icon.water-mend"
+    },
+    {
+      "line": "mend",
+      "tier": "4",
+      "branch": "",
+      "name": "Font",
+      "region": "icon.water-mend"
+    },
+    {
+      "line": "mirror",
+      "tier": "1",
+      "branch": "",
+      "name": "Sheen",
+      "region": "icon.water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": "2",
+      "branch": "A",
+      "name": "Reflection",
+      "region": "icon.water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": "2",
+      "branch": "B",
+      "name": "Ripple",
+      "region": "icon.water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": "3",
+      "branch": "",
+      "name": "Mirage",
+      "region": "icon.water-mirror"
+    },
+    {
+      "line": "mirror",
+      "tier": "4",
+      "branch": "",
+      "name": "Return Tide",
+      "region": "icon.water-mirror"
+    }
+  ],
+  "otherSchools": "school/resource marks only; detailed line catalogue remains game-stream input"
+}

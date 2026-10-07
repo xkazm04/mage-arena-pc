@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "02628d34-026c-417f-949f-c8b2010afe31",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-mire_maw-ne-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-mire_maw-ne-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/mire_maw-ne-square-v1.png",
+      "sha256": "0165e86677284818643d5b2f2b1e810fca89f83f485a7cee852e8ac8f582cbd5",
+      "role": "single full-body A3c identity crop or reviewed direction guide on square canvas"
+    }
+  ]
+}

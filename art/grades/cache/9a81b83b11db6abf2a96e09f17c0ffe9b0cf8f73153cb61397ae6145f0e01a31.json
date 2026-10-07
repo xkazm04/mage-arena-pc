@@ -1,0 +1,98 @@
+{
+  "artifact": "a3-effects",
+  "at": "2026-10-02T11:49:46.998884+00:00",
+  "input_hash": "9a81b83b11db6abf2a96e09f17c0ffe9b0cf8f73153cb61397ae6145f0e01a31",
+  "source": "art/delivery/a3/effects-contact.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "bc99fa670e638af19e7599534351bb26aaa8c25dcc9ea07e4e022e8bf6946a3a",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Authored effect family contact sheet. Intentional code labels and simple geometric silhouettes. Water absorb open-rear arc, perfect flash, four school bolts and lines, five Water family motifs, telegraph rings and crossed unblockable marks. Contact fits large shapes; native exports retain stroke widths. This is geometry-native interface/game effects, not an attempt to look like generated anatomy. Inspect visible separation and distinguishable threat shapes. No gameplay timing or full spell implementation claim.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.5,\n  \"observation\": \"The image is a clean, code-drawn contact sheet on a solid beige background. It displays a grid of 23 distinct geometric effect icons with corresponding text labels below each. The visual style is consistent, utilizing thin strokes and a limited palette of mineral blue, umber, terracotta, and lime/gold, matching the expected 'authored' aesthetic. All required elements are present and clearly distinguishable: four elemental bolts (water, fire, earth, air), four corresponding lines, five specific Water family motifs (tide-orb, lash, mire, mend, mirror), telegraph rings (water, physical, unblockable), and unblockable marks (crossed symbol, charge lane). The 'water-absorb' icon correctly shows an open-rear arc, and 'water-perfect-absorb' shows a flash/star shape. Text is legible, well-spaced, and does not overlap with the graphics. There are no watermarks, photographic inserts, or rendering artifacts. The layout is orderly and fits the 'contact sheet' expectation perfectly. No defects or obscured controls are visible.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.5,
+    "observation": "The image is a clean, code-drawn contact sheet on a solid beige background. It displays a grid of 23 distinct geometric effect icons with corresponding text labels below each. The visual style is consistent, utilizing thin strokes and a limited palette of mineral blue, umber, terracotta, and lime/gold, matching the expected 'authored' aesthetic. All required elements are present and clearly distinguishable: four elemental bolts (water, fire, earth, air), four corresponding lines, five specific Water family motifs (tide-orb, lash, mire, mend, mirror), telegraph rings (water, physical, unblockable), and unblockable marks (crossed symbol, charge lane). The 'water-absorb' icon correctly shows an open-rear arc, and 'water-perfect-absorb' shows a flash/star shape. Text is legible, well-spaced, and does not overlap with the graphics. There are no watermarks, photographic inserts, or rendering artifacts. The layout is orderly and fits the 'contact sheet' expectation perfectly. No defects or obscured controls are visible."
+  },
+  "eval_count": 291,
+  "elapsed_seconds": 11.594
+}

@@ -1,0 +1,48 @@
+@font-face {
+  font-family: CovenantTitle;
+  src: url("/fonts/Cinzel.ttf") format("truetype");
+  font-display: block;
+}
+@font-face {
+  font-family: CovenantBody;
+  src: url("/fonts/AlegreyaSans-Regular.ttf") format("truetype");
+  font-display: block;
+}
+:root {
+  color-scheme: dark;
+  background: #080f16;
+  font-family: CovenantBody;
+  color: #e4e7d5;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body {
+  position: fixed;
+  inset: 0;
+  touch-action: none;
+}
+#app {
+  position: absolute;
+  inset: 0;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  cursor: none;
+  touch-action: none;
+}
+::selection {
+  background: #28554c;
+}

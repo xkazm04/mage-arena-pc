@@ -1,0 +1,86 @@
+{
+  "id": "a14-shieldman-ne-reaction-agy-a01",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "shieldman-ne-reaction",
+  "attempt": 1,
+  "input": {
+    "wave": "A14",
+    "id": "shieldman-ne-reaction",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/references/shieldman-ne.png",
+        "sha256": "62520c5ba743045e2d0d8a76dc78ba5e0910b5d1883befd6a82bab815b7e02c6",
+        "role": "identity"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Moonchalk painting bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. Non-magical Roman legion heavy shield bearer, worn helmet and segmented iron torso plates, huge battered rectangular curved dark red shield with plain metal boss, short sword, leather sandals. Broad shield silhouette; no magic. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns and FOUR rows, 16 separate complete poses of ONE SAME character. Read left to right, top to bottom. Row 1: four keys of a QUICK FLINCH AND RECOVERY: 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled BACK by one head-width and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. These four poses MUST visibly differ, not four standing duplicates. Row 2: first four keys of a BIGGER STAGGER: 5 upright ready; 6 abrupt backward bend of upper body; 7 deepest backward bend, arms pulled close, balance visibly lost; 8 lower body catches the weight, bent knees or legs. Row 3: 9 pushing back upright, visibly struggling; 10 upright recovered. Then begin COLLAPSE: 11 ready upright; 12 legs buckle and body drops. Row 4: continue COLLAPSE: 13 body very low, leaning toward ground; 14 torso falls sideways nearly horizontal; 15 body settles FULLY LYING on its side, head and entire torso on ground; 16 body completely still FULLY LYING ON GROUND, legs extended or naturally folded, equipment resting beside it. The final TWO poses must be completely horizontal resting bodies, never crouching, kneeling, sitting or getting back up. Treat collapse as a harmless theatrical fall/rest pose, fully intact. No blood, gore, wounds or injury detail. No attacker, impact flash or effects. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+    "entity": "shieldman",
+    "direction": "ne",
+    "kind": "reaction",
+    "grid": [
+      4,
+      4
+    ],
+    "referenceConsumption": "agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual"
+  },
+  "input_hash": "6b6fdc10b58968763932c5138e1604bdd6adc6f2274280c0e3d28c8381f0e13e",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. Non-magical Roman legion heavy shield bearer, worn helmet and segmented iron torso plates, huge battered rectangular curved dark red shield with plain metal boss, short sword, leather sandals. Broad shield silhouette; no magic. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns and FOUR rows, 16 separate complete poses of ONE SAME character. Read left to right, top to bottom. Row 1: four keys of a QUICK FLINCH AND RECOVERY: 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled BACK by one head-width and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. These four poses MUST visibly differ, not four standing duplicates. Row 2: first four keys of a BIGGER STAGGER: 5 upright ready; 6 abrupt backward bend of upper body; 7 deepest backward bend, arms pulled close, balance visibly lost; 8 lower body catches the weight, bent knees or legs. Row 3: 9 pushing back upright, visibly struggling; 10 upright recovered. Then begin COLLAPSE: 11 ready upright; 12 legs buckle and body drops. Row 4: continue COLLAPSE: 13 body very low, leaning toward ground; 14 torso falls sideways nearly horizontal; 15 body settles FULLY LYING on its side, head and entire torso on ground; 16 body completely still FULLY LYING ON GROUND, legs extended or naturally folded, equipment resting beside it. The final TWO poses must be completely horizontal resting bodies, never crouching, kneeling, sitting or getting back up. Treat collapse as a harmless theatrical fall/rest pose, fully intact. No blood, gore, wounds or injury detail. No attacker, impact flash or effects. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "77088be0-f639-4544-9c47-ccb4d36cf6df",
+  "at": "2026-10-04T09:44:14.194591+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 47.594,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T09:44:23Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "shieldman_ne_reaction_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-shieldman-ne-reaction-agy-a01\\reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-shieldman-ne-reaction-agy-a01\\reference-2.png"
+        ],
+        "Prompt": "A 4x4 animation sprite sheet grid with exactly 16 separate poses arranged in 4 equal columns and 4 equal rows on a solid flat vivid magenta background (#FF00FF). Wide clean magenta gutters between cells, no grid lines, no borders, no text, no ground plane, no floor. Character identity strictly matches reference-1.png: a non-magical Roman legion heavy shield bearer wearing a worn iron helmet, segmented lorica segmentata iron torso armor plates, pale layered tunic cloth, leather sandals, holding a massive battered rectangular curved dark red scutum shield with a plain metal boss, and short gladius sword. Painting style strictly matches reference-2.png: sculpted digital painterly volume, hand-painted dark fantasy, broken confident brushwork, silver highlights, worn dark metal edges, opaque paint, cool upper-left lighting. No 3D render, no photorealism, no cartoon lineart. Viewing angle for ALL poses: High-angle elevated 55-degree orthographic view, REAR-RIGHT three-quarter perspective. The character's back and spine are angled facing diagonally AWAY from the camera and toward the image right. Back surfaces of armor, helmet, and shoulders are clearly visible; face is turned away from camera. During falling and collapse poses, the character collapses forward/away onto the ground, ending face-down/horizontal with back uppermost. Grid layout (16 poses, identical anatomical scale, each body contained inside middle 60% of cell): Row 1 (Poses 1 to 4 - Quick Flinch and Recovery): 1: upright alert ready guard pose, rear-right 3/4 view; 2: sharp recoil flinch, head and shoulders jerked back by one head-width, torso bent back 25 degrees; 3: shoulders returning forward, legs bent and braced; 4: fully recovered upright ready guard pose. Row 2 (Poses 5 to 8 - Heavy Stagger): 5: upright ready stance; 6: abrupt backward stagger, torso bent back; 7: deepest backward bend, arms tight, balance visibly lost; 8: lower body catches weight, bent knees. Row 3 (Poses 9 to 12 - Recovery then Collapse Start): 9: pushing back upright, visibly struggling; 10: upright recovered; 11: ready upright; 12: legs buckle and body drops down. Row 4 (Poses 13 to 16 - Collapse and Down): 13: body sinking very low near ground, leaning forward; 14: torso falls sideways/forward nearly horizontal; 15: body settles fully lying on the ground, head and entire torso on ground; 16: completely still fully lying flat on ground horizontally, legs extended or folded, equipment resting beside it. Theatrical harmless rest pose, no blood, gore or wounds. Uniform pure magenta #FF00FF background.",
+        "toolAction": "Generating spritesheet image",
+        "toolSummary": "Spritesheet image generation"
+      },
+      "conversation": "2081af0b-f5a9-443c-b8aa-d07db5744bdd"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "c026a02333c980ec47c68e344128f59858d755c0800bb3c01b3a520fead5c6bb",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\7428f19b-b997-4fa4-9b62-f539ceb329b4\\shieldman_ne_reaction_sheet_1791107101629.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-shieldman-ne-reaction-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a14-shieldman-ne-reaction-agy-a01.jpg",
+  "sha256": "c026a02333c980ec47c68e344128f59858d755c0800bb3c01b3a520fead5c6bb",
+  "invocation_evidence": "art/providers/runs/a14-shieldman-ne-reaction-agy-a01"
+}

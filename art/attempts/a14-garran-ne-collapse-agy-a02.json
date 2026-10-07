@@ -1,0 +1,86 @@
+{
+  "id": "a14-garran-ne-collapse-agy-a02",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "garran-ne-collapse",
+  "attempt": 2,
+  "input": {
+    "wave": "A14",
+    "id": "garran-ne-collapse",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/references/garran-ne.png",
+        "sha256": "76e7cde21aac3979713abe2840c62c6682bd01ddbaccdaddef208c7b384ce8c9",
+        "role": "identity"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Moonchalk painting bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete sequential poses of this same figure collapsing. Row 1: 1 upright ready; 2 knees/legs buckle, torso drops; 3 body low and leaning to the ground. Row 2: 4 torso falls forward or sideways, nearly horizontal; 5 entire torso and head touch ground; 6 completely still fully LYING ON GROUND with equipment resting beside the body. Last pose must be fully lying, never sitting, crouching or kneeling. A harmless theatrical fall/rest, intact body, no blood, gore, wounds or injury detail. Each complete pose occupies ONLY HALF its spacious cell. Entire feet, staff and all equipment stay far from the image boundary. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+    "entity": "garran",
+    "direction": "ne",
+    "kind": "collapse",
+    "grid": [
+      3,
+      2
+    ],
+    "referenceConsumption": "agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual"
+  },
+  "input_hash": "9843fe06b068cfa9f78bec13e378b6056e0f2e3ea931692ae407f42f67bec65f",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. During collapse fall FORWARD AWAY from the camera, finally FACE-DOWN with the back uppermost and the face HIDDEN. Never turn to face the viewer, never roll onto the back. Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete sequential poses of this same figure collapsing. Row 1: 1 upright ready; 2 knees/legs buckle, torso drops; 3 body low and leaning to the ground. Row 2: 4 torso falls forward or sideways, nearly horizontal; 5 entire torso and head touch ground; 6 completely still fully LYING ON GROUND with equipment resting beside the body. Last pose must be fully lying, never sitting, crouching or kneeling. A harmless theatrical fall/rest, intact body, no blood, gore, wounds or injury detail. Each complete pose occupies ONLY HALF its spacious cell. Entire feet, staff and all equipment stay far from the image boundary. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "3a15a0be-b5ca-4f81-b71f-e4f581c58632",
+  "at": "2026-10-04T09:38:38.203754+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 71.219,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T09:39:01Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "garran_ne_collapse_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-garran-ne-collapse-agy-a02\\Reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-garran-ne-collapse-agy-a02\\Reference-2.png"
+        ],
+        "Prompt": "Original painted game character 2D animation sprite sheet on solid uniform vivid MAGENTA #FF00FF background. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is painting style only. Character identity: Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Subtle floating stone motes and compact dust. Maintain exact identical face, headwear, clothes, and single set of equipment across all poses. View and Angle: REAR-RIGHT three-quarter view (elevated 55-degree orthographic perspective, not eye-level). The camera sees the BACK surfaces of the character throughout. The head and torso are facing diagonally AWAY from the viewer and toward the image right. During collapse, the character falls forward AWAY from the camera, ending face-down with back uppermost and face completely hidden from view. Never turn to face the viewer, never roll onto back. Layout: Sprite animation sheet with exactly 3 columns by 2 rows (6 poses total) arranged neatly on a solid uniform vivid magenta background (#FF00FF). Wide empty magenta gutters separating the cells. No grid lines, no borders, no text, no numbers, no floor, no scene background. Each pose is scaled identically, occupying the middle 60% of its spacious cell, with generous padding so nothing touches cell edges. Sequential Collapse Poses (harmless theatrical collapse, intact body, no blood or gore): Row 1: Pose 1 (top-left) upright ready stance, rear-right view, staff in hand; Pose 2 (top-middle) knees buckle, torso drops downward; Pose 3 (top-right) body low, leaning toward ground. Row 2: Pose 4 (bottom-left) torso falls forward, nearly horizontal; Pose 5 (bottom-middle) entire torso and head touch ground; Pose 6 (bottom-right) completely still fully LYING ON GROUND face-down with back uppermost and equipment resting beside the body. Original hand-painted digital dark fantasy, matching Reference-2.png style. Sculpted painterly volume, silver highlights, worn dark metal and pale layered cloth, cool upper-left lighting.",
+        "toolAction": "Generating animation sheet",
+        "toolSummary": "Generate collapse animation sheet"
+      },
+      "conversation": "a1bf3113-45ce-4c4c-8f77-ba9e797c37b6"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "1424a8195270eef22eb3df0d6c32cb4054fdd659a18607e163d186b681f79dbf",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\b5897ad3-12c3-49a0-8726-b100ca7344fe\\garran_ne_collapse_sheet_1791106789210.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-garran-ne-collapse-agy-a02/_driver/source.jpg",
+  "archive": "art/review/sources/a14-garran-ne-collapse-agy-a02.jpg",
+  "sha256": "1424a8195270eef22eb3df0d6c32cb4054fdd659a18607e163d186b681f79dbf",
+  "invocation_evidence": "art/providers/runs/a14-garran-ne-collapse-agy-a02"
+}

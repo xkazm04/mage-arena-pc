@@ -1,0 +1,98 @@
+{
+  "artifact": "a4-camp-night",
+  "at": "2026-10-02T08:10:40.850695+00:00",
+  "input_hash": "7d3509d2d8c9ebbf91f8fc5939faa49c90a8cd91359a5b84ffcc8903bb2ed897",
+  "source": "art/delivery/a4/screens/camp-night-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "0defbbfeb90bb987661f3023ca19da08e4d4776807a51ed410df44ae7fddbbc6",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Camp map with eight labeled places and Day/Dusk/Night controls. Current slot night. Open places reflect that slot, disabled places have opening labels. Labels must stay legible above map. The side panel shows selected place and Visit. Judge readability and overlap, not game behavior.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\"forbidden_rendering\": false, \"overhead_view\": \"yes\", \"required_content\": \"yes\", \"style_match\": \"yes\", \"readability\": 3, \"confidence\": 0.75, \"observation\": \"The UI successfully implements the requested camp map layout with eight distinct labeled locations (The Yard, The Cistern, The Pit, The Exchange, The Commons, The Door, Your tent, The Edge) and functional Day/Dusk/Night controls in the top right, with 'Night' currently selected. The side panel correctly displays the selected location ('Your tent') with a 'Visit' button and a list of other locations with their availability status. The color palette aligns with the expected style (chalk-lime, umber, terracotta, mineral blue). All labels are legible and positioned above the map art without significant overlap or obscuring of controls. One minor observation: the label for 'The Edge' appears to have a slight rendering artifact or typo where it reads '1he Edge' instead of 'The Edge', which is a small text defect but does not significantly impact overall readability or functionality. The map art is detailed and fits the theme, with clear visual distinction between different areas. The disabled locations (like The Pit, which opens at Dusk) are clearly marked with their opening times, while open locations show 'Open now'. The overall composition is clean and functional, meeting the stated expectations for a camp map interface.\"}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The UI successfully implements the requested camp map layout with eight distinct labeled locations (The Yard, The Cistern, The Pit, The Exchange, The Commons, The Door, Your tent, The Edge) and functional Day/Dusk/Night controls in the top right, with 'Night' currently selected. The side panel correctly displays the selected location ('Your tent') with a 'Visit' button and a list of other locations with their availability status. The color palette aligns with the expected style (chalk-lime, umber, terracotta, mineral blue). All labels are legible and positioned above the map art without significant overlap or obscuring of controls. One minor observation: the label for 'The Edge' appears to have a slight rendering artifact or typo where it reads '1he Edge' instead of 'The Edge', which is a small text defect but does not significantly impact overall readability or functionality. The map art is detailed and fits the theme, with clear visual distinction between different areas. The disabled locations (like The Pit, which opens at Dusk) are clearly marked with their opening times, while open locations show 'Open now'. The overall composition is clean and functional, meeting the stated expectations for a camp map interface."
+  },
+  "eval_count": 302,
+  "elapsed_seconds": 17.625
+}

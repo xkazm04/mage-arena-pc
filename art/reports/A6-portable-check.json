@@ -1,0 +1,202 @@
+{
+  "status": "pass",
+  "scope": "A6 portable evidence with ignored raw absent; global historical failures reported separately",
+  "a6": {
+    "status": "pass",
+    "errors": [],
+    "current_images": 16,
+    "attempts": 33,
+    "current_rejects": [
+      "a6-coal-salt-coal-salt-arena-a03",
+      "a6-cinder-veil-cinder-veil-arena-a03"
+    ],
+    "browser": [
+      {
+        "viewport": [
+          1920,
+          1080
+        ],
+        "loaded": true,
+        "overflow": false,
+        "filter": true,
+        "zoom": true,
+        "errors": []
+      },
+      {
+        "viewport": [
+          2560,
+          1440
+        ],
+        "loaded": true,
+        "overflow": false,
+        "filter": true,
+        "zoom": true,
+        "errors": []
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "loaded": true,
+        "overflow": false,
+        "filter": true,
+        "zoom": true,
+        "errors": []
+      }
+    ],
+    "budget": {
+      "week": "2026-W40",
+      "wave_reserved": 159,
+      "weekly_reserved": 159,
+      "target_remaining": 3,
+      "hard_remaining": 81,
+      "generated": 158,
+      "observed_image_tool_calls": 159,
+      "videos": 0,
+      "stop": null,
+      "shared_account_remaining": "not measured"
+    },
+    "owner_accepted": false,
+    "scope": "Portable delivery integrity, not style/scale acceptance. Semantic rejects remain held."
+  },
+  "review_hashes_identical": true,
+  "review_files": 4,
+  "commands": [
+    {
+      "command": [
+        "python",
+        "tools/art/a6_spec.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.25,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/art/a6.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.078,
+      "stdout": "{\"current\": 16, \"attempts\": 33, \"charged\": 33, \"project\": 159, \"remaining\": 81}\n{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"attempts\": 33,\n  \"current_rejects\": [\n    \"a6-coal-salt-coal-salt-arena-a03\",\n    \"a6-cinder-veil-cinder-veil-arena-a03\"\n  ],\n  \"browser\": [\n    {\n      \"viewport\": [\n        1920,\n        1080\n      ],\n      \"loaded\": true,\n      \"overflow\": false,\n      \"filter\": true,\n      \"zoom\": true,\n      \"errors\": []\n    },\n    {\n      \"viewport\": [\n        2560,\n        1440\n      ],\n      \"loaded\": true,\n      \"overflow\": false,\n      \"filter\": true,\n      \"zoom\": true,\n      \"errors\": []\n    },\n    {\n      \"viewport\": [\n        390,\n        844\n      ],\n      \"loaded\": true,\n      \"overflow\": false,\n      \"filter\": true,\n      \"zoom\": true,\n      \"errors\": []\n    }\n  ],\n  \"budget\": {\n    \"week\": \"2026-W40\",\n    \"wave_reserved\": 159,\n    \"weekly_reserved\": 159,\n    \"target_remaining\": 3,\n    \"hard_remaining\": 81,\n    \"generated\": 158,\n    \"observed_image_tool_calls\": 159,\n    \"videos\": 0,\n    \"stop\": null,\n    \"shared_account_remaining\": \"not measured\"\n  },\n  \"owner_accepted\": false,\n  \"scope\": \"Portable delivery integrity, not style/scale acceptance. Semantic rejects remain held.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/art/check.py"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 25.594,
+      "stdout": "PASS -m unittest discover -s tools/art -p test_*.py\nPASS -m compileall -q tools/art\nPASS tools/art/pipeline.py compile\nPASS tools/art/pipeline.py build\nPASS tools/art/pipeline.py validate\nFAIL tools/art/check_a3.py\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/art/verify_ui.py"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 1.031,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"reviewed_artifacts\": 3,\n  \"scope\": \"review integrity; local models and agent do not approve owner feel\",\n  \"pending\": [\n    {\n      \"school\": \"fire\",\n      \"scope\": \"approved spell-line migration\",\n      \"dependency\": \"W8\",\n      \"reason\": \"Only individual reference spells exist in this checkout.\"\n    },\n    {\n      \"school\": \"earth\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    },\n    {\n      \"school\": \"air\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    }\n  ],\n  \"owner_accepted\": false,\n  \"image_generation_calls\": 0\n}\n{\n  \"status\": \"fail\",\n  \"errors\": [\n    \"UNRESOLVED_UI:ui-a3-poses.json\"\n  ],\n  \"current_ui_grades\": 15,\n  \"owner_accepted\": false,\n  \"model_calls\": 0,\n  \"image_generation_calls\": 0\n}\n",
+      "stderr": ""
+    }
+  ],
+  "historical_global": {
+    "at": "2026-10-02T15:40:31.029098+00:00",
+    "label": "measured local art gate; quota incidents inside unit tests are simulated",
+    "status": "fail",
+    "browser": "included",
+    "game_build": "not applicable: no package manifest or code packages on the art baseline; none modified",
+    "commands": [
+      {
+        "command": [
+          "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/art",
+          "-p",
+          "test_*.py"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.797,
+        "stdout": "{\"id\": \"a6-coal-salt-coal-salt-arena-a01\", \"status\": \"moderation-refused\", \"seconds\": 0.0, \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 1, \"weekly_reserved\": 1, \"target_remaining\": 161, \"hard_remaining\": 239, \"generated\": 0, \"observed_image_tool_calls\": 1, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n{\"id\": \"a6-coal-salt-coal-salt-arena-a02\", \"status\": \"moderation-refused\", \"seconds\": 0.0, \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 2, \"weekly_reserved\": 2, \"target_remaining\": 160, \"hard_remaining\": 238, \"generated\": 0, \"observed_image_tool_calls\": 2, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n{\"id\": \"a6-coal-salt-coal-salt-arena-a01\", \"status\": \"quota-stopped\", \"seconds\": 0.016, \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 1, \"weekly_reserved\": 1, \"target_remaining\": 161, \"hard_remaining\": 239, \"generated\": 0, \"observed_image_tool_calls\": 1, \"videos\": 0, \"stop\": {\"at\": \"2026-10-02T15:40:06.678796+00:00\", \"reason\": \"a6-coal-salt-coal-salt-arena-a01: HTTP 429\"}, \"shared_account_remaining\": \"not measured\"}}\n{\"id\": \"a6-coal-salt-coal-salt-arena-a01\", \"status\": \"error-unknown-spend\", \"seconds\": 0.016, \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 1, \"weekly_reserved\": 1, \"target_remaining\": 161, \"hard_remaining\": 239, \"generated\": 0, \"observed_image_tool_calls\": 1, \"videos\": 0, \"stop\": {\"at\": \"2026-10-02T15:40:06.729263+00:00\", \"reason\": \"a6-coal-salt-coal-salt-arena-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry\"}, \"shared_account_remaining\": \"not measured\"}}\n{\"resume\": \"old\", \"status\": \"quota-stopped\", \"new_calls\": 0}\n{\"id\": \"01-tessera-arena-a01\", \"status\": \"quota-stopped\", \"seconds\": 0.0, \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 1, \"weekly_reserved\": 1, \"target_remaining\": 161, \"hard_remaining\": 239, \"generated\": 0, \"observed_image_tool_calls\": 0, \"videos\": 0, \"stop\": {\"at\": \"2026-10-02T15:40:07.200703+00:00\", \"reason\": \"01-tessera-arena-a01: structured HTTP 429\"}, \"shared_account_remaining\": \"not measured\"}}\n{\"resume\": \"old\", \"status\": \"generated\", \"new_calls\": 0}\n",
+        "stderr": ".............................................\n----------------------------------------------------------------------\nRan 45 tests in 0.917s\n\nOK\n"
+      },
+      {
+        "command": [
+          "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-m",
+          "compileall",
+          "-q",
+          "tools/art"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.235,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "tools/art/pipeline.py",
+          "compile"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.234,
+        "stdout": "Compiled 16 immutable comparison briefs; zero calls\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "tools/art/pipeline.py",
+          "build"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 14.797,
+        "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 159, \"weekly_reserved\": 159, \"target_remaining\": 3, \"hard_remaining\": 81, \"generated\": 158, \"observed_image_tool_calls\": 159, \"videos\": 0, \"stop\": null, \"shared_account_remaining\": \"not measured\"}}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "tools/art/pipeline.py",
+          "validate"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.937,
+        "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"direction_pairs\": 8,\n  \"generated_attempts\": 30,\n  \"graded_attempts\": 30,\n  \"current_rejects\": 0,\n  \"scope\": \"delivery integrity; does not turn semantic rejects into acceptance\",\n  \"owner_accepted\": false\n}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "tools/art/check_a3.py"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 7.453,
+        "stdout": "{\n  \"status\": \"fail\",\n  \"scope\": \"integrity of explicitly incomplete stopped handoff, NOT A3 completion\",\n  \"a3_complete\": false,\n  \"missing_items\": [\n    \"figure-cinder_hound-injury\",\n    \"figure-hush_moth-action\",\n    \"figure-hush_moth-injury\",\n    \"figure-hush_moth-run\",\n    \"figure-hush_moth-stance\",\n    \"figure-mire_maw-action\",\n    \"figure-mire_maw-injury\",\n    \"figure-mire_maw-run\",\n    \"figure-mire_maw-stance\",\n    \"figure-thornback-action\",\n    \"figure-thornback-injury\",\n    \"figure-thornback-run\",\n    \"figure-thornback-stance\"\n  ],\n  \"errors\": [\n    \"STOP_SNAPSHOT_DRIFT\"\n  ],\n  \"frames\": 70,\n  \"atlases\": 9,\n  \"effect_sheets\": 138,\n  \"budget\": {\n    \"week\": \"2026-W40\",\n    \"wave_reserved\": 159,\n    \"weekly_reserved\": 159,\n    \"target_remaining\": 3,\n    \"hard_remaining\": 81,\n    \"generated\": 158,\n    \"observed_image_tool_calls\": 159,\n    \"videos\": 0,\n    \"stop\": null,\n    \"shared_account_remaining\": \"not measured\"\n  },\n  \"owner_accepted\": false\n}\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "historical_ui": {
+    "status": "fail",
+    "errors": [
+      "UNRESOLVED_UI:ui-a3-poses.json"
+    ],
+    "current_ui_grades": 15,
+    "owner_accepted": false,
+    "model_calls": 0,
+    "image_generation_calls": 0
+  },
+  "all_project_gates_green": false,
+  "image_generation_calls": 0,
+  "model_calls": 0
+}

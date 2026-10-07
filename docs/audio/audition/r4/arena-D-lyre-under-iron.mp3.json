@@ -1,0 +1,163 @@
+{
+  "id": "061b3eee-44ed-4e53-816d-c19bea23df34",
+  "wave": "AU3",
+  "trackId": "arena-D-lyre-under-iron",
+  "kind": "music",
+  "out": "docs/audio/audition/r4/arena-D-lyre-under-iron.mp3",
+  "reservedCredits": 4500,
+  "startedAt": "2026-10-04T09:26:43.544Z",
+  "ts": "2026-10-04T09:26:43.544Z",
+  "seconds": 150,
+  "model": "music_v1",
+  "request": {
+    "model_id": "music_v1",
+    "respect_sections_durations": true,
+    "store_for_inpainting": true,
+    "composition_plan": {
+      "positive_global_styles": [
+        "Original Roman-era elemental arena instrumental; 96 BPM; strict 4/4; sixty bars in 150 seconds; Dorian modal harmony; dramatic physical entrance and memorable human melody; acoustic hide percussion and bowed low strings; clear midrange space for combat feedback; a new phrase boundary every six bars; complete through-composed dramatic arc; keep the theme recognizable while changing its harmony, register and accompaniment; no repeated audio block; instrumental throughout.",
+        "Human defiance in a muted gut-string lyre. A distinct syncopated descending four-note melody resolves upward in its answering phrase. Bowed viola doubles only phrase endings, low strings hold the floor, and hide percussion leaves holes for plucked attacks. Proposed A Dorian centre. The small instrument must remain the protagonist even at the climax."
+      ],
+      "negative_global_styles": [
+        "Vocals",
+        "spoken words",
+        "choir",
+        "pop drum kit",
+        "electronic dance beat",
+        "trailer risers",
+        "notification tones",
+        "bells",
+        "texture-only drone",
+        "constant maximum density",
+        "abrupt sectional cut",
+        "tempo change",
+        "fade before the release",
+        "repeated short loop"
+      ],
+      "sections": [
+        {
+          "section_name": "Entrance",
+          "duration_ms": 15000,
+          "positive_local_styles": [
+            "Open with one deep hide-drum impact and a short taut low-string gesture. The muted lyre starts its descending four-note syncopated motif immediately. Across six bars, place one upward answer in a gap in the drums; viola touches only the answer's last note. Establish resolve without haste."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Theme statement",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar seven, state the full descending lyre tune and its rising answer, leaving holes in the percussion around each pluck. At bar thirteen, repeat the theme with one displaced accent and a longer viola phrase-end response. Preserve the tune's clear contour and modest acoustic scale."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Development",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar nineteen, the lyre develops the same four notes through a higher-register answer over a more active low-string line. At bar twenty-five, trade short motif fragments with the viola while the hide drums use a new interlocking pattern. Do not replace the melody with continuous arpeggios."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Tension",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar thirty-one, expose the lyre's dry plucks over a narrow suspended string harmony, with widely spaced drum strokes. At bar thirty-seven, repeat the descending motif with a withheld upward resolution and increasingly active inner-string motion. Tension comes from harmony and expectation, not faster tempo."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Climax",
+          "duration_ms": 30000,
+          "positive_local_styles": [
+            "At bar forty-three, the lyre gives its complete descending theme with the strongest rising answer so far. Bowed viola supports only phrase endings while percussion reaches full physical energy in the spaces. At bar forty-nine, give a final embellished answer; protect every plucked attack from masking."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        },
+        {
+          "section_name": "Release",
+          "duration_ms": 15000,
+          "positive_local_styles": [
+            "At bar fifty-five, remove the busy drums and let the lyre answer the opening descent in a slower-feeling final phrase over unchanged tempo. One quiet viola note releases the suspension. End with a resonant plucked open interval and natural decay contained within the final bar."
+          ],
+          "negative_local_styles": [
+            "vocals",
+            "tempo change"
+          ],
+          "lines": []
+        }
+      ]
+    }
+  },
+  "text": "Original Roman-era elemental arena instrumental; 96 BPM; strict 4/4; sixty bars in 150 seconds; Dorian modal harmony; dramatic physical entrance and memorable human melody; acoustic hide percussion and bowed low strings; clear midrange space for combat feedback; a new phrase boundary every six bars; complete through-composed dramatic arc; keep the theme recognizable while changing its harmony, register and accompaniment; no repeated audio block; instrumental throughout.\nHuman defiance in a muted gut-string lyre. A distinct syncopated descending four-note melody resolves upward in its answering phrase. Bowed viola doubles only phrase endings, low strings hold the floor, and hide percussion leaves holes for plucked attacks. Proposed A Dorian centre. The small instrument must remain the protagonist even at the climax.",
+  "bytes": 2400802,
+  "sha256": "c418d1e8eff50249d1df299126939afecee49ece352a2f934c8b44ab7f58d410",
+  "billingHeaders": {
+    "date": "Sun, 04 Oct 2026 09:26:52 GMT",
+    "song-id": "8YaKSUqjlT0wm04zi9i9"
+  },
+  "accountBefore": {
+    "observedAt": "2026-10-04T09:26:43.544Z",
+    "tier": "starter",
+    "used": 83811,
+    "limit": 90000,
+    "remaining": 6189,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "estimatedCredits": 4500,
+  "documentedEstimateCredits": 4500,
+  "chargedCredits": 4500,
+  "costBasis": "max-shared-delta-estimate-header",
+  "flags": [],
+  "accountAfter": {
+    "observedAt": "2026-10-04T09:27:38.052Z",
+    "tier": "starter",
+    "used": 88311,
+    "limit": 90000,
+    "remaining": 1689,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 4500,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-04T09:28:10.042Z",
+      "tier": "starter",
+      "used": 88311,
+      "limit": 90000,
+      "remaining": 1689,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    }
+  ],
+  "accountSettled": {
+    "observedAt": "2026-10-04T09:28:10.042Z",
+    "tier": "starter",
+    "used": 88311,
+    "limit": 90000,
+    "remaining": 1689,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "settledDelta": 4500,
+  "measuredCredits": null,
+  "deltaBasis": "Shared-account upper-bound proxy; may include garden-vr or delayed usage, not exclusive invoice attribution."
+}

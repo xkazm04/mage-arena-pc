@@ -1,0 +1,22 @@
+{
+  "label": "measured byte identity against prior session commit",
+  "experimentHash": "5ff02d2bfe2f31e1041d6911b687d18eab5da094d0cd01d16ea97027b5fc11ec",
+  "runs": [
+    {
+      "run": "local-soak",
+      "originalCommit": "4c7256c",
+      "originalRows": 155,
+      "preservedBytes": 47823362,
+      "sha256": "3b7071eabf737b9132af5030a9a0d7b993017092c171a7347ca771686bffb63e",
+      "prefixUnchanged": true
+    },
+    {
+      "run": "sonnet",
+      "originalCommit": "4c7256c",
+      "originalRows": 30,
+      "preservedBytes": 7412704,
+      "sha256": "435c64a40db3f81f7abafc150fe65959dfe24383d4cf3e5bf3938c98140cc15f",
+      "prefixUnchanged": true
+    }
+  ]
+}

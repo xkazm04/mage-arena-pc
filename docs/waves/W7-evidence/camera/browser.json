@@ -1,0 +1,485 @@
+{
+  "label": "measured",
+  "command": "npm --prefix packages/game run smoke:w4b",
+  "machine": {
+    "platform": "win32",
+    "release": "10.0.26200",
+    "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor           ",
+    "node": "v24.14.0",
+    "browser": "153.0.8010.12",
+    "browserArgs": [
+      "--use-angle=d3d11"
+    ]
+  },
+  "errors": [],
+  "views": [
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "zoom": 1.2,
+      "camera": {
+        "width": 1920,
+        "height": 1080,
+        "centre": {
+          "x": 12,
+          "y": 10
+        },
+        "zoom": 1.2,
+        "elevation": 55
+      },
+      "metrics": {
+        "resolutionScale": 1,
+        "pxPerMetreX": 36,
+        "pxPerMetreY": 29.489473594403705,
+        "metresPerPixelX": 0.027777777777777776,
+        "metresPerPixelY": 0.03391040524337378,
+        "figureHeightPx": 64.8,
+        "visibleGroundM": {
+          "x": 53.333333333333336,
+          "y": 36.62323766284368
+        },
+        "outlinePx": 3,
+        "projectileCorePx": 4
+      },
+      "screenshot": "1080p-near-scale.png",
+      "label": "paused authored visual fixture; zero-damage effects, real projection/renderer"
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "zoom": 0.8,
+      "camera": {
+        "width": 1920,
+        "height": 1080,
+        "centre": {
+          "x": 12,
+          "y": 10
+        },
+        "zoom": 0.8,
+        "elevation": 55
+      },
+      "metrics": {
+        "resolutionScale": 1,
+        "pxPerMetreX": 24,
+        "pxPerMetreY": 19.659649062935802,
+        "metresPerPixelX": 0.041666666666666664,
+        "metresPerPixelY": 0.05086560786506067,
+        "figureHeightPx": 43.2,
+        "visibleGroundM": {
+          "x": 80,
+          "y": 54.934856494265524
+        },
+        "outlinePx": 3,
+        "projectileCorePx": 4
+      },
+      "screenshot": "1080p-far-scale.png",
+      "label": "paused authored visual fixture; zero-damage effects, real projection/renderer"
+    },
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "zoom": 1.2,
+      "camera": {
+        "width": 2560,
+        "height": 1440,
+        "centre": {
+          "x": 12,
+          "y": 10
+        },
+        "zoom": 1.2,
+        "elevation": 55
+      },
+      "metrics": {
+        "resolutionScale": 1.3333333333333333,
+        "pxPerMetreX": 48,
+        "pxPerMetreY": 39.319298125871605,
+        "metresPerPixelX": 0.020833333333333332,
+        "metresPerPixelY": 0.025432803932530335,
+        "figureHeightPx": 86.4,
+        "visibleGroundM": {
+          "x": 53.333333333333336,
+          "y": 36.623237662843685
+        },
+        "outlinePx": 4,
+        "projectileCorePx": 5.333333333333333
+      },
+      "screenshot": "1440p-near-scale.png",
+      "label": "paused authored visual fixture; zero-damage effects, real projection/renderer"
+    },
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "zoom": 0.8,
+      "camera": {
+        "width": 2560,
+        "height": 1440,
+        "centre": {
+          "x": 12,
+          "y": 10
+        },
+        "zoom": 0.8,
+        "elevation": 55
+      },
+      "metrics": {
+        "resolutionScale": 1.3333333333333333,
+        "pxPerMetreX": 32,
+        "pxPerMetreY": 26.212865417247738,
+        "metresPerPixelX": 0.03125,
+        "metresPerPixelY": 0.0381492058987955,
+        "figureHeightPx": 57.6,
+        "visibleGroundM": {
+          "x": 80,
+          "y": 54.934856494265524
+        },
+        "outlinePx": 4,
+        "projectileCorePx": 5.333333333333333
+      },
+      "screenshot": "1440p-far-scale.png",
+      "label": "paused authored visual fixture; zero-damage effects, real projection/renderer"
+    }
+  ],
+  "performance": [
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "zoom": 1.2,
+      "projectileCount": 100,
+      "visibleProjectileCount": 100,
+      "minimumVisibleAcrossSamples": 100,
+      "minimumProjectilesAcrossSamples": 100,
+      "cpuBudgetMs": 8,
+      "targetFps": 60,
+      "fpsToleranceFraction": 0.02,
+      "overlay": true,
+      "samples": 360,
+      "fpsFromMeanFrame": 60.0020000666689,
+      "frameP50Ms": 16.699999999999818,
+      "frameP95Ms": 16.799999999999272,
+      "cpuP50Ms": 1.0999999940395355,
+      "cpuP95Ms": 1.3999999910593033,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4090 (0x00002684) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1440
+      },
+      "zoom": 1.2,
+      "projectileCount": 100,
+      "visibleProjectileCount": 100,
+      "minimumVisibleAcrossSamples": 100,
+      "minimumProjectilesAcrossSamples": 100,
+      "cpuBudgetMs": 8,
+      "targetFps": 60,
+      "fpsToleranceFraction": 0.02,
+      "overlay": true,
+      "samples": 360,
+      "fpsFromMeanFrame": 60.00200006666888,
+      "frameP50Ms": 16.69999999999891,
+      "frameP95Ms": 16.799999999999272,
+      "cpuP50Ms": 1.0999999940395355,
+      "cpuP95Ms": 1.2999999970197678,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4090 (0x00002684) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ],
+  "aimChecks": [
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 0,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 1,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000020565368724524613
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 2,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 6.588693892695119e-7
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 3,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000012847599015441605
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 4,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 1.7763568394002505e-15
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 5,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 9.2452804578419e-7
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 6,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 6.588693892695119e-7
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 0.8,
+      "octant": 7,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000018529673549895075
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 0,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 1,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000016122778893952096
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 2,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 3.759940518932581e-7
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 3,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 8.317856363753868e-8
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 4,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 1.7763568394002505e-15
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 5,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 8.31785619377495e-8
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 6,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 3.759940518932581e-7
+    },
+    {
+      "viewportHeight": 1080,
+      "zoom": 1.2,
+      "octant": 7,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000016122778858438042
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 0,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 1,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000012847599054564115
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 2,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 6.588693892695119e-7
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 3,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000012847599043992945
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 4,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 1.7763568394002505e-15
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 5,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000012847599033150612
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 6,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 5.053519824826935e-7
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 0.8,
+      "octant": 7,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0.0000012847599026283942
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 0,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 0
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 1,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 9.24528044785465e-7
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 2,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 6.588693892695119e-7
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 3,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 7.261133419675788e-7
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 4,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 1.7763568394002505e-15
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 5,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 5.681227579321883e-7
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 6,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 1.17278192490744e-7
+    },
+    {
+      "viewportHeight": 1440,
+      "zoom": 1.2,
+      "octant": 7,
+      "hits": 1,
+      "damage": 2.05,
+      "groundAimErrorM": 8.063962956086646e-7
+    }
+  ],
+  "assetBoundary": {
+    "loadedAndFailedFrameProbe": {
+      "loaded": 1,
+      "diagnostics": [
+        "dummy: Error: [Loader.load] Failed to load http://127.0.0.1:4178/missing-frame.png.\nError: [WorkerManager.loadImageBitmap] Failed to fetch http://127.0.0.1:4178/missing-frame.png: 404 Not Found"
+      ]
+    },
+    "invalidManifestFallback": {
+      "loaded": 0,
+      "diagnostics": [
+        "Manifest fallback: Error: Unsupported sprite manifest"
+      ]
+    }
+  },
+  "checks": [
+    "native full viewport at both resolutions",
+    "near and far camera numbers",
+    "ground-space arc and warning fixtures",
+    "upright foot-depth order",
+    "32 real-pointer ground hits",
+    "stationary cursor remaps on follow",
+    "100 visible moving projectiles at both resolutions",
+    "live charge telegraphs",
+    "sprite loading and procedural fallback"
+  ],
+  "limitations": [
+    "Comparison and overlap screenshots use explicitly paused authored fixtures.",
+    "CPU timing includes simulation, rendering submission and HUD; GPU completion is not timed.",
+    "Headless Chromium requestAnimationFrame is not physical input-to-photon latency.",
+    "Motion readability, camera feel and aim comfort require owner judgment.",
+    "Projectile cores have a visual minimum; collision radii remain ground-space data."
+  ]
+}

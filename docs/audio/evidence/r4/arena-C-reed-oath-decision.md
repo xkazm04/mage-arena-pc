@@ -1,0 +1,15 @@
+# Reed oath — take 1 assessment and spending decision
+
+2026-10-04, written before Lyre under iron generation. One music_v1 request carried the exact six-section 150 s composition. Charged 4,500 credits: immediate and settled shared balance deltas both 4,500, 30/requested second. Account remaining 6,189. No provider error.
+
+**Decision: retain this take for review; no paid retry. Continue to D as authorized.** There is no demonstrated hard failure that another unconditioned render is likely to fix. A retry would use the remaining funds needed for D. Unverified listening requirements are not automatically passes or proven failures; adaptive playback remains disabled until they are checked.
+
+- Raw: 150.047347 s, 44.1 kHz stereo MP3, 6,617,088 samples/channel, -13.59 LUFS, -1.00 dBTP, zero samples at/above full scale. Master: 150 s, 48 kHz stereo PCM, -25.99 LUFS; <= -1 dBTP. Only the near-silent 47 ms overrun was removed from the derivative; raw untouched.
+- Grid screen: interpolated spectral-flux periodicity 96.021 BPM (estimator, not measured musical tempo). All nine internal 15 s boundaries have a detected onset within 10 ms. First true downbeat, complete six-bar phrases and <=20 ms cumulative beat drift remain unverified. The onset detector's first strong peak at 0.94 s is not proof the entrance starts late. No tempo warp was applied.
+- Literal-repeat screen: maximum aligned 15 s waveform correlation 0.05974; 5 s correlation 0.30148. No aligned identical block detected; this does not prove musical development or exclude shifted repeats. The full score was never tiled by our tooling.
+- Arc evidence: cell RMS rises from -19.82 to -11.00 dBFS before release. Tension at 75 s is already -11.86 dBFS; the requested strip-back is not established by these levels. Six timed sections were requested and cut, not perceptually certified. Lead identity, melodic recall and fidelity to the kept audition require listening; the original melody was neither transcribed nor used as audio conditioning. Chroma similarity is not motif verification.
+- Ending: last 5 s RMS -61.71 dBFS, last 2.5 s -78.89 dBFS, last 20 ms -106.95 dBFS. The take supplies a decaying tail, not a hard cut at the requested endpoint. Harmonic resolution versus an early fade remains a listening gate.
+- Vocals: no lyrics supplied; instrumental instructions present. Absence of accidental vocals is not confirmed by a human or a reliable audio classifier in this environment.
+- Adaptive material: ten exact 15 s segment indices, six section players, tier mapping, a 15 s interior sustain edit and exact 5 s release-fragment sting. Sustain passes the three-repeat numerical seam screen (identical boundary samples, 0.699 dB adjacent RMS difference). Harmony, rhythm and sting theme recognition remain pending; no adaptive transitions or loops are enabled by default.
+
+No owner keep/maybe/reject is inferred. Two full listens, low-volume combat masking, mono/small-speaker checks, approved transitions and AU4 event replay remain outstanding.

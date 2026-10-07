@@ -1,0 +1,50 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU3",
+  "file": "audition/r4/arena-D-lyre-under-iron/section-1-entrance.wav",
+  "sha256": "de7a951bacf9ade736c3669a436f290ae67fba8b4937ea8ea1dc38303a42fb4b",
+  "source": "audition/r4/arena-D-lyre-under-iron.mp3",
+  "sourceSha256": "c418d1e8eff50249d1df299126939afecee49ece352a2f934c8b44ab7f58d410",
+  "sourceSidecar": "audition/r4/arena-D-lyre-under-iron.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-D-lyre-under-iron",
+  "processing": {
+    "name": "Entrance",
+    "startSeconds": 0,
+    "endSeconds": 15.0,
+    "startSample": 0,
+    "endSample": 720000,
+    "file": "audition/r4/arena-D-lyre-under-iron/section-1-entrance.wav",
+    "boundaryStatus": "requested composition timing, not verified musical boundary"
+  },
+  "measurement": {
+    "file": "audition/r4/arena-D-lyre-under-iron/section-1-entrance.wav",
+    "sha256": "de7a951bacf9ade736c3669a436f290ae67fba8b4937ea8ea1dc38303a42fb4b",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 720000,
+    "decodedSeconds": 15.0,
+    "containerSeconds": 15.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -29.95,
+    "truePeakDbTP": -13.48,
+    "loudnessRangeLU": 15.8,
+    "samplePeakDbFS": -13.483,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-29.95",
+      "input_tp": "-13.48",
+      "input_lra": "15.80",
+      "input_thresh": "-41.41",
+      "output_i": "-24.19",
+      "output_tp": "-6.68",
+      "output_lra": "9.30",
+      "output_thresh": "-35.76",
+      "normalization_type": "dynamic",
+      "target_offset": "-1.81"
+    }
+  },
+  "note": "PCM derived from lossy provider MP3; no claim of native lossless master. Paid generation ledger records the original only."
+}

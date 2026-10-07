@@ -1,0 +1,77 @@
+# AU1 + AU2 + AU2b raw audio measurements
+
+Measured with ffmpeg ebur128 true-peak mode. Brief SFX LUFS is descriptive, not a quality score. Audition trim is browser gain; raw files are unchanged.
+
+| Sample | Decoded seconds | LUFS-I | dBTP | LRA LU | Audition trim dB |
+|---|---:|---:|---:|---:|---:|
+| fire-A-wounded-matter | 2.0 | -10.0 | 0.8 | 0.0 | -16.0 |
+| arena-A-hide-and-iron | 20.062041 | -14.4 | -1.5 | 2.0 | -9.6 |
+| fire-B-bound-radiance | 2.0 | -18.6 | -4.0 | 0.0 | -7.4 |
+| arena-B-ashen-vault | 20.062041 | -14.0 | -0.8 | 7.2 | -10.0 |
+| voice-A-george | 2.089796 | -22.7 | -4.8 | 0.0 | -1.3 |
+| water-A-wounded-matter | 2.0 | -18.9 | -1.7 | 0.0 | -7.1 |
+| water-B-bound-radiance | 2.0 | -14.4 | -2.6 | 0.0 | -11.6 |
+| earth-A-wounded-matter | 2.0 | -15.0 | 0.7 | 0.0 | -11.0 |
+| earth-B-bound-radiance | 2.0 | -17.7 | -0.0 | 0.0 | -8.3 |
+| air-A-wounded-matter | 2.0 | -19.2 | 0.5 | 0.0 | -6.8 |
+| air-B-bound-radiance | 2.0 | -13.4 | 0.4 | 0.0 | -12.6 |
+| absorb-A-normal | 2.0 | -14.5 | -0.4 | 0.0 | -11.5 |
+| absorb-A-perfect | 2.0 | -9.1 | 1.7 | 0.0 | -16.9 |
+| absorb-B-normal | 2.0 | -26.0 | -9.0 | 0.0 | 0 |
+| absorb-B-perfect | 2.0 | -12.5 | 0.9 | 0.0 | -13.5 |
+| arena-C-reed-oath | 20.009796 | -12.8 | -1.4 | 4.8 | -11.2 |
+| arena-D-lyre-under-iron | 20.009796 | -15.1 | -1.4 | 4.7 | -8.9 |
+| air-A-silk-rotor | 2.0 | -13.9 | -6.9 | 0.0 | -12.1 |
+| air-B-hollow-vortex | 2.0 | -11.4 | -1.8 | 0.0 | -14.6 |
+| air-C-spiral-filament | 2.0 | -11.6 | -3.5 | 0.0 | -14.4 |
+| absorb-A-warm-rune-normal | 2.0 | -8.0 | 0.7 | 0.0 | -25.8 |
+| absorb-A-warm-rune-perfect | 2.0 | -33.8 | -20.9 | 0.0 | 0 |
+| absorb-B-liquid-prism-normal | 2.0 | -22.3 | -5.0 | 0.0 | -5.7 |
+| absorb-B-liquid-prism-perfect | 2.0 | -28.0 | -10.1 | 0.0 | 0 |
+| absorb-C-hushed-orbit-normal | 2.0 | -18.5 | -0.8 | 0.0 | -7.5 |
+| absorb-C-hushed-orbit-perfect | 2.0 | -12.6 | 0.1 | 0.0 | -13.4 |
+| camp-A-day | 12.016327 | -10.7 | -1.8 | 9.3 | -13.3 |
+| camp-A-dusk | 12.016327 | -11.4 | -1.2 | 12.7 | -12.6 |
+| air-B2-hollow-vortex-sustained | 2.25 | -29.1 | -18.9 | 0.0 | 0 |
+| air-C2-spiral-filament-sustained | 2.25 | -31.0 | -19.8 | 0.0 | 0 |
+| camp-A-night | 12.016327 | -11.7 | -1.3 | 8.7 | -12.3 |
+| camp-B-day | 12.016327 | -16.1 | -1.5 | 26.1 | -7.9 |
+| camp-B-dusk | 12.016327 | -13.0 | -4.9 | 15.7 | -11.0 |
+| camp-B-night | 12.016327 | -11.9 | -1.3 | 14.5 | -12.1 |
+| title-A-unbroken-thread | 10.03102 | -15.8 | -7.5 | 11.3 | -8.2 |
+| title-B-oath-in-stone | 10.03102 | -25.7 | -16.0 | 19.5 | 0 |
+| hit-A-hide-and-slate | 1.48 | -52.4 | -31.8 | 0.0 | 0 |
+| impact-A-hide-and-slate | 1.48 | -45.2 | -21.2 | 0.0 | 0 |
+| hit-B-bronze-and-dust | 1.48 | -24.0 | -3.3 | 0.0 | -2.0 |
+| impact-B-bronze-and-dust | 1.48 | -17.0 | 0.4 | 0.0 | -9.0 |
+| collar-A-bronze-unbinding | 1.0 | -6.3 | 0.3 | 0.0 | -19.7 |
+| collar-B-stone-waking | 1.0 | -19.8 | -3.2 | 0.0 | -6.2 |
+| roll-A-linen-and-grit | 1.48 | -27.8 | -4.6 | 0.0 | 0 |
+| roll-B-cloak-and-stone | 1.48 | -18.5 | 0.4 | 0.0 | -7.5 |
+| crowd-A-stone-bowl | 3.0 | -10.4 | -0.3 | 20.0 | -15.6 |
+| crowd-B-low-thunder | 3.0 | -14.1 | -0.7 | 20.0 | -11.9 |
+| ui-A-click | 0.48 | -42.2 | -27.2 | 0.0 | 0 |
+| ui-A-confirm | 0.48 | -22.6 | -5.3 | 0.0 | -3.4 |
+| ui-A-deny | 0.48 | -9.8 | -3.2 | 0.0 | -16.2 |
+| ui-A-slot | 0.48 | -21.7 | -1.3 | 0.0 | -4.3 |
+| ui-A-tab | 0.48 | -13.9 | -2.6 | 0.0 | -12.1 |
+| ui-B-click | 0.48 | -23.7 | -3.6 | 0.0 | -2.3 |
+| ui-B-confirm | 0.48 | -18.8 | -6.1 | 0.0 | -7.2 |
+| ui-B-deny | 0.48 | -16.0 | -4.7 | 0.0 | -10.0 |
+| ui-B-slot | 0.48 | -17.9 | -7.4 | 0.0 | -8.1 |
+| ui-B-tab | 0.48 | -13.6 | -3.7 | 0.0 | -12.4 |
+| fire-kept-variation | 2.0 | -11.9 | -0.1 | 0.0 | -14.1 |
+| water-kept-variation | 2.0 | -25.7 | -5.6 | 0.0 | -0.3 |
+| absorb-A-pressure-wall-normal | 2.0 | -13.6 | 1.6 | 0.0 | -12.4 |
+| absorb-A-pressure-wall-perfect | 2.48 | -12.0 | 1.8 | 0.0 | -14.0 |
+| absorb-B-undertow-normal | 2.0 | -18.3 | -0.2 | 0.0 | -7.7 |
+| absorb-B-undertow-perfect | 2.48 | -18.4 | -0.5 | 0.0 | -7.6 |
+| absorb-C-mineral-drag-normal | 2.0 | -25.2 | -9.0 | 0.0 | -0.8 |
+| absorb-C-mineral-drag-perfect | 2.48 | -21.2 | -5.0 | 0.0 | -4.8 |
+| title-C-reed-standard | 29.988571 | -13.2 | -1.2 | 5.2 | -10.8 |
+| title-D-lyre-vow | 29.988571 | -13.2 | -1.3 | 6.8 | -10.8 |
+| roll-C-sand-plant | 0.680249 | -31.1 | -10.5 | 0.0 | 0 |
+| roll-D-sand-cut | 0.8 | -12.9 | -2.0 | 0.0 | -13.1 |
+| crowd-C-hungry-terraces | 3.0 | -8.1 | 0.7 | 20.0 | -17.9 |
+| crowd-D-stamping-bowl | 3.0 | -9.9 | -0.4 | 20.0 | -16.1 |
+| collar-C-stone-latch | 1.0 | -23.7 | -0.1 | 0.0 | -2.9 |

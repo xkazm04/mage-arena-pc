@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "0d843dfd-6696-4be5-9838-3ae94dc802eb",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-brennic-ne-grok-a02\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-brennic-ne-grok-a02",
+  "references": [
+    {
+      "path": "art/waves/A10/references/brennic-ne-square-v2.png",
+      "sha256": "17445b25c5d6ac41c1487e9032ef550bfb9c3cd0060911f3bbacbec03382b9c7",
+      "role": "single full-body A3c identity crop on square canvas"
+    }
+  ]
+}

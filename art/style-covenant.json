@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "id": "covenant-family",
+  "status": "owner-selected family; individual exports owner-review",
+  "authority": "OWNER-CHOICE.md v3; D16-D20",
+  "references": {
+    "verdigris-covenant-arena": {
+      "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+      "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f"
+    },
+    "verdigris-covenant-portrait": {
+      "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-portrait-a02.png",
+      "sha256": "0e1d5ccd3e40f01b065123379a548d723f1e395233b8324dadb0309f7e398b37"
+    },
+    "ragged-oracle-arena": {
+      "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-arena-a03.png",
+      "sha256": "93a5dac66b843247cda4b6688336cd62c2c314b5bf7e65bc34f26e68118d396f"
+    },
+    "ragged-oracle-portrait": {
+      "path": "art/review/sources/a6-ragged-oracle-ragged-oracle-portrait-a02.png",
+      "sha256": "001f8379465a4b2af9cae04c0e08e063e7cf1d920c5823f4c60512a46517e6ee"
+    },
+    "moonchalk-tempest-arena": {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+      "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+    },
+    "moonchalk-tempest-portrait": {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa"
+    }
+  },
+  "portrait_bar": "moonchalk-tempest-portrait",
+  "style_block": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.",
+  "palettes": {
+    "verdigris": {
+      "ground": "#293c36",
+      "shadow": "#101d1b",
+      "metal": "#7e987e",
+      "accent": "#63c6b1"
+    },
+    "rust-sand": {
+      "ground": "#6d5142",
+      "shadow": "#282c33",
+      "metal": "#b49468",
+      "accent": "#d29060"
+    },
+    "moonlit": {
+      "ground": "#172437",
+      "shadow": "#090f1c",
+      "metal": "#879cad",
+      "accent": "#aacdf2"
+    }
+  },
+  "elements": {
+    "fire": {
+      "color": "#ffa657",
+      "shape": "forked flame, ember flecks, heat"
+    },
+    "water": {
+      "color": "#75d9f4",
+      "shape": "crescent, mist, separated droplets"
+    },
+    "earth": {
+      "color": "#d6bd77",
+      "shape": "angular stone motes and dust"
+    },
+    "air": {
+      "color": "#c8b7ff",
+      "shape": "split wisps and forked lightning"
+    }
+  },
+  "silhouette": "staff, shoulder wedge, split cloth hem, belt accessories; pale torso, dark lower contour",
+  "texture_policy": "No all-over grain or paper in any active asset. Physical chipped edges allowed.",
+  "gate_policy": "immutable references; charged reservation; one-image proof; deterministic provenance; direct review; local reject or owner only"
+}

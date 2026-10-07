@@ -1,0 +1,75 @@
+{
+  "status": "pass",
+  "errors": [],
+  "inheritedJobs": 223,
+  "inheritedJobsUnchanged": true,
+  "preservedCampPortraitFiles": 156,
+  "changedApprovedFiles": [],
+  "charged": 285,
+  "chargedThisSession": 62,
+  "localCap": 300,
+  "localRemainder": 15,
+  "sessionChargesByWave": {
+    "A8": 7,
+    "A9": 11,
+    "A10": 44,
+    "A11": 0
+  },
+  "cumulativeChargesByProvider": {
+    "historical-other": 27,
+    "agy": 74,
+    "grok": 184
+  },
+  "providerLatches": {
+    "agy": {
+      "at": "2026-10-03T13:17:30.387432+00:00",
+      "event": "stop",
+      "job": "a10-brennic-north-agy-a01",
+      "reason": "exit=0; files=2"
+    },
+    "grok": {
+      "at": "2026-10-03T14:16:21.382680+00:00",
+      "event": "stop",
+      "job": "a10-cinder_hound-ne-grok-a02",
+      "reason": "HTTP 429"
+    }
+  },
+  "reportStatus": {
+    "a8-delivery-check": "pass",
+    "a8-covenant-check": "pass",
+    "a8-covenant-browser": "pass",
+    "a8-portable": "pass",
+    "a8-motion-browser": "pass",
+    "a9-delivery-check": "pass",
+    "a9-covenant-check": "pass",
+    "a9-covenant-browser": "pass",
+    "a9-portable": "pass",
+    "a10-delivery-check": "pass",
+    "a10-covenant-check": "pass",
+    "a10-covenant-browser": "pass",
+    "a10-portable": "pass",
+    "a10-motion-browser": "pass",
+    "a11-delivery-check": "pass",
+    "a11-covenant-check": "pass",
+    "a11-covenant-browser": "pass",
+    "a11-portable": "pass",
+    "a11-motion-browser": "pass"
+  },
+  "characterClips": 198,
+  "missingCharacterClips": 90,
+  "newUiRegions": 18,
+  "newGeneratedA11Images": 0,
+  "owner_accepted": false,
+  "knownUnmet": [
+    "A9 approved-concept equivalence unproven; repeated stands and derived rim remain",
+    "A10 90 clips absent; repeated leading-leg poses and identity drift remain in candidates",
+    "A11 requested new generated paintings blocked; authored candidates do not meet the painted fidelity bar",
+    "Game integration and owner feel unmeasured"
+  ],
+  "historicalFailuresRetained": [
+    "A3 STOP_SNAPSHOT_DRIFT",
+    "UNRESOLVED_UI:ui-a3-poses.json"
+  ],
+  "gitBranch": "art",
+  "pushed": false
+}

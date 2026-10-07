@@ -1,0 +1,1857 @@
+{
+  "season": {
+    "label": "authored",
+    "weeks": 6,
+    "daysPerWeek": 7,
+    "gamesWeekday": 7,
+    "trialOffsetBeforeGames": 1,
+    "schemeOpensWeekday": 4,
+    "daySlots": [
+      "day",
+      "dusk",
+      "night"
+    ],
+    "trialLocation": "pit",
+    "trialSlot": "dusk",
+    "fourthWatchLocation": "edge",
+    "fourthWatchSlot": "night",
+    "persistence": [
+      "stats",
+      "trust",
+      "debt",
+      "loyalty",
+      "renown",
+      "gold",
+      "knowledge",
+      "mastery",
+      "arcs"
+    ],
+    "endings": [
+      "breaking",
+      "champion",
+      "betrayed",
+      "revolt",
+      "martyr"
+    ]
+  },
+  "death-reservation": {
+    "label": "authored; disabled until W10",
+    "enabled": false,
+    "lifeStates": [
+      "Alive",
+      "Dead",
+      "Executed"
+    ],
+    "plotStages": [
+      "means",
+      "vigil",
+      "window",
+      "cover",
+      "resolved",
+      "foiled"
+    ],
+    "plotFields": [
+      "id",
+      "plotter",
+      "target",
+      "stage",
+      "meansNights",
+      "routineKnowing",
+      "guardRotaKnowing",
+      "guardianCompromised",
+      "isolated",
+      "witnesses",
+      "cover",
+      "result"
+    ],
+    "defaults": {
+      "plots": [],
+      "vigilAttention": 0,
+      "lifeState": "Alive"
+    },
+    "constraints": {
+      "meansSuccessesDifferentNights": 2,
+      "window": "games eve at dusk",
+      "perfectPlanSuccessCeiling": 0.35,
+      "npcDeathsPerSeasonTargetCeiling": 0.15,
+      "censusSeasons": 2000
+    },
+    "deathIntent": null
+  },
+  "characters": {
+    "_about": "Authored season cast. Numeric character sheets stay in code; Director receives qualitative facts.",
+    "valueVocabulary": [
+      "strength",
+      "rank",
+      "kin",
+      "freedom",
+      "knowledge",
+      "honour",
+      "survival",
+      "order",
+      "spite",
+      "faith",
+      "gold",
+      "belonging"
+    ],
+    "moods": [
+      "calm",
+      "proud",
+      "afraid",
+      "angry",
+      "scheming",
+      "grieving"
+    ],
+    "characters": [
+      {
+        "id": "cassia",
+        "name": "Cassia of the Lighthouse",
+        "tent": "tide",
+        "school": "water",
+        "role": "main",
+        "rank": 1,
+        "traits": {
+          "aggression": 3,
+          "ambition": 8,
+          "caution": 8,
+          "loyalty": 5,
+          "cunning": 10,
+          "warmth": 4
+        },
+        "values": [
+          "knowledge",
+          "rank",
+          "survival"
+        ],
+        "goal": {
+          "id": "learn_secrets",
+          "target": null
+        },
+        "stats": {
+          "vigor": 1,
+          "focus": 3,
+          "nerve": 1,
+          "guile": 2
+        },
+        "voice": {
+          "register": "precise, courteous, conditional sentences",
+          "tics": [
+            "answers a question with a better question",
+            "names the price of things"
+          ],
+          "never": [
+            "raises her voice",
+            "swears an oath she cannot keep"
+          ]
+        },
+        "bio": "An Alexandrian lamp-keeper's daughter who read every scroll about the tides of power. She wins fights before they start and keeps a ledger of her own.",
+        "forbiddenIntents": [],
+        "knowledgeSeed": [
+          "K-ford-betrayal"
+        ]
+      },
+      {
+        "id": "brennic",
+        "name": "Brennic the Red",
+        "tent": "ember",
+        "school": "fire",
+        "role": "main",
+        "rank": 1,
+        "traits": {
+          "aggression": 9,
+          "ambition": 9,
+          "caution": 2,
+          "loyalty": 4,
+          "cunning": 3,
+          "warmth": 3
+        },
+        "values": [
+          "strength",
+          "rank",
+          "honour"
+        ],
+        "goal": {
+          "id": "rise_in_tent",
+          "target": "ember"
+        },
+        "stats": {
+          "vigor": 2,
+          "focus": 1,
+          "nerve": 2,
+          "guile": 1
+        },
+        "voice": {
+          "register": "short, loud, second person",
+          "tics": [
+            "calls everyone by their school",
+            "speaks of arena victories"
+          ],
+          "never": [
+            "begs",
+            "apologises first"
+          ]
+        },
+        "bio": "A Gaulish auxiliary who burned a barbarian ford for Rome and was collared for it. He wants the top of whatever hierarchy he is standing in, and he will climb this one too.",
+        "forbiddenIntents": [
+          "REPORT"
+        ],
+        "knowledgeSeed": [
+          "K-ford-betrayal"
+        ]
+      },
+      {
+        "id": "garran",
+        "name": "Garran Stonehand",
+        "tent": "stone",
+        "school": "earth",
+        "role": "main",
+        "rank": 1,
+        "traits": {
+          "aggression": 2,
+          "ambition": 3,
+          "caution": 7,
+          "loyalty": 9,
+          "cunning": 3,
+          "warmth": 9
+        },
+        "values": [
+          "kin",
+          "honour",
+          "survival"
+        ],
+        "goal": {
+          "id": "escape_research",
+          "target": null
+        },
+        "stats": {
+          "vigor": 3,
+          "focus": 1,
+          "nerve": 2,
+          "guile": 1
+        },
+        "voice": {
+          "register": "slow, plain, few words",
+          "tics": [
+            "mentions his family",
+            "says we for strangers"
+          ],
+          "never": [
+            "mocks the weak",
+            "breaks a promise"
+          ]
+        },
+        "bio": "A Danube farmer who raised walls for the legion so his village would be spared. He has a wife and two daughters on the other side of the Door and means to walk back to them.",
+        "forbiddenIntents": [
+          "SCHEME:poison",
+          "SCHEME:steal"
+        ],
+        "knowledgeSeed": [
+          "K-ford-betrayal"
+        ]
+      },
+      {
+        "id": "iskar",
+        "name": "Iskar Windborn",
+        "tent": "gale",
+        "school": "air",
+        "role": "main",
+        "rank": 1,
+        "traits": {
+          "aggression": 7,
+          "ambition": 7,
+          "caution": 3,
+          "loyalty": 2,
+          "cunning": 6,
+          "warmth": 5
+        },
+        "values": [
+          "freedom",
+          "spite",
+          "belonging"
+        ],
+        "goal": {
+          "id": "build_fifth_tent",
+          "target": null
+        },
+        "stats": {
+          "vigor": 2,
+          "focus": 2,
+          "nerve": 1,
+          "guile": 2
+        },
+        "voice": {
+          "register": "fast, mocking, rhetorical",
+          "tics": [
+            "calls tent elders 'little prefects'",
+            "speaks of 'after the Door falls'"
+          ],
+          "never": [
+            "bows",
+            "praises Rome"
+          ]
+        },
+        "bio": "A steppe rider who believed Rome's promise of citizenship. He hates the collar, the tents that obey it, and everyone who plays by its rules; he wants a fifth tent that answers to no one.",
+        "forbiddenIntents": [
+          "REPORT"
+        ],
+        "knowledgeSeed": [
+          "K-ford-betrayal"
+        ]
+      },
+      {
+        "id": "sadruba",
+        "name": "Elder Sadruba",
+        "tent": "ember",
+        "school": "fire",
+        "role": "elder",
+        "rank": 4,
+        "traits": {
+          "aggression": 7,
+          "ambition": 6,
+          "caution": 5,
+          "loyalty": 8,
+          "cunning": 6,
+          "warmth": 2
+        },
+        "values": [
+          "rank",
+          "strength",
+          "order"
+        ],
+        "goal": {
+          "id": "win_games",
+          "target": "ember"
+        },
+        "stats": {
+          "vigor": 3,
+          "focus": 4,
+          "nerve": 5,
+          "guile": 3
+        },
+        "voice": {
+          "register": "commands, never questions",
+          "tics": [
+            "judges by scars"
+          ],
+          "never": [
+            "praises effort without result"
+          ]
+        },
+        "bio": "Twenty years in the camp, still burning. She picks the Ember Tent's entrant by blood and Pit results and nothing else.",
+        "forbiddenIntents": [
+          "DEFECT"
+        ],
+        "knowledgeSeed": [
+          "K-ember-won-last-games"
+        ]
+      },
+      {
+        "id": "ophel",
+        "name": "Elder Ophel",
+        "tent": "tide",
+        "school": "water",
+        "role": "elder",
+        "rank": 4,
+        "traits": {
+          "aggression": 2,
+          "ambition": 7,
+          "caution": 9,
+          "loyalty": 6,
+          "cunning": 9,
+          "warmth": 3
+        },
+        "values": [
+          "knowledge",
+          "order",
+          "rank"
+        ],
+        "goal": {
+          "id": "win_games",
+          "target": "tide"
+        },
+        "stats": {
+          "vigor": 1,
+          "focus": 5,
+          "nerve": 3,
+          "guile": 5
+        },
+        "voice": {
+          "register": "dry, scholarly, footnotes",
+          "tics": [
+            "quotes his own treatise"
+          ],
+          "never": [
+            "acts on a rumour he did not start"
+          ]
+        },
+        "bio": "Keeps the Tide Tent's ledger of debts and the camp's best information. Commissions most of the schemes that are never traced back.",
+        "forbiddenIntents": [
+          "DEFECT"
+        ],
+        "knowledgeSeed": [
+          "K-ember-won-last-games"
+        ]
+      },
+      {
+        "id": "ruadh",
+        "name": "Elder Ruadh",
+        "tent": "stone",
+        "school": "earth",
+        "role": "elder",
+        "rank": 4,
+        "traits": {
+          "aggression": 3,
+          "ambition": 3,
+          "caution": 8,
+          "loyalty": 9,
+          "cunning": 4,
+          "warmth": 7
+        },
+        "values": [
+          "order",
+          "kin",
+          "faith"
+        ],
+        "goal": {
+          "id": "keep_peace",
+          "target": "stone"
+        },
+        "stats": {
+          "vigor": 4,
+          "focus": 3,
+          "nerve": 4,
+          "guile": 2
+        },
+        "voice": {
+          "register": "proverbs, patient",
+          "tics": [
+            "talks about the harvest beyond the Door"
+          ],
+          "never": [
+            "starts a fight"
+          ]
+        },
+        "bio": "Holds the Stone Tent together with bread and patience. Believes endurance outlasts the Romans.",
+        "forbiddenIntents": [
+          "SCHEME:poison"
+        ],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "kesh",
+        "name": "Elder Kesh",
+        "tent": "gale",
+        "school": "air",
+        "role": "elder",
+        "rank": 4,
+        "traits": {
+          "aggression": 4,
+          "ambition": 6,
+          "caution": 6,
+          "loyalty": 4,
+          "cunning": 8,
+          "warmth": 4
+        },
+        "values": [
+          "survival",
+          "gold",
+          "freedom"
+        ],
+        "goal": {
+          "id": "profit",
+          "target": null
+        },
+        "stats": {
+          "vigor": 2,
+          "focus": 4,
+          "nerve": 3,
+          "guile": 5
+        },
+        "voice": {
+          "register": "amused, sideways",
+          "tics": [
+            "sells the same secret twice"
+          ],
+          "never": [
+            "picks a side before it wins"
+          ]
+        },
+        "bio": "An old nomad who trades with the Lanista and with everyone else. Tolerates Iskar because he brings in hands.",
+        "forbiddenIntents": [],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "corvo",
+        "name": "Corvo",
+        "tent": "ember",
+        "school": "fire",
+        "role": "rival",
+        "rank": 1,
+        "traits": {
+          "aggression": 8,
+          "ambition": 8,
+          "caution": 3,
+          "loyalty": 6,
+          "cunning": 5,
+          "warmth": 2
+        },
+        "values": [
+          "rank",
+          "spite",
+          "strength"
+        ],
+        "goal": {
+          "id": "rise_in_tent",
+          "target": "ember"
+        },
+        "stats": {
+          "vigor": 2,
+          "focus": 2,
+          "nerve": 1,
+          "guile": 2
+        },
+        "voice": {
+          "register": "boastful, sneering",
+          "tics": [
+            "retells his one arena win"
+          ],
+          "never": [
+            "admits fear"
+          ]
+        },
+        "bio": "Was the Ember Tent's next entrant until the new Fire mage arrived. Same rank as the player; the slot cannot hold both.",
+        "forbiddenIntents": [],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "nysa",
+        "name": "Nysa",
+        "tent": "tide",
+        "school": "water",
+        "role": "rival",
+        "rank": 1,
+        "traits": {
+          "aggression": 4,
+          "ambition": 8,
+          "caution": 5,
+          "loyalty": 5,
+          "cunning": 8,
+          "warmth": 5
+        },
+        "values": [
+          "rank",
+          "gold",
+          "survival"
+        ],
+        "goal": {
+          "id": "rise_in_tent",
+          "target": "tide"
+        },
+        "stats": {
+          "vigor": 1,
+          "focus": 2,
+          "nerve": 1,
+          "guile": 3
+        },
+        "voice": {
+          "register": "warm on the surface, bargaining underneath",
+          "tics": [
+            "offers a favour before asking one"
+          ],
+          "never": [
+            "tells the whole truth"
+          ]
+        },
+        "bio": "Charming, quick, and the best liar in the camp. Cassia's same-rank rival for the Tide Tent's slot.",
+        "forbiddenIntents": [],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "senna",
+        "name": "Senna",
+        "tent": "stone",
+        "school": "earth",
+        "role": "rival",
+        "rank": 1,
+        "traits": {
+          "aggression": 4,
+          "ambition": 7,
+          "caution": 7,
+          "loyalty": 7,
+          "cunning": 4,
+          "warmth": 4
+        },
+        "values": [
+          "honour",
+          "rank",
+          "order"
+        ],
+        "goal": {
+          "id": "rise_in_tent",
+          "target": "stone"
+        },
+        "stats": {
+          "vigor": 2,
+          "focus": 1,
+          "nerve": 2,
+          "guile": 1
+        },
+        "voice": {
+          "register": "formal, proud",
+          "tics": [
+            "keeps score of slights"
+          ],
+          "never": [
+            "cheats in the Pit"
+          ]
+        },
+        "bio": "Proud and careful, the Stone Tent's best young fighter until Garran came. Respects strength from any tent.",
+        "forbiddenIntents": [
+          "SCHEME:poison"
+        ],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "lio",
+        "name": "Lio",
+        "tent": "gale",
+        "school": "air",
+        "role": "rival",
+        "rank": 1,
+        "traits": {
+          "aggression": 6,
+          "ambition": 6,
+          "caution": 1,
+          "loyalty": 5,
+          "cunning": 4,
+          "warmth": 6
+        },
+        "values": [
+          "freedom",
+          "strength"
+        ],
+        "goal": {
+          "id": "win_games",
+          "target": "gale"
+        },
+        "stats": {
+          "vigor": 2,
+          "focus": 1,
+          "nerve": 2,
+          "guile": 1
+        },
+        "voice": {
+          "register": "laughing, reckless",
+          "tics": [
+            "bets on everything"
+          ],
+          "never": [
+            "walks when he can run"
+          ]
+        },
+        "bio": "Reckless, likeable, owes money to half the camp. Iskar's same-rank rival in the Gale Tent.",
+        "forbiddenIntents": [
+          "REPORT"
+        ],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "fenna",
+        "name": "Fenna",
+        "tent": "strays",
+        "school": "air",
+        "role": "stray",
+        "rank": 1,
+        "traits": {
+          "aggression": 3,
+          "ambition": 4,
+          "caution": 6,
+          "loyalty": 6,
+          "cunning": 7,
+          "warmth": 5
+        },
+        "values": [
+          "survival",
+          "belonging"
+        ],
+        "goal": {
+          "id": "find_tent",
+          "target": null
+        },
+        "stats": {
+          "vigor": 1,
+          "focus": 1,
+          "nerve": 1,
+          "guile": 3
+        },
+        "voice": {
+          "register": "quick, wary, bargaining",
+          "tics": [
+            "never says her old tent's name"
+          ],
+          "never": [
+            "steals from someone who fed her"
+          ]
+        },
+        "bio": "Thrown out of the Gale Tent for a theft she did not commit. Hungry, clever, and remembering who walked past.",
+        "forbiddenIntents": [
+          "SCHEME:poison"
+        ],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "quill",
+        "name": "Old Quill",
+        "tent": "strays",
+        "school": "earth",
+        "role": "stray",
+        "rank": 3,
+        "traits": {
+          "aggression": 1,
+          "ambition": 1,
+          "caution": 8,
+          "loyalty": 3,
+          "cunning": 7,
+          "warmth": 4
+        },
+        "values": [
+          "knowledge",
+          "survival"
+        ],
+        "goal": {
+          "id": "survive",
+          "target": null
+        },
+        "stats": {
+          "vigor": 1,
+          "focus": 4,
+          "nerve": 2,
+          "guile": 4
+        },
+        "voice": {
+          "register": "riddling, half-mad",
+          "tics": [
+            "talks to the Wardstones"
+          ],
+          "never": [
+            "says what he knows for free"
+          ]
+        },
+        "bio": "A deserter from the Roman arcane college that built the Door. Knows what the Wardstones drink. Nobody listens to him.",
+        "forbiddenIntents": [
+          "DEFECT",
+          "SCHEME:poison"
+        ],
+        "knowledgeSeed": [
+          "K-wardstones-drink"
+        ]
+      },
+      {
+        "id": "septima",
+        "name": "Warden Septima",
+        "tent": "vigil",
+        "school": "salt",
+        "role": "warden",
+        "rank": 5,
+        "traits": {
+          "aggression": 3,
+          "ambition": 4,
+          "caution": 9,
+          "loyalty": 9,
+          "cunning": 6,
+          "warmth": 2
+        },
+        "values": [
+          "order",
+          "faith"
+        ],
+        "goal": {
+          "id": "keep_peace",
+          "target": null
+        },
+        "stats": {
+          "vigor": 3,
+          "focus": 5,
+          "nerve": 5,
+          "guile": 4
+        },
+        "voice": {
+          "register": "ritual, third person",
+          "tics": [
+            "speaks of herself as 'the Vigil'"
+          ],
+          "never": [
+            "takes a bribe in public"
+          ]
+        },
+        "bio": "The arcane warden whose salt-wards keep the camp's collars locked. Stops violence; punishes the caught, not the guilty.",
+        "forbiddenIntents": [
+          "SCHEME:*",
+          "DEFECT",
+          "RECRUIT",
+          "PLOT",
+          "TRAIN",
+          "WORK"
+        ],
+        "knowledgeSeed": []
+      },
+      {
+        "id": "venno",
+        "name": "Lanista Aulus Venno",
+        "tent": "roman",
+        "school": "none",
+        "role": "lanista",
+        "rank": 0,
+        "traits": {
+          "aggression": 2,
+          "ambition": 9,
+          "caution": 6,
+          "loyalty": 1,
+          "cunning": 8,
+          "warmth": 3
+        },
+        "values": [
+          "gold",
+          "rank"
+        ],
+        "goal": {
+          "id": "profit",
+          "target": null
+        },
+        "stats": {
+          "vigor": 1,
+          "focus": 1,
+          "nerve": 2,
+          "guile": 5
+        },
+        "voice": {
+          "register": "genial showman",
+          "tics": [
+            "quotes odds"
+          ],
+          "never": [
+            "walks through the Door into the camp"
+          ]
+        },
+        "bio": "Runs the Games for the senators who bet on them. Sells scouting reports and buys favours. Never enters the camp; he speaks through the grille of the Door.",
+        "forbiddenIntents": [
+          "TRAIN",
+          "WORK",
+          "CONFIDE",
+          "PROTECT",
+          "SCHEME:*",
+          "RECRUIT",
+          "DEFECT",
+          "REPORT",
+          "PLOT",
+          "REST"
+        ],
+        "knowledgeSeed": []
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "from": "brennic",
+      "to": "cassia",
+      "trust": 15,
+      "debt": 0
+    },
+    {
+      "from": "brennic",
+      "to": "garran",
+      "trust": 20,
+      "debt": 0
+    },
+    {
+      "from": "brennic",
+      "to": "iskar",
+      "trust": 5,
+      "debt": 0
+    },
+    {
+      "from": "brennic",
+      "to": "corvo",
+      "trust": -15,
+      "debt": 0
+    },
+    {
+      "from": "brennic",
+      "to": "sadruba",
+      "trust": 10,
+      "debt": 0
+    },
+    {
+      "from": "sadruba",
+      "to": "brennic",
+      "trust": 10,
+      "debt": 0
+    },
+    {
+      "from": "sadruba",
+      "to": "corvo",
+      "trust": 15,
+      "debt": 0
+    },
+    {
+      "from": "cassia",
+      "to": "brennic",
+      "trust": 15,
+      "debt": 0
+    },
+    {
+      "from": "cassia",
+      "to": "garran",
+      "trust": 25,
+      "debt": 0
+    },
+    {
+      "from": "cassia",
+      "to": "iskar",
+      "trust": 10,
+      "debt": 0
+    },
+    {
+      "from": "cassia",
+      "to": "nysa",
+      "trust": -10,
+      "debt": 0
+    },
+    {
+      "from": "cassia",
+      "to": "ophel",
+      "trust": 20,
+      "debt": 0
+    },
+    {
+      "from": "garran",
+      "to": "brennic",
+      "trust": 20,
+      "debt": 0
+    },
+    {
+      "from": "garran",
+      "to": "cassia",
+      "trust": 25,
+      "debt": 0
+    },
+    {
+      "from": "garran",
+      "to": "iskar",
+      "trust": 15,
+      "debt": 0
+    },
+    {
+      "from": "garran",
+      "to": "senna",
+      "trust": -5,
+      "debt": 0
+    },
+    {
+      "from": "garran",
+      "to": "ruadh",
+      "trust": 25,
+      "debt": 0
+    },
+    {
+      "from": "iskar",
+      "to": "brennic",
+      "trust": 0,
+      "debt": 0
+    },
+    {
+      "from": "iskar",
+      "to": "cassia",
+      "trust": 10,
+      "debt": 0
+    },
+    {
+      "from": "iskar",
+      "to": "garran",
+      "trust": 20,
+      "debt": 0
+    },
+    {
+      "from": "iskar",
+      "to": "lio",
+      "trust": -10,
+      "debt": 0
+    },
+    {
+      "from": "iskar",
+      "to": "kesh",
+      "trust": -5,
+      "debt": 0
+    },
+    {
+      "from": "corvo",
+      "to": "brennic",
+      "trust": -20,
+      "debt": 0
+    },
+    {
+      "from": "nysa",
+      "to": "cassia",
+      "trust": -10,
+      "debt": 0
+    },
+    {
+      "from": "senna",
+      "to": "garran",
+      "trust": -5,
+      "debt": 0
+    },
+    {
+      "from": "lio",
+      "to": "iskar",
+      "trust": -5,
+      "debt": 1
+    },
+    {
+      "from": "fenna",
+      "to": "kesh",
+      "trust": -40,
+      "debt": 0
+    },
+    {
+      "from": "quill",
+      "to": "septima",
+      "trust": -30,
+      "debt": 0
+    },
+    {
+      "from": "septima",
+      "to": "fenna",
+      "trust": -30,
+      "debt": 0
+    },
+    {
+      "from": "ophel",
+      "to": "sadruba",
+      "trust": -20,
+      "debt": 0
+    },
+    {
+      "from": "kesh",
+      "to": "venno",
+      "trust": 20,
+      "debt": 0
+    },
+    {
+      "from": "fenna",
+      "to": "garran",
+      "trust": 10,
+      "debt": 0
+    },
+    {
+      "from": "ophel",
+      "to": "cassia",
+      "trust": 20,
+      "debt": 0
+    },
+    {
+      "from": "ophel",
+      "to": "nysa",
+      "trust": 25,
+      "debt": 0
+    }
+  ],
+  "facts": [
+    {
+      "id": "K-ford-betrayal",
+      "text": "The legion collared its own allies after the ford.",
+      "visibility": "secret"
+    },
+    {
+      "id": "K-ember-won-last-games",
+      "text": "The Ember Tent won the last Games.",
+      "visibility": "public"
+    },
+    {
+      "id": "K-wardstones-drink",
+      "text": "The Wardstones drink spilled arena magic.",
+      "visibility": "secret"
+    }
+  ],
+  "schools": [
+    {
+      "id": "water",
+      "tent": "tide",
+      "hint": "patient, intelligent, wins before the fight",
+      "weights": {
+        "WATCH": 1.4,
+        "CONFIDE": 1.2,
+        "SCHEME:persuade": 1.3,
+        "SCHEME:rumour": 1.2,
+        "TRAIN:focus": 1.2
+      },
+      "preferredStat": "focus"
+    },
+    {
+      "id": "fire",
+      "tent": "ember",
+      "hint": "hard-headed, aggressive, stronger under tension",
+      "weights": {
+        "TRAIN:nerve": 1.4,
+        "SCHEME:poison": 1.1,
+        "BEFRIEND": 0.8,
+        "REPORT": 0.5
+      },
+      "preferredStat": "nerve"
+    },
+    {
+      "id": "earth",
+      "tent": "stone",
+      "hint": "calm, protective, slow to move and hard to move",
+      "weights": {
+        "PROTECT": 1.5,
+        "WORK": 1.3,
+        "SCHEME:*": 0.3
+      },
+      "preferredStat": "vigor"
+    },
+    {
+      "id": "air",
+      "tent": "gale",
+      "hint": "restless, free, contemptuous of rules",
+      "weights": {
+        "RECRUIT": 1.6,
+        "SCHEME:rumour": 1.4,
+        "REPORT": 0.3,
+        "DEFECT": 1.3
+      },
+      "preferredStat": "guile"
+    }
+  ],
+  "rules": {
+    "label": "authored",
+    "initial": {
+      "gold": 10,
+      "renown": 5,
+      "hunger": 0,
+      "strayHunger": 60,
+      "loyaltyTraitMultiplier": 10,
+      "strayLoyalty": 10,
+      "fatigue": 0,
+      "mastery": 1,
+      "trust": 0,
+      "debt": 0,
+      "stores": 6
+    },
+    "ranges": {
+      "trust": [
+        -100,
+        100
+      ],
+      "loyalty": [
+        0,
+        100
+      ],
+      "hunger": [
+        0,
+        100
+      ],
+      "renown": [
+        0,
+        100
+      ],
+      "fatigue": [
+        0,
+        10
+      ],
+      "gold": [
+        0,
+        9999
+      ],
+      "debt": [
+        0,
+        99
+      ],
+      "stores": [
+        0,
+        9999
+      ]
+    },
+    "stats": {
+      "names": [
+        "vigor",
+        "focus",
+        "nerve",
+        "guile"
+      ],
+      "rankThresholds": [
+        0,
+        6,
+        14,
+        24,
+        36
+      ]
+    },
+    "effects": {
+      "TRAIN": {
+        "points": 3,
+        "hungryPoints": 2
+      },
+      "WORK": {
+        "gold": 4,
+        "stores": 2,
+        "fatigue": 1
+      },
+      "BEFRIEND": {
+        "trust": 6,
+        "peerMultiplier": 1.5,
+        "aggressionGap": 6,
+        "gapMultiplier": 0.5
+      },
+      "CONFIDE": {
+        "trust": 4
+      },
+      "PROTECT": {
+        "costGold": 2,
+        "trust": 10,
+        "debt": 1,
+        "hunger": -30,
+        "warningDc": 2
+      },
+      "WATCH": {
+        "noticedTrust": -6
+      },
+      "RECRUIT": {
+        "loyalty": -8,
+        "trust": 4
+      },
+      "DEFECT": {
+        "loyaltyBelow": 20,
+        "trustAtLeast": 20,
+        "newLoyalty": 40
+      },
+      "REST": {
+        "fatigue": -2
+      },
+      "PLOT": {
+        "progress": 1
+      },
+      "caught": {
+        "renown": -5,
+        "trust": -30
+      },
+      "daily": {
+        "hunger": 15,
+        "workingHunger": 8,
+        "sameTentTrust": -1,
+        "routinePoints": 1,
+        "hungryAt": 70,
+        "fatiguedAt": 6,
+        "fatigueTrainMultiplier": 0.5
+      },
+      "tornToPeers": {
+        "trust": 10
+      },
+      "tornToStrangers": {
+        "trust": -20
+      }
+    },
+    "contests": {
+      "dieSides": 20,
+      "guileMultiplier": 4,
+      "baseDc": 10,
+      "vigilBonus": 8,
+      "renownDivisor": 10,
+      "loyaltyDivisor": 4,
+      "rumourBaseDc": 12,
+      "patrol": 0
+    },
+    "schemes": {
+      "steal": {
+        "stores": -4
+      },
+      "poison": {
+        "nextGamesStamina": -20,
+        "nextGamesHp": -10
+      },
+      "persuade": {
+        "loyalty": -15
+      },
+      "rumour": {
+        "renown": -3,
+        "disbeliefTrust": 20,
+        "reactions": {
+          "serves_rome": {
+            "values": [
+              "freedom",
+              "spite"
+            ],
+            "trust": -10
+          },
+          "cowardice": {
+            "values": [
+              "strength",
+              "honour"
+            ],
+            "trust": -6
+          },
+          "theft": {
+            "values": [
+              "order"
+            ],
+            "trust": -6
+          },
+          "kindness_to_strays": {
+            "values": [
+              "kin",
+              "belonging"
+            ],
+            "trust": 4
+          }
+        }
+      }
+    },
+    "caps": {
+      "SCHEME": 2,
+      "SCHEME_eve": 3,
+      "DEFECT": 1,
+      "REPORT": 1,
+      "OFFER": 1
+    },
+    "arcs": {
+      "takenInTrust": 20,
+      "elderWarmth": 6,
+      "storesAcceptance": 6,
+      "newMemberLoyalty": 40,
+      "peerTrust": 20,
+      "swornTrust": 50,
+      "bondPairs": 3,
+      "bondTrust": 20,
+      "bondEarliestDay": 2,
+      "bondSwornTrust": 40,
+      "bondFractureTrust": -20,
+      "bondStepProgress": 3,
+      "desperateHunger": 70,
+      "huddledHelps": 1
+    },
+    "line": {
+      "maxLength": 140,
+      "maxCitedFacts": 3,
+      "numberWords": [
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "ten",
+        "eleven",
+        "twelve",
+        "thirteen",
+        "fourteen",
+        "fifteen",
+        "sixteen",
+        "seventeen",
+        "eighteen",
+        "nineteen",
+        "twenty",
+        "thirty",
+        "forty",
+        "fifty",
+        "sixty",
+        "seventy",
+        "eighty",
+        "ninety",
+        "hundred",
+        "thousand",
+        "million",
+        "first",
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        "seventh",
+        "eighth",
+        "ninth",
+        "tenth",
+        "dozen"
+      ],
+      "bannedConsequences": [
+        "kill",
+        "killed",
+        "killing",
+        "dead",
+        "death",
+        "dies",
+        "died",
+        "execute",
+        "executed",
+        "resurrect",
+        "resurrected",
+        "teleport",
+        "champion",
+        "cast a spell",
+        "mana",
+        "hit points"
+      ],
+      "safeCapitals": [
+        "I",
+        "The",
+        "A",
+        "An",
+        "We",
+        "You",
+        "Your",
+        "My",
+        "Our",
+        "Let",
+        "This",
+        "That",
+        "There",
+        "They",
+        "It",
+        "If",
+        "No",
+        "Do",
+        "Keep",
+        "Come",
+        "Perhaps",
+        "Today",
+        "Tomorrow",
+        "Bread",
+        "Walls",
+        "Nothing",
+        "Every",
+        "Trust",
+        "Watch",
+        "Some",
+        "Someone",
+        "Who",
+        "What",
+        "Why",
+        "How",
+        "When",
+        "Where",
+        "Better",
+        "Enough",
+        "Still",
+        "Not",
+        "Then",
+        "And",
+        "But",
+        "For",
+        "May",
+        "All",
+        "Even",
+        "Good",
+        "Take",
+        "Stand",
+        "Stay",
+        "Strength",
+        "Knowledge",
+        "Order",
+        "Freedom",
+        "Patience",
+        "Work",
+        "Rest",
+        "Listen",
+        "Silence",
+        "Rome",
+        "Roman",
+        "Romans",
+        "Vigil",
+        "Door",
+        "Games",
+        "Wardstones",
+        "Ember",
+        "Tide",
+        "Stone",
+        "Gale",
+        "Tent",
+        "Yard",
+        "Cistern",
+        "Pit",
+        "Exchange",
+        "Commons",
+        "Edge",
+        "Old",
+        "Elder",
+        "Warden",
+        "Lanista",
+        "Aulus",
+        "Red",
+        "Lighthouse",
+        "Stonehand",
+        "Windborn",
+        "Castra",
+        "Clausa",
+        "Janus",
+        "Sit",
+        "Quiet"
+      ]
+    },
+    "resolutionOrder": [
+      "PROTECT",
+      "BEFRIEND",
+      "WORK",
+      "TRAIN",
+      "REST",
+      "CONFIDE",
+      "WATCH",
+      "REPORT",
+      "SCHEME",
+      "RECRUIT",
+      "DEFECT",
+      "PLOT",
+      "OFFER"
+    ],
+    "factVisibility": {
+      "public": "everyone",
+      "witnessed": "participants and their tents",
+      "secret": "participants",
+      "private": "actor"
+    }
+  },
+  "intents": {
+    "TRAIN": {
+      "args": [
+        "stat"
+      ],
+      "optionalArgs": [],
+      "visibility": "public"
+    },
+    "WORK": {
+      "args": [],
+      "optionalArgs": [],
+      "visibility": "public"
+    },
+    "BEFRIEND": {
+      "args": [
+        "target"
+      ],
+      "optionalArgs": [],
+      "visibility": "public"
+    },
+    "CONFIDE": {
+      "args": [
+        "target",
+        "factId"
+      ],
+      "optionalArgs": [],
+      "visibility": "secret"
+    },
+    "PROTECT": {
+      "args": [
+        "target"
+      ],
+      "optionalArgs": [],
+      "visibility": "witnessed"
+    },
+    "WATCH": {
+      "args": [
+        "target"
+      ],
+      "optionalArgs": [],
+      "visibility": "secret"
+    },
+    "SCHEME": {
+      "args": [
+        "target",
+        "kind"
+      ],
+      "optionalArgs": [
+        "topic"
+      ],
+      "visibility": "secret"
+    },
+    "RECRUIT": {
+      "args": [
+        "target"
+      ],
+      "optionalArgs": [],
+      "visibility": "public"
+    },
+    "DEFECT": {
+      "args": [
+        "toTent"
+      ],
+      "optionalArgs": [],
+      "visibility": "public"
+    },
+    "REPORT": {
+      "args": [
+        "target"
+      ],
+      "optionalArgs": [],
+      "visibility": "secret"
+    },
+    "PLOT": {
+      "args": [],
+      "optionalArgs": [],
+      "visibility": "secret"
+    },
+    "REST": {
+      "args": [],
+      "optionalArgs": [],
+      "visibility": "private"
+    },
+    "OFFER": {
+      "args": [
+        "target",
+        "terms"
+      ],
+      "optionalArgs": [],
+      "visibility": "secret"
+    }
+  },
+  "goals": {
+    "rise_in_tent": "train; pit_challenge; socialize(elder)",
+    "win_games": "train; scout; scheme(steal|poison) vs the leading tent",
+    "protect": "help(target); report(schemer vs target)",
+    "revenge": "scheme vs target; pit_challenge(target)",
+    "escape_research": "study at well; socialize(quill); plot",
+    "build_fifth_tent": "recruit; help(strays); scheme(rumour) vs elders",
+    "undermine": "scheme vs tent; recruit from tent",
+    "win_favour": "help(target); socialize(target)",
+    "repay_debt": "help(target)",
+    "find_tent": "work; socialize(elders); help(anyone fed)",
+    "survive": "work; scheme(steal) for bread; rest",
+    "keep_peace": "report; socialize",
+    "profit": "trade; scout sales",
+    "learn_secrets": "trade; socialize; scheme(persuade)",
+    "hold_fifth_tent": "recruit; help(members); work"
+  },
+  "phrases": {
+    "TRAIN": "I will be ready when the gate opens.",
+    "WORK": "Bread must come from somewhere.",
+    "BEFRIEND": "Sit with me awhile.",
+    "CONFIDE": "Keep this close.",
+    "PROTECT": "We need a place to stand together.",
+    "WATCH": "Quiet feet hear more.",
+    "SCHEME": "There are ways around a closed door.",
+    "RECRUIT": "There is room beside us.",
+    "DEFECT": "I have chosen where I belong.",
+    "REPORT": "The Vigil will hear of this.",
+    "PLOT": "We should speak where the fog gathers.",
+    "REST": "Let the lamps burn without me.",
+    "OFFER": "A favour may open a door."
+  },
+  "locations": [
+    {
+      "id": "yard",
+      "name": "the Yard",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "activities": [
+        "TRAIN:vigor"
+      ]
+    },
+    {
+      "id": "cistern",
+      "name": "the Cistern",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "activities": [
+        "TRAIN:focus",
+        "WATCH"
+      ]
+    },
+    {
+      "id": "pit",
+      "name": "the Pit",
+      "open": [
+        "dusk"
+      ],
+      "activities": [
+        "TRAIN:nerve",
+        "trial"
+      ]
+    },
+    {
+      "id": "exchange",
+      "name": "the Exchange",
+      "open": [
+        "day"
+      ],
+      "activities": [
+        "TRAIN:guile",
+        "WORK"
+      ]
+    },
+    {
+      "id": "commons",
+      "name": "the Commons",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "activities": [
+        "BEFRIEND",
+        "PROTECT",
+        "RECRUIT"
+      ]
+    },
+    {
+      "id": "door",
+      "name": "the Door",
+      "open": [
+        "day"
+      ],
+      "activities": [
+        "OFFER",
+        "REPORT"
+      ]
+    },
+    {
+      "id": "tent",
+      "name": "your tent",
+      "open": [
+        "day",
+        "dusk",
+        "night"
+      ],
+      "activities": [
+        "REST",
+        "CONFIDE"
+      ]
+    },
+    {
+      "id": "edge",
+      "name": "the Edge",
+      "open": [
+        "night"
+      ],
+      "activities": [
+        "PLOT"
+      ]
+    }
+  ],
+  "scenarios": {
+    "seed": 73,
+    "startDay": 4,
+    "nights": [
+      {
+        "id": "shelter",
+        "choices": {
+          "garran": [
+            "PROTECT",
+            {
+              "target": "fenna"
+            }
+          ],
+          "brennic": [
+            "BEFRIEND",
+            {
+              "target": "cassia"
+            }
+          ],
+          "nysa": [
+            "SCHEME",
+            {
+              "kind": "rumour",
+              "target": "cassia",
+              "topic": "cowardice"
+            }
+          ],
+          "iskar": [
+            "BEFRIEND",
+            {
+              "target": "garran"
+            }
+          ],
+          "quill": [
+            "WORK",
+            {}
+          ]
+        }
+      },
+      {
+        "id": "consequence",
+        "choices": {
+          "garran": [
+            "PROTECT",
+            {
+              "target": "cassia"
+            }
+          ],
+          "nysa": [
+            "SCHEME",
+            {
+              "kind": "poison",
+              "target": "cassia"
+            }
+          ],
+          "ophel": [
+            "WATCH",
+            {
+              "target": "cassia"
+            }
+          ],
+          "fenna": [
+            "WORK",
+            {}
+          ],
+          "iskar": [
+            "BEFRIEND",
+            {
+              "target": "garran"
+            }
+          ]
+        }
+      },
+      {
+        "id": "games-eve",
+        "choices": {
+          "garran": [
+            "SCHEME",
+            {
+              "kind": "poison",
+              "target": "nysa"
+            }
+          ],
+          "nysa": [
+            "SCHEME",
+            {
+              "kind": "poison",
+              "target": "cassia"
+            }
+          ],
+          "corvo": [
+            "SCHEME",
+            {
+              "kind": "steal",
+              "target": "brennic"
+            }
+          ],
+          "sadruba": [
+            "SCHEME",
+            {
+              "kind": "steal",
+              "target": "ophel"
+            }
+          ],
+          "kesh": [
+            "SCHEME",
+            {
+              "kind": "rumour",
+              "target": "sadruba",
+              "topic": "serves_rome"
+            }
+          ],
+          "lio": [
+            "SCHEME",
+            {
+              "kind": "rumour",
+              "target": "corvo",
+              "topic": "cowardice"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "source": "docs/design/baseline-fourteen-nights/design/data/spells-water.csv",
+  "source_sha256": "ec50dfd7692df883f0a0d9adf975023ac47f23f4904bcea95706dcee0286d9ab",
+  "spells": [
+    {
+      "line": "bolt",
+      "tier": "0",
+      "branch": "",
+      "name": "Rain Needle",
+      "motif": "water.painted.bolt",
+      "gameplay_shape": "projectile 20 m/s"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "1",
+      "branch": "",
+      "name": "Bubble Shot",
+      "motif": "water.painted.impact",
+      "gameplay_shape": "projectile 12 m/s"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "2",
+      "branch": "",
+      "name": "Crash Orb",
+      "motif": "water.painted.impact",
+      "gameplay_shape": "projectile 12 m/s; bursts r 2 m"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "3",
+      "branch": "",
+      "name": "Twin Tides",
+      "motif": "water.painted.impact",
+      "gameplay_shape": "two projectiles 12 m/s at +-10 deg"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "4",
+      "branch": "A",
+      "name": "Leviathan Orb",
+      "motif": "water.painted.impact",
+      "gameplay_shape": "slow projectile 6 m/s r 1.5 m"
+    },
+    {
+      "line": "tide_orb",
+      "tier": "4",
+      "branch": "B",
+      "name": "Rain of Orbs",
+      "motif": "water.painted.impact",
+      "gameplay_shape": "5-orb fan 50 deg"
+    },
+    {
+      "line": "lash",
+      "tier": "1",
+      "branch": "",
+      "name": "Tide Lash",
+      "motif": "water.painted.ward",
+      "gameplay_shape": "cone 90 deg x 3 m"
+    },
+    {
+      "line": "lash",
+      "tier": "2",
+      "branch": "A",
+      "name": "Undertow",
+      "motif": "water.painted.ward",
+      "gameplay_shape": "cone 3 m + pull 3 m"
+    },
+    {
+      "line": "lash",
+      "tier": "2",
+      "branch": "B",
+      "name": "Riptide",
+      "motif": "water.painted.ward",
+      "gameplay_shape": "cone 3 m + push 3 m"
+    },
+    {
+      "line": "lash",
+      "tier": "3",
+      "branch": "",
+      "name": "Maelstrom Lash",
+      "motif": "water.painted.ward",
+      "gameplay_shape": "ring 360 deg r 3 m"
+    },
+    {
+      "line": "lash",
+      "tier": "4",
+      "branch": "",
+      "name": "Drown Coil",
+      "motif": "water.painted.ward",
+      "gameplay_shape": "grab 2.5 m; root 1.5 s"
+    },
+    {
+      "line": "mire",
+      "tier": "1",
+      "branch": "",
+      "name": "Puddle",
+      "motif": "water.painted.aura",
+      "gameplay_shape": "ground r 2.5 m; slow 30% for 4 s"
+    },
+    {
+      "line": "mire",
+      "tier": "2",
+      "branch": "",
+      "name": "Fog Bank",
+      "motif": "water.painted.aura",
+      "gameplay_shape": "ground r 3 m for 5 s; blocks line of sight; breaks soft-lock"
+    },
+    {
+      "line": "mire",
+      "tier": "3",
+      "branch": "",
+      "name": "Freeze Field",
+      "motif": "water.painted.aura",
+      "gameplay_shape": "ground r 3 m; root 1.0 s"
+    },
+    {
+      "line": "mire",
+      "tier": "4",
+      "branch": "",
+      "name": "Glacier Tomb",
+      "motif": "water.painted.aura",
+      "gameplay_shape": "encase one target 2 s (immune and silenced)"
+    },
+    {
+      "line": "mend",
+      "tier": "1",
+      "branch": "",
+      "name": "Cool Draught",
+      "motif": "water.perfect",
+      "gameplay_shape": "self heal"
+    },
+    {
+      "line": "mend",
+      "tier": "2",
+      "branch": "",
+      "name": "Tide Ward",
+      "motif": "water.perfect",
+      "gameplay_shape": "self: absorb drain -50% for 4 s"
+    },
+    {
+      "line": "mend",
+      "tier": "3",
+      "branch": "",
+      "name": "Spring",
+      "motif": "water.perfect",
+      "gameplay_shape": "self heal over time"
+    },
+    {
+      "line": "mend",
+      "tier": "4",
+      "branch": "",
+      "name": "Font",
+      "motif": "water.perfect",
+      "gameplay_shape": "self: restore 60 mana"
+    },
+    {
+      "line": "mirror",
+      "tier": "1",
+      "branch": "",
+      "name": "Sheen",
+      "motif": "water.absorb",
+      "gameplay_shape": "self 3 s: absorbed magic refunds +50% mana"
+    },
+    {
+      "line": "mirror",
+      "tier": "2",
+      "branch": "A",
+      "name": "Reflection",
+      "motif": "water.absorb",
+      "gameplay_shape": "passive while slotted: a perfect absorb reflects the projectile"
+    },
+    {
+      "line": "mirror",
+      "tier": "2",
+      "branch": "B",
+      "name": "Ripple",
+      "motif": "water.absorb",
+      "gameplay_shape": "passive while slotted: a perfect absorb releases a ring r 3 m"
+    },
+    {
+      "line": "mirror",
+      "tier": "3",
+      "branch": "",
+      "name": "Mirage",
+      "motif": "water.absorb",
+      "gameplay_shape": "decoy for 3 s draws soft-lock"
+    },
+    {
+      "line": "mirror",
+      "tier": "4",
+      "branch": "",
+      "name": "Return Tide",
+      "motif": "water.absorb",
+      "gameplay_shape": "release stored absorbed damage as a wave (max 80)"
+    }
+  ],
+  "scope": "family motifs, not complete per-tier/branch animation; gameplay data remains authoritative",
+  "other_schools": "generic school motifs; line catalogues require game-stream data"
+}

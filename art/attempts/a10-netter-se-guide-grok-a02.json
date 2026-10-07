@@ -1,0 +1,48 @@
+{
+  "id": "a10-netter-se-guide-grok-a02",
+  "wave": "A10",
+  "style_id": "covenant",
+  "scene": "netter-se-guide",
+  "attempt": 2,
+  "input": {
+    "wave": "A10",
+    "id": "netter-se-guide",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [],
+    "prompt": "Original hand-painted full-body game character direction reference. ONE complete figure, FRONT-RIGHT: face, chest/front torso, front belt and toes visible, diagonally towards viewer and right. Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Camera elevated 55-degree orthographic, both head top and upright body visible. One coherent body, correct anatomy and exactly one set of equipment. Planted neutral ready stance, creature supporting feet planted; moth wings open at rest.\nThe entire body including weapon, tail and wings is fully visible, central 60 percent of image, generous empty margins above head and below feet. Pure uniform vivid MAGENTA #FF00FF background. No floor, shadows, effects, scenery, text, labels, panel borders or other figures. Square image. Rich sculpted painted volume and fine worn edges, no heavy comic outline. Exact requested facing, no looking backwards over shoulder. Original design only.",
+    "revision": 2,
+    "provenance": "text-only direction-guide fallback; identity description from covenant-battle-roster and author-inspected A3c; downstream animation remains image-reference guided",
+    "correction_of": "a10-netter-se-guide-grok-a01"
+  },
+  "input_hash": "e96d99346691984f3532aca2ea346e847bcc128fb510e2aaadecef5f09f2730f",
+  "prompt": "Original hand-painted full-body game character direction reference. ONE complete figure, FRONT-RIGHT: face, chest/front torso, front belt and toes visible, diagonally towards viewer and right. Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Camera elevated 55-degree orthographic, both head top and upright body visible. One coherent body, correct anatomy and exactly one set of equipment. Planted neutral ready stance, creature supporting feet planted; moth wings open at rest.\nThe entire body including weapon, tail and wings is fully visible, central 60 percent of image, generous empty margins above head and below feet. Pure uniform vivid MAGENTA #FF00FF background. No floor, shadows, effects, scenery, text, labels, panel borders or other figures. Square image. Rich sculpted painted volume and fine worn edges, no heavy comic outline. Exact requested facing, no looking backwards over shoulder. Original design only.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "ba5b140d-6ccb-45d6-bd08-b07959811e4f",
+  "at": "2026-10-03T14:03:38.450412+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 17.282,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_gen",
+      "arguments": {
+        "prompt": "Original hand-painted full-body game character direction reference. ONE complete figure, FRONT-RIGHT: face, chest/front torso, front belt and toes visible, diagonally towards viewer and right. Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Camera elevated 55-degree orthographic, both head top and upright body visible. One coherent body, correct anatomy and exactly one set of equipment. Planted neutral ready stance, creature supporting feet planted; moth wings open at rest.\nThe entire body including weapon, tail and wings is fully visible, central 60 percent of image, generous empty margins above head and below feet. Pure uniform vivid MAGENTA #FF00FF background. No floor, shadows, effects, scenery, text, labels, panel borders or other figures. Square image. Rich sculpted painted volume and fine worn edges, no heavy comic outline. Exact requested facing, no looking backwards over shoulder. Original design only.",
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a10-netter-se-guide-grok-a02/source.jpg",
+  "archive": "art/review/sources/a10-netter-se-guide-grok-a02.jpg",
+  "sha256": "4828b10b696524315a08ed083b165ab883756dbb6d6b8b5251661bcc984d295d",
+  "invocation_evidence": "art/providers/runs/a10-netter-se-guide-grok-a02"
+}

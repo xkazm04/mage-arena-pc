@@ -1,0 +1,57 @@
+[aist#0:0/pcm_s16le @ 00000171a274bdc0] Guessed Channel Layout: stereo
+
+Input #0, wav, from 'C:\Users\kazda\kiro\mage-arena-audio\docs\audio\audition\r4\arena-D-lyre-under-iron\sustain.wav':
+
+  Metadata:
+
+    encoder         : Lavf61.9.107
+
+  Duration: 00:00:15.00, bitrate: 1536 kb/s
+
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+
+Stream mapping:
+
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+
+Output #0, null, to 'pipe:':
+
+  Metadata:
+
+    encoder         : Lavf61.9.107
+
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+
+    Metadata:
+
+      encoder         : Lavc61.33.102 pcm_s16le
+
+[Parsed_loudnorm_0 @ 00000171a0df17c0]
+
+{
+
+	"input_i" : "-25.13",
+
+	"input_tp" : "-13.10",
+
+	"input_lra" : "2.30",
+
+	"input_thresh" : "-35.13",
+
+	"output_i" : "-26.58",
+
+	"output_tp" : "-14.25",
+
+	"output_lra" : "1.80",
+
+	"output_thresh" : "-36.58",
+
+	"normalization_type" : "dynamic",
+
+	"target_offset" : "0.58"
+
+}
+
+[out#0/null @ 00000171a2692780] video:0KiB audio:11250KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+
+size=N/A time=00:00:15.00 bitrate=N/A speed=56.7x

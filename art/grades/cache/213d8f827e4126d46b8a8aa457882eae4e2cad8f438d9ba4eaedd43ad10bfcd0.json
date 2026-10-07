@@ -1,0 +1,98 @@
+{
+  "artifact": "a3-owner",
+  "at": "2026-10-02T11:36:29.700314+00:00",
+  "input_hash": "213d8f827e4126d46b8a8aa457882eae4e2cad8f438d9ba4eaedd43ad10bfcd0",
+  "source": "art/review/a3/owner-1920.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "1e8b8c7b78f1f257b324c6186ac838d7fc15b10d2668bd4217cba760ee9df7d9",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Owner board for explicitly INCOMPLETE A3. Spending latched and missing creatures disclosed. Native-size Cassia absorb preview, controls and links. Inspect legibility, overlap and colour separation. Text is authored; no gameplay claim.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The UI is clearly authored HTML/SVG over a game art asset. The header 'Figures in the open oval' and breadcrumb 'MAGE ARENA / ART A3 / OWNER REVIEW' are legible in a serif font against a dark green background. Below, two informational banners with light beige backgrounds and left-border accents disclose session stats (37 charged calls, 126/180 used) and explicitly state 'A3 INCOMPLETE ? SPENDING LATCHED' along with missing creature designs and HTTP 400 errors — this matches the expectation of disclosing incomplete status and spending latch. A control panel labeled 'Native-scale pose and timing study' contains six dropdowns (Figure, Pose, Resolution basis, Distance, Surface, Effect) and a 'Play study' button; all labels and values are readable, no overlap or obscuring. The main visual area shows an overhead-style arena view with a central character (Cassia) performing an absorb action, indicated by blue arc effects and a beam toward a small red enemy figure. The color palette includes chalk-lime (arena floor), umber/terracotta (border and text accents), and mineral blue (effect lines and UI elements), consistent with the expected style. No watermarks, logos, or unintended photographic inserts are visible. Text sizes are appropriate for their context; no critical controls are obscured. One minor note: the question mark in 'A3 INCOMPLETE ? SPENDING LATCHED' appears to be a typographical choice rather than a rendering error, but its intent is slightly ambiguous — possibly meant as a separator or emphasis. Overall, the board fulfills the expectation of an owner-facing review interface for an incomplete A3 asset, with clear disclosure, functional controls, and stylistic coherence.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The UI is clearly authored HTML/SVG over a game art asset. The header 'Figures in the open oval' and breadcrumb 'MAGE ARENA / ART A3 / OWNER REVIEW' are legible in a serif font against a dark green background. Below, two informational banners with light beige backgrounds and left-border accents disclose session stats (37 charged calls, 126/180 used) and explicitly state 'A3 INCOMPLETE ? SPENDING LATCHED' along with missing creature designs and HTTP 400 errors — this matches the expectation of disclosing incomplete status and spending latch. A control panel labeled 'Native-scale pose and timing study' contains six dropdowns (Figure, Pose, Resolution basis, Distance, Surface, Effect) and a 'Play study' button; all labels and values are readable, no overlap or obscuring. The main visual area shows an overhead-style arena view with a central character (Cassia) performing an absorb action, indicated by blue arc effects and a beam toward a small red enemy figure. The color palette includes chalk-lime (arena floor), umber/terracotta (border and text accents), and mineral blue (effect lines and UI elements), consistent with the expected style. No watermarks, logos, or unintended photographic inserts are visible. Text sizes are appropriate for their context; no critical controls are obscured. One minor note: the question mark in 'A3 INCOMPLETE ? SPENDING LATCHED' appears to be a typographical choice rather than a rendering error, but its intent is slightly ambiguous — possibly meant as a separator or emphasis. Overall, the board fulfills the expectation of an owner-facing review interface for an incomplete A3 asset, with clear disclosure, functional controls, and stylistic coherence."
+  },
+  "eval_count": 429,
+  "elapsed_seconds": 9.172
+}

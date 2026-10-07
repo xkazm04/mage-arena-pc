@@ -1,0 +1,64 @@
+{
+  "id": "a12-moonlit-proof-grok-grok-a01",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "moonlit-proof-grok",
+  "attempt": 1,
+  "input": {
+    "wave": "A12",
+    "id": "moonlit-proof-grok",
+    "pilot": true,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+        "role": "edit target: approved concept; preserve environment"
+      }
+    ],
+    "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena."
+  },
+  "input_hash": "6aa89813d846265fc6173781f7dac68acaadf1c0c2fe1d71735f56f04b44888f",
+  "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "90606795-65ab-4a1b-b65f-4fcd7f6c416d",
+  "at": "2026-10-03T15:13:38.765172+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 28.062,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Use case: precise-object-edit. Input image reference-1.png is the ORIGINAL APPROVED ARENA PAINTING and edit target. Deliver ONE coherent painted CLEAN ENVIRONMENT PLATE of this exact scene. Remove ALL four mages, all soldiers, all hounds and the large stone creature. Remove their staffs, shields, cast shadows, fire, blue water swirl, purple spell ribbons, floating earth rocks, all projectiles, combat sparks and personal auras. Reconstruct only the exposed floor where they stood using continuous original mineral strata and cracks. Preserve the original composition, 55-degree elevated oblique camera, framing, architecture, dark blue-black floor, original irregular stone layers, all FIVE existing wardstone pylons in their original positions, their subtle blue architectural lights, eroded circular rune geometry, rear masonry wall, banners, cool grazing illumination, rich painterly surface detail and deep nocturnal atmosphere. Do not invent or rearrange architecture. Do not simplify, tile, repeat, mirror, blur, flatten the lighting, smooth away mineral detail, add people or statues, or turn the surface into photographic noise. No text, letters, numbers, watermark, HUD or border. Pylons and masonry remain painted INTO this single scene. No separated object sheet. No paper grain overlay. Original designs only. Render as large and detailed as available, landscape 16:9; aim for 3840x2160 if supported. Priority is faithful detailed reference preservation, not an invented new arena.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-moonlit-proof-grok-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "c3cf3e17496bdc952b41905aa7c2c78bacba58f6a248bf7d0dae51ba35d056a3",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca12-moonlit-proof-grok-grok-a01\\90606795-65ab-4a1b-b65f-4fcd7f6c416d\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a12-moonlit-proof-grok-grok-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a12-moonlit-proof-grok-grok-a01.jpg",
+  "sha256": "c3cf3e17496bdc952b41905aa7c2c78bacba58f6a248bf7d0dae51ba35d056a3",
+  "invocation_evidence": "art/providers/runs/a12-moonlit-proof-grok-grok-a01"
+}

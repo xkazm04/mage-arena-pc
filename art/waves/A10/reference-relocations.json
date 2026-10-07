@@ -1,0 +1,13 @@
+{
+  "reason": "Local filename collision during correction: original v2 restored from exact provider input; later mirrored input archived separately. Original job input and input_hash remain unchanged. No new provider call, refund or latch reset.",
+  "entries": [
+    {
+      "job": "a10-shieldman-ne-corrected-grok-a02",
+      "originalPath": "art/waves/A10/references/shieldman-ne-square-v2.png",
+      "expectedSha256": "e3eafa4242e2581032f8b0923bef1d7c33fd08d2d98a2e5e111b5d9673ab8e0f",
+      "resolvedPath": "art/waves/A10/references/shieldman-ne-square-v3-consumed.png",
+      "originalEarlierJob": "a10-shieldman-ne-corrected-grok-a01",
+      "earlierBytesRestoredSha256": "140f2b8fb5972cde6fb8650caac6ad9b32fb595781cc58885d16e7ccd1bc67af"
+    }
+  ]
+}

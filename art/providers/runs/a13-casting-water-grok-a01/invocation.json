@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "0f1ce0a4-3694-498d-bdcc-61222c8eafc7",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-casting-water-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-casting-water-grok-a01",
+  "references": [
+    {
+      "path": "art/review/sources/a13-glyph-proof-agy-a02.png",
+      "sha256": "5810c7f0ecb581c6d9e5467e46305d8c2fea42e020cd6dae0edb8fbc8bc594bd",
+      "role": "canonical glyph grammar and painting treatment"
+    }
+  ]
+}

@@ -1,0 +1,323 @@
+{
+  "wave": "AU3",
+  "tracks": [
+    {
+      "id": "arena-C-reed-oath",
+      "title": "Reed oath",
+      "seconds": 150,
+      "request": {
+        "model_id": "music_v1",
+        "respect_sections_durations": true,
+        "store_for_inpainting": true,
+        "composition_plan": {
+          "positive_global_styles": [
+            "Original Roman-era elemental arena instrumental; 96 BPM; strict 4/4; sixty bars in 150 seconds; Dorian modal harmony; dramatic physical entrance and memorable human melody; acoustic hide percussion and bowed low strings; clear midrange space for combat feedback; a new phrase boundary every six bars; complete through-composed dramatic arc; keep the theme recognizable while changing its harmony, register and accompaniment; no repeated audio block; instrumental throughout.",
+            "Dark courage carried by a clearly audible intimate double-reed solo: a five-note rising then falling Dorian melody, answered with two gut-string lyre notes. Deep hide drum and tense low bowed strings give arena weight. Proposed D Dorian centre. Keep the reed's breath and melodic articulation clear; it leads the drama, never dissolves into an ambient pad."
+          ],
+          "negative_global_styles": [
+            "Vocals",
+            "spoken words",
+            "choir",
+            "pop drum kit",
+            "electronic dance beat",
+            "trailer risers",
+            "notification tones",
+            "bells",
+            "texture-only drone",
+            "constant maximum density",
+            "abrupt sectional cut",
+            "tempo change",
+            "fade before the release",
+            "repeated short loop"
+          ],
+          "sections": [
+            {
+              "section_name": "Entrance",
+              "duration_ms": 15000,
+              "positive_local_styles": [
+                "One deep hide drum and tense low strings open on the downbeat. The double reed begins its rising then falling five-note motif within two seconds. Across six bars, let two plucked lyre notes answer once, with enough silence to hear the reed breathe. End on a poised open modal harmony."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Theme statement",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar seven, the double reed states a complete memorable melody built from the opening five notes. The lyre answers phrase endings only. At bar thirteen, restate with a small upward answer while adding quiet frame-drum detail. The second phrase completes the thought without a final cadence."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Development",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar nineteen, move the reed tune to a higher register and let low bowed strings supply a contrasting descending counterline. At bar twenty-five, the lyre briefly carries the theme's rhythm while the reed answers in longer notes. Maintain a single recognizable theme over two distinct six-bar phrases."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Tension",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar thirty-one, strip back the drums and let the reed hold a vulnerable note over moving suspended low strings. At bar thirty-seven, bring back the five-note contour in shorter breaths, with a contained hide-drum pulse gathering force. Preserve 96 BPM and clear phrase-end space."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Climax",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar forty-three, the reed gives the fullest complete theme with bowed strings supporting its final notes, not masking it. At bar forty-nine, the lyre answer becomes a clear counter-melody while hide drums reach their strongest pattern. Keep the reed recognizable and the sound acoustic, courageous and dangerous."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Release",
+              "duration_ms": 15000,
+              "positive_local_styles": [
+                "At bar fifty-five, reduce to reed, two lyre notes and a low held string. The reed gives a calmer falling answer to the opening rise. Resolve deliberately over six bars; the final breath and string decay fit inside bar sixty. Finish the story rather than fading a repeated loop."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena-D-lyre-under-iron",
+      "title": "Lyre under iron",
+      "seconds": 150,
+      "request": {
+        "model_id": "music_v1",
+        "respect_sections_durations": true,
+        "store_for_inpainting": true,
+        "composition_plan": {
+          "positive_global_styles": [
+            "Original Roman-era elemental arena instrumental; 96 BPM; strict 4/4; sixty bars in 150 seconds; Dorian modal harmony; dramatic physical entrance and memorable human melody; acoustic hide percussion and bowed low strings; clear midrange space for combat feedback; a new phrase boundary every six bars; complete through-composed dramatic arc; keep the theme recognizable while changing its harmony, register and accompaniment; no repeated audio block; instrumental throughout.",
+            "Human defiance in a muted gut-string lyre. A distinct syncopated descending four-note melody resolves upward in its answering phrase. Bowed viola doubles only phrase endings, low strings hold the floor, and hide percussion leaves holes for plucked attacks. Proposed A Dorian centre. The small instrument must remain the protagonist even at the climax."
+          ],
+          "negative_global_styles": [
+            "Vocals",
+            "spoken words",
+            "choir",
+            "pop drum kit",
+            "electronic dance beat",
+            "trailer risers",
+            "notification tones",
+            "bells",
+            "texture-only drone",
+            "constant maximum density",
+            "abrupt sectional cut",
+            "tempo change",
+            "fade before the release",
+            "repeated short loop"
+          ],
+          "sections": [
+            {
+              "section_name": "Entrance",
+              "duration_ms": 15000,
+              "positive_local_styles": [
+                "Open with one deep hide-drum impact and a short taut low-string gesture. The muted lyre starts its descending four-note syncopated motif immediately. Across six bars, place one upward answer in a gap in the drums; viola touches only the answer's last note. Establish resolve without haste."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Theme statement",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar seven, state the full descending lyre tune and its rising answer, leaving holes in the percussion around each pluck. At bar thirteen, repeat the theme with one displaced accent and a longer viola phrase-end response. Preserve the tune's clear contour and modest acoustic scale."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Development",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar nineteen, the lyre develops the same four notes through a higher-register answer over a more active low-string line. At bar twenty-five, trade short motif fragments with the viola while the hide drums use a new interlocking pattern. Do not replace the melody with continuous arpeggios."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Tension",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar thirty-one, expose the lyre's dry plucks over a narrow suspended string harmony, with widely spaced drum strokes. At bar thirty-seven, repeat the descending motif with a withheld upward resolution and increasingly active inner-string motion. Tension comes from harmony and expectation, not faster tempo."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Climax",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar forty-three, the lyre gives its complete descending theme with the strongest rising answer so far. Bowed viola supports only phrase endings while percussion reaches full physical energy in the spaces. At bar forty-nine, give a final embellished answer; protect every plucked attack from masking."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Release",
+              "duration_ms": 15000,
+              "positive_local_styles": [
+                "At bar fifty-five, remove the busy drums and let the lyre answer the opening descent in a slower-feeling final phrase over unchanged tempo. One quiet viola note releases the suspension. End with a resonant plucked open interval and natural decay contained within the final bar."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena-A-hide-and-iron",
+      "title": "Hide and iron",
+      "seconds": 150,
+      "request": {
+        "model_id": "music_v1",
+        "respect_sections_durations": true,
+        "store_for_inpainting": true,
+        "composition_plan": {
+          "positive_global_styles": [
+            "Original Roman-era elemental arena instrumental; 96 BPM; strict 4/4; sixty bars in 150 seconds; Dorian modal harmony; dramatic physical entrance and memorable human melody; acoustic hide percussion and bowed low strings; clear midrange space for combat feedback; a new phrase boundary every six bars; complete through-composed dramatic arc; keep the theme recognizable while changing its harmony, register and accompaniment; no repeated audio block; instrumental throughout.",
+            "Captive strength becomes defiance. Worn hide drums, low bowed strings with audible bow grain, sparse muted iron and bronze rattle. A clear middle-register bowed-string melody is the emotional spine, supported by tactile interlocking percussion. Proposed D Dorian centre. Preserve physical restraint and dramatic entrance; melody must remain audible through the percussion."
+          ],
+          "negative_global_styles": [
+            "Vocals",
+            "spoken words",
+            "choir",
+            "pop drum kit",
+            "electronic dance beat",
+            "trailer risers",
+            "notification tones",
+            "bells",
+            "texture-only drone",
+            "constant maximum density",
+            "abrupt sectional cut",
+            "tempo change",
+            "fade before the release",
+            "repeated short loop"
+          ],
+          "sections": [
+            {
+              "section_name": "Entrance",
+              "duration_ms": 15000,
+              "positive_local_styles": [
+                "Begin on the first downbeat with one deep hide-drum strike and a tense bowed-string attack. In six bars, reveal a short rising three-note bowed motif answered by a falling fourth. Leave breath between drum strokes. End bar six on a held open fifth ready for the theme."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Theme statement",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "State the complete bowed-string melody over restrained interlocking hide drums in bars seven to twelve. Repeat its identity with a changed answering contour in bars thirteen to eighteen, introducing one dry iron rattle at the phrase boundary. Keep the tune prominent and the texture human."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Development",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar nineteen, open into the first full physical statement: drums interlock beneath the same melody in a higher register. At bar twenty-five, pass its answer to low strings and invert only the final interval. Increase movement without adding a new tune. Both six-bar phrases end on clear edit boundaries."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Tension",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar thirty-one, remove half the percussion and expose the theme over a held lower neighbour. Bow grain and close string suspensions carry unease. At bar thirty-seven, rebuild with a slowly tightening hide-drum pattern; sustain harmonic pressure without accelerating the tempo or adding a riser."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Climax",
+              "duration_ms": 30000,
+              "positive_local_styles": [
+                "At bar forty-three, bring back the complete melody in strong bowed octaves above the fullest hide rhythm. Let the phrase breathe between attacks. At bar forty-nine, answer with the widest modal harmony and one restrained iron accent. This is the emotional peak, not a wall of noise."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            },
+            {
+              "section_name": "Release",
+              "duration_ms": 15000,
+              "positive_local_styles": [
+                "At bar fifty-five, withdraw the upper percussion and return the opening motif to one exposed bowed voice. Resolve the tension across six bars with a final grounded open fifth. Let drum skin and bow resonance decay naturally inside the last bar; complete ending by 150 seconds."
+              ],
+              "negative_local_styles": [
+                "vocals",
+                "tempo change"
+              ],
+              "lines": []
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

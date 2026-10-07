@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A13 · The broken oath · motion review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080e15;color:#e3e7e8;font:15px system-ui}canvas{display:block;width:100%;height:auto}nav{padding:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}button,select,input{font:inherit;background:#162a36;color:#e9e9dd;border:1px solid #66817e;padding:7px}a{color:#a9d9ec}label{display:flex;gap:8px;align-items:center}p{margin:8px 14px}#stage{width:100vw;overflow:hidden}
+</style>
+<nav><a href="index.html">Owner board</a><select id="palette" aria-label="Arena palette"><option>moonlit</option><option>verdigris</option><option>rust-sand</option></select>
+<select id="mode" aria-label="Review mode"><option value="arena">Arena composite</option><option value="catalogue">Decal catalogue</option><option value="progress">Progress and warning proof</option><option value="before">Before: geometric renderer</option></select>
+<button id="pause">Pause</button><label>Charge <input id="progress" type="range" min="0" max="1" step="0.01" value="0.62"></label>
+<label><input id="window" type="checkbox" checked>Perfect window</label><label><input id="cleanup" type="checkbox" checked>Floor replacement</label></nav>
+<p>Standalone art consumer. A10 bodies 60.75 px at 1080p / 81 px at 1440p. Game state owns hit geometry and timing. Press Space to pause.</p>
+<div id="stage"><canvas width="1920" height="1080" aria-label="Animated sigil art review"></canvas></div>
+<script type="module" src="demo.js"></script></html>

@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "b6798a0b-3caf-46ca-92cd-9b02f7492e8d",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-iskar-se-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-iskar-se-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/iskar-se-square-v1.png",
+      "sha256": "e98a663ab35300968bab51f7f1fb8b68b0ecfb46d37a8b601b623e67a8dc6847",
+      "role": "single full-body A3c identity crop on square canvas"
+    }
+  ]
+}

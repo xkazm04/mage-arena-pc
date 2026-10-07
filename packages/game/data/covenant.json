@@ -1,0 +1,104 @@
+{
+  "palettes": {
+    "training": "verdigris",
+    "1": "verdigris",
+    "2": "verdigris",
+    "3": "rust-sand",
+    "4": "rust-sand",
+    "5": "moonlit",
+    "6": "moonlit"
+  },
+  "plate": {
+    "size": [1920, 1080],
+    "worldMarginM": 6,
+    "groundCrop": [120, 240, 1680, 560],
+    "edgeBlendPx": 128,
+    "rimStoneGroups": 24
+  },
+  "props": [
+    {
+      "id": "west-pylon",
+      "foot": [196, 199],
+      "polygon": [
+        148, 180, 168, 160, 177, 83, 196, 51, 216, 106, 221, 170, 247, 187, 246,
+        199, 169, 204
+      ]
+    },
+    {
+      "id": "north-pylon",
+      "foot": [953, 118],
+      "polygon": [
+        902, 99, 925, 71, 937, 17, 954, 0, 970, 14, 985, 87, 1010, 103, 1007,
+        117, 923, 124
+      ]
+    },
+    {
+      "id": "east-pylon",
+      "foot": [1730, 206],
+      "polygon": [
+        1683, 188, 1703, 151, 1718, 65, 1737, 46, 1754, 88, 1762, 180, 1787,
+        191, 1784, 207, 1698, 212
+      ]
+    },
+    {
+      "id": "southwest-pylon",
+      "foot": [163, 973],
+      "polygon": [
+        107, 953, 126, 922, 143, 859, 169, 823, 188, 869, 202, 944, 227, 961,
+        212, 981, 119, 985
+      ]
+    },
+    {
+      "id": "southeast-pylon",
+      "foot": [1758, 967],
+      "polygon": [
+        1710, 945, 1722, 890, 1739, 826, 1753, 802, 1776, 847, 1793, 940, 1814,
+        951, 1800, 975, 1721, 978
+      ]
+    },
+    {
+      "id": "northwest-stones",
+      "foot": [482, 179],
+      "polygon": [389, 135, 555, 94, 574, 114, 574, 140, 405, 185, 390, 173]
+    },
+    {
+      "id": "northeast-stones",
+      "foot": [1460, 185],
+      "polygon": [
+        1397, 103, 1459, 122, 1467, 146, 1487, 135, 1534, 159, 1534, 181, 1508,
+        188, 1483, 166, 1381, 147, 1382, 126
+      ]
+    },
+    {
+      "id": "south-stones",
+      "foot": [480, 1076],
+      "polygon": [
+        333, 979, 378, 986, 435, 1011, 480, 1016, 557, 1040, 620, 1041, 638,
+        1079, 321, 1079, 323, 1002
+      ]
+    }
+  ],
+  "figures": {
+    "cassia": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "brennic": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "garran": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "iskar": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "conscript": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "shieldman": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "slinger": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "netter": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "cinder_hound": "procedural: A10 has no accepted clip for this identity",
+    "mire_maw": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "thornback": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts",
+    "hush_moth": "A10 packed directional clips; game-owned fallback policy in animation.json/body-policy.ts"
+  },
+  "effects": {
+    "aura": "A8 element-family animated aura behind figures",
+    "cast": "A8 event-bound cast keys",
+    "bolt": "A8 travel clip oriented in unprojected ground then projected",
+    "impact": "A8 impact/hit one-shots from combat events and spell release",
+    "absorb": "A8 hold/contact membrane clipped to data-owned 140-degree arc",
+    "telegraphs": "exact data-owned footprints; delivered raster proposals do not override hit geometry",
+    "perfect": "A8 localized perfect flare at the forward barrier contact"
+  }
+}

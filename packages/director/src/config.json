@@ -1,0 +1,23 @@
+{
+  "promptVersion": "season-director-a",
+  "groups": ["ember", "tide", "stone", "gale", "margins"],
+  "claude": {"model":"claude-sonnet-5-5", "effort":"medium", "timeoutMs":90000},
+  "ollama": {"model":"qwen3.8:27b-64k", "alternate":"mimo-9b:q8-64k", "endpoint":"http://localhost:11434", "timeoutMs":120000, "temperature":0.3, "numPredict":1800, "numCtx":8192},
+  "limits": {"responseBytes":1048576, "promptFactsPerMember":6, "publicBoardFacts":4, "recentInvestigations":3},
+  "completion": {"chunkNights":10,"retainedLocalReservations":1,"heartbeatMs":15000,"gapMultiplier":3},
+  "judge": {"numCtx":8192,"numPredict":1600,"maxAttemptsPerNight":6,"timeoutMs":600000,"reasonChars":80,"calibrationCalls":3},
+  "budget": {"game":{"runCalls":200,"dayCalls":40}, "w1":{"sonnetNights":30,"localNights":300,"pilotLocalNights":3,"fuzzCases":500,"rejectionKillRate":0.15}},
+  "bands": {"trustEnemyBelow":-20,"trustFriendAt":20,"trustSwornAt":50,"wealthLowBelow":2,"wealthComfortableAt":20,"traitLowBelow":4,"traitHighAt":7},
+  "planner": {
+    "base":1, "goalBonus":3, "needBonus":6, "relationshipScale":0.03, "noiseAmplitude":0.05,
+    "restFatigueAt":4,"protectWarmthAt":7,"protectHungerAt":40,"workGoldBelow":4,
+    "goalIntents": {
+      "rise_in_tent":["TRAIN","BEFRIEND"],"win_games":["TRAIN","WATCH","SCHEME"],
+      "protect":["PROTECT","REPORT"],"revenge":["SCHEME"],"escape_research":["PLOT","CONFIDE","WATCH"],
+      "build_fifth_tent":["RECRUIT","PROTECT"],"undermine":["SCHEME","RECRUIT"],
+      "win_favour":["PROTECT","BEFRIEND"],"repay_debt":["PROTECT"],"find_tent":["WORK","BEFRIEND"],
+      "survive":["WORK","REST"],"keep_peace":["BEFRIEND","REPORT"],"profit":["WORK","OFFER","WATCH"],
+      "learn_secrets":["WATCH","CONFIDE"],"hold_fifth_tent":["RECRUIT","PROTECT","WORK"]
+    }
+  }
+}

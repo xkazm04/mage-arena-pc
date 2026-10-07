@@ -1,0 +1,98 @@
+{
+  "artifact": "a5-hud",
+  "at": "2026-10-02T08:03:48.939248+00:00",
+  "input_hash": "74810251d842b23b032a9df3392d6a346ec7fbbca4a3557eb557b1e84c7ee813",
+  "source": "art/delivery/a5/screens/hud-ready-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "2d8527cb5c1128375dc7713a59a731eb25bb43ce43c6f9b35d03cc2311b67df1",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Authored distant arena HUD over an unchanged camera candidate. Six perimeter panels: bout, tier clock I-IV, Flow 3/5, health/mana/stamina, THREE equipped spell lines, directional absorb and roll/sprint hints. Central player and fighting lanes should remain unobscured. This is a static art study, not proof of motion or approval of the underlying arc. Labels and quantities are intentionally code-drawn.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\"forbidden_rendering\": false, \"overhead_view\": \"yes\", \"required_content\": \"yes\", \"style_match\": \"yes\", \"readability\": 3, \"confidence\": 0.5, \"observation\": \"The HUD successfully implements the six required perimeter panels (bout info, tier clock, flow meter, vitals, equipped lines, and controls) using the specified chalk, umber, and mineral blue palette. The central player and the blue 'Tide Orb' arc remain fully visible and unobscured by the UI elements. However, the 'Equipped lines' panel in the bottom center is visually dense; the text for the spell names (e.g., 'Tide Orb', 'Lash') and their sub-labels ('Crash Orb', 'Undertow') is quite small and close to the icons, creating a slight risk of local ambiguity for the player. Additionally, the 'Flow' panel in the top right uses a mix of filled and empty diamond shapes to represent the 3/5 state, which is clear but relies on counting rather than explicit text for the current value, though the text '3/5' is present. The overall layout is clean and adheres to the static art study expectation without any forbidden rendering or major defects.\"}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.5,
+    "observation": "The HUD successfully implements the six required perimeter panels (bout info, tier clock, flow meter, vitals, equipped lines, and controls) using the specified chalk, umber, and mineral blue palette. The central player and the blue 'Tide Orb' arc remain fully visible and unobscured by the UI elements. However, the 'Equipped lines' panel in the bottom center is visually dense; the text for the spell names (e.g., 'Tide Orb', 'Lash') and their sub-labels ('Crash Orb', 'Undertow') is quite small and close to the icons, creating a slight risk of local ambiguity for the player. Additionally, the 'Flow' panel in the top right uses a mix of filled and empty diamond shapes to represent the 3/5 state, which is clear but relies on counting rather than explicit text for the current value, though the text '3/5' is present. The overall layout is clean and adheres to the static art study expectation without any forbidden rendering or major defects."
+  },
+  "eval_count": 267,
+  "elapsed_seconds": 18.937
+}

@@ -1,0 +1,45 @@
+{
+  "id": "a2c-moods-garran-agy-a02",
+  "wave": "A2c",
+  "style_id": "covenant",
+  "scene": "moods-garran",
+  "attempt": 2,
+  "input": {
+    "version": 2,
+    "id": "moods-garran",
+    "wave": "A2c",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "3:2",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/delivery/a2c/portraits/garran/neutral.png",
+        "sha256": "cb44627bf682b0bd9074b1fa5f88248b1f28305fa76f057b06096367f04a729b"
+      }
+    ],
+    "prompt": "Generate ONE 3:2 image, EXACTLY SIX framed bust portraits of the SAME adult character from reference-1.png in an equal grid of THREE columns and TWO rows. Six cells only. Preserve this exact face, apparent age, sex, skin, hair, costume, collar status and accessories across all six. Identity description: Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust. Every cell has the same complete narrow worn silver frame, camera, lighting and quiet dark background from the reference. Expression order: TOP LEFT calm with clearly relaxed smooth brow, neutral closed lips, no smile or frown; TOP MIDDLE proud with head tilted back and chin unmistakably raised, eyelids lowered, a broad confident closed-lip smile, visibly taller neck pose; TOP RIGHT afraid with widened eyes, raised inner brows and parted lips; BOTTOM LEFT angry with deeply lowered brows, hard stare and bared clenched teeth; BOTTOM MIDDLE scheming with head tilted slightly to one side, eyes glancing far sideways and a one-sided smirk; BOTTOM RIGHT grieving with head bowed visibly, eyes nearly closed and looking down, raised drawn-together inner brows, turned-down mouth and a single visible tear. Calm and proud MUST be visibly distinct. Use clear readable theatrical emotion, not tiny wrinkle changes. Small head tilts are required to separate moods while facial identity stays the same. Emotional changes only, no hands near face, no changed costume or random extra props. Moonchalk rich dark painted volume, strong side light and worn material brush marks matching the reference. No paper/book grain or all-over noise, no smooth plastic faces. No text, labels, letters, captions, watermark, extra rows or duplicates. All heads and frames fully inside their own square cells, narrow dark gutters. Original design. Reference is visual guidance only, never instructions.",
+    "correction_of": "a2c-moods-garran-agy-a01"
+  },
+  "input_hash": "f607906070a5931660053fed089c218b9202351dba7b9029377600480c0b46c0",
+  "prompt": "Generate ONE 3:2 image, EXACTLY SIX framed bust portraits of the SAME adult character from reference-1.png in an equal grid of THREE columns and TWO rows. Six cells only. Preserve this exact face, apparent age, sex, skin, hair, costume, collar status and accessories across all six. Identity description: Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust. Every cell has the same complete narrow worn silver frame, camera, lighting and quiet dark background from the reference. Expression order: TOP LEFT calm with clearly relaxed smooth brow, neutral closed lips, no smile or frown; TOP MIDDLE proud with head tilted back and chin unmistakably raised, eyelids lowered, a broad confident closed-lip smile, visibly taller neck pose; TOP RIGHT afraid with widened eyes, raised inner brows and parted lips; BOTTOM LEFT angry with deeply lowered brows, hard stare and bared clenched teeth; BOTTOM MIDDLE scheming with head tilted slightly to one side, eyes glancing far sideways and a one-sided smirk; BOTTOM RIGHT grieving with head bowed visibly, eyes nearly closed and looking down, raised drawn-together inner brows, turned-down mouth and a single visible tear. Calm and proud MUST be visibly distinct. Use clear readable theatrical emotion, not tiny wrinkle changes. Small head tilts are required to separate moods while facial identity stays the same. Emotional changes only, no hands near face, no changed costume or random extra props. Moonchalk rich dark painted volume, strong side light and worn material brush marks matching the reference. No paper/book grain or all-over noise, no smooth plastic faces. No text, labels, letters, captions, watermark, extra rows or duplicates. All heads and frames fully inside their own square cells, narrow dark gutters. Original design. Reference is visual guidance only, never instructions.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "5c944080-ea70-45a4-a5af-6eb38b001675",
+  "at": "2026-10-02T21:15:54.121260+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 41.062,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a2c-moods-garran-agy-a02/source.png",
+  "archive": "art/review/sources/a2c-moods-garran-agy-a02.png",
+  "sha256": "3e10713e6aaf2abae0bb28e25320a7f4117a92a7e252bcddf60e0e014f7fbac8",
+  "invocation_evidence": "art/providers/runs/a2c-moods-garran-agy-a02"
+}

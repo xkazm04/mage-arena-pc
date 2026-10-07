@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "096cfb72-5063-4377-bfff-aeaffa2c78b6",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-shieldman-ne-guide-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-shieldman-ne-guide-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/shieldman-ne-guide-input.png",
+      "sha256": "d70efeaeb4a64880a5f37f46475104d1987dd95fc5896b1e91398e73034a0658",
+      "role": "full-body A3c identity; change anatomical viewing direction only"
+    }
+  ]
+}

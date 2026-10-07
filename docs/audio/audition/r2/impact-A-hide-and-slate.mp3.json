@@ -1,0 +1,51 @@
+{
+  "id": "ca9f49fe-a306-445c-902b-34b3a25f018c",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:13:29.303Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One hard slate impact: a dry stone knock, two small chips and a tight grounded low body. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.5,
+  "chars": null,
+  "out": "docs/audio/audition/r2/impact-A-hide-and-slate.mp3",
+  "request": {
+    "text": "One hard slate impact: a dry stone knock, two small chips and a tight grounded low body. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "15"
+  },
+  "bytes": 24703,
+  "sha256": "bcfb96b7dcafa84cf84b04c52b5a6f36b3716488891c42e2e3a8c0ea6e0d71c0",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:13:29.302Z",
+    "tier": "starter",
+    "used": 71282,
+    "limit": 90000,
+    "remaining": 18718,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 30,
+  "estimatedCredits": 30,
+  "documentedEstimateCredits": 30,
+  "chargedCredits": 30,
+  "measuredCredits": 15,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:13:48.637Z",
+    "tier": "starter",
+    "used": 71282,
+    "limit": 90000,
+    "remaining": 18718,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

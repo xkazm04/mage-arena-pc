@@ -1,0 +1,54 @@
+{
+  "label": "Synthetic atlas fixture, not delivered or accepted art; browser integration measured",
+  "command": "npx tsx packages/tools/src/u1-kit-browser.ts",
+  "passed": true,
+  "results": [
+    {
+      "kind": "valid",
+      "source": "/art/ui/kit.json",
+      "diagnostics": [],
+      "playable": true,
+      "fullscreenRoundTrip": true
+    },
+    {
+      "kind": "wrong-hash",
+      "source": "procedural",
+      "diagnostics": [
+        "Error: UI hash mismatch: test"
+      ],
+      "playable": true
+    },
+    {
+      "kind": "missing-region",
+      "source": "procedural",
+      "diagnostics": [
+        "Error: Missing required UI region: button.focus"
+      ],
+      "playable": true
+    },
+    {
+      "kind": "out-of-bounds",
+      "source": "procedural",
+      "diagnostics": [
+        "Error: Invalid UI frame: panel.body"
+      ],
+      "playable": true
+    },
+    {
+      "kind": "unknown-schema",
+      "source": "procedural",
+      "diagnostics": [
+        "Error: Unsupported UI atlas"
+      ],
+      "playable": true
+    },
+    {
+      "kind": "missing-page",
+      "source": "procedural",
+      "diagnostics": [
+        "Error: Missing UI page: test"
+      ],
+      "playable": true
+    }
+  ]
+}

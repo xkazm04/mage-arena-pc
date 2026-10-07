@@ -1,0 +1,62 @@
+[mp3 @ 000001cb5cbc6180] Estimating duration from bitrate, this may be inaccurate
+
+Input #0, mp3, from 'C:\Users\kazda\kiro\mage-arena-audio\docs\audio\audition\r4\arena-D-lyre-under-iron.mp3':
+
+  Metadata:
+
+    encoder         : Lavf60.16.101
+
+  Duration: 00:02:30.05, start: 0.000000, bitrate: 128 kb/s
+
+  Stream #0:0: Audio: mp3 (mp3float), 44100 Hz, stereo, fltp, 128 kb/s
+
+Stream mapping:
+
+  Stream #0:0 -> #0:0 (mp3 (mp3float) -> pcm_s16le (native))
+
+Output #0, null, to 'pipe:':
+
+  Metadata:
+
+    encoder         : Lavf61.9.107
+
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+
+    Metadata:
+
+      encoder         : Lavc61.33.102 pcm_s16le
+
+size=N/A time=00:00:25.80 bitrate=N/A speed=  51x
+size=N/A time=00:00:54.00 bitrate=N/A speed=52.5x
+size=N/A time=00:01:22.50 bitrate=N/A speed=53.4x
+size=N/A time=00:01:50.50 bitrate=N/A speed=53.9x
+size=N/A time=00:02:19.70 bitrate=N/A speed=54.2x
+[Parsed_loudnorm_0 @ 000001cb5b2e17c0]
+
+{
+
+	"input_i" : "-14.19",
+
+	"input_tp" : "-0.94",
+
+	"input_lra" : "9.00",
+
+	"input_thresh" : "-24.62",
+
+	"output_i" : "-24.50",
+
+	"output_tp" : "-6.65",
+
+	"output_lra" : "4.60",
+
+	"output_thresh" : "-34.80",
+
+	"normalization_type" : "dynamic",
+
+	"target_offset" : "-1.50"
+
+}
+
+[out#0/null @ 000001cb5cbc6640] video:0KiB audio:112536KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+
+size=N/A time=00:02:30.10 bitrate=N/A speed=54.7x

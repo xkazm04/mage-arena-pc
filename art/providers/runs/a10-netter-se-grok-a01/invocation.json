@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "bf34e984-211b-4312-9534-8b5e3d038be0",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-netter-se-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-netter-se-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/netter-se-square-v1.png",
+      "sha256": "fc7c5032f18f5238aab2f2949622850c61939f04cfb0aa4a931746f7b6f90d39",
+      "role": "single full-body A3c identity crop or reviewed direction guide on square canvas"
+    }
+  ]
+}

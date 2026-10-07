@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "0f6c8e2b-8a0c-4b39-a45d-c5e6caa7bea6",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-conscript-se-guide-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-conscript-se-guide-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/conscript-se-guide-input.png",
+      "sha256": "e8fe7be1f8aa16f27dff39db98a153d15098f6ae53b10a91d99fa403a2d8b6cb",
+      "role": "full-body A3c identity; change anatomical viewing direction only"
+    }
+  ]
+}

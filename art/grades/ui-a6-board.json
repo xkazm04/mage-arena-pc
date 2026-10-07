@@ -1,0 +1,103 @@
+{
+  "artifact": "a6-board",
+  "at": "2026-10-02T15:30:18.858852+00:00",
+  "input_hash": "21d93a41d3603b5bc871f531e6534bb9fa4bdfb916d98be4f1471064d8e277bb",
+  "source": "art/review/a6/board-1920.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "3754632a54b03b8b9ab48e60058a000f4f98d5be62678cf29179cad211dcb48d",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks neutral dark comparison board with readable pale labels and named direction pairs. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Top of A6 owner board: title, navigation, spend, owner-only recommendation and direction selector must be readable without overlap; image pairs continue below the fold. Do not require all eight pairs in this viewport.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\"forbidden_rendering\": false, \"overhead_view\": \"yes\", \"required_content\": \"yes\", \"style_match\": \"yes\", \"readability\": 3, \"confidence\": 0.5, \"observation\": \"The UI capture displays a dark-themed owner board with a clear hierarchy. The title 'Eight identities' is prominent at the top, followed by a navigation bar with links like 'Eight pairs' and 'Combined contact sheet'. Below this, there are two distinct text blocks: one detailing the identity choice and image charges, and another providing recommendations for the owner. A direction selector dropdown labeled 'All eight' is visible. The section '01 · Flint Litany' begins below, showing a description and two images side-by-side. All text is readable, there are no overlapping elements, and the layout is clean and organized. The images appear to be part of the content, not unintended inserts. The overall design matches the expected neutral dark comparison board with readable pale labels.\"}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.5,
+    "observation": "The UI capture displays a dark-themed owner board with a clear hierarchy. The title 'Eight identities' is prominent at the top, followed by a navigation bar with links like 'Eight pairs' and 'Combined contact sheet'. Below this, there are two distinct text blocks: one detailing the identity choice and image charges, and another providing recommendations for the owner. A direction selector dropdown labeled 'All eight' is visible. The section '01 · Flint Litany' begins below, showing a description and two images side-by-side. All text is readable, there are no overlapping elements, and the layout is clean and organized. The images appear to be part of the content, not unintended inserts. The overall design matches the expected neutral dark comparison board with readable pale labels."
+  },
+  "eval_count": 205,
+  "elapsed_seconds": 17.75,
+  "verdict": "owner-review",
+  "codes": [
+    "GRADER_UNCERTAIN"
+  ],
+  "owner_accepted": false
+}

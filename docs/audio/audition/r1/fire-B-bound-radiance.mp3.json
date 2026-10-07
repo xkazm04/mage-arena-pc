@@ -1,0 +1,50 @@
+{
+  "id": "9495f08f-0cb9-4ec0-9a9d-d49ec39e56c0",
+  "ts": "2026-10-02T21:00:13.694Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One fire spell cast: an ember snaps into a bright unstable harmonic ribbon, with granular flame underneath. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r1/fire-B-bound-radiance.mp3",
+  "request": {
+    "text": "One fire spell cast: an ember snaps into a bright unstable harmonic ribbon, with granular flame underneath. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 33062,
+  "sha256": "797895d7c75bf5b28db38bd432a96679d5c15125e022f2156dc81bf8c65aea8e",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:00:13.693Z",
+    "tier": "starter",
+    "used": 64476,
+    "limit": 90000,
+    "remaining": 25524,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 40,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:00:16.917Z",
+    "tier": "starter",
+    "used": 64476,
+    "limit": 90000,
+    "remaining": 25524,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

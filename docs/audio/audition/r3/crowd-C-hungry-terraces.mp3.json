@@ -1,0 +1,49 @@
+{
+  "id": "d43313f7-372f-4e62-9ee2-e47e491a481f",
+  "wave": "AU2b",
+  "ts": "2026-10-03T11:33:18.729Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "Three seconds of a raw blood-hungry colosseum crowd demanding a brutal fight. Rough adult throats bellow, snarl and shout wordlessly, close hoarse voices against a dense terrace roar, irregular feet pounding stone. Aggressive anticipation and menace, not celebration. Natural open stone amphitheatre reflections. No football or soccer chants, synchronized slogan, singing, melody, whistles, applause, PA announcer or music.",
+  "seconds": 3,
+  "chars": null,
+  "out": "docs/audio/audition/r3/crowd-C-hungry-terraces.mp3",
+  "request": {
+    "text": "Three seconds of a raw blood-hungry colosseum crowd demanding a brutal fight. Rough adult throats bellow, snarl and shout wordlessly, close hoarse voices against a dense terrace roar, irregular feet pounding stone. Aggressive anticipation and menace, not celebration. Natural open stone amphitheatre reflections. No football or soccer chants, synchronized slogan, singing, melody, whistles, applause, PA announcer or music.",
+    "duration_seconds": 3,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "30"
+  },
+  "bytes": 48945,
+  "sha256": "c50e211e2eef44072420a049eec67d35f379265a4d32d11c6ec9e2d094e7794d",
+  "accountBefore": {
+    "observedAt": "2026-10-03T11:33:18.728Z",
+    "tier": "starter",
+    "used": 73826,
+    "limit": 90000,
+    "remaining": 16174,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 60,
+  "estimatedCredits": 60,
+  "documentedEstimateCredits": 60,
+  "chargedCredits": 60,
+  "measuredCredits": 30,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-03T11:33:37.940Z",
+    "tier": "starter",
+    "used": 73841,
+    "limit": 90000,
+    "remaining": 16159,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 15,
+  "flags": [],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

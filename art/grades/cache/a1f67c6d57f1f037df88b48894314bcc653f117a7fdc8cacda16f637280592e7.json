@@ -1,0 +1,98 @@
+{
+  "artifact": "a3-poses",
+  "at": "2026-10-02T11:36:39.059275+00:00",
+  "input_hash": "a1f67c6d57f1f037df88b48894314bcc653f117a7fdc8cacda16f637280592e7",
+  "source": "art/review/a3/key-pose-contact.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "6ce9b6c90935d97d7d26f66b3ec28896ca9404193e0b95f8f479982138f9cba4",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Pose contact at 1080p near body scale. Nine delivered identities and three missing creature rows intentionally blank with missing labels. Repeated run keys disclosed. Brennic/Garran/Iskar absorb reuse cast body; these are not independent generated gestures. Inspect clipped bodies, magenta fringes, reading of silhouettes and costume drift; reject or owner route only.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"no\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The image is a clean, code-drawn HTML/SVG contact sheet on a parchment background. It lists 12 character/creature identities. The first 8 (Cassia, Brennic, Garran, Iskar, Hastatus, Scutum, Funditor, Net-thrower) and the 9th (Cinder hound) have pose sprites rendered. The last 3 (Mire maw, Thornback, Hush moth) are explicitly labeled 'MISSING — spending latch; no generated source', which matches the expectation of 9 delivered and 3 missing. The poses are small (near body scale at 1080p), consistent with the title. The color palette uses umber, terracotta, and muted greens/blues (mineral blue), fitting the style. Text is clear and legible. No watermarks, logos, or photographic inserts are present. The layout is a standard grid with labels under each sprite. Some sprites show slight pixelation or alpha fringing (e.g., Iskar's run-b has a white speck, Net-thrower's net is semi-transparent), but these are minor and consistent with 'extracted alpha' as noted in the header. The 'absorb' poses for Brennic, Garran, and Iskar do visually resemble their 'cast-release' or 'cast-windup' poses, supporting the note that they are reused gestures. No critical defects like clipped bodies or unreadable text are observed. The sheet is well-organized and meets the stated expectations.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "no",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The image is a clean, code-drawn HTML/SVG contact sheet on a parchment background. It lists 12 character/creature identities. The first 8 (Cassia, Brennic, Garran, Iskar, Hastatus, Scutum, Funditor, Net-thrower) and the 9th (Cinder hound) have pose sprites rendered. The last 3 (Mire maw, Thornback, Hush moth) are explicitly labeled 'MISSING — spending latch; no generated source', which matches the expectation of 9 delivered and 3 missing. The poses are small (near body scale at 1080p), consistent with the title. The color palette uses umber, terracotta, and muted greens/blues (mineral blue), fitting the style. Text is clear and legible. No watermarks, logos, or photographic inserts are present. The layout is a standard grid with labels under each sprite. Some sprites show slight pixelation or alpha fringing (e.g., Iskar's run-b has a white speck, Net-thrower's net is semi-transparent), but these are minor and consistent with 'extracted alpha' as noted in the header. The 'absorb' poses for Brennic, Garran, and Iskar do visually resemble their 'cast-release' or 'cast-windup' poses, supporting the note that they are reused gestures. No critical defects like clipped bodies or unreadable text are observed. The sheet is well-organized and meets the stated expectations."
+  },
+  "eval_count": 386,
+  "elapsed_seconds": 10.093
+}

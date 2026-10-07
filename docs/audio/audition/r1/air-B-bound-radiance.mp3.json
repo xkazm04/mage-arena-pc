@@ -1,0 +1,50 @@
+{
+  "id": "91d57a5d-a45c-4de5-a8f9-1b1fd38cb11f",
+  "ts": "2026-10-02T21:02:01.084Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One air spell cast: a focused airy snap with a narrow electric filament and disappearing high harmonics. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r1/air-B-bound-radiance.mp3",
+  "request": {
+    "text": "One air spell cast: a focused airy snap with a narrow electric filament and disappearing high harmonics. Two seconds including tail. One isolated event, immediate attack and natural short decay, close and dry, no voice, no music, no repeated attacks.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 33062,
+  "sha256": "271b478d79ef961ee2934c896c173d39cb4df3d8d0a6267d0c96e136def549d5",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:02:01.083Z",
+    "tier": "starter",
+    "used": 65188,
+    "limit": 90000,
+    "remaining": 24812,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 40,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:02:04.528Z",
+    "tier": "starter",
+    "used": 65188,
+    "limit": 90000,
+    "remaining": 24812,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

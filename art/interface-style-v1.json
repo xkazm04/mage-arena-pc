@@ -1,0 +1,47 @@
+{
+  "version": "interface-style-v1",
+  "origin": "authored vector UI in owner-chosen Tessera & Lime palette",
+  "palette": {
+    "ink": "#38291e",
+    "paper": "#f3e7c7",
+    "blue": "#236d84",
+    "clay": "#a64e39",
+    "gold": "#b48b47",
+    "night": "#172832"
+  },
+  "font_family": "Segoe UI, sans-serif",
+  "minimum_hit_target_px": 44,
+  "frame_states": {
+    "ordinary": {
+      "accent": "#b48b47",
+      "label": "Read"
+    },
+    "unread": {
+      "accent": "#236d84",
+      "label": "New"
+    },
+    "selected": {
+      "accent": "#236d84",
+      "label": "Selected"
+    },
+    "warning": {
+      "accent": "#a64e39",
+      "label": "Attention"
+    }
+  },
+  "frame_viewbox": [
+    0,
+    0,
+    400,
+    300
+  ],
+  "frame_safe_inset_px": 24,
+  "nine_slice_insets_px": [
+    24,
+    24,
+    24,
+    24
+  ],
+  "owner_accepted": false,
+  "minimum_body_text_px": 16
+}

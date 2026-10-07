@@ -1,0 +1,47 @@
+{
+  "id": "a7-arena-moonlit-agy-a01",
+  "wave": "A7",
+  "style_id": "covenant",
+  "scene": "arena-moonlit",
+  "attempt": 1,
+  "input": {
+    "version": 1,
+    "id": "arena-moonlit",
+    "wave": "A7",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "16:9",
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "references": [
+      {
+        "path": "art/review/sources/a7-arena-verdigris-agy-a01.png",
+        "sha256": "71d08aa2e70c02e0fe9d3b96664f533181935016ec065c6937888b0173d49186"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e"
+      }
+    ],
+    "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nGenerate ONE empty wide 16:9 arena palette variant. reference-1.png is the layout and camera reference: preserve its five edge pylons, distant oblique fixed view, low perimeter walls, sparse cracks and broad empty central lanes. reference-2.png is PALETTE inspiration only, do not copy its figures or effects. New palette: deep moonlit blue-black stone, cold slate planes, restrained silver-blue edge lights, dark navy shadows. Preserve reference-1 broad smooth painted stone planes and localized worn edges. No people, creatures, active spells, UI, labels, letters or frame. No grain or paper texture. Strong reference-guided new painting; maintain macro composition."
+  },
+  "input_hash": "eeb68f6924802fd994aa57f32dae589010caf97572512536c419956833c023c5",
+  "prompt": "Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nGenerate ONE empty wide 16:9 arena palette variant. reference-1.png is the layout and camera reference: preserve its five edge pylons, distant oblique fixed view, low perimeter walls, sparse cracks and broad empty central lanes. reference-2.png is PALETTE inspiration only, do not copy its figures or effects. New palette: deep moonlit blue-black stone, cold slate planes, restrained silver-blue edge lights, dark navy shadows. Preserve reference-1 broad smooth painted stone planes and localized worn edges. No people, creatures, active spells, UI, labels, letters or frame. No grain or paper texture. Strong reference-guided new painting; maintain macro composition.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "820f4b97-1624-4bdb-b467-64eed53637a6",
+  "at": "2026-10-02T18:59:35.567228+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 74.047,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a7-arena-moonlit-agy-a01/source.png",
+  "archive": "art/review/sources/a7-arena-moonlit-agy-a01.png",
+  "sha256": "5f70fb89c6b79e67ea82ff4a3f8e9002bc6f0bb0e3a64d5f9e87568010d6af11"
+}

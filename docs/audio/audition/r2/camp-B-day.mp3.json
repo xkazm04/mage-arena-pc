@@ -1,0 +1,77 @@
+{
+  "id": "cb98f877-c070-413c-86e6-5e5f9935653a",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:07:09.223Z",
+  "kind": "music",
+  "model": "music_v1",
+  "voice": null,
+  "text": "Original instrumental music for a guarded Roman-era camp of captive mages. Soft bowed viola and plucked low strings, an exposed memorable melody with a tiny resonant ceramic-bell answer. DAY: fragile warmth under restraint; a gently rising modal phrase, a light slow pulse and room for conversation. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+  "seconds": 12,
+  "chars": null,
+  "out": "docs/audio/audition/r2/camp-B-day.mp3",
+  "request": {
+    "prompt": "Original instrumental music for a guarded Roman-era camp of captive mages. Soft bowed viola and plucked low strings, an exposed memorable melody with a tiny resonant ceramic-bell answer. DAY: fragile warmth under restraint; a gently rising modal phrase, a light slow pulse and room for conversation. Twelve seconds with an audible melodic phrase starting immediately. Modest ensemble, no big cinematic percussion, no choir or voice, no spell effects. Hold the established texture to the end rather than fading to silence. A musical style sketch, not a trailer.",
+    "music_length_ms": 12000,
+    "force_instrumental": true,
+    "model_id": "music_v1"
+  },
+  "billingHeaders": {
+    "song-id": "q0g0po0POefrjhIj4Yyj"
+  },
+  "bytes": 192306,
+  "sha256": "54092841ef09317952abdc4ffaa317ce9cc332b15eb043037db05cef51d4e86e",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:07:09.223Z",
+    "tier": "starter",
+    "used": 69587,
+    "limit": 90000,
+    "remaining": 20413,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 360,
+  "estimatedCredits": 360,
+  "documentedEstimateCredits": 180,
+  "chargedCredits": 360,
+  "measuredCredits": null,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:07:32.254Z",
+    "tier": "starter",
+    "used": 69587,
+    "limit": 90000,
+    "remaining": 20413,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-02T23:08:03.652Z",
+      "tier": "starter",
+      "used": 69587,
+      "limit": 90000,
+      "remaining": 20413,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    },
+    {
+      "observedAt": "2026-10-02T23:08:35.015Z",
+      "tier": "starter",
+      "used": 69947,
+      "limit": 90000,
+      "remaining": 20053,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    }
+  ],
+  "accountSettled": {
+    "observedAt": "2026-10-02T23:08:35.015Z",
+    "tier": "starter",
+    "used": 69947,
+    "limit": 90000,
+    "remaining": 20053,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "settledDelta": 360,
+  "flags": [
+    "charge_visible_only_after_settlement_wait"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

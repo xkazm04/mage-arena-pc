@@ -1,0 +1,48 @@
+{
+  "status": "partial",
+  "newProviderCalls": 0,
+  "newGeneratedImages": 0,
+  "clock": {
+    "rim": {
+      "source": "art/review/sources/a5b-ui-ornament-proof-agy-a01.png",
+      "sha256": "7de5261ff29be05e74c01c6d42d904045d99ccfb1bc74afde116bea132186396",
+      "crop": [
+        518,
+        518,
+        1019,
+        1019
+      ],
+      "origin": "existing A5b generated silver rim; native crop, key, resize and placement only; no new image call"
+    },
+    "mist": {
+      "manifest": "art/delivery/a8/effects.json",
+      "page": "art/delivery/a8/atlases/water.png",
+      "pageSha256": "a81a29db570901ab0a6f6ec6212ba07f8165e7a882958ef23970c0bea621f108",
+      "clip": "water.aura",
+      "frame": 2,
+      "origin": "existing generated A8 emission keys; crop, anisotropic resize and opacity derived"
+    },
+    "otherLayers": "original authored masks, relief shading, gradients and compositing; NOT newly generated imagery"
+  },
+  "statIcons": "original authored geometry, relief shading and sparse physical edge nicks; not generated icons",
+  "backlog": [
+    "Generate new gold, reputation and fatigue paintings after a provider is legitimately available",
+    "Generate Tideglass painted state/layer sheet and compare against this authored design",
+    "Owner approval and game integration"
+  ],
+  "providerStops": {
+    "agy": {
+      "at": "2026-10-03T13:17:30.387432+00:00",
+      "event": "stop",
+      "job": "a10-brennic-north-agy-a01",
+      "reason": "exit=0; files=2"
+    },
+    "grok": {
+      "at": "2026-10-03T14:16:21.382680+00:00",
+      "event": "stop",
+      "job": "a10-cinder_hound-ne-grok-a02",
+      "reason": "HTTP 429"
+    }
+  },
+  "owner_accepted": false
+}

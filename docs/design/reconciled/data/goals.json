@@ -1,0 +1,221 @@
+{
+  "rise_in_tent": [
+    {
+      "intent": "TRAIN",
+      "args": {
+        "stat": "$preferredStat"
+      }
+    },
+    {
+      "intent": "BEFRIEND",
+      "args": {
+        "target": "$elder"
+      }
+    }
+  ],
+  "win_games": [
+    {
+      "intent": "TRAIN",
+      "args": {
+        "stat": "$preferredStat"
+      }
+    },
+    {
+      "intent": "WATCH",
+      "args": {
+        "target": "$rival"
+      }
+    },
+    {
+      "intent": "SCHEME",
+      "args": {
+        "kind": "steal",
+        "target": "$rival"
+      }
+    }
+  ],
+  "protect": [
+    {
+      "intent": "PROTECT",
+      "args": {
+        "target": "$goalTarget"
+      }
+    },
+    {
+      "intent": "REPORT",
+      "args": {
+        "target": "$schemer"
+      }
+    }
+  ],
+  "revenge": [
+    {
+      "intent": "SCHEME",
+      "args": {
+        "kind": "persuade",
+        "target": "$goalTarget"
+      }
+    }
+  ],
+  "escape_research": [
+    {
+      "intent": "TRAIN",
+      "args": {
+        "stat": "focus"
+      },
+      "location": "cistern"
+    },
+    {
+      "intent": "BEFRIEND",
+      "args": {
+        "target": "quill"
+      },
+      "location": "commons"
+    },
+    {
+      "intent": "PLOT",
+      "args": {},
+      "location": "edge"
+    }
+  ],
+  "build_fifth_tent": [
+    {
+      "intent": "RECRUIT",
+      "args": {
+        "target": "$stray"
+      }
+    },
+    {
+      "intent": "PROTECT",
+      "args": {
+        "target": "$stray"
+      }
+    }
+  ],
+  "undermine": [
+    {
+      "intent": "SCHEME",
+      "args": {
+        "kind": "rumour",
+        "target": "$rival",
+        "topic": "serves_rome"
+      }
+    },
+    {
+      "intent": "RECRUIT",
+      "args": {
+        "target": "$rival"
+      }
+    }
+  ],
+  "win_favour": [
+    {
+      "intent": "PROTECT",
+      "args": {
+        "target": "$goalTarget"
+      }
+    },
+    {
+      "intent": "BEFRIEND",
+      "args": {
+        "target": "$goalTarget"
+      }
+    }
+  ],
+  "repay_debt": [
+    {
+      "intent": "PROTECT",
+      "args": {
+        "target": "$creditor"
+      }
+    }
+  ],
+  "find_tent": [
+    {
+      "intent": "WORK",
+      "args": {}
+    },
+    {
+      "intent": "BEFRIEND",
+      "args": {
+        "target": "$elder"
+      }
+    }
+  ],
+  "survive": [
+    {
+      "intent": "WORK",
+      "args": {}
+    },
+    {
+      "intent": "REST",
+      "args": {}
+    }
+  ],
+  "keep_peace": [
+    {
+      "intent": "REPORT",
+      "args": {
+        "target": "$schemer"
+      }
+    },
+    {
+      "intent": "BEFRIEND",
+      "args": {
+        "target": "$peer"
+      }
+    }
+  ],
+  "profit": [
+    {
+      "intent": "OFFER",
+      "args": {
+        "target": "$peer",
+        "terms": "back_entrant"
+      }
+    },
+    {
+      "intent": "WORK",
+      "args": {}
+    },
+    {
+      "intent": "WATCH",
+      "args": {
+        "target": "$peer"
+      }
+    }
+  ],
+  "learn_secrets": [
+    {
+      "intent": "WATCH",
+      "args": {
+        "target": "$peer"
+      }
+    },
+    {
+      "intent": "CONFIDE",
+      "args": {
+        "target": "$peer",
+        "factId": "$knownFact"
+      }
+    }
+  ],
+  "hold_fifth_tent": [
+    {
+      "intent": "RECRUIT",
+      "args": {
+        "target": "$stray"
+      }
+    },
+    {
+      "intent": "PROTECT",
+      "args": {
+        "target": "$peer"
+      }
+    },
+    {
+      "intent": "WORK",
+      "args": {}
+    }
+  ]
+}

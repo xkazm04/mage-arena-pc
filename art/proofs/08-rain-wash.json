@@ -1,0 +1,25 @@
+{
+  "job": "08-rain-wash-arena-a02",
+  "style_id": "08-rain-wash",
+  "source": "art/raw/08-rain-wash-arena-a02/source.jpg",
+  "sha256": "7ac31a5e1de9d440978a36cca4cc4869d97354095cd7177000c325c1cb28c834",
+  "style_hash": "cd60552337627ee9ddb994fb3aa99167913284170d70de7707b351901c416da5",
+  "pair_input_hash": "521d8b2c4e32ae9a6b6ee3594a24b32f303d313c53069706c627afbb3a623fcf",
+  "verdict": "exploration-sibling-ready",
+  "reviewer": "executing-agent",
+  "note": "Actual pixels: translucent lavender/ochre washes, white paper, faint contour and pigment edges; full player under a forward cyan wash arc with orange impact and a separate dart. Enemy spacing and red-black hazard are clear. Perspective is elevated oblique; tiny silhouette readability needs owner judgment.",
+  "owner_accepted": false,
+  "label": "authored direct pixel observation; not felt",
+  "gate": {
+    "verdict": "technical-pass",
+    "codes": [],
+    "metrics": {
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG",
+      "aspect": 1.7777777777777777,
+      "luminance_stddev": 34.591941286529675
+    },
+    "scope": "file, dimensions, aspect, alpha, contrast and hash only; semantics and taste not measured here"
+  }
+}

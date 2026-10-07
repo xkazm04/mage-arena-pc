@@ -1,0 +1,80 @@
+{
+  "id": "01-tessera-split-lanes-busy-standard-a01",
+  "style_id": "01-tessera",
+  "scene": "split-lanes-busy-standard",
+  "attempt": 1,
+  "input_hash": "7cd764dcf273d52deef0b258fe589de1498ca4e06a0251bc2bee6ee271535ada",
+  "input": {
+    "version": "a1b-v2",
+    "wave": "A1b",
+    "style": {
+      "id": "01-tessera",
+      "name": "Tessera & Lime",
+      "line": "broken umber contours and hand-painted tessera joins",
+      "palette": "chalk, terracotta, ochre, mineral blue",
+      "shading": "flat fresco planes with sparse tile shadows",
+      "density": "medium, ornament confined to edges",
+      "mood": "sun-bleached civic grandeur and captivity",
+      "style_block": "STYLE: A hand-drawn digital fusion of Roman fresco and mosaic. Broken umber contours surround flat chalk-lime and terracotta forms; small irregular painted tessera shapes cluster at architectural edges while open ground remains broad matte pigment. Mineral blue and pale turquoise carry water, vermilion carries hostile fire, dull ochre carries stone and bronze. Shading is flattened fresco colour planes with rubbed plaster gaps, never realistic volume; ornament has civic gravity but the mood is sun-bleached captivity. The mosaic is a drawing language inside the scene, not a photograph of a wall or a framed historical artifact.",
+      "ui": {
+        "paper": "#f3e6c5",
+        "ink": "#38261f",
+        "accent": "#226b8b"
+      }
+    },
+    "scene": "split-lanes-busy-standard",
+    "aspect_ratio": "16:9",
+    "brief_hash": "2dd473a6806b9cd110f51ec5275bd3c0f8a14abecad1f82990c376617293cdfa",
+    "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents.\n\nUse case: stylized-concept. Original Roman-era elemental-mage arena, Tessera & Lime palette: chalk sand, terracotta, mineral blue, umber contour. Hand-painted digital overhead map with small edge tesserae and matte pigment. Do not depict an ancient wall mural: depict a playable arena seen from high above. No text, UI, letters, logos or photorealism."
+  },
+  "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents.\n\nUse case: stylized-concept. Original Roman-era elemental-mage arena, Tessera & Lime palette: chalk sand, terracotta, mineral blue, umber contour. Hand-painted digital overhead map with small edge tesserae and matte pigment. Do not depict an ancient wall mural: depict a playable arena seen from high above. No text, UI, letters, logos or photorealism.",
+  "session_id": "778a1260-8bd9-4333-9723-2924a832ef6f",
+  "origin": "grok-cli",
+  "model": "grok-4.7",
+  "seed": null,
+  "correction": null,
+  "wave": "A1b",
+  "at": "2026-10-02T07:08:19.351387+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_gen",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "778a1260-8bd9-4333-9723-2924a832ef6f",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\01-tessera-split-lanes-busy-standard-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "tool_calls": [
+    {
+      "name": "image_gen",
+      "arguments": {
+        "prompt": "EXTREME LONG SHOT, HIGH AERIAL VIEW. Landscape arena floor fills the entire 16:9 image. The camera is 55 degrees above the ground. Tiny overhead people with the tops of their heads visible, each whole person 5% of image height (36 pixels at 720p). The distant people look like tiny specks on a huge map: no faces or anatomy details. Vast empty floor separates every person. No large person, no foreground person. A vast rectangular sand court divided by two low broken strips of terracotta masonry, broad gaps at their ends and a huge central crossing. Walls never hide combatants. One tiny blue mage near centre and eight tiny ochre/red enemies spaced widely, with clear escape paths between. A little cyan open crescent immediately in front of the blue mage, facing one incoming red projectile; the back of the mage is open. Two hollow red floor warning circles twice the height of a person. One thin blue bolt. The setting and immense ground area dominate; people are miniature accents.\n\nUse case: stylized-concept. Original Roman-era elemental-mage arena, Tessera & Lime palette: chalk sand, terracotta, mineral blue, umber contour. Hand-painted digital overhead map with small edge tesserae and matte pigment. Do not depict an ancient wall mural: depict a playable arena seen from high above. No text, UI, letters, logos or photorealism.",
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "tool_results": [
+    "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-split-lanes-busy-standard-a01\\\\778a1260-8bd9-4333-9723-2924a832ef6f\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C01-tessera-split-lanes-busy-standard-a01\\\\778a1260-8bd9-4333-9723-2924a832ef6f\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+  ],
+  "prompt_verbatim_verified": true,
+  "returncode": 0,
+  "source": "art/raw/01-tessera-split-lanes-busy-standard-a01/source.jpg",
+  "sha256": "a259594d9b9d845aa8b6ae720078d24f5b1252b56f1e26af6414133d8eb6f97e",
+  "elapsed_seconds": 22.078
+}

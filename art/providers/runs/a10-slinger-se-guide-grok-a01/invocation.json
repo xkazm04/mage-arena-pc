@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "ef738c47-cfec-4b9f-98bb-0a874787e1bd",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-slinger-se-guide-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-slinger-se-guide-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/slinger-se-guide-input.png",
+      "sha256": "5ca81bc329306b36c39e47ca47e1091ac4c08920c40fe1414fdf1d52d874c129",
+      "role": "full-body A3c identity; change anatomical viewing direction only"
+    }
+  ]
+}

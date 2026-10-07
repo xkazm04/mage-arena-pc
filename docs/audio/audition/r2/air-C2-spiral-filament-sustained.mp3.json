@@ -1,0 +1,51 @@
+{
+  "id": "4d112462-09fa-42da-8239-47a3320a4396",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:05:34.938Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "Seamless two-second loop of a steady magical turbine wind. Constant subtle but clearly present airflow from the first sample through the last, same strength at both ends, no attack or decay. Fine spiralling turbine hiss with two close magical whistling partials gently beating. An uninterrupted rotating air column, not a whoosh or an impact. No silence, voice, music or harsh machinery.",
+  "seconds": 2,
+  "chars": null,
+  "out": "docs/audio/audition/r2/air-C2-spiral-filament-sustained.mp3",
+  "request": {
+    "text": "Seamless two-second loop of a steady magical turbine wind. Constant subtle but clearly present airflow from the first sample through the last, same strength at both ends, no attack or decay. Fine spiralling turbine hiss with two close magical whistling partials gently beating. An uninterrupted rotating air column, not a whoosh or an impact. No silence, voice, music or harsh machinery.",
+    "duration_seconds": 2,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": true
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 37242,
+  "sha256": "62bcf1750401f5acf294a029c1b5f688f2961b7853fbea38560b2e41053958f4",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:05:34.937Z",
+    "tier": "starter",
+    "used": 69207,
+    "limit": 90000,
+    "remaining": 20793,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 40,
+  "estimatedCredits": 40,
+  "documentedEstimateCredits": 40,
+  "chargedCredits": 40,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:05:55.220Z",
+    "tier": "starter",
+    "used": 69207,
+    "limit": 90000,
+    "remaining": 20793,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

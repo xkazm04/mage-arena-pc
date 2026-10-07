@@ -1,0 +1,69 @@
+{
+  "id": "41161895-0fe3-4497-bbbe-7e1b2ecada9c",
+  "wave": "AU2",
+  "ts": "2026-10-02T23:10:52.815Z",
+  "kind": "music",
+  "model": "music_v1",
+  "voice": null,
+  "text": "Original ten-second instrumental title-menu theme for captive elemental mages in a Roman world. A muted lyre states a memorable five-note minor melody from the first second, a quiet breath flute answers, and a warm bowed low string leaves the last harmony open. Dignified resolve with sadness, a small human ensemble. Hide drum only once very softly at the opening. No choir, voice, huge trailer percussion or final crash.",
+  "seconds": 10,
+  "chars": null,
+  "out": "docs/audio/audition/r2/title-A-unbroken-thread.mp3",
+  "request": {
+    "prompt": "Original ten-second instrumental title-menu theme for captive elemental mages in a Roman world. A muted lyre states a memorable five-note minor melody from the first second, a quiet breath flute answers, and a warm bowed low string leaves the last harmony open. Dignified resolve with sadness, a small human ensemble. Hide drum only once very softly at the opening. No choir, voice, huge trailer percussion or final crash.",
+    "music_length_ms": 10000,
+    "force_instrumental": true,
+    "model_id": "music_v1"
+  },
+  "billingHeaders": {
+    "song-id": "lwR11LI22QiEv4I4bncv"
+  },
+  "bytes": 160541,
+  "sha256": "ed71ead377e1d2003dd0e02b1e7e368eff68e26d51d0aa942ba7970ffccda627",
+  "accountBefore": {
+    "observedAt": "2026-10-02T23:10:52.815Z",
+    "tier": "starter",
+    "used": 70667,
+    "limit": 90000,
+    "remaining": 19333,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 300,
+  "estimatedCredits": 300,
+  "documentedEstimateCredits": 150,
+  "chargedCredits": 300,
+  "measuredCredits": null,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T23:11:15.190Z",
+    "tier": "starter",
+    "used": 70667,
+    "limit": 90000,
+    "remaining": 19333,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-02T23:11:46.625Z",
+      "tier": "starter",
+      "used": 70967,
+      "limit": 90000,
+      "remaining": 19033,
+      "resetsAt": "2026-10-04T19:31:41.000Z"
+    }
+  ],
+  "accountSettled": {
+    "observedAt": "2026-10-02T23:11:46.625Z",
+    "tier": "starter",
+    "used": 70967,
+    "limit": 90000,
+    "remaining": 19033,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "settledDelta": 300,
+  "flags": [
+    "charge_visible_only_after_settlement_wait"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

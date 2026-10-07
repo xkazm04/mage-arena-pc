@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "36344771-462f-4b3d-8351-b97f86f6ff2a",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-grok-a02\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-grok-a02",
+  "references": [
+    {
+      "path": "art/review/sources/a12-verdigris-clean-grok-a01.jpg",
+      "sha256": "84f25fda44bb8483ec92097d67037e711fd2cc22a7b003d5c170f4e0c7e79a46",
+      "role": "edit target; rejected because one quadruped remains"
+    }
+  ]
+}

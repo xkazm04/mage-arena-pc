@@ -1,0 +1,77 @@
+{
+  "id": "02-salt-ink-camp-a01",
+  "style_id": "02-salt-ink",
+  "scene": "camp",
+  "attempt": 1,
+  "input_hash": "fafd74fccd40214d813bfba9f556b7e1be0a882ab55adfeded1cd6bd9d479382",
+  "input": {
+    "version": "a1-v3",
+    "style": {
+      "id": "02-salt-ink",
+      "name": "Salt & Scribe",
+      "line": "fine nervous pen with broken edges",
+      "palette": "parchment, soot, muted indigo, rust",
+      "shading": "crosshatching and dilute ink wash",
+      "density": "sparse with large paper reserves",
+      "mood": "secretive, brittle, observant",
+      "style_block": "STYLE: Hand-drawn digital pen-and-ink on warm fibrous parchment, with fine nervous dark strokes, broken contours and dry-nib crosshatching. Mostly parchment and soot, with muted indigo washes for water, pinches of rust for hostile fire, and pale stone ochre. Shadows are sparse hatch groups and dilute ink pools; large untouched paper shapes keep routes and action legible. Narrow, wiry figures and economical architectural marks create a secretive, brittle, observant mood. No polished comic outlines or smooth rendered gradients.",
+      "ui": {
+        "paper": "#eee0bd",
+        "ink": "#292827",
+        "accent": "#374d73"
+      }
+    },
+    "scene": "camp",
+    "prompt": "STYLE: Hand-drawn digital pen-and-ink on warm fibrous parchment, with fine nervous dark strokes, broken contours and dry-nib crosshatching. Mostly parchment and soot, with muted indigo washes for water, pinches of rust for hostile fire, and pale stone ochre. Shadows are sparse hatch groups and dilute ink pools; large untouched paper shapes keep routes and action legible. Narrow, wiry figures and economical architectural marks create a secretive, brittle, observant mood. No polished comic outlines or smooth rendered gradients.\n\nACTION: A wide overhead illustrated navigation map of the guarded mage camp, a complete walkable enclosure with branching paths and small collared adult inhabitants, no combat or spellcasting. Arrange a staff-training yard at upper left, a dry round cistern at upper centre, a sunken sparring pit at upper right; a market of awnings at middle left, a communal bread table and gathering square at the centre, a monumental barred arena door at middle right; a cluster of patched living tents at lower left, and a fogbound camp boundary with a secluded meeting path at lower right. Make each destination a distinct recognizable landmark with empty ground nearby for later code-drawn labels; salt ward posts and patrolling guards communicate confinement without obscuring routes. Leave calm space along the top for the day time-slot strip and along the bottom for destination information; draw only the map, all text and time-slot controls are added in code.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+    "aspect_ratio": "16:9"
+  },
+  "prompt": "STYLE: Hand-drawn digital pen-and-ink on warm fibrous parchment, with fine nervous dark strokes, broken contours and dry-nib crosshatching. Mostly parchment and soot, with muted indigo washes for water, pinches of rust for hostile fire, and pale stone ochre. Shadows are sparse hatch groups and dilute ink pools; large untouched paper shapes keep routes and action legible. Narrow, wiry figures and economical architectural marks create a secretive, brittle, observant mood. No polished comic outlines or smooth rendered gradients.\n\nACTION: A wide overhead illustrated navigation map of the guarded mage camp, a complete walkable enclosure with branching paths and small collared adult inhabitants, no combat or spellcasting. Arrange a staff-training yard at upper left, a dry round cistern at upper centre, a sunken sparring pit at upper right; a market of awnings at middle left, a communal bread table and gathering square at the centre, a monumental barred arena door at middle right; a cluster of patched living tents at lower left, and a fogbound camp boundary with a secluded meeting path at lower right. Make each destination a distinct recognizable landmark with empty ground nearby for later code-drawn labels; salt ward posts and patrolling guards communicate confinement without obscuring routes. Leave calm space along the top for the day time-slot strip and along the bottom for destination information; draw only the map, all text and time-slot controls are added in code.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+  "session_id": "b8c03b0a-f03b-47bf-aff4-97be10d879ea",
+  "origin": "grok-cli",
+  "model": "grok-4.7",
+  "seed": null,
+  "correction": null,
+  "at": "2026-10-01T22:13:55.966308+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_gen",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "b8c03b0a-f03b-47bf-aff4-97be10d879ea",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\02-salt-ink-camp-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "tool_calls": [
+    {
+      "name": "image_gen",
+      "arguments": {
+        "prompt": "STYLE: Hand-drawn digital pen-and-ink on warm fibrous parchment, with fine nervous dark strokes, broken contours and dry-nib crosshatching. Mostly parchment and soot, with muted indigo washes for water, pinches of rust for hostile fire, and pale stone ochre. Shadows are sparse hatch groups and dilute ink pools; large untouched paper shapes keep routes and action legible. Narrow, wiry figures and economical architectural marks create a secretive, brittle, observant mood. No polished comic outlines or smooth rendered gradients.\n\nACTION: A wide overhead illustrated navigation map of the guarded mage camp, a complete walkable enclosure with branching paths and small collared adult inhabitants, no combat or spellcasting. Arrange a staff-training yard at upper left, a dry round cistern at upper centre, a sunken sparring pit at upper right; a market of awnings at middle left, a communal bread table and gathering square at the centre, a monumental barred arena door at middle right; a cluster of patched living tents at lower left, and a fogbound camp boundary with a secluded meeting path at lower right. Make each destination a distinct recognizable landmark with empty ground nearby for later code-drawn labels; salt ward posts and patrolling guards communicate confinement without obscuring routes. Leave calm space along the top for the day time-slot strip and along the bottom for destination information; draw only the map, all text and time-slot controls are added in code.\n\nCONSTRAINTS: An original Roman-era elemental-mage prison game, drawn digitally by hand as a complete two-dimensional illustration. Roman-inspired tunics, sandals, limewashed masonry, terracotta, bronze collars and ward stones; invented people and symbols only. Entire scene in focus, clear silhouettes, readable at a reduced game-screen scale. No three-dimensional rendering, photography, modern equipment, existing franchise designs, text, letters, numbers, logos, watermark, panel grid or decorative outer frame.",
+        "aspect_ratio": "16:9"
+      }
+    }
+  ],
+  "tool_results": [
+    "{\"path\":\"C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C02-salt-ink-camp-a01\\\\b8c03b0a-f03b-47bf-aff4-97be10d879ea\\\\images\\\\1.jpg\",\"filename\":\"1.jpg\",\"session_folder\":\"images\",\"message\":\"Image generated and saved to C:\\\\Users\\\\kazda\\\\.grok\\\\sessions\\\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5C02-salt-ink-camp-a01\\\\b8c03b0a-f03b-47bf-aff4-97be10d879ea\\\\images\\\\1.jpg. Do not read or re-display it, and do not describe how it appears to the user.\"}"
+  ],
+  "prompt_verbatim_verified": true,
+  "returncode": 0,
+  "source": "art/raw/02-salt-ink-camp-a01/source.jpg",
+  "sha256": "c3910635ca319fa3a5366cda92f04982365aadd77736813584387858159c05af",
+  "elapsed_seconds": 21.0
+}

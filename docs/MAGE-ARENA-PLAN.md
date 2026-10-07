@@ -97,6 +97,7 @@ Two code streams and one art stream run in parallel worktrees; the orchestrator 
 | Art | A3 | Top-down figures, poses, spell effects | A1 owner choice | not planned | | |
 | Art | A4 | Camp map final, backdrops, story cards, Hollow Board frames | A1 owner choice | not planned | | |
 | Art | A5 | Icons, HUD, spell-line icons | A1 owner choice | not planned | | |
+| Audio [`audio`] | AU3 | Full arena scores C and D, normalized copies, section/cell indices, sustain/sting candidates and r4 proof | D39 | delivered for review; adaptive musical gates pending; A deferred by cap/floor | 7e7a9ed, 3b304b8 + final handoff | 2026-10-04 |
 
 ## h. Wave cards
 
@@ -264,16 +265,87 @@ Decisions: **D35** the A13 sigils (casting circles, threat decals with progress 
 
 | Stream | Id | Wave | Depends on | Status |
 |---|---|---|---|---|
-| Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | not started |
-| Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | not started |
-| Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | not started |
-| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | not started |
-| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | not started |
+| Game | U6 | Wire the A13 sigils and bring every screen up to the improved boards | D35 | complete; U6 report and evidence |
+| Game | H1 | Hit reactions (D36) and defeat (D37) in the simulation, animation selection, Lab tuning parameters, tests, census | D36, D37 | complete; H1 report and evidence |
+| Game | U6b | Wire the new character clips and the full-length tracks when delivered | D38, D39 | complete for landed gated deliveries; U6b report lists pending assets |
+| Game | U6c | Rewire A14.3 reactions, persistent corpses, extra motion and creature Lab targets | A14.3, H1 | complete for landed delivery; U6c report/evidence and exact remaining fallback table |
+| Art | A14 | Missing character clips, hit and death first (all entities, all directions, a lying final pose), hit-light and hit-heavy flinch, then the remaining clips and creature front views | D38 | A14.3: 180 priority + 46 additional clips integrated in U6c; 12 priority + 12 other gaps remain |
+| Audio | AU3 | Full-length 2 to 3 minute arena tracks (C, D, then A), loop-free, aligned to the collar clock; layers or cut points for the adaptive engine | D39 | full C/D delivered; A and adaptive certification pending, U6b audit |
+| Art | A14.1 | Hit-light, hit-heavy, collapse and persistent lying poses | D36-D38 | 124/192 slots; 68 explicit missing; owner-review; commit containing A14-1 note |
+| Art | A14.2 | Remaining clips, creature views and cheap gait corrections | A14.1, D38 | BLOCKED generation; 18-loop audit complete, no safe correction; 58 non-reaction slots missing; zero spend |
+| Art | A14.3-1 | Session 10 humanoid completion | D36-D38 | 128/192 total; all humanoid priority slots present; gates pass; 2 new charges, 344 total; owner-review |
+| Art | A14.3-2 | Session 10 creature collapse and reactions | D36-D38 | 180/192 priority slots; 12 bounded-attempt gaps; 22 session charges, 364 total; owner-review |
+| Art | A14.3-3 | Session 10 creature motion and remaining legacy clips | D38, A14.3-2 | 226 clips: 180 priority + 46 other; 12 + 12 explicit gaps; 40 session charges, 382 total; gates pass; owner-review |
 
 ## l. Session log
 
 (each run appends: wave, date, what changed, commands with results, what is `not measured`, next wave)
 
+**ART session 9 / A14 stage 2 / 2026-10-04:** Existing-pixel audit complete; generation BLOCKED. Inspected all 18 inherited ne/se run strips (14 six-key, three five-key, one three-key). No safe cheap opposite-stride correction exists in the inspected keys; Hush moth already has raised/lowered wing poses. No animation changed. Exact queue: 68 priority A14 slots, then 58 other legacy slots; the full 84-slot legacy backlog overlaps 26 priority hit/death slots. Creature front views remain missing. Zero calls/charges, total still 342/450; both latches retained. `python tools/art/a14_gait_audit.py` verifies 73 stage-1 delivery/ledger files unchanged and produces the [owner board](../art/review/a14/stage2.html), findings and queue. Stage-2 browser checks cover 1920, 2560 and 390px widths. Owner animation quality, game integration and provider account allowance remain unmeasured. Stage 1 committed as `3c4f4a9`; this stage has its own local commit. Next: restore provider availability under the retained guards, then finish priority reactions before other clips; no push.
+**AU3 / AUDIO session 4 — 2026-10-04:** D39 executed now, without waiting for reset: one 150 s six-section music_v1 composition each for Reed oath then Lyre under iron. Raw MP3s remain untouched; 48 kHz PCM derivatives are exactly 150 s at -25.99/-26.00 LUFS, below -1 dBTP, with no clipped samples. Delivered six section cuts, ten cell indices and tier map per track, 15 s sustain candidates and 5 s sting candidates, full provenance, r4 triage, updated investment proof and engine manifest. Separate commits: `7e7a9ed` C, `3b304b8` D; final handoff follows. No push.
+
+Cost: 4,500 per track, observed shared immediate/settled deltas matching 30 credits/requested second; **9,000/10,000**, last balance **1,689**, floor **1,000**. Nine HTTP requests all succeeded, minimum pacing 8.004 s, no 429/quota error or pending reservation. Budget closed. A cannot fit at 150 s (4,500) or 90 s (2,700): 1,000 job credits and 689 balance headroom remain. No retry, camp, Google or round-3 generation. Choices updated only with generation facts.
+
+Gates: `node --test tools/audio/guard.test.mjs tools/audio/guard-r4.test.mjs` 28/28; `python tools/audio/process-r4.py <track-id>` both tracks; `python tools/audio/evidence-r4.py` 18 measured/provenanced derivatives; `python tools/audio/build-reports.py`; `python tools/audio/check-reports.py` passes 73 original hash/sidecar/ledger checks, exact section reconstruction, mastering, ten-cell indices, numerical three-repeat seams, and desktop/phone light/dark browser playback/triage/export with no overflow or JS errors. Evidence: `docs/audio/evidence/r4/validation.json`. Both internal-boundary attack screens pass 9/9 at <=10 ms; onset periodicity estimates 96.021 and 95.999 BPM. These are not true-downbeat certification. Musical acceptance remains **not measured**: no listening model available, so motif identity, vocal absence, six-phase development, real harmonic release, fatigue, masking, mono/small speakers and transition harmony remain owner checks. Adaptive playback defaults disabled. Next: owner r4/r3 triage and AU4 integration/acceptance; A needs a future budget authorization, camp/Google remain separate.
+
 **Camera angle (owner, 2026-10-02): the view is oblique, about 55 degrees of elevation, never a straight 90-degree top-down.** Figures are upright billboards with visible faces and bodies; the arena ground is foreshortened. See art/CAMERA-OK.md.
 
 **Audio proof report (owner, 2026-10-02):** when the audition cap is reached, produce `docs/audio/PROOF-REPORT.html`: everything generated, per-sample prompt, duration and credit cost, the measured cost model, a candid strength and weakness assessment per category, the extrapolated cost of a full production set, and the questions to settle before investing in a richer ElevenLabs plan versus combining with Google audio services (the owner has credits through a Google ultra plan). Evidence for an investment decision; the r1 audition report stays the triage tool.
+
+
+### 2026-10-04 - GAME U6
+
+A13 imported through the verified loader; pooled painted cast, threat/progress, ward, selection/status and floor decals. Complete native 1080p/1440p screen walk, consistent school radicals/inscriptions and corrected frame insets. Geometry coverage witnesses and fallback retained. Commands/results and measured GPU texture/performance evidence: [U6 report](waves/U6-report.md). Owner visual/TV judgment remains unmeasured. Next: H1 hit reactivity and persistent defeat.
+
+
+### 2026-10-04 - GAME H1
+
+Damage-scaled .10-.20 s stagger, immunity tail, authored poise and paid-cast cancellation
+now apply to every combatant. DEFEATED is the shared serialized state tag across
+activation, movement, targeting, effects, AI, projectiles and HUD. A10 reaction
+selection, procedural recoil/fall, persistent corpses, audio hooks and paged Lab
+Hit controls are wired. Owner guide extended. Full census, seeded before/after
+metrics, save/replay and native browser captures: [H1 report](waves/H1-report.md).
+Human feel and art acceptance remain unmeasured. Next: U6b fresh delivery audit.
+
+
+### 2026-10-04 - GAME U6b
+
+Read-only upstream audit: art 74b3d56, audio 8e8ab42. Imported 124 A14 reaction
+slots additively with lossless packing, per-clip anchors/scale and exact-facing
+persistent corpse keys. Wired full 150-second AU3 C/D masters through the audio
+manifest and tier playlists; retained A preview and nonquantized whole-track
+crossfades while certified adaptive transitions are unavailable. Native reaction
+and audio walks, real full-track progression, performance/memory, final gate and
+save/replay are recorded in [U6b report](waves/U6b-report.md). No upstream edits,
+generation or push. Owner feel/listening/TV acceptance is not measured. Remaining
+work: 68 priority A14 slots plus 58 other legacy requests, full A, and verified
+adaptive musical boundaries/approval when those deliveries become available.
+
+
+### 2026-10-04 - GAME U6c
+
+Read-only A14.3 audit at art 82f5bc4. Four sub-waves: verified additive import,
+paired collapse/corpse selection and stationary creature Lab targets, all 46
+extra motion clips with creature attack presentation, then native verification.
+All twelve roster bodies use delivered reactions and persistent lying sprites;
+12 priority directions and 12 other motion/brace slots use explicit same-entity
+fallbacks. F8 logs missing slots once. No core/director combat implementation,
+combat data, tuning or save-version changes. Gate: 215 tests + 11 reference
+checks, zero contradictions; game build pass. Full 8,000-fight records and
+save/replay bytes equal H1. Native 1080p/1440p walks and 100-projectile/12-figure
+stress: 60 fps, 325.716 MiB decoded textures. [U6c report](waves/U6c-report.md)
+and [gallery](waves/U6c-evidence/index.html). Art/audio worktrees unchanged;
+no generation or push. Owner animation/identity/TV/feel acceptance is not
+measured. Next: the exact 24 missing slots listed in the report, then owner
+creature reaction review using the new Lab selector.
+**ART session 9 / A14 stage 1 / 2026-10-04:** PARTIAL: 124/192 state-direction slots. All four mages and four soldiers have hit-light/heavy in all directions; death plus persistent corpse in all directions except Garran ne/nw. Creature A14 generation remains missing. 21 generated sources, 24 charged attempts, total 342/450; Grok latched on HTTP 402 exhausted Build balance, agy on repeated pre-image HTTP 503. One agy extra-call driver repair/reset and one bounded preflight recovery are archived; no refunds. 88 tests, 49-product offline rebuild and five browser viewport cases pass. Existing 378 protected art files and inherited ledger prefix are unchanged. Owner animation/readability and game integration remain unmeasured. Commands: `python tools/art/a14_build.py`, `a14_board.py`, `a14_portable.py`, `a14_browser.py`, `a14_audit.py`; `python -m unittest discover -s tools/art -p test_*.py`. [Owner board](../art/review/a14/index.html). Next: zero-spend gait audit and exact stage-2 backlog; no further generation under retained latches.
+
+
+**ART session 10 / A14.3 stage 1 / 2026-10-04:** Garran rear collapse and persistent corpse delivered; all eight humanoids complete, 128/192 priority slots. Two fresh agy calls/images/charges, one reject, project 344; old latch and failure records preserved, Grok unavailable. Source/delivery gates, 52-product byte-identical rebuild, five browser cases and 16 targeted tests pass. All 378 protected art files and inherited ledger rows unchanged. Design: docs/waves/A14-3-stage1-garran.md. Owner feel and game integration unmeasured. Next: reference-guided creature collapse, then reactions; no push.
+
+
+**ART session 10 / A14.3 stage 2 / 2026-10-04:** Added 52 creature priority slots; total 180/192. Twelve rear Mire Maw/Thornback slots remain missing after two attempts per source slot. Twenty stage calls, 22 session calls/images/charges, project 364; agy clear, Grok unused and latched. Original Covenant creature images passed on every call, explicit crop/selection/scale/pivot records and local reject-or-owner grading. Standalone corpse overwrite detected and fixed by persistence checks; final delivery, 77-product portable checks and all 90 tests pass. Browser five cases/44 persistent atlas corpses pass. Design: docs/waves/A14-3-stage2-creatures.md. Owner animation and game integration unmeasured. Next: budgeted remaining creature motion and legacy queue; no push.
+
+
+**ART session 10 / A14.3 stage 3 / 2026-10-04:** Added 46 motion/attack/resistance slots; A14 now has 226 clips (180/192 priority plus 46 other), with 12 priority and 12 other legacy slots still missing. Eighteen stage calls bring session 10 to 40 agy calls/images/charges, project 382; allowance exhausted, Grok unused, old latches and ledger evidence retained. Thornback front run/attack failed both attempts; Shieldman attack failed crop/equipment continuity and only brace keys survive. All 90 tests, 91-product byte-identical offline rebuild and seven browser cases pass (44 persistent corpses and 46 added clips at both native sizes). All 378 earlier protected files, 75 stage-2 atlas/corpse images and inherited ledger rows unchanged. Owner feel, game integration and actual shared-account allowance remain unmeasured. Design: docs/waves/A14-3-stage3-motion.md. Commands: python tools/art/a14_build.py, a14_board.py, a14_extra_board.py, a14_portable.py, a14_browser.py; python tools/art/a14_session10.py audit stage3; python -m unittest discover -s tools/art -p test_*.py. Exact queue and loader note in art/SESSION-10-HANDOFF.md. Stopped at the session cap; no push.

@@ -1,0 +1,144 @@
+{
+  "at": "2026-10-02T12:00:36.131417+00:00",
+  "label": "measured disposable copy; ignored raw evidence absent",
+  "status": "fail",
+  "commands": [
+    {
+      "command": [
+        "tools/art/pipeline.py",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 15.828,
+      "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 126, \"weekly_reserved\": 126, \"target_remaining\": 23, \"hard_remaining\": 54, \"generated\": 125, \"observed_image_tool_calls\": 126, \"videos\": 0, \"stop\": {\"at\": \"2026-10-02T11:21:51.279862+00:00\", \"reason\": \"01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry\"}, \"shared_account_remaining\": \"not measured\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/art/pipeline.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.688,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"direction_pairs\": 8,\n  \"generated_attempts\": 30,\n  \"graded_attempts\": 30,\n  \"current_rejects\": 0,\n  \"scope\": \"delivery integrity; does not turn semantic rejects into acceptance\",\n  \"owner_accepted\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/art/verify_ui.py"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.406,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"reviewed_artifacts\": 3,\n  \"scope\": \"review integrity; local models and agent do not approve owner feel\",\n  \"pending\": [\n    {\n      \"school\": \"fire\",\n      \"scope\": \"approved spell-line migration\",\n      \"dependency\": \"W8\",\n      \"reason\": \"Only individual reference spells exist in this checkout.\"\n    },\n    {\n      \"school\": \"earth\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    },\n    {\n      \"school\": \"air\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    }\n  ],\n  \"owner_accepted\": false,\n  \"image_generation_calls\": 0\n}\n{\n  \"status\": \"fail\",\n  \"errors\": [\n    \"UNRESOLVED_UI:ui-a3-poses.json\"\n  ],\n  \"current_ui_grades\": 13,\n  \"owner_accepted\": false,\n  \"model_calls\": 0,\n  \"image_generation_calls\": 0\n}\n",
+      "stderr": ""
+    }
+  ],
+  "screen_hashes_identical": true,
+  "screens": 16,
+  "validation": {
+    "status": "pass",
+    "errors": [],
+    "current_images": 16,
+    "direction_pairs": 8,
+    "generated_attempts": 30,
+    "graded_attempts": 30,
+    "current_rejects": 0,
+    "scope": "delivery integrity; does not turn semantic rejects into acceptance",
+    "owner_accepted": false
+  },
+  "image_generation_calls": 0,
+  "later_waves": [
+    {
+      "wave": "A1b",
+      "exit_code": 0,
+      "sources": 27,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A2",
+      "exit_code": 0,
+      "sources": 18,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A3",
+      "exit_code": 0,
+      "sources": 36,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A4",
+      "exit_code": 0,
+      "sources": 14,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A2 portrait crops",
+      "exit_code": 0,
+      "sources": 96,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A4 camp and frames",
+      "exit_code": 0,
+      "sources": 18,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A5 native icons and HUD",
+      "exit_code": 0,
+      "sources": 233,
+      "hashes_identical": true,
+      "stderr": ""
+    },
+    {
+      "wave": "A3 incomplete stopped handoff",
+      "exit_code": 0,
+      "sources": 224,
+      "hashes_identical": true,
+      "commands": [
+        {
+          "command": [
+            "tools/art/figures.py",
+            "build"
+          ],
+          "exit_code": 0,
+          "stdout": "{\"frames\": 70, \"atlases\": 9, \"proofs\": 2}\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "tools/art/effects.py"
+          ],
+          "exit_code": 0,
+          "stdout": "{\"effects\": 23, \"sheets\": 138, \"water_rows\": 24}\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "tools/art/a3_board.py"
+          ],
+          "exit_code": 0,
+          "stdout": "{\"owner_board\": \"art/review/a3/owner.html\", \"frames\": 70, \"effects\": 23}\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "tools/art/check_a3.py",
+            "--skip-browser"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"status\": \"pass\",\n  \"scope\": \"integrity of explicitly incomplete stopped handoff, NOT A3 completion\",\n  \"a3_complete\": false,\n  \"missing_items\": [\n    \"figure-cinder_hound-injury\",\n    \"figure-hush_moth-action\",\n    \"figure-hush_moth-injury\",\n    \"figure-hush_moth-run\",\n    \"figure-hush_moth-stance\",\n    \"figure-mire_maw-action\",\n    \"figure-mire_maw-injury\",\n    \"figure-mire_maw-run\",\n    \"figure-mire_maw-stance\",\n    \"figure-thornback-action\",\n    \"figure-thornback-injury\",\n    \"figure-thornback-run\",\n    \"figure-thornback-stance\"\n  ],\n  \"errors\": [],\n  \"frames\": 70,\n  \"atlases\": 9,\n  \"effect_sheets\": 138,\n  \"budget\": {\n    \"week\": \"2026-W40\",\n    \"wave_reserved\": 126,\n    \"weekly_reserved\": 126,\n    \"target_remaining\": 23,\n    \"hard_remaining\": 54,\n    \"generated\": 125,\n    \"observed_image_tool_calls\": 126,\n    \"videos\": 0,\n    \"stop\": {\n      \"at\": \"2026-10-02T11:21:51.279862+00:00\",\n      \"reason\": \"01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry\"\n    },\n    \"shared_account_remaining\": \"not measured\"\n  },\n  \"owner_accepted\": false\n}\n",
+          "stderr": ""
+        }
+      ],
+      "a3_complete": false
+    }
+  ]
+}

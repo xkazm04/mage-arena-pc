@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "id": "a12-compact-single-plate",
+  "status": "art integration proposal; owner instruction, not game implementation",
+  "v2Evidence": {
+    "file": "art/scale-contract-v2.json",
+    "sha256": "69a739f7a1e39292d8f8d676b7ae329a875b93cafba754dc15c8dba6fc3d15ba",
+    "ellipseCentre": [
+      16,
+      62
+    ],
+    "ellipseSize": [
+      192,
+      144
+    ]
+  },
+  "arena": {
+    "shape": "ellipse",
+    "centreMetres": [
+      16,
+      62
+    ],
+    "sizeMetres": [
+      94,
+      62
+    ],
+    "visualAuthority": "conservative authored playable footprint; generated image is not metre-accurate geometry"
+  },
+  "plate": {
+    "masterSizePx": [
+      3072,
+      1728
+    ],
+    "worldSizeMetres": [
+      102.4,
+      70.31661631265986
+    ],
+    "worldTopLeftMetres": [
+      -35.2,
+      26.84169184367007
+    ],
+    "screenSize1080": [
+      2304,
+      1296
+    ],
+    "screenSize1440": [
+      3072,
+      1728
+    ],
+    "normalViewCropMasterPx": [
+      256,
+      144,
+      2560,
+      1440
+    ],
+    "overscan": "single complete painting, 20 percent wider/taller than 16:9 viewport; no extension panels, repeats or join lines"
+  },
+  "camera": {
+    "projection": "orthographic ground / upright painted billboards",
+    "elevation_above_ground_degrees": 55,
+    "ground_pixels_per_metre_at_1080p": 22.5,
+    "zoom": 1,
+    "zoom_range": [
+      1,
+      1
+    ],
+    "dead_zone_normalized": [
+      0.16,
+      0.18,
+      0.84,
+      0.8
+    ],
+    "edge_follow": "soft follow only outside dead zone; no constant tracking",
+    "edge_follow_time_constant_seconds": 0.35,
+    "edge_follow_parameters": "authored visual proposal; engine feel not measured",
+    "plate_projection": "already projected; never multiply plate Y by sin(55) again",
+    "nominal_centre_metres": [
+      16,
+      62
+    ],
+    "clamp_centre_metres": [
+      [
+        7.466666666666667,
+        56.14028197394501
+      ],
+      [
+        24.53333333333333,
+        67.85971802605499
+      ]
+    ],
+    "proof_centre_metres": [
+      16,
+      62
+    ],
+    "proof_body_height_px": {
+      "1080": 40.5,
+      "1440": 54
+    }
+  },
+  "migration": {
+    "required": true,
+    "oldEllipseCentreMetres": [
+      16,
+      62
+    ],
+    "oldEllipseSizeMetres": [
+      192,
+      144
+    ],
+    "newEllipseCentreMetres": [
+      16,
+      62
+    ],
+    "newEllipseSizeMetres": [
+      94,
+      62
+    ],
+    "positionTransform": "xNew=16+(xOld-16)*94/192; yNew=62+(yOld-62)*62/144",
+    "scaleActorBodies": false,
+    "scaleCombatDistances": false,
+    "spawnPolicy": "Do not blindly scale tightly spaced formations. Re-author spawns around [16,62] at >=6m centre separation; proof witnesses are not balance data.",
+    "oldGameSpawnsOutsideNewEllipse": [
+      [
+        8,
+        10
+      ],
+      [
+        24,
+        10
+      ],
+      [
+        12,
+        10
+      ]
+    ],
+    "gameWorkRequired": [
+      "apply compact core boundary",
+      "move initial spawns into compact arena",
+      "recheck waves, range, timing, collisions and save migration",
+      "clamp soft-follow camera to plate coverage",
+      "load A12 preprojected plate and fixed-position depth overlays"
+    ],
+    "oldLayoutDropInCompatible": false
+  },
+  "paletteForGames": {
+    "training": "verdigris",
+    "1": "verdigris",
+    "2": "verdigris",
+    "3": "rust-sand",
+    "4": "rust-sand",
+    "5": "moonlit",
+    "6": "moonlit"
+  },
+  "sourcePaletteMapping": "mage-arena-int/packages/game/data/covenant.json, read-only inspection",
+  "owner_accepted": false,
+  "engineMotionAndPerformance": "not measured"
+}

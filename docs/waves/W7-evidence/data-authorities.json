@@ -1,0 +1,48 @@
+{
+  "label": "measured source comparison",
+  "command": "npx tsx packages/tools/src/w7-authorities.ts",
+  "pinned": "68a4d68d315856c89339d331ac0db7f4784d566f",
+  "tables": [
+    {
+      "file": "combat.json",
+      "pinnedHash": "27344eeac1e4dadb4e2fa855cef345482df9874f3cd5bb78e545fe0ccd5f7470",
+      "currentHash": "27344eeac1e4dadb4e2fa855cef345482df9874f3cd5bb78e545fe0ccd5f7470",
+      "unchangedNumbers": true,
+      "change": "none (line endings ignored in semantic comparison)"
+    },
+    {
+      "file": "stats.csv",
+      "pinnedHash": "beaff7e3bf58acc01d3c69a294cd93be9b230aff74efd309718a2757bcc3914d",
+      "currentHash": "beaff7e3bf58acc01d3c69a294cd93be9b230aff74efd309718a2757bcc3914d",
+      "unchangedNumbers": true,
+      "change": "none (line endings ignored in semantic comparison)"
+    },
+    {
+      "file": "spells-water.csv",
+      "pinnedHash": "f10aad3aefafe35295e10eb61ae65e8da94465a14bee136bb2659a5b4390fa2e",
+      "currentHash": "f10aad3aefafe35295e10eb61ae65e8da94465a14bee136bb2659a5b4390fa2e",
+      "unchangedNumbers": true,
+      "change": "none (line endings ignored in semantic comparison)"
+    },
+    {
+      "file": "enemies.json",
+      "pinnedHash": "aa569eefbdda33a0b0ce0df755f230d1da402be3300e042430169cd22e2467ab",
+      "currentHash": "ddf9d089b91dd1e5e7d7dea7da905fd8678024bcfcd05fc2663cd0a363a23407",
+      "unchangedNumbers": true,
+      "change": "conscript behaviour prose only; all numeric values identical"
+    },
+    {
+      "file": "arena-tiers.json",
+      "pinnedHash": "4ed9f961708647ec6d8e1d5cc42a931eda2bffc125cbc6d569377c20bb2a61a3",
+      "currentHash": "4ed9f961708647ec6d8e1d5cc42a931eda2bffc125cbc6d569377c20bb2a61a3",
+      "unchangedNumbers": true,
+      "change": "none (line endings ignored in semantic comparison)"
+    }
+  ],
+  "camera": {
+    "pinnedHash": "be3dec34686cec131f521f276bef1c0e108c4d54197ac4f0907926f2dcd921d9",
+    "currentHash": "be3dec34686cec131f521f276bef1c0e108c4d54197ac4f0907926f2dcd921d9",
+    "unchanged": true
+  },
+  "passed": true
+}

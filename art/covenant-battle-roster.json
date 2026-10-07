@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "authority": "baseline cast IDs and enemies.json; visual identities newly authored under D12-D17",
+  "enemy_source": "docs/design/baseline-fourteen-nights/design/data/enemies.json",
+  "enemy_source_sha256": "e6b55f3e0925c6ac2c609dcdb5d3baae7490cc41f9e1647e3174e1ec2296aba9",
+  "entities": {
+    "cassia": {
+      "kind": "mage",
+      "school": "water",
+      "design": "Adult woman, dark curly hair and blue hood, ivory/pale-blue split layered cloth, water glass charms, worn silver clasps, crescent orb staff. Compact mist and droplets."
+    },
+    "brennic": {
+      "kind": "mage",
+      "school": "fire",
+      "design": "Adult broad-shouldered man, shaved dark head and short copper beard, pale warm ivory layered battle cloth with burnt-orange split sash, dark short shoulder mantle, ember jars and hammered rings on belt, forked charred staff cradling an ember. Compact embers and heat."
+    },
+    "garran": {
+      "kind": "mage",
+      "school": "earth",
+      "design": "Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust."
+    },
+    "iskar": {
+      "kind": "mage",
+      "school": "air",
+      "design": "Lean adult man, copper skin, long black hair tied high behind swept pale lilac hood, ivory layered cloth with two narrow trailing lilac panels, silver wire charms and belt tools, slender bifurcated silver-bound staff. Sparse wind wisps and tiny branching lightning."
+    },
+    "conscript": {
+      "kind": "soldier",
+      "design": "Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura."
+    },
+    "shieldman": {
+      "kind": "soldier",
+      "design": "Non-magical Roman legion heavy shield bearer, worn helmet and segmented iron torso plates, huge battered rectangular curved dark red shield with plain metal boss, short sword, leather sandals. Broad shield silhouette; no magic."
+    },
+    "slinger": {
+      "kind": "soldier",
+      "design": "Non-magical Roman auxiliary slinger, plain head wrap, dull sand short tunic, leather sling visibly extended, stone pouch on hip, no helmet, compact light human silhouette; no magical aura."
+    },
+    "netter": {
+      "kind": "soldier",
+      "design": "Non-magical Roman arena net fighter, dark ochre short tunic, worn single shoulder guard, coiled rope net in left hand and short trident in right; visibly open rope lattice, no magic."
+    },
+    "cinder_hound": {
+      "kind": "creature",
+      "design": "Raw magical low lean canine made of charcoal-black cracked stone hide, ember seams, angular pointed ears, long jointed legs, compact flame tail. Four legs and distinct lean hound muzzle; no gore."
+    },
+    "mire_maw": {
+      "kind": "creature",
+      "design": "Raw magical broad squat amphibian-like bog creature, four short splayed legs, heavy moss-green stone hide, broad round mouth, luminous turquoise throat sac, root tendrils and wet mist. Chunky artillery silhouette; intact non-gory creature."
+    },
+    "thornback": {
+      "kind": "creature",
+      "design": "Raw magical heavy four-legged stone beast, squat broad body, blunt mineral horns and tall angular thorn-like back plates, ochre mineral seams, heavy blunt feet, small armored head. Charging wedge silhouette; no gore."
+    },
+    "hush_moth": {
+      "kind": "creature",
+      "design": "Raw magical oversized moth, four ragged triangular midnight-blue wings, pale silver wing veins and moonlike empty markings, small dark segmented body and fine antennae, restrained lilac wisps. Clear wing silhouette, no human face."
+    }
+  },
+  "ai_mages": "reuse four school figures",
+  "echo": "excluded by season plan; no new image"
+}

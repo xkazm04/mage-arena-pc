@@ -1,0 +1,98 @@
+{
+  "artifact": "a6-contact",
+  "at": "2026-10-02T15:30:36.762052+00:00",
+  "input_hash": "8fdee21d996b92fd750e34ae8d131d39dc5bf98c269dbe86a6aa9739c39e3def",
+  "source": "art/review/a6/contact-sheet.jpg",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "17cd27c5fb1359156c578ac9dfcda49ad7e90c01afca46e39af122e3aea4b2c6",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks neutral dark comparison board with readable pale labels and named direction pairs. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: A combined eight-row contact sheet; each named direction has exactly arena at left and Cassia portrait at right; six candidate rows followed by two visibly rejected arena rows. Assess labels and pairing, not approval of the art.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\"forbidden_rendering\": false, \"overhead_view\": \"yes\", \"required_content\": \"yes\", \"style_match\": \"yes\", \"readability\": 3, \"confidence\": 0.5, \"observation\": \"The image is a clean, code-drawn HTML/SVG contact sheet with a neutral dark background and pale, readable labels. It contains exactly eight rows, each with a named direction (01 Flint Litany through 08 Cinder Veil). Each row has an arena image on the left and a Cassia portrait on the right, as required. The first six rows (01–06) are labeled 'ARENA / OWNER-REVIEW' and 'PORTRAIT / OWNER-REVIEW'. The last two rows (07 Coal & Salt and 08 Cinder Veil) are labeled 'ARENA / REJECT' and 'PORTRAIT / OWNER-REVIEW', indicating visible rejection status for the arena assets in those rows. All text is legible, no watermarks or logos are present, and the layout matches the expected structure. No defects, overlaps, or obscured controls are observed.\"}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.5,
+    "observation": "The image is a clean, code-drawn HTML/SVG contact sheet with a neutral dark background and pale, readable labels. It contains exactly eight rows, each with a named direction (01 Flint Litany through 08 Cinder Veil). Each row has an arena image on the left and a Cassia portrait on the right, as required. The first six rows (01–06) are labeled 'ARENA / OWNER-REVIEW' and 'PORTRAIT / OWNER-REVIEW'. The last two rows (07 Coal & Salt and 08 Cinder Veil) are labeled 'ARENA / REJECT' and 'PORTRAIT / OWNER-REVIEW', indicating visible rejection status for the arena assets in those rows. All text is legible, no watermarks or logos are present, and the layout matches the expected structure. No defects, overlaps, or obscured controls are observed."
+  },
+  "eval_count": 238,
+  "elapsed_seconds": 4.078
+}

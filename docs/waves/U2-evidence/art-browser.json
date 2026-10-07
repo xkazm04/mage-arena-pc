@@ -1,0 +1,1363 @@
+{
+  "passed": true,
+  "command": "npx tsx packages/tools/src/u2-art-browser.ts",
+  "label": "Delivery fixtures use production art helpers; not gameplay outcomes",
+  "results": [
+    {
+      "height": 1080,
+      "portraits": 112,
+      "backdrops": 8,
+      "mapSlots": 3,
+      "stories": 6,
+      "art": {
+        "textures": 34,
+        "rgbaBytes": 139984824,
+        "rgbaMiB": 133.49993133544922,
+        "failed": [],
+        "pending": 0,
+        "diagnostics": []
+      },
+      "requests": [
+        "/",
+        "/assets/index-dSCbpPLq.js",
+        "/assets/CanvasPool-CWB7dUpA.js",
+        "/assets/Filter-BCRRlzOx.js",
+        "/assets/canvasUtils-DgOpi9E8.js",
+        "/assets/Cache-CjXwQj7Q.js",
+        "/assets/GCManagedHash-D-KtdWRQ.js",
+        "/assets/RenderTargetSystem-BpoD1MMF.js",
+        "/assets/getTextureBatchBindGroup-BztqtdtG.js",
+        "/assets/GraphicsContext-cHTD_JxT.js",
+        "/assets/getTexelRangeRects-CUrMOIMb.js",
+        "/assets/index-Ixvpfn2H.css",
+        "/assets/accepted/covenant/manifest.json",
+        "/assets/browserAll-BKC52xI8.js",
+        "/assets/init-VCfnalKz.js",
+        "/assets/accepted/covenant/ui/fonts/SourceSans3.ttf",
+        "/fonts/AlegreyaSans-Regular.ttf",
+        "/assets/accepted/covenant/ui/fonts/Cinzel.ttf",
+        "/assets/accepted/covenant/ui/kit.json",
+        "/assets/accepted/covenant/ui/atlases/frames.png",
+        "/assets/accepted/covenant/ui/atlases/icons.png",
+        "/assets/accepted/covenant/a4c/backdrops/door.png",
+        "/assets/accepted/covenant/a2c/portraits/cassia/neutral.png",
+        "/api/session",
+        "/api/pause",
+        "/assets/accepted/covenant/a2c/atlases/cassia.png",
+        "/assets/accepted/covenant/a2c/atlases/brennic.png",
+        "/assets/accepted/covenant/a2c/atlases/garran.png",
+        "/assets/accepted/covenant/a2c/atlases/iskar.png",
+        "/assets/accepted/covenant/a2c/atlases/sadruba.png",
+        "/assets/accepted/covenant/a2c/atlases/ophel.png",
+        "/assets/accepted/covenant/a2c/atlases/ruadh.png",
+        "/assets/accepted/covenant/a2c/atlases/kesh.png",
+        "/assets/accepted/covenant/a2c/atlases/corvo.png",
+        "/assets/accepted/covenant/a2c/atlases/nysa.png",
+        "/assets/accepted/covenant/a2c/atlases/senna.png",
+        "/assets/accepted/covenant/a2c/atlases/lio.png",
+        "/assets/accepted/covenant/a2c/atlases/fenna.png",
+        "/assets/accepted/covenant/a2c/atlases/quill.png",
+        "/assets/accepted/covenant/a2c/atlases/septima.png",
+        "/assets/accepted/covenant/a2c/atlases/venno.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/yard.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/cistern.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/pit.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/exchange.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/commons.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/tent.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/edge.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/maps/day-1920.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/maps/dusk-1920.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/maps/night-1920.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/stories/shared-loaf.png",
+        "/assets/accepted/covenant/a4c/stories/empty-bowl.png",
+        "/assets/accepted/covenant/a4c/stories/watch-rota.png",
+        "/assets/accepted/covenant/a4c/stories/ward-seam.png",
+        "/assets/accepted/covenant/a4c/stories/quiet-bargain.png",
+        "/assets/accepted/covenant/a4c/stories/before-grille.png",
+        "/api/session",
+        "/api/session",
+        "/api/session"
+      ]
+    },
+    {
+      "height": 1440,
+      "portraits": 112,
+      "backdrops": 8,
+      "mapSlots": 3,
+      "stories": 6,
+      "art": {
+        "textures": 34,
+        "rgbaBytes": 159338424,
+        "rgbaMiB": 151.95696258544922,
+        "failed": [],
+        "pending": 0,
+        "diagnostics": []
+      },
+      "requests": [
+        "/",
+        "/assets/index-dSCbpPLq.js",
+        "/assets/CanvasPool-CWB7dUpA.js",
+        "/assets/Filter-BCRRlzOx.js",
+        "/assets/canvasUtils-DgOpi9E8.js",
+        "/assets/Cache-CjXwQj7Q.js",
+        "/assets/GCManagedHash-D-KtdWRQ.js",
+        "/assets/RenderTargetSystem-BpoD1MMF.js",
+        "/assets/getTextureBatchBindGroup-BztqtdtG.js",
+        "/assets/GraphicsContext-cHTD_JxT.js",
+        "/assets/getTexelRangeRects-CUrMOIMb.js",
+        "/assets/index-Ixvpfn2H.css",
+        "/assets/accepted/covenant/manifest.json",
+        "/assets/browserAll-BKC52xI8.js",
+        "/assets/init-VCfnalKz.js",
+        "/assets/accepted/covenant/ui/fonts/SourceSans3.ttf",
+        "/fonts/AlegreyaSans-Regular.ttf",
+        "/assets/accepted/covenant/ui/fonts/Cinzel.ttf",
+        "/assets/accepted/covenant/ui/kit.json",
+        "/assets/accepted/covenant/ui/atlases/frames.png",
+        "/assets/accepted/covenant/ui/atlases/icons.png",
+        "/assets/accepted/covenant/a4c/backdrops/door.png",
+        "/assets/accepted/covenant/a2c/portraits/cassia/neutral.png",
+        "/api/session",
+        "/api/pause",
+        "/assets/accepted/covenant/a2c/atlases/cassia.png",
+        "/assets/accepted/covenant/a2c/atlases/brennic.png",
+        "/assets/accepted/covenant/a2c/atlases/garran.png",
+        "/assets/accepted/covenant/a2c/atlases/iskar.png",
+        "/assets/accepted/covenant/a2c/atlases/sadruba.png",
+        "/assets/accepted/covenant/a2c/atlases/ophel.png",
+        "/assets/accepted/covenant/a2c/atlases/ruadh.png",
+        "/assets/accepted/covenant/a2c/atlases/kesh.png",
+        "/assets/accepted/covenant/a2c/atlases/corvo.png",
+        "/assets/accepted/covenant/a2c/atlases/nysa.png",
+        "/assets/accepted/covenant/a2c/atlases/senna.png",
+        "/assets/accepted/covenant/a2c/atlases/lio.png",
+        "/assets/accepted/covenant/a2c/atlases/fenna.png",
+        "/assets/accepted/covenant/a2c/atlases/quill.png",
+        "/assets/accepted/covenant/a2c/atlases/septima.png",
+        "/assets/accepted/covenant/a2c/atlases/venno.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/yard.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/cistern.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/pit.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/exchange.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/commons.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/tent.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/backdrops/edge.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/maps/day-2560.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/maps/dusk-2560.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/maps/night-2560.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/assets/accepted/covenant/a4c/stories/shared-loaf.png",
+        "/assets/accepted/covenant/a4c/stories/empty-bowl.png",
+        "/assets/accepted/covenant/a4c/stories/watch-rota.png",
+        "/assets/accepted/covenant/a4c/stories/ward-seam.png",
+        "/assets/accepted/covenant/a4c/stories/quiet-bargain.png",
+        "/assets/accepted/covenant/a4c/stories/before-grille.png",
+        "/api/session",
+        "/api/session",
+        "/api/session",
+        "/api/session"
+      ]
+    },
+    {
+      "mode": "all-art-missing",
+      "playable": true,
+      "initial": {
+        "screen": "menu",
+        "busy": false,
+        "focus": "pick-character",
+        "modality": "keyboard",
+        "kit": "procedural",
+        "diagnostics": [
+          "UI kit unavailable (404); procedural kit active"
+        ],
+        "art": {
+          "textures": 0,
+          "rgbaBytes": 0,
+          "rgbaMiB": 0,
+          "failed": [],
+          "pending": 0,
+          "diagnostics": [
+            "Error: Covenant manifest 404"
+          ]
+        },
+        "uiTextureBytes": 0,
+        "fontDiagnostics": [
+          "Error: Missing Source Sans 3",
+          "Error: Missing Cinzel"
+        ],
+        "fontTextureBytes": 46137344,
+        "layout": {
+          "scale": 1,
+          "x": 0,
+          "y": 0,
+          "safe": {
+            "x": 96,
+            "y": 54,
+            "w": 1728,
+            "h": 972
+          }
+        },
+        "texts": [
+          {
+            "text": "A COVENANT IN CHAINS",
+            "x": 112,
+            "y": 168,
+            "w": 255.2159562110901,
+            "h": 31.720000000000002,
+            "size": 26
+          },
+          {
+            "text": "MAGE\nARENA",
+            "x": 96,
+            "y": 220,
+            "w": 384.60792160034185,
+            "h": 273.28000000000003,
+            "size": 112
+          },
+          {
+            "text": "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
+            "x": 112,
+            "y": 538,
+            "w": 489.56593275070196,
+            "h": 82.96000000000001,
+            "size": 34
+          },
+          {
+            "text": "Begin your story",
+            "x": 196,
+            "y": 676.28,
+            "w": 173.17997837066653,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Choose your mage",
+            "x": 196,
+            "y": 712.4399999999999,
+            "w": 170.0639820098877,
+            "h": 29.28,
+            "size": 24
+          },
+          {
+            "text": "Continue season",
+            "x": 150,
+            "y": 789.92,
+            "w": 178.02396774291995,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Load season",
+            "x": 444,
+            "y": 789.92,
+            "w": 131.29197692871094,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "The proving ground",
+            "x": 150,
+            "y": 881.92,
+            "w": 210.92397308349612,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Fullscreen",
+            "x": 1612,
+            "y": 962.92,
+            "w": 110.68398189544679,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "WATER  /  THE FIRST TWO WEEKS",
+            "x": 112,
+            "y": 976,
+            "w": 314.0639419555664,
+            "h": 29.28,
+            "size": 24
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "id": "pick-character",
+            "label": "Begin your story",
+            "x": 112,
+            "y": 667,
+            "w": 570,
+            "h": 84,
+            "disabled": false
+          },
+          {
+            "id": "continue-season",
+            "label": "Continue season",
+            "x": 112,
+            "y": 771,
+            "w": 274,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "menu-load",
+            "label": "Load season",
+            "x": 406,
+            "y": 771,
+            "w": 276,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "training-arena",
+            "label": "The proving ground",
+            "x": 112,
+            "y": 863,
+            "w": 570,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "fullscreen",
+            "label": "Fullscreen",
+            "x": 1574,
+            "y": 946,
+            "w": 250,
+            "h": 68,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "mode": "ui-missing",
+      "playable": true,
+      "initial": {
+        "screen": "menu",
+        "busy": false,
+        "focus": "pick-character",
+        "modality": "keyboard",
+        "kit": "procedural",
+        "diagnostics": [
+          "UI kit unavailable (404); procedural kit active"
+        ],
+        "art": {
+          "textures": 3,
+          "rgbaBytes": 15216640,
+          "rgbaMiB": 14.51171875,
+          "failed": [],
+          "pending": 0,
+          "diagnostics": []
+        },
+        "uiTextureBytes": 0,
+        "fontDiagnostics": [],
+        "fontTextureBytes": 46137344,
+        "layout": {
+          "scale": 1,
+          "x": 0,
+          "y": 0,
+          "safe": {
+            "x": 96,
+            "y": 54,
+            "w": 1728,
+            "h": 972
+          }
+        },
+        "texts": [
+          {
+            "text": "A COVENANT IN CHAINS",
+            "x": 112,
+            "y": 168,
+            "w": 256.7337279319763,
+            "h": 31.720000000000002,
+            "size": 26
+          },
+          {
+            "text": "MAGE\nARENA",
+            "x": 96,
+            "y": 220,
+            "w": 399.31480026245123,
+            "h": 273.28000000000003,
+            "size": 112
+          },
+          {
+            "text": "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
+            "x": 112,
+            "y": 538,
+            "w": 528.0517511367798,
+            "h": 82.96000000000001,
+            "size": 34
+          },
+          {
+            "text": "Begin your story",
+            "x": 196,
+            "y": 676.28,
+            "w": 189.53871059417727,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Choose your mage",
+            "x": 196,
+            "y": 712.4399999999999,
+            "w": 185.06934356689453,
+            "h": 29.28,
+            "size": 24
+          },
+          {
+            "text": "Continue season",
+            "x": 150,
+            "y": 789.92,
+            "w": 194.40394878387454,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Load season",
+            "x": 444,
+            "y": 789.92,
+            "w": 144.826265335083,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "The proving ground",
+            "x": 150,
+            "y": 881.92,
+            "w": 228.66588115692142,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Fullscreen",
+            "x": 1612,
+            "y": 962.92,
+            "w": 119.63814544677736,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "WATER  /  THE FIRST TWO WEEKS",
+            "x": 112,
+            "y": 976,
+            "w": 327.66926193237305,
+            "h": 29.28,
+            "size": 24
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "id": "pick-character",
+            "label": "Begin your story",
+            "x": 112,
+            "y": 667,
+            "w": 570,
+            "h": 84,
+            "disabled": false
+          },
+          {
+            "id": "continue-season",
+            "label": "Continue season",
+            "x": 112,
+            "y": 771,
+            "w": 274,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "menu-load",
+            "label": "Load season",
+            "x": 406,
+            "y": 771,
+            "w": 276,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "training-arena",
+            "label": "The proving ground",
+            "x": 112,
+            "y": 863,
+            "w": 570,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "fullscreen",
+            "label": "Fullscreen",
+            "x": 1574,
+            "y": 946,
+            "w": 250,
+            "h": 68,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "mode": "ui-corrupt",
+      "playable": true,
+      "initial": {
+        "screen": "menu",
+        "busy": false,
+        "focus": "pick-character",
+        "modality": "keyboard",
+        "kit": "procedural",
+        "diagnostics": [
+          "Error: UI hash mismatch: frames"
+        ],
+        "art": {
+          "textures": 3,
+          "rgbaBytes": 15216640,
+          "rgbaMiB": 14.51171875,
+          "failed": [],
+          "pending": 0,
+          "diagnostics": []
+        },
+        "uiTextureBytes": 0,
+        "fontDiagnostics": [],
+        "fontTextureBytes": 46137344,
+        "layout": {
+          "scale": 1,
+          "x": 0,
+          "y": 0,
+          "safe": {
+            "x": 96,
+            "y": 54,
+            "w": 1728,
+            "h": 972
+          }
+        },
+        "texts": [
+          {
+            "text": "A COVENANT IN CHAINS",
+            "x": 112,
+            "y": 168,
+            "w": 256.7337279319763,
+            "h": 31.720000000000002,
+            "size": 26
+          },
+          {
+            "text": "MAGE\nARENA",
+            "x": 96,
+            "y": 220,
+            "w": 399.31480026245123,
+            "h": 273.28000000000003,
+            "size": 112
+          },
+          {
+            "text": "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
+            "x": 112,
+            "y": 538,
+            "w": 528.0517511367798,
+            "h": 82.96000000000001,
+            "size": 34
+          },
+          {
+            "text": "Begin your story",
+            "x": 196,
+            "y": 676.28,
+            "w": 189.53871059417727,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Choose your mage",
+            "x": 196,
+            "y": 712.4399999999999,
+            "w": 185.06934356689453,
+            "h": 29.28,
+            "size": 24
+          },
+          {
+            "text": "Continue season",
+            "x": 150,
+            "y": 789.92,
+            "w": 194.40394878387454,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Load season",
+            "x": 444,
+            "y": 789.92,
+            "w": 144.826265335083,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "The proving ground",
+            "x": 150,
+            "y": 881.92,
+            "w": 228.66588115692142,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Fullscreen",
+            "x": 1612,
+            "y": 962.92,
+            "w": 119.63814544677736,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "WATER  /  THE FIRST TWO WEEKS",
+            "x": 112,
+            "y": 976,
+            "w": 327.66926193237305,
+            "h": 29.28,
+            "size": 24
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "id": "pick-character",
+            "label": "Begin your story",
+            "x": 112,
+            "y": 667,
+            "w": 570,
+            "h": 84,
+            "disabled": false
+          },
+          {
+            "id": "continue-season",
+            "label": "Continue season",
+            "x": 112,
+            "y": 771,
+            "w": 274,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "menu-load",
+            "label": "Load season",
+            "x": 406,
+            "y": 771,
+            "w": 276,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "training-arena",
+            "label": "The proving ground",
+            "x": 112,
+            "y": 863,
+            "w": 570,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "fullscreen",
+            "label": "Fullscreen",
+            "x": 1574,
+            "y": 946,
+            "w": 250,
+            "h": 68,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "mode": "portrait-corrupt",
+      "playable": true,
+      "initial": {
+        "screen": "menu",
+        "busy": false,
+        "focus": "pick-character",
+        "modality": "keyboard",
+        "kit": "/assets/accepted/covenant/ui/kit.json",
+        "diagnostics": [],
+        "art": {
+          "textures": 2,
+          "rgbaBytes": 10915840,
+          "rgbaMiB": 10.41015625,
+          "failed": [
+            "portrait.cassia.neutral"
+          ],
+          "pending": 0,
+          "diagnostics": [
+            "Error: Asset hash: portrait.cassia.neutral"
+          ]
+        },
+        "uiTextureBytes": 33554432,
+        "fontDiagnostics": [],
+        "fontTextureBytes": 46137344,
+        "layout": {
+          "scale": 1,
+          "x": 0,
+          "y": 0,
+          "safe": {
+            "x": 96,
+            "y": 54,
+            "w": 1728,
+            "h": 972
+          }
+        },
+        "texts": [
+          {
+            "text": "A COVENANT IN CHAINS",
+            "x": 112,
+            "y": 168,
+            "w": 256.7337279319763,
+            "h": 31.720000000000002,
+            "size": 26
+          },
+          {
+            "text": "MAGE\nARENA",
+            "x": 96,
+            "y": 220,
+            "w": 399.31480026245123,
+            "h": 273.28000000000003,
+            "size": 112
+          },
+          {
+            "text": "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
+            "x": 112,
+            "y": 538,
+            "w": 528.0517511367798,
+            "h": 82.96000000000001,
+            "size": 34
+          },
+          {
+            "text": "Begin your story",
+            "x": 196,
+            "y": 676.28,
+            "w": 189.53871059417727,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Choose your mage",
+            "x": 196,
+            "y": 712.4399999999999,
+            "w": 185.06934356689453,
+            "h": 29.28,
+            "size": 24
+          },
+          {
+            "text": "Continue season",
+            "x": 150,
+            "y": 789.92,
+            "w": 194.40394878387454,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Load season",
+            "x": 444,
+            "y": 789.92,
+            "w": 144.826265335083,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "The proving ground",
+            "x": 150,
+            "y": 881.92,
+            "w": 228.66588115692142,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Fullscreen",
+            "x": 1612,
+            "y": 962.92,
+            "w": 119.63814544677736,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "WATER  /  THE FIRST TWO WEEKS",
+            "x": 112,
+            "y": 976,
+            "w": 327.66926193237305,
+            "h": 29.28,
+            "size": 24
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "id": "pick-character",
+            "label": "Begin your story",
+            "x": 112,
+            "y": 667,
+            "w": 570,
+            "h": 84,
+            "disabled": false
+          },
+          {
+            "id": "continue-season",
+            "label": "Continue season",
+            "x": 112,
+            "y": 771,
+            "w": 274,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "menu-load",
+            "label": "Load season",
+            "x": 406,
+            "y": 771,
+            "w": 276,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "training-arena",
+            "label": "The proving ground",
+            "x": 112,
+            "y": 863,
+            "w": 570,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "fullscreen",
+            "label": "Fullscreen",
+            "x": 1574,
+            "y": 946,
+            "w": 250,
+            "h": 68,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "mode": "backdrop-missing",
+      "playable": true,
+      "initial": {
+        "screen": "menu",
+        "busy": false,
+        "focus": "pick-character",
+        "modality": "keyboard",
+        "kit": "/assets/accepted/covenant/ui/kit.json",
+        "diagnostics": [],
+        "art": {
+          "textures": 2,
+          "rgbaBytes": 6922240,
+          "rgbaMiB": 6.6015625,
+          "failed": [
+            "place.door"
+          ],
+          "pending": 0,
+          "diagnostics": [
+            "Error: Asset place.door: 404"
+          ]
+        },
+        "uiTextureBytes": 33554432,
+        "fontDiagnostics": [],
+        "fontTextureBytes": 46137344,
+        "layout": {
+          "scale": 1,
+          "x": 0,
+          "y": 0,
+          "safe": {
+            "x": 96,
+            "y": 54,
+            "w": 1728,
+            "h": 972
+          }
+        },
+        "texts": [
+          {
+            "text": "A COVENANT IN CHAINS",
+            "x": 112,
+            "y": 168,
+            "w": 256.7337279319763,
+            "h": 31.720000000000002,
+            "size": 26
+          },
+          {
+            "text": "MAGE\nARENA",
+            "x": 96,
+            "y": 220,
+            "w": 399.31480026245123,
+            "h": 273.28000000000003,
+            "size": 112
+          },
+          {
+            "text": "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
+            "x": 112,
+            "y": 538,
+            "w": 528.0517511367798,
+            "h": 82.96000000000001,
+            "size": 34
+          },
+          {
+            "text": "Begin your story",
+            "x": 196,
+            "y": 676.28,
+            "w": 189.53871059417727,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Choose your mage",
+            "x": 196,
+            "y": 712.4399999999999,
+            "w": 185.06934356689453,
+            "h": 29.28,
+            "size": 24
+          },
+          {
+            "text": "Continue season",
+            "x": 150,
+            "y": 789.92,
+            "w": 194.40394878387454,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Load season",
+            "x": 444,
+            "y": 789.92,
+            "w": 144.826265335083,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "The proving ground",
+            "x": 150,
+            "y": 881.92,
+            "w": 228.66588115692142,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Fullscreen",
+            "x": 1612,
+            "y": 962.92,
+            "w": 119.63814544677736,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "WATER  /  THE FIRST TWO WEEKS",
+            "x": 112,
+            "y": 976,
+            "w": 327.66926193237305,
+            "h": 29.28,
+            "size": 24
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "id": "pick-character",
+            "label": "Begin your story",
+            "x": 112,
+            "y": 667,
+            "w": 570,
+            "h": 84,
+            "disabled": false
+          },
+          {
+            "id": "continue-season",
+            "label": "Continue season",
+            "x": 112,
+            "y": 771,
+            "w": 274,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "menu-load",
+            "label": "Load season",
+            "x": 406,
+            "y": 771,
+            "w": 276,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "training-arena",
+            "label": "The proving ground",
+            "x": 112,
+            "y": 863,
+            "w": 570,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "fullscreen",
+            "label": "Fullscreen",
+            "x": 1574,
+            "y": 946,
+            "w": 250,
+            "h": 68,
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "mode": "fonts-missing",
+      "playable": true,
+      "initial": {
+        "screen": "menu",
+        "busy": false,
+        "focus": "pick-character",
+        "modality": "keyboard",
+        "kit": "/assets/accepted/covenant/ui/kit.json",
+        "diagnostics": [],
+        "art": {
+          "textures": 3,
+          "rgbaBytes": 15216640,
+          "rgbaMiB": 14.51171875,
+          "failed": [],
+          "pending": 0,
+          "diagnostics": []
+        },
+        "uiTextureBytes": 33554432,
+        "fontDiagnostics": [
+          "Error: Font Source Sans 3: 404",
+          "Error: Font Cinzel: 404"
+        ],
+        "fontTextureBytes": 46137344,
+        "layout": {
+          "scale": 1,
+          "x": 0,
+          "y": 0,
+          "safe": {
+            "x": 96,
+            "y": 54,
+            "w": 1728,
+            "h": 972
+          }
+        },
+        "texts": [
+          {
+            "text": "A COVENANT IN CHAINS",
+            "x": 112,
+            "y": 168,
+            "w": 255.2159562110901,
+            "h": 31.720000000000002,
+            "size": 26
+          },
+          {
+            "text": "MAGE\nARENA",
+            "x": 96,
+            "y": 220,
+            "w": 384.60792160034185,
+            "h": 273.28000000000003,
+            "size": 112
+          },
+          {
+            "text": "Six weeks beneath the collar.\nWhat will you carry beyond the grille?",
+            "x": 112,
+            "y": 538,
+            "w": 489.56593275070196,
+            "h": 82.96000000000001,
+            "size": 34
+          },
+          {
+            "text": "Begin your story",
+            "x": 196,
+            "y": 676.28,
+            "w": 173.17997837066653,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Choose your mage",
+            "x": 196,
+            "y": 712.4399999999999,
+            "w": 170.0639820098877,
+            "h": 29.28,
+            "size": 24
+          },
+          {
+            "text": "Continue season",
+            "x": 150,
+            "y": 789.92,
+            "w": 178.02396774291995,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Load season",
+            "x": 444,
+            "y": 789.92,
+            "w": 131.29197692871094,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "The proving ground",
+            "x": 150,
+            "y": 881.92,
+            "w": 210.92397308349612,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "Fullscreen",
+            "x": 1612,
+            "y": 962.92,
+            "w": 110.68398189544679,
+            "h": 34.160000000000004,
+            "size": 28
+          },
+          {
+            "text": "WATER  /  THE FIRST TWO WEEKS",
+            "x": 112,
+            "y": 976,
+            "w": 314.0639419555664,
+            "h": 29.28,
+            "size": 24
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "id": "pick-character",
+            "label": "Begin your story",
+            "x": 112,
+            "y": 667,
+            "w": 570,
+            "h": 84,
+            "disabled": false
+          },
+          {
+            "id": "continue-season",
+            "label": "Continue season",
+            "x": 112,
+            "y": 771,
+            "w": 274,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "menu-load",
+            "label": "Load season",
+            "x": 406,
+            "y": 771,
+            "w": 276,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "training-arena",
+            "label": "The proving ground",
+            "x": 112,
+            "y": 863,
+            "w": 570,
+            "h": 72,
+            "disabled": false
+          },
+          {
+            "id": "fullscreen",
+            "label": "Fullscreen",
+            "x": 1574,
+            "y": 946,
+            "w": 250,
+            "h": 68,
+            "disabled": false
+          }
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

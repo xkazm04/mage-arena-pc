@@ -1,0 +1,86 @@
+{
+  "id": "a14-conscript-se-reaction-agy-a01",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "conscript-se-reaction",
+  "attempt": 1,
+  "input": {
+    "wave": "A14",
+    "id": "conscript-se-reaction",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/references/conscript-se.png",
+        "sha256": "0372a297d85c56d6823bfb64e2fefe71ec1fe05e2590a7dd3d8e1c70ebc7bdb6",
+        "role": "identity"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Moonchalk painting bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns and FOUR rows, 16 separate complete poses of ONE SAME character. Read left to right, top to bottom. Row 1: four keys of a QUICK FLINCH AND RECOVERY: 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled BACK by one head-width and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. These four poses MUST visibly differ, not four standing duplicates. Row 2: first four keys of a BIGGER STAGGER: 5 upright ready; 6 abrupt backward bend of upper body; 7 deepest backward bend, arms pulled close, balance visibly lost; 8 lower body catches the weight, bent knees or legs. Row 3: 9 pushing back upright, visibly struggling; 10 upright recovered. Then begin COLLAPSE: 11 ready upright; 12 legs buckle and body drops. Row 4: continue COLLAPSE: 13 body very low, leaning toward ground; 14 torso falls sideways nearly horizontal; 15 body settles FULLY LYING on its side, head and entire torso on ground; 16 body completely still FULLY LYING ON GROUND, legs extended or naturally folded, equipment resting beside it. The final TWO poses must be completely horizontal resting bodies, never crouching, kneeling, sitting or getting back up. Treat collapse as a harmless theatrical fall/rest pose, fully intact. No blood, gore, wounds or injury detail. No attacker, impact flash or effects. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+    "entity": "conscript",
+    "direction": "se",
+    "kind": "reaction",
+    "grid": [
+      4,
+      4
+    ],
+    "referenceConsumption": "agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual"
+  },
+  "input_hash": "24ea6a764afce0afa37f4bef4c2e708deb96b187591d1fe9077c75b76e4d6867",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. Non-magical Roman legion recruit, worn iron helmet, dull rust tunic, short mail vest, small round shield and long plain spear. Compact human silhouette; no magical aura. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns and FOUR rows, 16 separate complete poses of ONE SAME character. Read left to right, top to bottom. Row 1: four keys of a QUICK FLINCH AND RECOVERY: 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled BACK by one head-width and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. These four poses MUST visibly differ, not four standing duplicates. Row 2: first four keys of a BIGGER STAGGER: 5 upright ready; 6 abrupt backward bend of upper body; 7 deepest backward bend, arms pulled close, balance visibly lost; 8 lower body catches the weight, bent knees or legs. Row 3: 9 pushing back upright, visibly struggling; 10 upright recovered. Then begin COLLAPSE: 11 ready upright; 12 legs buckle and body drops. Row 4: continue COLLAPSE: 13 body very low, leaning toward ground; 14 torso falls sideways nearly horizontal; 15 body settles FULLY LYING on its side, head and entire torso on ground; 16 body completely still FULLY LYING ON GROUND, legs extended or naturally folded, equipment resting beside it. The final TWO poses must be completely horizontal resting bodies, never crouching, kneeling, sitting or getting back up. Treat collapse as a harmless theatrical fall/rest pose, fully intact. No blood, gore, wounds or injury detail. No attacker, impact flash or effects. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "132bf99c-2816-418d-bd6f-b1a59bf6160a",
+  "at": "2026-10-04T09:43:02.799556+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 67.281,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T09:43:33Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "conscript_reaction_animation_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-conscript-se-reaction-agy-a01\\Reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-conscript-se-reaction-agy-a01\\Reference-2.png"
+        ],
+        "Prompt": "A 4x4 sprite animation sheet grid (exactly 4 columns and 4 rows, 16 separate poses) of ONE identical character isolated on a solid uniform vivid MAGENTA #FF00FF background. Character identity and equipment matching Reference-1.png: non-magical Roman legion recruit wearing a worn iron helmet, dull rust-colored tunic, short mail vest, holding a small round shield and a long plain spear. Compact human silhouette, no magical aura. Painting style matching Reference-2.png: original hand-painted digital dark fantasy, sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth, smooth opaque paint, cool upper-left lighting, no heavy cartoon outline, no 3D render, no grain or canvas texture. Camera elevated 55-degree orthographic angle (not eye-level). FRONT-RIGHT three-quarter view: head and torso facing diagonally toward viewer and image right across all poses. Read left to right, top to bottom in a 4x4 grid: Row 1 (Quick Flinch): 1 ready upright pose; 2 sharp unmistakable recoil with shoulders and head pulled back and torso bent back 25 degrees; 3 shoulders returning and braced bent legs; 4 upright recovered ready pose. Row 2 (Bigger Stagger): 5 upright ready; 6 abrupt backward bend of upper body; 7 deepest backward bend, arms pulled close, balance visibly lost; 8 lower body catches weight with bent knees. Row 3: 9 pushing back upright, visibly struggling; 10 upright recovered; 11 ready upright; 12 legs buckle and body drops. Row 4 (Collapse): 13 body very low, leaning toward ground; 14 torso falls sideways nearly horizontal; 15 body settles FULLY LYING on its side, head and entire torso flat on ground; 16 body completely still FULLY LYING ON GROUND, legs extended or folded, equipment resting beside recruit. Cells 15 and 16 MUST be completely horizontal resting bodies flat on the ground. Identical anatomical scale in all cells, middle 60% of cell, wide empty magenta gutters, no borders, no text, no floor lines, no gore.",
+        "toolAction": "Generating image",
+        "toolSummary": "Conscript animation sheet"
+      },
+      "conversation": "b10ea8b7-8816-42f9-a2d6-38a1f7b237b6"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "1c45e61e46cd56a6080ac784c3a58c3ad1a5ab80b47fba27dd3ff8a0f647a9d3",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\1df05f8f-e56f-4f4b-b446-a1fe3fcdcf05\\conscript_reaction_animation_sheet_1791107049938.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-conscript-se-reaction-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a14-conscript-se-reaction-agy-a01.jpg",
+  "sha256": "1c45e61e46cd56a6080ac784c3a58c3ad1a5ab80b47fba27dd3ff8a0f647a9d3",
+  "invocation_evidence": "art/providers/runs/a14-conscript-se-reaction-agy-a01"
+}

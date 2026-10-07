@@ -1,0 +1,110 @@
+{
+  "source": "art/review/sources/01-tessera-camp-a01.jpg",
+  "sha256": "6c041e4c9f61a5072007fd31e17bc77f91105d7d8dfe93c82f729de4e3a662ea",
+  "screen": "art/review/screens/01-tessera-camp.png",
+  "screen_sha256": "3d85a54bf891f597b9a20dce79cc340d5d2483717397525874dda2ec9a427699",
+  "slots": [
+    "day",
+    "dusk",
+    "night"
+  ],
+  "locations": [
+    {
+      "id": "yard",
+      "name": "the Yard",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.21,
+        0.3
+      ]
+    },
+    {
+      "id": "cistern",
+      "name": "the Cistern",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.5,
+        0.28
+      ]
+    },
+    {
+      "id": "pit",
+      "name": "the Pit",
+      "open": [
+        "dusk"
+      ],
+      "anchor": [
+        0.77,
+        0.3
+      ]
+    },
+    {
+      "id": "exchange",
+      "name": "the Exchange",
+      "open": [
+        "day"
+      ],
+      "anchor": [
+        0.19,
+        0.54
+      ]
+    },
+    {
+      "id": "commons",
+      "name": "the Commons",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.5,
+        0.53
+      ]
+    },
+    {
+      "id": "door",
+      "name": "the Door",
+      "open": [
+        "day"
+      ],
+      "anchor": [
+        0.79,
+        0.55
+      ]
+    },
+    {
+      "id": "tent",
+      "name": "your tent",
+      "open": [
+        "day",
+        "dusk",
+        "night"
+      ],
+      "anchor": [
+        0.28,
+        0.77
+      ]
+    },
+    {
+      "id": "edge",
+      "name": "the Edge",
+      "open": [
+        "night"
+      ],
+      "anchor": [
+        0.69,
+        0.79
+      ]
+    }
+  ],
+  "direct_observation": "All eight place regions visible: yard upper left; dry stepped cistern upper centre (extra smaller basin nearby); pit upper right; market left; communal table centre; grille right; tents bottom left; fog edge bottom right. Day labels are legible. Cistern dry; cyan ground patches are decorative pigment, not demonstrated usable water. Door anchor sits right of actual grille and Edge anchor sits on a tree; refine both in A4. Eight labels and three exact slot names are code-drawn.",
+  "a4_action": "Reuse the chosen source with corrected anchors and explicit day/dusk/night open-state overlays. Night action is a slot, not a claim of free roaming.",
+  "owner_accepted": false,
+  "new_image_calls": 0
+}

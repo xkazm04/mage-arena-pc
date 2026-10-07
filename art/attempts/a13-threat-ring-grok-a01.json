@@ -1,0 +1,70 @@
+{
+  "id": "a13-threat-ring-grok-a01",
+  "wave": "A13",
+  "style_id": "covenant",
+  "scene": "threat-ring",
+  "attempt": 1,
+  "input": {
+    "wave": "A13",
+    "id": "threat-ring",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "4:3",
+    "references": [
+      {
+        "path": "art/review/sources/a13-glyph-proof-agy-a02.png",
+        "sha256": "5810c7f0ecb581c6d9e5467e46305d8c2fea42e020cd6dae0edb8fbc8bc594bd",
+        "role": "canonical glyph grammar and painting treatment"
+      }
+    ],
+    "sheet": {
+      "columns": 3,
+      "rows": 2,
+      "kind": "threat"
+    },
+    "prompt": "Use case: stylized-concept. ONE production decal sprite sheet, on absolutely pure black. Reference-1.png is the canonical original rune alphabet: use its crooked hooked cut ends, pressure-varied strokes, weathered luminous silver and deliberately broken curves. Painted dark fantasy with sculpted luminous paint, rich worn edges, controlled glow; NOT vectors, uniform outlines, geometric clip art, diagrams, neon tubing or mathematical symbols. No text, labels, grid lines, borders, floor, objects, people, paper texture or all-over noise. Flat orthographic TOP VIEW of ground artwork, circular forms circular before game projection. Keep the identical centre, scale and facing in EVERY cell. Each whole effect INCLUDING bloom stays in the middle 65 percent of its cell; large empty black gutters. Do NOT put a bright point or emblem at the exact centre: that area stays empty under the actor. The game will place the EXACT canonical glyph cutouts into reserved gaps: concentrate on beautiful elemental painted connecting strokes and small fragments, no new pseudo-writing. Exactly THREE columns by TWO rows, SIX distinct stable HOLD animation keys of the SAME enemy threat boundary: a complete rough circular perimeter, with an empty middle and a narrow inner band of swept strokes. Neutral ivory-silver luminous underpainting, occasional muted warm weathering, suitable for tinting. Broad cracked calligraphic ribbons, with black cracks inside bright paint, small displaced sparks. The full perimeter remains visible in ALL six keys, fixed position and size. Only travelling light, tiny sparks and stroke-tip life vary. Keep generous dark gaps beside the inside edge for canonical rune placement. No generated writing or symbols. No progress pie slice: the game applies a separately authored fill wave. Exactly one isolated shape per cell. Do not accidentally join adjacent cells."
+  },
+  "input_hash": "ae757feb54d0b4d7923d7a538e29a396363df0084003448f8713d192c3a132f7",
+  "prompt": "Use case: stylized-concept. ONE production decal sprite sheet, on absolutely pure black. Reference-1.png is the canonical original rune alphabet: use its crooked hooked cut ends, pressure-varied strokes, weathered luminous silver and deliberately broken curves. Painted dark fantasy with sculpted luminous paint, rich worn edges, controlled glow; NOT vectors, uniform outlines, geometric clip art, diagrams, neon tubing or mathematical symbols. No text, labels, grid lines, borders, floor, objects, people, paper texture or all-over noise. Flat orthographic TOP VIEW of ground artwork, circular forms circular before game projection. Keep the identical centre, scale and facing in EVERY cell. Each whole effect INCLUDING bloom stays in the middle 65 percent of its cell; large empty black gutters. Do NOT put a bright point or emblem at the exact centre: that area stays empty under the actor. The game will place the EXACT canonical glyph cutouts into reserved gaps: concentrate on beautiful elemental painted connecting strokes and small fragments, no new pseudo-writing. Exactly THREE columns by TWO rows, SIX distinct stable HOLD animation keys of the SAME enemy threat boundary: a complete rough circular perimeter, with an empty middle and a narrow inner band of swept strokes. Neutral ivory-silver luminous underpainting, occasional muted warm weathering, suitable for tinting. Broad cracked calligraphic ribbons, with black cracks inside bright paint, small displaced sparks. The full perimeter remains visible in ALL six keys, fixed position and size. Only travelling light, tiny sparks and stroke-tip life vary. Keep generous dark gaps beside the inside edge for canonical rune placement. No generated writing or symbols. No progress pie slice: the game applies a separately authored fill wave. Exactly one isolated shape per cell. Do not accidentally join adjacent cells.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "7b4cdac5-3ab6-45c8-ad8c-97890daab024",
+  "at": "2026-10-03T21:44:54.479454+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 60.094,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Use case: stylized-concept. ONE production decal sprite sheet, on absolutely pure black. Reference-1.png is the canonical original rune alphabet: use its crooked hooked cut ends, pressure-varied strokes, weathered luminous silver and deliberately broken curves. Painted dark fantasy with sculpted luminous paint, rich worn edges, controlled glow; NOT vectors, uniform outlines, geometric clip art, diagrams, neon tubing or mathematical symbols. No text, labels, grid lines, borders, floor, objects, people, paper texture or all-over noise. Flat orthographic TOP VIEW of ground artwork, circular forms circular before game projection. Keep the identical centre, scale and facing in EVERY cell. Each whole effect INCLUDING bloom stays in the middle 65 percent of its cell; large empty black gutters. Do NOT put a bright point or emblem at the exact centre: that area stays empty under the actor. The game will place the EXACT canonical glyph cutouts into reserved gaps: concentrate on beautiful elemental painted connecting strokes and small fragments, no new pseudo-writing. Exactly THREE columns by TWO rows, SIX distinct stable HOLD animation keys of the SAME enemy threat boundary: a complete rough circular perimeter, with an empty middle and a narrow inner band of swept strokes. Neutral ivory-silver luminous underpainting, occasional muted warm weathering, suitable for tinting. Broad cracked calligraphic ribbons, with black cracks inside bright paint, small displaced sparks. The full perimeter remains visible in ALL six keys, fixed position and size. Only travelling light, tiny sparks and stroke-tip life vary. Keep generous dark gaps beside the inside edge for canonical rune placement. No generated writing or symbols. No progress pie slice: the game applies a separately authored fill wave. Exactly one isolated shape per cell. Do not accidentally join adjacent cells.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a13-threat-ring-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "4:3"
+      }
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "e7723304dd6106aa1a495dd1b297a13522ab167b44b11824111ba4933bc4fa80",
+      "paths": [
+        "C:\\Users\\kazda\\.grok\\sessions\\C%3A%5CUsers%5Ckazda%5Ckiro%5Cmage-arena-art%5Cart%5Craw%5Ca13-threat-ring-grok-a01\\7b4cdac5-3ab6-45c8-ad8c-97890daab024\\images\\1.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a13-threat-ring-grok-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a13-threat-ring-grok-a01.jpg",
+  "sha256": "e7723304dd6106aa1a495dd1b297a13522ab167b44b11824111ba4933bc4fa80",
+  "invocation_evidence": "art/providers/runs/a13-threat-ring-grok-a01"
+}

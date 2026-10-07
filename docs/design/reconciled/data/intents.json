@@ -1,0 +1,92 @@
+{
+  "TRAIN": {
+    "args": [
+      "stat"
+    ],
+    "optionalArgs": [],
+    "visibility": "public"
+  },
+  "WORK": {
+    "args": [],
+    "optionalArgs": [],
+    "visibility": "public"
+  },
+  "BEFRIEND": {
+    "args": [
+      "target"
+    ],
+    "optionalArgs": [],
+    "visibility": "public"
+  },
+  "CONFIDE": {
+    "args": [
+      "target",
+      "factId"
+    ],
+    "optionalArgs": [],
+    "visibility": "secret"
+  },
+  "PROTECT": {
+    "args": [
+      "target"
+    ],
+    "optionalArgs": [],
+    "visibility": "witnessed"
+  },
+  "WATCH": {
+    "args": [
+      "target"
+    ],
+    "optionalArgs": [],
+    "visibility": "secret"
+  },
+  "SCHEME": {
+    "args": [
+      "target",
+      "kind"
+    ],
+    "optionalArgs": [
+      "topic"
+    ],
+    "visibility": "secret"
+  },
+  "RECRUIT": {
+    "args": [
+      "target"
+    ],
+    "optionalArgs": [],
+    "visibility": "public"
+  },
+  "DEFECT": {
+    "args": [
+      "toTent"
+    ],
+    "optionalArgs": [],
+    "visibility": "public"
+  },
+  "REPORT": {
+    "args": [
+      "target"
+    ],
+    "optionalArgs": [],
+    "visibility": "secret"
+  },
+  "PLOT": {
+    "args": [],
+    "optionalArgs": [],
+    "visibility": "secret"
+  },
+  "REST": {
+    "args": [],
+    "optionalArgs": [],
+    "visibility": "private"
+  },
+  "OFFER": {
+    "args": [
+      "target",
+      "terms"
+    ],
+    "optionalArgs": [],
+    "visibility": "secret"
+  }
+}

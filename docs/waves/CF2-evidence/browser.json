@@ -1,0 +1,119 @@
+{
+  "runs": [
+    {
+      "height": 1080,
+      "frameP95": 16.700000000000728,
+      "cpuP95": 1.2000000178813934,
+      "lab": {
+        "config": {
+          "opponent": "mage",
+          "dummyAttack": "magic",
+          "playerSchool": "earth",
+          "opponentSchool": "water",
+          "competence": 3,
+          "aggression": 0.75,
+          "distanceM": 10,
+          "seed": 7331,
+          "randomSeed": false,
+          "composition": {
+            "name": "Mirror tide",
+            "lines": [
+              "mirror",
+              "mend",
+              "tide_orb"
+            ],
+            "branches": {
+              "lash": "A",
+              "mirror": "A",
+              "tide_orb": "B"
+            }
+          }
+        },
+        "metrics": {
+          "landed": 0,
+          "taken": 10,
+          "incomingMagic": 10,
+          "absorbs": 0,
+          "perfects": 0,
+          "practiceDamage": 0,
+          "manaSpent": 0,
+          "timeToKillS": null,
+          "mixed": false
+        },
+        "tuningName": "Custom",
+        "historyCount": 411
+      },
+      "overflow": []
+    },
+    {
+      "height": 1440,
+      "frameP95": 16.799999999999272,
+      "cpuP95": 1.300000011920929,
+      "lab": {
+        "config": {
+          "opponent": "mage",
+          "dummyAttack": "magic",
+          "playerSchool": "earth",
+          "opponentSchool": "water",
+          "competence": 3,
+          "aggression": 0.75,
+          "distanceM": 10,
+          "seed": 7331,
+          "randomSeed": false,
+          "composition": {
+            "name": "Mirror tide",
+            "lines": [
+              "mirror",
+              "mend",
+              "tide_orb"
+            ],
+            "branches": {
+              "lash": "A",
+              "mirror": "A",
+              "tide_orb": "B"
+            }
+          }
+        },
+        "metrics": {
+          "landed": 0,
+          "taken": 11,
+          "incomingMagic": 11,
+          "absorbs": 0,
+          "perfects": 0,
+          "practiceDamage": 0,
+          "manaSpent": 0,
+          "timeToKillS": null,
+          "mixed": false
+        },
+        "tuningName": "Custom",
+        "historyCount": 443
+      },
+      "overflow": []
+    }
+  ],
+  "screens": [
+    "1080-setup.png",
+    "1080-tuning.png",
+    "1080-spells.png",
+    "1080-replay.png",
+    "1080-combat.png",
+    "1080-hit-feedback.png",
+    "1080-perfect-feedback.png",
+    "1080-cast-windup.png",
+    "1080-cast-feedback.png",
+    "1080-warning-windup.png",
+    "1080-warning-feedback.png",
+    "1440-setup.png",
+    "1440-tuning.png",
+    "1440-spells.png",
+    "1440-replay.png",
+    "1440-combat.png",
+    "1440-hit-feedback.png",
+    "1440-perfect-feedback.png",
+    "1440-cast-windup.png",
+    "1440-cast-feedback.png",
+    "1440-warning-windup.png",
+    "1440-warning-feedback.png"
+  ],
+  "errors": []
+}

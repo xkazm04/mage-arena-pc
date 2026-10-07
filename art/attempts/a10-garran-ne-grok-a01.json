@@ -1,0 +1,55 @@
+{
+  "id": "a10-garran-ne-grok-a01",
+  "wave": "A10",
+  "style_id": "covenant",
+  "scene": "garran-ne",
+  "attempt": 1,
+  "input": {
+    "wave": "A10",
+    "id": "garran-ne",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A10/references/garran-ne-square-v1.png",
+        "sha256": "93b4e8ae5c42120e146dd1230dd03d384704b2afd4c3f220eb9f68cfd6ed439f",
+        "role": "single full-body A3c identity crop on square canvas"
+      }
+    ],
+    "prompt": "Replace this single-character reference with an entirely new SQUARE 4x4 animation sheet of the SAME character. Retain identity and equipment, but do NOT retain its single-pose layout. Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Rich physical painted cloth folds and worn metal, subtle fine highlights. No thick comic outlines, no texture overlay.\nEXACTLY FOUR columns and FOUR rows, sixteen separate WHOLE FULL-BODY figures, heads to feet plus weapons. All sixteen face THREE-QUARTER REAR RIGHT, back of head and back of torso visible, moving RIGHT and AWAY. Same camera elevation 55 degrees, same body scale, same costume and headwear. Never change direction during an action. A hood stays up in every frame if present in the reference. Keep exactly ONE consistent staff/weapon in every frame, never two, never omit it.\nFor a MAGE, the ONE staff stays UPRIGHT beside the body in the SAME hand throughout idle, run, cast and brace. The free hand gestures to cast or resist. Do not swing the staff horizontally and do not add a second staff. Other characters retain their actual weapon/anatomy.\nPure flat magenta background, no panel borders or lines, no shadow or ground. Every figure is SMALL and fits inside the CENTRAL HALF of its cell; broad completely empty magenta gutters above and below every head and foot. Leave a LARGE empty margin around the whole image. No cropped head, foot, weapon or resting body.\nRow 1: idle A, idle B, run right-foot contact, run compression.\nRow 2: run passing, run left-foot contact, run compression, run passing. These six RUN frames are a real alternating gait in the same requested direction.\nRow 3: cast/attack anticipation, cast/attack release, absorb/brace preparation, absorb/brace resisting. Use staff, actual weapon or natural creature anatomy. Keep same facing.\nRow 4: hit recoil, hit recovery, intact collapse, intact resting body. No blood or injury. No large magical effect: game adds effects separately.\nNo letters, numbers, extra figures, portraits, layouts or labels. Original design only. Every pose has both head and feet within its own broad blank margins.",
+    "revision": 1
+  },
+  "input_hash": "3795c07c4dd730ca753fe582c1e543e121494b2e87f2a3a89380edf0a1fb7493",
+  "prompt": "Replace this single-character reference with an entirely new SQUARE 4x4 animation sheet of the SAME character. Retain identity and equipment, but do NOT retain its single-pose layout. Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Rich physical painted cloth folds and worn metal, subtle fine highlights. No thick comic outlines, no texture overlay.\nEXACTLY FOUR columns and FOUR rows, sixteen separate WHOLE FULL-BODY figures, heads to feet plus weapons. All sixteen face THREE-QUARTER REAR RIGHT, back of head and back of torso visible, moving RIGHT and AWAY. Same camera elevation 55 degrees, same body scale, same costume and headwear. Never change direction during an action. A hood stays up in every frame if present in the reference. Keep exactly ONE consistent staff/weapon in every frame, never two, never omit it.\nFor a MAGE, the ONE staff stays UPRIGHT beside the body in the SAME hand throughout idle, run, cast and brace. The free hand gestures to cast or resist. Do not swing the staff horizontally and do not add a second staff. Other characters retain their actual weapon/anatomy.\nPure flat magenta background, no panel borders or lines, no shadow or ground. Every figure is SMALL and fits inside the CENTRAL HALF of its cell; broad completely empty magenta gutters above and below every head and foot. Leave a LARGE empty margin around the whole image. No cropped head, foot, weapon or resting body.\nRow 1: idle A, idle B, run right-foot contact, run compression.\nRow 2: run passing, run left-foot contact, run compression, run passing. These six RUN frames are a real alternating gait in the same requested direction.\nRow 3: cast/attack anticipation, cast/attack release, absorb/brace preparation, absorb/brace resisting. Use staff, actual weapon or natural creature anatomy. Keep same facing.\nRow 4: hit recoil, hit recovery, intact collapse, intact resting body. No blood or injury. No large magical effect: game adds effects separately.\nNo letters, numbers, extra figures, portraits, layouts or labels. Original design only. Every pose has both head and feet within its own broad blank margins.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "1bc3fec9-7cba-4044-94c0-386624152262",
+  "at": "2026-10-03T13:35:46.482152+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 32.593,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "prompt": "Replace this single-character reference with an entirely new SQUARE 4x4 animation sheet of the SAME character. Retain identity and equipment, but do NOT retain its single-pose layout. Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Rich physical painted cloth folds and worn metal, subtle fine highlights. No thick comic outlines, no texture overlay.\nEXACTLY FOUR columns and FOUR rows, sixteen separate WHOLE FULL-BODY figures, heads to feet plus weapons. All sixteen face THREE-QUARTER REAR RIGHT, back of head and back of torso visible, moving RIGHT and AWAY. Same camera elevation 55 degrees, same body scale, same costume and headwear. Never change direction during an action. A hood stays up in every frame if present in the reference. Keep exactly ONE consistent staff/weapon in every frame, never two, never omit it.\nFor a MAGE, the ONE staff stays UPRIGHT beside the body in the SAME hand throughout idle, run, cast and brace. The free hand gestures to cast or resist. Do not swing the staff horizontally and do not add a second staff. Other characters retain their actual weapon/anatomy.\nPure flat magenta background, no panel borders or lines, no shadow or ground. Every figure is SMALL and fits inside the CENTRAL HALF of its cell; broad completely empty magenta gutters above and below every head and foot. Leave a LARGE empty margin around the whole image. No cropped head, foot, weapon or resting body.\nRow 1: idle A, idle B, run right-foot contact, run compression.\nRow 2: run passing, run left-foot contact, run compression, run passing. These six RUN frames are a real alternating gait in the same requested direction.\nRow 3: cast/attack anticipation, cast/attack release, absorb/brace preparation, absorb/brace resisting. Use staff, actual weapon or natural creature anatomy. Keep same facing.\nRow 4: hit recoil, hit recovery, intact collapse, intact resting body. No blood or injury. No large magical effect: game adds effects separately.\nNo letters, numbers, extra figures, portraits, layouts or labels. Original design only. Every pose has both head and feet within its own broad blank margins.",
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-garran-ne-grok-a01\\reference-1.png"
+        ],
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a10-garran-ne-grok-a01/source.jpg",
+  "archive": "art/review/sources/a10-garran-ne-grok-a01.jpg",
+  "sha256": "b1e7c878e15e8cdaa8ec220aa6081669e1944093bc960b43608afacddaddad9d",
+  "invocation_evidence": "art/providers/runs/a10-garran-ne-grok-a01"
+}

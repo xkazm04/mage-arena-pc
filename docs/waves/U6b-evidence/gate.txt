@@ -1,0 +1,59 @@
+
+> gate
+> npm run build && npm run lint && npm run test && npm run check:design
+
+
+> build
+> npm --prefix packages/core run data && tsc -p tsconfig.json && tsc -p packages/core/tsconfig.arena.json
+
+
+> data
+> node scripts/compile-arena-data.mjs
+
+Arena data compiled from reconciled arena and scale contract; clock, Nerve and absorb authorities agree.
+
+> lint
+> eslint packages --max-warnings 0
+
+
+> test
+> vitest run && node --test packages/tools/replay/*.test.mjs
+
+
+ RUN  v5.0.3 C:/Users/kazda/kiro/mage-arena-int
+
+
+ Test Files  30 passed (30)
+      Tests  211 passed (211)
+   Start at  12:33:46
+   Duration  25.16s (tests 85%, transform 7%, import 7%)
+
+✔ stored golden nights replay exactly with source references (52.2024ms)
+✔ Fable planted faults fail directly, including case, second vocabulary and foreign keys (413.2358ms)
+✔ generated branch oracle covers every verb, persuade, caught, stocks, Games and repaired lines (18.2031ms)
+✔ balance review regressions: author cannot believe own rumour; fed protection has no social reward; natural minimum fails (11.9503ms)
+✔ planted prose, rule and fixture contradictions all fail the checker (63.6337ms)
+✔ golden content fixes hunger, aggression halving, repetition, caps and provenance (8.8721ms)
+✔ calendar has weekly Games and eve Trials throughout one season (0.8103ms)
+✔ every same-tent equal-rank directed pair decays; a player cannot be directed (2.7821ms)
+✔ crier rejects number words, Unicode digits and invented consequences (1.0481ms)
+✔ identical visible request has one key; changed fact, model or prompt has another (0.7866ms)
+✔ hour-rule planted faults are rejected directly (147.7657ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 864.4258
+
+> check:design
+> node packages/tools/replay/cli.mjs check
+
+{
+  "contradictions": 0,
+  "errors": [],
+  "nights": 3,
+  "deltas": 216
+}

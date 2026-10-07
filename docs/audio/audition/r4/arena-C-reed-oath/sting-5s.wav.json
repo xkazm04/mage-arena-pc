@@ -1,0 +1,85 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU3",
+  "file": "audition/r4/arena-C-reed-oath/sting-5s.wav",
+  "sha256": "46f3a45e33c913e10c911065a0b68e53f9ebf7d0b060235d1ac9921c6821e95d",
+  "source": "audition/r4/arena-C-reed-oath.mp3",
+  "sourceSha256": "e5cf5f788a7277b8bb1f173f56b9be78a7ed3f039151697258da4868ee5233b5",
+  "sourceSidecar": "audition/r4/arena-C-reed-oath.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-C-reed-oath",
+  "processing": {
+    "file": "audition/r4/arena-C-reed-oath/sting-5s.wav",
+    "durationSeconds": 5.0,
+    "sourceRangesSeconds": [
+      [
+        135,
+        138
+      ],
+      [
+        147.5,
+        150
+      ]
+    ],
+    "crossfadeSeconds": 0.5,
+    "approved": false,
+    "note": "Release-fragment plus source decay; musical continuity and theme recognition pending listening.",
+    "measurement": {
+      "file": "audition/r4/arena-C-reed-oath/sting-5s.wav",
+      "sha256": "46f3a45e33c913e10c911065a0b68e53f9ebf7d0b060235d1ac9921c6821e95d",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleCount": 240000,
+      "decodedSeconds": 5.0,
+      "containerSeconds": 5.0,
+      "codec": "pcm_s16le",
+      "integratedLufs": -25.06,
+      "truePeakDbTP": -13.86,
+      "loudnessRangeLU": 6.5,
+      "samplePeakDbFS": -13.864,
+      "samplesAtOrAboveFullScale": 0,
+      "loudnorm": {
+        "input_i": "-25.06",
+        "input_tp": "-13.86",
+        "input_lra": "6.50",
+        "input_thresh": "-35.48",
+        "output_i": "-26.00",
+        "output_tp": "-15.20",
+        "output_lra": "5.80",
+        "output_thresh": "-36.29",
+        "normalization_type": "dynamic",
+        "target_offset": "0.00"
+      }
+    }
+  },
+  "measurement": {
+    "file": "audition/r4/arena-C-reed-oath/sting-5s.wav",
+    "sha256": "46f3a45e33c913e10c911065a0b68e53f9ebf7d0b060235d1ac9921c6821e95d",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 240000,
+    "decodedSeconds": 5.0,
+    "containerSeconds": 5.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -25.06,
+    "truePeakDbTP": -13.86,
+    "loudnessRangeLU": 6.5,
+    "samplePeakDbFS": -13.864,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-25.06",
+      "input_tp": "-13.86",
+      "input_lra": "6.50",
+      "input_thresh": "-35.48",
+      "output_i": "-26.00",
+      "output_tp": "-15.20",
+      "output_lra": "5.80",
+      "output_thresh": "-36.29",
+      "normalization_type": "dynamic",
+      "target_offset": "0.00"
+    }
+  },
+  "note": "PCM derived from lossy provider MP3; no claim of native lossless master. Paid generation ledger records the original only."
+}

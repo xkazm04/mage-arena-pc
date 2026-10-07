@@ -1,0 +1,15 @@
+{
+  "label": "measured interruption; cause not established",
+  "status": "stopped after wall-clock window; W1 gate incomplete",
+  "requestedWaitMs": 55000,
+  "reportedWaitSeconds": 25926.6283,
+  "resumedAtUtc": "2026-10-02T06:34:02Z",
+  "localNightsSaved": 155,
+  "localCallsWithEvidence": 775,
+  "localReservations": 776,
+  "unrecordedInFlightReservations": 1,
+  "sonnetNightsSaved": 30,
+  "sonnetReservations": 150,
+  "judgeCalls": 0,
+  "note": "Execution resumed more than seven hours after a requested short wait. The last recorded local night includes a timeout and the interruption in elapsed time. The next in-flight local call was stopped; its reservation remains charged. The queued judge exited at its deadline without calling a model. No samples were discarded or relabelled successful."
+}

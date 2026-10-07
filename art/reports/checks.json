@@ -1,0 +1,91 @@
+{
+  "at": "2026-10-02T11:59:08.220379+00:00",
+  "label": "measured local art gate; quota incidents inside unit tests are simulated",
+  "status": "fail",
+  "browser": "included",
+  "game_build": "not applicable: no package manifest or code packages on the art baseline; none modified",
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/art",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.781,
+      "stdout": "{\"resume\": \"old\", \"status\": \"quota-stopped\", \"new_calls\": 0}\n{\"id\": \"01-tessera-arena-a01\", \"status\": \"quota-stopped\", \"seconds\": 0.015, \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 1, \"weekly_reserved\": 1, \"target_remaining\": 148, \"hard_remaining\": 179, \"generated\": 0, \"observed_image_tool_calls\": 0, \"videos\": 0, \"stop\": {\"at\": \"2026-10-02T11:58:44.826048+00:00\", \"reason\": \"01-tessera-arena-a01: structured HTTP 429\"}, \"shared_account_remaining\": \"not measured\"}}\n{\"resume\": \"old\", \"status\": \"generated\", \"new_calls\": 0}\n",
+      "stderr": ".....................................\n----------------------------------------------------------------------\nRan 37 tests in 0.493s\n\nOK\n"
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "compileall",
+        "-q",
+        "tools/art"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.094,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/pipeline.py",
+        "compile"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.156,
+      "stdout": "Compiled 16 immutable comparison briefs; zero calls\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/pipeline.py",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 15.953,
+      "stdout": "{\"build\": \"complete\", \"pairs\": 8, \"attempts\": 30, \"shortlist\": [\"06-forum-print\", \"01-tessera\", \"03-hearth-gouache\"], \"budget\": {\"week\": \"2026-W40\", \"wave_reserved\": 126, \"weekly_reserved\": 126, \"target_remaining\": 23, \"hard_remaining\": 54, \"generated\": 125, \"observed_image_tool_calls\": 126, \"videos\": 0, \"stop\": {\"at\": \"2026-10-02T11:21:51.279862+00:00\", \"reason\": \"01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry\"}, \"shared_account_remaining\": \"not measured\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/pipeline.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.844,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"current_images\": 16,\n  \"direction_pairs\": 8,\n  \"generated_attempts\": 30,\n  \"graded_attempts\": 30,\n  \"current_rejects\": 0,\n  \"scope\": \"delivery integrity; does not turn semantic rejects into acceptance\",\n  \"owner_accepted\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/check_a3.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.0,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"scope\": \"integrity of explicitly incomplete stopped handoff, NOT A3 completion\",\n  \"a3_complete\": false,\n  \"missing_items\": [\n    \"figure-cinder_hound-injury\",\n    \"figure-hush_moth-action\",\n    \"figure-hush_moth-injury\",\n    \"figure-hush_moth-run\",\n    \"figure-hush_moth-stance\",\n    \"figure-mire_maw-action\",\n    \"figure-mire_maw-injury\",\n    \"figure-mire_maw-run\",\n    \"figure-mire_maw-stance\",\n    \"figure-thornback-action\",\n    \"figure-thornback-injury\",\n    \"figure-thornback-run\",\n    \"figure-thornback-stance\"\n  ],\n  \"errors\": [],\n  \"frames\": 70,\n  \"atlases\": 9,\n  \"effect_sheets\": 138,\n  \"budget\": {\n    \"week\": \"2026-W40\",\n    \"wave_reserved\": 126,\n    \"weekly_reserved\": 126,\n    \"target_remaining\": 23,\n    \"hard_remaining\": 54,\n    \"generated\": 125,\n    \"observed_image_tool_calls\": 126,\n    \"videos\": 0,\n    \"stop\": {\n      \"at\": \"2026-10-02T11:21:51.279862+00:00\",\n      \"reason\": \"01-tessera-figure-cinder_hound-injury-a01: UNCERTAIN_RESULT; inspect evidence, no automatic retry\"\n    },\n    \"shared_account_remaining\": \"not measured\"\n  },\n  \"owner_accepted\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\kazda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "tools/art/verify_ui.py"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.219,
+      "stdout": "{\n  \"status\": \"pass\",\n  \"errors\": [],\n  \"reviewed_artifacts\": 3,\n  \"scope\": \"review integrity; local models and agent do not approve owner feel\",\n  \"pending\": [\n    {\n      \"school\": \"fire\",\n      \"scope\": \"approved spell-line migration\",\n      \"dependency\": \"W8\",\n      \"reason\": \"Only individual reference spells exist in this checkout.\"\n    },\n    {\n      \"school\": \"earth\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    },\n    {\n      \"school\": \"air\",\n      \"scope\": \"line-specific icons\",\n      \"dependency\": \"W8\",\n      \"reason\": \"No spell-line catalogue exists in this checkout.\"\n    }\n  ],\n  \"owner_accepted\": false,\n  \"image_generation_calls\": 0\n}\n{\n  \"status\": \"fail\",\n  \"errors\": [\n    \"UNRESOLVED_UI:ui-a3-poses.json\"\n  ],\n  \"current_ui_grades\": 13,\n  \"owner_accepted\": false,\n  \"model_calls\": 0,\n  \"image_generation_calls\": 0\n}\n",
+      "stderr": ""
+    }
+  ]
+}

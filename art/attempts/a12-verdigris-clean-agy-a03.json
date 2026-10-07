@@ -1,0 +1,73 @@
+{
+  "id": "a12-verdigris-clean-agy-a03",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "verdigris-clean",
+  "attempt": 3,
+  "input": {
+    "wave": "A12",
+    "id": "verdigris-clean",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+        "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+        "role": "approved A6 scene; edit target, preserve entire environment"
+      }
+    ],
+    "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: deep bottle-green mineral flagstones, malachite glaze, pitted bronze-copper inlays, five green eroded obelisks, the large central concentric copper ring-and-crescent and the fine interconnected copper geometrical floor network, rear worn masonry, muted warm grazing light and deep green shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: The large thorn-backed four-legged stone creature at x .63 y .33 is an ANIMAL and must also disappear entirely. Replace it with the same flat worn dark green floor. No raised slab islands. No hovering pebbles, no glowing residual silhouettes.",
+    "correction_of": "a12-verdigris-clean-grok-a02",
+    "revision": 3
+  },
+  "input_hash": "22e376eb26ccea2524f28b1fade5f21b2cb5b8865d4e5461e479d73af5263801",
+  "prompt": "Use case: precise-object-edit. The supplied image is the ORIGINAL APPROVED ARENA PAINTING and edit target. Make ONE coherent clean painted background of this exact scene. Remove every living figure: all four mages, all soldiers, both hounds, the large thorn-backed stone creature. Remove all their equipment, cast shadows, personal auras and combat effects: fire streams, embers from characters, water swirl, purple air ribbon, floating rocks, sparks, projectiles. Reconstruct the exposed stone or sand below their former positions with continuous matching painted surface. LOCK the original camera, composition and framing. Preserve ALL existing architecture, objects and lighting: deep bottle-green mineral flagstones, malachite glaze, pitted bronze-copper inlays, five green eroded obelisks, the large central concentric copper ring-and-crescent and the fine interconnected copper geometrical floor network, rear worn masonry, muted warm grazing light and deep green shadows. Keep the exact pylon positions, rune layout and irregular distribution of stone, floor seams and material wear. Preserve subtle surface detail and painted physical material richness. Do not invent new objects, broaden the floor cracks, smooth away detail, change the hue, flatten the atmosphere or add repetitive texture. 55-degree elevated oblique view, no perspective change. One continuous painting, no separated parts, no grid or modular arena. No text, letters, numbers, logos, watermark, UI, portrait, statues, creatures or people. Retain abstract nonlinguistic rune geometry. No paper or canvas noise overlay. Original designs only. Largest available detailed landscape 16:9 image; target 3840x2160 if supported. Faithful preservation is the priority. CRITICAL: The large thorn-backed four-legged stone creature at x .63 y .33 is an ANIMAL and must also disappear entirely. Replace it with the same flat worn dark green floor. No raised slab islands. No hovering pebbles, no glowing residual silhouettes.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "1d7aeb90-e58c-454e-9027-18ae7d6a9b2e",
+  "at": "2026-10-03T15:29:03.164492+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 118.0,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "at": "2026-10-03T15:29:49Z",
+      "step": 3,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "output",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-agy-a03\\reference-1.png"
+        ],
+        "Prompt": "Inpainting and clean background restoration of the provided fantasy arena painting. Completely remove all characters, creatures, and magical effects from the scene while seamlessly reconstructing the floor underneath them. Specifically remove: the four robed mages (the fire mage at middle-left, the earth mage with hovering stones at bottom-left, the ice mage at middle-right, and the lightning mage at bottom-right), all three armored soldiers at upper-left, the two shadow hounds at upper-center, and the large spiked four-legged stone beast at upper-right. Remove all spell effects, fire streams, sparks, water arcs, purple ribbons, hovering rock fragments, cast shadows, and character glowing auras. Reconstruct the continuous floor beneath them with exact matching deep bottle-green mineral flagstones, malachite glaze, and unbroken inlaid bronze-copper geometric astronomical circles, arcs, and central crescent moon line network. Keep all five weathered green stone obelisks, the rear masonry boundary wall, the exact 55-degree elevated oblique camera framing, lighting, and rich painted texture identical to the original reference image. Clean empty arena with no living beings, creatures, or characters.",
+        "toolAction": "Generating clean arena image",
+        "toolSummary": "Arena background generation"
+      },
+      "conversation": "e7947dcd-8398-44d8-a311-be9e94fce4c7"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "bcdd12b93ac7649d8131bc245ef6f2c9abe588b5e9619957a4f79cb0dc1bee52",
+      "paths": [
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-clean-agy-a03\\output.png"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a12-verdigris-clean-agy-a03/_driver/source.png",
+  "archive": "art/review/sources/a12-verdigris-clean-agy-a03.png",
+  "sha256": "bcdd12b93ac7649d8131bc245ef6f2c9abe588b5e9619957a4f79cb0dc1bee52",
+  "invocation_evidence": "art/providers/runs/a12-verdigris-clean-agy-a03"
+}

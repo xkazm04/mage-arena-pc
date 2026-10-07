@@ -1,0 +1,827 @@
+[
+  {
+    "label": "simulated from tables",
+    "timeline": [
+      {
+        "action": "wake",
+        "day": 1,
+        "hour": 8,
+        "phase": "day",
+        "location": "tent",
+        "nightFinished": false
+      },
+      {
+        "action": "travel",
+        "day": 1,
+        "hour": 8,
+        "phase": "day",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "activity",
+        "day": 1,
+        "hour": 10,
+        "phase": "day",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 1,
+        "hour": 18,
+        "phase": "dusk",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 1,
+        "hour": 20,
+        "phase": "night",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 1,
+        "hour": 22,
+        "phase": "night",
+        "location": "yard",
+        "nightFinished": true
+      },
+      {
+        "action": "settle",
+        "day": 2,
+        "hour": 8,
+        "phase": "day",
+        "location": "tent",
+        "nightFinished": false
+      }
+    ],
+    "player": {
+      "id": "cassia",
+      "name": "Cassia of the Lighthouse",
+      "tent": "tide",
+      "school": "water",
+      "role": "main",
+      "rank": 1,
+      "traits": {
+        "aggression": 3,
+        "ambition": 8,
+        "caution": 8,
+        "loyalty": 5,
+        "cunning": 10,
+        "warmth": 4
+      },
+      "values": [
+        "knowledge",
+        "rank",
+        "survival"
+      ],
+      "goal": {
+        "id": "learn_secrets",
+        "target": null
+      },
+      "stats": {
+        "vigor": 1,
+        "focus": 3,
+        "nerve": 1,
+        "guile": 2
+      },
+      "voice": {
+        "register": "precise, courteous, conditional sentences",
+        "tics": [
+          "answers a question with a better question",
+          "names the price of things"
+        ],
+        "never": [
+          "raises her voice",
+          "swears an oath she cannot keep"
+        ]
+      },
+      "bio": "An Alexandrian lamp-keeper's daughter who read every scroll about the tides of power. She wins fights before they start and keeps a ledger of her own.",
+      "forbiddenIntents": [],
+      "knowledgeSeed": [
+        "K-ford-betrayal"
+      ],
+      "points": {
+        "vigor": 3,
+        "focus": 14,
+        "nerve": 0,
+        "guile": 6
+      },
+      "gold": 10,
+      "renown": 5,
+      "hunger": 0,
+      "loyalty": 50,
+      "fatigue": 0,
+      "mastery": 1,
+      "mood": "calm",
+      "knowledge": [
+        "K-ford-betrayal"
+      ],
+      "life": "Alive",
+      "sick": false,
+      "warned": false,
+      "stocks": false,
+      "lastScheme": null
+    },
+    "trace": [
+      {
+        "path": "characters/brennic/points/nerve",
+        "before": 6,
+        "after": 7,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/garran/points/vigor",
+        "before": 14,
+        "after": 15,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/iskar/points/guile",
+        "before": 6,
+        "after": 7,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/sadruba/points/nerve",
+        "before": 36,
+        "after": 37,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/ophel/points/focus",
+        "before": 36,
+        "after": 37,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/ruadh/points/vigor",
+        "before": 24,
+        "after": 25,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/kesh/points/guile",
+        "before": 36,
+        "after": 37,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/corvo/points/nerve",
+        "before": 0,
+        "after": 1,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/nysa/points/focus",
+        "before": 6,
+        "after": 7,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/senna/points/vigor",
+        "before": 6,
+        "after": 7,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/lio/points/guile",
+        "before": 0,
+        "after": 1,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/fenna/hunger",
+        "before": 60,
+        "after": 75,
+        "rule": "rules/effects/daily"
+      },
+      {
+        "path": "characters/fenna/points/guile",
+        "before": 14,
+        "after": 15,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/quill/hunger",
+        "before": 60,
+        "after": 75,
+        "rule": "rules/effects/daily"
+      },
+      {
+        "path": "characters/quill/points/vigor",
+        "before": 0,
+        "after": 1,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "trust/cassia>nysa",
+        "before": -10,
+        "after": -11,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/brennic>corvo",
+        "before": -15,
+        "after": -16,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/garran>senna",
+        "before": -5,
+        "after": -6,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/iskar>lio",
+        "before": -10,
+        "after": -11,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/corvo>brennic",
+        "before": -20,
+        "after": -21,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/nysa>cassia",
+        "before": -10,
+        "after": -11,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/senna>garran",
+        "before": -5,
+        "after": -6,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/lio>iskar",
+        "before": -5,
+        "after": -6,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "day",
+        "before": 1,
+        "after": 2,
+        "rule": "season/daysPerWeek"
+      }
+    ]
+  },
+  {
+    "label": "simulated from tables",
+    "timeline": [
+      {
+        "action": "wake",
+        "day": 2,
+        "hour": 8,
+        "phase": "day",
+        "location": "tent",
+        "nightFinished": false
+      },
+      {
+        "action": "travel",
+        "day": 2,
+        "hour": 8,
+        "phase": "day",
+        "location": "exchange",
+        "nightFinished": false
+      },
+      {
+        "action": "activity",
+        "day": 2,
+        "hour": 12,
+        "phase": "day",
+        "location": "exchange",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 2,
+        "hour": 18,
+        "phase": "dusk",
+        "location": "exchange",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 2,
+        "hour": 20,
+        "phase": "night",
+        "location": "exchange",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 2,
+        "hour": 22,
+        "phase": "night",
+        "location": "exchange",
+        "nightFinished": true
+      },
+      {
+        "action": "settle",
+        "day": 3,
+        "hour": 8,
+        "phase": "day",
+        "location": "tent",
+        "nightFinished": false
+      }
+    ],
+    "player": {
+      "id": "cassia",
+      "name": "Cassia of the Lighthouse",
+      "tent": "tide",
+      "school": "water",
+      "role": "main",
+      "rank": 1,
+      "traits": {
+        "aggression": 3,
+        "ambition": 8,
+        "caution": 8,
+        "loyalty": 5,
+        "cunning": 10,
+        "warmth": 4
+      },
+      "values": [
+        "knowledge",
+        "rank",
+        "survival"
+      ],
+      "goal": {
+        "id": "learn_secrets",
+        "target": null
+      },
+      "stats": {
+        "vigor": 1,
+        "focus": 3,
+        "nerve": 1,
+        "guile": 2
+      },
+      "voice": {
+        "register": "precise, courteous, conditional sentences",
+        "tics": [
+          "answers a question with a better question",
+          "names the price of things"
+        ],
+        "never": [
+          "raises her voice",
+          "swears an oath she cannot keep"
+        ]
+      },
+      "bio": "An Alexandrian lamp-keeper's daughter who read every scroll about the tides of power. She wins fights before they start and keeps a ledger of her own.",
+      "forbiddenIntents": [],
+      "knowledgeSeed": [
+        "K-ford-betrayal"
+      ],
+      "points": {
+        "vigor": 3,
+        "focus": 14,
+        "nerve": 0,
+        "guile": 6
+      },
+      "gold": 14,
+      "renown": 5,
+      "hunger": 0,
+      "loyalty": 50,
+      "fatigue": 1,
+      "mastery": 1,
+      "mood": "calm",
+      "knowledge": [
+        "K-ford-betrayal"
+      ],
+      "life": "Alive",
+      "sick": false,
+      "warned": false,
+      "stocks": false,
+      "lastScheme": null
+    },
+    "trace": [
+      {
+        "path": "characters/brennic/points/nerve",
+        "before": 7,
+        "after": 8,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/garran/points/vigor",
+        "before": 15,
+        "after": 16,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/iskar/points/guile",
+        "before": 7,
+        "after": 8,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/sadruba/points/nerve",
+        "before": 37,
+        "after": 38,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/ophel/points/focus",
+        "before": 37,
+        "after": 38,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/ruadh/points/vigor",
+        "before": 25,
+        "after": 26,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/kesh/points/guile",
+        "before": 37,
+        "after": 38,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/corvo/points/nerve",
+        "before": 1,
+        "after": 2,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/nysa/points/focus",
+        "before": 7,
+        "after": 8,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/senna/points/vigor",
+        "before": 7,
+        "after": 8,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/lio/points/guile",
+        "before": 1,
+        "after": 2,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/fenna/hunger",
+        "before": 75,
+        "after": 90,
+        "rule": "rules/effects/daily"
+      },
+      {
+        "path": "characters/fenna/points/guile",
+        "before": 15,
+        "after": 16,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/quill/hunger",
+        "before": 75,
+        "after": 90,
+        "rule": "rules/effects/daily"
+      },
+      {
+        "path": "characters/quill/points/vigor",
+        "before": 1,
+        "after": 2,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "trust/cassia>nysa",
+        "before": -11,
+        "after": -12,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/brennic>corvo",
+        "before": -16,
+        "after": -17,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/garran>senna",
+        "before": -6,
+        "after": -7,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/iskar>lio",
+        "before": -11,
+        "after": -12,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/corvo>brennic",
+        "before": -21,
+        "after": -22,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/nysa>cassia",
+        "before": -11,
+        "after": -12,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/senna>garran",
+        "before": -6,
+        "after": -7,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/lio>iskar",
+        "before": -6,
+        "after": -7,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "day",
+        "before": 2,
+        "after": 3,
+        "rule": "season/daysPerWeek"
+      }
+    ]
+  },
+  {
+    "label": "simulated from tables",
+    "timeline": [
+      {
+        "action": "wake",
+        "day": 3,
+        "hour": 8,
+        "phase": "day",
+        "location": "tent",
+        "nightFinished": false
+      },
+      {
+        "action": "travel",
+        "day": 3,
+        "hour": 8,
+        "phase": "day",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "activity",
+        "day": 3,
+        "hour": 10,
+        "phase": "day",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 3,
+        "hour": 18,
+        "phase": "dusk",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 3,
+        "hour": 20,
+        "phase": "night",
+        "location": "yard",
+        "nightFinished": false
+      },
+      {
+        "action": "wait",
+        "day": 3,
+        "hour": 22,
+        "phase": "night",
+        "location": "yard",
+        "nightFinished": true
+      },
+      {
+        "action": "settle",
+        "day": 4,
+        "hour": 8,
+        "phase": "day",
+        "location": "tent",
+        "nightFinished": false
+      }
+    ],
+    "player": {
+      "id": "cassia",
+      "name": "Cassia of the Lighthouse",
+      "tent": "tide",
+      "school": "water",
+      "role": "main",
+      "rank": 1,
+      "traits": {
+        "aggression": 3,
+        "ambition": 8,
+        "caution": 8,
+        "loyalty": 5,
+        "cunning": 10,
+        "warmth": 4
+      },
+      "values": [
+        "knowledge",
+        "rank",
+        "survival"
+      ],
+      "goal": {
+        "id": "learn_secrets",
+        "target": null
+      },
+      "stats": {
+        "vigor": 2,
+        "focus": 3,
+        "nerve": 1,
+        "guile": 2
+      },
+      "voice": {
+        "register": "precise, courteous, conditional sentences",
+        "tics": [
+          "answers a question with a better question",
+          "names the price of things"
+        ],
+        "never": [
+          "raises her voice",
+          "swears an oath she cannot keep"
+        ]
+      },
+      "bio": "An Alexandrian lamp-keeper's daughter who read every scroll about the tides of power. She wins fights before they start and keeps a ledger of her own.",
+      "forbiddenIntents": [],
+      "knowledgeSeed": [
+        "K-ford-betrayal"
+      ],
+      "points": {
+        "vigor": 6,
+        "focus": 14,
+        "nerve": 0,
+        "guile": 6
+      },
+      "gold": 14,
+      "renown": 5,
+      "hunger": 0,
+      "loyalty": 50,
+      "fatigue": 1,
+      "mastery": 1,
+      "mood": "calm",
+      "knowledge": [
+        "K-ford-betrayal"
+      ],
+      "life": "Alive",
+      "sick": false,
+      "warned": false,
+      "stocks": false,
+      "lastScheme": null
+    },
+    "trace": [
+      {
+        "path": "characters/brennic/points/nerve",
+        "before": 8,
+        "after": 9,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/garran/points/vigor",
+        "before": 16,
+        "after": 17,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/iskar/points/guile",
+        "before": 8,
+        "after": 9,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/sadruba/points/nerve",
+        "before": 38,
+        "after": 39,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/ophel/points/focus",
+        "before": 38,
+        "after": 39,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/ruadh/points/vigor",
+        "before": 26,
+        "after": 27,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/kesh/points/guile",
+        "before": 38,
+        "after": 39,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/corvo/points/nerve",
+        "before": 2,
+        "after": 3,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/nysa/points/focus",
+        "before": 8,
+        "after": 9,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/senna/points/vigor",
+        "before": 8,
+        "after": 9,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/lio/points/guile",
+        "before": 2,
+        "after": 3,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/fenna/hunger",
+        "before": 90,
+        "after": 100,
+        "rule": "rules/effects/daily"
+      },
+      {
+        "path": "characters/fenna/points/guile",
+        "before": 16,
+        "after": 17,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "characters/quill/hunger",
+        "before": 90,
+        "after": 100,
+        "rule": "rules/effects/daily"
+      },
+      {
+        "path": "characters/quill/points/vigor",
+        "before": 2,
+        "after": 3,
+        "rule": "rules/effects/daily/routinePoints"
+      },
+      {
+        "path": "trust/cassia>nysa",
+        "before": -12,
+        "after": -13,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/brennic>corvo",
+        "before": -17,
+        "after": -18,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/garran>senna",
+        "before": -7,
+        "after": -8,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/iskar>lio",
+        "before": -12,
+        "after": -13,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/corvo>brennic",
+        "before": -22,
+        "after": -23,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/nysa>cassia",
+        "before": -12,
+        "after": -13,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/senna>garran",
+        "before": -7,
+        "after": -8,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "trust/lio>iskar",
+        "before": -7,
+        "after": -8,
+        "rule": "rules/effects/daily/sameTentTrust"
+      },
+      {
+        "path": "day",
+        "before": 3,
+        "after": 4,
+        "rule": "season/daysPerWeek"
+      }
+    ]
+  }
+]

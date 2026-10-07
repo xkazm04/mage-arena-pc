@@ -1,0 +1,177 @@
+{
+  "conceptCropInPlateNormalized": [
+    0.08333333333333333,
+    0.08333333333333333,
+    0.8333333333333334,
+    0.8333333333333334
+  ],
+  "meanEncodedLuminanceConcept": 0.418238,
+  "meanEncodedLuminancePlate": 0.425335,
+  "meanLuminanceDelta": 0.007097,
+  "meanRGBDelta": [
+    0.007025,
+    0.007266,
+    0.005627
+  ],
+  "driftFlag": false,
+  "thresholds": {
+    "meanRGBOrLuminanceAbsoluteDelta": 0.065,
+    "joinGradientRatio": 1.8
+  },
+  "extensionSeams": {
+    "assemblyJoinCount": 0,
+    "strategy": "one coherent regenerated wide painting, no assembled panels",
+    "guideBoundaryChecks": [
+      {
+        "axis": "x",
+        "sourceCoordinate": 256,
+        "gradientRatioToNeighbourhood": 1.00261,
+        "flag": false
+      },
+      {
+        "axis": "x",
+        "sourceCoordinate": 2816,
+        "gradientRatioToNeighbourhood": 0.9243,
+        "flag": false
+      },
+      {
+        "axis": "y",
+        "sourceCoordinate": 144,
+        "gradientRatioToNeighbourhood": 1.04182,
+        "flag": false
+      },
+      {
+        "axis": "y",
+        "sourceCoordinate": 1584,
+        "gradientRatioToNeighbourhood": 1.06475,
+        "flag": false
+      }
+    ],
+    "flag": false
+  },
+  "thresholdAuthority": "authored routing diagnostics; not calibrated perceptual acceptance; removes bright figures so some drift is expected",
+  "rawGenerationDrift": {
+    "conceptCropInPlateNormalized": [
+      0.08333333333333333,
+      0.08333333333333333,
+      0.8333333333333334,
+      0.8333333333333334
+    ],
+    "meanEncodedLuminanceConcept": 0.418238,
+    "meanEncodedLuminancePlate": 0.40559,
+    "meanLuminanceDelta": -0.012648,
+    "meanRGBDelta": [
+      -0.003758,
+      -0.014517,
+      -0.020311
+    ],
+    "driftFlag": false,
+    "thresholds": {
+      "meanRGBOrLuminanceAbsoluteDelta": 0.065,
+      "joinGradientRatio": 1.8
+    },
+    "extensionSeams": {
+      "assemblyJoinCount": 0,
+      "strategy": "one coherent regenerated wide painting, no assembled panels",
+      "guideBoundaryChecks": [
+        {
+          "axis": "x",
+          "sourceCoordinate": 115,
+          "gradientRatioToNeighbourhood": 0.95551,
+          "flag": false
+        },
+        {
+          "axis": "x",
+          "sourceCoordinate": 1261,
+          "gradientRatioToNeighbourhood": 0.925,
+          "flag": false
+        },
+        {
+          "axis": "y",
+          "sourceCoordinate": 64,
+          "gradientRatioToNeighbourhood": 1.05295,
+          "flag": false
+        },
+        {
+          "axis": "y",
+          "sourceCoordinate": 704,
+          "gradientRatioToNeighbourhood": 0.98289,
+          "flag": false
+        }
+      ],
+      "flag": false
+    },
+    "thresholdAuthority": "authored routing diagnostics; not calibrated perceptual acceptance; removes bright figures so some drift is expected"
+  },
+  "wholePlateColourGrade": {
+    "method": "single whole-image RGB gain from mean approved/reference-centre environment; original figure boxes excluded from measurement; never composited",
+    "gainRGB": [
+      1.0423004483968836,
+      1.0673089287622113,
+      1.0820982994567403
+    ],
+    "gainLimits": [
+      0.8,
+      1.25
+    ],
+    "clippedChannelFraction": 3.453635384516461e-06,
+    "measurementMaskExcludedFraction": 0.2049763816361501
+  },
+  "autocorrelation": {
+    "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+    "axes": [
+      {
+        "axis": "y",
+        "peak": 0.012959,
+        "lagAt768x432": 204
+      },
+      {
+        "axis": "x",
+        "peak": 0.020574,
+        "lagAt768x432": 58
+      }
+    ],
+    "flagThreshold": 0.12,
+    "repetitionFlag": false,
+    "thresholdCalibration": "all three A9 repeated-layout controls peak >=0.19; A6 controls <=0.017; 0.12 separates this small evidence set, not universal validation",
+    "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+  },
+  "a6ControlAutocorrelation": {
+    "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+    "axes": [
+      {
+        "axis": "y",
+        "peak": 0.01658,
+        "lagAt768x432": 42
+      },
+      {
+        "axis": "x",
+        "peak": 0.014658,
+        "lagAt768x432": 50
+      }
+    ],
+    "flagThreshold": 0.12,
+    "repetitionFlag": false,
+    "thresholdCalibration": "all three A9 repeated-layout controls peak >=0.19; A6 controls <=0.017; 0.12 separates this small evidence set, not universal validation",
+    "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+  },
+  "a9ControlAutocorrelation": {
+    "method": "mean-normalized highpass cross-correlation over overlapping lagged pixels; lags 40..half dimension, step 2",
+    "axes": [
+      {
+        "axis": "y",
+        "peak": 0.403608,
+        "lagAt768x432": 166
+      },
+      {
+        "axis": "x",
+        "peak": 0.410599,
+        "lagAt768x432": 360
+      }
+    ],
+    "flagThreshold": 0.12,
+    "repetitionFlag": true,
+    "thresholdCalibration": "all three A9 repeated-layout controls peak >=0.19; A6 controls <=0.017; 0.12 separates this small evidence set, not universal validation",
+    "interpretation": "diagnostic only; does not prove absence of visible repetition, requires direct review"
+  }
+}

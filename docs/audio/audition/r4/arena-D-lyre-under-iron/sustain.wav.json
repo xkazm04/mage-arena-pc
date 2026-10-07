@@ -1,0 +1,92 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU3",
+  "file": "audition/r4/arena-D-lyre-under-iron/sustain.wav",
+  "sha256": "bb13cdae00f2cdbb644b94bbe9b75e44f195026b7cf82662ccc393f28aaacbd5",
+  "source": "audition/r4/arena-D-lyre-under-iron.mp3",
+  "sourceSha256": "c418d1e8eff50249d1df299126939afecee49ece352a2f934c8b44ab7f58d410",
+  "sourceSidecar": "audition/r4/arena-D-lyre-under-iron.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-D-lyre-under-iron",
+  "processing": {
+    "file": "audition/r4/arena-D-lyre-under-iron/sustain.wav",
+    "startSample": 0,
+    "endSample": 720000,
+    "startSeconds": 0,
+    "endSeconds": 15.0,
+    "sourceRangeSeconds": [
+      117.5,
+      135
+    ],
+    "crossfadeSeconds": 2.5,
+    "crossfadeCurves": "equal-power sine",
+    "rotationSamples": 50969,
+    "sourceEntrySeconds": 121.06185416666666,
+    "threeRepeatJoinJumpsDbFS": [
+      -240.0,
+      -240.0
+    ],
+    "adjacentHalfSecondRmsDifferenceDb": 2.003,
+    "numericalScreenPass": true,
+    "approved": false,
+    "enabled": false,
+    "reason": "Unverified harmonic/beat seam and conspicuous fill; rotation removes mathematical click but is not a beat alignment. Three-repeat listening pending.",
+    "measurement": {
+      "file": "audition/r4/arena-D-lyre-under-iron/sustain.wav",
+      "sha256": "bb13cdae00f2cdbb644b94bbe9b75e44f195026b7cf82662ccc393f28aaacbd5",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleCount": 720000,
+      "decodedSeconds": 15.0,
+      "containerSeconds": 15.0,
+      "codec": "pcm_s16le",
+      "integratedLufs": -25.13,
+      "truePeakDbTP": -13.1,
+      "loudnessRangeLU": 2.3,
+      "samplePeakDbFS": -13.102,
+      "samplesAtOrAboveFullScale": 0,
+      "loudnorm": {
+        "input_i": "-25.13",
+        "input_tp": "-13.10",
+        "input_lra": "2.30",
+        "input_thresh": "-35.13",
+        "output_i": "-26.58",
+        "output_tp": "-14.25",
+        "output_lra": "1.80",
+        "output_thresh": "-36.58",
+        "normalization_type": "dynamic",
+        "target_offset": "0.58"
+      }
+    }
+  },
+  "measurement": {
+    "file": "audition/r4/arena-D-lyre-under-iron/sustain.wav",
+    "sha256": "bb13cdae00f2cdbb644b94bbe9b75e44f195026b7cf82662ccc393f28aaacbd5",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 720000,
+    "decodedSeconds": 15.0,
+    "containerSeconds": 15.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -25.13,
+    "truePeakDbTP": -13.1,
+    "loudnessRangeLU": 2.3,
+    "samplePeakDbFS": -13.102,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-25.13",
+      "input_tp": "-13.10",
+      "input_lra": "2.30",
+      "input_thresh": "-35.13",
+      "output_i": "-26.58",
+      "output_tp": "-14.25",
+      "output_lra": "1.80",
+      "output_thresh": "-36.58",
+      "normalization_type": "dynamic",
+      "target_offset": "0.58"
+    }
+  },
+  "note": "PCM derived from lossy provider MP3; no claim of native lossless master. Paid generation ledger records the original only."
+}

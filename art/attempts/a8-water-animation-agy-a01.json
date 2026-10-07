@@ -1,0 +1,49 @@
+{
+  "id": "a8-water-animation-agy-a01",
+  "wave": "A8",
+  "style_id": "covenant",
+  "scene": "water-animation",
+  "attempt": 1,
+  "input": {
+    "wave": "A8",
+    "id": "water-animation",
+    "pilot": true,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "aspect_ratio": "3:2",
+    "references": [
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-arena-a02.png",
+        "sha256": "2f97721ce3940bb3898a31ceb333fffffa43fc5a2989d76ff396c04fa6f28e0e",
+        "role": "energy/mist/spark painting reference"
+      },
+      {
+        "path": "art/review/sources/a6-verdigris-covenant-verdigris-covenant-arena-a02.png",
+        "sha256": "d99c1cfac103c691d3e64e318103b26c7d9ca54f3cf401e1f026b67807dca29f",
+        "role": "painted effect fidelity and grounded light reference"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY WATER magic: crescent, mist, separated droplets, main pigment #75d9f4, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only."
+  },
+  "input_hash": "11359c519d91b2b4af60d2e47a047dfe8e2409ac6f320b0129187610b59f7a77",
+  "prompt": "Use case: stylized-concept. Asset: real animated VFX spritesheet for a canvas action game.\nReference-1.png and reference-2.png are visual style references only. Study their finely painted energetic magic.\nOriginal hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows.\nProduce ONE high-resolution sheet, ideally 3072 x 2560, EXACTLY SIX equal columns and FIVE equal rows, 30 separate frames.\nPure uniform BLACK #000000 background everywhere between effects. No text, no labels, no dividers, no people, no scenery.\nEvery cell has 12 percent empty black margins on all sides. Do not join energy across cell boundaries.\nAll five rows are ONLY WATER magic: crescent, mist, separated droplets, main pigment #75d9f4, luminous selected ivory cores. Intricate painted filaments with soft translucent falloff, never thick cartoon outlines or flat logos.\nRead LEFT TO RIGHT as SIX genuinely changing consecutive hand-painted animation frames in each row. Camera 55-degree oblique.\nROW 1 CAST: spark gathers, coil forms, compresses, releases, wisps disperse, small last sparks. Center locked.\nROW 2 PROJECTILE/TRAVEL LOOP: one pointed energy head on the right at 68 percent cell width, tapering turbulent trail toward the left, length and center consistent; the internal filaments evolve in six phases that loop. Travels screen-right. No arrows or weapons.\nROW 3 IMPACT: tiny contact spark, compression, bright branching burst, expanded spray or fragments, dissipating cloud, faint residue. Center locked.\nROW 4 HIT SPARK: six stages of one compact sharp contact flicker, much less area than impact; sparse distinct motes.\nROW 5 AURA LOOP: a broken elliptical swirl seen obliquely around an empty center, low mist and orbiting elemental motes, six evenly spaced phases returning toward phase one. Keep the center empty for a character.\nDesigned to remain legible beside a 40-pixel-tall mage at 1080p. No blurry sheet-wide glow. Each row retains coherent form and palette. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "de21ec8e-77db-4081-9c65-3ca6c3d01e10",
+  "at": "2026-10-03T11:23:54.850817+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 164.359,
+  "returncode": 0,
+  "tool_calls": [],
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "CLI request and output only; internal image prompt not exposed",
+  "source": "art/raw/a8-water-animation-agy-a01/source.png",
+  "archive": "art/review/sources/a8-water-animation-agy-a01.png",
+  "sha256": "bb4a9a364311e875237f2fc3332f664787311c2052f6d12685c02a9454a9ae4d",
+  "invocation_evidence": "art/providers/runs/a8-water-animation-agy-a01"
+}

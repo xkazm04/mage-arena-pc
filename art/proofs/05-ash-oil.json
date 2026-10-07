@@ -1,0 +1,25 @@
+{
+  "job": "05-ash-oil-arena-a03",
+  "style_id": "05-ash-oil",
+  "source": "art/raw/05-ash-oil-arena-a03/source.jpg",
+  "sha256": "ced7af47c59f0d12febcb8ed1d252041a57e95cd7bd920585fc854d818d31d8e",
+  "style_hash": "5b467f180720209d4ce733aaaa5813bcd40e264097d7827f12f3e00e762575a4",
+  "pair_input_hash": "5b33ab264da1f5ddd1bbd1d25fc39ed52471c770a79502423e8db59ed4db2936",
+  "verdict": "exploration-sibling-ready",
+  "reviewer": "executing-agent",
+  "note": "Actual pixels: full player framed on sand, steep elevated view, scumbled umber paint and dark metallic figures with brush texture; a forward cyan arc takes an orange/white impact. Separate cyan streak near the upper-left soldier is detached from the casting hands, a residual readability limitation; dense ground texture may compete at game scale. Clearly different from flat ink directions.",
+  "owner_accepted": false,
+  "label": "authored direct pixel observation; not felt",
+  "gate": {
+    "verdict": "technical-pass",
+    "codes": [],
+    "metrics": {
+      "width": 1280,
+      "height": 720,
+      "format": "JPEG",
+      "aspect": 1.7777777777777777,
+      "luminance_stddev": 36.81247180524147
+    },
+    "scope": "file, dimensions, aspect, alpha, contrast and hash only; semantics and taste not measured here"
+  }
+}

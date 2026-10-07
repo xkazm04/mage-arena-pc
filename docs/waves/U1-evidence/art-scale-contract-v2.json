@@ -1,0 +1,83 @@
+{
+  "version": "scale-contract-v2",
+  "authority": "D17 owner far fixed camera; supersedes v1 near camera",
+  "reference_viewport_px": [
+    1920,
+    1080
+  ],
+  "second_viewport_px": [
+    2560,
+    1440
+  ],
+  "camera": {
+    "projection": "orthographic ground / upright painted billboards",
+    "elevation_above_ground_degrees": 55,
+    "ground_pixels_per_metre_at_1080p": 22.5,
+    "zoom": 1,
+    "zoom_range": [
+      1,
+      1
+    ],
+    "dead_zone_normalized": [
+      0.16,
+      0.18,
+      0.84,
+      0.8
+    ],
+    "edge_follow": "soft follow only outside dead zone; no constant tracking",
+    "edge_follow_time_constant_seconds": 0.35,
+    "edge_follow_parameters": "authored visual proposal; engine feel not measured"
+  },
+  "character": {
+    "nominal_height_metres": 1.8,
+    "screen_height_fraction": 0.0375,
+    "screen_height_fraction_range": [
+      0.03,
+      0.045
+    ],
+    "measure": "head to sole only; exclude staff, aura and shadow",
+    "pixels_at_1080p": [
+      32.4,
+      48.6
+    ],
+    "pixels_at_1440p": [
+      43.2,
+      64.8
+    ],
+    "nominal_px_at_1080p": 40.5,
+    "nominal_px_at_1440p": 54
+  },
+  "arena_metres": [
+    192,
+    144
+  ],
+  "minimum_combatant_centre_separation_metres": 6,
+  "telegraph": {
+    "minimum_ground_diameter_metres": 4,
+    "minimum_outline_px_at_1080p": 3,
+    "minimum_projectile_core_px_at_1080p": 4,
+    "shape_plus_colour": true,
+    "advisory_outer_cue_is_not_hitbox": true
+  },
+  "absorb": {
+    "angle_degrees": 140,
+    "rear_open_degrees": 220,
+    "visual_radius_metres": 2.4,
+    "radius_authority": "visual proposal only; game owns balance"
+  },
+  "formulas": {
+    "resolution_scale": "height/1080",
+    "ground_px_per_m_x": "22.5 * resolution_scale",
+    "ground_px_per_m_y": "ground_px_per_m_x * sin(55 degrees)",
+    "body_height_px": "height * 0.0375",
+    "metres_per_pixel_x": "1/ground_px_per_m_x",
+    "visible_ground_metres": "[width/ground_px_per_m_x,height/ground_px_per_m_y]"
+  },
+  "not_measured": [
+    "generated exact elevation",
+    "generated metre accuracy",
+    "motion readability",
+    "engine performance",
+    "owner feel"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "bfdb5129-d00d-4b3e-8f57-d0af173243d6",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-slinger-se-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-slinger-se-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/slinger-se-square-v1.png",
+      "sha256": "a4987e8c71204a6f685991e5aec94017505cc6321c73a3b43d76ba567c8ce0cb",
+      "role": "single full-body A3c identity crop or reviewed direction guide on square canvas"
+    }
+  ]
+}

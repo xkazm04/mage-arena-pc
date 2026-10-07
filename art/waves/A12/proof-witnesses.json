@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "scope": "authored static composition; actual A10 and A8 delivery frames at unchanged v2 body/effect scale; not gameplay capture",
+  "actors": [
+    {
+      "entity": "brennic",
+      "state": "cast",
+      "facing": "ne",
+      "frame": 1,
+      "footUV": [
+        0.2916666666666667,
+        0.5333333333333333
+      ]
+    },
+    {
+      "entity": "cassia",
+      "state": "cast",
+      "facing": "ne",
+      "frame": 1,
+      "footUV": [
+        0.4083333333333333,
+        0.6500000000000001
+      ]
+    },
+    {
+      "entity": "garran",
+      "state": "cast",
+      "facing": "nw",
+      "frame": 1,
+      "footUV": [
+        0.625,
+        0.6666666666666667
+      ]
+    },
+    {
+      "entity": "iskar",
+      "state": "cast",
+      "facing": "nw",
+      "frame": 1,
+      "footUV": [
+        0.75,
+        0.55
+      ]
+    },
+    {
+      "entity": "conscript",
+      "state": "run",
+      "facing": "se",
+      "frame": 2,
+      "footUV": [
+        0.39999999999999997,
+        0.3166666666666667
+      ]
+    },
+    {
+      "entity": "shieldman",
+      "state": "idle",
+      "facing": "se",
+      "frame": 0,
+      "footUV": [
+        0.5166666666666667,
+        0.3166666666666667
+      ]
+    },
+    {
+      "entity": "slinger",
+      "state": "idle",
+      "facing": "se",
+      "frame": 0,
+      "footUV": [
+        0.6333333333333334,
+        0.325
+      ]
+    },
+    {
+      "entity": "thornback",
+      "state": "idle",
+      "facing": "nw",
+      "frame": 0,
+      "footUV": [
+        0.5666666666666667,
+        0.45
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "clip": "fire.cast",
+      "frame": 3,
+      "footUV": [
+        0.3025,
+        0.5183333333333334
+      ]
+    },
+    {
+      "clip": "water.cast",
+      "frame": 3,
+      "footUV": [
+        0.42249999999999993,
+        0.6358333333333335
+      ]
+    },
+    {
+      "clip": "earth.cast",
+      "frame": 3,
+      "footUV": [
+        0.6166666666666667,
+        0.6558333333333335
+      ]
+    },
+    {
+      "clip": "air.cast",
+      "frame": 3,
+      "footUV": [
+        0.7433333333333334,
+        0.5333333333333333
+      ]
+    },
+    {
+      "clip": "water.aura",
+      "frame": 2,
+      "footUV": [
+        0.4083333333333333,
+        0.6500000000000001
+      ]
+    }
+  ]
+}

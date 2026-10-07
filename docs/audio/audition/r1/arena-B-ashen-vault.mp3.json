@@ -1,0 +1,47 @@
+{
+  "id": "63452b7f-9701-4b4e-be49-5814d9200604",
+  "ts": "2026-10-02T21:00:23.175Z",
+  "kind": "music",
+  "model": "music_v1",
+  "voice": null,
+  "text": "96 BPM, 4/4. Low brass in close intervals, dark wordless choral vowels, sparse struck bronze and glass harmonics. First 5 seconds an exposed low brass pulse; middle 10 introduce choir; final 5 hold controlled force. No intelligible words. Original dark fantasy game underscore. Twenty seconds. Instrumental unless explicitly requesting wordless choir; no lyrics, no contemporary drum kit. Clear midrange space for combat cues. No final cadence.",
+  "seconds": 20,
+  "chars": null,
+  "out": "docs/audio/audition/r1/arena-B-ashen-vault.mp3",
+  "request": {
+    "prompt": "96 BPM, 4/4. Low brass in close intervals, dark wordless choral vowels, sparse struck bronze and glass harmonics. First 5 seconds an exposed low brass pulse; middle 10 introduce choir; final 5 hold controlled force. No intelligible words. Original dark fantasy game underscore. Twenty seconds. Instrumental unless explicitly requesting wordless choir; no lyrics, no contemporary drum kit. Clear midrange space for combat cues. No final cadence.",
+    "music_length_ms": 20000,
+    "force_instrumental": false,
+    "model_id": "music_v1"
+  },
+  "billingHeaders": {},
+  "bytes": 321037,
+  "sha256": "e1e3afc8b1777b0c7795cbe31658d7749b9f2cf25c30e375c686698f04f3df76",
+  "accountBefore": {
+    "observedAt": "2026-10-02T21:00:23.174Z",
+    "tier": "starter",
+    "used": 64476,
+    "limit": 90000,
+    "remaining": 25524,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "reservedCredits": 600,
+  "estimatedCredits": 600,
+  "documentedEstimateCredits": 300,
+  "chargedCredits": 600,
+  "measuredCredits": null,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-02T21:00:31.452Z",
+    "tier": "starter",
+    "used": 64476,
+    "limit": 90000,
+    "remaining": 25524,
+    "resetsAt": "2026-10-04T19:31:41.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

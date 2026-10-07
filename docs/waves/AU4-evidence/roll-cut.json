@@ -1,0 +1,105 @@
+{
+  "label": "measured source mono RMS in 50 ms windows; not listened",
+  "sourceSha256": "499e773d952b24269e50c2177cef46851e49dda06a114a75b44554ffb2c3f032",
+  "cutSeconds": 0.45,
+  "fadeSeconds": 0.05,
+  "command": "python packages/tools/audio/import-kept.py",
+  "windows": [
+    {
+      "startSeconds": 0.0,
+      "rmsDbfs": -25.48
+    },
+    {
+      "startSeconds": 0.05,
+      "rmsDbfs": -25.42
+    },
+    {
+      "startSeconds": 0.1,
+      "rmsDbfs": -26.73
+    },
+    {
+      "startSeconds": 0.15,
+      "rmsDbfs": -28.64
+    },
+    {
+      "startSeconds": 0.2,
+      "rmsDbfs": -38.48
+    },
+    {
+      "startSeconds": 0.25,
+      "rmsDbfs": -46.97
+    },
+    {
+      "startSeconds": 0.3,
+      "rmsDbfs": -58.16
+    },
+    {
+      "startSeconds": 0.35,
+      "rmsDbfs": -65.77
+    },
+    {
+      "startSeconds": 0.4,
+      "rmsDbfs": -74.46
+    },
+    {
+      "startSeconds": 0.45,
+      "rmsDbfs": -82.27
+    },
+    {
+      "startSeconds": 0.5,
+      "rmsDbfs": -83.15
+    },
+    {
+      "startSeconds": 0.55,
+      "rmsDbfs": -83.06
+    },
+    {
+      "startSeconds": 0.6,
+      "rmsDbfs": -83.56
+    },
+    {
+      "startSeconds": 0.65,
+      "rmsDbfs": -82.26
+    },
+    {
+      "startSeconds": 0.7,
+      "rmsDbfs": -82.44
+    },
+    {
+      "startSeconds": 0.75,
+      "rmsDbfs": -45.23
+    },
+    {
+      "startSeconds": 0.8,
+      "rmsDbfs": -23.03
+    },
+    {
+      "startSeconds": 0.85,
+      "rmsDbfs": -36.32
+    },
+    {
+      "startSeconds": 0.9,
+      "rmsDbfs": -30.36
+    },
+    {
+      "startSeconds": 0.95,
+      "rmsDbfs": -25.54
+    },
+    {
+      "startSeconds": 1.0,
+      "rmsDbfs": -26.09
+    },
+    {
+      "startSeconds": 1.05,
+      "rmsDbfs": -29.41
+    },
+    {
+      "startSeconds": 1.1,
+      "rmsDbfs": -39.75
+    },
+    {
+      "startSeconds": 1.15,
+      "rmsDbfs": -53.21
+    }
+  ]
+}

@@ -1,0 +1,376 @@
+{
+  "schema": 1,
+  "places": [
+    {
+      "id": "yard",
+      "name": "the Yard",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.23,
+        0.2
+      ]
+    },
+    {
+      "id": "cistern",
+      "name": "the Cistern",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.62,
+        0.2
+      ]
+    },
+    {
+      "id": "pit",
+      "name": "the Pit",
+      "open": [
+        "dusk"
+      ],
+      "anchor": [
+        0.87,
+        0.24
+      ]
+    },
+    {
+      "id": "exchange",
+      "name": "the Exchange",
+      "open": [
+        "day"
+      ],
+      "anchor": [
+        0.24,
+        0.5
+      ]
+    },
+    {
+      "id": "commons",
+      "name": "the Commons",
+      "open": [
+        "day",
+        "dusk"
+      ],
+      "anchor": [
+        0.52,
+        0.5
+      ]
+    },
+    {
+      "id": "door",
+      "name": "the Door",
+      "open": [
+        "day"
+      ],
+      "anchor": [
+        0.77,
+        0.59
+      ]
+    },
+    {
+      "id": "tent",
+      "name": "your tent",
+      "open": [
+        "day",
+        "dusk",
+        "night"
+      ],
+      "anchor": [
+        0.195,
+        0.8
+      ]
+    },
+    {
+      "id": "edge",
+      "name": "the Edge",
+      "open": [
+        "night"
+      ],
+      "anchor": [
+        0.89,
+        0.8
+      ]
+    }
+  ],
+  "slots": [
+    "day",
+    "dusk",
+    "night"
+  ],
+  "maps": [
+    {
+      "slot": "day",
+      "size": [
+        1920,
+        1080
+      ],
+      "file": "art/delivery/a4c/maps/day-1920.png",
+      "sha256": "52cad31891e65ed7b8d732aa7dfbf3f6a52fe64236c7b3460be299058e71216c",
+      "source": "art/review/sources/a4c-camp-day-agy-a02.png",
+      "source_sha256": "c23683d19ce3c46f6ea7e8215dddf2186248c13119067c0a4170858bd2681f50",
+      "transform": "center-cover Lanczos",
+      "owner_accepted": false
+    },
+    {
+      "slot": "day",
+      "size": [
+        2560,
+        1440
+      ],
+      "file": "art/delivery/a4c/maps/day-2560.png",
+      "sha256": "b9bc4ca832966ec1a31d43701cd87223a7d95513e7e9546b8a50f485da5448b3",
+      "source": "art/review/sources/a4c-camp-day-agy-a02.png",
+      "source_sha256": "c23683d19ce3c46f6ea7e8215dddf2186248c13119067c0a4170858bd2681f50",
+      "transform": "center-cover Lanczos",
+      "owner_accepted": false
+    },
+    {
+      "slot": "dusk",
+      "size": [
+        1920,
+        1080
+      ],
+      "file": "art/delivery/a4c/maps/dusk-1920.png",
+      "sha256": "12f6b4452c81760007c9654dc560a5f649c33f641a708e681d77d719f4a7f2fb",
+      "source": "art/review/sources/a4c-camp-dusk-agy-a01.png",
+      "source_sha256": "8d577789ed228e5509aad24f6c403621b30108453446d2eeefc535380069b959",
+      "transform": "center-cover Lanczos",
+      "owner_accepted": false
+    },
+    {
+      "slot": "dusk",
+      "size": [
+        2560,
+        1440
+      ],
+      "file": "art/delivery/a4c/maps/dusk-2560.png",
+      "sha256": "4f7c4407e8bdd711a56e2cfadc33b8d9d73f504f4bde938fc359b424acd7fc28",
+      "source": "art/review/sources/a4c-camp-dusk-agy-a01.png",
+      "source_sha256": "8d577789ed228e5509aad24f6c403621b30108453446d2eeefc535380069b959",
+      "transform": "center-cover Lanczos",
+      "owner_accepted": false
+    },
+    {
+      "slot": "night",
+      "size": [
+        1920,
+        1080
+      ],
+      "file": "art/delivery/a4c/maps/night-1920.png",
+      "sha256": "f244b8e80071fa65058f5b55f89a459ff292df74067eea7017e0e6d2f3d2473d",
+      "source": "art/review/sources/a4c-camp-night-agy-a01.png",
+      "source_sha256": "3203e265a168d775215d9a88336f7dee03be559126f34de160ee628f8f0e0716",
+      "transform": "center-cover Lanczos",
+      "owner_accepted": false
+    },
+    {
+      "slot": "night",
+      "size": [
+        2560,
+        1440
+      ],
+      "file": "art/delivery/a4c/maps/night-2560.png",
+      "sha256": "69d6c86580f86f5df46e5cf716e1a28df901dce25006260b1f07c6cbf6827944",
+      "source": "art/review/sources/a4c-camp-night-agy-a01.png",
+      "source_sha256": "3203e265a168d775215d9a88336f7dee03be559126f34de160ee628f8f0e0716",
+      "transform": "center-cover Lanczos",
+      "owner_accepted": false
+    }
+  ],
+  "backdrops": [
+    {
+      "place": "yard",
+      "file": "art/delivery/a4c/backdrops/yard.png",
+      "sha256": "ca391900b642337edc5559da20090ce051816312e879145c0c642290d69ecb22",
+      "source": "art/review/sources/a4c-backdrop-yard-agy-a01.png",
+      "source_sha256": "06a26a44e4fd52108b018772012758bac3d04a74394e55fb54a77d212e062656",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    },
+    {
+      "place": "cistern",
+      "file": "art/delivery/a4c/backdrops/cistern.png",
+      "sha256": "28fddcc15e00c0c6b05bd46dbc755a5bb1ec1c76e6778ae6a00304fe3042d167",
+      "source": "art/review/sources/a4c-backdrop-cistern-agy-a01.png",
+      "source_sha256": "196cfdb6e82ff9e9423f4c3672ab524f6b6dbdca0f841a73b450bd20e2e65c28",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    },
+    {
+      "place": "pit",
+      "file": "art/delivery/a4c/backdrops/pit.png",
+      "sha256": "0a444083ac1ec7572e72abac3cb3382db7b781059c5b3aea9ef4f46a0abdbb30",
+      "source": "art/review/sources/a4c-backdrop-pit-agy-a01.png",
+      "source_sha256": "b4e348396604ae7d0648b7e303829d6f501b06fef30c792c01b7dd3bedfc2c83",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    },
+    {
+      "place": "exchange",
+      "file": "art/delivery/a4c/backdrops/exchange.png",
+      "sha256": "b94662e5c1cac2b80bbf007faab94552e453216572a805d2f03e06ff00a0b6b5",
+      "source": "art/review/sources/a4c-backdrop-exchange-agy-a01.png",
+      "source_sha256": "84b78fed5ec22c7865cdb689733f87f367a7c3634a5d68132b45571a9a5a652d",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    },
+    {
+      "place": "commons",
+      "file": "art/delivery/a4c/backdrops/commons.png",
+      "sha256": "ec8a58245d80ac42753396d752efdeb7ebefe52d8694ef785115c59eb59de665",
+      "source": "art/review/sources/a4c-backdrop-commons-agy-a01.png",
+      "source_sha256": "0454cd130157d025eeb098be793f6d90e4500aad0e2b59eebaddf5bfaf4e8c03",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    },
+    {
+      "place": "door",
+      "file": "art/delivery/a4c/backdrops/door.png",
+      "sha256": "2a71b261bb4ecd81e672a3599a14612a1808584c249b934f27775825d390c6b4",
+      "source": "art/review/sources/a4c-backdrop-door-agy-a01.png",
+      "source_sha256": "8ac4f4e0f3f3d4b1945deea4a4877782e05d34399ad47e79cb7fa52ca0f2adee",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    },
+    {
+      "place": "tent",
+      "file": "art/delivery/a4c/backdrops/tent.png",
+      "sha256": "d2bba4f1fc4bb7482d5711f753fd8aeb3e59266149c3dcc660bdc8dba2e28488",
+      "source": "art/review/sources/a4c-backdrop-tent-agy-a01.png",
+      "source_sha256": "46915218ab66fe1e490abea98b17f1df6b14f9ea352aa3cd760851f47a250073",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    },
+    {
+      "place": "edge",
+      "file": "art/delivery/a4c/backdrops/edge.png",
+      "sha256": "392e6051631789f73751938132637c14d8b47c672397ac40d0e78dadc4026bac",
+      "source": "art/review/sources/a4c-backdrop-edge-agy-a01.png",
+      "source_sha256": "8f8669f7368f1e5bb63a3f2f43fb16b7c9caf7803b1bda65b40728c0ce5ab7f5",
+      "transform": "center-cover Lanczos; single authored lighting, not live time simulation",
+      "owner_accepted": false
+    }
+  ],
+  "stories": [
+    {
+      "id": "shared-loaf",
+      "title": "A shared loaf",
+      "body": "A portion waits beside your bowl. Someone has remembered you.",
+      "file": "art/delivery/a4c/stories/shared-loaf.png",
+      "sha256": "15c2eea07c1b778978684c58133ebf308f2a6c79f51f729e7669541955fca563",
+      "source": "art/review/sources/a4c-story-sheet-agy-a01.png",
+      "source_sha256": "cf5aae251077fdf8318dbb6bb325583f29f26eac55220bcdfd85d78832a5d6ec",
+      "crop": [
+        8,
+        8,
+        448,
+        245
+      ],
+      "text_origin": "authored thematic sample, not Director output or state facts",
+      "owner_accepted": false
+    },
+    {
+      "id": "empty-bowl",
+      "title": "An empty bowl",
+      "body": "The meal is over. One place at the table remains untouched.",
+      "file": "art/delivery/a4c/stories/empty-bowl.png",
+      "sha256": "49b24f50ce5255b8aaa50dc62276bf5c3f3568d3781f58a80b21dd56be973c14",
+      "source": "art/review/sources/a4c-story-sheet-agy-a01.png",
+      "source_sha256": "cf5aae251077fdf8318dbb6bb325583f29f26eac55220bcdfd85d78832a5d6ec",
+      "crop": [
+        468,
+        8,
+        907,
+        245
+      ],
+      "text_origin": "authored thematic sample, not Director output or state facts",
+      "owner_accepted": false
+    },
+    {
+      "id": "watch-rota",
+      "title": "The watch changes",
+      "body": "A different pair of boots pauses outside the grille.",
+      "file": "art/delivery/a4c/stories/watch-rota.png",
+      "sha256": "01dea35b9d586e269f650b2b23f6b38a1769d9ee936f705c61d50ec5a43a9b5b",
+      "source": "art/review/sources/a4c-story-sheet-agy-a01.png",
+      "source_sha256": "cf5aae251077fdf8318dbb6bb325583f29f26eac55220bcdfd85d78832a5d6ec",
+      "crop": [
+        928,
+        8,
+        1368,
+        245
+      ],
+      "text_origin": "authored thematic sample, not Director output or state facts",
+      "owner_accepted": false
+    },
+    {
+      "id": "ward-seam",
+      "title": "A seam in the ward",
+      "body": "An old fracture catches the light between two stones.",
+      "file": "art/delivery/a4c/stories/ward-seam.png",
+      "sha256": "c83d2f758e3b68f643e9858a75f3be6d0a9e75b243164e9ff3e9f41d1c326e63",
+      "source": "art/review/sources/a4c-story-sheet-agy-a01.png",
+      "source_sha256": "cf5aae251077fdf8318dbb6bb325583f29f26eac55220bcdfd85d78832a5d6ec",
+      "crop": [
+        8,
+        265,
+        448,
+        503
+      ],
+      "text_origin": "authored thematic sample, not Director output or state facts",
+      "owner_accepted": false
+    },
+    {
+      "id": "quiet-bargain",
+      "title": "A quiet bargain",
+      "body": "A small token changes hands beneath the awning.",
+      "file": "art/delivery/a4c/stories/quiet-bargain.png",
+      "sha256": "cbfa9796b92781a06a326375d46629d0d9fe6c0a2da4329125cbe673d3373e88",
+      "source": "art/review/sources/a4c-story-sheet-agy-a01.png",
+      "source_sha256": "cf5aae251077fdf8318dbb6bb325583f29f26eac55220bcdfd85d78832a5d6ec",
+      "crop": [
+        468,
+        523,
+        907,
+        760
+      ],
+      "text_origin": "authored thematic sample, not Director output or state facts",
+      "owner_accepted": false
+    },
+    {
+      "id": "before-grille",
+      "title": "Before the grille",
+      "body": "Beyond the iron, the arena has fallen silent.",
+      "file": "art/delivery/a4c/stories/before-grille.png",
+      "sha256": "142a561a41cbc4de0fd7356697841703ac65c997ebe247c07f6d4125e4385692",
+      "source": "art/review/sources/a4c-story-sheet-agy-a01.png",
+      "source_sha256": "cf5aae251077fdf8318dbb6bb325583f29f26eac55220bcdfd85d78832a5d6ec",
+      "crop": [
+        928,
+        523,
+        1368,
+        760
+      ],
+      "text_origin": "authored thematic sample, not Director output or state facts",
+      "owner_accepted": false
+    }
+  ],
+  "frameKit": "art/ui/kit.json",
+  "frameRegions": [
+    "card.normal",
+    "card.unread",
+    "card.selected",
+    "card.warning"
+  ],
+  "ui_contract": "art/ui/README.md",
+  "owner_accepted": false,
+  "not_measured": [
+    "game integration",
+    "live camp-state correctness",
+    "runtime performance",
+    "owner feel"
+  ]
+}

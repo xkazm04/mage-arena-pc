@@ -1,0 +1,98 @@
+{
+  "artifact": "a3-composite",
+  "at": "2026-10-02T11:38:30.528545+00:00",
+  "input_hash": "699ebc95039051951dda0e0c6cb9caf7c216661609c947d837b4747e36663642",
+  "source": "art/delivery/a3/proofs/open-oval-1920x1080.png",
+  "origin": "authored UI browser capture",
+  "scope": "local diagnostic; reject or route to owner only",
+  "image_sha256": "91c434e9d98f34316637c18a1c1564aeb8b6379b6067426866ce9e48bf51f6e0",
+  "model": "qwen3.8:27b-64k",
+  "model_digest": "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+  "prompt": "Inspect this actual UI capture. It is authored HTML/SVG over project art, not a generated screenshot. The labels and numbers are intentional, code-drawn text and are allowed. Never approve an asset or infer owner acceptance. Use the supplied schema: forbidden_rendering means an unintended watermark, logo or photographic insert; overhead_view means requested UI framing/layout is present, not literally an overhead camera; required_content checks the stated visible controls or icons; style_match checks chalk-lime, umber, terracotta and mineral blue. Readability is 0 absent, 1 confused, 2 local ambiguity, 3 clear. State uncertain observations honestly. Describe overlap, text size, obscured controls and specific defects. EXPECTATION: Static scale proof over unchanged chosen arena. Cassia at 4/5/6 percent, four school bodies below and an exact procedural open-rear absorb arc at upper right. Three mage absorb body exports reuse cast poses, not independent generated gestures. Source-painted figures remain. Inspect silhouette separation and alpha, no owner acceptance or motion claim.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "forbidden_rendering": {
+        "type": "boolean",
+        "description": "Photograph, 3D render, watermark, logo or visible generated letters/numbers."
+      },
+      "overhead_view": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "required_content": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "style_match": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no",
+          "uncertain"
+        ]
+      },
+      "readability": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "description": "0 absent/unreadable; 1 present but confused; 2 clear with localized ambiguity; 3 clearly separated and immediately readable."
+      },
+      "confidence": {
+        "type": "number",
+        "enum": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      },
+      "observation": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "forbidden_rendering",
+      "overhead_view",
+      "required_content",
+      "style_match",
+      "readability",
+      "confidence",
+      "observation"
+    ],
+    "additionalProperties": false
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 47,
+    "num_ctx": 8192,
+    "num_predict": 1200
+  },
+  "raw_content": "{\n  \"forbidden_rendering\": false,\n  \"overhead_view\": \"yes\",\n  \"required_content\": \"yes\",\n  \"style_match\": \"yes\",\n  \"readability\": 3,\n  \"confidence\": 0.75,\n  \"observation\": \"The image displays a static scale study over an arena background. The required content is present: three figures at the top labeled with percentages (4%, 5%, 6%) and pixel values, four named figures at the bottom (Cassia, Brennic, Garran, Iskar), and a procedural open-rear arc at the upper right with angle annotations (140° / rear open 220°). The style matches the expected palette of chalk-lime, umber, terracotta, and mineral blue. Text is clear and legible, with no obscured controls or significant overlap issues. The figures appear to be anchored alpha composites as described, with no evidence of unintended watermarks, logos, or photographic inserts. The composition is static, as indicated by the footer text, and there are no motion claims. The source-painted figures remain visible in the background, and the added figures are distinct and well-separated. The overall presentation is consistent with the expectation of a static scale proof over an unchanged arena.\"\n}",
+  "status": "graded",
+  "answers": {
+    "forbidden_rendering": false,
+    "overhead_view": "yes",
+    "required_content": "yes",
+    "style_match": "yes",
+    "readability": 3,
+    "confidence": 0.75,
+    "observation": "The image displays a static scale study over an arena background. The required content is present: three figures at the top labeled with percentages (4%, 5%, 6%) and pixel values, four named figures at the bottom (Cassia, Brennic, Garran, Iskar), and a procedural open-rear arc at the upper right with angle annotations (140° / rear open 220°). The style matches the expected palette of chalk-lime, umber, terracotta, and mineral blue. Text is clear and legible, with no obscured controls or significant overlap issues. The figures appear to be anchored alpha composites as described, with no evidence of unintended watermarks, logos, or photographic inserts. The composition is static, as indicated by the footer text, and there are no motion claims. The source-painted figures remain visible in the background, and the added figures are distinct and well-separated. The overall presentation is consistent with the expectation of a static scale proof over an unchanged arena."
+  },
+  "eval_count": 277,
+  "elapsed_seconds": 5.094
+}

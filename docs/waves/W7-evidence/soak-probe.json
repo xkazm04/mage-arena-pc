@@ -1,0 +1,40 @@
+{
+  "label": "measured wall-clock browser lifecycle soak plus simulated ordinary season policy; no human feel claim",
+  "command": "npx tsx packages/tools/src/w7-soak.ts 1",
+  "passed": false,
+  "requiredMinutes": 30,
+  "requestedMinutes": 1,
+  "elapsedMs": 60053,
+  "source": "51030c7a60c3c7c97f27683f13f9da9dc9a45ebee7143739b2aa291ee8559743",
+  "cycles": 2,
+  "seasons": 0,
+  "simulationDays": 2,
+  "paidCallsAdded": 0,
+  "errors": [],
+  "samples": [
+    {
+      "cycle": 1,
+      "elapsedMs": 8364,
+      "day": 2,
+      "seed": 73,
+      "hash": "d441bd20daa76549ce52284bdc153eece3c95df8ccb2fe77130eb378a500e5e1",
+      "campPolls": 11,
+      "advanced": 16,
+      "usedHeapSize": 5285768,
+      "totalHeapSize": 6414336,
+      "nodeHeap": 255119864
+    },
+    {
+      "cycle": 2,
+      "elapsedMs": 34236,
+      "day": 3,
+      "seed": 73,
+      "hash": "ae7df82eee16cc1a987f645fa1305956d487c3996a30f7da39e7224cc7045b54",
+      "campPolls": 11,
+      "advanced": 15,
+      "usedHeapSize": 5488088,
+      "totalHeapSize": 6414336,
+      "nodeHeap": 97408120
+    }
+  ]
+}

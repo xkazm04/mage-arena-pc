@@ -1,0 +1,731 @@
+{
+  "clips": 46,
+  "locomotionAttackClips": 28,
+  "resistanceClips": 18,
+  "rows": [
+    {
+      "entity": "garran",
+      "state": "absorb",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-garran-ne-defense"
+    },
+    {
+      "entity": "garran",
+      "state": "absorb",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-garran-ne-defense"
+    },
+    {
+      "entity": "shieldman",
+      "state": "absorb",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 3,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-shieldman-ne-combat"
+    },
+    {
+      "entity": "shieldman",
+      "state": "absorb",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 3,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-shieldman-ne-combat"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "idle",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-ne-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "idle",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-ne-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "idle",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-se-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "idle",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-se-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "run",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-ne-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "run",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-ne-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "run",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-se-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "run",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-se-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "cast",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 5,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-ne-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "cast",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 5,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-ne-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "cast",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 6,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-se-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "cast",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 6,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-se-motion"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "absorb",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-ne-defense"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "absorb",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-ne-defense"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "absorb",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-cinder_hound-se-defense"
+    },
+    {
+      "entity": "cinder_hound",
+      "state": "absorb",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-cinder_hound-se-defense"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "absorb",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 6,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-mire_maw-ne-defense"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "absorb",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 6,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-mire_maw-ne-defense"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "absorb",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 6,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-mire_maw-se-defense"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "absorb",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 6,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-mire_maw-se-defense"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "idle",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-mire_maw-se-motion"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "idle",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-mire_maw-se-motion"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "run",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-mire_maw-se-motion"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "run",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-mire_maw-se-motion"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "cast",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 6,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-mire_maw-se-motion"
+    },
+    {
+      "entity": "mire_maw",
+      "state": "cast",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 6,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-mire_maw-se-motion"
+    },
+    {
+      "entity": "thornback",
+      "state": "idle",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-thornback-se-motion"
+    },
+    {
+      "entity": "thornback",
+      "state": "idle",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-thornback-se-motion"
+    },
+    {
+      "entity": "thornback",
+      "state": "absorb",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-thornback-se-defense"
+    },
+    {
+      "entity": "thornback",
+      "state": "absorb",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-thornback-se-defense"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "cast",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 6,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-hush_moth-ne-combat"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "cast",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 6,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-hush_moth-ne-combat"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "cast",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 5,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-hush_moth-se-motion"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "cast",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 540,
+      "frameCount": 5,
+      "loop": false,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-hush_moth-se-motion"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "absorb",
+      "direction": "ne",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 6,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-hush_moth-ne-combat"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "absorb",
+      "direction": "nw",
+      "fillsA10Gap": true,
+      "durationMs": 600,
+      "frameCount": 6,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-hush_moth-ne-combat"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "absorb",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-hush_moth-se-defense"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "absorb",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 480,
+      "frameCount": 4,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-hush_moth-se-defense"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "idle",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 2,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-hush_moth-se-motion"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "idle",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 720,
+      "frameCount": 2,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-hush_moth-se-motion"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "run",
+      "direction": "se",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": false,
+      "page": "a14-hush_moth-se-motion"
+    },
+    {
+      "entity": "hush_moth",
+      "state": "run",
+      "direction": "sw",
+      "fillsA10Gap": true,
+      "durationMs": 430,
+      "frameCount": 5,
+      "loop": true,
+      "anchor": [
+        0.5,
+        0.78125
+      ],
+      "mirrorX": true,
+      "page": "a14-hush_moth-se-motion"
+    }
+  ],
+  "remaining": {
+    "priority": [
+      "mire_maw:death:ne",
+      "mire_maw:death:nw",
+      "mire_maw:corpse:ne",
+      "mire_maw:corpse:nw",
+      "thornback:hit-light:ne",
+      "thornback:hit-light:nw",
+      "thornback:hit-heavy:ne",
+      "thornback:hit-heavy:nw",
+      "thornback:death:ne",
+      "thornback:death:nw",
+      "thornback:corpse:ne",
+      "thornback:corpse:nw"
+    ],
+    "otherLegacy": [
+      "iskar:run:se:missing",
+      "iskar:run:sw:missing",
+      "shieldman:cast:ne:missing",
+      "shieldman:cast:nw:missing",
+      "slinger:absorb:ne:missing",
+      "slinger:absorb:nw:missing",
+      "netter:absorb:ne:missing",
+      "netter:absorb:nw:missing",
+      "thornback:run:se:missing",
+      "thornback:run:sw:missing",
+      "thornback:cast:se:missing",
+      "thornback:cast:sw:missing"
+    ],
+    "priorityMissing": 12,
+    "otherMissing": 12,
+    "owner_accepted": false,
+    "boundedAttemptFailures": "Mire Maw rear collapse, Thornback rear collapse/hits and front motion each used both session attempts; no third attempt authorized. Shieldman rear attack failed crop/equipment continuity on its first sheet; no allowance remained for correction. Iskar front run and Slinger/Netter rear absorb were not reached within the session cap."
+  }
+}

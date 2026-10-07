@@ -1,0 +1,45 @@
+{
+  "source": "art/review/sources/a12-moonlit-wide-agy-a01.png",
+  "sourceSha256": "1a13c5d74924fb21413486d5ff9e1133a7538b5276ae20280223ed0a5e2b7ac6",
+  "sourceSizePx": [
+    1376,
+    768
+  ],
+  "output": "art/waves/A12/upscaled/moonlit.png",
+  "outputSha256": "e7084859bea1c3dbceb7c103eeed7b8e3ee9b823b4e8e57964cb6bbbca5e086e",
+  "outputSizePx": [
+    3072,
+    1728
+  ],
+  "model": {
+    "name": "RealESRGAN_x4plus",
+    "source": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
+    "project": "https://github.com/xinntao/Real-ESRGAN",
+    "license": "BSD-3-Clause (project/release licence; no separate restriction supplied with the model)",
+    "licenseSource": "https://github.com/xinntao/Real-ESRGAN/blob/master/LICENSE",
+    "localPath": ".venv-art6/models/RealESRGAN_x4plus.pth",
+    "sha256": "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1",
+    "use": "one measured local upscale comparison first; select only after direct review; learned detail is inferred, never native recovered detail",
+    "bytes": 67040989,
+    "licenseLocal": "art/waves/A12/licenses/Real-ESRGAN-BSD-3-Clause.txt",
+    "licenseSha256": "4a699ec4863d96a91fc265948a0c90033f7e8735d515524dcf3444736406e0c2"
+  },
+  "runtime": {
+    "torch": "2.11.0+cu128",
+    "spandrel": "0.4.2",
+    "device": "NVIDIA GeForce RTX 4090",
+    "precision": "float16"
+  },
+  "settings": {
+    "inferenceScale": 4,
+    "tileInputPx": 224,
+    "contextPadPx": 32,
+    "seed": 47,
+    "learnedBlend": 0.35,
+    "resampling": "Lanczos"
+  },
+  "elapsedSeconds": 4.11,
+  "comparison": "art/waves/A12/upscaled/moonlit-upscale-comparison.png",
+  "honesty": "Learned sharpening/denoising can invent texture; this is not recovered/native 3072px detail. 65% Lanczos retains source paint. No diffusion detail generation.",
+  "selection": "selected after direct 100% crop comparison: 35% learned retains paint while adding restrained edge clarity; 100% learned looked too smoothed/engraved. Owner acceptance unmeasured."
+}

@@ -1,0 +1,50 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU3",
+  "file": "audition/r4/arena-C-reed-oath/section-6-release.wav",
+  "sha256": "2ce525e184513797e163f73dc806f8f480d34b8fa0a25cc6e8c27941c7d7be0e",
+  "source": "audition/r4/arena-C-reed-oath.mp3",
+  "sourceSha256": "e5cf5f788a7277b8bb1f173f56b9be78a7ed3f039151697258da4868ee5233b5",
+  "sourceSidecar": "audition/r4/arena-C-reed-oath.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-C-reed-oath",
+  "processing": {
+    "name": "Release",
+    "startSeconds": 135.0,
+    "endSeconds": 150.0,
+    "startSample": 6480000,
+    "endSample": 7200000,
+    "file": "audition/r4/arena-C-reed-oath/section-6-release.wav",
+    "boundaryStatus": "requested composition timing, not verified musical boundary"
+  },
+  "measurement": {
+    "file": "audition/r4/arena-C-reed-oath/section-6-release.wav",
+    "sha256": "2ce525e184513797e163f73dc806f8f480d34b8fa0a25cc6e8c27941c7d7be0e",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 720000,
+    "decodedSeconds": 15.0,
+    "containerSeconds": 15.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -23.98,
+    "truePeakDbTP": -13.41,
+    "loudnessRangeLU": 4.8,
+    "samplePeakDbFS": -13.411,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-23.98",
+      "input_tp": "-13.41",
+      "input_lra": "4.80",
+      "input_thresh": "-37.20",
+      "output_i": "-26.07",
+      "output_tp": "-15.60",
+      "output_lra": "4.90",
+      "output_thresh": "-39.22",
+      "normalization_type": "dynamic",
+      "target_offset": "0.07"
+    }
+  },
+  "note": "PCM derived from lossy provider MP3; no claim of native lossless master. Paid generation ledger records the original only."
+}

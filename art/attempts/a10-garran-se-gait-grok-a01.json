@@ -1,0 +1,54 @@
+{
+  "id": "a10-garran-se-gait-grok-a01",
+  "wave": "A10",
+  "style_id": "covenant",
+  "scene": "garran-se-gait",
+  "attempt": 1,
+  "input": {
+    "wave": "A10",
+    "id": "garran-se-gait",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "grok"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A10/references/garran-se-gait.png",
+        "sha256": "7df1995678f6de392304cc0fc2765e5a032499946ae6a280298814e342839141",
+        "role": "complete reviewed front-right body key; preserve viewing direction and identity"
+      }
+    ],
+    "prompt": "Create an entirely new EIGHT-frame locomotion sheet of this EXACT character, same face, clothes, colours and ONE staff. EXACTLY FOUR columns and TWO rows on flat magenta. No panel lines, text, shadows or effects. Keep the FRONT-RIGHT three-quarter view of this reference in EVERY key; face and chest front visible. Never show the back. Fixed elevated 55-degree camera, uniform body scale, complete head, weapon and feet, very wide empty margins.\nRow 1: idle planted both feet A; idle planted both feet B; RUN frame 1 RIGHT foot clearly FAR FORWARD and LEFT foot behind; RUN frame 2 right foot under weight while LEFT knee moves forward.\nRow 2: RUN frame 3 LEFT foot passes ahead and right heel lifts; RUN frame 4 LEFT foot clearly FAR FORWARD and RIGHT foot behind; RUN frame 5 left foot under weight while RIGHT knee moves forward; RUN frame 6 right foot passes ahead and left heel lifts.\nA real alternating six-phase gait: frame 1 and frame 4 have OPPOSITE legs forward. Do not repeat a single leading-leg pose. Cloth follows each stride. The ONE staff stays upright in the SAME hand, free arm counter-swings. No duplicate or missing staff. No attack, crouched attack or kneeling poses. Rich physical painted volume, subtle worn cloth and metal, fine highlights, no noisy texture or thick comic outlines. Original character, no extra figures."
+  },
+  "input_hash": "ca9628d00637ecd098d97c6f8ef04b3ef6a8a28c7e874d5873c322948d08986a",
+  "prompt": "Create an entirely new EIGHT-frame locomotion sheet of this EXACT character, same face, clothes, colours and ONE staff. EXACTLY FOUR columns and TWO rows on flat magenta. No panel lines, text, shadows or effects. Keep the FRONT-RIGHT three-quarter view of this reference in EVERY key; face and chest front visible. Never show the back. Fixed elevated 55-degree camera, uniform body scale, complete head, weapon and feet, very wide empty margins.\nRow 1: idle planted both feet A; idle planted both feet B; RUN frame 1 RIGHT foot clearly FAR FORWARD and LEFT foot behind; RUN frame 2 right foot under weight while LEFT knee moves forward.\nRow 2: RUN frame 3 LEFT foot passes ahead and right heel lifts; RUN frame 4 LEFT foot clearly FAR FORWARD and RIGHT foot behind; RUN frame 5 left foot under weight while RIGHT knee moves forward; RUN frame 6 right foot passes ahead and left heel lifts.\nA real alternating six-phase gait: frame 1 and frame 4 have OPPOSITE legs forward. Do not repeat a single leading-leg pose. Cloth follows each stride. The ONE staff stays upright in the SAME hand, free arm counter-swings. No duplicate or missing staff. No attack, crouched attack or kneeling poses. Rich physical painted volume, subtle worn cloth and metal, fine highlights, no noisy texture or thick comic outlines. Original character, no extra figures.",
+  "provider": "grok",
+  "origin": "grok-cli",
+  "session_id": "3ee0bdf5-0791-418a-9427-9e38a99152f5",
+  "at": "2026-10-03T14:14:32.275503+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 25.172,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "name": "image_edit",
+      "arguments": {
+        "image": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-garran-se-gait-grok-a01\\reference-1.png"
+        ],
+        "prompt": "Create an entirely new EIGHT-frame locomotion sheet of this EXACT character, same face, clothes, colours and ONE staff. EXACTLY FOUR columns and TWO rows on flat magenta. No panel lines, text, shadows or effects. Keep the FRONT-RIGHT three-quarter view of this reference in EVERY key; face and chest front visible. Never show the back. Fixed elevated 55-degree camera, uniform body scale, complete head, weapon and feet, very wide empty margins.\nRow 1: idle planted both feet A; idle planted both feet B; RUN frame 1 RIGHT foot clearly FAR FORWARD and LEFT foot behind; RUN frame 2 right foot under weight while LEFT knee moves forward.\nRow 2: RUN frame 3 LEFT foot passes ahead and right heel lifts; RUN frame 4 LEFT foot clearly FAR FORWARD and RIGHT foot behind; RUN frame 5 left foot under weight while RIGHT knee moves forward; RUN frame 6 right foot passes ahead and left heel lifts.\nA real alternating six-phase gait: frame 1 and frame 4 have OPPOSITE legs forward. Do not repeat a single leading-leg pose. Cloth follows each stride. The ONE staff stays upright in the SAME hand, free arm counter-swings. No duplicate or missing staff. No attack, crouched attack or kneeling poses. Rich physical painted volume, subtle worn cloth and metal, fine highlights, no noisy texture or thick comic outlines. Original character, no extra figures.",
+        "aspect_ratio": "1:1"
+      }
+    }
+  ],
+  "prompt_verbatim_verified": true,
+  "tool_input_visibility": "session tool history",
+  "source": "art/raw/a10-garran-se-gait-grok-a01/source.jpg",
+  "archive": "art/review/sources/a10-garran-se-gait-grok-a01.jpg",
+  "sha256": "e772dd7063d31993401800d72c940a5901f7a7b2a4356ce3e5c7cc7847bee743",
+  "invocation_evidence": "art/providers/runs/a10-garran-se-gait-grok-a01"
+}

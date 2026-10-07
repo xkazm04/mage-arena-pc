@@ -1,0 +1,31 @@
+{
+  "wave": "A14",
+  "id": "mire_maw-se-reaction",
+  "pilot": false,
+  "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+  "providers": [
+    "agy"
+  ],
+  "aspect_ratio": "1:1",
+  "references": [
+    {
+      "path": "art/waves/A14/references/mire_maw-se.png",
+      "sha256": "46cf5e4a9d8df7cec0eb6551a6c2c6018e0fe091f6f3be5da8b811a4c5b04f3a",
+      "role": "identity"
+    },
+    {
+      "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+      "role": "Moonchalk painting bar"
+    }
+  ],
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. This is an ANIMAL ONLY. No human body, no clothes, no weapon or staff, no hands. Keep its exact creature anatomy. Raw magical broad squat amphibian-like bog creature, four short splayed legs, heavy moss-green stone hide, broad round mouth, luminous turquoise throat sac, root tendrils and wet mist. Chunky artillery silhouette; intact non-gory creature. FRONT-RIGHT three-quarter view, head and torso facing diagonally TOWARD viewer and image RIGHT, face and front surfaces clearly visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly FOUR columns by FOUR rows, 16 complete QUADRUPED ANIMAL poses of this same creature. Row 1 quick flinch: 1 all four paws planted in animal ready stance; 2 head/neck pull sharply back and shoulders hunch; 3 crouched forelegs catch the recoil; 4 returns to ready. Row 2 heavy struggle first four keys: 5 four-paw ready; 6 neck jerks backward and spine arches, all four paws remain on ground; 7 deepest hunched back and head recoil, belly visibly compressed; 8 forelegs splay and hind legs bend to catch balance. Row 3: 9 pushes back up on all four legs; 10 recovered four-paw stance. Begin collapse: 11 four-paw ready; 12 legs fold and chest drops. Row 4 collapse: 13 belly and chest very low to ground; 14 animal tips onto its side; 15 head, belly and chest FULLY REST ON GROUND with legs folded or relaxed; 16 animal motionless LYING FLAT ON ITS SIDE, head on ground and four relaxed legs. No rearing on two legs, no biped stance, no human torso, arms or hands, no clothes, equipment or weapon. FOUR animal legs only. Last two poses must fully lie on the ground, never stand, sit or crouch. Intact non-graphic animal, no blood, gore or injury detail. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "entity": "mire_maw",
+  "direction": "se",
+  "kind": "reaction",
+  "grid": [
+    4,
+    4
+  ],
+  "referenceConsumption": "agy receives both image references; Grok wrapper consumes first identity image only, Covenant style block is textual"
+}

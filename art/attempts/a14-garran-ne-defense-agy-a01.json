@@ -1,0 +1,87 @@
+{
+  "id": "a14-garran-ne-defense-agy-a01",
+  "wave": "A14",
+  "style_id": "covenant",
+  "scene": "garran-ne-defense",
+  "attempt": 1,
+  "input": {
+    "wave": "A14",
+    "id": "garran-ne-defense",
+    "pilot": false,
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/waves/A14/references/garran-ne.png",
+        "sha256": "76e7cde21aac3979713abe2840c62c6682bd01ddbaccdaddef208c7b384ce8c9",
+        "role": "identity"
+      },
+      {
+        "path": "art/review/sources/a6-moonchalk-tempest-moonchalk-tempest-portrait-a02.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Moonchalk painting bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. Keep head and torso aimed upper-right away from viewer. Never turn to face the viewer. Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete poses. Six defensive resistance poses: ready, feet brace, hands and equipment lift forward to block, torso leans into resistance, slightly recoils while keeping guard, steady forward guard hold. No glowing effect, keep exactly the reference equipment.All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+    "entity": "garran",
+    "direction": "ne",
+    "kind": "defense",
+    "grid": [
+      3,
+      2
+    ],
+    "referenceConsumption": "agy receives all named image references; creatures always include original approved Covenant creature source; Grok wrapper consumes first identity image only, Covenant style block is textual",
+    "session": 10
+  },
+  "input_hash": "c64ee49b92cab6cd991a60c11f0f8434acca1e95881bbcc6757a55a18fc1b209",
+  "prompt": "Use case: stylized-concept. Original painted game character ANIMATION SHEET on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact character identity and equipment reference. Reference-2.png is PAINTING STYLE ONLY, never copy its person, framing or pose. Keep the same face, headwear, clothes and single set of equipment. For ALL poses the camera sees BACK surfaces. Keep head and torso aimed upper-right away from viewer. Never turn to face the viewer. Older powerful man, deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, heavy gnarled staff with angular stone head. Floating stone motes and compact dust. REAR-RIGHT three-quarter view, head and torso facing diagonally AWAY from viewer and toward image RIGHT, back surfaces visible. Maintain this anatomical view for every pose, including resting body; do not rotate a flat upright sprite. Camera elevated 55-degree orthographic, not eye-level. Exactly THREE columns by TWO rows, SIX complete poses. Six defensive resistance poses: ready, feet brace, hands and equipment lift forward to block, torso leans into resistance, slightly recoils while keeping guard, steady forward guard hold. No glowing effect, keep exactly the reference equipment.All complete bodies same anatomical scale, very wide empty magenta gutters. No labels, no text, no anatomy outside its cell. No falling or resting poses. Each equal cell contains ONE entire body at IDENTICAL anatomical scale. Each body and all equipment fit within middle 60% of the cell, including lying poses. Wide completely empty magenta gutters. No text, numbers, labels, panel borders, shadows, floor, scene, magic aura, extra figures or chopped anatomy. Do not let staff, tail, wing or foot cross a cell boundary. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Smooth opaque painted cloth and metal, rich physical volume, no heavy cartoon outline. Sheet aspect 1:1. Original designs only.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "196414e5-14a9-4f8f-a040-7b6a985ef896",
+  "at": "2026-10-04T15:42:20.035668+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 56.953,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-04T15:42:38Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "garran_ne_defense_sheet",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-garran-ne-defense-agy-a01\\reference-1.png",
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a14-garran-ne-defense-agy-a01\\reference-2.png"
+        ],
+        "Prompt": "Original hand-painted digital dark fantasy game character animation sheet on uniform vivid solid MAGENTA background (#FF00FF). Exactly 3 columns by 2 rows (3x2 grid), containing 6 complete poses of the same character. Reference-1.png provides the exact character identity, headwear, layered garments, and gnarled stone staff. Reference-2.png is for the painterly digital dark fantasy rendering style only. Character: Older powerful man with deep brown skin and thick short greying beard, broad pale ochre hooded shoulder wrap over ivory layered cloth, stone charms and leather pouches, holding a heavy gnarled staff with an angular stone head, with small floating stone motes and compact dust. Perspective and angle: Elevated 55-degree orthographic camera. REAR-RIGHT three-quarter view for ALL poses, with head and torso turned diagonally away from the viewer towards image-right so the viewer sees the back surfaces and hooded back. Never facing the viewer. The 6 defensive resistance poses in order across the cells: ready guard stance, feet bracing, hands and staff lifting forward to block, torso leaning forward into resistance, slightly recoiling from impact while keeping guard, steady forward guard hold. Each cell contains one complete figure at identical anatomical scale within the middle 60% of the cell, with wide completely empty magenta gutters. No panel borders, no grid lines, no text, no labels, no ground shadows, no glowing auras. Pure solid magenta background.",
+        "toolAction": "Generating animation sheet",
+        "toolSummary": "Generate animation sheet"
+      },
+      "conversation": "91c5b215-e877-4744-8da8-53fa8aa4e4bb"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "b9c691beb9879d75f34198b5b1fef965da5dacd7c2f8d0e289d6ef08dfec5d69",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\1528a01b-92af-49f3-a244-c46f7cdc89f0\\garran_ne_defense_sheet_1791128595058.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a14-garran-ne-defense-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/a14-garran-ne-defense-agy-a01.jpg",
+  "sha256": "b9c691beb9879d75f34198b5b1fef965da5dacd7c2f8d0e289d6ef08dfec5d69",
+  "invocation_evidence": "art/providers/runs/a14-garran-ne-defense-agy-a01"
+}

@@ -1,0 +1,68 @@
+
+> gate
+> npm run build && npm run lint && npm run test && npm run check:design
+
+
+> build
+> npm --prefix packages/core run data && tsc -p tsconfig.json && tsc -p packages/core/tsconfig.arena.json
+
+
+> data
+> node scripts/compile-arena-data.mjs
+
+Arena data compiled from reconciled arena and scale contract; clock, Nerve and absorb authorities agree.
+
+> lint
+> eslint packages --max-warnings 0
+
+
+> test
+> vitest run && node --test packages/tools/replay/*.test.mjs
+
+
+ RUN  v5.0.3 C:/Users/kazda/kiro/mage-arena-int
+
+node.exe : [vitest-pool]: Timeout terminating forks worker for test files
+C:/Users/kazda/kiro/mage-arena-int/packages/tools/src/camp.test.ts.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([vitest-pool]: ...c/camp.test.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+[vitest-pool]: Timeout terminating forks worker for test files
+C:/Users/kazda/kiro/mage-arena-int/packages/tools/src/season.test.ts.
+
+ Test Files  21 passed (21)
+      Tests  156 passed (156)
+   Start at  01:45:31
+   Duration  18.96s (tests 88%, transform 7%, import 5%)
+
+✔ stored golden nights replay exactly with source references (51.5924ms)
+✔ Fable planted faults fail directly, including case, second vocabulary and foreign keys (453.856ms)
+✔ generated branch oracle covers every verb, persuade, caught, stocks, Games and repaired lines (16.9241ms)
+✔ balance review regressions: author cannot believe own rumour; fed protection has no social reward; natural minimum fails (8.8893ms)
+✔ planted prose, rule and fixture contradictions all fail the checker (51.2902ms)
+✔ golden content fixes hunger, aggression halving, repetition, caps and provenance (6.8235ms)
+✔ calendar has weekly Games and eve Trials throughout one season (0.8089ms)
+✔ every same-tent equal-rank directed pair decays; a player cannot be directed (1.5127ms)
+✔ crier rejects number words, Unicode digits and invented consequences (0.8451ms)
+✔ identical visible request has one key; changed fact, model or prompt has another (0.5735ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 751.5236
+
+> check:design
+> node packages/tools/replay/cli.mjs check
+
+{
+  "contradictions": 0,
+  "errors": [],
+  "nights": 3,
+  "deltas": 216
+}

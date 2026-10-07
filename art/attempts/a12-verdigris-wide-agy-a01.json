@@ -1,0 +1,72 @@
+{
+  "id": "a12-verdigris-wide-agy-a01",
+  "wave": "A12",
+  "style_id": "covenant",
+  "scene": "verdigris-wide",
+  "attempt": 1,
+  "input": {
+    "wave": "A12",
+    "id": "verdigris-wide",
+    "pilot": false,
+    "providers": [
+      "agy",
+      "grok"
+    ],
+    "style_hash": "26887365a7f0c22db9546c37f8a142d48346a6fbfcf1283010b44fcde996020c",
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/waves/A12/references/verdigris-overscan-guide.png",
+        "sha256": "cb4a4ed8ec4e74f1e5a97920b2574d8fc59fee111ab92a00a74a4686fcdffbcf",
+        "role": "outpaint target: clean approved-composition scene centered within blank grey overscan margins"
+      }
+    ],
+    "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result."
+  },
+  "input_hash": "4d73775912005a4a6b5a6b6ccc2fc0547cb7efa23196bb4b2db2691544a2a61d",
+  "prompt": "Use case: precise-object-edit / environment outpainting. The reference is a complete CLEAN painted arena in the middle, with blank flat GREY bands at every outside edge. FILL ONLY those grey margins by naturally continuing this SAME single painting. The existing inner scene occupies exactly the central five-sixths of width and height; keep it at this exact position and scale. Do NOT crop away the grey border or zoom in: the final image must include the new wider view. Extend the same irregular stone/sand floor to left, right and bottom; extend the existing rear masonry, banners and darkness to the top. Connect surfaces and lighting across the former grey boundaries with no visible seam or abrupt edge. Keep all existing pylons, rune rings, cracks and broad colour regions at their original locations within the inner scene. Keep all FIVE pylons intact, including foreground ones; do not duplicate them in the new margins. Preserve the exact material painting, light direction, atmosphere, palette and floor detail of the reference. No creatures, figures, people, weapons, statues, combat effects, new inscriptions, text, UI or logos. Abstract existing rune marks stay. Absolutely no solid grey bands remain, no outer frame, no background border. One seamless coherent original hand-painted environment, not a collage. Same elevated 55-degree oblique camera, no additional perspective convergence. Largest available landscape output 16:9. Make EXACTLY ONE image and do not refine or retry it. Return that first result.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "073b0b51-998c-4ef3-aa25-0ece884dab87",
+  "at": "2026-10-03T15:46:58.839003+00:00",
+  "week": "2026-W40",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 138.657,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "at": "2026-10-03T15:48:21Z",
+      "step": 3,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "output",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-wide-agy-a01\\reference-1.png"
+        ],
+        "Prompt": "Precise environment outpainting extending the provided reference image into a full 16:9 canvas. The reference image contains an ancient dark fantasy arena surrounded by flat grey border margins on all four sides. Seamlessly fill and replace all grey margins by continuing the existing painted environment outward to the edges of the 16:9 frame:\n- The central arena must remain intact, identical in scale, perspective, and position: dark verdigris-green weathered stone flagstone ground, intricate cracks, bronze/copper glowing astrological circles and crescent moon markings, and exactly five ancient standing stone monolith pylons carved with concentric circle runes.\n- Keep all five pylons intact; do not duplicate them or add new pylons in the outer margins.\n- Extend the dark greenish-grey verdigris cracked stone floor naturally and seamlessly across the left, right, and bottom margins.\n- Extend the ancient crumbling masonry stone wall and dark atmospheric background seamlessly across the top margin.\n- Perfect seamless blending across the previous grey boundaries with zero seams, zero lines, and absolutely no remaining grey bands, borders, or frames.\n- Stylized hand-painted dark fantasy digital painting aesthetic, isometric 55-degree high-angle oblique camera view, moody ambient lighting. No characters, no figures, no monsters, no weapons, no text, no UI.",
+        "toolAction": "Generating outpainted arena image",
+        "toolSummary": "Generate outpainted arena image"
+      },
+      "conversation": "2ddb0f40-5c7a-46a6-9c93-3d436a816ec4"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "b0ed3d041aede70abb122ed10a162e04bae7ed0ed8da63e5f68ec5c4b067be0c",
+      "paths": [
+        "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a12-verdigris-wide-agy-a01\\output.png"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "conservative max(reservation, visible calls, output files); duplicate saves do not establish extra generations",
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/a12-verdigris-wide-agy-a01/_driver/source.png",
+  "archive": "art/review/sources/a12-verdigris-wide-agy-a01.png",
+  "sha256": "b0ed3d041aede70abb122ed10a162e04bae7ed0ed8da63e5f68ec5c4b067be0c",
+  "invocation_evidence": "art/providers/runs/a12-verdigris-wide-agy-a01"
+}

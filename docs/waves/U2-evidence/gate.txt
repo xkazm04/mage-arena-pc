@@ -1,0 +1,58 @@
+
+> gate
+> npm run build && npm run lint && npm run test && npm run check:design
+
+
+> build
+> npm --prefix packages/core run data && tsc -p tsconfig.json && tsc -p packages/core/tsconfig.arena.json
+
+
+> data
+> node scripts/compile-arena-data.mjs
+
+Arena data compiled from reconciled arena and scale contract; clock, Nerve and absorb authorities agree.
+
+> lint
+> eslint packages --max-warnings 0
+
+
+> test
+> vitest run && node --test packages/tools/replay/*.test.mjs
+
+
+ RUN  v5.0.3 C:/Users/kazda/kiro/mage-arena-int
+
+
+ Test Files  21 passed (21)
+      Tests  156 passed (156)
+   Start at  01:47:35
+   Duration  18.54s (tests 83%, transform 9%, import 7%)
+
+✔ stored golden nights replay exactly with source references (48.3526ms)
+✔ Fable planted faults fail directly, including case, second vocabulary and foreign keys (420.08ms)
+✔ generated branch oracle covers every verb, persuade, caught, stocks, Games and repaired lines (20.7704ms)
+✔ balance review regressions: author cannot believe own rumour; fed protection has no social reward; natural minimum fails (12.5459ms)
+✔ planted prose, rule and fixture contradictions all fail the checker (51.8662ms)
+✔ golden content fixes hunger, aggression halving, repetition, caps and provenance (14.7719ms)
+✔ calendar has weekly Games and eve Trials throughout one season (0.9476ms)
+✔ every same-tent equal-rank directed pair decays; a player cannot be directed (1.6504ms)
+✔ crier rejects number words, Unicode digits and invented consequences (1.0488ms)
+✔ identical visible request has one key; changed fact, model or prompt has another (0.633ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 697.5323
+
+> check:design
+> node packages/tools/replay/cli.mjs check
+
+{
+  "contradictions": 0,
+  "errors": [],
+  "nights": 3,
+  "deltas": 216
+}

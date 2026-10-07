@@ -1,0 +1,17 @@
+{
+  "label": "measured wall-clock browser lifecycle soak plus simulated ordinary season policy; no human feel claim",
+  "command": "npx tsx packages/tools/src/w7-soak.ts 1",
+  "passed": false,
+  "requiredMinutes": 30,
+  "requestedMinutes": 1,
+  "elapsedMs": 6994,
+  "source": "51030c7a60c3c7c97f27683f13f9da9dc9a45ebee7143739b2aa291ee8559743",
+  "cycles": 0,
+  "seasons": 0,
+  "simulationDays": 1,
+  "paidCallsAdded": 0,
+  "errors": [
+    "AssertionError [ERR_ASSERTION]: Wake does not simulate two seconds of combat at once."
+  ],
+  "samples": []
+}

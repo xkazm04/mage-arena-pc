@@ -1,0 +1,71 @@
+{
+  "version": "hud-v1",
+  "origin": "authored interface example; not gameplay capture",
+  "combat_source": {
+    "path": "docs/design/baseline-fourteen-nights/design/data/combat.json",
+    "sha256": "bebe556c6c9723ce7425fe4159bf72f58c1e6e198c104041cce5b596e4001bb0"
+  },
+  "plate": {
+    "path": "art/review/sources/01-tessera-staggered-plinths-sparse-near-a02.jpg",
+    "sha256": "03b8c07e39a9789c376482fdc9a5941d3d3e10b6dd64bd23627fdc69afd2af79",
+    "owner_accepted": false
+  },
+  "slots": [
+    {
+      "line": "tide_orb",
+      "icon": "water-tide-orb",
+      "label": "Tide Orb",
+      "branch": "A"
+    },
+    {
+      "line": "lash",
+      "icon": "water-lash",
+      "label": "Lash",
+      "branch": "A"
+    },
+    {
+      "line": "mire",
+      "icon": "water-mire",
+      "label": "Mire",
+      "branch": null
+    }
+  ],
+  "tier_unlock_seconds": {
+    "1": 0,
+    "2": 15,
+    "3": 30,
+    "4": 45
+  },
+  "flow_max": 5,
+  "absorb_arc_degrees": 140,
+  "sample": {
+    "clock_seconds": 20,
+    "health": [
+      74,
+      100
+    ],
+    "mana": [
+      62,
+      100
+    ],
+    "stamina": [
+      87,
+      100
+    ],
+    "flow": 3,
+    "selected_slot": 0,
+    "state": "ready",
+    "cooldown_seconds": 4.0
+  },
+  "sample_values_authority": "Presentation examples only, not balance defaults or engine results. Combat timing and slot count copied from hash-bound combat data.",
+  "controls": {
+    "move": "WASD",
+    "aim": "Mouse",
+    "cast": "LMB",
+    "select": "1 / 2 / 3 or wheel",
+    "absorb": "RMB",
+    "roll": "Space",
+    "sprint": "Shift"
+  },
+  "owner_accepted": false
+}

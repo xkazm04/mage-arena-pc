@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\.grok\\bin\\grok.EXE",
+    "-m",
+    "grok-4.7",
+    "--effort",
+    "low",
+    "--always-approve",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search",
+    "--tools",
+    "image_edit",
+    "--max-turns",
+    "2",
+    "--session-id",
+    "27abe140-5cf2-4faa-be4b-936a3f4a562f",
+    "--prompt-file",
+    "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-shieldman-ne-grok-a01\\request.txt",
+    "--output-format",
+    "streaming-json"
+  ],
+  "cwd": "C:\\Users\\kazda\\kiro\\mage-arena-art\\art\\raw\\a10-shieldman-ne-grok-a01",
+  "references": [
+    {
+      "path": "art/waves/A10/references/shieldman-ne-square-v1.png",
+      "sha256": "5b18a43f0a05da2c733fcb9af530e7aae84bc7e36173f48a8bb12c91b80d61a7",
+      "role": "single full-body A3c identity crop on square canvas"
+    }
+  ]
+}

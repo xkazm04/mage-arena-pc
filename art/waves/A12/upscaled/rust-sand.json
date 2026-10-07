@@ -1,0 +1,45 @@
+{
+  "source": "art/review/sources/a12-rust-sand-wide-agy-a01.png",
+  "sourceSha256": "c831f7467608bc117d54495749e920aba830439500b5252317953157e3c7c9da",
+  "sourceSizePx": [
+    1376,
+    768
+  ],
+  "output": "art/waves/A12/upscaled/rust-sand.png",
+  "outputSha256": "75b26810cb5f9abf1761f67e9e3d88c016f43a0c21ccb895191dab629661613f",
+  "outputSizePx": [
+    3072,
+    1728
+  ],
+  "model": {
+    "name": "RealESRGAN_x4plus",
+    "source": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
+    "project": "https://github.com/xinntao/Real-ESRGAN",
+    "license": "BSD-3-Clause (project/release licence; no separate restriction supplied with the model)",
+    "licenseSource": "https://github.com/xinntao/Real-ESRGAN/blob/master/LICENSE",
+    "localPath": ".venv-art6/models/RealESRGAN_x4plus.pth",
+    "sha256": "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1",
+    "use": "one measured local upscale comparison first; select only after direct review; learned detail is inferred, never native recovered detail",
+    "bytes": 67040989,
+    "licenseLocal": "art/waves/A12/licenses/Real-ESRGAN-BSD-3-Clause.txt",
+    "licenseSha256": "4a699ec4863d96a91fc265948a0c90033f7e8735d515524dcf3444736406e0c2"
+  },
+  "runtime": {
+    "torch": "2.11.0+cu128",
+    "spandrel": "0.4.2",
+    "device": "NVIDIA GeForce RTX 4090",
+    "precision": "float16"
+  },
+  "settings": {
+    "inferenceScale": 4,
+    "tileInputPx": 224,
+    "contextPadPx": 32,
+    "seed": 47,
+    "learnedBlend": 0.35,
+    "resampling": "Lanczos"
+  },
+  "elapsedSeconds": 5.454,
+  "comparison": "art/waves/A12/upscaled/rust-sand-upscale-comparison.png",
+  "honesty": "Learned sharpening/denoising can invent texture; this is not recovered/native 3072px detail. 65% Lanczos retains source paint. No diffusion detail generation.",
+  "selection": "selected after direct 100% crop comparison: 35% learned retains paint while adding restrained edge clarity; 100% learned looked too smoothed/engraved. Owner acceptance unmeasured."
+}

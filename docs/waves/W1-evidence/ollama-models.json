@@ -1,0 +1,175 @@
+{
+    "models":  [
+                   {
+                       "name":  "mimo-9b:q8-64k",
+                       "model":  "mimo-9b:q8-64k",
+                       "modified_at":  "2026-09-22T21:30:10.5413096+02:00",
+                       "size":  10151727909,
+                       "digest":  "35fc231b70167b8c3d1e3a9ebd54610f5359ad1d7aff0d18e7d082d47b78024b",
+                       "details":  {
+                                       "parent_model":  "mimo9-q8:latest",
+                                       "format":  "gguf",
+                                       "family":  "qwen35",
+                                       "families":  [
+                                                        "qwen35"
+                                                    ],
+                                       "parameter_size":  "9.0B",
+                                       "quantization_level":  "Q8_0",
+                                       "context_length":  262144,
+                                       "embedding_length":  4096
+                                   },
+                       "capabilities":  [
+                                            "tools",
+                                            "thinking",
+                                            "completion",
+                                            "vision"
+                                        ]
+                   },
+                   {
+                       "name":  "mimo9-q8:latest",
+                       "model":  "mimo9-q8:latest",
+                       "modified_at":  "2026-09-22T19:59:07.7316731+02:00",
+                       "size":  10151727891,
+                       "digest":  "3e9c34c043e4f2261acaf5b865dd5e39515d9025993322e01fe5fc5eaa4cecdb",
+                       "details":  {
+                                       "parent_model":  "MiMo-V2.6-Distill-Qwen-9B-Q8_0.gguf",
+                                       "format":  "gguf",
+                                       "family":  "qwen35",
+                                       "families":  [
+                                                        "qwen35"
+                                                    ],
+                                       "parameter_size":  "9.0B",
+                                       "quantization_level":  "Q8_0",
+                                       "context_length":  262144,
+                                       "embedding_length":  4096
+                                   },
+                       "capabilities":  [
+                                            "tools",
+                                            "thinking",
+                                            "completion",
+                                            "vision"
+                                        ]
+                   },
+                   {
+                       "name":  "qwen3.8:27b-64k",
+                       "model":  "qwen3.8:27b-64k",
+                       "modified_at":  "2026-09-21T15:34:41.1997803+02:00",
+                       "size":  17741872134,
+                       "digest":  "12af24e3ee72bf54bca064a972bf767938a96149d671eaa64c9506c7ea54c08c",
+                       "details":  {
+                                       "parent_model":  "qwen3.8:27b",
+                                       "format":  "gguf",
+                                       "family":  "qwen35",
+                                       "families":  [
+                                                        "qwen35"
+                                                    ],
+                                       "parameter_size":  "27.3B",
+                                       "quantization_level":  "Q4_K_M",
+                                       "context_length":  262144,
+                                       "embedding_length":  5120
+                                   },
+                       "capabilities":  [
+                                            "completion",
+                                            "vision",
+                                            "tools",
+                                            "thinking"
+                                        ]
+                   },
+                   {
+                       "name":  "nomic-embed-text:latest",
+                       "model":  "nomic-embed-text:latest",
+                       "modified_at":  "2026-09-07T12:23:27.6815725+02:00",
+                       "size":  274302450,
+                       "digest":  "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+                       "details":  {
+                                       "parent_model":  "",
+                                       "format":  "gguf",
+                                       "family":  "nomic-bert",
+                                       "families":  [
+                                                        "nomic-bert"
+                                                    ],
+                                       "parameter_size":  "137M",
+                                       "quantization_level":  "F16",
+                                       "context_length":  2048,
+                                       "embedding_length":  768
+                                   },
+                       "capabilities":  [
+                                            "embedding"
+                                        ]
+                   },
+                   {
+                       "name":  "qwen2.5:7b-instruct",
+                       "model":  "qwen2.5:7b-instruct",
+                       "modified_at":  "2026-09-03T11:38:52.8589219+02:00",
+                       "size":  4683087332,
+                       "digest":  "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+                       "details":  {
+                                       "parent_model":  "",
+                                       "format":  "gguf",
+                                       "family":  "qwen2",
+                                       "families":  [
+                                                        "qwen2"
+                                                    ],
+                                       "parameter_size":  "7.6B",
+                                       "quantization_level":  "Q4_K_M",
+                                       "context_length":  32768,
+                                       "embedding_length":  3584
+                                   },
+                       "capabilities":  [
+                                            "completion",
+                                            "tools"
+                                        ]
+                   },
+                   {
+                       "name":  "qwen3.8:27b",
+                       "model":  "qwen3.8:27b",
+                       "modified_at":  "2026-08-25T11:20:44.1427878+02:00",
+                       "size":  17741872154,
+                       "digest":  "22130167c4c20e20c7b71454612966ca8e8171e9b3cc8ab6ce8aa6cbfec79643",
+                       "details":  {
+                                       "parent_model":  "qwen3.8:27b-q4_K_M",
+                                       "format":  "gguf",
+                                       "family":  "qwen35",
+                                       "families":  [
+                                                        "qwen35"
+                                                    ],
+                                       "parameter_size":  "27.3B",
+                                       "quantization_level":  "Q4_K_M",
+                                       "context_length":  262144,
+                                       "embedding_length":  5120
+                                   },
+                       "capabilities":  [
+                                            "completion",
+                                            "vision",
+                                            "tools",
+                                            "thinking"
+                                        ]
+                   },
+                   {
+                       "name":  "gemma4:12b",
+                       "model":  "gemma4:12b",
+                       "modified_at":  "2026-08-25T10:27:53.5359922+02:00",
+                       "size":  7556508396,
+                       "digest":  "4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+                       "details":  {
+                                       "parent_model":  "",
+                                       "format":  "gguf",
+                                       "family":  "gemma4",
+                                       "families":  [
+                                                        "gemma4"
+                                                    ],
+                                       "parameter_size":  "11.9B",
+                                       "quantization_level":  "Q4_K_M",
+                                       "context_length":  262144,
+                                       "embedding_length":  3840
+                                   },
+                       "capabilities":  [
+                                            "completion",
+                                            "vision",
+                                            "audio",
+                                            "tools",
+                                            "thinking"
+                                        ]
+                   }
+               ]
+}

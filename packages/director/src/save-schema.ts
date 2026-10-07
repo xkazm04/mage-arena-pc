@@ -1,0 +1,45 @@
+import { Ajv, type ValidateFunction } from 'ajv';
+import { bridgeRules, campPlay, createCampSession, type Tables } from '@mage/core';
+import { itemSchema } from './schema.ts';
+type Schema = Record<string, unknown>;
+const text: Schema = { type: 'string', maxLength: 16384 };
+const bool: Schema = { type: 'boolean' };
+const number: Schema = { type: 'number' };
+const integer = (minimum = 0, maximum = Number.MAX_SAFE_INTEGER): Schema => ({ type: 'integer', minimum, maximum });
+const array = (items: Schema, maxItems = 10000): Schema => ({ type: 'array', items, maxItems });
+const nullable = (schema: Schema): Schema => ({ anyOf: [schema, { type: 'null' }] });
+const object = (properties: Record<string, Schema>, optional: string[] = []): Schema => ({ type: 'object', properties, required: Object.keys(properties).filter(k => !optional.includes(k)), additionalProperties: false });
+const record = (value: Schema): Schema => ({ type: 'object', additionalProperties: value, maxProperties: 10000 });
+const strings = array(text);
+const board = array(object({ factId: text, text }));
+const fact = object({ id: text, text, visibility: text, type: text, actor: text, target: text, truth: bool }, ['type', 'actor', 'target', 'truth']);
+const trace = array(object({ path: text, before: {}, after: {}, rule: text }));
+const roll = object({ seed: integer(-Number.MAX_SAFE_INTEGER), day: integer(1, 42), actor: text, action: text, unit: number, value: number, rule: text, score: number, dc: number, success: bool }, ['score', 'dc', 'success']);
+const carry = object({ helped: strings, working: strings, stopped: strings, freshStocks: strings });
+const composition = object({ name: text, lines: array({ enum: ['tide_orb','lash','mire','mend','mirror'] }, 3), branches: object({ lash: { enum: ['A','B'] }, mirror: { enum: ['A','B'] }, tide_orb: { enum: ['A','B'] } }) });
+const result = object({ kind: { enum: ['champion','missio'] }, wavesCleared: integer(0,4), gold: integer(), renown: integer(0,100), finalReached: bool, finalWon: bool });
+const vector = object({ x: number, y: number });
+const input = object({ move: vector, aim: vector, slot: integer(0,3), cast: bool, absorb: bool, roll: bool, sprint: bool });
+const stance = { enum: bridgeRules.trial.stances };
+const trial = object({ id: text, day: integer(1,42), rival: text, elder: text, stamina: array(number,2), score: array(integer(0,3),2), rounds: array(object({ stance, opponent: stance, rolls: array(number,2), totals: array(number,2), won: bool }),3), phase: { enum: ['active','complete'] }, entrant: text, weights: array(number,2) }, ['entrant','weights']);
+const bout = object({ id: text, day: integer(1,42), seed: integer(0,0xffffffff), phase: { enum: ['prepared','active','intermission','terminal'] }, entrant: object({ id: text, name: text, school: { const: 'water' }, ranks: object({ vigor: integer(1,5), focus: integer(1,5), nerve: integer(1,5) }), mastery: integer(1,4), hpPenalty: number, staminaPenalty: number }), spectator: bool, composition, games: nullable({ type: 'object' }), log: array({ oneOf: [object({ type: { const: 'tick' }, tick: integer(), input }), object({ type: { const: 'advance' }, tick: integer() })] }, bridgeRules.limits.maxLogEntries) });
+const validators = new WeakMap<Tables, ValidateFunction>();
+export function saveValidator(t: Tables) {
+  const cached = validators.get(t); if (cached) return cached;
+  const initial = createCampSession(t), ids = Object.keys(initial.camp.characters), id = { enum: ids };
+  const ranks = object(Object.fromEntries(t.rules.stats.names.map(k => [k, integer(1,t.rules.stats.rankThresholds.length)])));
+  const points = object(Object.fromEntries(t.rules.stats.names.map(k => [k, integer()])));
+  const character = object({ id, name: text, tent: text, school: { enum: [...new Set(t.characters.characters.map(c => c.school))] }, role: text, rank: integer(0,5), traits: record(number), values: strings, goal: object({ id: text, target: nullable(text) }), stats: ranks, voice: object({ register: text, tics: strings, never: strings }), bio: text, forbiddenIntents: strings, knowledgeSeed: strings,
+    points, ...Object.fromEntries(['gold','renown','hunger','loyalty','fatigue'].map(k => { const range = t.rules.ranges[k as keyof typeof t.rules.ranges]; return [k, { type: 'number', minimum: range[0], maximum: range[1] }]; })), mastery: integer(1,4), mood: { enum: t.characters.moods }, knowledge: strings, life: { enum: ['Alive','Dead','Executed'] }, sick: bool, warned: bool, stocks: bool, lastScheme: nullable(object({ day: integer(1,42), target: id })) });
+  const camp = object({ seed: integer(-Number.MAX_SAFE_INTEGER), day: integer(1,t.season.weeks*t.season.daysPerWeek), player: { const: bridgeRules.playableCharacter }, characters: object(Object.fromEntries(ids.map(k=>[k,character]))), trust: object(Object.fromEntries(Object.keys(initial.camp.trust).map(k=>[k,{ type:'number',minimum:t.rules.ranges.trust[0],maximum:t.rules.ranges.trust[1] }]))), debt: object(Object.fromEntries(Object.keys(initial.camp.debt).map(k=>[k,{ type:'number',minimum:t.rules.ranges.debt[0],maximum:t.rules.ranges.debt[1] }]))), stores: object(Object.fromEntries(Object.keys(initial.camp.stores).map(k=>[k,integer(...t.rules.ranges.stores)]))), facts: array(fact), board, bond: text, bondProgress: integer(), strays: text, fifth: array(id), plots: { type:'array',maxItems:0 }, vigilAttention: integer(), investigations: array(object({ actor:id,target:id,day:integer(1,42),substantiated:bool })), ended: bool });
+  const resolution = object({ state: camp, trace, rolls: array(roll), events: array(fact), carry }, ['carry']);
+  const parley = object({ day:integer(1,42),target:id,stance:text,proposed:text,effect:text,citedKnowings:strings,reply:text,reason:nullable(text),trustDelta:number,revealedFact:nullable(text),roll:nullable(roll),trace });
+  const session = object({ camp, slot:{enum:Object.keys(t.season.phases)},location:{enum:t.locations.map(p=>p.id)},hour:integer(t.season.wakeHour,t.season.wakeHour+t.season.wakingHours),revision:integer(),carry,dayActs:array(itemSchema(t)),dayEvents:array(fact),listening:nullable(object({ tick:integer(0,campPlay.listening.durationTicks),lane:integer(0,campPlay.listening.lanes-1),listening:bool,progress:integer(),clues:integer(),alerts:integer(),exposed:bool,done:bool,learned:nullable(text) })),nightFinished:bool,history:array(object({day:integer(1,42),board}),42),lastResolution:nullable(resolution),parleys:array(parley,42),intentPromises:array(object({target:id,day:integer(1,42)}),42) });
+  const audit = object({day:integer(1,42),source:text,problem:nullable(text),key:nullable(text),replyReplaced:nullable(text)});
+  const nightAudit = object({group:text,key:text,source:text,elapsedMs:number,rejected:integer(),error:nullable(text)});
+  const night = object({ state:camp,caps:record(number),completed:array(object({group:text,items:array(itemSchema(t),16)}),5),audit:array(nightAudit,5),requests:array(object({group:text,key:text,request:{type:'object'}}),5) });
+  const checkpoint = object({ session, input:object({lane:integer(0,campPlay.listening.lanes-1),listening:bool}),night:nullable(night),parleyAudit:array(audit,42),pendingParley:nullable(object({input:object({target:id,cardId:text,text},['text']),key:nullable(text)})),pendingDawn:bool });
+  const payload = object({ camp:checkpoint,progress:object({composition,trial:nullable(trial),bout:nullable(bout),receipts:array(object({id:text,day:integer(1,42),kind:{enum:['trial','games']},entrant:id,result,hash:text,trace},['result']),12)}) });
+  const compiled = new Ajv({ allErrors:true,strict:true }).compile(payload);
+  validators.set(t, compiled); return compiled;
+}
