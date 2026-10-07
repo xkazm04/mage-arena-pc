@@ -1,0 +1,66 @@
+{
+  "label": "authored",
+  "version": "season-parley-a",
+  "maxTextChars": 280,
+  "maxReplyChars": 200,
+  "maxCitations": 3,
+  "perDay": 1,
+  "contestDc": 15,
+  "trustSmall": 8,
+  "trustLarge": 20,
+  "timeoutMs": 10000,
+  "stances": ["intimidate", "appeal", "bargain", "reveal", "deceive"],
+  "effects": [
+    "shift_trust_small",
+    "shift_trust_large",
+    "flip_next_intent",
+    "reveal_fact",
+    "refuse"
+  ],
+  "friendlyIntents": ["BEFRIEND", "PROTECT", "CONFIDE"],
+  "facts": [
+    {
+      "id": "K-quill-lantern",
+      "text": "Old Quill leaves the last lantern burning to mark a safe place to talk.",
+      "type": "knowing",
+      "visibility": "secret",
+      "truth": true,
+      "target": "quill",
+      "holders": ["nysa", "quill"]
+    }
+  ],
+  "cards": [
+    {
+      "id": "reveal",
+      "title": "Reveal what you know",
+      "stance": "reveal",
+      "effect": "flip_next_intent",
+      "text": "I know this: {knowing} Stand with me when the camp falls quiet.",
+      "reply": "Keep your voice down. I will hear you out."
+    },
+    {
+      "id": "bargain",
+      "title": "Bargain with it",
+      "stance": "bargain",
+      "effect": "shift_trust_large",
+      "text": "I can keep this close: {knowing} Let us find some common ground.",
+      "reply": "A careful word is better than a careless promise."
+    },
+    {
+      "id": "ask",
+      "title": "Keep it and ask a question",
+      "stance": "appeal",
+      "effect": "reveal_fact",
+      "text": "I have heard this: {knowing} What else should I understand?",
+      "reply": "There is more to a person than the camp sees."
+    }
+  ],
+  "replies": {
+    "refuse": "I have nothing to say about that.",
+    "shift_trust_small": "I hear you. Let us leave it there for now.",
+    "shift_trust_large": "Perhaps we can speak plainly with each other.",
+    "flip_next_intent": "Keep your voice down. I will hear you out.",
+    "reveal_fact": "There is more to a person than the camp sees.",
+    "failed": "I am not ready to put my faith in that."
+  }
+}

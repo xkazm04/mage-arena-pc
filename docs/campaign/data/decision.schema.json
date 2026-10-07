@@ -1,0 +1,142 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "character",
+    "intent",
+    "args",
+    "goal",
+    "mood",
+    "reasonValue",
+    "citedFacts",
+    "line"
+  ],
+  "properties": {
+    "character": {
+      "type": "string"
+    },
+    "intent": {
+      "enum": [
+        "TRAIN",
+        "WORK",
+        "BEFRIEND",
+        "CONFIDE",
+        "PROTECT",
+        "WATCH",
+        "SCHEME",
+        "RECRUIT",
+        "DEFECT",
+        "REPORT",
+        "PLOT",
+        "REST",
+        "OFFER"
+      ]
+    },
+    "args": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "stat": {
+          "enum": [
+            "vigor",
+            "focus",
+            "nerve",
+            "guile"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "steal",
+            "poison",
+            "persuade",
+            "rumour"
+          ]
+        },
+        "topic": {
+          "enum": [
+            "serves_rome",
+            "cowardice",
+            "theft",
+            "kindness_to_strays"
+          ]
+        },
+        "factId": {
+          "type": "string"
+        },
+        "toTent": {
+          "enum": [
+            "tide",
+            "ember",
+            "stone",
+            "gale"
+          ]
+        },
+        "terms": {
+          "enum": [
+            "favour_for_training",
+            "back_entrant"
+          ]
+        }
+      }
+    },
+    "goal": {
+      "enum": [
+        "rise_in_tent",
+        "win_games",
+        "protect",
+        "revenge",
+        "escape_research",
+        "build_fifth_tent",
+        "undermine",
+        "win_favour",
+        "repay_debt",
+        "find_tent",
+        "survive",
+        "keep_peace",
+        "profit",
+        "learn_secrets",
+        "hold_fifth_tent"
+      ]
+    },
+    "mood": {
+      "enum": [
+        "calm",
+        "proud",
+        "afraid",
+        "angry",
+        "scheming",
+        "grieving"
+      ]
+    },
+    "reasonValue": {
+      "enum": [
+        "strength",
+        "rank",
+        "kin",
+        "freedom",
+        "knowledge",
+        "honour",
+        "survival",
+        "order",
+        "spite",
+        "faith",
+        "gold",
+        "belonging"
+      ]
+    },
+    "citedFacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 3,
+      "uniqueItems": true
+    },
+    "line": {
+      "type": "string"
+    }
+  }
+}

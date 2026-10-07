@@ -1,0 +1,44 @@
+{
+  "label": "authored; disabled until W10",
+  "enabled": false,
+  "lifeStates": [
+    "Alive",
+    "Dead",
+    "Executed"
+  ],
+  "plotStages": [
+    "means",
+    "vigil",
+    "window",
+    "cover",
+    "resolved",
+    "foiled"
+  ],
+  "plotFields": [
+    "id",
+    "plotter",
+    "target",
+    "stage",
+    "meansNights",
+    "routineKnowing",
+    "guardRotaKnowing",
+    "guardianCompromised",
+    "isolated",
+    "witnesses",
+    "cover",
+    "result"
+  ],
+  "defaults": {
+    "plots": [],
+    "vigilAttention": 0,
+    "lifeState": "Alive"
+  },
+  "constraints": {
+    "meansSuccessesDifferentNights": 2,
+    "window": "games eve at dusk",
+    "perfectPlanSuccessCeiling": 0.35,
+    "npcDeathsPerSeasonTargetCeiling": 0.15,
+    "censusSeasons": 2000
+  },
+  "deathIntent": null
+}

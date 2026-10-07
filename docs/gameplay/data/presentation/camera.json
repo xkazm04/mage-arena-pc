@@ -1,0 +1,74 @@
+{
+  "version": "game-camera-u5",
+  "status": "D17 far fixed camera; game presentation authority",
+  "authority": "art/scale-contract-v3.json; D31/D32",
+  "reference_viewport_px": [
+    1920,
+    1080
+  ],
+  "second_viewport_px": [
+    2560,
+    1440
+  ],
+  "camera": {
+    "projection": "orthographic ground; hand-drawn upright billboard silhouettes",
+    "elevation_above_ground_degrees": 55,
+    "elevation_range_degrees": [
+      45,
+      60
+    ],
+    "standard_ground_pixels_per_metre_at_1080p": 30,
+    "zoom_range": [
+      0.75,
+      0.75
+    ]
+  },
+  "distances": [
+    {
+      "zoom": 0.75,
+      "screen_height_fraction": 0.056249999999999994,
+      "id": "standard"
+    }
+  ],
+  "formulas": {
+    "resolution_scale": "viewport_height / 1080",
+    "ground_px_per_m_x": "30 * zoom * resolution_scale",
+    "ground_px_per_m_y": "ground_px_per_m_x * sin(elevation)",
+    "metres_per_pixel_x": "1 / ground_px_per_m_x",
+    "metres_per_pixel_y": "1 / ground_px_per_m_y",
+    "character_height_px": "viewport_height * screen_height_fraction",
+    "visible_ground_metres": "[viewport_width / ground_px_per_m_x, viewport_height / ground_px_per_m_y]"
+  },
+  "not_measured": [
+    "motion readability",
+    "owner feel",
+    "engine performance",
+    "generated scene metre accuracy",
+    "generated exact absorb angle"
+  ],
+  "a3_gate": "art/CAMERA-OK.md supplied by owner",
+  "follow": {
+    "dead_zone_normalized": [
+      0.16,
+      0.18,
+      0.84,
+      0.8
+    ],
+    "response_per_second": 2.857142857142857,
+    "max_delta_seconds": 0.05
+  },
+  "plate": {
+    "centre": [
+      16,
+      10
+    ],
+    "world_size": [
+      102.4,
+      70.31661631265986
+    ],
+    "delivery_offset": [
+      0,
+      -52
+    ]
+  }
+}

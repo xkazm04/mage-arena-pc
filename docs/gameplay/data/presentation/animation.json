@@ -1,0 +1,52 @@
+{
+  "effects": {
+    "maxSprites": 256,
+    "maxOneShots": 64,
+    "cpuBudgetMs": 2,
+    "auraOpacity": 0.26,
+    "travelOpacity": 0.78,
+    "castOpacity": 0.58,
+    "impactOpacity": 0.65,
+    "hitOpacity": 0.7,
+    "barrierOpacity": 0.68,
+    "contactImpactScale": 0.65,
+    "contactImpactOpacity": 0.72
+  },
+  "bodies": {
+    "hitHoldMs": 100,
+    "castHoldMs": 80,
+    "deathOpacity": 0.55,
+    "heavyHitDamage": 18
+  },
+  "schoolBodies": {
+    "water": "cassia",
+    "fire": "brennic",
+    "earth": "garran",
+    "air": "iskar"
+  },
+  "enemyElements": {
+    "cinder_hound": "fire",
+    "mire_maw": "water",
+    "thornback": "earth",
+    "hush_moth": "air",
+    "conscript": "earth",
+    "shieldman": "earth",
+    "slinger": "earth",
+    "netter": "water"
+  },
+  "compatibleStates": {
+    "idle": ["absorb", "run", "cast", "hit", "death"],
+    "run": ["idle", "absorb", "cast", "hit", "death"],
+    "cast": ["absorb", "idle", "hit", "run", "death"],
+    "absorb": ["idle", "cast", "hit", "run", "death"],
+    "hit": ["idle", "absorb", "cast", "run", "death"],
+    "death": ["hit", "idle", "absorb", "cast", "run"],
+    "hit-light": ["hit", "idle", "absorb"],
+    "hit-heavy": ["hit-light", "hit", "idle", "absorb"],
+    "corpse": ["death", "idle"]
+  },
+  "dailyClock": {
+    "middayArtHour": 12,
+    "phaseFadeMs": 500
+  }
+}
