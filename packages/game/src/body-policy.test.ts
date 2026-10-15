@@ -3,12 +3,18 @@ import { readFileSync } from "node:fs";
 import {
   createGames,
   createLab,
+  createTraining,
   defaultLabConfig,
   presets,
   runtime,
-  tiro,
-  type GamesPlayer,
 } from "@mage/core/arena";
+import {
+  createCampSession,
+  createSeason,
+  prepareBout,
+  startBout,
+} from "@mage/core";
+import { loadTables } from "@mage/director";
 import { bodyIdentity } from "./body-policy.ts";
 import type { BodyManifest } from "./animation-contract.ts";
 
@@ -27,16 +33,6 @@ const painted = new Set(
 const reference = presets.find(
   (p) => p.name === runtime.games.referencePreset,
 )!;
-const entrant = (id: string, name: string): GamesPlayer => ({
-  id,
-  name,
-  school: "water",
-  ranks: { vigor: 3, focus: 3, nerve: 3 },
-  mastery: tiro.requiresMastery,
-  hpPenalty: 0,
-  staminaPenalty: 0,
-});
-
 describe("body identity", () => {
   it("paints every Tiro semifinal and final mage, never the procedural figure", () => {
     for (const wave of [2, 3]) {
@@ -53,15 +49,42 @@ describe("body identity", () => {
         expect(painted.has(bodyIdentity(a)), a.label).toBe(true);
     }
   });
-  it("paints the season entrant, who carries the character's name, and a spectated tent-mate", () => {
-    for (const [id, name] of [
-      ["cassia", "Cassia of the Lighthouse"],
-      ["nysa", "Nysa"],
-    ]) {
-      const g = createGames(7, reference, 3, false, entrant(id!, name!));
-      expect(g.player.label).toBe(name);
-      expect(bodyIdentity(g.player)).toBe("cassia");
-    }
+  it("resolves a season entrant by camp character id, never by display name", () => {
+    const t = loadTables();
+    const bout = (entrant: string) => {
+      const s = createCampSession(t),
+        p = createSeason();
+      s.camp.day = 7;
+      s.hour = t.season.gamesHour;
+      p.receipts.push({
+        id: `trial:${entrant}`,
+        day: 7 - t.season.trialOffsetBeforeGames,
+        kind: "trial",
+        entrant,
+        hash: "",
+        trace: [],
+      });
+      const b = prepareBout(t, s, p, reference);
+      startBout(b);
+      return b;
+    };
+    const own = bout("cassia");
+    expect(own.spectator).toBe(false);
+    expect(own.games!.player.label).toBe("Cassia of the Lighthouse");
+    expect(bodyIdentity(own.games!.player, own.entrant.id)).toBe("cassia");
+    // Without the character id the display name matches nothing.
+    expect(bodyIdentity(own.games!.player)).toBe("mage.unknown");
+    const watched = bout("nysa");
+    expect(watched.spectator).toBe(true);
+    // No Nysa body is delivered yet: she keeps her id on the explicit fallback.
+    expect(bodyIdentity(watched.games!.player, watched.entrant.id)).toBe(
+      "nysa",
+    );
+    expect(painted.has("nysa")).toBe(false);
+  });
+  it("paints the training player and Tiro's practice player by label", () => {
+    expect(bodyIdentity(createTraining().player)).toBe("cassia");
+    expect(bodyIdentity(createGames(7, reference).player)).toBe("cassia");
   });
   it("paints the Lab's mage opponent by its school", () => {
     for (const school of ["water", "fire", "earth", "air"] as const) {

@@ -35,17 +35,18 @@ export interface BodySelection {
   clip: Clip;
   held: boolean;
 }
-export function bodyIdentity(a: Actor): string {
+/** `character` is the camp character a season entrant fights as; its label is only the display name. */
+export function bodyIdentity(a: Actor, character?: string): string {
   if (a.enemy) return a.enemy.id;
   if (a.dummy) return "dummy";
   if (a.school) return policy.schoolBodies[a.school];
+  // A character without a delivered body keeps its id and takes the explicit procedural fallback.
+  if (character) return character;
   const name = a.label.toLowerCase();
   for (const id of Object.values(policy.schoolBodies))
     if (name === id) return id;
   if (a.label === tiroEntrantLabel) return policy.rivalBody;
-  // Core profiles every school-less mage as Water (profileFor): the default
-  // "Water mage" and the Games entrant, who carries the character's name.
-  return policy.schoolBodies.water;
+  return name === "water mage" ? policy.schoolBodies.water : "mage.unknown";
 }
 /** No access to other entities: a fallback cannot change creature identity. */
 export function selectBodyClip(
