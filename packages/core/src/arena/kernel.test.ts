@@ -108,6 +108,8 @@ describe('evidence and deterministic boundary', () => {
         stepTraining(t, { ...idleInput(t.dummy.pos), move: { x: 0, y: Math.sin(i / 60) }, cast: i % 5 === 0, absorb: i % 80 < 12, roll: i % 90 === 0 });
         if (i % 60 === 0) hashes.push(stateHash(t.state));
       }
+      // This scenario draws nothing; seeded-RNG replay is pinned in replay-golden.test.ts.
+      expect(t.state.randomLog).toEqual([]);
       return hashes;
     }
     expect(replay(17)).toEqual(replay(17)); expect(replay(17)).not.toEqual(replay(18));
