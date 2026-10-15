@@ -69,7 +69,7 @@ describe('tier curve play (usesTierCurve rows 3-4)', () => {
     }
     expect(wins).toEqual([47, 25, 5]);
     expect(wins[0]! > wins[1]! && wins[1]! > wins[2]! && wins[2]! > 0).toBe(true);
-  });
+  }, 120_000); // ~25 s of fights alone; the 30 s default flakes when the machine is busy
 
   it('baits with absorbable casts and punishes a raised or fresh ward with an unblockable', () => {
     const pick = (absorb: boolean, freshAgoS: number) => {
