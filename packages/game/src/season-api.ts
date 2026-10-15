@@ -1,7 +1,17 @@
 import type { SeasonService, SeasonCommand } from '@mage/director';
 export type SeasonView = ReturnType<SeasonService['view']>;
+/** Whether the local season server is answering: consecutive unreachable requests and when it last replied. */
+export const connection = { failures: 0, lastHeard: Date.now() };
 export async function request<T>(path: string, body?: unknown): Promise<T> {
-  const response = await fetch(`/api/${path}`, body === undefined ? {} : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  let response: Response;
+  try {
+    response = await fetch(`/api/${path}`, body === undefined ? {} : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  } catch {
+    connection.failures++;
+    throw Error('The camp could not be reached. Try again in a moment.');
+  }
+  connection.failures = 0;
+  connection.lastHeard = Date.now();
   const result = await response.json();
   if (!response.ok) throw Error(result.error ?? 'The season could not complete that action.');
   return result as T;

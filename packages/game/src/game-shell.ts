@@ -15,7 +15,12 @@ import {
   type TrainingKind,
 } from "@mage/core/arena";
 import { ArenaGame } from "./arena-entry.ts";
-import { request, seasonCommand, type SeasonView } from "./season-api.ts";
+import {
+  connection,
+  request,
+  seasonCommand,
+  type SeasonView,
+} from "./season-api.ts";
 import { CanvasUI } from "./ui/ui.ts";
 import { backdrop } from "./ui/backdrop.ts";
 import { picture, portrait, storyFor, sigil } from "./ui/artwork.ts";
@@ -229,10 +234,21 @@ export class GameShell {
           this.redraw();
       }
     } catch {
-      /* Keep the last scene during a transient disconnection. */
+      /* Keep the last scene during a disconnection; the status line admits it. */
     } finally {
       this.pollBusy = false;
+      this.showConnection();
     }
+  }
+  /** Held content stays on screen; a lost server is said quietly, with how old the scene is. */
+  private showConnection() {
+    if (this.disposed) return;
+    const heard = new Date(connection.lastHeard);
+    this.ui.status(
+      connection.failures >= 3
+        ? `Camp unreachable · last heard ${String(heard.getHours()).padStart(2, "0")}:${String(heard.getMinutes()).padStart(2, "0")} · retrying`
+        : "",
+    );
   }
   private async run(action: () => Promise<void>) {
     if (this.busy) return;
@@ -246,6 +262,7 @@ export class GameShell {
     } finally {
       this.busy = false;
       this.ui.busy = false;
+      this.showConnection();
     }
   }
   private scene(id: string, title: string, kicker: string, kind = "gate") {

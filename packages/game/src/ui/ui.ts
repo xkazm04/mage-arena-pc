@@ -84,6 +84,8 @@ export class CanvasUI {
   private pressed?: Button;
   private toast?: Container;
   private toastUntil = 0;
+  private statusChip?: Container;
+  statusText = "";
   private raf = 0;
   private previous = 0;
   private ready = false;
@@ -791,6 +793,19 @@ export class CanvasUI {
           .fill(kind === "cast" ? colours.water : colours.gold);
     };
   }
+  /** A standing line that survives screen changes until cleared with "". */
+  status(message: string) {
+    if (message === this.statusText) return;
+    this.statusText = message;
+    this.statusChip?.destroy({ children: true });
+    this.statusChip = undefined;
+    if (!message) return;
+    const c = new Container();
+    this.feedback.addChild(c);
+    this.panel(650, 40, 600, 56, "tooltip", c);
+    this.text(message, 674, 54, 24, colours.danger, 552, false, c);
+    this.statusChip = c;
+  }
   notice(message: string) {
     this.toast?.destroy({ children: true });
     const c = new Container();
@@ -1072,6 +1087,7 @@ export class CanvasUI {
     return {
       screen: this.screen,
       busy: this.busy,
+      status: this.statusText,
       focus: this.focus,
       modality: this.modality,
       kit: this.kit.source,
