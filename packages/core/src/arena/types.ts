@@ -27,7 +27,10 @@ export interface Actor {
 }
 export interface Projectile extends Hit { id: number; pos: Vec; previousPos: Vec; velocity: Vec; radius: number; remainingM: number; hitIds: number[]; burstRadiusM?: number; piercing?: boolean; reflected?: boolean }
 export interface Zone { id: number; ownerId: number; pos: Vec; radiusM: number; until: number; kind: 'slow' | 'fog'; slowMult: number }
-export interface Telegraph extends Hit { id: number; kind: 'projectile' | 'lane' | 'melee' | 'area' | 'charge'; origin: Vec; target: Vec; resolveTick: number; startTick: number; speedMps: number; rangeM: number; widthM: number; rootS?: number; pullM?: number; survivesOwner?: boolean; wallStunS?: number }
+export interface Telegraph extends Hit { id: number; kind: 'projectile' | 'lane' | 'melee' | 'area' | 'charge'; origin: Vec; target: Vec; resolveTick: number; startTick: number; speedMps: number; rangeM: number; widthM: number; rootS?: number; pullM?: number; survivesOwner?: boolean; wallStunS?: number;
+  /** Committed body attack: after resolveTick the owner travels travelM over travelTicks along origin->target (a lunge carries a reachM weapon sector).
+   * `contacted` exists only during travel and lists every target already met by this activation. */
+  travelM?: number; travelTicks?: number; reachM?: number; contacted?: number[] }
 export interface ArenaEvent { direction?: Vec; spellId?: string; at?: Vec; family?: Family; contactDamage?: number; guarded?: boolean; activationId?: number; tick: number; kind: 'perfect' | 'hit' | 'cast' | 'release' | 'down' | 'unlock' | 'interrupt' | 'roll' | 'stagger'; actorId: number; targetId?: number; value: number }
 export interface RandomDraw { tick: number; purpose: string; value: number }
 export interface ArenaState {

@@ -16,6 +16,7 @@ export const creatureTargets = [
   "hush_moth",
   "shieldman",
   "netter",
+  "conscript",
 ] as const;
 export type CreatureTarget = (typeof creatureTargets)[number];
 export type LabSetup = LabConfig & {

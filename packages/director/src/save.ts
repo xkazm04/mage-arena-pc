@@ -18,11 +18,15 @@ interface FilePayload { camp: CampCheckpoint; progress: SavedProgress }
 export interface SaveEnvelope { version: 2; sources: string; checkpoint: string; checksum: string; payload: FilePayload }
 const json = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 const root = fileURLToPath(new URL('../../../', import.meta.url));
-export function sourceHash() {
+/** Every authored data and simulation source a save depends on; editing any of them refuses older saves. */
+export function sourceFiles(): string[] {
   const walk = (path: string): string[] => readdirSync(resolve(root,path),{withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(`${path}/${e.name}`) : [`${path}/${e.name}`]);
   const files = ['docs/design/reconciled/data','packages/core/src','packages/director/src'].flatMap(walk).filter(p=>/\.(?:json|csv|ts)$/.test(p) && !p.endsWith('.test.ts') && !p.endsWith('.generated.ts'));
   files.push('art/scale-contract-v3.json','packages/core/scripts/compile-arena-data.mjs');
-  return hash(files.sort().map(p=>[p,readFileSync(resolve(root,p),'utf8').replaceAll('\r\n','\n')]));
+  return files.sort();
+}
+export function sourceHash(read: (path: string) => string = p => readFileSync(resolve(root,p),'utf8')) {
+  return hash(sourceFiles().map(p=>[p,read(p).replaceAll('\r\n','\n')]));
 }
 export function validatePayload(t: Tables, value: unknown): SavePayload {
   const validate = saveValidator(t);

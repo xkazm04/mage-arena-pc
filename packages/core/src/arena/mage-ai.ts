@@ -2,7 +2,7 @@ import { tuningFor, feelPolicy } from './tuning.ts';
 import { arenaContains, arenaGeometry } from './geometry.ts';
 import { enemyData } from './data.generated.ts';
 import { spellFor, spells, type Spell } from './catalog.ts';
-import { bolt, combat, random, runtime, ticks } from './kernel.ts';
+import { bodyContact, bolt, combat, committedBody, random, runtime, ticks, travelLine } from './kernel.ts';
 import { clamp, distance, inArc, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
 import { hasLineOfSight } from './water.ts';
 import { idleInput, type Actor, type ArenaState, type InputFrame } from './types.ts';
@@ -32,6 +32,13 @@ export function threats(state: ArenaState, a: Actor): Threat[] {
   }
   for (const t of state.telegraphs) {
     const owner = state.actors.find(o => o.id === t.ownerId); if (owner?.team === a.team || !hasLineOfSight(state, a.pos, t.origin)) continue;
+    if (owner && committedBody(t)) {
+      // A charge or lunge is read along what is left of its committed line; a body already met cannot meet us again.
+      const line = travelLine(t), from = t.contacted ? owner.pos : t.origin, at = t.contacted?.includes(a.id) ? undefined : bodyContact(t, from, line.end, a.pos, a.radius);
+      const contactS = distance(t.origin, from) + (at ?? 0) * distance(from, line.end), step = line.distanceM / Math.max(1, t.travelTicks ?? 1);
+      result.push({ id: t.activationId, family: t.family, origin: from, impactTick: t.resolveTick + (at === undefined ? 0 : Math.max(0, Math.ceil(contactS / step - 1e-9) - 1)), aimedAtUs: at !== undefined });
+      continue;
+    }
     const end = t.kind === 'area' ? t.target : { x: t.origin.x + unit(sub(t.target, t.origin)).x * t.rangeM, y: t.origin.y + unit(sub(t.target, t.origin)).y * t.rangeM };
     const aimedAtUs = t.kind === 'area' ? distance(t.target, a.pos) < t.widthM + a.radius
       : t.kind === 'melee' ? distance(t.origin, a.pos) < t.rangeM + a.radius && inArc(sub(t.target, t.origin), sub(a.pos, t.origin), t.widthM)

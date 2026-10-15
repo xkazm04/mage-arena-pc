@@ -13,7 +13,11 @@
           "damage": 10,
           "windupS": 0.6,
           "recoveryS": 0.5,
-          "rangeM": 2.0
+          "rangeM": 2.0,
+          "travelM": 1.2,
+          "reachM": 0.8,
+          "travelS": 0.2,
+          "_travel": "after the windup the body lunges travelM along the committed line over travelS while the spear reaches reachM ahead of it; travelM + reachM is the authored rangeM, never more. Recovery follows the travel."
         }
       ],
       "behaviour": "approach with stamina-costed sprint, lunge, back off 1 s",
@@ -153,7 +157,10 @@
           "damage": 22,
           "windupS": 1.0,
           "telegraph": "lane 2 m wide x 12 m",
-          "onWallHit": "self-stun 1.5 s"
+          "onWallHit": "self-stun 1.5 s",
+          "travelM": 12,
+          "travelS": 0.6,
+          "_travel": "after the windup the body runs the whole lane (travelM equals the telegraphed lane length) over travelS; the lane hits whoever the body sweeps, once each, and a wall ends the run with the self-stun"
         }
       ],
       "behaviour": "charges along a lane; stunned if it hits a wall",

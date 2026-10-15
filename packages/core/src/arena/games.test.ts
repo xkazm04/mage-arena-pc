@@ -11,15 +11,17 @@ describe('the full roster on common damage and movement rules', () => {
   });
   it('spear windup is honest and a moving player can leave it', () => {
     const state = createArena(), player = addMage(state, 0, { x: 10, y: 10 }); addEnemy(state, 'conscript', { x: 12, y: 10 });
-    simulateEnemies(state, ticks(0.6)); expect(player.hp).toBe(player.maxHp); simulateEnemies(state, 1); expect(player.hp).toBe(player.maxHp - 10);
+    // Windup, then the lunge carries the spear 1.2 m: at 2 m the 0.8 m reach meets the player on the ninth travel tick, not before.
+    simulateEnemies(state, ticks(0.6) + 8); expect(player.hp).toBe(player.maxHp); simulateEnemies(state, 1); expect(player.hp).toBe(player.maxHp - 10);
     expect(state.actors[1]!.enemy!.backoffUntil).toBeGreaterThan(state.tick);
   });
   it('conscript recovers before its separate backoff interval and keeps the committed aim', () => {
     const state = createArena(), player = addMage(state, 0, { x: 10, y: 10 }), enemy = addEnemy(state, 'conscript', { x: 12, y: 10 });
     simulateEnemies(state, 1); const aim = { ...state.telegraphs[0]!.target }; player.pos.y += 3;
     expect(enemyInputs(state)[enemy.id]!.aim).toEqual(aim);
-    simulateEnemies(state, ticks(0.6)); const pos = { ...enemy.pos }; simulateEnemies(state, ticks(0.4)); expect(enemy.pos).toEqual(pos);
-    expect(enemy.enemy!.backoffUntil - ticks(1)).toBe(1 + ticks(0.6 + 0.5));
+    simulateEnemies(state, ticks(0.6) + ticks(0.2)); const pos = { ...enemy.pos }; expect(pos.x).toBeCloseTo(12 - 1.2);
+    simulateEnemies(state, ticks(0.4)); expect(enemy.pos).toEqual(pos);
+    expect(enemy.enemy!.backoffUntil - ticks(1)).toBe(1 + ticks(0.6 + 0.2 + 0.5));
   });
   it('shield blocks direct frontal hits, with flank and area counterplay', () => {
     const state = createArena(), a = addEnemy(state, 'shieldman', { x: 10, y: 10 });
@@ -50,7 +52,8 @@ describe('the full roster on common damage and movement rules', () => {
     enemyInputs(state); expect(state.telegraphs[0]!.pullM).toBe(4);
     for (let i = 0; i < ticks(1) + 1; i++) stepArena(state); expect(player.pos.x).toBeCloseTo(8 - defaultTuning.knockbackM * .4);
     const s = createArena(), edge = arenaGeometry.centre.x + arenaGeometry.widthM / 2, y = arenaGeometry.centre.y, p = addMage(s, 0, { x: edge - 1, y }), thorn = addEnemy(s, 'thornback', { x: edge - 7, y });
-    simulateEnemies(s, ticks(1) + 1); expect(p.hp).toBe(p.maxHp - 22); expect(thorn.enemy!.stunnedUntil).toBeGreaterThan(s.tick); expect(thorn.pos).toEqual(constrainToArena({ x: edge + 10, y }, thorn.radius));
+    simulateEnemies(s, ticks(1) + ticks(0.6) + 1); expect(p.hp).toBe(p.maxHp - 22); expect(thorn.enemy!.stunnedUntil).toBeGreaterThan(s.tick);
+    const wall = constrainToArena({ x: edge + 10, y }, thorn.radius); expect(thorn.pos.x).toBeCloseTo(wall.x, 9); expect(thorn.pos.y).toBeCloseTo(wall.y, 9);
   });
   it('moths drain mana in contact without HP damage; Fog prevents ranged acquisition', () => {
     const state = createArena(), player = addMage(state, 0, { x: 10, y: 10 });

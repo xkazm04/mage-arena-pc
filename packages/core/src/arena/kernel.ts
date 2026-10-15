@@ -2,8 +2,8 @@ import { feelPolicy, profileFor, tuningFor } from './tuning.ts';
 import { combat, statRules, bolt, rankRange } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
 import { constrainToArena } from './geometry.ts';
-import { distance, inArc, length, segmentHit, sub, unit, type Vec } from './math.ts';
-import { activationBlocked, idleInput, type Actor, type ArenaState, type Hit, type InputFrame, type Projectile, type Ranks } from './types.ts';
+import { distance, inArc, length, sectorSweep, segmentHit, sub, unit, type Vec } from './math.ts';
+import { activationBlocked, idleInput, type Actor, type ArenaState, type Hit, type InputFrame, type Projectile, type Ranks, type Telegraph } from './types.ts';
 import { newWaterState } from './catalog.ts';
 import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, updateWater, wardDrainMult, waterAbsorbed } from './water.ts';
 import { enemySpec } from './enemies.ts';
@@ -211,14 +211,51 @@ function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
   }
   a.metrics.casts++; emit(state, 'cast', a); releaseCast(state, a);
 }
+/** A charge or a lunge: once its warning ends, the owner's body carries the attack along the committed line. */
+export const committedBody = (t: Telegraph): boolean => t.kind === 'charge' || t.travelM !== undefined;
+export function travelLine(t: Telegraph): { dir: Vec; distanceM: number; end: Vec } {
+  const dir = unit(sub(t.target, t.origin)), distanceM = t.travelM ?? t.rangeM;
+  return { dir, distanceM, end: { x: t.origin.x + dir.x * distanceM, y: t.origin.y + dir.y * distanceM } };
+}
+/** Earliest fraction of the body's from->to step at which its envelope meets a disk: the lane width for a charge, the weapon sector for a lunge. */
+export function bodyContact(t: Telegraph, from: Vec, to: Vec, centre: Vec, radius: number): number | undefined {
+  return t.kind === 'charge' ? segmentHit(from, to, centre, t.widthM / 2 + radius) : sectorSweep(from, to, travelLine(t).dir, centre, (t.reachM ?? t.rangeM) + radius, t.widthM);
+}
+const endTelegraph = (state: ArenaState, t: Telegraph): void => { state.telegraphs = state.telegraphs.filter(x => x !== t); };
+/** One fixed travel step from the origin-based path; each target is contacted at most once per activation, earliest first. */
+function travel(state: ArenaState, t: Telegraph, owner: Actor): void {
+  const n = Math.max(1, t.travelTicks ?? 1), k = state.tick - t.resolveTick + 1, { dir, distanceM } = travelLine(t), s = distanceM * Math.min(1, k / n);
+  const want = { x: t.origin.x + dir.x * s, y: t.origin.y + dir.y * s }, next = constrainToArena(want, owner.radius), from = { ...owner.pos };
+  const wall = next.x !== want.x || next.y !== want.y;
+  owner.pos = next; if (owner.velocity) owner.velocity = { x: 0, y: 0 };
+  const met: { target: Actor; at: number }[] = [];
+  for (const target of state.actors) {
+    if (target.team === owner.team || target.tags.includes("DEFEATED") || t.contacted!.includes(target.id)) continue;
+    const at = bodyContact(t, from, next, target.pos, target.radius);
+    if (at !== undefined) met.push({ target, at });
+  }
+  met.sort((x, y) => x.at - y.at || x.target.id - y.target.id);
+  for (const { target, at } of met) {
+    t.contacted!.push(target.id);
+    resolveHit(state, target, { ...t, source: { x: from.x + (next.x - from.x) * at, y: from.y + (next.y - from.y) * at }, delivery: t.kind === 'melee' ? 'melee' : 'area' });
+    // A reaction that staggers or downs the owner has already cancelled the travel.
+    if (!state.telegraphs.includes(t)) return;
+  }
+  if (wall && t.wallStunS && owner.enemy) owner.enemy.stunnedUntil = state.tick + ticks(t.wallStunS);
+  if (wall || k >= n) endTelegraph(state, t);
+}
 function updateTelegraphs(state: ArenaState): void {
   const due = state.telegraphs.filter(t => t.resolveTick <= state.tick);
-  state.telegraphs = state.telegraphs.filter(t => t.resolveTick > state.tick);
+  state.telegraphs = state.telegraphs.filter(t => t.resolveTick > state.tick || t.contacted);
   for (const t of due) {
-    const owner = state.actors.find(a => a.id === t.ownerId); if (!owner || (owner.tags.includes("DEFEATED") && !t.survivesOwner) || (!t.survivesOwner && (activationBlocked(owner) || state.tick < owner.water.encasedUntil))) continue;
+    const owner = state.actors.find(a => a.id === t.ownerId);
+    // Stagger, defeat or encasement stops a committed body where it stands.
+    if (!owner || (owner.tags.includes("DEFEATED") && !t.survivesOwner) || (!t.survivesOwner && (activationBlocked(owner) || state.tick < owner.water.encasedUntil))) { if (t.contacted) endTelegraph(state, t); continue; }
+    if (t.contacted) { if (state.telegraphs.includes(t)) travel(state, t, owner); continue; }
     emit(state, 'release', owner, t.tier); Object.assign(state.events.at(-1)!, {activationId:t.activationId, at:{...t.origin}});
     const direction = unit(sub(t.target, t.origin));
-    if (t.kind === 'projectile') spawnProjectile(state, t, t.origin, direction, t.speedMps, t.rangeM);
+    if (committedBody(t)) { t.contacted = []; state.telegraphs.push(t); travel(state, t, owner); }
+    else if (t.kind === 'projectile') spawnProjectile(state, t, t.origin, direction, t.speedMps, t.rangeM);
     else {
       const end = { x: t.origin.x + direction.x * t.rangeM, y: t.origin.y + direction.y * t.rangeM };
       for (const target of state.actors) {
@@ -236,11 +273,6 @@ function updateTelegraphs(state: ArenaState): void {
             target.pos = constrainToArena({ x: target.pos.x + direction.x * amount, y: target.pos.y + direction.y * amount }, target.radius);
           }
         }
-      }
-      if (t.kind === 'charge') {
-        const { x, y } = constrainToArena(end, owner.radius);
-        owner.pos = { x, y };
-        if ((x !== end.x || y !== end.y) && owner.enemy) owner.enemy.stunnedUntil = state.tick + ticks(t.wallStunS ?? 0);
       }
     }
   }

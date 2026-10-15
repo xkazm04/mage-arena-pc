@@ -92,7 +92,7 @@ describe("live creature Lab setup", () => {
     lab.training.state.events.filter((e) => e.kind === "hit" && e.actorId === id && (!family || e.family === family));
 
   it("offers every roster target the Lab can stage, still by default", () => {
-    expect([...creatureTargets]).toEqual(["cinder_hound", "mire_maw", "thornback", "hush_moth", "shieldman", "netter"]);
+    expect([...creatureTargets]).toEqual(["cinder_hound", "mire_maw", "thornback", "hush_moth", "shieldman", "netter", "conscript"]);
     expect(defaultLabConfig.targetMotion).toBeUndefined();
     expect(() => createLabSetup({ ...defaultLabConfig, creature: "thornback", targetMotion: "walk" as never })).toThrow();
   });
@@ -125,6 +125,33 @@ describe("live creature Lab setup", () => {
     expect(thorn.pos).not.toEqual(start);
     expect(lab.ledger.counts.unblockable.avoided).toBe(1);
     expect(lab.ledger.entries.find((e) => e.activationId === charge)?.answer).toBe("avoided");
+  });
+  it("a live thornback runs its lane: the body travels after the warning and meets the player mid-run", () => {
+    const lab = live("thornback", { distanceM: 10 }),
+      { state, player, dummy: thorn } = lab.training;
+    let charge: (typeof state.telegraphs)[number] | undefined, travelled = 0;
+    for (let i = 0; i < 600 && !hitsOn(lab, player.id).length; i++) {
+      stepLab(lab, frame(thorn.pos));
+      charge ??= state.telegraphs.find((t) => t.ownerId === thorn.id);
+      if (charge?.contacted && state.telegraphs.includes(charge)) travelled++;
+    }
+    const [hit] = hitsOn(lab, player.id, "unblockable");
+    expect(charge?.travelTicks).toBe(36);
+    expect(hit!.tick).toBeGreaterThan(charge!.resolveTick);
+    expect(travelled).toBeGreaterThan(1);
+  });
+  it("a live conscript lunges its body forward and lands the spear on a ward as guarded steel", () => {
+    const lab = live("conscript", { distanceM: 6 }),
+      { state, player, dummy: conscript } = lab.training;
+    let lunge: (typeof state.telegraphs)[number] | undefined, origin = { ...conscript.pos };
+    for (let i = 0; i < 600 && !hitsOn(lab, player.id).length; i++) {
+      stepLab(lab, frame(conscript.pos, { absorb: true }));
+      if (!lunge && (lunge = state.telegraphs.find((t) => t.ownerId === conscript.id))) origin = { ...lunge.origin };
+    }
+    expect(lunge?.travelM).toBe(1.2);
+    expect(Math.hypot(conscript.pos.x - origin.x, conscript.pos.y - origin.y)).toBeGreaterThan(0.5);
+    expect(lab.ledger.counts.physical.guarded).toBe(1);
+    expect(hitsOn(lab, player.id, "physical")[0]!.guarded).toBe(true);
   });
   it("a live hush moth drains the player's mana while the ward is held in contact range", () => {
     const run = (targetMotion: "still" | "live") => {
