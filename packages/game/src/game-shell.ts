@@ -21,6 +21,7 @@ import {
   seasonCommand,
   type SeasonView,
 } from "./season-api.ts";
+import { enterBlock, hoursNote } from "./camp-reasons.ts";
 import { CanvasUI } from "./ui/ui.ts";
 import { backdrop } from "./ui/backdrop.ts";
 import { picture, portrait, storyFor, sigil } from "./ui/artwork.ts";
@@ -582,6 +583,7 @@ export class GameShell {
         {
           selected: this.selected === p.id,
           disabled: !p.isOpen,
+          subtitle: hoursNote(p, v.hour) || undefined,
           tooltip: p.description,
         },
       );
@@ -589,9 +591,15 @@ export class GameShell {
     const p = v.places.find((p) => p.id === this.selected) ?? v.places[0]!;
     u.panel(96, 806, 1728, 72, "button.normal");
     u.text(p.name, 134, 825, 28, colours.gold, 265);
-    u.text(p.description, 430, 818, 24, colours.text, 940);
-    const allowed =
-      !v.listening && !v.nightFinished && p.isOpen && !v.player.stocks;
+    const block = enterBlock(v, p);
+    u.text(
+      block || p.description,
+      430,
+      818,
+      24,
+      block ? colours.danger : colours.text,
+      940,
+    );
     u.button(
       "visit-place",
       "Enter",
@@ -604,7 +612,7 @@ export class GameShell {
         if (p.id === v.location) this.visit();
         else void this.command({ type: "travel", place: p.id });
       },
-      { disabled: !allowed },
+      { disabled: !!block },
     );
     this.timeFooter();
     u.end(`place-${this.selected}`);
@@ -799,7 +807,11 @@ export class GameShell {
     );
     if (!actions.length)
       u.text(
-        "Nothing calls for your time here.\nReturn to the map or let the hours pass.",
+        v.nightFinished
+          ? "The night is spent.\nMeet the morning to see what it left behind."
+          : !p.isOpen
+            ? `${p.name.replace(/^./, (c) => c.toUpperCase())} has closed for now.\nReturn to the map.`
+            : "Nothing calls for your time here.\nReturn to the map or let the hours pass.",
         720,
         464,
         34,
