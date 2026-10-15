@@ -120,8 +120,8 @@ export class ArenaGame {
   private bot?: BotKind;
   private lastPerfect = -1e9;
   private lastGain?: PerfectGain;
-  /** Training and roster ledger for the ward words; Tiro uses `ledger`, the Lab its own. */
-  private practice?: { state: ArenaState; ledger: ThreatLedger };
+  /** Training and roster ledger for the ward words (a drill); Tiro uses `ledger`, the Lab its own. */
+  private drill?: { state: ArenaState; ledger: ThreatLedger };
   private flowBefore = new FlowBeforeContact();
   private flowTip = idleTip();
   private flowSeen?: { player: object; mark: FlowMark };
@@ -436,8 +436,8 @@ export class ArenaGame {
                     tier: 1,
                     source: dummy.pos,
                   });
-                  if (this.practice)
-                    observeLedger(this.practice.ledger, state);
+                  if (this.drill)
+                    observeLedger(this.drill.ledger, state);
                 }
               },
               visualFixture: (kind: string, direction = 0) => {
@@ -507,15 +507,15 @@ export class ArenaGame {
   }
   /** The ledger whose grades put words on the player's hits: the Lab's, the Tiro bout's, or a practice one. */
   private wardLedger(): ThreatLedger | undefined {
-    return this.lab?.ledger ?? this.ledger ?? this.practice?.ledger;
+    return this.lab?.ledger ?? this.ledger ?? this.drill?.ledger;
   }
   /** Attach the read-only contact taps to the state now on screen (practice ledger only where no other ledger exists). */
   private watchContacts() {
     const { state, player } = this.training;
     this.flowBefore.watch(state, player.id);
-    if (this.lab || this.ledger || this.practice?.state === state) return;
-    if (this.practice) detachLedger(this.practice.ledger);
-    this.practice = { state, ledger: createLedger(state, player.id) };
+    if (this.lab || this.ledger || this.drill?.state === state) return;
+    if (this.drill) detachLedger(this.drill.ledger);
+    this.drill = { state, ledger: createLedger(state, player.id) };
   }
   restart(kind: TrainingKind = "magic") {
     this.mode = "training";
@@ -523,8 +523,8 @@ export class ArenaGame {
     this.games = undefined;
     if (this.ledger) detachLedger(this.ledger);
     this.ledger = undefined;
-    if (this.practice) detachLedger(this.practice.ledger);
-    this.practice = undefined;
+    if (this.drill) detachLedger(this.drill.ledger);
+    this.drill = undefined;
     this.flowTip = idleTip();
     this.flowSeen = undefined;
     this.lastGain = undefined;
@@ -1075,8 +1075,8 @@ export class ArenaGame {
             this.training,
             this.bot ? timingBot(this.training, this.bot) : this.input.frame(),
           );
-        if (this.practice?.state === this.training.state)
-          observeLedger(this.practice.ledger, this.practice.state);
+        if (this.drill?.state === this.training.state)
+          observeLedger(this.drill.ledger, this.drill.state);
       });
     if (
       this.season &&
@@ -1243,7 +1243,7 @@ export class ArenaGame {
     this.disposed = true;
     window.removeEventListener("keydown", this.artDebugKey);
     this.flowBefore.dispose();
-    if (this.practice) detachLedger(this.practice.ledger);
+    if (this.drill) detachLedger(this.drill.ledger);
     this.ui.world.position.set(0, 0);
     this.labUI?.dispose();
     this.input.dispose();
