@@ -18,6 +18,7 @@ import type {
   Intent,
   Resolution,
   Tables,
+  Trace,
 } from "./types.ts";
 
 export const campPlay = data;
@@ -450,6 +451,7 @@ export function campView(t: Tables, s: CampSession) {
     wakeHour: t.season.wakeHour,
     endHour: endHour(t.season),
     ended: s.camp.ended,
+    playerId: s.camp.player,
     player: {
       name: player.name,
       school: player.school,
@@ -520,17 +522,30 @@ export function campView(t: Tables, s: CampSession) {
       ? { ...s.listening, ...listeningScene(s.listening) }
       : null,
     nightFinished: s.nightFinished,
-    changes:
-      s.lastResolution?.trace
-        .filter(
-          (x) =>
-            (x.path.startsWith(`characters/${s.camp.player}/`) &&
-              !x.path.endsWith("/knowledge")) ||
-            x.path.startsWith(`trust/${s.camp.player}>`) ||
-            x.path.endsWith(`>${s.camp.player}`),
-        )
-        .slice(0, 8) ?? [],
+    changes: playerChanges(s.lastResolution?.trace ?? [], s.camp.player),
+    /** True while `changes` still describes the night just settled, before any act of the new day. */
+    changesAtDawn: s.lastResolution !== null && s.dayActs.length === 0,
   };
+}
+/** What one resolution did to the player and their bonds: one entry per path, first before to last after, no-ops dropped. */
+export function playerChanges(trace: readonly Trace[], player: string): Trace[] {
+  const byPath = new Map<string, Trace>();
+  for (const x of trace) {
+    if (
+      !(
+        (x.path.startsWith(`characters/${player}/`) &&
+          !x.path.endsWith("/knowledge")) ||
+        x.path.startsWith(`trust/${player}>`) ||
+        x.path.endsWith(`>${player}`)
+      )
+    )
+      continue;
+    const held = byPath.get(x.path);
+    byPath.set(x.path, { ...x, before: held ? held.before : x.before });
+  }
+  return [...byPath.values()].filter(
+    (x) => JSON.stringify(x.before) !== JSON.stringify(x.after),
+  );
 }
 export type CampView = ReturnType<typeof campView>;
 
