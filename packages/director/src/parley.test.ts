@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { mkdtempSync } from "node:fs";
+import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
+import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { applyParley, authoredParley, parleyRules } from "@mage/core";
@@ -34,8 +34,13 @@ const result = (raw: unknown): ProviderResult => ({
   error: null,
   metadata: {},
 });
+const made: string[] = [];
+afterAll(() => {
+  for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+});
 function options(transport?: ParleyTransport, cap = 200) {
   const dir = mkdtempSync(join(tmpdir(), "mage-parley-"));
+  made.push(dir);
   return {
     cache: new RequestCache(join(dir, "cache")),
     guard: new CostGuard(join(dir, "ledger.json"), "test", "local", cap, cap),

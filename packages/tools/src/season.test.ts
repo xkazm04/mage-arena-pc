@@ -1,8 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { afterAll, describe, it, expect } from 'vitest';
 import { applyBoutInput, beginTrial, boutHash, campPlayerSnapshot, createCampSession, createSeason, linkBout, prepareBout, startBout, trialTell, type BoutInput } from '@mage/core';
 import { createGames, idleInput, presets } from '@mage/core/arena';
 import { hash, loadTables } from '@mage/director';
-import { fourteenDays, fixtureService, trialPolicy } from './season-fixtures.ts';
+import { fourteenDays, fixtureService, removeFixtureDirs, trialPolicy } from './season-fixtures.ts';
+afterAll(removeFixtureDirs);
 const t = loadTables();
 describe('W7 season authority', () => {
   it('maps actual camp ranks and carries sickness/fatigue before expiry', () => {

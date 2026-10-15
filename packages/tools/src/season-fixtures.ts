@@ -1,12 +1,19 @@
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { applyBoutInput, boutHash, bridgeRules, trialTell, type BoutInput, type TrialStance } from '@mage/core';
 import { idleInput, presets } from '@mage/core/arena';
 import { CostGuard, loadTables, PlannerProvider, RequestCache, SeasonService } from '@mage/director';
 import { SeasonPolicy } from './season-policy.ts';
+const fixtureDirs: string[] = [];
+// Removes every directory fixtureService made; tests call it in afterAll, scripts get it on exit.
+export function removeFixtureDirs() {
+  for (const d of fixtureDirs.splice(0)) rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+}
+process.once('exit', removeFixtureDirs);
 export function fixtureService(seed = 73) {
   const dir = mkdtempSync(join(tmpdir(), 'mage-season-')), t = loadTables();
+  fixtureDirs.push(dir);
   const service: SeasonService = new SeasonService(t, {
     provider: new PlannerProvider(t, () => service.session.camp),
     cache: new RequestCache(join(dir, 'cache')), guard: new CostGuard(join(dir, 'ledger'), 'test', 'planner', 0, 0),

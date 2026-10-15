@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { afterAll, describe, it, expect } from "vitest";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
@@ -29,8 +29,16 @@ import {
 import { night } from "./harness.ts";
 import config from "./config.json" with { type: "json" };
 
+const made: string[] = [];
+afterAll(() => {
+  for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+});
 const t = loadTables(),
-  temporary = () => mkdtempSync(join(tmpdir(), "mage-director-"));
+  temporary = () => {
+    const dir = mkdtempSync(join(tmpdir(), "mage-director-"));
+    made.push(dir);
+    return dir;
+  };
 describe("Director trust boundary", () => {
   it("rejects invalid run initialization before any provider can be called", () => {
     expect(() => createState(t, Number.NaN)).toThrow();

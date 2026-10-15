@@ -1,7 +1,8 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { actCamp, activityHours, campActions, createCampSession, decision, moveCamp, passSlot, phaseAt, playerProblem, spendHours, beginTrial, seasonDue } from "@mage/core";
 import { buildInput, decodeSave, encodeSave, loadTables, plan, validateGroup } from "@mage/director";
-import { fixtureService } from "./season-fixtures.ts";
+import { fixtureService, removeFixtureDirs } from "./season-fixtures.ts";
+afterAll(removeFixtureDirs);
 const t = loadTables();
 describe("D25 hour authority", () => {
   it("spends each activity's hours without advancing a whole phase or duplicating facts", () => {

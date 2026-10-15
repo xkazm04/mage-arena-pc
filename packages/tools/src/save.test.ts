@@ -1,14 +1,17 @@
-import { describe, expect, it } from 'vitest';
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { afterAll, describe, expect, it } from 'vitest';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { applyBoutInput, authoredParley, boutHash, bridgeRules, type BoutInput } from '@mage/core';
 import { idleInput, presets } from '@mage/core/arena';
 import { CostGuard, decodeSave, encodeSave, hash, restoreSave, SaveStore, SeasonService, type ProviderResult } from '@mage/director';
-import { campDay, fixtureService, fourteenDays, trialPolicy } from './season-fixtures.ts';
+import { campDay, fixtureService, fourteenDays, removeFixtureDirs, trialPolicy } from './season-fixtures.ts';
 import { knowingFixture } from './parley-fixtures.ts';
 import { SeasonPolicy } from './season-policy.ts';
 
+const made:string[]=[];
+const temp=(prefix:string)=>{const dir=mkdtempSync(join(tmpdir(),prefix)); made.push(dir); return dir;};
+afterAll(()=>{removeFixtureDirs(); for(const d of made.splice(0)) rmSync(d,{recursive:true,force:true,maxRetries:5,retryDelay:100});});
 const digest=(service:SeasonService)=>hash(encodeSave(service).payload);
 function clone(original:SeasonService) {
   const loaded=new SeasonService(original.tables, original.options);
@@ -112,7 +115,7 @@ describe('season save', () => {
     original.close(); loaded.close();
   },30000);
   it('freezes pending Parley to the selected card, preserves budget/key and ignores the late reply', async () => {
-    const original=fixtureService(), dir=mkdtempSync(join(tmpdir(),'mage-save-parley-'));
+    const original=fixtureService(), dir=temp('mage-save-parley-');
     const guard=new CostGuard(join(dir,'ledger.json'),'save-test','fake',20,20);
     let late!:(r:ProviderResult)=>void, calls=0;
     original.parleyDirector.options.guard=guard;
@@ -131,7 +134,7 @@ describe('season save', () => {
     expect(original.session.parleys).toHaveLength(1); original.close(); loaded.close();
   });
   it('restores pending dawn with completed groups, ignores late work and makes no repeated paid calls', async () => {
-    const original=fixtureService(), dir=mkdtempSync(join(tmpdir(),'mage-save-dawn-'));
+    const original=fixtureService(), dir=temp('mage-save-dawn-');
     let late!:(r:ProviderResult)=>void, calls=0;
     original.options.guard=new CostGuard(join(dir,'ledger.json'),'save-test','fake',20,20);
     const planner=original.options.provider;
@@ -151,7 +154,7 @@ describe('season save', () => {
     expect(original.session.camp.day).toBe(2); original.close(); loaded.close();
   });
   it('rejects corrupt, unknown and incompatible saves without mutation and recovers the previous good file', async () => {
-    const original=fixtureService(), store=new SaveStore(mkdtempSync(join(tmpdir(),'mage-save-store-')));
+    const original=fixtureService(), store=new SaveStore(temp('mage-save-store-'));
     store.write(original); const first=readFileSync(store.filename,'utf8');
     await campDay(original); store.write(original);
     expect(readFileSync(`${store.filename}.previous`,'utf8')).toBe(first);
