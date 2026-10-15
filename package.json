@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "npm --prefix packages/core run data && tsc -p tsconfig.json && tsc -p packages/core/tsconfig.arena.json && tsc -p packages/core/tsconfig.purity.json",
-    "test": "vitest run && node --test packages/tools/replay/*.test.mjs",
+    "test": "vitest run && node --test packages/tools/replay/*.test.mjs packages/core/scripts/*.test.mjs",
     "lint": "eslint packages --max-warnings 0",
     "check:design": "node packages/tools/replay/cli.mjs check",
     "gate": "npm run build && npm run lint && npm run test && npm run check:design",
