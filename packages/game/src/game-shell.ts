@@ -19,7 +19,14 @@ import { boutAnswerLines } from "./answers.ts";
 import { request, seasonCommand, type SeasonView } from "./season-api.ts";
 import { CanvasUI } from "./ui/ui.ts";
 import { backdrop } from "./ui/backdrop.ts";
-import { picture, portrait, storyFor, sigil } from "./ui/artwork.ts";
+import {
+  picture,
+  portrait,
+  preloadSigils,
+  storyFor,
+  sigil,
+} from "./ui/artwork.ts";
+import { preloadPolicy, settleWithin } from "./arena-preload.ts";
 import { art } from "./art.ts";
 import castData from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
 import { colours } from "./ui/kit.ts";
@@ -56,7 +63,15 @@ export class GameShell {
   private clockDay = 0;
   async init(host: HTMLElement) {
     await this.ui.init(host);
-    await art.preload(["place.door", "portrait.cassia.neutral"]);
+    // The menu's first paint carries its backdrop, portrait and inscription; bounded like the arena gate.
+    await settleWithin(
+      Promise.all([
+        art.preload(["place.door", "portrait.cassia.neutral"]),
+        preloadSigils(["inscription.collar"]),
+      ]),
+      preloadPolicy.timeoutS * 1000,
+      "Main menu art",
+    );
     if (new URLSearchParams(location.search).has("harness"))
       Object.assign(window, {
         __artReview: {

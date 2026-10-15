@@ -6,6 +6,18 @@ import { colours } from "./kit.ts";
 
 let sigilManifest: Promise<SigilManifest> | undefined;
 const sigilFrames = new Map<string, Texture>();
+const sigils = () =>
+  (sigilManifest ??= art.json("a13.manifest") as Promise<SigilManifest>);
+/** Settles once the inscriptions' pages are resident, so a first paint draws them. */
+export async function preloadSigils(ids: string[]) {
+  const m = await sigils().catch(() => undefined);
+  if (m)
+    await art.preload(
+      ids.flatMap((id) =>
+        m.clips[id] ? [`a13.page.${m.clips[id].page}`] : [],
+      ),
+    );
+}
 /** Static painted inscription for menus; no gameplay or animation state implied. */
 export function sigil(
   ui: CanvasUI,
@@ -19,8 +31,7 @@ export function sigil(
   root.position.set(x, y);
   root.alpha = opacity;
   ui.content.addChild(root);
-  sigilManifest ??= art.json("a13.manifest") as Promise<SigilManifest>;
-  void sigilManifest
+  void sigils()
     .then(async (m) => {
       const clip = m.clips[id];
       if (!clip) return;

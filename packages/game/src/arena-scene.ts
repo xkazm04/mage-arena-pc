@@ -6,6 +6,7 @@ import {
   Graphics,
   Sprite,
   type Application,
+  type TextureSource,
 } from "pixi.js";
 import {
   arenaGeometry,
@@ -36,6 +37,15 @@ import { RivalCollarView } from "./rival-collar-view.ts";
 import { rivalRune } from "./rival-collar.ts";
 import type { Element } from "./animation-contract.ts";
 import animation from "../data/animation.json" with { type: "json" };
+import { art } from "./art.ts";
+import { preloadSigils } from "./ui/artwork.ts";
+import {
+  bodyPages,
+  effectPages,
+  preloadPolicy,
+  sigilClips,
+  sigilPages,
+} from "./arena-preload.ts";
 
 const ink = 0x07161e;
 const familyColour = (family: string) =>
@@ -72,6 +82,13 @@ export class ArenaScene {
   private timeMs = 0;
   visibleProjectiles = 0;
   sortedActorIds: number[] = [];
+  private sceneryLoad: Promise<void> = Promise.resolve();
+  /** Art held for the bout so nothing it can draw is unloaded or met lazily mid-fight. */
+  private pins = new Set<string>();
+  private wanted: string[] = [];
+  private uploaded = new WeakSet<TextureSource>();
+  private disposed = false;
+  private readyGeneration = 0;
   constructor(app: Application, parent: Container = app.stage) {
     this.library = new FigureLibrary(app);
     parent.addChild(
@@ -93,12 +110,102 @@ export class ArenaScene {
     this.scenery = new ArenaArt(this.floor, this.figures);
   }
   palette(value: Palette) {
-    void this.scenery.load(value);
+    this.sceneryLoad = this.scenery.load(value);
+  }
+  /**
+   * Settles once the plate, the bodies of `actors`, the sigils and effects of
+   * their elements and the HUD inscription are decoded and on the GPU; returns
+   * what failed. `additive` keeps the current pins (an intermission prefetch).
+   */
+  async ready(
+    actors: readonly Actor[],
+    upload: (source: TextureSource) => void,
+    additive = false,
+  ): Promise<string[]> {
+    const elements = actors.map((a) => this.clips.element(a)),
+      generation = additive ? this.readyGeneration : ++this.readyGeneration;
+    if (!additive) this.wanted = [];
+    // Each family starts its pages as soon as its own manifest settles; nothing waits on the plate.
+    const pin = async (keys: string[]) => {
+      if (this.disposed) return [];
+      for (const key of keys)
+        if (!this.pins.has(key)) {
+          this.pins.add(key);
+          art.retain(key);
+        }
+      if (!additive) this.wanted.push(...keys);
+      await art.preload(keys);
+      return keys;
+    };
+    const groups = await Promise.all([
+      this.bodies.loaded.then(() =>
+        this.bodies.manifest
+          ? pin(
+              bodyPages(
+                this.bodies.manifest,
+                actors.map((a) => this.bodies.identity(a)),
+              ),
+            )
+          : [],
+      ),
+      this.sigils.loaded.then(() =>
+        this.sigils.manifest
+          ? pin(sigilPages(this.sigils.manifest, sigilClips(elements)))
+          : [],
+      ),
+      pin(effectPages(elements)),
+      this.clips.loaded.then(() => []),
+      preloadSigils(["inscription.collar"]).then(() => []),
+      this.sceneryLoad.catch(() => {}).then(() => []),
+    ]);
+    if (this.disposed) return [];
+    const keys = groups.flat();
+    // Only the newest bout drops pins; a superseded load must not unpin its successor's art.
+    if (!additive && generation === this.readyGeneration)
+      for (const key of this.pins)
+        if (!keys.includes(key)) {
+          this.pins.delete(key);
+          art.release(key);
+        }
+    const wanted = [...new Set([...keys, ...this.scenery.keys])];
+    // Decode alone leaves the GPU copy to the first frame that draws it; upload now, behind the card.
+    const sources = wanted
+      .map((k) => art.get(k)?.source)
+      .filter((s): s is TextureSource => !!s && !this.uploaded.has(s));
+    for (let i = 0; i < sources.length; i++) {
+      if (i && i % preloadPolicy.uploadsPerFrame === 0)
+        await new Promise((r) => requestAnimationFrame(r));
+      if (this.disposed) return [];
+      if (sources[i]!.destroyed) continue;
+      upload(sources[i]!);
+      this.uploaded.add(sources[i]!);
+    }
+    return [
+      ...(this.bodies.manifest ? [] : ["a10.packed.manifest"]),
+      ...(this.sigils.manifest ? [] : ["a13.manifest"]),
+      ...(this.clips.manifest ? [] : ["a8.manifest"]),
+      ...(this.scenery.source === "A12"
+        ? []
+        : [`a12.plate.${this.scenery.palette}`]),
+      ...wanted.filter((k) => !art.get(k)),
+    ];
+  }
+  /** Fraction of the current bout's art that is resident, and what is not yet. */
+  progress() {
+    const wanted = [...new Set([...this.wanted, ...this.scenery.keys])],
+      pending = wanted.filter((k) => !art.get(k));
+    return {
+      fraction: wanted.length ? 1 - pending.length / wanted.length : 0,
+      pending,
+    };
   }
   depthSnapshot() {
     return this.figures.children.map((c) => ({ id: c.label, y: c.zIndex }));
   }
   dispose() {
+    this.disposed = true;
+    for (const key of this.pins) art.release(key);
+    this.pins.clear();
     this.library.dispose();
     this.clips.dispose();
     this.sigils.dispose();
