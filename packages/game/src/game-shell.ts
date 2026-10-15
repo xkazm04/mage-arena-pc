@@ -617,7 +617,7 @@ export class GameShell {
     );
     u.text(
       v.hoursRemaining === 0
-        ? "The day is spent ? dawn awaits"
+        ? "The day is spent — dawn awaits"
         : v.hoursRemaining <= 2
           ? "Keep watch in the final hours"
           : `${v.hoursRemaining} waking hours remain`,
@@ -744,14 +744,14 @@ export class GameShell {
       actions.push({
         id: "listen",
         label: "Listen at the tent flap",
-        subtitle: `${v.listeningHours} hours ? Follow the voices. Hide from the Vigil.`,
+        subtitle: `${v.listeningHours} hours · Follow the voices. Hide from the Vigil.`,
         run: () => void this.command({ type: "listen" }),
       });
     for (const m of v.parley.moments)
       actions.push({
         id: `parley-${m.target}`,
         label: `Speak with ${m.name}`,
-        subtitle: `${v.parleyHours} hours ? A Knowing gives your words weight.`,
+        subtitle: `${v.parleyHours} hours · A Knowing gives your words weight.`,
         run: () => {
           this.parleyText = "";
           this.parleyApproach = 0;
@@ -762,7 +762,7 @@ export class GameShell {
       actions.push({
         id: `action-${a.id}`,
         label: a.label,
-        subtitle: `${a.hours} ${a.hours === 1 ? "hour" : "hours"} ? ${a.gains}`,
+        subtitle: `${a.hours} ${a.hours === 1 ? "hour" : "hours"} · ${a.gains}`,
         run: () => void this.command({ type: "act", action: a.id }),
       });
     u.text("CHOOSE A MOMENT", 712, 314, 26, colours.gold);
@@ -851,7 +851,7 @@ export class GameShell {
     u.panel(1350, 307, 474, 554);
     u.text("THE NEXT SUMMONS", 1382, 347, 26, colours.gold);
     u.text(
-      `Tent Trial ? ${v.day.trialHour}:00`,
+      `Tent Trial · ${v.day.trialHour}:00`,
       1382,
       406,
       40,
@@ -868,7 +868,7 @@ export class GameShell {
       405,
     );
     u.text(
-      `Games at ${String(v.day.gamesHour).padStart(2, "0")}:00 ? days 7 / 14`,
+      `Games at ${String(v.day.gamesHour).padStart(2, "0")}:00 · days 7 / 14`,
       1382,
       644,
       30,
