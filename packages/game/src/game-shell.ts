@@ -15,6 +15,7 @@ import {
   type TrainingKind,
 } from "@mage/core/arena";
 import { ArenaGame } from "./arena-entry.ts";
+import { boutAnswerLines } from "./answers.ts";
 import { request, seasonCommand, type SeasonView } from "./season-api.ts";
 import { CanvasUI } from "./ui/ui.ts";
 import { backdrop } from "./ui/backdrop.ts";
@@ -1893,6 +1894,13 @@ export class GameShell {
       true,
     );
     u.icon("water", 1710, 399, 52);
+    if (a.ledger) {
+      u.panel(250, 270, 790, 350);
+      u.text("HOW YOU ANSWERED", 290, 290, 26, colours.gold, 710);
+      boutAnswerLines(a.ledger).forEach((line, i) =>
+        u.text(line, 290, 350 + i * 52, 26, colours.text, 710),
+      );
+    }
     u.text(
       intermission
         ? "Recover, then take your place beyond the next grille."

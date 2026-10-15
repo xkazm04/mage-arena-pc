@@ -31,6 +31,10 @@ import {
   presets,
   spellFor,
   createGames,
+  createLedger,
+  detachLedger,
+  observeLedger,
+  resetLedger,
   stepGames,
   advanceGames,
   addEnemy,
@@ -45,6 +49,7 @@ import {
   type BotKind,
   type Composition,
   type Games,
+  type ThreatLedger,
   type InputFrame,
 } from "@mage/core/arena";
 import { ArenaInput } from "./input.ts";
@@ -73,6 +78,8 @@ export class ArenaGame {
   camera: Camera;
   training = createTraining();
   games?: Games;
+  /** The player's threat answers for the current Tiro bout; observed beside the state, read by the results card. */
+  ledger?: ThreatLedger;
   lab?: LabSession;
   labUI?: LabUI;
   composition: Composition = structuredClone(presets[0]!);
@@ -129,6 +136,7 @@ export class ArenaGame {
       this.composition = season.bout.composition;
       this.mode = "tiro";
       this.sync();
+      this.ledger = createLedger(this.games.state, this.games.player.id);
     }
     this.lastEvents = this.training.state.events.length;
     gameAudio.pauseWorld(false);
@@ -455,6 +463,8 @@ export class ArenaGame {
     this.mode = "training";
     this.lab = undefined;
     this.games = undefined;
+    if (this.ledger) detachLedger(this.ledger);
+    this.ledger = undefined;
     this.reference = false;
     this.training = createTraining(kind);
     this.training.player.water = newWaterState(this.composition);
@@ -508,6 +518,7 @@ export class ArenaGame {
     this.mode = "tiro";
     this.games = createGames(seed, this.composition);
     this.sync();
+    this.ledger = createLedger(this.games.state, this.games.player.id);
     this.camera = makeCamera(
       this.camera,
       arenaGeometry.centre,
@@ -534,6 +545,7 @@ export class ArenaGame {
   }
   private seasonStep(entry: BoutInput) {
     applyBoutInput(this.season!.bout, entry);
+    if (this.ledger && this.games) observeLedger(this.ledger, this.games.state);
     this.queued.push(entry);
   }
   async flush() {
@@ -563,6 +575,7 @@ export class ArenaGame {
       this.seasonStep({ type: "advance", tick: this.games.state.tick });
     else advanceGames(this.games);
     this.sync();
+    if (this.ledger) resetLedger(this.ledger);
     this.lastEvents = this.training.state.events.length;
     this.lastPerfect = -1e9;
     this.impactClock.reset();
@@ -893,11 +906,13 @@ export class ArenaGame {
               tick: this.games.state.tick,
               input: this.input.frame(),
             });
-          else if (!this.season)
+          else if (!this.season) {
             stepGames(
               this.games,
               this.reference ? undefined : this.input.frame(),
             );
+            if (this.ledger) observeLedger(this.ledger, this.games.state);
+          }
         } else if (this.mode === "roster") {
           stepArena(this.training.state, {
             ...enemyInputs(this.training.state),

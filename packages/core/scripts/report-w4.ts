@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
-import { combat, runFight, runtime, tiro } from '../src/arena/index.ts';
+import { answers as answerKinds, combat, emptyAnswerCounts, families, runFight, runtime, tiro } from '../src/arena/index.ts';
 const args = process.argv.slice(2), countIndex = args.indexOf('--count'), tagIndex = args.indexOf('--tag');
 const count = countIndex >= 0 ? Number(args[countIndex + 1]) : runtime.games.censusFightsPerWave;
 const tag = tagIndex >= 0 ? args[tagIndex + 1]! : 'census';
@@ -24,6 +24,9 @@ for (let wave = 0; wave < tiro.waves.length; wave++) {
     earlyDowns: fights.filter(f => f.outcome === 'loss' && f.durationS < combat.reactionBands.playerDeathNotBeforeS).map(f => f.seed),
     invalidStates: fights.filter(f => !f.finite).map(f => f.seed), replayFailures
   };
+  // Reference player's threat answers, family x answer, summed over the wave (observed beside the state; hashes unaffected).
+  const answers = emptyAnswerCounts();
+  for (const f of fights) for (const family of families) for (const answer of answerKinds) answers[family][answer] += f.answers[family][answer];
   const passed = !failures.medianOutOfBand && !failures.timeoutRate && !failures.earlyDowns.length && !failures.invalidStates.length && !replayFailures.length;
   allPassed &&= passed;
   const report = { wave: wave + 1, kind: tiro.waves[wave]!.kind, fights: count, targetDurationS: target, wins: wins.length, losses: fights.filter(f => f.outcome === 'loss').length,
@@ -31,7 +34,7 @@ for (let wave = 0; wave < tiro.waves.length; wave++) {
     inBandFraction: completed.filter(f => f.durationS >= target[0] && f.durationS <= target[1]).length / Math.max(1, completed.length),
     deadAirFraction: fights.reduce((sum, f) => sum + f.deadAirBuckets, 0) / fights.reduce((sum, f) => sum + f.buckets, 0),
     perfectRate: fights.reduce((sum, f) => sum + f.perfects, 0) / Math.max(1, fights.reduce((sum, f) => sum + f.incomingHits, 0)),
-    finalMana: summary(fights.map(f => f.mana)), finalHp: summary(fights.map(f => f.hp)), failures, passed,
+    finalMana: summary(fights.map(f => f.mana)), finalHp: summary(fights.map(f => f.hp)), answers, failures, passed,
     digest: createHash('sha256').update(fights.map(f => `${f.seed}:${f.hash}`).join('\n')).digest('hex') };
   waves.push(report); writeFileSync(new URL(`${tag}-wave-${wave + 1}.json`, destination), JSON.stringify({ label: 'simulated', summary: report, fights }, null, 2) + '\n');
   console.log(JSON.stringify(report));

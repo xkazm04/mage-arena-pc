@@ -2,6 +2,7 @@ import { newWaterState, presets, validateComposition } from "./catalog.ts";
 import { attachMageAI, mageInput } from "./mage-ai.ts";
 import { createTraining, scheduleTraining, type Training } from "./training.ts";
 import { combat, seconds, stepArena, reviveActor } from "./kernel.ts";
+import { createLedger, observeLedger, type ThreatLedger } from "./ledger.ts";
 import {
   makeTuning,
   schools,
@@ -54,6 +55,8 @@ export interface CombatLab {
   training: Training;
   tuningName: string;
   metrics: LabMetrics;
+  /** Player threat answers and ward-age (lead) histogram; lives beside the state, never in it. */
+  ledger: ThreatLedger;
   history: ArenaState[];
   historyCursor: number;
   historyCount: number;
@@ -132,6 +135,7 @@ export function createLab(
       timeToKillS: null,
       mixed: false,
     },
+    ledger: createLedger(state, player.id),
     history: [],
     historyCursor: 0,
     historyCount: 0,
@@ -184,6 +188,7 @@ export function stepLab(
     [player.id]: input,
     ...(dummy.mageAI ? { [dummy.id]: mageInput(state, dummy) } : {}),
   });
+  observeLedger(lab.ledger, state);
   for (const e of state.events.slice(first)) {
     if (e.kind === "stagger") { if (e.actorId === player.id) lab.metrics.staggersReceived++; else lab.metrics.staggersDealt++; }
     if (e.kind === "interrupt" && e.actorId === player.id) lab.metrics.castInterrupts++;
