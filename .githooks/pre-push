@@ -1,0 +1,4 @@
+#!/bin/sh
+# Runs the repository gate before a push. `npm run hooks:install` wires this into
+# .git/hooks/pre-push ahead of the Git LFS call, which still runs after it.
+npm run gate || { echo >&2 "pre-push: npm run gate failed. Fix it rather than pushing with --no-verify."; exit 1; }

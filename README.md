@@ -30,7 +30,8 @@ npm run report
 ```
 
 The gate runs strict compilation, ESLint, Vitest, the original reference tests and
-the design consistency checker. The report revalidates stored model responses and
+the design consistency checker. Run `npm run hooks:install` once per clone so every push
+runs it first (the Git LFS hook still runs after). The report revalidates stored model responses and
 replays their state transitions. Neither command makes model calls.
 
 Offline development:

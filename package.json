@@ -17,6 +17,7 @@
     "lint": "eslint packages --max-warnings 0",
     "check:design": "node packages/tools/replay/cli.mjs check",
     "gate": "npm run build && npm run lint && npm run test && npm run check:design",
+    "hooks:install": "node .githooks/install.mjs",
     "soak": "tsx packages/tools/src/soak.ts",
     "report": "tsx packages/tools/src/report.ts",
     "camp": "tsx node_modules/vite/bin/vite.js --config packages/game/vite.config.ts",
