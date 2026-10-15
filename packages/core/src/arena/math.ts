@@ -25,3 +25,16 @@ export function segmentHit(from: Vec, to: Vec, centre: Vec, radius: number): num
 export function rotate(v: Vec, radians: number): Vec {
   return { x: v.x * Math.cos(radians) - v.y * Math.sin(radians), y: v.x * Math.sin(radians) + v.y * Math.cos(radians) };
 }
+/**
+ * segmentHit's companion for a weapon carried by a moving body: a sector of `radius` and `arcDeg`, centred on `dir`,
+ * slides from `from` to `to` along `dir`. Returns the earliest fraction in [0, 1] at which it covers `centre`.
+ */
+export function sectorSweep(from: Vec, to: Vec, dir: Vec, centre: Vec, radius: number, arcDeg: number): number | undefined {
+  const d = unit(dir), q = sub(centre, from), len = Math.max(0, d.x * (to.x - from.x) + d.y * (to.y - from.y));
+  const u = q.x * d.x + q.y * d.y, v = Math.abs(q.x * d.y - q.y * d.x);
+  if (v > radius) return undefined;
+  const half = Math.sqrt(radius * radius - v * v), hi = arcDeg >= 360 ? u + half : Math.min(u + half, u - v / Math.tan(arcDeg * Math.PI / 360));
+  const s = Math.max(0, u - half);
+  if (s > Math.min(len, hi) + 1e-12) return undefined;
+  return len > 0 ? Math.min(1, s / len) : 0;
+}

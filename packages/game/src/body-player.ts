@@ -170,25 +170,30 @@ export class BodyPlayer {
     const windup = this.state?.telegraphs.find(
       (t) => t.ownerId === a.id && !t.survivesOwner,
     );
+    // A travelling charge plays the run clip along its line; a travelling lunge keeps the attack (cast) clip.
+    const charging = windup?.kind === "charge" && !!windup.contacted;
     const castWindow =
       a.pending ??
-      (windup && {
-        startTick: windup.startTick,
-        releaseTick: windup.resolveTick,
-      });
+      (windup &&
+        !charging && {
+          startTick: windup.startTick,
+          releaseTick: windup.resolveTick,
+        });
     const state: BodyState = a.tags.includes("DEFEATED")
       ? "death"
       : motion.hitElapsed < motion.hitDuration
         ? motion.hitState
         : a.absorb
           ? "absorb"
-          : castWindow ||
-              this.tick < motion.castUntil ||
-              (this.state && mothContact(a, this.state))
-            ? "cast"
-            : Math.abs(vx) + Math.abs(vy) > 1e-6
-              ? "run"
-              : "idle";
+          : charging
+            ? "run"
+            : castWindow ||
+                this.tick < motion.castUntil ||
+                (this.state && mothContact(a, this.state))
+              ? "cast"
+              : Math.abs(vx) + Math.abs(vy) > 1e-6
+                ? "run"
+                : "idle";
     const response = this.state ? tuningFor(this.state).turnResponse : 0;
     const tx = state === "run" ? vx : a.facing.x,
       ty = state === "run" ? vy : a.facing.y;

@@ -12,6 +12,7 @@ import {
   runtime,
   seconds,
   spells,
+  travelLine,
   type Actor,
   type ArenaState,
   type Vec,
@@ -399,6 +400,40 @@ export class ArenaScene {
       const colour = familyColour(t.family),
         progress =
           (state.tick - t.startTick) / Math.max(1, t.resolveTick - t.startTick);
+      const owner = state.actors.find((a) => a.id === t.ownerId);
+      if (t.contacted && owner) {
+        // A travelling charge or lunge: only the corridor its body has yet to cover, from the simulated body onward.
+        const line = travelLine(t),
+          left = Math.max(
+            0,
+            line.distanceM -
+              Math.hypot(owner.pos.x - t.origin.x, owner.pos.y - t.origin.y),
+          ),
+          ahead = { x: owner.pos.x + line.dir.x, y: owner.pos.y + line.dir.y };
+        if (t.kind === "charge")
+          this.lane(
+            owner.pos,
+            ahead,
+            left,
+            t.widthM,
+            colour,
+            1,
+            element,
+            unblockable,
+          );
+        else
+          this.sector(
+            owner.pos,
+            ahead,
+            left + (t.reachM ?? 0),
+            t.widthM,
+            colour,
+            1,
+            element,
+            unblockable,
+          );
+        continue;
+      }
       if (t.kind === "lane" || t.kind === "charge")
         this.lane(
           t.origin,
@@ -440,7 +475,7 @@ export class ArenaScene {
         const tell = state.telegraphs.find(
           (t) => t.ownerId === a.id && !t.survivesOwner,
         );
-        if (tell)
+        if (tell && state.tick < tell.resolveTick)
           this.sigils.casting(a, this.clips.element(a), {
             kind: "spell",
             startTick: tell.startTick,

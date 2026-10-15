@@ -49,7 +49,15 @@ const boltRow = rows.find(row => row.line === 'bolt');
 const bolt = { name: boltRow.name, castS: +boltRow.cast_s, cooldownS: +boltRow.cooldown_s,
   mana: +boltRow.mana, damage: +boltRow.damage, rangeM: +boltRow.range_m,
   speedMps: Number(boltRow.shape.match(/([\d.]+) m\/s/)[1]) };
+const enemyData = JSON.parse(read('enemies.json'));
+// A committed body attack moves its owner; it must never quietly extend the authored reach or lane.
+for (const attack of [...enemyData.soldiers, ...enemyData.creatures].flatMap(e => e.attacks)) {
+  if (attack.travelM === undefined && attack.travelS === undefined && attack.reachM === undefined) continue;
+  if (!(attack.travelM > 0 && attack.travelS > 0)) throw Error(`${attack.id}: travel needs travelM and travelS`);
+  const lane = attack.telegraph?.match(/x ([\d.]+) m/);
+  if (lane ? attack.reachM !== undefined || attack.travelM !== Number(lane[1]) : Math.abs(attack.travelM + attack.reachM - attack.rangeM) > 1e-9) throw Error(`${attack.id}: travel and reach must split the authored range`);
+}
 const output = '// GENERATED from reconciled arena data and art/scale-contract-v3.json. Edit the source data, never this file.\n' +
-  Object.entries({ scaleContract, combat, statRules, rankRange, trialWeights, bolt, waterRows: rows, enemyData: JSON.parse(read('enemies.json')), arenaTiers: tierData }).map(([key, value]) => `export const ${key} = ${JSON.stringify(value, null, 2)} as const;`).join('\n');
+  Object.entries({ scaleContract, combat, statRules, rankRange, trialWeights, bolt, waterRows: rows, enemyData, arenaTiers: tierData }).map(([key, value]) => `export const ${key} = ${JSON.stringify(value, null, 2)} as const;`).join('\n');
 writeFileSync(fileURLToPath(new URL('../src/arena/data.generated.ts', import.meta.url)), output + '\n');
 console.log('Arena data compiled from reconciled arena and scale contract; clock, Nerve and absorb authorities agree.');

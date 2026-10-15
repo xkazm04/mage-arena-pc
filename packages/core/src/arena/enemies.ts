@@ -1,9 +1,9 @@
 import { enemyData } from './data.generated.ts';
-import { addMage, combat, runtime, ticks } from './kernel.ts';
+import { addMage, combat, runtime, ticks, travelLine } from './kernel.ts';
 import { distance, sub, unit, type Vec } from './math.ts';
 import { idleInput, type Actor, type ArenaState, type Family, type InputFrame, type Telegraph } from './types.ts';
 import { hasLineOfSight } from './water.ts';
-export interface AttackSpec { id: string; family: Family; damage: number; windupS: number; recoveryS?: number; cooldownS?: number; rangeM?: number; projectileMps?: number; tier?: number; effect?: string; telegraph?: string; onWallHit?: string }
+export interface AttackSpec { id: string; family: Family; damage: number; windupS: number; recoveryS?: number; cooldownS?: number; rangeM?: number; projectileMps?: number; tier?: number; effect?: string; telegraph?: string; onWallHit?: string; travelM?: number; travelS?: number; reachM?: number }
 export interface EnemySpec { id: string; name: string; poise: number; hp: number; speedMps: number; attacks: readonly AttackSpec[]; behaviour: string; frontBlockDeg?: number; frontBlockMult?: number; armourMultVsBolt?: number; keepDistanceM?: readonly number[]; packSize?: number; onDeath?: { id: string; family: Family; tier: number; damage: number; radiusM: number; delayS: number } }
 export const enemyRoster: readonly EnemySpec[] = [...enemyData.soldiers, ...enemyData.creatures];
 export const enemySpec = (a: Actor): EnemySpec | undefined => enemyRoster.find(s => s.id === a.enemy?.id);
@@ -23,8 +23,10 @@ function scheduleAttack(state: ArenaState, a: Actor, target: Actor, spec: EnemyS
   if (attack.id === 'net_cast') { t.kind = 'area'; t.rangeM = runtime.games.netRangeM; t.widthM = extract(attack.telegraph, /([\d.]+) m/); t.rootS = extract(attack.effect, /root ([\d.]+) s/); }
   if (attack.id === 'tongue_pull') { t.kind = 'lane'; t.rangeM = runtime.games.tongueRangeM; t.widthM = runtime.games.tongueWidthM; t.pullM = extract(attack.effect, /pull ([\d.]+) m/); }
   if (attack.id === 'thorn_charge') { t.kind = 'charge'; t.widthM = extract(attack.telegraph, /lane ([\d.]+) m/); t.rangeM = extract(attack.telegraph, /x ([\d.]+) m/); t.wallStunS = extract(attack.onWallHit, /self-stun ([\d.]+) s/); }
+  // The body travels after the full warning; travelM + reachM stays inside the authored range (compile-arena-data checks it).
+  if (attack.travelM !== undefined) { t.travelM = attack.travelM; t.travelTicks = ticks(attack.travelS!); if (attack.reachM !== undefined) t.reachM = attack.reachM; }
   state.telegraphs.push(t); brain.attackIndex++;
-  const cooldown = attack.cooldownS ?? (spec.id === 'mire_maw' ? runtime.games.mawArtilleryCooldownS : spec.id === 'thornback' ? runtime.games.chargeCooldownS : attack.windupS + (attack.recoveryS ?? runtime.games.defaultRecoveryS));
+  const cooldown = attack.cooldownS ?? (spec.id === 'mire_maw' ? runtime.games.mawArtilleryCooldownS : spec.id === 'thornback' ? runtime.games.chargeCooldownS : attack.windupS + (attack.travelS ?? 0) + (attack.recoveryS ?? runtime.games.defaultRecoveryS));
   brain.readyTick = state.tick + 1 + ticks(cooldown);
   if (spec.id === 'slinger') brain.recoveryUntil = state.tick + 1 + ticks(attack.windupS + runtime.games.slingerReloadS);
   if (spec.id === 'conscript') { brain.backoffUntil = brain.readyTick + ticks(extract(spec.behaviour, /back off ([\d.]+) s/)); brain.readyTick = brain.backoffUntil; }
@@ -41,7 +43,8 @@ export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
     const input = idleInput(target.pos); inputs[a.id] = input;
     if (state.tick < (a.staggerUntil ?? 0) || state.tick < brain.stunnedUntil || state.tick < a.water.encasedUntil) continue;
     const windup = state.telegraphs.find(t => t.ownerId === a.id && !t.survivesOwner);
-    if (windup) { input.aim = { ...windup.target }; continue; }
+    // A travelling body keeps facing along its committed line, even past the point it aimed at.
+    if (windup) { const line = travelLine(windup); input.aim = windup.contacted ? { x: line.end.x + line.dir.x, y: line.end.y + line.dir.y } : { ...windup.target }; continue; }
     if (state.tick < (brain.recoveryUntil ?? 0)) continue;
     if (spec.id === 'conscript' && state.tick < brain.backoffUntil - ticks(extract(spec.behaviour, /back off ([\d.]+) s/))) continue;
     const delta = sub(target.pos, a.pos), d = distance(target.pos, a.pos), toward = unit(delta);
