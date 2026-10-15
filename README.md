@@ -76,6 +76,9 @@ client build: `npm run build:game`. Browser gate while the server runs:
 `npx tsx packages/tools/src/camp-browser.ts`. Screens, limitations and the measured
 night-latency sample are in [the W5 report](docs/waves/W5-report.md).
 
+On the Fire TV: keep `npm run camp` running, then `npm run tv`. It builds and installs a small
+WebView shell and tunnels the TV to this PC over adb. See [tv/README.md](tv/README.md).
+
 Parley opens at held Knowing moments with a present character. The three authored
 cards work offline; local mode interprets optional typed dialogue through the
 Director and core checks. See [W6 evidence and limits](docs/waves/W6-report.md).
