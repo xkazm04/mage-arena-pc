@@ -4,6 +4,7 @@ import { createTraining, scheduleTraining, type Training } from "./training.ts";
 import { combat, seconds, stepArena, reviveActor } from "./kernel.ts";
 import { createLedger, observeLedger, type ThreatLedger } from "./ledger.ts";
 import { enemyInputs, queueDeathEffects } from "./enemies.ts";
+import { flowMark, flowShift } from "./water.ts";
 import {
   makeTuning,
   schools,
@@ -50,6 +51,8 @@ export interface LabMetrics {
   perfects: number;
   practiceDamage: number;
   manaSpent: number;
+  /** Player casts that repeated a line and zeroed a standing Flow. */
+  flowBreaks: number;
   timeToKillS: number | null;
   mixed: boolean;
 }
@@ -136,6 +139,7 @@ export function createLab(
       perfects: 0,
       practiceDamage: 0,
       manaSpent: 0,
+      flowBreaks: 0,
       timeToKillS: null,
       mixed: false,
     },
@@ -191,6 +195,7 @@ export function stepLab(
   const first = state.events.length;
   if (lab.config.opponent === "dummy" && lab.config.dummyAttack !== "still")
     scheduleTraining(lab.training);
+  const flow = flowMark(player.water);
   // Live pairing matches roster mode: the creature brain reads the tick first, then the player's frame applies.
   stepArena(state, {
     ...(live ? enemyInputs(state) : {}),
@@ -199,6 +204,7 @@ export function stepLab(
   });
   if (live) queueDeathEffects(state);
   observeLedger(lab.ledger, state);
+  if (flowShift(flow, player.water)?.kind === "break") lab.metrics.flowBreaks++;
   for (const e of state.events.slice(first)) {
     if (e.kind === "stagger") { if (e.actorId === player.id) lab.metrics.staggersReceived++; else lab.metrics.staggersDealt++; }
     if (e.kind === "interrupt" && e.actorId === player.id) lab.metrics.castInterrupts++;

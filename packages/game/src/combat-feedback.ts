@@ -10,7 +10,9 @@ import {
   seconds,
   type ArenaState,
   type Actor,
+  type ThreatLedger,
 } from "@mage/core/arena";
+import { gradeFor, hitLabel, wardWord, wordAllowed } from "./combat-readout.ts";
 import { groundToScreen, cameraMetrics, type Camera } from "./camera.ts";
 import policy from "../data/combat-feedback.json" with { type: "json" };
 export { policy as feedbackPolicy };
@@ -72,6 +74,9 @@ interface NumberView {
   text: BitmapText;
   bornS: number;
   at: { x: number; y: number };
+  lifeS: number;
+  /** Ward words stay put under reduced motion. */
+  still: boolean;
 }
 export class CombatFeedback {
   readonly layer = new Container();
@@ -88,6 +93,10 @@ export class CombatFeedback {
   private pool: BitmapText[] = [];
   private flashes = new Map<number, number>();
   private compressions = new Map<number, number>();
+  private lastWordS = -1e9;
+  /** The watched actor's threat ledger; hits it graded as a ward mistake carry a word (STEEL, LEAVE, BEHIND, HELD +nf, CAST). */
+  ledger?: ThreatLedger;
+  reduced = false;
   constructor() {
     this.layer.addChild(this.cue);
     this.white.matrix = [
@@ -110,6 +119,7 @@ export class CombatFeedback {
         this.pool.push(n.text);
       }
       this.active = [];
+      this.lastWordS = -1e9;
     }
     for (const e of state.events.slice(this.eventIndex)) {
       const actor = state.actors.find((a) => a.id === e.actorId);
@@ -129,12 +139,16 @@ export class CombatFeedback {
           damage: e.value,
         });
       }
-      if (
-        e.kind !== "perfect" &&
-        (e.kind !== "hit" || damage < policy.minimumNumberDamage)
-      )
-        continue;
+      const bornS = this.clock - seconds(state.tick - e.tick);
+      let word =
+        e.kind === "hit" && e.actorId === this.ledger?.actorId
+          ? wardWord(gradeFor(this.ledger, e.tick, e.activationId))
+          : undefined;
+      if (word && !wordAllowed(this.lastWordS, bornS)) word = undefined;
+      const label = e.kind === "hit" ? hitLabel(word, damage) : undefined;
+      if (e.kind !== "perfect" && !label) continue;
       if (this.active.length >= policy.maxNumbers) continue;
+      if (word) this.lastWordS = bornS;
       const text =
         this.pool.pop() ??
         new BitmapText({
@@ -142,22 +156,23 @@ export class CombatFeedback {
           style: { fontFamily: "CovenantBody", fontSize: 24, fill: 0xffffff },
         });
       if (!text.parent) this.layer.addChild(text);
-      text.text =
-        e.kind === "perfect"
-          ? `+${e.value.toFixed(1)} mana`
-          : String(Math.round(damage * 10) / 10);
+      text.text = e.kind === "perfect" ? `+${e.value.toFixed(1)} mana` : label!;
       text.style.fill =
         e.kind === "perfect"
           ? 0x9affea
-          : actor.team === 0
-            ? 0xffb1a4
-            : 0xfff4d0;
+          : word
+            ? word.fill
+            : actor.team === 0
+              ? 0xffb1a4
+              : 0xfff4d0;
       text.anchor.set(0.5, 1);
       text.visible = true;
       this.active.push({
         text,
-        bornS: this.clock - seconds(state.tick - e.tick),
+        bornS,
         at: e.at ?? { ...actor.pos },
+        lifeS: word ? policy.wardWords.holdS : policy.numbersS,
+        still: !!word && this.reduced,
       });
     }
     this.eventIndex = state.events.length;
@@ -196,7 +211,7 @@ export class CombatFeedback {
     }
     this.active = this.active.filter((n) => {
       const age = this.clock - n.bornS;
-      if (age > policy.numbersS) {
+      if (age > n.lifeS) {
         n.text.visible = false;
         this.pool.push(n.text);
         return false;
@@ -207,12 +222,12 @@ export class CombatFeedback {
         p.y -
           m.figureHeightPx -
           14 * m.resolutionScale -
-          (age / policy.numbersS) *
+          (n.still ? 0 : Math.min(1, age / policy.numbersS)) *
             policy.numberRisePixels1080 *
             m.resolutionScale,
       );
       n.text.scale.set(m.resolutionScale);
-      n.text.alpha = Math.min(1, (policy.numbersS - age) * 4);
+      n.text.alpha = Math.min(1, (n.lifeS - age) * 4);
       return true;
     });
   }
@@ -237,6 +252,7 @@ export class CombatFeedback {
   snapshot() {
     return {
       numbers: this.active.length,
+      labels: this.active.map((n) => n.text.text),
       allocated: this.active.length + this.pool.length,
       flashes: this.flashes.size,
       reactions: [...this.reactions].map(([id, r]) => ({

@@ -14,5 +14,54 @@
   "numberRisePixels1080": 40,
   "maxNumbers": 32,
   "anticipationOpacity": 0.85,
-  "minimumNumberDamage": 0.5
+  "minimumNumberDamage": 0.5,
+  "wardWords": {
+    "enabled": true,
+    "minGapS": 0.4,
+    "holdS": 1.1,
+    "withNumber": true,
+    "words": {
+      "steel": {
+        "text": "STEEL",
+        "fill": "#dfe6ee"
+      },
+      "leave": {
+        "text": "LEAVE",
+        "fill": "#ff6b57"
+      },
+      "behind": {
+        "text": "BEHIND",
+        "fill": "#ffc46b"
+      },
+      "late": {
+        "text": "HELD +{n}f",
+        "fill": "#7fc4d2"
+      },
+      "cast": {
+        "text": "CAST",
+        "fill": "#d8a8ff"
+      }
+    }
+  },
+  "slotPrice": {
+    "crest": "{mana} MANA · x{mult} CREST",
+    "crestFill": "#e8c76a",
+    "repeat": "REPEAT → 0",
+    "repeatFill": "#f49c8c"
+  },
+  "flowTip": {
+    "holdS": 1.6,
+    "idle": "Alternate spells",
+    "freeCrest": "FREE CREST",
+    "rise": "{from} → {to}",
+    "break": "{line} twice: Flow breaks",
+    "crest": "Crest spent",
+    "fade": "Flow fades"
+  },
+  "perfectGain": {
+    "text": "PERFECT ABSORB  +{mana} MANA  /  +{flow} FLOW{collar}",
+    "collar": "  /  +{s}s COLLAR",
+    "banked": "  /  +{s}s COLLAR BANKED",
+    "holdS": 1.2
+  }
 }

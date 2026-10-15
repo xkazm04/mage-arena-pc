@@ -359,6 +359,7 @@ export class ArenaScene {
     this.sigils.begin(state, c, alpha);
     this.collars.begin();
     this.bodies.begin(state, alpha, dt);
+    this.feedback.reduced = localStorage.getItem("mage-motion") === "reduced";
     this.feedback.begin(state, dt);
     this.scenery.render(c);
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
