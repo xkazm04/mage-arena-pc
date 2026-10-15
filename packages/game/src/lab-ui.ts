@@ -17,6 +17,7 @@ import {
 import type { BitmapText } from "pixi.js";
 import type { ArenaGame } from "./arena-entry.ts";
 import { colours } from "./ui/kit.ts";
+import { labAnswerLine } from "./answers.ts";
 import type { CanvasUI } from "./ui/ui.ts";
 import { sigil } from "./ui/artwork.ts";
 import {
@@ -44,6 +45,7 @@ export class LabUI {
   private importText = "";
   private text?: BitmapText;
   private metricsText?: BitmapText;
+  private answersText?: BitmapText;
   private statusText?: BitmapText;
   private readonly lifetime = new AbortController();
   private frames: ArenaState[] = [];
@@ -103,6 +105,7 @@ export class LabUI {
   }
   private clear() {
     this.metricsText = undefined;
+    this.answersText = undefined;
     this.statusText = undefined;
     this.text = undefined;
   }
@@ -177,8 +180,9 @@ export class LabUI {
     this.clear();
     const u = this.u;
     u.panel(96, 168, 1728, 128);
-    this.metricsText = u.text("", 132, 198, 24, colours.text, 1650);
-    this.statusText = u.text("", 132, 240, 24, colours.gold, 1650);
+    this.metricsText = u.text("", 132, 184, 22, colours.text, 1650);
+    this.answersText = u.text("", 132, 218, 22, colours.muted, 1650);
+    this.statusText = u.text("", 132, 252, 22, colours.gold, 1650);
     const actions: [string, string, () => void][] = [
       ["setup", "L  Setup", () => this.openSetup()],
       ["tuning", "T  Tune", () => this.openTuning()],
@@ -851,6 +855,7 @@ export class LabUI {
       const m = this.lab.metrics,
         n = m.incomingMagic;
       this.metricsText.text = `Hits ${m.landed}/${m.taken}   Absorb ${m.absorbs}/${n}   Perfect ${m.perfects}/${n}   Staggers dealt/taken ${m.staggersDealt}/${m.staggersReceived}   Cancels ${m.castInterrupts}   Damage/mana ${m.manaSpent ? (m.practiceDamage / m.manaSpent).toFixed(2) : "--"}   TTK ${m.timeToKillS === null ? "--" : m.timeToKillS.toFixed(2) + "s"}`;
+      if (this.answersText) this.answersText.text = labAnswerLine(this.lab.ledger);
       const actors = this.lab.training,
         phase = actors.player.tags.includes("DEFEATED")
           ? "DEFEATED / G refill, R reset"

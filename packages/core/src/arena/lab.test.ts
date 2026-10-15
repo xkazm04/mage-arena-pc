@@ -76,6 +76,8 @@ describe("Combat Feel Lab", () => {
     expect(l.metrics.incomingMagic).toBeGreaterThan(2);
     expect(l.metrics.perfects).toBeGreaterThan(2);
     expect(l.metrics.timeToKillS).toBeNull();
+    expect(l.ledger.counts.magic.perfect).toBe(l.metrics.perfects);
+    expect(Object.values(l.ledger.ages).reduce((n, c) => n + c, 0)).toBe(l.metrics.absorbs);
     expect(labReplay(l)).toHaveLength(1201);
     const history = labReplay(l),
       hash = stateHash(l.training.state);

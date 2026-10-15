@@ -66,7 +66,16 @@ export function reviveActor(state: ArenaState, actor: Actor): void {
   actor.rollUntil = actor.immuneUntil = actor.recoveryUntil = state.tick;
   actor.absorb = false; actor.pending = undefined;
 }
+/** Observer seam kept outside the hashed state: every tap sees each contact before resolveHit applies it, including
+ * the contacts immunity swallows without an event. Taps read and never write; ledger.ts is the client. */
+export type ContactTap = (state: ArenaState, target: Actor, hit: Hit) => void;
+const contactTaps = new WeakMap<ArenaState, ContactTap[]>();
+export function tapContacts(state: ArenaState, tap: ContactTap): () => void {
+  const list = contactTaps.get(state) ?? []; list.push(tap); contactTaps.set(state, list);
+  return () => { const i = list.indexOf(tap); if (i >= 0) list.splice(i, 1); };
+}
 export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean } {
+  for (const tap of contactTaps.get(state) ?? []) tap(state, target, hit);
   if (target.tags.includes("DEFEATED") || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
   const tune = tuningFor(state);
   const spec = target.enemy ? enemySpec(target) : undefined;

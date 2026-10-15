@@ -18,8 +18,9 @@ export function attachMageAI(a: Actor, level: number, tick = 0): void {
   a.mageAI = { competence: level, nextDecisionTick: tick, input: idleInput(), observed: [], defendUntil: 0, plannedRaiseTick: 1e9, plannedReleaseTick: 0,
     targetPoint: { ...a.pos }, decisionTicks: [], reactionAges: [] };
 }
-interface Threat { id: number; family: string; origin: Vec; impactTick: number; aimedAtUs: boolean }
-function threats(state: ArenaState, a: Actor): Threat[] {
+export interface Threat { id: number; family: string; origin: Vec; impactTick: number; aimedAtUs: boolean }
+/** What an actor can see coming: live projectiles, telegraphs and enemy windups, each with its activation id. */
+export function threats(state: ArenaState, a: Actor): Threat[] {
   const result: Threat[] = [];
   for (const p of state.projectiles) {
     const owner = state.actors.find(o => o.id === p.ownerId); if (owner?.team === a.team || !hasLineOfSight(state, a.pos, p.pos)) continue;

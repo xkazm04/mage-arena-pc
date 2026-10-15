@@ -4,6 +4,7 @@ import { newWaterState, presets, validateComposition } from './catalog.ts';
 import { addEnemy, enemyInputs, queueDeathEffects } from './enemies.ts';
 import { addMage, combat, createArena, random, resetWave, runtime, seconds, stateHash, stepArena, ticks } from './kernel.ts';
 import { attachMageAI, mageInput } from './mage-ai.ts';
+import { createLedger, observeLedger } from './ledger.ts';
 import { type Actor, type ArenaState, type Composition, type InputFrame, type Ranks } from './types.ts';
 export const tiro = arenaTiers.tiers[0];
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
@@ -70,15 +71,15 @@ export function advanceGames(g: Games): void {
 }
 export function runFight(seed: number, wave: number, maxSeconds = runtime.games.fightTimeoutS) {
   const composition = presets.find(p => p.name === runtime.games.referencePreset)!;
-  const g = createGames(seed, composition, wave, true);
+  const g = createGames(seed, composition, wave, true), ledger = createLedger(g.state, g.player.id);
   const deadAirBuckets: boolean[] = []; let bucketActive = false;
   while (g.phase === 'active' && g.state.tick < ticks(maxSeconds)) {
-    const eventsBefore = g.state.events.length; stepGames(g);
+    const eventsBefore = g.state.events.length; stepGames(g); observeLedger(ledger, g.state);
     if (g.state.events.slice(eventsBefore).some(e => e.kind === 'cast' || e.kind === 'hit') || g.state.projectiles.length || g.state.telegraphs.length || g.state.actors.some(a => a.pending)) bucketActive = true;
     if (g.state.tick % ticks(combat.pacingTargets.deadAirBucketS) === 0) { deadAirBuckets.push(!bucketActive); bucketActive = false; }
   }
   return { seed, wave: wave + 1, outcome: g.phase === 'active' ? 'timeout' : g.phase === 'lost' ? 'loss' : 'win', durationS: seconds(g.state.tick),
     hp: g.player.hp, mana: g.player.mana, stamina: g.player.stamina, perfects: g.player.metrics.perfects, incomingHits: g.player.metrics.hits,
-    damageDealt: g.player.metrics.damageDealt, damageTaken: g.player.metrics.damageTaken, deadAirBuckets: deadAirBuckets.filter(Boolean).length, buckets: deadAirBuckets.length,
+    damageDealt: g.player.metrics.damageDealt, damageTaken: g.player.metrics.damageTaken, deadAirBuckets: deadAirBuckets.filter(Boolean).length, buckets: deadAirBuckets.length, answers: ledger.counts,
     hash: stateHash(g.state), finite: g.state.actors.every(a => [a.hp,a.mana,a.stamina,a.pos.x,a.pos.y].every(Number.isFinite) && a.hp >= 0 && a.hp <= a.maxHp && a.mana >= 0 && a.mana <= a.maxMana && a.stamina >= 0 && a.stamina <= a.maxStamina) };
 }
