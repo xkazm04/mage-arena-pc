@@ -1,0 +1,1238 @@
+{
+  "proposals": [
+    {
+      "id": "P01",
+      "seat": "agy-gemini-4-argon_high",
+      "round": 1,
+      "title": "Turn Lab Replay into a Forkable Counterfactual Sandbox with Ghost Diffs",
+      "kind": "leap",
+      "outcome": "While tuning combat feel in the Lab, a designer or player can pause at any moment of a 20-second exchange, scrub backward and forward tick-by-tick, drag any feel slider or toggle between presets ('Current', 'Snappier', 'Heavier'), and immediately see a translucent ghost of their original play side-by-side with the counterfactual trajectory re-simulated from their exact human inputs—complete with live A/B metric deltas and a one-click 'Take Over Here' branch or 25 KB deterministic Feel Capsule export.",
+      "builds_on": "Evolves the deterministic 60 Hz `stepArena` / `stateHash` kernel (`packages/core/src/arena/kernel.ts:275-308`), the 1,200-tick `CombatLab.history` ring buffer (`packages/core/src/arena/lab.ts:52-62`), and the event-sourced `ArenaScene` renderer (`packages/game/src/arena-scene.ts:530-630`) that already re-derives visuals cleanly when `state` is swapped.",
+      "mechanism": "1) In `packages/core/src/arena/lab.ts:52-62,144-212`, store a parallel 1,200-entry `inputTape: InputFrame[]` ring buffer plus the ring-start base `ArenaState` snapshot and `LabTuningSnapshot`. 2) Add a pure `resimulateLab(lab, nextTuning, upToIndex)` helper that clones the ring-start snapshot and runs `stepArena` across `inputTape` (1,200 ticks takes ~2.6 ms CPU), producing a parallel `counterfactualHistory: ArenaState[]` and `counterfactualMetrics: LabMetrics` without mutating the baseline recording. 3) In `packages/game/src/lab-ui.ts:151-166,520-653,814-865`, add `,`/`.` bidirectional tick scrubbing, live counterfactual re-simulation whenever a tuning slider moves while paused/replaying, an A/B metric diff banner (`Perfects: 2 -> 4 | Staggers: 1 -> 2`), and a `Take Over` key (`B`) that truncates the tape at the scrub cursor and resumes live play from the counterfactual state. 4) In `packages/game/src/arena-scene.ts:530-630`, optionally render the baseline snapshot's player/enemy transforms as a `0.35`-alpha wireframe/tinted ghost mesh and projectile trail. 5) Upgrade `exportTuning` (`packages/core/src/arena/tuning.ts:346-385`, `packages/game/src/lab-ui.ts:738-751`) to v4 Feel Capsules bundling `{ config, tuning, inputTape, startSnapshot, expectedStateHash }`.",
+      "anchors": [
+        "packages/core/src/arena/lab.ts:52-62",
+        "packages/core/src/arena/lab.ts:144-223",
+        "packages/core/src/arena/tuning.ts:346-385",
+        "packages/game/src/lab-ui.ts:151-166",
+        "packages/game/src/lab-ui.ts:738-751",
+        "packages/game/src/lab-ui.ts:814-865",
+        "packages/game/src/arena-scene.ts:530-630"
+      ],
+      "evidence": "Observed in code: `changeLabTuning` (`packages/core/src/arena/lab.ts:213-223`) only affects future ticks and marks `lab.metrics.mixed = true`, while `LabUI.export` (`packages/game/src/lab-ui.ts:749`) prints `'Include the seed and setup in your feel report'` because `exportTuning` (`packages/core/src/arena/tuning.ts:352-360`) drops the seed, `LabConfig`, and player inputs. Observed in benchmark: 500-bout Monte Carlo sweeps in `packages/core/src/arena/balance.test.ts:19-41` execute ~1.8M ticks in a few seconds (~2.2 us/tick), so re-simulating a 1,200-tick (20s) window on slider drag takes <3 ms. Prior art: Bret Victor's *Inventing on Principle* (https://vimeo.com/36579366) demonstrates how coupling live parameter manipulation to recorded input trajectories transforms game-feel tuning from blind trial-and-error into direct visual inspection.",
+      "effort": "M",
+      "risk": "Counterfactual re-simulation could diverge if `ArenaState` cloning misses nested arrays (`randomLog`, `events`), or ghost meshes could clutter the arena during 5-unit skirmishes; mitigate by asserting `stateHash(resimulateLab(lab, lab.tuning).at(-1)) === stateHash(lab.state)` in unit tests and rendering ghost overlays only for the player and primary locked target while paused.",
+      "verify": "1) Automated test in `packages/core/src/arena/arena.test.ts`: record 600 ticks of play, call `resimulateLab` with identical tuning, and assert exact `stateHash` equality; call `resimulateLab` with `absorbWindowS: 0.22` vs `0.10` on a tape containing a 9-tick-old ward contact and assert `perfectAbsorbs` flips from `0` to `1`. 2) Performance check: 1,200-tick counterfactual re-sim completes in `< 5 ms` on desktop.",
+      "why_groundbreaking": "Elevates the Combat Lab from a passive tuning form into a Bret Victor-style time-traveling feel instrument where every parameter adjustment is seen and verified against the player's own muscle memory in real time, and every exported JSON is an executable regression test.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 7,
+        "total": 7,
+        "bad": []
+      }
+    },
+    {
+      "id": "P02",
+      "seat": "agy-gemini-4-argon_high",
+      "round": 1,
+      "title": "Fix Level-4 AI Over-Defense and Wire Tier Curves & Staff Interrupts",
+      "kind": "deepen",
+      "outcome": "AI competence scales monotonically from Level 1 to Level 4—eliminating the inversion where Level 4 loses more often than Level 3—while higher-level mages visibly bait wards, save 5-stack Free Crests for high-tier spells, time dodges to actual telegraph impacts, and use close-range staff strikes that reliably interrupt enemy casts.",
+      "builds_on": "Deepens the data-driven AI competence ladder (`packages/core/src/arena/mage-ai.ts:9-16`, `docs/design/reconciled/data/arena/enemies.json:184-226`) and the Monte Carlo balance harness (`packages/core/src/arena/balance.test.ts:19-41`).",
+      "mechanism": "1) Fix the premature defense lockout in `packages/core/src/arena/mage-ai.ts:68-70`: when the `perfect` roll fails (`60%` of the time at L4), schedule `brain.plannedRaiseTick = Math.max(state.tick + 1, threat.impactTick - ticks(tune.absorbWindowS + feelPolicy.ai.imperfectLeadS))` instead of `state.tick + 1`, and only engage the movement/casting lockout (`defendUntil`) once `state.tick >= brain.plannedRaiseTick - 2`. This stops L4 from raising its ward 50-70 ticks early on initial cast sighting and draining `27 mana/s` while slowed by 50%. 2) Fix premature dodge rolling in `packages/core/src/arena/mage-ai.ts:71-74`: schedule unblockable/physical dodge rolls and close-range interrupt strikes for `threat.impactTick - ticks(combat.dodgeRoll.iframeS * 0.7)` instead of firing immediately at `firstSeenTick + reactionDelayS` (which burns 0.25s i-frames 0.5s before a 1.0s unblockable resolves). 3) Wire the currently unread `usesTierCurve` field (`docs/design/reconciled/data/arena/enemies.json:193,202,211,220`) in `packages/core/src/arena/mage-ai.ts:95-107`: `tier_hold` holds cooldowns within 2s of a collar unlock; `tier_bait` fires a low-mana `bolt` when the target is warding to bait `minReleaseBeforeReRaiseS` before an `unblockable`; `full` refuses to spend a 5-stack Free Crest (`flow === 5`) on a tier-0 `bolt` and avoids repeating `lastLine` at `flow >= 3`. 4) Wire the unread `combat.staffStrike.interruptsCasts` flag (`docs/design/reconciled/data/arena/combat.json:25`) in `packages/core/src/arena/kernel.ts:183-189` so a connected staff strike calls `interrupt(state, enemy)` even if the target is in `staggerImmuneUntil`.",
+      "anchors": [
+        "packages/core/src/arena/mage-ai.ts:53-117",
+        "packages/core/src/arena/kernel.ts:183-204",
+        "docs/design/reconciled/data/arena/enemies.json:184-226",
+        "docs/design/reconciled/data/arena/combat.json:19-26",
+        "packages/core/src/arena/data/feel.json:67-72"
+      ],
+      "evidence": "Observed in brief dossier & code: 500-trial reference win counts across AI levels 1..4 are `443 / 287 / 115 / 184` (Level 4 is weaker than Level 3). Tracing `packages/core/src/arena/mage-ai.ts:38-50,65-70` reveals why: `threats()` registers `enemy.pending` casts immediately, and at line 68 an imperfect roll sets `plannedRaiseTick = state.tick + 1` and `defendUntil = plannedReleaseTick`. Because Level 4 reacts in `0.30s` (`18` ticks) vs Level 3's `0.42s` (`25` ticks), Level 4 raises its ward during the enemy's windup and holds it across the entire projectile flight, draining ~25-35 mana per threat (`packages/core/src/arena/kernel.ts:130-132`) and locking out its own offense (`mage-ai.ts:80,114`). Furthermore, `usesTierCurve` in `enemies.json:193-220` and `interruptsCasts` in `combat.json:25` have zero readers in `packages/core/src`.",
+      "effort": "S",
+      "risk": "Making Level 4 mana-disciplined and tier-aware could push reference win rate below the 10% floor in `packages/core/src/arena/balance.test.ts:38`; mitigate by keeping `reactionDelayMinS >= 0.25` and tuning `imperfectLeadS` in `packages/core/src/arena/data/feel.json:69` so L4 reference wins land squarely in the 12%-18% band (60-90 / 500).",
+      "verify": "In `packages/core/src/arena/balance.test.ts:19-41`, assert strictly monotonic win progression `wins[0] > wins[1] > wins[2] > wins[3]` across the 500-seed sweep (specifically `wins[3] < wins[2]` and `50 <= wins[3] <= 105`), plus a unit test verifying `staffStrike` interrupts an active `pending` cast during `staggerImmuneUntil`.",
+      "why_groundbreaking": "Turns the top of the AI ladder from a mana-starved turtle into a genuine master duelist that fulfills the reconciled design contract (`usesTierCurve` + `interruptsCasts`) and makes high-level Lab sparring and Finals bouts thrilling.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 5,
+        "total": 5,
+        "bad": []
+      }
+    },
+    {
+      "id": "P03",
+      "seat": "agy-gemini-4-argon_high",
+      "round": 1,
+      "title": "Surface Ward Frame-Timing Diagnostics and World-Space Flow/Crest HUD",
+      "kind": "deepen",
+      "outcome": "Players and feel tuners can see at a glance why a ward contact missed the 0.15s perfect window (`EARLY +3f`, `RE-RAISE LOCK`, `FLANK`), which spell slot will break their Water Flow chain (`REPEAT`), when their next spell is a 0-mana `x1.5 CREST`, and how much time remains on the 2.0s Flow chain timer right on their mage's ground ring.",
+      "builds_on": "Builds on the tick-exact ward resolution in `packages/core/src/arena/kernel.ts:69-95`, the Water Flow state machine in `packages/core/src/arena/water.ts:11-38`, the floating callout system in `packages/game/src/combat-feedback.ts:114-164`, and the procedural ground rings in `packages/game/src/arena-scene.ts:572-602`.",
+      "mechanism": "1) In `packages/core/src/arena/kernel.ts:75-95`, enrich `hit` events on magic contacts with optional `wardDeltaTicks` (ticks past `absorbWindowS` when `guarded` is true, or negative ticks since `releaseTick` if hit while trying to re-raise inside `minReleaseBeforeReRaiseS`) and `flank: true` when `absorbing && !inArc`. 2) In `packages/core/src/arena/lab.ts:38-51,182-198`, record `wardLeadTicks: number[]` so `metricsText` (`packages/game/src/lab-ui.ts:853`) reports human median early/late frame offset alongside `Perfects`. 3) In `packages/game/src/combat-feedback.ts:132-162`, render concise sub-callouts on guarded/failed-ward hits (`EARLY +2f (33ms)`, `LOCKOUT`, `FLANK`). 4) In `packages/game/src/arena-entry.ts:742-789`, update `hudUpdate()` so when `player.water.flow >= 5`, all unlocked spell slots display `0 MANA · x1.5 CREST` with a crest border, and when `player.water.flow > 0`, the slot matching `player.water.lastLine` displays a `REPEAT -> 0` warning badge. 5) In `packages/game/src/arena-scene.ts:572-602`, draw 5 procedural arc segments on the player's ground ring showing active Flow stacks and a draining 2.0s chain window arc (`120` ticks since `lastCastTick`), using existing Three.js `RingGeometry` with zero new textures.",
+      "anchors": [
+        "packages/core/src/arena/kernel.ts:69-95",
+        "packages/core/src/arena/water.ts:11-38",
+        "packages/core/src/arena/lab.ts:38-51",
+        "packages/game/src/combat-feedback.ts:114-164",
+        "packages/game/src/arena-entry.ts:742-789",
+        "packages/game/src/arena-scene.ts:572-602"
+      ],
+      "evidence": "Observed in code: `packages/game/src/arena-entry.ts:759-764` always renders `${s.mana} mana / Tier ${player.tier}` on spell cards even when `player.water.flow >= 5` (where `trySpellCast` in `packages/core/src/arena/water.ts:28` sets cost to `0` and `flowCast` at line 16 grants `1.5x` damage), and gives zero indication of `player.water.lastLine` (which resets Flow to `0` at line 13). Likewise, `resolveHit` (`packages/core/src/arena/kernel.ts:75-95`) silently downgrades a 10-tick-old ward (`166ms` vs `150ms` window) to a normal `guarded` hit with no timing feedback. Prior art: *Street Fighter 6*'s frame-timing feedback and Motion Twin's *Dead Cells* GDC postmortem (https://www.gdcvault.com/play/1025695/Designing-Dead-Cells-for-Speed) show that tight defensive windows feel fair only when near-miss timing is explicitly surfaced to the player.",
+      "effort": "S",
+      "risk": "Extra floating text could add visual noise during multi-creature waves; mitigate by emitting `EARLY +Nf` / `LOCKOUT` micro-callouts only for the human player (and always in the Lab), capped at 1 callout per 0.4s.",
+      "verify": "1) Unit test in `packages/core/src/arena/arena.test.ts`: raise ward 11 ticks before projectile impact (`absorbWindowS = 0.15` = 9 ticks), step to impact, and assert the emitted `hit` event carries `guarded: true` and `wardDeltaTicks: 2`. 2) DOM/HUD check: at `player.water.flow === 5`, spell slot labels read `0 MANA · x1.5 CREST` and `ArenaScene` texture count remains unchanged at `325.7 MiB`.",
+      "why_groundbreaking": "Transforms two invisible math rules—the 9-tick perfect absorb window and the 5-stack Water Flow cycle—into visceral, self-teaching combat literacy right at the character's feet without spending a single byte of the texture budget.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    },
+    {
+      "id": "P04",
+      "seat": "agy-gemini-4-argon_high",
+      "round": 1,
+      "title": "Connect Camp Rivals, Guile Scouting, Poison & Crowd Flasks into Games",
+      "kind": "connect",
+      "outcome": "Entering the Games from Camp pits Cassia against the actual named rival mages she just schemed with or poisoned in Camp—each fighting with their own elemental school profile (`fire`, `earth`, `air`), camp rank, and `sick`/`fatigue` penalties—while Cassia's `Guile` stat reveals rival loadouts and wave lineups on the pre-bout Composition screen and high `Renown` triggers a mid-final crowd mana flask.",
+      "builds_on": "Connects the Season/Camp bridge (`packages/core/src/season.ts:30-36,93-106`), the already-authored school combat profiles in `packages/core/src/arena/tuning.ts:252-288` (`packages/core/src/arena/data/lab-schools.json:1-40`), the character roster (`docs/design/reconciled/data/characters.json:73-220`), and the pre-bout Composition screen (`packages/game/src/game-shell.ts:1606-1779`).",
+      "mechanism": "1) Extend `CampBoutContext` and `campPlayerSnapshot` in `packages/core/src/season.ts:13-36,93-106` to extract `guile: number`, `renown: number`, and an `entrants: CampRivalEntrant[]` list from `camp.characters` for the active tier (`Brennic`, `Garran`, `Iskar`, `Corvo`, `Senna`, `Lio`), mapping each rival's tent (`ember` -> `'fire'`, `stone` -> `'earth'`, `gale` -> `'air'`), camp rank (`tiro`/`veteranus`/`primus`), `traits.aggression` -> AI competence level, and camp `sick` (`SCHEME:poison`) / `fatigue` flags into HP/stamina penalties. 2) In `packages/core/src/arena/games.ts:11-43`, replace the hardcoded `'Tiro entrant · Water proxy'` in waves 3 and 4 with the seeded semifinale and finale `CampRivalEntrant`s, setting `actor.school` so `adjustedSpell` and `profileFor` (`packages/core/src/arena/tuning.ts:252-288`) automatically apply Fire's `1.22x` damage / slow ward, Earth's `1.35x` poise / heavy stun, or Air's `1.12x` move speed / fast projectiles, and using their already-loaded A10/A14 3D bodies (`Brennic`/`Garran`/`Iskar`) in `packages/game/src/arena-scene.ts:431-452`. 3) Wire the unread `guile` formula (`docs/design/reconciled/data/arena/stats.csv:5`: `scouting reveal = rank - 1`) into `renderArenaComposition` (`packages/game/src/game-shell.ts:1606-1779`): Guile 2 reveals the exact creature wave composition; Guile 3 reveals the semifinal/final rival identity and school; Guile 4+ reveals their AI competence habit and any active camp poison penalty. 4) Wire the unread `renown >= 40` rule (`docs/design/reconciled/data/arena/stats.csv:6`) in `packages/core/src/arena/games.ts:53-69`: once per final wave, when the player drops below 30% mana, a crowd sponsor tosses a `+25 mana` surge.",
+      "anchors": [
+        "packages/core/src/season.ts:30-36",
+        "packages/core/src/season.ts:93-106",
+        "packages/core/src/arena/games.ts:11-43",
+        "packages/core/src/arena/tuning.ts:252-288",
+        "packages/game/src/game-shell.ts:1606-1779",
+        "docs/design/reconciled/data/arena/stats.csv:5-6",
+        "docs/design/reconciled/data/characters.json:73-220"
+      ],
+      "evidence": "Observed in code: `packages/core/src/arena/games.ts:36` hardcodes `'Tiro entrant · Water proxy'` with default water school for every Season bout, even though `packages/core/src/arena/tuning.ts:252-288` already implements full `fire`, `earth`, and `air` combat modifiers and `packages/game/src/arena-scene.ts:436-447` already maps `brennic`, `garran`, and `iskar` to preloaded A10/A14 GLBs. Meanwhile, `guile` and `renown` are defined in `docs/design/reconciled/data/arena/stats.csv:5-6` and tracked on camp characters, yet `campPlayerSnapshot` (`packages/core/src/season.ts:30-36`) drops both stats and never inspects rival characters' `sick` or `fatigue` statuses.",
+      "effort": "M",
+      "risk": "School modifiers (`lab-schools.json`) are tuned for Lab drills and could skew Season wave win rates when combined with camp poison penalties; mitigate by capping camp `sick` HP penalty on bosses at `-15%` and running the 500-seed balance sweep across all three rival schools.",
+      "verify": "1) In `packages/core/src/season.test.ts`, poison `Brennic` in camp (`sick: true`), call `prepareBout`, and assert the wave-3/4 opponent in `bout.games` is `Brennic` with `school: 'fire'` and reduced starting HP. 2) Set player `guile: 4` and `renown: 45`, verify `CampBoutContext` exposes 3 scouting intel cards on the Composition screen, and verify dropping below 30% mana in Wave 4 triggers a one-time `+25 mana` crowd flask event.",
+      "why_groundbreaking": "Fulfills the core fantasy of a gladiatorial management RPG: every intrigue action in the Camp tents (`Guile` scouting, `SCHEME:poison`, `Renown` crowd work, rival tent politics) has a tangible, mechanical payoff inside the 60 Hz Arena.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 7,
+        "total": 7,
+        "bad": []
+      }
+    },
+    {
+      "id": "P05",
+      "seat": "agy-gemini-4-argon_high",
+      "round": 1,
+      "title": "Unlock Veteranus, Primus & Summa Tiers with Mastery & Resonance Duets",
+      "kind": "extend",
+      "outcome": "Players can advance beyond Tiro through Veteranus, Primus, and the Season-ending Summa Magica tournament—facing all 8 implemented Arena creature types across 4-wave gauntlets and culminating in a Summa Final where consecutive Perfect Absorbs between the two finalists build harmonic Resonance that either shatters the arena Wardstones (the Cooperative Breaking ending) or triggers a high-speed lethal volley.",
+      "builds_on": "Extends `packages/core/src/arena/games.ts:8-70`, the 8 creature AI controllers already implemented in `packages/core/src/arena/enemies.ts:8-88`, projectile reflection in `packages/core/src/arena/water.ts:130-136`, and the complete 4-tier tournament tables in `docs/design/reconciled/data/arena/arena-tiers.json:85-271`.",
+      "mechanism": "1) Parameterize `createGames` (`packages/core/src/arena/games.ts:8-43`) by `tierId: 'tiro' | 'veteranus' | 'primus' | 'summa'` (defaulting to the player's current camp rank or scheduled tournament tier in `packages/core/src/season.ts:93-106`) instead of hardcoding `export const tiro = arenaTiers.tiers[0]`. 2) In `packages/core/src/arena/games.ts:28`, guard `creatureOpeningOrder[index] ?? (index % 4)` and extend `formationOffsets` fallback so 6- and 7-creature waves in Veteranus (`shieldman`, `netter`, `thornback`) and Primus (`hush_moth`) spawn cleanly using their existing controllers in `packages/core/src/arena/enemies.ts:23-88`. 3) In `packages/core/src/season.ts:138-155` (`receiveBout`), implement the mastery advancement rule from `docs/design/reconciled/data/arena/arena-tiers.json:85` (`win a final, or reach a final twice` increments `player.mastery` and promotes camp tier). 4) Implement the Summa Final **Breaking Resonance** rule (`docs/design/reconciled/data/arena/arena-tiers.json:249-258`) in `packages/core/src/arena/water.ts:130-136` and `packages/core/src/arena/kernel.ts:251-255`: remove the `!p.reflected` one-bounce cap when `state.resonanceActive` is set; each Perfect Absorb of a reflected spell increments `state.resonance` (`0..5`), speeds the projectile by `1.12x`, and advances the tier collar. At `resonance === 5`, if `CampBoutContext` has `breakingPact: true` (`trust >= 60` + `K-wardstones-drink`), both finalists channel the harmonic overload into the arena pillars (`outcome: 'wardstones_broken'`); otherwise the next hit detonates an unguardable `2.0x` harmonic blast.",
+      "anchors": [
+        "packages/core/src/arena/games.ts:8-70",
+        "packages/core/src/season.ts:138-155",
+        "packages/core/src/arena/water.ts:130-136",
+        "packages/core/src/arena/enemies.ts:8-88",
+        "docs/design/reconciled/data/arena/arena-tiers.json:85-271",
+        "packages/core/src/arena/data/runtime.json:37-38"
+      ],
+      "evidence": "Observed in code: `docs/design/reconciled/data/arena/arena-tiers.json:85-271` defines complete wave tables, rewards, and boss configurations for `veteranus`, `primus`, and `summa`, and `packages/core/src/arena/enemies.ts:23-88` already implements full AI for `shieldman`, `netter`, `thornback`, and `hush_moth`. However, `packages/core/src/arena/games.ts:8` hardcodes `arenaTiers.tiers[0]` (`tiro`), leaving 3 of the 4 tournament tiers and 4 of the 8 enemy archetypes unreachable in actual Games play! Additionally, `packages/core/src/arena/games.ts:28` indexes `creatureOpeningOrder[index]!` (which only has 4 entries in `packages/core/src/arena/data/runtime.json:37`), which would produce `undefined` on 7-unit Veteranus/Primus waves without a fallback.",
+      "effort": "M",
+      "risk": "Seven-creature waves in Veteranus/Primus could spike simultaneous attack telegraphs and overwhelm the player's stamina/ward economy; mitigate by keeping `maxSimultaneousAttackers: 2` (`docs/design/reconciled/data/arena/enemies.json:8`) enforced across all creature types and verifying `0.40-0.75` player survival rates per wave in headless simulation.",
+      "verify": "1) Add tests in `packages/core/src/arena/arena.test.ts` that instantiate `createGames(42, { tierId: 'veteranus' })`, `'primus'`, and `'summa'`, step through all 4 waves, and verify `shieldman`, `netter`, `thornback`, and `hush_moth` spawn with valid positions and non-undefined `formationIndex`. 2) Simulate a Summa final rally where two mages trade 5 consecutive perfect absorbs on a reflected bolt and assert `state.resonance === 5` triggers `'wardstones_broken'` when `breakingPact: true`.",
+      "why_groundbreaking": "Unlocks the entire second half of the combat roster and tournament ladder that is already built in data and code, while turning the game's core defensive skill—the 0.15s Perfect Absorb—into the narrative climax of the Season.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    },
+    {
+      "id": "P06",
+      "seat": "claude-claude-opus-5-5_xhigh",
+      "round": 1,
+      "title": "Add a threat-answer ledger: absorb timing in ticks for every threat",
+      "kind": "deepen",
+      "outcome": "For every threat aimed at the player, the game shows what it was (magic, steel, unblockable), how the player answered (perfect, guarded with timing, wrong facing, rolled through, stepped out, or took it) and a signed raise-timing error in ticks (for example 'EARLY 4f' or 'LATE 2f'). It appears live in the Lab, on proving-ground lessons, on the Tiro results card ('magic absorbed 18/31, perfect 4, median late +2f; steel rolled 6/9; unblockable left 3/3') and per wave in the census. The owner check 'is the 0.15 s window right?' becomes a histogram instead of a guess.",
+      "builds_on": "The kernel already decides perfect-absorb timing exactly, tick by tick (absorbFreshTick against the hit tick) and tags hits with family and guarded. The AI already computes, for every visible threat, whether it is aimed at it and when it will land. Nobody shows any of this to the player or the owner.",
+      "mechanism": "1. Export the AI's existing threat finder (`threats()` in mage-ai.ts) and add a pure, read-only `ledger.ts` in core that runs after each tick for one actor.\n2. Open an entry per threat when it is first seen, keyed by activation id, aimed at the actor.\n3. Close the entry from facts the kernel already knows: the hit event's guarded flag and perfect event; age = hit tick minus absorbFreshTick, so early-by = age minus the window in ticks; immune at impact means rolled through (resolveHit returns with no event at kernel.ts:70, so this is invisible today); an unguarded frontal hit followed by a raise within 0.5 s gives late-by k; outside the arc means wrong facing; the threat vanished without contact means avoided; anything else is counted as unclassified.\n4. Call it from stepLab, from ArenaGame's fixed-step callback and from runFight, and add the family-by-answer matrix to report-w4.\n5. Presentation reuses the pooled damage-number text (combat-feedback.ts) for the timing tag, behind a flag in packages/game/data/combat-feedback.json. The Lab gets a second metrics line and the Tiro results card gets one panel.\n6. Nothing writes simulation state, so no hash or save version changes.",
+      "anchors": [
+        "packages/core/src/arena/kernel.ts:69-93",
+        "packages/core/src/arena/kernel.ts:119-128",
+        "packages/core/src/arena/mage-ai.ts:21-52",
+        "packages/core/src/arena/mage-ai.ts:64-70",
+        "packages/core/src/arena/lab.ts:187-206",
+        "packages/game/src/game-shell.ts:1863-1954",
+        "packages/core/scripts/report-w4.ts:33",
+        "docs/waves/H1-evidence/census.json:110-214"
+      ],
+      "evidence": "Observed: the H1 census measures the scripted player's perfect rate at 0.3255 against creatures (wave 2) and 0.0051/0.0077 against mages (waves 3-4), with the same competence data (absorb 0.6 × perfect 0.15, about 9% planned). Nothing in the repo can say why.\n\nHypothesis, to be confirmed by the ledger: an own cast blocks the raise (`!a.pending`, kernel.ts:123); the impact estimate for a pending cast goes stale (mage-ai.ts:48-49); immediate raises against fast creature bursts produce accidental perfects.\n\nThe docs say plainly that the human perfect rate is unmeasured (docs/gameplay/ward-and-absorb.md:91; CF-report.md:64 'Owner hands must settle that').\n\nThe Tiro results screen today shows only bouts, gold and renown.\n\nPrior art: the Street Fighter 6 frame meter shows press and release timing per frame so players can practise parries (https://www.eventhubs.com/news/2022/sep/16/sf6-training-visual-frame-data, https://words.infil.net/w03-sf6beta-p6.html).",
+      "effort": "S",
+      "risk": "Wrong labels on streams, bursts or area hits could mislead the owner. Mitigation: classify only from kernel-truth fields, keep an explicit 'unclassified' count, and pin each training lesson (magic, physical, flanker, charge, stream) to its known correct answer in tests. On-screen tags could clutter the fight; they are off in season bouts by default and controlled by one data flag.",
+      "verify": "1. The W2 timing bots run through the ledger: every hit at leads 0-8 is labelled perfect, and every hit at lead 9+ is labelled early by (lead - 8). This must hold on 100% of hits and match docs/waves/W2-evidence/bots.json.\n2. H1/U6c census digests and the 1,300,369-byte season replay hash are byte-identical before and after.\n3. The new per-wave census ledger puts at least 90% of the reference player's non-perfect magic contacts in waves 3-4 into named early, late, cast-blocked or facing buckets, explaining the 32.6% vs under 1% gap.",
+      "why_groundbreaking": "The perfect absorb is the game's core skill check, and right now nobody can see it. This turns it into a skill the player can read and a number the owner can act on, and it is the shared measuring stick every later human-facing move needs.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P07",
+      "seat": "claude-claude-opus-5-5_xhigh",
+      "round": 1,
+      "title": "Let the owner take over from any frame of the Lab's 20 s replay",
+      "kind": "extend",
+      "outcome": "While scrubbing the V replay, the owner presses one key and takes control at that exact frame. The opponent, its memory, the projectiles in flight and the random state all continue exactly as they were. A 'retake anchor' lets them retry the same unfair moment ten times in a row and, with the ledger, see their timing each time ('late 3f, late 1f, PERFECT').",
+      "builds_on": "The Lab already keeps a 1,201-frame ring of complete compact states, and replays are exact. Visuals rebuild themselves from state.events whenever the state object is swapped. Today the ring is view-only.",
+      "mechanism": "1. Extend the ring entry so it also holds Training.nextAttack/attacks (the dummy scheduler lives outside state, training.ts:6-40) and a copy of lab.metrics.\n2. Add a LabUI hotkey during replay: copy the shown frame into the live state, relink player and dummy by id (the same pattern as linkBout), restore the scheduler fields and metrics, cut the ring after the frame, log `changes.push({tick, kind:'takeover'})`, keep the pre-fork live state in a single undo slot, and resume stepping.\n3. Continuation is exact because state.rng and nextId are part of state; random() only appends to randomLog (kernel.ts:22-28), and AI decisions never read the trimmed decisionTicks/reactionAges arrays.\n4. A retake anchor stores one frame index; R returns to it.\n5. No kernel change and no new art.",
+      "anchors": [
+        "packages/core/src/arena/lab.ts:143-172",
+        "packages/core/src/arena/training.ts:6-40",
+        "packages/core/src/arena/kernel.ts:22-28",
+        "packages/game/src/lab-ui.ts:118-150",
+        "packages/game/src/lab-ui.ts:814-849",
+        "packages/game/src/arena-entry.ts:879-912",
+        "packages/game/src/combat-feedback.ts:97-113"
+      ],
+      "evidence": "Observed: the owner feel protocol already asks the owner to 'replay an unfair moment' (docs/gameplay/combat-feel-lab.md:142), but the replay can only be watched. The snapshot code keeps observed-threat memory and drops only audit arrays (lab.ts:150-161). Visual rebuild on state swap is already proven by the replay path (combat-feedback.ts:99-113).\n\nPrior art: Tekken 8's Replay Takeover lets players take control within a recorded replay; a reviewer called it arguably the best feature because you can relive the exact moment you struggle with (https://primagames.com/news/tekken-8-teaches-you-how-to-learn-from-mistakes-with-new-interactive-replays).",
+      "effort": "S",
+      "risk": "It breaks the current promise that V returns to the untouched live bout, and metrics could mix timelines. Mitigation: takeover is a separate explicit key, logged in `changes`, with metrics restored from the frame and one undo slot back to the pre-fork bout.",
+      "verify": "1. Headless test: a Lab bout against a level-3 mage AI with scripted inputs runs for 1,200 ticks. Fork the ring frame at tick 600 and feed the same scripted inputs for ticks 601-1200. Actors, projectiles, telegraphs, zones, rng, nextId and Training.nextAttack must deep-equal the uninterrupted run at tick 1200.\n2. The same test against the magic dummy, with nextAttack restoration disabled, must fail, proving the test bites.\n3. Browser harness: replay, scrub to t-2 s, take over; the snapshot shows the Lab live at that tick with metrics equal to the frame's.",
+      "why_groundbreaking": "Determinism stops being just a verification tool and becomes a practice loop: any moment in a fight can be retried until it is mastered. That is exactly what deciding the 0.15 s window by feel needs.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 7,
+        "total": 7,
+        "bad": []
+      }
+    },
+    {
+      "id": "P08",
+      "seat": "claude-claude-opus-5-5_xhigh",
+      "round": 1,
+      "title": "Show a census forecast next to every Lab tuning change",
+      "kind": "connect",
+      "outcome": "When the owner moves a slider or picks Snappier or Heavier, a panel fills in about 10 s with simulated consequences against Current: median duration per Tiro wave against its band, the reference player's win rate per wave, perfect rate, Lab-duel time to kill, and damage per mana. Each number is labelled with its sample size and as a reference-AI forecast. The checks 'Current, Snappier or Heavier?' and 'difficulty after CF2' get feel and pacing side by side, in one sitting, without asking an agent.",
+      "builds_on": "The Lab's live, validated tuning object and the headless census and Lab-duel runners already exist. They have never been connected: the census always runs with default tuning, and only agents run it, between waves.",
+      "mechanism": "1. Add an optional tuning parameter to runFight/createGames that sets state.tuning. Pass nothing for Current, so existing hashes are unchanged.\n2. Run the census loop from report-w4 (seeds from censusSeedStart) and the cf-report Lab-duel loop for the current Lab setup in a module Web Worker that imports @mage/core/arena (pure, no DOM).\n3. Changes go through changeLabTuning, then a short debounce, then the worker runs 50 seeds per wave plus 50 duels for the live tuning; results for Current are cached.\n4. The forecast is cancelled on any new change and shown in the preset panel area.\n5. It is read-only and never writes a band, so the census rules hold.",
+      "anchors": [
+        "packages/core/src/arena/games.ts:12-21",
+        "packages/core/src/arena/games.ts:71-84",
+        "packages/core/scripts/report-w4.ts:15-17",
+        "packages/tools/src/cf-report.ts:25-43",
+        "packages/core/src/arena/lab.ts:213-223",
+        "packages/core/src/arena/tuning.ts:249-251",
+        "packages/game/src/lab-ui.ts:582-630",
+        "docs/waves/CF-report.md:84-90"
+      ],
+      "evidence": "Observed: the H1 census ran 8,000 fights plus sampled replays in 207 s of wall time (docs/waves/H1-evidence/census.json, wallSecondsMeasured), about 26 ms per fight in node, so 400 fights take about 10 s. CF2 showed that a feel pass can move reference duel wins from 91%/70% to 38%/40% (CF-report.md:85-86), yet the Lab shows none of that while tuning. The tuning reaches every actor through tuningFor(state), so forecasts use the same rules the owner is feeling. Browser worker speed is a hypothesis; it could be about 2x slower.",
+      "effort": "M",
+      "risk": "The owner might read AI-against-AI numbers as a difficulty verdict, and the worker could compete with the render loop. Mitigation: a fixed 'simulated, reference policy, n=50' label with intervals, a single cancellable worker, and the frame budget checked with the existing __arena.performance frames.",
+      "verify": "1. A forecast with Current for seeds 40000-40049 reproduces the outcome, durationS and hash of those 50 fights per wave in docs/waves/H1-evidence/census-wave-1..4.json, byte-exact.\n2. A 400-fight forecast completes in 20 s or less in the browser while the main-thread frame time p95 stays at 16.7 ms or less at 1080p.\n3. Moving absorbWindowS from 0.15 to 0.25 shows a non-zero perfect-rate delta within one forecast cycle.",
+      "why_groundbreaking": "Today feel tuning and pacing proof live in separate hands and separate weeks. This brings them into one loop, so every feel decision the owner makes carries its measured consequences with it.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P09",
+      "seat": "claude-claude-opus-5-5_xhigh",
+      "round": 1,
+      "title": "Export feel capsules: replayable bundles from the Lab and season bouts",
+      "kind": "connect",
+      "outcome": "The owner presses M at a bad moment and tags it with the protocol's own words (floaty, snappy, heavy, unfair, unreadable). Export writes one capsule: setup (school, loadout, seed, creature), every tuning change with its full values, the per-tick input tape, the marks, data source hashes and the final hash. Agents run `node packages/tools/src/capsule.ts file.json` and get the exact fight back, plus a tick table and ledger for ±2 s around each mark. The Tiro results screen can keep a bout as a capsule too, because the full season log still exists before settlement.",
+      "builds_on": "Replays are exact, the season bout log already re-simulates to the server-verified hash (replayBout), and the Lab already logs change ticks. Today the owner's feel report is hand-typed prose, and the export holds tuning only.",
+      "mechanism": "1. Add `tape` (tick and InputFrame, compressed as runs of repeated inputs) and `marks` to CombatLab. Record inside stepLab, which already receives every input including the single-step key.\n2. Make changeLabTuning, replenish and damage-toggle log their payloads, not just names.\n3. Move the Lab creature setup from packages/game/src/lab-setup.ts into core so node can rebuild it.\n4. The capsule replayer runs createLabSetup, then applies changes at their ticks while stepping, then compares the final stateHash. It refuses with the name of the file whose source hash changed.\n5. For Tiro: before season.finish(), serialize {seed, entrant, composition, log}; replayBout already checks it. The save format is unchanged.",
+      "anchors": [
+        "packages/core/src/arena/lab.ts:52-61",
+        "packages/core/src/arena/lab.ts:173-186",
+        "packages/core/src/arena/lab.ts:213-223",
+        "packages/game/src/lab-ui.ts:738-751",
+        "packages/game/src/lab-setup.ts:28-54",
+        "docs/gameplay/combat-feel-lab.md:133-145",
+        "packages/core/src/season.ts:123-137",
+        "packages/core/src/season.ts:138-155"
+      ],
+      "evidence": "Observed: the export notice asks the owner to 'Include the seed and setup in your feel report' (lab-ui.ts:748-750), and the doc admits 'School, loadout and seed are not included' (combat-feel-lab.md:135). The protocol asks the owner to hand-transcribe resolution, loadouts, opponent settings, seed, preset, parameter values, damage mode and the action (combat-feel-lab.md:145). Changes record only names, for example `tuning:Custom` (lab.ts:222), so a mid-bout tweak cannot be rebuilt. The season log is validated and then discarded (`p.bout = null`, season.ts:153). Agents verify headlessly (brief D5) but cannot see what the owner saw.",
+      "effort": "M",
+      "risk": "Capsules go stale when data changes, and raw float aim makes files large. Mitigation: source hashes with a named refusal, compressed runs plus gzip via CompressionStream, and a capsule version field.",
+      "verify": "1. 20 scripted Lab sessions (timing bots and an AI-driven player, with mid-bout tuning changes, refills and damage toggles) export and replay in node to the identical final stateHash, 20 of 20. The same test with name-only changes fails.\n2. A Tiro capsule replays to the boutHash the server accepted.\n3. Editing combat.json makes the replayer refuse and name that file.\n4. A 5-minute Lab capsule is 1 MB or less raw.",
+      "why_groundbreaking": "The owner is the only judge of feel. This turns each of their judgements into an exact, replayable fixture that agents can diagnose and keep as a regression, so feel reports become test cases.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P10",
+      "seat": "claude-claude-opus-5-5_xhigh",
+      "round": 1,
+      "title": "Build the player's Shade: a fair AI fitted to their play that the census runs",
+      "kind": "leap",
+      "outcome": "From the player's own Lab and Tiro play, the game fits a 'Shade', a mage AI with their measured reaction time, absorb and perfect habits, aim error, decision rate, preferred spacing and line choices, clamped to the fairness caps. The owner and player can duel their Shade in the Lab (a mirror of their own habits). The 2,000-fight census can run with the Shade as the player, giving pacing and difficulty bands anchored to a real human instead of the invented level-2 reference.",
+      "builds_on": "AI mages run on the same kernel as the player and differ only in their inputs, driven by a small data-defined competence profile. The census replaces a player with an input policy cleanly, and the season already records the human's exact per-tick inputs.",
+      "mechanism": "1. Feature extraction over ledgers (proposal 1) and tapes (season bout logs, Lab tapes): reaction time is first sight to the first defensive input; absorb rate per magic threat; realized perfect rate; aim error between aim and target at cast; mean decision interval; spacing quantiles; line frequencies.\n2. `fitShade()` maps these to an optional `profile` on MageBrain that overrides competence(level) at mage-ai.ts:55-56, the preferred distance at :86 and the choice weights at :95-106. It is clamped to reaction ≥ 0.25 s and perfect ≤ 0.45 (enemies.json caps) and reads no future inputs.\n3. Because the census shows the realized perfect rate is decoupled from the perfect-chance setting, the fit is calibrated in a loop: simulate the Shade in the human's Lab setup and adjust until its ledger matches the human's.\n4. `report-w4 --reference shade:<file>` and the Lab target 'Your Shade'.\n5. Kept out of season bouts until the hold-out check passes.",
+      "anchors": [
+        "packages/core/src/arena/mage-ai.ts:9-20",
+        "packages/core/src/arena/mage-ai.ts:53-56",
+        "packages/core/src/arena/mage-ai.ts:83-87",
+        "packages/core/src/arena/mage-ai.ts:95-106",
+        "packages/core/src/arena/types.ts:14",
+        "docs/design/reconciled/data/arena/enemies.json:185-226",
+        "packages/core/src/arena/games.ts:71-84",
+        "packages/core/src/season.ts:123-131"
+      ],
+      "evidence": "Observed: difficulty is the open owner check, and CF2 says 'the scripted reference is not a human skill model' (CF-report.md:87-88). The level-4 AI beats the reference less often than level 3 (W4 ladder), and the realized perfect rate swings from 32.6% to under 1% under one profile (H1 census), so today's ladder is not anchored to anything human. All the inputs to the fit already exist: the season log at 60 Hz (season.ts:129), plus the ledger from proposal 1.\n\nPrior art: Killer Instinct's Shadow AI replicates a portion of a player's behaviour after three training sessions and exposes flaws in their own style (https://gamedeveloper.com/programming/the-killer-groove-the-shadow-ai-of-killer-instinct; https://en.wikipedia.org/wiki/Killer_Instinct_(2013_video_game)).\n\nThat a six-to-eight-parameter Shade predicts a human's Tiro outcomes is a hypothesis.",
+      "effort": "L",
+      "risk": "The Shade may not predict the human, because behaviour is richer than the profile, and a strong player is capped by the fairness limits. Mitigation: a hold-out gate before any census or season use, the caps reported openly (the Shade is labelled as capped), shipping as a Lab target first, and the MageBrain field is optional, so existing census and season hashes are unchanged.",
+      "verify": "1. Fit check: a Shade fitted to a known source (the L3 AI and timing-bot mixes) reproduces the source's absorb rate, perfect rate and median reaction within ±5 points and ±50 ms in the same Lab setup.\n2. Hold-out: after K owner sessions, the Shade census's 80% interval for waves won and per-wave duration contains the owner's next 5 real Tiro results more often than the level-2 reference census does, scored in a committed ledger.\n3. Every fitted profile passes the caps test, and H1/U6c census digests are unchanged.",
+      "why_groundbreaking": "The census and the AI ladder stop modelling an invented opponent and start modelling the actual player. Difficulty bands become personal, measurable claims, and the game's most rigorous machinery is finally pointed at a human.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P11",
+      "seat": "codex-gpt-6.1-sol_xhigh",
+      "round": 1,
+      "title": "Expose the absorb-to-Crest payoff",
+      "kind": "deepen",
+      "outcome": "Players can see how defense creates offensive opportunities, which available spells continue Flow, and what their next free Crest will buy.",
+      "builds_on": "Perfect absorbs already connect mana recovery, faster collar unlocks and Flow. This is a distinctive combat economy with several rewards attached to one skilled action.",
+      "mechanism": "Ship a 2–4 day presentation slice: show the remaining different-line link window and idle grace beside Flow; mark ready, affordable, different-line spells; and display zero mana cost plus the Crest multiplier when Crest is available. A perfect shows actual mana returned, actual Flow gained and collar credit together. Compute the displayed unlock benefit with the existing minimum-gap rule, including cases where credit does not immediately shorten the countdown. Read simulation state without selecting or casting spells for the player. Derive gameplay values from combat.json and spell data; put new display durations in packages/game/data/combat-feedback.json. Reuse existing text, icons and vector drawing.",
+      "anchors": [
+        "packages/core/src/arena/water.ts:11-37",
+        "packages/core/src/arena/water.ts:113-122",
+        "packages/core/src/arena/kernel.ts:75-84",
+        "packages/core/src/arena/kernel.ts:267-271",
+        "docs/design/reconciled/data/arena/combat.json:83-94",
+        "docs/design/reconciled/data/arena/spells-water.csv:2-7",
+        "packages/game/src/arena-entry.ts:743-806",
+        "packages/game/src/arena-entry.ts:840-846"
+      ],
+      "evidence": "Observed in code: the HUD says 'Alternate spells' or 'FREE CREST', while ready slots continue displaying their ordinary mana cost. Flow has a 2-second link window and 3-second idle reset. Every successful spell cast can consume Crest, including the 3-mana Rain Needle; at tier IV, branch A Leviathan Orb normally costs 45 mana. Perfect feedback currently emphasizes only mana despite also granting Flow and collar credit. Hypothesis: exposing these connections makes the existing mechanics yield deliberate decisions sooner.",
+      "effort": "S",
+      "risk": "Additional information could compete with threat reading. Keep it beside existing resources, highlight only actionable slots, and make detailed timing available in the Lab. Display actual gains so mana caps, capped Flow and the collar gap never produce misleading rewards.",
+      "verify": "A legal seven-cast rotation displays five Flow on cast six and the free Crest on cast seven. Slot costs match the actual payment. Perfects at maximum mana, maximum Flow, tier IV and the minimum unlock gap never overstate gains. Recorded input sequences retain identical simulation hashes. After a short explanation, the owner intentionally spends Crest on a nominated spell in three consecutive practice attempts.",
+      "why_groundbreaking": "The ward becomes visibly part of an offensive engine. Players can learn the game's signature rhythm through the fight itself, and every future spell benefits from the same feedback.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P12",
+      "seat": "codex-gpt-6.1-sol_xhigh",
+      "round": 1,
+      "title": "Give each rival a readable tactical plan",
+      "kind": "connect",
+      "outcome": "Players face contrasting Water rivals whose positioning and commitments reveal different weaknesses, making preparation and adaptation matter before additional schools arrive.",
+      "builds_on": "Mage opponents already use player spells, resources, casts and defenses through ordinary input frames. Their compositions already differ, providing tactical identities without additional assets.",
+      "mechanism": "Connect composition and current-tier spell purpose to movement and action selection. Give Undertow a close-pressure plan that creates an approach opportunity, enters Lash range, commits and withdraws during recovery. Give Mirror tide a ranged counter plan that budgets defensive mana and attacks after observed openings. Derive engagement distances from actual spell ranges. Serialize the current plan in MageBrain and log seeded choices. Select among defend, evade and attack using threat value and resource cost, rather than repeatedly extending defense for every incoming activation. Author new policy weights and durations in docs/design/reconciled/data/arena/enemies.json. Expose both styles in the Lab, then apply them to the existing Tiro Water proxies at their existing competence settings.",
+      "anchors": [
+        "packages/core/src/arena/mage-ai.ts:9-19",
+        "packages/core/src/arena/mage-ai.ts:58-80",
+        "packages/core/src/arena/mage-ai.ts:83-106",
+        "packages/core/src/arena/games.ts:33-40",
+        "packages/core/src/arena/data/runtime.json:46-49",
+        "docs/design/reconciled/data/arena/enemies.json:183-225"
+      ],
+      "evidence": "Observed in code: both opponents use the same general 5–8 m preferred-distance band, while Lash requires roughly 3 m or less. Spell selection therefore knows about a close-range tool that movement does not deliberately enable. Defense scheduling can postpone attack decisions across incoming threats. The dossier reports 115 reference wins against level 3 versus 184 against level 4 in 500 trials, with over-defense identified as the problem. Hypothesis: coherent plans will create more recognizable and exploitable opponents than increasing reaction precision.",
+      "effort": "M",
+      "risk": "Recognizable plans could become repetitive, or improved tactics could make current difficulty excessive. Give each plan an observable commitment and recovery, retain seeded variation, and evaluate current Tiro competence separately from the higher-level ladder. Preserve the reaction floor, perfect-chance cap, shared resources and warning floors. Version changed combat behavior explicitly.",
+      "verify": "In controlled scenarios, Undertow voluntarily reaches Lash range and uses it; Mirror tide completes a defense-and-counter cycle under sustained Rain Needle pressure. The original 500-seed ladder and a predeclared suite across all three presets show whether level 4 still underperforms level 3. Report every outcome and rerun all 8,000 Tiro census fights against unchanged pacing bands. The owner distinguishes the two styles in at least four of five unlabelled clips and demonstrates each intended counter.",
+      "why_groundbreaking": "Existing loadouts become opponents with a character expressed through combat. Three selected lines can support different fights, giving the current Water catalogue more content value.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    },
+    {
+      "id": "P13",
+      "seat": "codex-gpt-6.1-sol_xhigh",
+      "round": 1,
+      "title": "Make lunges and charges commit moving bodies",
+      "kind": "deepen",
+      "outcome": "Players can sidestep an advancing attack, cross behind its committed direction and punish its recovery through visible spatial decisions.",
+      "builds_on": "Enemies already have committed aim, authored windups, recovery, wall punishment and interruptible attacks. The kernel also already handles swept collision and activation-level hit deduplication.",
+      "mechanism": "Introduce serialized movement phases for two existing attacks: the conscript lunge in current Tiro and the Thornback charge in roster practice. After the existing warning, advance the attacker along its committed direction over fixed ticks and resolve swept contact as its attack envelope reaches a target. Track targets already contacted, cancel on stagger or defeat, and retain authored recovery and wall stun. For the conscript, partition movement and weapon reach within the existing attack range rather than silently extending reach. Author movement distances and durations in docs/design/reconciled/data/arena/enemies.json. Add an explicit live-opponent Lab option that runs enemyInputs and death effects while retaining stationary inspection. Reuse current run, cast and hit presentation.",
+      "anchors": [
+        "packages/core/src/arena/enemies.ts:17-30",
+        "packages/core/src/arena/kernel.ts:205-235",
+        "packages/core/src/arena/kernel.ts:239-265",
+        "docs/design/reconciled/data/arena/enemies.json:5-21",
+        "docs/design/reconciled/data/arena/enemies.json:143-161",
+        "packages/game/src/lab-setup.ts:27-51",
+        "packages/core/src/arena/lab.ts:173-186",
+        "packages/game/src/body-player.ts:168-191"
+      ],
+      "evidence": "Observed in code: a charge resolves damage against the entire lane on one tick, then assigns the attacker its constrained endpoint. Conscripts plant for their attack rather than performing a simulated lunge. Lab creatures currently serve as stationary inspection targets. The owner's recorded concern includes one-axis movement. Hypothesis: attacks that visibly commit bodies create stronger spacing decisions and more physical impact. Thornback is outside current Tiro, so the conscript slice supplies the immediate Games benefit.",
+      "effort": "M",
+      "risk": "Moving collision changes dodge timing and could create mismatches between animation and damage. Keep existing warnings, draw the remaining attack corridor from simulation state, and verify contact frame by frame. Treat this as a combat behavior change with deliberate replay/save version handling. Require an owner comparison before expanding beyond these two attacks.",
+      "verify": "Before swept contact, an in-lane target takes no damage. One activation contacts each target at most once; roll immunity prevents damage; stagger and defeat terminate movement; wall contact produces the authored 1.5-second Thornback stun. Save/resume during travel reproduces the same continuation hash. All 8,000 Tiro census fights retain the existing median bands and timeout gate without HP, damage or resource subsidies. The owner can bait, sidestep and punish both attacks in live Lab trials. Maintain 60 fps, CPU p95 at most 8 ms and the 330 MiB texture limit.",
+      "why_groundbreaking": "Enemy movement becomes part of the attack's meaning and counterplay. This creates a reusable foundation for physical encounters while giving the existing player movement and control spells more purpose.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P14",
+      "seat": "codex-gpt-6.1-sol_xhigh",
+      "round": 1,
+      "title": "Turn hard exchanges into playable combat drills",
+      "kind": "leap",
+      "outcome": "Players can retry a specific mistake immediately, test another response and export that situation as a playable challenge. The owner can attach an executable encounter to a feel decision.",
+      "builds_on": "The arena already has deterministic continuation, logged inputs, seeded AI and event-derived presentation. The Lab already records twenty seconds of history and can pause and step playback.",
+      "mechanism": "Add 'Practice this exchange' to replay and bout results. Reconstruct the selected moment, fork a separate practice session, and let the player take control while opponents continue through their normal AI. Offer scored objectives such as avoiding damage or landing a perfect. Export a drill containing a canonical checkpoint, required wrapper state and actor IDs, input history, tuning, engine/data fingerprints and objective. Use bounded input recording with sparse full checkpoints; the compact renderer history is insufficient for authoritative restoration because it removes audit arrays. Include Training scheduler state when relevant. Store new drill timings in packages/core/src/arena/data/runtime.json. Repeated attempts reset the complete fork. Practice outcomes remain outside season payout. Start with local export/import and add labelled tuning comparisons for owner review.",
+      "anchors": [
+        "packages/core/src/arena/lab.ts:143-171",
+        "packages/game/src/lab-ui.ts:814-848",
+        "packages/game/src/game-shell.ts:1863-1943",
+        "packages/game/src/arena-entry.ts:875-929",
+        "packages/core/src/season.ts:115-136",
+        "packages/core/src/arena/kernel.ts:275-307",
+        "packages/core/src/arena/training.ts:6-12",
+        "packages/core/src/arena/data/runtime.json:4-19"
+      ],
+      "evidence": "Observed in code: current replay displays stored states and returns to the live session; export currently exports tuning rather than the encounter. Season bouts already reconstruct from their input log. The dossier records byte-identical continuation and a stable 1,300,369-byte season replay. Important implementation evidence: Lab history strips randomLog and AI audit histories, while stateHash hashes the complete serialized state. Hypothesis: executable situations will shorten learning and feel-review cycles, and let existing fights generate reusable practice content.",
+      "effort": "L",
+      "risk": "Incomplete checkpoints could produce convincing but incorrect retries, and combat updates could invalidate drills. Preserve canonical state and wrapper references, require matching engine/data fingerprints for exact replay, and label changed-tuning attempts as experiments. Bound recording cost, reset presentation transients on every fork, and bind the HUD to the displayed session. Keep the initial release focused on local drills.",
+      "verify": "Export and import a mid-cast, mid-projectile and mid-stagger situation. Replaying original inputs reproduces the original full-state hash; repeating replacement inputs reproduces the branch hash. A deliberately recoverable scenario fails with the original response and passes with a different legal response. Opponents retain reaction and probability caps after takeover. Repeated practice leaves the season bout, receipt and payout unchanged. From a result screen, the owner reaches the chosen exchange within two actions and can export enough information for another installation to reproduce it. Recording stays within the existing frame and CPU budgets.",
+      "why_groundbreaking": "The arena becomes a source of player-authored combat lessons and challenges. Every fight can contribute reusable content and a precise way to discuss feel, extending the game's value without additional schools or generated assets.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P15",
+      "seat": "grok-grok-4.7_high",
+      "round": 1,
+      "title": "Let the player read and take over a settled bout",
+      "kind": "leap",
+      "outcome": "After a Games day the player can scrub to the tick a read failed, see the lead in ticks, and take control from that tick in a practice copy.",
+      "builds_on": "Settlement already re-simulates the full input log and refuses to pay unless the hash matches, and the Lab already scrubs a 20-second state ring. Visuals re-derive from events, so a replay renders without a second animation system.",
+      "mechanism": "Keep the season log that applyBoutInput already appends. During the live bout, accumulate a presentation-side grade outside ArenaState: family, guarded, lead ticks equal to tick minus absorbFreshTick, and the Flow delta. Results gains Read the bout. Seeking replays the log with the same replayBout path settlement uses and shows a short window of the existing scene. Take over clones that replay into a practice bout at the chosen tick and then accepts new input. The settled receipt stays the original object and keeps its hash.",
+      "anchors": [
+        "packages/core/src/season.ts:123-142",
+        "packages/game/src/game-shell.ts:1896-1926",
+        "packages/core/src/arena/lab.ts:62",
+        "packages/core/src/arena/lab.ts:166-172",
+        "packages/core/src/arena/kernel.ts:303-308",
+        "packages/game/src/arena-entry.ts:535-546"
+      ],
+      "evidence": "Observed: receiveBout pays only after replayBout reproduces boutHash, and the results screen then shows gold and renown. The Lab ring is 20 seconds and owner-only, while Tiro duel medians are 57.10 s and 62.00 s. W2's timing sweep is a cliff (lead 8 perfects, lead 9 misses in docs/waves/W2-evidence/bots.json) and a bot that perfects 40/40 cannot tell a person whether 0.15 s is too tight. Hypothesis, from fighting-game practice at the same 60 Hz: a frame meter plus replay takeover is how a one-tick window becomes a skill (https://www.youtube.com/watch?v=zLecicjSYSs, https://www.youtube.com/watch?v=rDnuK5VCMxw). The grade itself is the same comparison resolveHit already uses.",
+      "effort": "M",
+      "risk": "Replaying a long log on the results screen can hitch, and takeover could rewrite a settled payout. The grade is accumulated during play, outside the hashed state; takeover is a clone; the receipt hash is left as replayBout certified it. Render a window around the scrub point.",
+      "verify": "A scripted bout grades age == ticks(window) as PERFECT and age == ticks(window)+1 as HELD, matching kernel.test.ts. Takeover's stateHash at the handoff equals a fresh replay stopped on that tick, and one new input diverges. The original settlement hash is unchanged. The grade is on screen with no multi-second fast-forward because it was collected live.",
+      "why_groundbreaking": "The bout stops being a gold receipt and becomes a 60 Hz text the player can enter at the tick they missed. Determinism stops being only the audit that protects the payout and becomes the mastery loop.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    },
+    {
+      "id": "P16",
+      "seat": "grok-grok-4.7_high",
+      "round": 1,
+      "title": "Say the answer and the weave on the frame they happen",
+      "kind": "deepen",
+      "outcome": "On the frame of a committed mistake the player reads STEEL, LEAVE, BEHIND, or HELD plus the extra ticks, and the Flow line names the weave or the repeat that broke it.",
+      "builds_on": "resolveHit already knows family, arc, and the fresh-raise age, and a perfect already prints a mana refund in its own colour. Flow is already a stack on the actor, with a tip slot that currently says only Alternate spells or FREE CREST.",
+      "mechanism": "One pure function of fields the tick already stores, drawn through the existing number pool and the Flow tip. A perfect keeps the mana text. If the ward is up and the hit is physical, the number reads STEEL. Unblockable reads LEAVE. Magic, ward up, outside the arc reads BEHIND. Magic, guarded, age greater than the window reads HELD and the extra ticks. Ordinary hits with the ward down keep the damage number. The tip diffs water.flow and water.lastLine against the previous frame: a rise names both lines, a repeat that zeroes Flow names the line and says Flow breaks, a crest keeps FREE CREST. The Lab metrics line and the tuning export gain the lead histogram and the break count. No new event kind and no save bump.",
+      "anchors": [
+        "packages/core/src/arena/kernel.ts:69-84",
+        "packages/core/src/arena/kernel.test.ts:21-27",
+        "packages/game/src/combat-feedback.ts:132-154",
+        "packages/game/src/arena-entry.ts:785-789",
+        "packages/game/src/arena-entry.ts:840-846",
+        "packages/core/src/arena/water.ts:11-18",
+        "packages/game/src/lab-ui.ts:851-853",
+        "docs/design/reconciled/data/arena/combat.json:95-99"
+      ],
+      "evidence": "Observed: the number pool special-cases only perfect; every other contact is a red numeral. flowCast zeroes the stack on a repeated line and emits nothing. Lab metrics count perfects over incoming magic and do not record the lead, so a 40% rate hides a one-tick miss and a 30-tick miss. threatLanguage already names the three answers and has no reader; family colour is a separate hardcoded table. Hypothesis: speaking the committed mistake, and the line that broke Flow, makes the open window check and the open reset check decidable from one session. This does not claim which way the owner will call them.",
+      "effort": "S",
+      "risk": "A word on every hit becomes noise and hides the damage. Annotate only a committed ward or a Flow change; plain damage numbers stay plain. Keep the grader out of ArenaState so the pinned replay hash stays put.",
+      "verify": "Scripted contacts produce STEEL, LEAVE, BEHIND, and HELD with the kernel age. Three different lines inside 2 s name the weave and reach Flow 2; an immediate repeat says Flow breaks and shows 0. A Lab export contains the lead histogram and the break count. stateHash of a pinned bout is unchanged.",
+      "why_groundbreaking": "The fight starts teaching the grammar it already simulates, on the frame the decision happened. Every later bout, Lab session, and census can count the same grade.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P17",
+      "seat": "grok-grok-4.7_high",
+      "round": 1,
+      "title": "Show the rival's collar beside your own",
+      "kind": "extend",
+      "outcome": "In a mage bout the player can see the rival's rune and spend a perfect to pull their own tier IV forward of Leviathan Orb or Drown Coil.",
+      "builds_on": "Every actor already runs the same collar, and a perfect already banks 2 s on clockAdvanceTicks. The player's clock, hand, and rune pips are already drawn from that formula.",
+      "mechanism": "For an opponent that has mageAI, draw their tier with the existing collar inscription at the figure's foot, using the same elapsed formula as the player clock: tick minus waveStartTick plus clockAdvanceTicks, against collarIntervalS, with the 6 s gap. Their hand is dim gold; the player's stays water. A perfect moves only the player's hand. Soldiers and creatures, which have an enemy brain and no mageAI, draw no second collar. Nothing is added along the southern rim.",
+      "anchors": [
+        "packages/core/src/arena/kernel.ts:83",
+        "packages/core/src/arena/kernel.ts:267-272",
+        "packages/game/src/arena-entry.ts:790-846",
+        "packages/game/src/arena-scene.ts:572-579",
+        "docs/design/reconciled/data/arena/spells-water.csv:6",
+        "docs/design/reconciled/data/arena/spells-water.csv:12"
+      ],
+      "evidence": "Observed: updateClock runs for every living actor, and the HUD computes the countdown only for the player. Tier IV Leviathan Orb and Drown Coil are unblockable, so the rival's rune is the threat the 2 s advance exists to race. Tiro semifinal and final medians are 57.10 s and 62.00 s, past the 45 s fourth unlock, so the race falls inside a normal duel. Hypothesis: a visible rival rune changes whether the player spends the window. No human session has checked that yet.",
+      "effort": "S",
+      "risk": "A second meter clutters a HUD that already covers the southern rim. The rival rune sits on the duelist and reuses the collar inscription; soldier and creature bouts gain nothing.",
+      "verify": "In a duel fixture the rival's drawn rune equals actor.tier for the whole bout. A scripted perfect advances only the player's countdown by perfectAbsorbAdvanceS, subject to the 6 s gap. A soldier bout draws no rival collar.",
+      "why_groundbreaking": "The perfect stops being a private refund and becomes a move in a race the player can see. Reaching the fourth rune before the rival's unblockable is a decision the bout already contains.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    },
+    {
+      "id": "P18",
+      "seat": "grok-grok-4.7_high",
+      "round": 1,
+      "title": "Make high competence play the curve it names",
+      "kind": "deepen",
+      "outcome": "A level 3 or 4 mage casts through the approach, blocks near impact, and punishes a ward it just saw, so the ladder gets harder as the row says it does.",
+      "builds_on": "The mage already plays by the same kernel, with competence living only in its inputs. The competence rows already name the curve, and the compiler already copies those rows through wholesale.",
+      "mechanism": "Read usesTierCurve from the competence row. Rows marked random or holds the best spell keep today's inputs byte for byte, which covers Tiro at 1 and 1.5. On the bait row and the full-curve row: a perfect roll still raises at impact minus half the window. A plain absorb raises at impact minus the window minus the 0.12 s re-raise gap minus one tick, so the ward is up for the hit and the age is outside the window. If that raise would land inside the window, it does not raise, so a failed perfect roll cannot become a perfect by being late. Until the raise, every cadence tick refreshes strafe, aim, and spell choice, and a cadence inside the hold is not thrown away. The tick the ward drops may start a cast. Spell sort prefers an unblockable when the target's ward is up or absorbFreshTick falls inside the last cadence, and prefers an absorbable cast otherwise. Variety weight, aggression, the 0.25 s reaction floor, and the 0.45 perfect cap stay the authorities.",
+      "anchors": [
+        "packages/core/src/arena/mage-ai.ts:9-16",
+        "packages/core/src/arena/mage-ai.ts:64-75",
+        "packages/core/src/arena/mage-ai.ts:78-114",
+        "docs/design/reconciled/data/arena/enemies.json:183-226",
+        "packages/core/scripts/compile-arena-data.mjs:52-53",
+        "packages/core/src/arena/data/runtime.json:46-53"
+      ],
+      "evidence": "Observed: reference wins out of 500 are L1 443, L2 287, L3 115, L4 184, so level 4 loses more often than level 3. usesTierCurve is on the row and is never read. The offensive rebuild sits inside tick >= defendUntil, and a cadence that fires during the hold still advances nextDecisionTick, so the slot is spent on silence. A plain absorb sets plannedRaiseTick to the next tick and holds until impact, and level 4's absorb chance is 0.85 against level 3's 0.75. The unblockable preference runs only when target.absorb is already true, which is a punish of a ward that is already up. Hypothesis: delaying the plain raise to just outside the window, and letting those rows keep deciding until then, removes the silence that inverts the ladder. Confirmed only by the rerun below.",
+      "effort": "M",
+      "risk": "The delayed raise can make level 4 a wall, or a sloppy raise can perfect on a failed roll and break the fairness cap. If the computed raise falls inside the window, the mage does not raise. The 500-seed ladder must be strictly monotonic and level 4 reference wins must stay above zero. Perfects on threats whose perfect roll failed must be zero. Tiro census hashes must stay identical to the H1/U6c records; a moved hash rejects the change. Bands are not retuned.",
+      "verify": "With ladderTrials 500, reference wins are strictly L1 > L2 > L3 > L4. competence at the cap still has reaction delay at least 0.25 s and perfect chance at most 0.45. Across those fights, a failed perfect roll produces no perfect. The 8,000-fight Tiro census matches the current hashes, medians 36.03 / 45.93 / 57.10 / 62.00. A unit test shows an L4 cast on the tick defendUntil elapses, and the input at tick T is independent of the player's input at T+1.",
+      "why_groundbreaking": "The duel at the top of the ladder becomes the exam the rows describe: bait the ward, then punish it. Higher competence stops meaning a longer silence.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    },
+    {
+      "id": "P19",
+      "seat": "grok-grok-4.7_high",
+      "round": 1,
+      "title": "Run the living lesson inside the Feel Lab",
+      "kind": "connect",
+      "outcome": "The owner can freeze, step, replay, and export a thornback charge, a hush-moth drain, a shieldman's flank, and a netter's root with the Lab instruments they already use.",
+      "builds_on": "enemyInputs already runs those lessons in the proving ground, and the Lab already has seed, freeze, one-tick step, the 20 s ring, and the metrics line. The still creature exists so hit-stop can be inspected on a frozen body.",
+      "mechanism": "Add a live value beside the current still creature. Still keeps createLabSetup and stepLab unchanged, so the position hold and the post-death hash stay. Live calls enemyInputs for that actor and then applies the player's frame, the same pairing roster mode uses. Extend the target list with shieldman and netter, which are already in enemyRoster. Metrics, freeze, step, replay, and the grade histogram apply. No new art.",
+      "anchors": [
+        "packages/game/src/lab-setup.ts:27-52",
+        "packages/game/src/lab-setup.test.ts:41-60",
+        "packages/game/src/lab-ui.ts:245-294",
+        "packages/core/src/arena/lab.ts:173-186",
+        "packages/game/src/arena-entry.ts:901-906",
+        "packages/core/src/arena/enemies.ts:32-87"
+      ],
+      "evidence": "Observed: the Lab places a creature and the test asserts that 20 steps leave it unmoved and that 120 steps after death leave the hash unchanged. stepLab never calls enemyInputs. Roster mode does, including the moth's drift toward a held ward and the thornback's charge. The Lab's own doc says active creature AI is exercised in the proving ground, which has no freeze, step, replay, or metrics. Tiro never spawns shieldman, netter, thornback, or hush moth, so those four lessons are the ones the owner cannot currently judge with the Lab. Hypothesis: putting the existing brain under the existing instruments makes those feel checks playable. It does not decide them.",
+      "effort": "S",
+      "risk": "A live target would break the stationary inspection the hit-stop pass depends on. Still stays the default and the existing test stays on still. Live is a separate setup value.",
+      "verify": "Still creatures still hold position for 20 steps and keep the post-death hash for 120 steps. A live thornback changes position and its charge hits a scripted stand-in-lane and misses a scripted sidestep. A live hush moth reduces mana while the ward is held in contact range. A live shieldman takes no damage through the front block and takes damage from a flank. The session exports seed, lesson id, and the answer histogram.",
+      "why_groundbreaking": "The lessons the roster was written to teach become something the owner can feel with the same freeze, step, and export they trust for the window. The Lab and the enemy brain stop being two separate arenas.",
+      "parents": [],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    },
+    {
+      "id": "P20",
+      "seat": "agy-gemini-4-argon_high",
+      "round": 2,
+      "title": "Make High-Competence Mages Play Their Tier Curves and Loadout Ranges",
+      "kind": "deepen",
+      "outcome": "The AI competence ladder scales strictly monotonically from Level 1 to Level 4 (fixing the Level 4 < Level 3 inversion), high-competence mages cast and strafe up until the moment they raise their ward, failed perfect rolls never accidentally trigger late perfects while moving, and Undertow vs Mirror tide mages actively close into 3 m Lash range or space at 6–9 m counter range according to their ready spell lines.",
+      "builds_on": "Evolves the shared-kernel AI controller (`packages/core/src/arena/mage-ai.ts:9-117`), the authored `usesTierCurve` competence table (`docs/design/reconciled/data/arena/enemies.json:185-226`), and the named Water opponent presets (`packages/core/src/arena/data/runtime.json:27-31,46-53`).",
+      "mechanism": "1) Read `usesTierCurve` in `competence()` (`packages/core/src/arena/mage-ai.ts:9-16`). Keep rows 1–2 (`'random'` and `'holds the best spell for its tier'`, covering Tiro at 1.0/1.5 and the L2 reference player) byte-for-byte identical unless an explicit tactical plan is toggled in the Lab, preserving all 8,000 H1/U6c census hashes and the 1,300,369-byte season replay. 2) Fix the moving-actor `impactTick` drift flaw in P18: in `packages/core/src/arena/types.ts:14` and `mage-ai.ts:59-75`, store `decision?: 'ignore' | 'imperfect' | 'perfect' | 'roll'` on each `brain.observed` threat entry when `memory.reacted` flips at `firstSeenTick + ticks(profile.reactionDelayS)`. On every subsequent tick while the threat remains in `seen` (including when `enemy.pending` becomes a live projectile with the same `activationId`), refresh `plannedRaiseTick` and `plannedReleaseTick` from the live `threat.impactTick`: `'perfect'` raises at `threat.impactTick - Math.floor(ticks(tune.absorbWindowS) / 2)`, while `'imperfect'` raises at `threat.impactTick - ticks(tune.absorbWindowS) - ticks(combat.absorb.minReleaseBeforeReRaiseS) - 1` and suppresses the raise if `state.tick + 1 >= threat.impactTick - ticks(tune.absorbWindowS)` so a failed perfect roll can never become an accidental perfect when closing distance. 3) Keep decision cadences active until `plannedRaiseTick` (`mage-ai.ts:78-80`) so `nextDecisionTick` is not wasted on silence during approach, and allow casting on the tick `plannedReleaseTick` elapses. 4) Fuse P12's loadout-driven spacing on curve rows (`'baits absorbs before unblockables'`, `'full curve play'`) and Lab rival plans: replace the static `[5, 8] m` band (`mage-ai.ts:86`) with a composition-derived band that pulls into `[2.0, 2.8] m` when `lash` (`rangeM <= 3` at `mage-ai.ts:95`) is off cooldown and `a.water.lastLine !== 'lash'`, withdraws to `[6, 9] m` during `mirror` (`Sheen`/`Reflection`) windows, and punishes an active or just-dropped target ward (`target.absorb` or `state.tick - target.releaseTick <= ticks(profile.decisionCadenceS)`) with ready unblockables or low-mana `bolt` baits.",
+      "anchors": [
+        "packages/core/src/arena/mage-ai.ts:9-16",
+        "packages/core/src/arena/mage-ai.ts:38-52",
+        "packages/core/src/arena/mage-ai.ts:59-116",
+        "packages/core/src/arena/types.ts:14",
+        "docs/design/reconciled/data/arena/enemies.json:185-226",
+        "docs/design/reconciled/data/arena/spells-water.csv:8-12",
+        "packages/core/src/arena/data/runtime.json:27-31",
+        "packages/core/src/arena/data/runtime.json:46-53"
+      ],
+      "evidence": "Observed in code and dossier: in the 500-trial ladder, reference wins are L1 443, L2 287, L3 115, L4 184 (`brief.md:178-180`) because `mage-ai.ts:68-70` sets `plannedRaiseTick = state.tick + 1` and `defendUntil = plannedReleaseTick` on every imperfect absorb roll, and `mage-ai.ts:78-80` advances `nextDecisionTick` while skipping decisions inside `defendUntil`. Meanwhile, `mage-ai.ts:86` forces a `[5, 8] m` preferred distance while `mage-ai.ts:95` filters out `lash` unless `d <= 3 m`, preventing `Undertow` from using its signature close-range line. Finally, in `mage-ai.ts:48-49,62`, `enemy.pending` and its spawned projectile share `activationId`, so computing `plannedRaiseTick` only once at `firstSeenTick + reactionDelayS` without refreshing `threat.impactTick` as the mage moves causes stale raise timing when combined with pre-raise movement. Hypothesis: refreshing `impactTick` per tick on stored reaction decisions while coupling spacing to ready spell ranges will make L3/L4 strictly stronger and give `Undertow` and `Mirror tide` distinct, readable combat plans.",
+      "effort": "M",
+      "risk": "Closing into 2.0–2.8 m for Lash while delaying plain-absorb raises could cause a moving mage to cross into the 9-tick perfect window on a failed perfect roll, or alter Tiro census hashes if applied to L1/L2. Mitigate by suppressing any `'imperfect'` raise whose refreshed lead would fall inside `ticks(tune.absorbWindowS)`, and gating the new curve/range policy strictly to `usesTierCurve` rows 3–4 (plus explicit Lab selection) so L1/1.5/2 Tiro fights stay byte-identical.",
+      "verify": "1) Across the 500-seed competence ladder (`runtime.games.ladderTrials`), reference wins satisfy `L1 > L2 > L3 > L4` with `L4 > 0`, and threats whose `perfect` roll failed produce `0` perfect absorbs even while the AI closes from 7 m to 2.5 m. 2) In a controlled 30 s duel fixture, an L3/L4 `Undertow` mage closes to `<= 3 m` and casts `lash` at least 3 times, whereas today's AI casts it 0 times from 7 m. 3) All 8,000 H1/U6c Tiro census fight hashes and the 1,300,369-byte season replay hash remain byte-identical.",
+      "why_groundbreaking": "It resolves the codebase's two biggest AI defects—the Level 4 over-defense silence and the 5–8 m range lock that disables Lash—in one cohesive, fairness-capped controller upgrade without breaking a single pinned Tiro census or season replay hash.",
+      "parents": [
+        "P18",
+        "P12"
+      ],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P21",
+      "seat": "agy-gemini-4-argon_high",
+      "round": 2,
+      "title": "Fuse Threat-Answer Ledger, Replay Takeover, and Executable Feel Capsules",
+      "kind": "leap",
+      "outcome": "In both the Combat Feel Lab (including live or stationary roster creatures) and the post-bout Season/Tiro Results screen, the player or owner sees a tick-exact Threat-Answer Ledger for every incoming attack (`PERFECT`, `EARLY +3f`, `LATE -2f`, `CAST-BLOCKED`, `WRONG FACING`, `ROLLED`, `AVOIDED`), can jump directly to any missed read on the timeline and press one key to Take Over and retry that exact moment ten times in a row with live frame-error feedback, or press `M` to export a self-contained Feel Capsule that replays deterministically in Node and prints a `±2 s` diagnostic ledger around every marked moment.",
+      "builds_on": "Unifies the tick-exact ward/hit kernel (`packages/core/src/arena/kernel.ts:69-95,119-128`), the AI threat detector (`packages/core/src/arena/mage-ai.ts:21-52`), the 1,201-frame Lab ring (`packages/core/src/arena/lab.ts:52-62,143-242`), and the server-verified `replayBout` log (`packages/core/src/season.ts:123-155`).",
+      "mechanism": "1) Export `threats()` from `packages/core/src/arena/mage-ai.ts:22` and add a pure, read-only `ThreatLedger` in `packages/core/src/arena/ledger.ts` (from P06) that tracks each threat aimed at an actor by `activationId` and classifies its resolution from post-tick facts (`perfect` event, `hit` with `guarded` and `age - ticks(absorbWindowS)` for `EARLY +Nf`, unguarded hit while `a.pending` for `CAST-BLOCKED`, unguarded frontal hit followed by `input.absorb` within 0.5 s for `LATE -Nf`, outside `absorbArcDeg` for `WRONG FACING`, `state.tick < target.immuneUntil` at contact for `ROLLED`, and no-contact expiry for `AVOIDED`) without mutating `ArenaState`. 2) Move `createLabSetup` (`packages/game/src/lab-setup.ts:28-54`) into `@mage/core/arena` (adding an optional `liveCreature?: boolean` mode that calls `enemyInputs` and `queueDeathEffects` in `stepLab`) and upgrade `CombatLab` (`packages/core/src/arena/lab.ts:52-62,143-242`) to record a run-length-compressed `tape: InputFrame[]`, payload-complete `changes` (including full `CombatTuning` objects on `changeLabTuning`), `marks`, and per-ring-frame `{ nextAttack, attacks, metrics, ledgerCount }` (fixing P07's `stateHash` trim limitation by allowing authoritative replay from tick 0 alongside instant ring-frame takeover). 3) In `packages/game/src/lab-ui.ts:118-166,738-751,814-865` and `packages/game/src/game-shell.ts:1863-1955` (before `a.season.finish()` clears `p.bout` at `season.ts:153`), render the ledger summary, add `[` / `]` hotkeys to seek directly to failed-read ticks, a `Take Over` action (key `B`, with `R` returning to the retake anchor and 1-slot undo) that forks a live practice continuation with `Training.nextAttack` and actor links restored, and a Capsule export/CLI tool (`packages/tools/src/capsule.ts`) that verifies source data hashes, replays Lab or Tiro capsules to their exact `stateHash`/`boutHash`, and outputs the `±2 s` ledger around each mark.",
+      "anchors": [
+        "packages/core/src/arena/kernel.ts:69-95",
+        "packages/core/src/arena/kernel.ts:119-128",
+        "packages/core/src/arena/mage-ai.ts:21-52",
+        "packages/core/src/arena/lab.ts:52-62",
+        "packages/core/src/arena/lab.ts:143-242",
+        "packages/core/src/arena/training.ts:6-40",
+        "packages/game/src/lab-setup.ts:28-54",
+        "packages/game/src/lab-ui.ts:738-751",
+        "packages/game/src/lab-ui.ts:814-865",
+        "packages/core/src/season.ts:123-155",
+        "packages/game/src/game-shell.ts:1863-1955"
+      ],
+      "evidence": "Observed in code: 1) `resolveHit` (`kernel.ts:70`) returns early with no event when `state.tick < target.immuneUntil`, and `updateWard` (`kernel.ts:123`) silently blocks ward raises during `!a.pending`, leaving rolled threats and cast-blocked ward attempts invisible in `state.events` and explaining why the H1 census shows a 32.6% perfect rate in Wave 2 vs 0.5%/0.8% in Waves 3–4 (`docs/waves/H1-evidence/census.json:110,162,214`). 2) `recordLab` (`lab.ts:144-161`) strips `randomLog` and AI audit arrays and omits `Training.nextAttack`/`attacks` (`training.ts:6-40`), while `changeLabTuning` (`lab.ts:222`) logs only `tuning:Custom` without the tuning payload and `createLabSetup` (`lab-setup.ts:28-54`) lives in `packages/game`, making today's Lab replays view-only and exports non-replayable. 3) `a.season.bout.log` is still in memory on the Results screen (`game-shell.ts:1863-1936`) before `finish()` discards it (`season.ts:153`). Hypothesis: uniting tick-level threat grading, mistake-indexed replay takeover, and payload-complete capsules turns every missed read in Lab or Games into an immediate practice loop and an executable regression test.",
+      "effort": "M",
+      "risk": "Forking a replay could corrupt the active Season receipt or desync dummy attack cadence, and stripped audit arrays in `lab.history` would alter `stateHash` if hashed directly. Mitigate by keeping `ThreatLedger` 100% read-only outside `ArenaState`, cloning Season takeovers into an unlinked practice `ArenaGame` while leaving `a.season.bout` untouched, storing `Training.nextAttack`/`attacks` per ring frame for instant takeover, and replaying the full `tape` + payload `changes` from tick 0 when verifying authoritative capsule `stateHash`.",
+      "verify": "1) W2 timing bots run through `ThreatLedger`: leads 0–8 ticks grade 100% `perfect` and leads 9+ grade `early` by `lead - 8` ticks, while H1/U6c census digests and the 1,300,369-byte season replay hash remain byte-identical. 2) Forking a 1,200-tick Lab session (both against a Level 3 mage AI and against the magic dummy) at tick 600 and feeding ticks 601–1,200 reproduces identical actors, projectiles, telegraphs, `rng`, `nextId`, and `Training.nextAttack` at tick 1,200. 3) 20 scripted Lab sessions with mid-bout tuning changes, refills, damage toggles, and `M` marks export and replay in `node packages/tools/src/capsule.ts` to the exact final `stateHash`, and a settled Tiro bout capsule replays to the server-accepted `boutHash`.",
+      "why_groundbreaking": "It closes the entire loop between playing, learning, tuning, and agent verification: the game tells you to the tick why a defense failed, lets you jump to that exact tick and take over the controls until you master it, and exports the moment as a deterministic fixture that agents can replay and diagnose headlessly.",
+      "parents": [
+        "P06",
+        "P07",
+        "P09",
+        "P15"
+      ],
+      "anchor_check": {
+        "ok": 11,
+        "total": 11,
+        "bad": []
+      }
+    },
+    {
+      "id": "P22",
+      "seat": "claude-claude-opus-5-5_xhigh",
+      "round": 2,
+      "title": "Grade each answer on its tick and price every slot as the kernel charges",
+      "kind": "deepen",
+      "outcome": "On the tick a committed defensive mistake resolves, the player reads STEEL, LEAVE, BEHIND or HELD +nf over the contact. The Flow line names the weave or the repeat that broke it. Each slot shows the price trySpellCast will actually charge (0 mana x1.5 CREST at Flow 5, a REPEAT badge on the line that would zero Flow). A perfect shows the mana, Flow and collar credit actually gained. The Lab metrics line and export gain a HELD-lead histogram and break counts, so the window, threat-readability and Flow-readability owner checks can each be observed in one session.",
+      "builds_on": "resolveHit already decides family, arc and fresh-raise age for every contact; flowCast and waterAbsorbed already own Flow; the HUD and pooled numbers already draw from state; visuals already re-derive from state.events on a state swap.",
+      "mechanism": "1) One pure grader in packages/game, called inside ArenaGame's fixed-step callback after every kernel step (and over the per-tick history frames in Lab replay), never per render frame: FixedStepper can run up to 15 ticks in one frame, so a re-raise or a Flow reset can be overwritten between frames, which is the flaw in P16's frame diff. 2) For each player hit event it reads only existing fields (e.family, e.guarded, target.absorb, target.absorbFreshTick, tune.absorbWindowS): guarded magic that is not perfect gives HELD +(age - ticks(window))f; magic with the ward up but not guarded gives BEHIND; physical with the ward up gives STEEL; unblockable gives LEAVE; ward down keeps the plain number. Nothing is written to ArenaState or its events, so unlike P03's kernel enrichment the stateHash, census digests and 1,300,369-byte season replay stay byte-identical. 3) Flow: compare water.flow, lastLine and crests before and after each tick. A rise names both lines, a same-line reset says the line and 'Flow breaks', crest use keeps FREE CREST. The 2 s link window (from lastCastTick) and the 3 s idle grace (from lastActivityTick) drain as a procedural arc on the player's existing ground ring, with no texture. 4) Slots use trySpellCast's own cost rule (flow >= max means crest.manaCost and crest.damageMult), a REPEAT badge goes on the slot whose line equals lastLine while flow > 0, and a 'continues Flow' mark goes only on ready, affordable, different-line slots. 5) The perfect banner shows the event's actual refund, the actual Flow delta, and collar credit computed with updateClock's minimum-gap rule ('rune IV 9.4 s -> 7.4 s', or 'banked' when the gap holds it). 6) LabMetrics gains heldLeads[], behind/steel/leave counts and flowBreaks, carried by metricsText and exportTuning. 7) The rate limit (one tag per 0.4 s), the season-bout default and display durations live in packages/game/data/combat-feedback.json.",
+      "anchors": [
+        "packages/core/src/arena/kernel.ts:69-93",
+        "packages/core/src/arena/kernel.ts:119-128",
+        "packages/core/src/arena/water.ts:11-37",
+        "packages/core/src/arena/water.ts:113-122",
+        "packages/game/src/arena-entry.ts:756-806",
+        "packages/game/src/arena-entry.ts:887-930",
+        "packages/game/src/combat-feedback.ts:132-162",
+        "packages/game/src/lab-ui.ts:850-853"
+      ],
+      "evidence": "Observed: slot detail always renders `${s.mana} mana / Tier n` (arena-entry.ts:764) although trySpellCast charges crest.manaCost 0 at Flow 5 (water.ts:22); the tip says only 'Alternate spells' or 'FREE CREST' (arena-entry.ts:785-789); the number pool special-cases only perfect (combat-feedback.ts:146-152); flowCast zeroes the stack on a repeat and emits nothing (water.ts:14); combat.json threatLanguage names the three answers and has no reader; the Lab line counts perfects but not leads (lab-ui.ts:853). The W2 cliff (lead 8 perfect, lead 9 zero) means a one-tick miss and a thirty-tick miss look the same today. Three seats (P03, P11, P16) converged on this surface independently. Hypothesis: naming the committed mistake and the true price makes the window and Flow checks decidable from one session. It does not predict the owner's verdict.",
+      "effort": "S",
+      "risk": "Words on every hit become noise and hide damage, and the grade could mislabel streams or area hits. Mitigation: tag only a committed ward, an unblockable or a Flow change; plain hits stay numerals; rate-limited and player-only in season bouts behind a data flag; classify only from kernel-truth fields and leave everything else unlabelled.",
+      "verify": "1) W2 timing bots through the grader: every contact at leads 0-8 reads PERFECT and lead L >= 9 reads HELD +(L-8)f, matching docs/waves/W2-evidence/bots.json on 100% of hits. 2) The physical, charge and flanker training lessons produce STEEL, LEAVE and BEHIND. 3) In a seven-cast legal rotation, cast seven's slot reads 0 mana x1.5 CREST, and on every cast the mana actually deducted equals the displayed price; an immediate repeat shows 'Flow breaks' and 0. 4) A perfect at full mana shows +0 mana, and at the minimum unlock gap shows the credit as banked. 5) A forced catch-up of 4 ticks per frame logs the same grade sequence as 1 tick per frame. 6) The pinned season replay stateHash, the H1/U6c census digests and the decoded texture total are unchanged.",
+      "why_groundbreaking": "The fight starts teaching the grammar it already simulates (absorb magic, roll steel, leave the unblockable, never repeat a line) on the tick the decision is made, and every slot tells the truth about its price. It is the cheapest move that turns three open owner checks into observations, and every later replay or practice tool can read the same grade.",
+      "parents": [
+        "P16",
+        "P11",
+        "P03"
+      ],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P23",
+      "seat": "claude-claude-opus-5-5_xhigh",
+      "round": 2,
+      "title": "Give each Water rival a plan and make high competence bait, then punish",
+      "kind": "deepen",
+      "outcome": "The Tiro semifinal and final stop being the same 5-8 m strafer twice. Undertow closes to Lash range, commits and withdraws. Mirror tide holds range, budgets its ward and counter-casts after an observed release. At levels 3-4 the same rivals raise their ward just outside the perfect window, keep deciding until they raise, and punish a ward they just saw with an unblockable. The player sees the rival's collar rune at its feet, so a tier IV Leviathan Orb or Drown Coil is a threat they can watch coming. The ladder becomes monotonic, and the two Tiro duels become different fights that reward the composition the player chose.",
+      "builds_on": "AI mages already play the player's kernel with competence only in their inputs; the two opponent presets already differ in lines; every actor already runs the collar; the 500-seed ladder and the 8,000-fight census already exist to judge the change.",
+      "mechanism": "1) Plan layer (P12), serialized in MageBrain and authored in enemies.json mages.plans. Preferred distance comes from the preset's own spell ranges instead of the shared magePreferredDistanceM. Undertow 'press': approach to within the lash rangeM when a Lash line is off cooldown, cast, then withdraw for its cooldown. Mirror tide 'counter': keep 5-8 m, refuse a raise when mana is below raise cost + expected drain + its next counter, and prefer a cast shortly after an observed enemy release. Seeded choices go through random() with purpose strings. 2) Defence schedule (P18), applied only to rows whose usesTierCurve is 'baits absorbs before unblockables' or 'full curve play', keyed on Math.floor(level). A plain absorb raises at impact - ticks(window) - 1 - margin and never inside the window, so a failed perfect roll cannot become a perfect. Cadence ticks during the hold still refresh strafe, aim and spell choice instead of being spent. The tick the ward drops may start a cast. The unblockable sort fires when the target's ward is up or its absorbFreshTick fell inside the last cadence. Rows 'random' and 'holds the best spell' keep today's schedule byte for byte. 3) Rival collar (P17): for actors with mageAI, the scene draws actor.tier with the existing collar inscription at the figure's foot, using the HUD's own until formula. Presentation only, and nothing on the southern rim. 4) The plan layer changes Tiro behaviour, so it ships behind a deliberate replay/save version bump and a full census rerun with bands unchanged. If any wave leaves its band, plans stay Lab-only and the Tiro proxies keep the old policy.",
+      "anchors": [
+        "packages/core/src/arena/mage-ai.ts:53-80",
+        "packages/core/src/arena/mage-ai.ts:83-114",
+        "docs/design/reconciled/data/arena/enemies.json:183-226",
+        "packages/core/src/arena/data/runtime.json:27-49",
+        "packages/core/src/arena/games.ts:33-40",
+        "packages/core/src/arena/kernel.ts:267-273",
+        "packages/game/src/arena-entry.ts:790-806",
+        "packages/core/scripts/report-ladder.ts:7-21"
+      ],
+      "evidence": "Observed: both Tiro proxies use magePreferredDistanceM [5,8] (mage-ai.ts:86) while Lash range is 3 m and the spell filter requires d <= rangeM (mage-ai.ts:95), so Undertow's signature line is never sought. A plain absorb sets plannedRaiseTick = tick + 1 and holds to impact (mage-ai.ts:68-69). A cadence during the hold still advances nextDecisionTick (79-80). The unblockable preference fires only when target.absorb is already true (103). usesTierCurve has no reader. Ladder reference wins are L1 443, L2 287, L3 115, L4 184 (report-ladder.ts, W4 evidence). Tiro uses competence 1 and 1.5 and the reference player uses 2 (arena-tiers.json; runtime.json:48), so the defence change cannot move Tiro or census inputs; only the plan layer does, and it is versioned. Tier IV Leviathan Orb and Drown Coil are unblockable (spells-water.csv), and duel medians of 57.10/62.00 s pass the 45 s unlock, so the rival rune matters in a normal duel. Hypothesis: plans make the duels recognisable and the late raise removes the silence that inverts the ladder. Only the reruns below confirm it.",
+      "effort": "M",
+      "risk": "Plans can make Tiro duels harder or repetitive, and a late raise could slip perfects past the 0.45 cap. Mitigation: plan weights live only in enemies.json with seeded variation; raises after a failed perfect roll never land inside the window (counted, must be zero); the reaction floor, perfect cap and warning floors are untouched; Tiro gets plans only if the versioned 8,000-fight rerun stays in the existing bands without retuning, otherwise plans stay Lab opponents.",
+      "verify": "1) report-ladder.ts at 500 trials: reference wins strictly L1 > L2 > L3 > L4 with L4 > 0; zero perfects on threats whose perfect roll failed; minimum reaction ticks >= ticks(0.25). 2) With plans off, the 8,000-fight Tiro census reproduces the H1/U6c hashes byte for byte. 3) With plans on: a scripted Lab scenario measures Undertow voluntarily entering 3 m and landing Lash across 100 seeds, against a baseline measured first; Mirror tide completes a defend-then-counter cycle under sustained Rain Needle pressure; versioned census duel medians stay inside the authored [45,85] s bands with no HP, damage or resource change. 4) In a duel fixture the drawn rival rune equals actor.tier on every tick, and soldier and creature bouts draw none. 5) The owner tells the two styles apart in 4 of 5 unlabelled Lab clips.",
+      "why_groundbreaking": "The duels are most of a Tiro day's fight time, and today they are one opponent twice. This makes the composition the player prepares against matter, and it gives the top of the ladder the 'bait the ward, then punish it' exam its own rows describe, with no new art, no new stats and no shorter reaction floor.",
+      "parents": [
+        "P18",
+        "P12",
+        "P17"
+      ],
+      "anchor_check": {
+        "ok": 8,
+        "total": 8,
+        "bad": []
+      }
+    },
+    {
+      "id": "P24",
+      "seat": "codex-gpt-6.1-sol_xhigh",
+      "round": 2,
+      "title": "Prove a better response, then turn the mistake into a drill",
+      "kind": "leap",
+      "outcome": "Select a damaging exchange, inspect its actual defensive timing and blocking conditions, see one legal alternative that simulation has verified, then practise or export that exact situation with the tested response.",
+      "builds_on": "Deterministic continuation, the Lab's replay interface, ordinary opponent input policies, season input logs and existing roster lessons provide the recording, simulation and presentation foundations.",
+      "mechanism": "Add an optional nonserialized trace sink through the stepping wrappers into updateWard and resolveHit, capturing ward requests and rejection reasons plus contact-time family, facing, raise age and immunity before early returns or subsequent reactions change them. Identify contacts by activation, projectile when applicable, target and occurrence. Back practice with canonical checkpoints containing complete audit history, actor IDs and wrapper state, including Training counters or Games phase; rebind actor references after restoration. Record inputs and ordered intervention payloads, including tuning, refill and damage changes. For live roster drills, run enemyInputs and queueDeathEffects and allow surviving hazards to settle. In a worker, search a bounded set of earlier ward raises and legal roll inputs after an observed warning, replaying normal opponent policies from the checkpoint. Certify an alternative only when the kernel demonstrates the stated improvement over a declared follow-up horizon, showing resource and damage tradeoffs. If the search finds nothing, report that limit. Export the checkpoint, journal, original and replacement inputs, fingerprints and both expected hashes. Author search budgets and horizons in runtime.json and feedback durations in combat-feedback.json.",
+      "anchors": [
+        "packages/core/src/arena/kernel.ts:69-110",
+        "packages/core/src/arena/kernel.ts:119-145",
+        "packages/core/src/arena/kernel.ts:275-307",
+        "packages/core/src/arena/lab.ts:143-211",
+        "packages/core/src/arena/training.ts:6-40",
+        "packages/core/src/arena/enemies.ts:32-97",
+        "packages/core/src/season.ts:115-153",
+        "packages/game/src/body-policy.ts:7-25",
+        "packages/game/src/lab-ui.ts:814-864"
+      ],
+      "evidence": "Observed: direct execution confirms that contact age 9 perfects and age 10 does not, yet the current lead-9 timing bot perfects 39/40 contacts over 120 seconds, contradicting the archived oracle. A live Lab state and its renderer snapshot also produced different hashes because the snapshot removed audit data. These findings support contact-time tracing and canonical reconstruction; faster learning from automatically tested alternatives remains a hypothesis requiring owner trials.",
+      "effort": "L",
+      "risk": "A simulated alternative could depend on implausible anticipation or trade one hit for a worse subsequent outcome. Restrict edits to responses after visible cues, preserve all commitment and resource rules, run adaptive opponents normally, and disclose the tested horizon and tradeoffs. Require matching fingerprints and exact replay hashes before presenting a portable drill as reproduced.",
+      "verify": "Trace fixtures distinguish contact ages 9 and 10, cast-blocked raises, flanks, exhaustion, rolls, encase and multiple contacts within one rendered frame. Tracing enabled and disabled produces identical simulation hashes. Exported originals and replacement responses reproduce their respective full hashes, including dummy scheduling and mid-cast continuation; deliberately omitting scheduler restoration fails the test. At least one recoverable fixture takes damage with the recorded response and avoids it with the certified alternative. Repeated practice leaves the season log, receipt and payout untouched. Recording meets the existing CPU and texture budgets, and the owner reaches a selected retry within two actions.",
+      "why_groundbreaking": "Every suggested correction becomes an executable claim that the player can enter and practise. Feel reports gain a reproducible failure, a tested legal response and an explicit account of what the diagnostic search could establish.",
+      "parents": [
+        "P06",
+        "P09",
+        "P14",
+        "P19"
+      ],
+      "anchor_check": {
+        "ok": 9,
+        "total": 9,
+        "bad": []
+      }
+    },
+    {
+      "id": "P25",
+      "seat": "grok-grok-4.7_high",
+      "round": 2,
+      "title": "Seek Lab and season forks from a full checkpoint tape",
+      "kind": "connect",
+      "outcome": "The owner scrubs any Lab exchange or settled Tiro bout to a tick, reads the ledger grade for that threat, drags a feel slider and sees the original bout as a ghost against the retuned tape, then either takes over from that tick or exports the tape as a capsule another machine can replay to the same hash.",
+      "builds_on": "stepArena is deterministic, the season log already replays to boutHash, and the Lab already keeps a 20s picture of the bout. The picture is the wrong object to fork.",
+      "mechanism": "Keep the renderer ring as a view. Authority becomes an input tape recorded in stepLab and applyBoutInput, plus a full ArenaState checkpoint every 2s that includes rng, randomLog, nextId, events, and Training.nextAttack. Seek replays stepArena from the last checkpoint through the tape. Takeover copies that replayed state into a practice session and leaves the settled receipt untouched. A slider runs the same tape under the new tuning into a second state; the ledger from kernel fields (family, guarded, age versus ticks(absorbWindowS), immune with no event) diffs early, late, facing, rolled, and perfect. The baseline draws at 0.35 alpha in the existing Pixi pass. Export writes the tape, the checkpoints, the tuning changes with full values, the marks, and the source hashes; the replayer refuses with the file name whose hash moved.",
+      "anchors": [
+        "packages/core/src/arena/lab.ts:143-172",
+        "packages/core/src/arena/lab.ts:213-223",
+        "packages/core/src/arena/kernel.ts:69-84",
+        "packages/core/src/arena/kernel.ts:303-308",
+        "packages/core/src/arena/training.ts:6-14",
+        "packages/core/src/season.ts:123-155",
+        "packages/game/src/lab-ui.ts:814-848"
+      ],
+      "evidence": "Observed: recordLab stores randomLog as [] and clears decisionTicks, so stateHash of a history entry cannot equal the live state; changeLabTuning records only tuning:${name}; receiveBout nulls the log after a matching replay. Hypothesis: one tape plus full checkpoints makes counterfactual, takeover, and the capsule the same seek, and the ledger delta tells the owner whether a window edit moved early misses or late misses.",
+      "effort": "M",
+      "risk": "A checkpoint that forgets Training.nextAttack would desync the magic dummy while still looking exact. The checkpoint struct includes Training, and a unit test with restoration disabled must fail. Aim floats are run-length compressed; a 5-minute capsule stays at or under 1 MB raw.",
+      "verify": "A scripted 1200-tick Lab bout re-simulated from checkpoint plus tape matches stateHash, including randomLog; the same seek from a compact history entry does not. Raising absorbWindowS on that tape changes the ledger's early count. A Tiro capsule replays to the accepted boutHash, editing combat.json makes the replayer name that file, and takeover leaves the settled receipt hash unchanged.",
+      "why_groundbreaking": "Determinism becomes the instrument the owner already asked for: every unfair moment, every slider, and every feel word is the same executable bout. The 20s ring stays a picture, and the tape is what agents can keep.",
+      "parents": [
+        "P01",
+        "P06",
+        "P07",
+        "P09"
+      ],
+      "anchor_check": {
+        "ok": 7,
+        "total": 7,
+        "bad": []
+      }
+    },
+    {
+      "id": "P26",
+      "seat": "grok-grok-4.7_high",
+      "round": 2,
+      "title": "Step high-competence bait into the punish's real range",
+      "kind": "deepen",
+      "outcome": "A level 3 or 4 mage keeps casting through the approach, raises only near impact, and then walks into the range of the punish it chose, so Undertow is a body at Lash range and a full-curve rival threatens Drown Coil or a staff interrupt from where that hit can land.",
+      "builds_on": "The mage already plays through the same kernel, the competence rows already name the curve, and Undertow and Mirror tide already exist as Tiro loadouts whose spells have real ranges.",
+      "mechanism": "Below competence 3, mageInput stays byte-for-byte the current function, which is every Tiro census actor (opponent 1 and 1.5, reference 2). At competence 3 and 4, read the authored usesTierCurve strings. A successful perfect roll still raises at impact minus half the window. A failed perfect roll raises at impactTick minus ticks(absorbWindowS) minus ticks(minReleaseBeforeReRaiseS) minus 1, and does not raise if that tick would still fall inside the window. Until the raise, each cadence refreshes strafe, aim, and spell choice. When the choice is a punish, an unblockable because the target ward is up, or a staff strike because interruptsCasts is set and the gap can be closed, preferred distance for that windup becomes the spell's rangeM (Lash 3, Drown Coil 2.5, staff 1.6) and returns to the row band when the cast ends. Undertow's default band is Lash range; Mirror tide stays on [5, 8] and spends mana on the absorb. Lab exposes both plans immediately. The Tiro games path does not.",
+      "anchors": [
+        "packages/core/src/arena/mage-ai.ts:64-114",
+        "docs/design/reconciled/data/arena/enemies.json:185-226",
+        "packages/core/src/arena/data/runtime.json:46-49",
+        "docs/design/reconciled/data/arena/arena-tiers.json:45-66",
+        "docs/design/reconciled/data/arena/spells-water.csv:7-12",
+        "docs/design/reconciled/data/arena/combat.json:19-26"
+      ],
+      "evidence": "Observed: a failed perfect roll sets plannedRaiseTick to the next tick and holds defendUntil through impact; level 4's absorb chance is 0.85 and perfect chance is 0.40; W4 reference wins are 443, 287, 115, 184; Lash is 3m and Drown Coil is 2.5m while magePreferredDistanceM is [5, 8]; Tiro competences are 1 and 1.5. Hypothesis: delaying only the level 3 and 4 raise, and committing the punish to its own range, removes the silence and makes the two loadouts readable, and is confirmed only by the ladder rerun.",
+      "effort": "M",
+      "risk": "The delayed raise can make level 4 a wall, or a late raise can perfect on a failed roll. If the computed raise falls inside the window, the mage does not raise. Level 4 reference wins must stay above zero, and a moved Tiro census hash rejects the change. Bands are not retuned.",
+      "verify": "The 8000-fight Tiro census matches the H1 hashes and medians 36.03, 45.93, 57.10, 62.00. With ladderTrials 500, reference wins are strictly level 1 greater than 2 greater than 3 greater than 4, and level 4 wins are at least 1. Across those fights a failed perfect roll produces no perfect. In a Lab fixture a level 4 Undertow enters 3m and casts Lash, and a level 4 Mirror tide answers sustained pressure from inside [5, 8]. The input at tick T is independent of the player's input at T+1.",
+      "why_groundbreaking": "Higher competence stops meaning a longer silence, and the punish stops being a spell the body cannot reach. The two Water rivals become fights a player can learn, while the Tiro census the pacing bands rest on stays put.",
+      "parents": [
+        "P02",
+        "P12",
+        "P18"
+      ],
+      "anchor_check": {
+        "ok": 6,
+        "total": 6,
+        "bad": []
+      }
+    }
+  ],
+  "ratings": [
+    {
+      "id": "P01",
+      "score": 5,
+      "why": "Checked packages/core/src/arena/lab.ts:144-223, packages/core/src/arena/training.ts:6-40, and packages/game/src/arena-scene.ts:530-630: counterfactual Lab re-simulation is a compelling idea, but the proposal cites non-existent test files (balance.test.ts, arena.test.ts), proposes 3D wireframe ghost meshes in a 2D PixiJS sprite renderer, and misses that Training.nextAttack lives outside ArenaState.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P02",
+      "score": 4,
+      "why": "Checked packages/core/src/arena/mage-ai.ts:64-74, docs/design/reconciled/data/arena/enemies.json:186-226, and docs/design/reconciled/data/arena/combat.json:12-26: while it correctly spots the premature plannedRaiseTick = state.tick + 1 hold at mage-ai.ts:68, it cites a non-existent balance.test.ts, invents combat.dodgeRoll.iframeS and feel.json keys, and misstates the actual usesTierCurve strings in enemies.json.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P03",
+      "score": 4,
+      "why": "Checked packages/game/src/arena-scene.ts:572-602, packages/game/src/arena-entry.ts:742-789, and packages/core/src/arena/kernel.ts:75-95,304-308: the HUD observations on Crest cost and lastLine are accurate, but the proposal hallucinates Three.js RingGeometry in a 2D PixiJS scene, cites a non-existent arena.test.ts, and mutates state.events in resolveHit which would break stateHash and all pinned replay hashes.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P04",
+      "score": 3,
+      "why": "Checked packages/game/src/arena-scene.ts:431-452, packages/game/src/body-policy.ts:33-44, and packages/core/src/season.ts:30-36: the proposal falsely claims arena-scene.ts:431-452 maps rivals to preloaded 3D GLB models and calls game-shell.ts:1606 renderArenaComposition, while straying into out-of-scope camp integration and misusing Lab-only school multipliers for Season bouts.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P05",
+      "score": 4,
+      "why": "Checked docs/design/reconciled/data/arena/arena-tiers.json:85-271, docs/design/reconciled/data/arena/enemies.json:1-240, and packages/core/src/arena/games.ts:8-43: catching the creatureOpeningOrder[index] bounds issue on 7-unit waves is valid, but enemies.json:8 has no maxSimultaneousAttackers field as claimed, veteranus/primus/summa lack targetDurationS bands in arena-tiers.json, and inventing a 5-bounce harmonic blast overreaches W9 scope.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P06",
+      "score": 9,
+      "why": "Checked packages/core/src/arena/kernel.ts:69-93,123, packages/core/src/arena/mage-ai.ts:21-52, and docs/waves/H1-evidence/census.json:110,162,214: every code claim is exact—including the silent early return on immuneUntil at kernel.ts:70 and the 32.6% vs 0.5%/0.8% perfect-rate drop in census.json—and a pure read-only ledger gives both players and the owner tick-exact timing diagnostics without touching stateHash.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P07",
+      "score": 8,
+      "why": "Checked packages/core/src/arena/lab.ts:143-172, packages/core/src/arena/training.ts:6-40, and packages/game/src/combat-feedback.ts:97-113: catching that Training.nextAttack and attacks live outside ArenaState makes Lab replay takeover genuinely deterministic at effort S, with only the minor limitation that recordLab strips randomLog and decisionTicks from ring snapshots.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P08",
+      "score": 8,
+      "why": "Checked packages/core/src/arena/games.ts:12-21,71-84, packages/core/scripts/report-w4.ts:15-17, and packages/tools/src/cf-report.ts:25-43: runFight currently ignores state.tuning, and running a 50-seed per-wave census and Lab-duel sweep in a Web Worker exploits @mage/core/arena's verified zero-DOM purity (kernel.test.ts:129-132) to unite feel tuning with pacing proof.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P09",
+      "score": 8,
+      "why": "Checked packages/core/src/arena/lab.ts:213-242, packages/game/src/lab-setup.ts:28-54, and packages/core/src/season.ts:123-155: spotting that lab.changes only logs tuning names without payloads and that createLabSetup is stranded in packages/game makes this capsule exporter/replayer cleanly reproducible in Node across both Lab and Season bouts.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P10",
+      "score": 6,
+      "why": "Checked packages/core/src/arena/mage-ai.ts:53-106 and docs/design/reconciled/data/arena/enemies.json:185-238: while fitting a player Shade aligns with the echo entry in enemies.json:228-238, calibrating MageBrain parameters on top of the unfixed mage-ai.ts:68-70 premature-ward bug requires a heavy L-effort fitting loop before the owner has even run gate G1.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P11",
+      "score": 8,
+      "why": "Checked packages/core/src/arena/water.ts:11-37,113-122, packages/core/src/arena/kernel.ts:75-84,267-271, and packages/game/src/arena-entry.ts:743-846: every claim holds in code—slots still show normal mana cost during a free x1.5 Crest, Flow link/idle timers and lastLine are hidden, and PERFECT ABSORB omits Flow and minimum-gap collar credit—making this a zero-hash-risk S-effort win.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P12",
+      "score": 8,
+      "why": "Checked packages/core/src/arena/mage-ai.ts:86,95, packages/core/src/arena/data/runtime.json:28-29,46,49, and docs/design/reconciled/data/arena/spells-water.csv:8-12: mage-ai.ts:86 indeed keeps all mages at 5–8 m while mage-ai.ts:95 filters lash out unless d <= 3 m, so connecting preferred range and defense commitment to loadout purpose makes Undertow and Mirror tide play distinctly.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P13",
+      "score": 7,
+      "why": "Checked packages/core/src/arena/kernel.ts:205-236 and packages/core/src/arena/enemies.ts:17-30: thorn_charge indeed resolves damage across the entire 12 m lane on a single tick and teleports owner.pos at kernel.ts:233, so multi-tick swept body commitment directly improves spatial counterplay, though changing conscript lunges alters Wave 1 hashes and requires re-verifying Tiro soldier pacing.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P14",
+      "score": 7,
+      "why": "Checked packages/core/src/arena/lab.ts:143-171, packages/core/src/arena/kernel.ts:303-308, and packages/core/src/season.ts:115-136: the proposal accurately notes that recordLab strips randomLog and AI audit arrays while stateHash hashes the full state, but building a full scored-objective drill system across all modes is high effort (L) relative to direct replay takeover and feel capsules.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P15",
+      "score": 8,
+      "why": "Checked packages/core/src/season.ts:123-155 and packages/game/src/game-shell.ts:1863-1943: a.season.bout.log remains intact on the results screen until Return to camp calls a.season.finish(), so replaying bout.log via replayBout and cloning a practice takeover at any missed read brings frame-level mastery to full 60 s Season bouts without touching the settled receipt hash.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P16",
+      "score": 6,
+      "why": "Checked packages/core/src/arena/kernel.ts:56,75-95 and packages/game/src/combat-feedback.ts:114-162: grading hits from live actor.absorb and actor.absorbFreshTick outside ArenaState fails on killing blows (where defeatActor clears actor.absorb = false at kernel.ts:56) and during replay scrubbing (where e.tick < state.tick), while replacing damage numerals with words hides HP lost.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P17",
+      "score": 7,
+      "why": "Checked packages/core/src/arena/kernel.ts:83,267-272 and packages/game/src/arena-entry.ts:660-691,790-839: updateClock runs for every living actor and banks 2 s on clockAdvanceTicks per perfect absorb, so drawing the rival mage's collar progress makes the race to tier IV unblockables visible at effort S, though the mechanism slightly conflates a foot inscription with a second HUD clock hand.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P18",
+      "score": 9,
+      "why": "Checked packages/core/src/arena/mage-ai.ts:64-114 and docs/design/reconciled/data/arena/enemies.json:186-226: gating delayed plain-absorb raises and uninterrupted pre-raise decision cadences on usesTierCurve rows 3–4 cleanly fixes the L4 over-defense inversion while preserving L1–L2 (and all 8,000 H1/U6c Tiro census hashes) byte-for-byte, needing only a live impactTick refresh when strafing.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P19",
+      "score": 8,
+      "why": "Checked packages/game/src/lab-setup.ts:12-54, packages/game/src/lab-setup.test.ts:41-60, packages/core/src/arena/lab.ts:173-186, and packages/game/src/arena-entry.ts:901-906: stepLab never calls enemyInputs or queueDeathEffects and lab-setup.ts omits shieldman and netter, so adding a live toggle beside the default still mode brings all 8 roster lessons under the Lab's instruments without breaking existing tests.",
+      "by": "agy-gemini-4-argon_high"
+    },
+    {
+      "id": "P01",
+      "score": 5,
+      "why": "The counterfactual for the absorb window is a real question, but the cited 2.2 us/tick benchmark comes from a balance.test.ts that does not exist, it ignores Training.nextAttack living outside state (training.ts:6), and its hash-equality check would fail because Lab history frames strip randomLog and the AI audit arrays (lab.ts:143-160).",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P02",
+      "score": 4,
+      "why": "The diagnosis at mage-ai.ts:68-69 (plain absorb raises at tick+1 and holds to impact) is right, but its balance.test.ts anchors do not exist (the ladder is scripts/report-ladder.ts), it says L3 reacts in 0.42 s when the data says 0.35, imperfectLeadS does not exist, staff strikes already interrupt through H1 stagger, and the all-level change moves census hashes without saying so.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P03",
+      "score": 5,
+      "why": "Verified that slots render `${s.mana} mana` even at Flow 5 (arena-entry.ts:764) and that a late ward gets no timing feedback, but enriching the kernel's hashed hit events changes the pinned season replay hash, and it overlaps P11 and P16.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P04",
+      "score": 3,
+      "why": "guile and renown are real unread rules (stats.csv:5-6) dropped by campPlayerSnapshot, but arena-scene.ts has no Brennic/Garran/Iskar mapping (only an art fixture and a test name them), the school 'profiles' are Lab multipliers over Water spells so a 'fire' rival would still cast Water, and the camp is out of scope.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P05",
+      "score": 3,
+      "why": "The Tiro-only hardcode (games.ts:8) and the 4-entry creatureOpeningOrder are confirmed, but the Summa 'Breaking Resonance' mechanic is invented (arena-tiers.json only says the final can become a cooperative duet), it presumes an owner ending decision, and M effort is far too small for three tiers, mastery and new census bands.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P11",
+      "score": 6,
+      "why": "Confirmed the tip reads only 'Alternate spells' or 'FREE CREST' (arena-entry.ts:785-789), slot prices ignore the 0-mana Crest, and the perfect banner shows mana only; it is careful not to overstate gains, but it is abstract and overlaps P03 and P16.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P12",
+      "score": 6,
+      "why": "Confirmed both Tiro proxies share magePreferredDistanceM [5,8] (runtime.json:46) while Lash range is 3 m and the spell filter requires d <= rangeM (mage-ai.ts:95), so Undertow never seeks its signature line; good value for the duels players actually fight, but the mechanism is vague and the Tiro census risk is real.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P13",
+      "score": 5,
+      "why": "Confirmed the charge damages the whole lane on one tick and then teleports the owner (kernel.ts:214-235) and that conscripts plant to attack; a genuine gain in spatial counterplay, but it needs a kernel change, a save bump and a census rerun, thornback is not in Tiro, and the owner's 'one-axis' quote is about the characters, so the link is stretched.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P14",
+      "score": 5,
+      "why": "A broad L-sized superset of the takeover and capsule ideas with little concrete mechanism; it rightly notes that compact history strips the audit arrays, but that does not block exact continuation because mageInput never reads decisionTicks or reactionAges.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P15",
+      "score": 7,
+      "why": "Confirmed receiveBout re-simulates the log and then sets p.bout = null (season.ts:141-153), so the full input log exists up to settlement; it carries replay and takeover into the real Tiro bout while keeping the grade outside hashed state and the receipt untouched.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P16",
+      "score": 8,
+      "why": "Confirmed the number pool special-cases only perfect (combat-feedback.ts:146-152), flowCast zeroes Flow on a repeat silently (water.ts:14), and threatLanguage has no reader (grep); S effort, hash-safe and serves three open owner checks, its one flaw being Flow diffs per render frame, which miss multi-tick frames.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P17",
+      "score": 5,
+      "why": "Confirmed updateClock runs for every actor while the countdown is player-only, and that tier IV Leviathan Orb and Drown Coil are unblockable; cheap and readable, but a perfect never touches the rival's clock, so the 'race' is mostly a threat forecast against L1/L1.5 Tiro rivals.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P18",
+      "score": 6,
+      "why": "Every premise checks out (usesTierCurve unread, nextDecisionTick spent during the hold at mage-ai.ts:79-80, the unblockable punish only when target.absorb is already true at :103), and it keeps the Tiro L1/L1.5 and reference L2 rows byte-identical while guarding the perfect cap, but today only the Lab and the ladder field L3/L4.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P19",
+      "score": 6,
+      "why": "Confirmed stepLab never calls enemyInputs while roster mode does (arena-entry.ts:901-905) and that Lab creatures are stationary by design; a cheap, safe way to put existing brains under the Lab's freeze, step and replay, though the four creatures it targets are not in Tiro.",
+      "by": "claude-claude-opus-5-5_xhigh"
+    },
+    {
+      "id": "P01",
+      "score": 4,
+      "why": "lab.ts requires scheduler and AI calls outside stepArena and strips audit history, while arena-scene.ts uses Pixi sprites, so the proposed replay correctness, mesh overlays and performance claims substantially understate implementation work.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P02",
+      "score": 5,
+      "why": "mage-ai.ts confirms premature defense, but imperfectLeadS and balance.test.ts do not exist, and enemies.json gives level 3 a 0.35-second reaction delay rather than the claimed 0.42 seconds.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P03",
+      "score": 6,
+      "why": "water.ts and arena-entry.ts confirm misleading costs and missing diagnostics, but arena-scene.ts uses Pixi rather than Three.js, and adding event fields changes the complete-state hash.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P04",
+      "score": 2,
+      "why": "season.ts confirms the missing rival bridge, but lab-schools.json contradicts the claimed modifiers, arena-scene.ts contains no GLB mapping, and the proposed camp intrigue work exceeds the hunt's scope.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P05",
+      "score": 1,
+      "why": "arena-tiers.json defines two Summa bouts and no proposed resonance mechanics, while enemyInputs restricts only hound engagement slots, leaving the medium-effort ending expansion unsupported and dependent on excluded camp work.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P06",
+      "score": 6,
+      "why": "resolveHit confirms the diagnostic gap, but a read-only 120-second timingBot run produced 39/40 perfects at lead 9, contradicting its acceptance oracle, and threat disappearance cannot reliably establish evasion.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P07",
+      "score": 8,
+      "why": "recordLab retains causal RNG and AI memory while Training owns the omitted scheduling counters, making wrapper-aware takeover a practical practice improvement whose acceptance correctly compares continuation fields rather than original audit hashes.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P08",
+      "score": 7,
+      "why": "games.ts and cf-report.ts confirm reusable deterministic runners, making paired forecasts valuable, although browser throughput is unmeasured and explicitly attaching default tuning would invalidate the promised historical hashes.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P09",
+      "score": 9,
+      "why": "lab.ts records tuning names without values, exportTuning omits setup, and season.ts discards the verified log at settlement, so complete journals and portable capsules address a directly observed reporting gap.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P10",
+      "score": 3,
+      "why": "mage-ai.ts and season.ts provide plausible parameters and recordings, but the dossier contains no human sessions and the required ledger is unbuilt, leaving expensive behavioral fitting and predictive value largely speculative.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P11",
+      "score": 10,
+      "why": "flowCast, waterAbsorbed, updateClock and the HUD confirm that these offensive rewards already exist but remain poorly communicated, giving this narrowly scoped presentation change exceptional immediate value.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P12",
+      "score": 9,
+      "why": "mage-ai.ts combines distant spacing with range-filtered Lash selection, while games.ts already assigns contrasting compositions, so composition-aware plans resolve a concrete tactical contradiction and improve current Tiro encounters.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P13",
+      "score": 7,
+      "why": "enemies.ts and kernel.ts confirm stationary lunges and instantaneous charge damage, but sidestepping already works during windup, making traveling contact and bodily commitment valuable additions with substantial collision and pacing costs.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P14",
+      "score": 8,
+      "why": "lab.ts explicitly strips audit arrays and season.ts supplies authoritative input replay, so this proposal correctly budgets canonical checkpoints, wrapper restoration and isolated practice as a substantial feature with reusable player value.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P15",
+      "score": 7,
+      "why": "season.ts confirms verified replay and settlement-time log deletion, but replayBout has no seek API and the cited lead-9 cliff is stale, increasing the work needed for responsive, accurate bout review.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P16",
+      "score": 6,
+      "why": "combat-feedback.ts consumes historical events against current actors and resolveHit can immediately stagger or defeat them, so reliable contact-time ward, facing and Flow explanations require observations beyond the proposed current-state comparison.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P17",
+      "score": 8,
+      "why": "updateClock advances every living actor while arena-entry.ts displays only the player's countdown, so an opponent rune cheaply exposes an existing tactical race through available state and presentation assets.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P18",
+      "score": 5,
+      "why": "mage-ai.ts confirms wasted decision cadences, but report-ladder.ts explicitly defines perfect probability as a decision chance, so prohibiting incidental perfect contacts misconstrues the fairness contract and unnecessarily discards valid defenses.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P19",
+      "score": 8,
+      "why": "stepLab and lab-setup.test.ts confirm the stationary-target gap, but live integration must also settle death hazards and address mothContact's explicit Lab exclusion, adding modest work beyond the proposed target toggle.",
+      "by": "codex-gpt-6.1-sol_xhigh"
+    },
+    {
+      "id": "P01",
+      "score": 7,
+      "why": "lab.ts and lab-ui.ts do keep a 20s forward-only replay and exportTuning omits the seed, but the cited balance.test.ts is absent and recordLab clears randomLog, so a resim from a history entry cannot match stateHash.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P02",
+      "score": 5,
+      "why": "mage-ai.ts:68-69 does raise on the next tick after a failed perfect roll and level 4's perfect chance is 0.40, but level 3's delay is 0.35s, feel.json:69 is spellVarietyWeight, and dodgeRoll, tier_hold, and balance.test.ts are not in the tree.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P03",
+      "score": 5,
+      "why": "arena-entry.ts:764 always prints s.mana and resolveHit stores no timing fields, but arena-scene.ts is Pixi and hit events sit inside stateHash, so the Three.js RingGeometry and the kernel fields as specified both miss.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P04",
+      "score": 6,
+      "why": "games.ts:36 is a Water proxy and campPlayerSnapshot drops guile and renown, but lab-schools.json gives fire 1.12 damage and no poise term, and arena-scene.ts:431-452 draws spell telegraphs rather than the school bodies in body-policy.ts.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P05",
+      "score": 5,
+      "why": "games.ts hardcodes tiro and Veteranus wave 2 puts 7 creature spawns through a 4-long creatureOpeningOrder, but arena-tiers.json:249-258 is a trust and Knowing duet, and reflectProjectile returns when p.reflected is already true.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P06",
+      "score": 9,
+      "why": "H1 census.json records perfect rates 0.3255, 0.0051 and 0.0077, game-shell.ts:1900 shows only bouts, gold and renown, and kernel.ts:70 returns with no event while the target is immune.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P07",
+      "score": 7,
+      "why": "lab-ui.ts:814-836 only displays the ring and training.ts keeps nextAttack outside ArenaState, but recordLab clears randomLog and the mage audit arrays, so copying the shown frame fails the proposed actor deep-equal.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P08",
+      "score": 8,
+      "why": "runFight takes no tuning argument, census seeds start at 40000, and H1 census.json measured 206.98s for 8000 fights; the browser-worker rate is left as a hypothesis.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P09",
+      "score": 8,
+      "why": "exportTuning stores tuning only, changeLabTuning logs the preset name, combat-feel-lab.md:135 omits seed and setup, and receiveBout sets bout to null after replayBout matches.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P10",
+      "score": 4,
+      "why": "competence() is a handful of scalars and season.ts:129 keeps inputs only until receiveBout discards them; one reference profile already produces perfect rates 0.3255 and 0.0051, and enemies.json:228 already specifies this Echo.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P11",
+      "score": 8,
+      "why": "arena-entry.ts:764 still prints the spell's mana cost while the tip says only FREE CREST, spells-water.csv prices Rain Needle at 3 and Leviathan Orb at 45, and the collar label already applies the 6s gap.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P12",
+      "score": 6,
+      "why": "runtime.json names Undertow and Mirror tide and both use magePreferredDistanceM [5, 8] while Lash's range is 3m, so the spacing gap is real; the 115-versus-184 inversion is the defendUntil hold in mage-ai.ts.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P13",
+      "score": 7,
+      "why": "updateTelegraphs resolves a charge across the lane on one tick and then writes the endpoint, the conscript zeros movement during windup, and lab-setup.test.ts expects the creature unmoved after 20 steps.",
+      "by": "grok-grok-4.7_high"
+    },
+    {
+      "id": "P14",
+      "score": 6,
+      "why": "recordLab drops randomLog while stateHash covers the full state, and replayBout already rebuilds a bout from its log; the scored cross-install challenge is a large extra on top of that checkpoint.",
+      "by": "grok-grok-4.7_high"
+    }
+  ],
+  "seats": {
+    "agy-gemini-4-argon_high": {
+      "letter": "A",
+      "spec": "agy:gemini-4-argon@high"
+    },
+    "claude-claude-opus-5-5_xhigh": {
+      "letter": "B",
+      "spec": "claude:claude-opus-5-5@xhigh"
+    },
+    "codex-gpt-6.1-sol_xhigh": {
+      "letter": "C",
+      "spec": "codex:gpt-6.1-sol@xhigh"
+    },
+    "grok-grok-4.7_high": {
+      "letter": "D",
+      "spec": "grok:grok-4.7@high"
+    }
+  },
+  "problems": {}
+}
