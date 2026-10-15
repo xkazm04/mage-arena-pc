@@ -14,6 +14,8 @@ export const creatureTargets = [
   "mire_maw",
   "thornback",
   "hush_moth",
+  "shieldman",
+  "netter",
 ] as const;
 export type CreatureTarget = (typeof creatureTargets)[number];
 export type LabSetup = LabConfig & {
@@ -24,7 +26,7 @@ export type LabSession = Omit<CombatLab, "config"> & { config: LabSetup };
 export const creatureName = (id: CreatureTarget) =>
   enemyRoster.find((s) => s.id === id)!.name;
 
-/** Stationary roster targets for art/feel inspection. Season rules stay in core. */
+/** Roster targets for art/feel inspection: still by default, or live (config.targetMotion) with the roster brain. Season rules stay in core. */
 export function createLabSetup(
   config: LabSetup,
   tuning?: CombatTuning,
