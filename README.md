@@ -5,6 +5,22 @@ in [the reconciled data](docs/design/reconciled/data); the contest designs are
 historical references. The core is pure TypeScript, and the Director owns external
 processes, validation, caching and budgets.
 
+## Core law: a replayable transition function
+
+`packages/core/src` is what saves, replays and the VR pin depend on, so the same seed and
+inputs must give the same state on every machine. Inputs and the seed arrive as values;
+time is the tick (`FixedStepper`); every random value comes from the seeded RNG in
+`packages/core/src/arena/kernel.ts` (`random(state, purpose)`), which logs each draw for
+replay. Never reach for `Math.random`, `Date`, timers, `process`, `crypto`, `Intl`, the DOM,
+Node modules, dynamic `import()` or the game, tools and Director packages. Pass what
+you need in, and let the game or the Director act on what the core returns.
+
+Three gates hold this, each proven to fire: the core block in `eslint.config.mjs` with its
+canaries in `packages/core/src/determinism-wall.test.ts`, the pinned replay hashes in
+`packages/core/src/arena/replay-golden.test.ts`, and the `types: []` compile in
+`packages/core/tsconfig.purity.json`. When you add a restriction, add its canary; when an
+intended combat or data change rehashes the replay pin, re-pin it in the same commit.
+
 Requires Node 24 or newer and npm. From the repository root:
 
 ```powershell
