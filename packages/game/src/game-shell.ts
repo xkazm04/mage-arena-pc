@@ -1900,6 +1900,20 @@ export class GameShell {
       boutAnswerLines(a.ledger).forEach((line, i) =>
         u.text(line, 290, 350 + i * 52, 26, colours.text, 710),
       );
+      if (a.season)
+        u.button(
+          "read-bout",
+          "Read the bout",
+          250,
+          650,
+          790,
+          76,
+          () => this.readBout(),
+          {
+            tooltip:
+              "Replay this bout from your own inputs, seek to any threat, and take over as practice.",
+          },
+        );
     }
     u.text(
       intermission
@@ -1960,6 +1974,18 @@ export class GameShell {
     );
     u.onBack = () => void this.pause();
     u.end();
+  }
+  private readBout() {
+    const a = this.arena;
+    if (!a) return;
+    try {
+      a.openReader().draw(this.ui, {
+        back: () => this.results(),
+        takeOver: () => a.takeOver(),
+      });
+    } catch (e) {
+      this.ui.notice(e instanceof Error ? e.message : String(e));
+    }
   }
   private async pause() {
     if (

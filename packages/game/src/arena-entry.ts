@@ -9,10 +9,14 @@ import { audioData } from "./audio-policy.ts";
 import { BitmapText, Graphics } from "pixi.js";
 import {
   applyBoutInput,
+  boutCheckpoint,
   boutHash,
+  takeOverBout,
+  type BoutCheckpoint,
   type BoutInput,
   type SeasonBout,
 } from "@mage/core";
+import { BoutReader } from "./bout-reader-ui.ts";
 import {
   combat,
   idleInput,
@@ -98,6 +102,14 @@ export class ArenaGame {
   ledger?: ThreatLedger;
   lab?: LabSession;
   labUI?: LabUI;
+  /** Season bout checkpoints at its opening and every wave start, kept beside the state so a reading skips earlier waves. */
+  readonly tape: BoutCheckpoint[] = [];
+  /** The results card's reading of the wave just fought; shown instead of the live state while its screen is up. */
+  reader?: BoutReader;
+  /** A practice clone taken over from the reading. Never sent, saved or paid; `live` is what it stands in for. */
+  practice?: {
+    live: { games: Games; ledger?: ThreatLedger; lastPhase: string };
+  };
   composition: Composition = structuredClone(presets[0]!);
   mode: "training" | "roster" | "tiro" | "lab" = "training";
   paused = false;
@@ -158,6 +170,8 @@ export class ArenaGame {
       this.mode = "tiro";
       this.sync();
       this.ledger = createLedger(this.games.state, this.games.player.id);
+      if (season.bout.phase !== "prepared")
+        this.tape.push(boutCheckpoint(season.bout));
     }
     this.lastEvents = this.training.state.events.length;
     gameAudio.pauseWorld(false);
@@ -595,7 +609,57 @@ export class ArenaGame {
   private seasonStep(entry: BoutInput) {
     applyBoutInput(this.season!.bout, entry);
     if (this.ledger && this.games) observeLedger(this.ledger, this.games.state);
+    if (entry.type === "advance")
+      this.tape.push(boutCheckpoint(this.season!.bout));
     this.queued.push(entry);
+  }
+  /** Read the season wave just fought from the client's own log; rebuilt only when the log has grown. */
+  openReader(): BoutReader {
+    const bout = this.season?.bout;
+    if (!bout?.games || this.practice)
+      throw Error("Only a fought season bout can be read.");
+    if (
+      this.reader?.reading.source !== bout ||
+      this.reader.wave.last !== bout.log.length
+    )
+      this.reader = new BoutReader(bout, this.tape);
+    this.reader.playing = false;
+    this.pause(true);
+    return this.reader;
+  }
+  /** Practice from the reader's tick: a clone of the replayed Games, stepped locally and never queued or flushed. */
+  takeOver() {
+    if (!this.reader?.canTakeOver || !this.games || this.practice) return;
+    this.practice = {
+      live: {
+        games: this.games,
+        ledger: this.ledger,
+        lastPhase: this.lastPhase,
+      },
+    };
+    this.games = takeOverBout(this.reader.at);
+    this.ledger = undefined;
+    this.sync();
+    this.lastEvents = this.training.state.events.length;
+    this.lastPhase = "";
+    this.lastPerfect = -1e9;
+    this.impactClock.reset();
+    this.pause(false);
+    this.hud();
+  }
+  endPractice(note = "Practice ended. The settled bout is unchanged.") {
+    const live = this.practice?.live;
+    if (!live) return;
+    this.practice = undefined;
+    this.games = live.games;
+    this.ledger = live.ledger;
+    this.sync();
+    this.lastEvents = this.training.state.events.length;
+    this.lastPhase = live.lastPhase;
+    this.impactClock.reset();
+    this.pause(true);
+    this.results();
+    this.ui.notice(note);
   }
   async flush() {
     if (this.pending) await this.pending;
@@ -643,11 +707,13 @@ export class ArenaGame {
     u.begin("arena");
     u.onBack = this.settings;
     u.text(
-      this.mode === "tiro"
-        ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
-        : this.lab
-          ? "COMBAT FEEL LAB"
-          : "THE PROVING GROUND",
+      this.practice
+        ? `PRACTICE  /  BOUT ${(this.games?.wave ?? 0) + 1} TAKEN OVER  /  NOTHING IS SENT, SAVED OR PAID`
+        : this.mode === "tiro"
+          ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
+          : this.lab
+            ? "COMBAT FEEL LAB"
+            : "THE PROVING GROUND",
       96,
       58,
       24,
@@ -665,6 +731,20 @@ export class ArenaGame {
     u.button("pause", "Pause", 1644, 54, 180, 68, this.settings, {
       tooltip: "Escape / Start opens pause and settings.",
     });
+    if (this.practice)
+      u.button(
+        "end-practice",
+        "End practice",
+        1524,
+        140,
+        300,
+        68,
+        () => this.endPractice(),
+        {
+          tooltip:
+            "Back to the results. The settled bout and its receipt are unchanged.",
+        },
+      );
     u.panel(96, 806, 400, 220);
     const hp = u.bar("VITALITY", 132, 834, 328, p.hp, p.maxHp, colours.danger),
       mana = u.bar("MANA", 132, 892, 328, p.mana, p.maxMana, colours.water),
@@ -961,6 +1041,7 @@ export class ArenaGame {
     if (
       !this.paused &&
       !this.labUI?.replayState &&
+      (!this.reader || this.ui.screen !== "bout-reader") &&
       !this.pending &&
       !this.syncError &&
       !this.training.player.tags.includes("DEFEATED") &&
@@ -969,7 +1050,8 @@ export class ArenaGame {
       alpha = this.clock.advance(simulationDt, () => {
         if (this.lab) stepLab(this.lab, this.input.frame());
         else if (this.games) {
-          if (this.season && this.games.phase === "active")
+          if (this.practice) stepGames(this.games, this.input.frame());
+          else if (this.season && this.games.phase === "active")
             this.seasonStep({
               type: "tick",
               tick: this.games.state.tick,
@@ -1008,9 +1090,14 @@ export class ArenaGame {
         ),
       );
     this.consumeEvents(reduced);
-    const replay = this.lab ? this.labUI?.frame(dt) : undefined;
+    const read =
+      this.reader && !this.practice && this.ui.screen === "bout-reader"
+        ? this.reader.frame(dt)
+        : undefined;
+    const replay = this.lab ? this.labUI?.frame(dt) : read?.state;
     const shown = replay ?? this.training.state;
     const shownPlayer =
+      read?.player ??
       replay?.actors.find((a) => a.id === this.training.player.id) ??
       this.training.player;
     this.camera = clampPlateCamera(
@@ -1034,9 +1121,9 @@ export class ArenaGame {
       this.artFixture?.state ?? shown,
       this.artFixture?.player ?? shownPlayer,
       this.camera,
-      alpha,
-      this.input.aim,
-      this.lastPerfect,
+      read ? 1 : alpha,
+      read ? read.player.lastInput.aim : this.input.aim,
+      read ? -1e9 : this.lastPerfect,
       false,
       dt,
     );
@@ -1052,7 +1139,13 @@ export class ArenaGame {
     ) {
       this.lastPhase = phase;
       this.pause(true);
-      this.results();
+      if (this.practice)
+        this.endPractice(
+          phase === "lost"
+            ? "Practice lost. The settled bout is unchanged."
+            : "Practice bout cleared. The settled bout is unchanged.",
+        );
+      else this.results();
     }
   }
   private consumeEvents(reduced: boolean) {
