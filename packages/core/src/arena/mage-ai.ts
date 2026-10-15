@@ -37,7 +37,7 @@ export function threats(state: ArenaState, a: Actor): Threat[] {
       // A charge or lunge is read along what is left of its committed line; a body already met cannot meet us again.
       const line = travelLine(t), from = t.contacted ? owner.pos : t.origin, at = t.contacted?.includes(a.id) ? undefined : bodyContact(t, from, line.end, a.pos, a.radius);
       const contactS = distance(t.origin, from) + (at ?? 0) * distance(from, line.end), step = line.distanceM / Math.max(1, t.travelTicks ?? 1);
-      result.push({ id: t.activationId, family: t.family, origin: from, impactTick: t.resolveTick + (at === undefined ? 0 : Math.max(0, Math.ceil(contactS / step - 1e-9) - 1)), aimedAtUs: at !== undefined });
+      result.push({ id: t.activationId, family: t.family, origin: from, impactTick: t.resolveTick + (at === undefined ? 0 : Math.max(0, Math.ceil(contactS / step - 1e-9) - 1)), aimedAtUs: at !== undefined, damage: t.damage });
       continue;
     }
     const end = t.kind === 'area' ? t.target : { x: t.origin.x + unit(sub(t.target, t.origin)).x * t.rangeM, y: t.origin.y + unit(sub(t.target, t.origin)).y * t.rangeM };
