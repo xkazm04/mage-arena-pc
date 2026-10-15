@@ -59,6 +59,7 @@ export function check(t, fixtures, prose, template, schema = itemSchema(t)) {
     }
   }
   for (const rel of t.relationships) if (!ids.includes(rel.from) || !ids.includes(rel.to)) errors.push('relationship outside cast');
+  errors.push(...campPlayProblems(t, ids, places, verbs));
   if (!places.includes(t.season.trialLocation) || !places.includes(t.season.fourthWatchLocation)) errors.push('unknown calendar place');
   const time = t.season, end = time.wakeHour + time.wakingHours;
   const positive = n => Number.isInteger(n) && n > 0;
@@ -86,6 +87,36 @@ export function check(t, fixtures, prose, template, schema = itemSchema(t)) {
   }
   return errors;
 }
+
+// camp-session.ts reads these without a door: a dangling presence place silently hides a character,
+// an unknown map node makes travel cost Infinity. Name every dangling reference here instead.
+function campPlayProblems(t, ids, places, verbs) {
+  const errors = [], play = t['camp-play'], parley = t.parley, bridge = t['season-bridge'];
+  const nodes = Object.keys(play.map.nodes), unknown = (list, known) => list.filter(id => !known.includes(id));
+  if (!places.includes(play.startLocation)) errors.push(`camp-play start is not a place: ${play.startLocation}`);
+  for (const id of unknown(nodes, places)) errors.push(`camp-play map node is not a place: ${id}`);
+  for (const id of unknown(places, nodes)) errors.push(`place missing from camp-play map: ${id}`);
+  for (const id of unknown(play.map.routes.flat(), nodes)) errors.push(`camp-play route to unknown node: ${id}`);
+  for (const [who, slots] of Object.entries(play.presence)) {
+    if (!ids.includes(who)) errors.push(`camp-play presence for unknown character: ${who}`);
+    if (!Array.isArray(slots) || slots.length !== 3) errors.push(`camp-play presence needs day, dusk and night: ${who}`);
+    else for (const id of unknown(slots, places)) errors.push(`camp-play presence ${who} at unknown place: ${id}`);
+  }
+  for (const id of unknown(Object.keys(play.descriptions), places)) errors.push(`camp-play description for unknown place: ${id}`);
+  for (const fact of [...play.discoveries, ...parley.facts])
+    for (const id of unknown([fact.actor, fact.target, ...fact.holders].filter(Boolean), ids)) errors.push(`fact ${fact.id} names unknown character: ${id}`);
+  for (const verb of unknown(parley.friendlyIntents, verbs)) errors.push(`parley friendly intent is not an intent: ${verb}`);
+  const playable = t.characters.characters.find(c => c.id === bridge.playableCharacter);
+  if (!playable) errors.push(`season-bridge playable character unknown: ${bridge.playableCharacter}`);
+  if (!t.schools.some(s => s.id === bridge.playableSchool)) errors.push(`season-bridge playable school unknown: ${bridge.playableSchool}`);
+  else if (playable && playable.school !== bridge.playableSchool) errors.push(`season-bridge playable character ${playable.id} is not of school ${bridge.playableSchool}`);
+  if (!places.includes(t['arena/arena-tiers'].tentTrial.where)) errors.push(`tent trial at unknown place: ${t['arena/arena-tiers'].tentTrial.where}`);
+  return errors;
+}
+
+/** Every file `cli.mjs generate` writes into fixtures/; anything else there is an orphan nothing re-derives. */
+export const generatedFixtures = ['golden-nights.json', 'branch-nights.json', 'hour-days.json'];
+export function orphanFixtures(names) { return names.filter(name => !generatedFixtures.includes(name)); }
 
 export function readArtifacts(root = designRoot) {
   return { fixtures: JSON.parse(readFileSync(new URL('fixtures/golden-nights.json',root),'utf8')),

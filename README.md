@@ -21,6 +21,25 @@ canaries in `packages/core/src/determinism-wall.test.ts`, the pinned replay hash
 `packages/core/tsconfig.purity.json`. When you add a restriction, add its canary; when an
 intended combat or data change rehashes the replay pin, re-pin it in the same commit.
 
+## Data law: canon is authored once and checked where it is read
+
+`docs/design/reconciled/data` is the canon that core, the Director and the VR pin read. A value
+lives in one file; code-side data (`packages/core/src/arena/data/*.json`) authors only what
+canon lacks and names canon by id rather than copying it (training attacks name an enemy
+attack). Every authored value meets the validator that guards the same value from a player
+or a model (`packages/core/src/authored-data.test.ts`), and a JSON value narrowed into a type
+goes through `member()` in `packages/core/src/arena/doors.ts`, never a cast. Every
+cross-file reference is checked by `npm run check:design` (`packages/tools/replay/check.mjs`,
+whose list of checked files covers what core imports directly). Prose that the arena compiler
+parses (`packages/core/scripts/arena-data.mjs`) must match whole sentences or stop the build.
+
+Derived files are checked through the same function that writes them and never silently
+rewritten: the reconciled README, schema and fixtures fail `check:design` on drift and on an
+orphan in `fixtures/`; `data.generated.ts` is gitignored and rebuilt by every build. Saves
+refuse rather than migrate (`packages/director/src/save.ts`: version, source hash, checksum,
+strict schema, full replay); Lab tuning exports migrate by version with tests. Adding a canon
+file or reference means adding its check and a planted fault in `replay.test.mjs`.
+
 Requires Node 24 or newer and npm. From the repository root:
 
 ```powershell

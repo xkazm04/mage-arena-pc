@@ -145,3 +145,34 @@ test('hour-rule planted faults are rejected directly', () => {
     assert.ok(check(t,a.fixtures,a.prose,a.template).some(e => e.startsWith(expected)), expected);
   }
 });
+
+test('fixtures/ holds only what generate writes; a planted orphan is named', async () => {
+  const { orphanFixtures } = await import('./check.mjs');
+  const { readdirSync } = await import('node:fs');
+  assert.deepEqual(orphanFixtures(readdirSync(new URL('../../../docs/design/reconciled/fixtures/', import.meta.url))), []);
+  assert.deepEqual(orphanFixtures(['golden-nights.json', 'old-nights.json']), ['old-nights.json']);
+});
+
+test('camp-play, parley, season-bridge and the tent trial: each planted dangling reference names itself', () => {
+  const a = readArtifacts();
+  const plant = (mutate, expected) => {
+    const t = loadTables(); mutate(t);
+    const errors = check(t, a.fixtures, a.prose, a.template, a.schema);
+    assert.ok(errors.includes(expected), `${expected} not in ${JSON.stringify(errors)}`);
+  };
+  plant(t => { t['camp-play'].startLocation = 'well'; }, 'camp-play start is not a place: well');
+  plant(t => { t['camp-play'].map.nodes.crypt = [0, 0]; }, 'camp-play map node is not a place: crypt');
+  plant(t => { delete t['camp-play'].map.nodes.pit; }, 'place missing from camp-play map: pit');
+  plant(t => { t['camp-play'].map.routes.push(['tent', 'crypt']); }, 'camp-play route to unknown node: crypt');
+  plant(t => { t['camp-play'].presence.cassia[1] = 'cisterns'; }, 'camp-play presence cassia at unknown place: cisterns');
+  plant(t => { t['camp-play'].presence.nobody = ['tent', 'tent', 'tent']; }, 'camp-play presence for unknown character: nobody');
+  plant(t => { t['camp-play'].presence.cassia.pop(); }, 'camp-play presence needs day, dusk and night: cassia');
+  plant(t => { t['camp-play'].descriptions.crypt = 'x'; }, 'camp-play description for unknown place: crypt');
+  plant(t => { t['camp-play'].discoveries[0].holders.push('ghost'); }, `fact ${loadTables()['camp-play'].discoveries[0].id} names unknown character: ghost`);
+  plant(t => { t.parley.facts[0].target = 'ghost'; }, `fact ${loadTables().parley.facts[0].id} names unknown character: ghost`);
+  plant(t => { t.parley.friendlyIntents.push('FLATTER'); }, 'parley friendly intent is not an intent: FLATTER');
+  plant(t => { t['season-bridge'].playableCharacter = 'ghost'; }, 'season-bridge playable character unknown: ghost');
+  plant(t => { t['season-bridge'].playableSchool = 'salt'; }, 'season-bridge playable school unknown: salt');
+  plant(t => { t['season-bridge'].playableSchool = 'fire'; }, `season-bridge playable character ${loadTables()['season-bridge'].playableCharacter} is not of school fire`);
+  plant(t => { t['arena/arena-tiers'].tentTrial.where = 'arena'; }, 'tent trial at unknown place: arena');
+});

@@ -1,5 +1,6 @@
 import { Ajv, type ValidateFunction } from 'ajv';
 import { bridgeRules, campPlay, createCampSession, type Tables } from '@mage/core';
+import { waterLines } from '@mage/core/arena';
 import { itemSchema } from './schema.ts';
 type Schema = Record<string, unknown>;
 const text: Schema = { type: 'string', maxLength: 16384 };
@@ -16,7 +17,7 @@ const fact = object({ id: text, text, visibility: text, type: text, actor: text,
 const trace = array(object({ path: text, before: {}, after: {}, rule: text }));
 const roll = object({ seed: integer(-Number.MAX_SAFE_INTEGER), day: integer(1, 42), actor: text, action: text, unit: number, value: number, rule: text, score: number, dc: number, success: bool }, ['score', 'dc', 'success']);
 const carry = object({ helped: strings, working: strings, stopped: strings, freshStocks: strings });
-const composition = object({ name: text, lines: array({ enum: ['tide_orb','lash','mire','mend','mirror'] }, 3), branches: object({ lash: { enum: ['A','B'] }, mirror: { enum: ['A','B'] }, tide_orb: { enum: ['A','B'] } }) });
+const composition = object({ name: text, lines: array({ enum: [...waterLines] }, 3), branches: object({ lash: { enum: ['A','B'] }, mirror: { enum: ['A','B'] }, tide_orb: { enum: ['A','B'] } }) });
 const result = object({ kind: { enum: ['champion','missio'] }, wavesCleared: integer(0,4), gold: integer(), renown: integer(0,100), finalReached: bool, finalWon: bool });
 const vector = object({ x: number, y: number });
 const input = object({ move: vector, aim: vector, slot: integer(0,3), cast: bool, absorb: bool, roll: bool, sprint: bool });

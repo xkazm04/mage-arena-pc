@@ -45,3 +45,14 @@ art/waves/**/*.webp
 
 # Short-lived parallel worktrees (replace the old long-lived lane folders)
 .worktrees/
+
+# BEGIN ai-registry linked skills (managed by ai-registry/scripts/link-registry.mjs)
+# Links are machine state; the declarations live in .ai/manifest.yaml (`skills:` and `knowledge.domains`).
+.claude/skills/architect
+.claude/skills/friend
+.claude/skills/tiger
+.ai/skill-runs.local.jsonl
+# END ai-registry linked skills
+
+# /architect's fallback vault (backlog, ADRs, scan notes): local, shared by concurrent sessions
+.architect/

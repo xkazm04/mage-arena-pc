@@ -1,6 +1,25 @@
 import { reviveActor, addMage, createArena, random, runtime, ticks, seconds, spawnProjectile, stepArena, stateHash, combat } from './kernel.ts';
 import { distance, sub, unit } from './math.ts';
 import { idleInput, type Actor, type ArenaState, type InputFrame } from './types.ts';
+import { enemyRoster } from './enemies.ts';
+const canonAttack = (id: string) => {
+  const attack = enemyRoster.flatMap(e => e.attacks).find(a => a.id === id);
+  if (!attack) throw Error(`Unknown training attack ${id}`);
+  return attack;
+};
+const laneSize = (text: string | undefined, pattern: RegExp): number => {
+  const match = text?.match(pattern); if (!match) throw Error(`Missing lane size: ${text}`); return Number(match[1]);
+};
+const ranged = (spec: { attack: string; rangeM: number }) => {
+  const a = canonAttack(spec.attack);
+  return { damage: a.damage, tier: a.tier ?? 0, windupS: a.windupS, speedMps: a.projectileMps ?? 0, rangeM: spec.rangeM };
+};
+const chargeAttack = canonAttack(runtime.training.charge.attack);
+/** Training attacks are canon enemy attacks by id; runtime.json authors only the range canon leaves to the arena. */
+export const trainingAttacks = {
+  magic: ranged(runtime.training.magic), physical: ranged(runtime.training.physical),
+  charge: { damage: chargeAttack.damage, windupS: chargeAttack.windupS, rangeM: laneSize(chargeAttack.telegraph, /x ([\d.]+) m/), widthM: laneSize(chargeAttack.telegraph, /lane ([\d.]+) m/) },
+};
 export type TrainingKind = 'magic' | 'physical' | 'flanker' | 'charge' | 'stream' | 'performance';
 export type BotKind = 'perfect' | 'holder' | 'never' | 'late';
 export interface Training { state: ArenaState; player: Actor; dummy: Actor; kind: TrainingKind; nextAttack: number; attacks: number }
@@ -25,17 +44,17 @@ export function scheduleTraining(t: Training): void {
   if (state.tick + 1 < t.nextAttack) return;
   t.nextAttack += ticks(runtime.training.attackIntervalS); t.attacks++;
   if (t.kind === 'flanker') dummy.pos = { x: t.attacks % 2 ? runtime.training.front.x : 2 * runtime.training.player.x - runtime.training.front.x, y: runtime.training.front.y };
-  const spec = t.kind === 'physical' ? runtime.training.physical : runtime.training.magic;
+  const spec = t.kind === 'physical' ? trainingAttacks.physical : trainingAttacks.magic;
   const count = t.kind === 'stream' ? runtime.training.streamCount : 1;
   for (let i = 0; i < count; i++) {
     const id = state.nextId++;
     state.telegraphs.push({ id, activationId: id, ownerId: dummy.id,
       family: t.kind === 'charge' ? 'unblockable' : t.kind === 'physical' ? 'physical' : 'magic',
-      damage: t.kind === 'charge' ? runtime.training.charge.damage : spec.damage, tier: spec.tier,
+      damage: t.kind === 'charge' ? trainingAttacks.charge.damage : spec.damage, tier: spec.tier,
       source: { ...dummy.pos }, origin: { ...dummy.pos }, target: { ...player.pos }, startTick: state.tick + 1,
-      resolveTick: state.tick + 1 + ticks(t.kind === 'charge' ? runtime.training.charge.windupS : spec.windupS) + i * ticks(runtime.training.streamIntervalS),
+      resolveTick: state.tick + 1 + ticks(t.kind === 'charge' ? trainingAttacks.charge.windupS : spec.windupS) + i * ticks(runtime.training.streamIntervalS),
       kind: t.kind === 'charge' ? 'lane' : 'projectile', speedMps: spec.speedMps,
-      rangeM: t.kind === 'charge' ? runtime.training.charge.rangeM : spec.rangeM, widthM: runtime.training.charge.widthM });
+      rangeM: t.kind === 'charge' ? trainingAttacks.charge.rangeM : spec.rangeM, widthM: trainingAttacks.charge.widthM });
   }
 }
 /** Instrumented timing oracle for mechanics evidence, not an opponent AI or human-feel claim. */

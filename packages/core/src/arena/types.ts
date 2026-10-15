@@ -3,7 +3,9 @@ import type { Spell } from './catalog.ts';
 import type { Vec } from './math.ts';
 export type Family = 'magic' | 'physical' | 'unblockable';
 export interface Ranks { vigor: number; focus: number; nerve: number }
-export type WaterLine = 'tide_orb' | 'lash' | 'mire' | 'mend' | 'mirror';
+/** The one spelling of the Water line ids: the type, the save schema and the spell-id pattern derive from it. */
+export const waterLines = ['tide_orb', 'lash', 'mire', 'mend', 'mirror'] as const;
+export type WaterLine = typeof waterLines[number];
 export interface Composition { name: string; lines: WaterLine[]; branches: { lash: 'A' | 'B'; mirror: 'A' | 'B'; tide_orb: 'A' | 'B' } }
 export interface WaterState { composition: Composition; flow: number; lastLine: string; lastCastTick: number; lastActivityTick: number; cooldowns: Record<string, number>; stored: number;
   rootUntil: number; encasedUntil: number; slowUntil: number; slowMult: number; wardUntil: number; sheenUntil: number; hotUntil: number; hotPerTick: number;
