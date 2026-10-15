@@ -160,7 +160,7 @@ Everything below is presentation only; combat is untouched.
 - **Since.** No hang in the 13 later Tiro runs that cleared waves 1-2 on the Stick. Treat the freeze as
   likely fixed, not proven fixed.
 
-**Visual cost.** Screenshots are TV `screencap`s of the same paused fixture, in this folder:
+**Visual cost.** Screenshots are TV `screencap`s of the same paused fixture, in `docs/waves/P1-tv-performance/`. They are local only: `.gitignore` excludes images under `docs/waves`. `tools/tvshot.mjs` retakes them:
 - `tv-before-1080p-msaa.jpg`
 - `tv-after-810p-tv-profile.jpg`
 - `tv-after-code-only-1080p-msaa.jpg`, the TV with the desktop profile
