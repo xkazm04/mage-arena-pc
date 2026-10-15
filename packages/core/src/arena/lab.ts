@@ -1,5 +1,6 @@
 import { newWaterState, presets, validateComposition } from "./catalog.ts";
 import { attachMageAI, mageInput } from "./mage-ai.ts";
+import { attachRivalPlan } from "./rival-plan.ts";
 import { createTraining, scheduleTraining, type Training } from "./training.ts";
 import { combat, seconds, stepArena, reviveActor } from "./kernel.ts";
 import { createLedger, observeLedger, type ThreatLedger } from "./ledger.ts";
@@ -27,6 +28,9 @@ export interface LabConfig {
   composition: Composition;
   /** Roster-creature targets only: "still" (absent = still) holds position; "live" runs the roster brain. */
   targetMotion?: "still" | "live";
+  /** Mage opponents only: the rival's Water preset (absent = Rotation) and whether it plays its authored plan (absent = off). */
+  rivalPreset?: string;
+  rivalPlan?: boolean;
 }
 export const defaultLabConfig: LabConfig = {
   opponent: "dummy",
@@ -90,6 +94,8 @@ export function validateLabConfig(c: LabConfig): LabConfig {
     c.seed > 0xffffffff ||
     typeof c.randomSeed !== "boolean" ||
     (c.targetMotion !== undefined && !["still", "live"].includes(c.targetMotion)) ||
+    (c.rivalPreset !== undefined && !presets.some((p) => p.name === c.rivalPreset)) ||
+    (c.rivalPlan !== undefined && typeof c.rivalPlan !== "boolean") ||
     validateComposition(c.composition).length
   )
     throw Error("Invalid Lab setup.");
@@ -122,9 +128,10 @@ export function createLab(
   if (c.opponent === "mage") {
     dummy.dummy = false;
     dummy.label = `${c.opponentSchool} practice rival`;
-    dummy.water = newWaterState(presets[2]!);
+    dummy.water = newWaterState(presets.find((p) => p.name === c.rivalPreset) ?? presets[2]!);
     attachMageAI(dummy, c.competence);
     dummy.mageAI!.aggression = c.aggression;
+    if (c.rivalPlan) attachRivalPlan(dummy);
   }
   const lab: CombatLab = {
     config: c,

@@ -5,6 +5,7 @@ import { spellFor, spells, type Spell } from './catalog.ts';
 import { bodyContact, bolt, combat, committedBody, random, runtime, ticks, travelLine } from './kernel.ts';
 import { clamp, distance, inArc, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
 import { hasLineOfSight } from './water.ts';
+import { rivalGate, rivalSkipsWard, rivalSteer, rivalTick } from './rival-plan.ts';
 import { idleInput, type Actor, type ArenaState, type InputFrame } from './types.ts';
 export function competence(level: number) {
   const rows = enemyData.mages.competence, bounded = clamp(level, rows[0].level, rows.at(-1)!.level);
@@ -20,7 +21,7 @@ export function attachMageAI(a: Actor, level: number, tick = 0): void {
   a.mageAI = { competence: level, nextDecisionTick: tick, input: idleInput(), observed: [], defendUntil: 0, plannedRaiseTick: 1e9, plannedReleaseTick: 0,
     targetPoint: { ...a.pos }, decisionTicks: [], reactionAges: [] };
 }
-export interface Threat { id: number; family: string; origin: Vec; impactTick: number; aimedAtUs: boolean }
+export interface Threat { id: number; family: string; origin: Vec; impactTick: number; aimedAtUs: boolean; damage: number }
 /** What an actor can see coming: live projectiles, telegraphs and enemy windups, each with its activation id. */
 export function threats(state: ArenaState, a: Actor): Threat[] {
   const result: Threat[] = [];
@@ -28,7 +29,7 @@ export function threats(state: ArenaState, a: Actor): Threat[] {
     const owner = state.actors.find(o => o.id === p.ownerId); if (owner?.team === a.team || !hasLineOfSight(state, a.pos, p.pos)) continue;
     const speed = Math.hypot(p.velocity.x, p.velocity.y), d = unit(p.velocity);
     const end = { x: p.pos.x + d.x * p.remainingM, y: p.pos.y + d.y * p.remainingM };
-    result.push({ id: p.activationId, family: p.family, origin: p.pos, impactTick: state.tick + Math.max(1, ticks((distance(p.pos, a.pos) - p.radius - a.radius) / speed)), aimedAtUs: segmentHit(p.pos, end, a.pos, a.radius + p.radius) !== undefined });
+    result.push({ id: p.activationId, family: p.family, origin: p.pos, impactTick: state.tick + Math.max(1, ticks((distance(p.pos, a.pos) - p.radius - a.radius) / speed)), aimedAtUs: segmentHit(p.pos, end, a.pos, a.radius + p.radius) !== undefined, damage: p.damage });
   }
   for (const t of state.telegraphs) {
     const owner = state.actors.find(o => o.id === t.ownerId); if (owner?.team === a.team || !hasLineOfSight(state, a.pos, t.origin)) continue;
@@ -43,7 +44,7 @@ export function threats(state: ArenaState, a: Actor): Threat[] {
     const aimedAtUs = t.kind === 'area' ? distance(t.target, a.pos) < t.widthM + a.radius
       : t.kind === 'melee' ? distance(t.origin, a.pos) < t.rangeM + a.radius && inArc(sub(t.target, t.origin), sub(a.pos, t.origin), t.widthM)
       : segmentHit(t.origin, end, a.pos, a.radius + (t.kind === 'projectile' ? runtime.geometry.projectileRadiusM : t.widthM / 2)) !== undefined;
-    result.push({ id: t.activationId, family: t.family, origin: t.origin, impactTick: t.resolveTick + (t.kind === 'projectile' ? ticks(distance(t.origin, a.pos) / t.speedMps) : 0), aimedAtUs });
+    result.push({ id: t.activationId, family: t.family, origin: t.origin, impactTick: t.resolveTick + (t.kind === 'projectile' ? ticks(distance(t.origin, a.pos) / t.speedMps) : 0), aimedAtUs, damage: t.damage });
   }
   for (const enemy of state.actors) {
     if (enemy.team === a.team || enemy.tags.includes("DEFEATED") || !enemy.pending || !hasLineOfSight(state, a.pos, enemy.pos)) continue;
@@ -56,7 +57,8 @@ export function threats(state: ArenaState, a: Actor): Threat[] {
       : s?.kind === 'cone' || s?.kind === 'ring' ? distance(centre, a.pos) <= s.rangeM + a.radius && inArc(sub(p.aim, enemy.pos), sub(a.pos, centre), s.arcDeg)
       : true;
     result.push({ id: p.activationId, family: p.kind === 'staff' ? 'physical' : s?.family ?? 'magic', origin: centre,
-      impactTick: p.releaseTick + (s?.kind === 'projectile' ? ticks(distance(enemy.pos, a.pos) / s.speedMps) : 0), aimedAtUs });
+      impactTick: p.releaseTick + (s?.kind === 'projectile' ? ticks(distance(enemy.pos, a.pos) / s.speedMps) : 0), aimedAtUs,
+      damage: p.kind === 'bolt' ? bolt.damage : p.kind === 'staff' ? combat.staffStrike.damage : (s?.damage ?? 0) * (s?.count ?? 1) * (p.damageMult ?? 1) });
   }
   return result;
 }
@@ -87,6 +89,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
       if (profile.curve && brain.plan && state.tick + 1 <= brain.plannedReleaseTick && threat.impactTick >= brain.plannedRaiseTick && threat.impactTick < brain.plannedReleaseTick + window) {
         brain.plannedReleaseTick = Math.max(brain.plannedReleaseTick, threat.impactTick + 1); continue;
       }
+      if (brain.rival && rivalSkipsWard(a, threat.damage)) continue;
       if (random(state, `mage ${a.id} absorb ${threat.id}`) < profile.absorbChance) {
         brain.targetPoint = { ...threat.origin };
         const perfect = random(state, `mage ${a.id} perfect ${threat.id}`) < profile.perfectChance;
@@ -120,6 +123,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
       if (!brain.plan.perfect && !a.absorb && state.tick + 1 >= brain.plannedReleaseTick - 1 - window) { brain.plannedRaiseTick = 1e9; brain.plan = undefined; }
     }
   }
+  if (brain.rival) rivalTick(state, a, target, seen, window, ticks(profile.reactionDelayS));
   // Curve rows never spend a cadence inside a roll hold; the next decision waits for the hold to end.
   if (state.tick >= brain.nextDecisionTick && (!profile.curve || state.tick >= brain.defendUntil)) {
     brain.nextDecisionTick = state.tick + ticks(profile.decisionCadenceS); brain.decisionTicks.push(state.tick);
@@ -128,11 +132,12 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
       if (target) {
         const d = distance(a.pos, target.pos), direction = unit(sub(target.pos, a.pos));
         const strafe = Math.floor((state.tick + (state.seed + a.id * 17) % ticks(feelPolicy.ai.strafePhaseS)) / ticks(runtime.games.mageStrafePeriodS)) % 2 ? 1 : -1;
-        const aggression = brain.aggression ?? 1;
-        const preferred = runtime.games.magePreferredDistanceM.map(v => v * (1.3 - .3 * aggression) + ((state.seed + a.id * 31) % 101 / 100 - .5) * feelPolicy.ai.spacingVariationM);
-        input.move = d > preferred[1]! ? direction : d < preferred[0]! ? { x: -direction.x, y: -direction.y } : { x: -direction.y * strafe, y: direction.x * strafe };
-        // Turn inward at the arena edge instead of getting pinned by the clamp.
-        if (!arenaContains(a.pos, runtime.games.spawnMarginM)) input.move = unit(sub(arenaGeometry.centre, a.pos));
+        const aggression = brain.aggression ?? 1, steer = brain.rival && rivalSteer(state, a, target, d, ticks(profile.reactionDelayS));
+        const preferred = steer && steer.band ? steer.band : runtime.games.magePreferredDistanceM.map(v => v * (1.3 - .3 * aggression) + ((state.seed + a.id * 31) % 101 / 100 - .5) * feelPolicy.ai.spacingVariationM);
+        input.move = steer && steer.move ? steer.move : d > preferred[1]! ? direction : d < preferred[0]! ? { x: -direction.x, y: -direction.y } : { x: -direction.y * strafe, y: direction.x * strafe };
+        if (steer && steer.sprint) input.sprint = true;
+        // Turn inward at the arena edge instead of getting pinned by the clamp (a plan chasing its target already heads inward).
+        if (!arenaContains(a.pos, runtime.games.spawnMarginM) && !(steer && steer.chase)) input.move = unit(sub(arenaGeometry.centre, a.pos));
         const aimPoint = target.water.decoy?.pos ?? target.pos;
         const velocity = sub(target.pos, target.previousPos), lead = d / bolt.speedMps * combat.simStepHz * profile.aimLeadFraction;
         const prediction = target.water.decoy ? aimPoint : { x: aimPoint.x + velocity.x * lead, y: aimPoint.y + velocity.y * lead };
@@ -144,7 +149,9 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         const useful = available.filter(({ s }) => s.damage > 0 || (['heal','hot'].includes(s.effect) && a.hp < a.maxHp) || (s.effect === 'font' && a.mana < a.maxMana) || (s.effect === 'ward' && seen.some(t => t.family === 'magic')) || s.kind === 'zone' || s.effect === 'decoy' || s.effect === 'sheen' || s.effect === 'encase');
         const candidates = useful.length ? useful : available, fitting = candidates.filter(({ s }) => fitsBeforeRaise(state, brain.plannedRaiseTick, s));
         // Curve rows keep choosing while a raise is pending: a spell that cannot finish first waits for the ward to drop.
-        const choices = profile.curve && !fitting.length ? candidates : fitting;
+        const pool = profile.curve && !fitting.length ? candidates : fitting;
+        // A rival counter-cast decides among damaging spells only.
+        const choices = steer && steer.counter && pool.some(c => c.s.damage > 0) ? pool.filter(c => c.s.damage > 0) : pool;
         const variety = new Map(choices.map(c => [c.slot, random(state, `mage ${a.id} variety ${c.slot}`) * feelPolicy.ai.spellVarietyWeight]));
         const bait = target.absorb || state.tick - target.absorbFreshTick <= ticks(profile.decisionCadenceS);
         const prefers = (s: Spell): boolean => profile.curve ? bait === (s.family === 'unblockable') : profile.level >= 3 && target.absorb && s.family === 'unblockable';
@@ -155,8 +162,9 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
               const counterX = prefers(x.s), counterY = prefers(y.s);
               return Number(counterY) - Number(counterX) || Number(sustainY) - Number(sustainX) || Number(y.s.line !== a.water.lastLine) - Number(x.s.line !== a.water.lastLine) || (y.s.damage * y.s.count + variety.get(y.slot)!) - (x.s.damage * x.s.count + variety.get(x.slot)!) || x.slot - y.slot;
             })[0]!;
-          input.slot = choice.slot; input.cast = brain.aggression === undefined || brain.aggression >= 1 || random(state, `mage ${a.id} aggression`) < brain.aggression;
+          input.slot = choice.slot; input.cast = (steer && steer.counter) || brain.aggression === undefined || brain.aggression >= 1 || random(state, `mage ${a.id} aggression`) < brain.aggression;
         }
+        if (steer && steer.cast !== undefined) { input.cast = steer.cast; if (steer.slot !== undefined) input.slot = steer.slot; }
       }
     }
   }
@@ -164,6 +172,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
   result.absorb = state.tick + 1 >= brain.plannedRaiseTick && state.tick + 1 <= brain.plannedReleaseTick;
   if (profile.curve) { const s = spellFor(a, result.slot, state); if (s && !fitsBeforeRaise(state, brain.plannedRaiseTick, s)) result.cast = false; }
   else if (brain.plannedRaiseTick > state.tick && brain.plannedRaiseTick <= state.tick + ticks(profile.decisionCadenceS + feelPolicy.ai.reactionCastSafetyS)) result.cast = false;
+  if (brain.rival) rivalGate(state, a, target, result, seen, window, profile.curve);
   if (result.absorb) { result.cast = false; result.aim = { ...brain.targetPoint }; }
   if (!target) { result.cast = false; result.move = { x: 0, y: 0 }; }
   brain.input.roll = false; return result;

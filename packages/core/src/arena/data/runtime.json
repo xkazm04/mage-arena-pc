@@ -31,7 +31,7 @@
     ]
   },
   "games": {
-    "_about": "W4 authored values absent from baseline. Tiro spawns, enemy stats/attacks, competence and duration targets stay baseline-owned.",
+    "_about": "W4 authored values absent from baseline. Tiro spawns, enemy stats/attacks, competence and duration targets stay baseline-owned. rivalPlans opts the Tiro mage opponents into the enemies.json mages.plans (default false: no plan, identical runs).",
     "playerSpawn": { "x": 8, "y": 10 }, "enemySpawn": { "x": 24, "y": 10 },
     "multiEnemyApproachReductionM": 8,
     "creatureOpeningOrder": [1, 2, 3, 0],
@@ -46,7 +46,7 @@
     "magePreferredDistanceM": [5, 8], "mageStrafePeriodS": 2.4, "mageAimLeadFraction": 0.45,
     "mageDefenceHoldS": 0.35,
     "referenceCompetence": 2, "referencePreset": "Rotation",
-    "opponentPresets": ["Undertow", "Mirror tide"],
+    "opponentPresets": ["Undertow", "Mirror tide"], "rivalPlans": false,
     "censusFightsPerWave": 2000, "censusSeedStart": 40000, "fightTimeoutS": 180,
     "timeoutRateMax": 0.01, "sampleReplayStride": 199,
     "ladderTrials": 500,

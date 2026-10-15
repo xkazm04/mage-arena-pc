@@ -6,6 +6,7 @@ export * from './catalog.ts';
 export * from './water.ts';
 export * from './enemies.ts';
 export * from './mage-ai.ts';
+export * from './rival-plan.ts';
 export * from './games.ts';
 
 export * from './geometry.ts';
