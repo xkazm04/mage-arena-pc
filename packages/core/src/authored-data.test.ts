@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import parley from "../../../docs/design/reconciled/data/parley.json" with { type: "json" };
 import bridge from "../../../docs/design/reconciled/data/season-bridge.json" with { type: "json" };
-import { presets, validateComposition, type Composition } from "./arena/catalog.ts";
+import { presets, validateComposition } from "./arena/catalog.ts";
+import type { Composition } from "./arena/types.ts";
 import { makeTuning, tuningPresets, validateTuning } from "./arena/tuning.ts";
 
 // Authored data passes the same doors as user and model input. Each check is paired with a
