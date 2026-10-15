@@ -1,7 +1,7 @@
 import { adjustedSpell } from './tuning.ts';
 import { combat, waterRows } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
-import type { Actor, ArenaState, Composition, Family, WaterLine, WaterState } from './types.ts';
+import { waterLines, type Actor, type ArenaState, type Composition, type Family, type WaterState } from './types.ts';
 export interface Spell {
   id: string; line: string; tier: number; branch: string; name: string; castS: number; cooldownS: number; mana: number;
   damage: number; family: Family; telegraphS: number; rangeM: number;
@@ -51,7 +51,6 @@ export const spells: Spell[] = waterRows.map(row => {
   } else throw Error('Unrecognized Water line');
   return s;
 });
-export const waterLines: WaterLine[] = ['tide_orb', 'lash', 'mire', 'mend', 'mirror'];
 export const presets = runtime.water.presets as Composition[];
 export function validateComposition(c: Composition): string[] {
   const errors: string[] = [];

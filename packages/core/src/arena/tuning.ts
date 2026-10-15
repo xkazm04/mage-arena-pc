@@ -1,7 +1,7 @@
 import { combat } from "./data.generated.ts";
 import data from "./data/feel.json" with { type: "json" };
 import schoolData from "./data/lab-schools.json" with { type: "json" };
-import type { Actor, ArenaState } from "./types.ts";
+import { waterLines, type Actor, type ArenaState } from "./types.ts";
 import { spells, type Spell } from "./catalog.ts";
 
 export type School = "fire" | "water" | "earth" | "air";
@@ -286,6 +286,7 @@ export function adjustedSpell(s: Spell, a: Actor, state?: ArenaState): Spell {
     durationS: s.durationS * p.control,
   };
 }
+const spellIdPattern = new RegExp(`^(bolt:0:base|(?:${waterLines.join("|")}):[1-4]:(?:base|A|B))$`);
 export function validateTuning(value: unknown): CombatTuning {
   if (!value || typeof value !== "object" || Array.isArray(value))
     throw Error("Tuning must be an object.");
@@ -317,9 +318,7 @@ export function validateTuning(value: unknown): CombatTuning {
     throw Error("Invalid spell overrides.");
   for (const [id, spec] of Object.entries(v.spells)) {
     if (
-      !/^(bolt:0:base|(?:tide_orb|lash|mire|mend|mirror):[1-4]:(?:base|A|B))$/.test(
-        id,
-      ) ||
+      !spellIdPattern.test(id) ||
       !spec ||
       typeof spec !== "object"
     )
