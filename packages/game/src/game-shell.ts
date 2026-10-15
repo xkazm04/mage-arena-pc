@@ -29,6 +29,7 @@ import { art } from "./art.ts";
 import castData from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
 import { colours } from "./ui/kit.ts";
 import { dawnLedger } from "./dawn-ledger.ts";
+import { mentions, shortName } from "./cast-names.ts";
 
 type Moment = SeasonView["parley"]["moments"][number];
 const friendly = (text: string) =>
@@ -751,7 +752,23 @@ export class GameShell {
       colours.gold,
     );
     v.presence.slice(0, 4).forEach((person, i) => {
-      portrait(u, person.id, "neutral", 134 + i * 112, 727, 88, 106);
+      const x = 124 + i * 128,
+        name = shortName(person.name);
+      u.button(
+        `presence-${person.id}`,
+        "",
+        x,
+        718,
+        112,
+        136,
+        () => this.castDetails(person.id, () => this.visit(), "Back"),
+        {
+          kind: "card.normal",
+          tooltip: `${name} · trusts you ${person.trust ?? 0} · choose to see what you know`,
+        },
+      );
+      portrait(u, person.id, "neutral", x + 12, 724, 88, 92);
+      u.text(name, x + 8, 820, 24, colours.text, 96);
     });
     if (!v.presence.length)
       u.text("Only the wardstones listen.", 128, 731, 30, colours.muted, 490);
@@ -1039,7 +1056,9 @@ export class GameShell {
       v.changes,
       v.playerId,
       (id) =>
-        castData.characters.find((c) => c.id === id)?.name ?? friendly(id),
+        shortName(
+          castData.characters.find((c) => c.id === id)?.name ?? friendly(id),
+        ),
     );
     u.text("WHAT THE NIGHT LEFT YOU", 950, 355, 26, colours.gold, 750);
     if (!rows.length)
@@ -1081,9 +1100,7 @@ export class GameShell {
   ) {
     const u = this.ui;
     const subject = castData.characters.find(
-      (c) =>
-        card?.text.includes(c.name) ||
-        card?.text.includes(c.name.split(" ")[0]!),
+      (c) => card && mentions(card.text, c.name),
     );
     if (kind === "journal" && subject)
       portrait(u, subject.id, "neutral", 946, 410, 205, 256);
@@ -1170,29 +1187,57 @@ export class GameShell {
     this.footer();
     u.end();
   }
-  private castDetails(id: string) {
+  private castDetails(
+    id: string,
+    back = () => this.castJournal(),
+    backLabel = "People",
+  ) {
     const c = castData.characters.find((c) => c.id === id);
     if (!c) return;
     this.scene("cast-detail", c.name, "YOUR JOURNAL");
     portrait(this.ui, c.id, "neutral", 140, 268, 476, 596);
     this.ui.panel(720, 270, 1104, 594, "panel.story");
     this.ui.text(friendly(c.school), 774, 320, 40, colours.gold, 990, true);
-    const known = this.view.journal.filter(
-      (f) => f.text.includes(c.name) || f.text.includes(c.name.split(" ")[0]!),
-    );
+    const known = this.view.journal.filter((f) => mentions(f.text, c.name));
     const presence = this.view.presence.find((p) => p.id === id);
+    const bond = this.view.bonds[id];
     this.ui.text(
       presence
         ? `Here with you at ${this.view.places.find((p) => p.id === this.view.location)?.name}.`
         : "Another life within the wards.",
       774,
-      406,
+      396,
       30,
       colours.muted,
       990,
     );
-    this.ui.text(known[0]?.text ?? c.bio, 774, 499, 34, colours.text, 990);
-    this.back(() => this.castJournal(), "People");
+    if (bond)
+      this.ui.text(
+        `Trusts you ${bond.toYou}  /  You trust ${shortName(c.name)} ${bond.fromYou}`,
+        774,
+        444,
+        30,
+        bond.toYou < 0 ? colours.danger : colours.water,
+        990,
+      );
+    if (known.length) {
+      this.ui.text("WHAT YOU KNOW", 774, 506, 24, colours.gold);
+      this.ui.text(
+        known
+          .slice(0, 3)
+          .map((f) => `${f.rumour ? "Rumour: " : ""}${f.text}`)
+          .join("\n\n") +
+          (known.length > 3
+            ? `\n\n…and ${known.length - 3} more in your journal.`
+            : ""),
+        774,
+        544,
+        28,
+        colours.text,
+        990,
+      );
+    } else this.ui.text(c.bio, 774, 506, 34, colours.text, 990);
+    this.back(back, backLabel);
     this.footer();
     this.ui.end();
   }
