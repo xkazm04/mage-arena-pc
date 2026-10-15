@@ -58,6 +58,7 @@ import {
   type Camera,
 } from "./camera.ts";
 import { ArenaScene } from "./arena-scene.ts";
+import { collarClock } from "./rival-collar.ts";
 import { paletteForGames, type Palette } from "./arena-art.ts";
 import { colours } from "./ui/kit.ts";
 import type { CanvasUI } from "./ui/ui.ts";
@@ -787,20 +788,7 @@ export class ArenaGame {
         player.water.flow >= combat.flow.max
           ? "FREE CREST"
           : "Alternate spells";
-      const tier = player.tier,
-        elapsed = seconds(
-          state.tick - player.waveStartTick + player.clockAdvanceTicks,
-        ),
-        nextTier = (tier + 1) as 2 | 3 | 4;
-      const until =
-        nextTier <= 4
-          ? Math.max(
-              0,
-              (nextTier - 1) * tuningFor(state).collarIntervalS - elapsed,
-              combat.tierClock.minimumSecondsBetweenUnlocks -
-                seconds(state.tick - player.lastUnlockTick),
-            )
-          : 0;
+      const { tier, untilS: until, progress } = collarClock(state, player);
       rune.text = `COLLAR  ${["", "I", "II", "III", "IV"][tier]}`;
       next.text =
         tier < 4 ? `Next rune in ${until.toFixed(1)}s` : "All four runes awake";
@@ -825,9 +813,7 @@ export class ArenaGame {
           ])
           .fill(i < tier ? colours.water : colours.edge);
       }
-      const interval = tier < 4 ? tuningFor(state).collarIntervalS : 1;
-      const a =
-        -Math.PI / 2 + Math.PI * 2 * (tier < 4 ? 1 - until / interval : 1);
+      const a = -Math.PI / 2 + Math.PI * 2 * progress;
       if (clockHand) clockHand.rotation = a + Math.PI / 2;
       pips.forEach(([off, on], i) => {
         if (off) off.visible = i >= tier;
@@ -1040,6 +1026,7 @@ export class ArenaGame {
       animation: this.scene.bodies.snapshot(),
       effects: this.scene.clips.snapshot(),
       sigils: this.scene.sigils.snapshot(),
+      rivalCollars: this.scene.collars.snapshot(),
       feedback: this.scene.feedback.snapshot(),
       impactClock: {
         stopS: this.impactClock.stopS,

@@ -31,6 +31,8 @@ import { ArenaArt, type Palette } from "./arena-art.ts";
 import { BodyPlayer } from "./body-player.ts";
 import { EffectPlayer } from "./effect-player.ts";
 import { SigilPlayer } from "./sigil-player.ts";
+import { RivalCollarView } from "./rival-collar-view.ts";
+import { rivalRune } from "./rival-collar.ts";
 import type { Element } from "./animation-contract.ts";
 import animation from "../data/animation.json" with { type: "json" };
 
@@ -52,6 +54,7 @@ export class ArenaScene {
   readonly sigils = new SigilPlayer();
   readonly bodies = new BodyPlayer();
   readonly feedback = new CombatFeedback();
+  readonly collars = new RivalCollarView();
   debugEnabled = false;
   debugPage = 0;
   private debugLabel = new BitmapText({
@@ -75,6 +78,7 @@ export class ArenaScene {
       this.sigils.behind,
       this.ground,
       this.clips.behind,
+      this.collars.layer,
       this.figures,
       this.clips.front,
       this.sigils.front,
@@ -99,6 +103,7 @@ export class ArenaScene {
     this.sigils.dispose();
     this.bodies.dispose();
     this.feedback.dispose();
+    this.collars.dispose();
     this.debugLabel.destroy();
     this.debugPanel.destroy();
     this.scenery.dispose();
@@ -352,6 +357,7 @@ export class ArenaScene {
     e.clear();
     this.clips.begin(state, c, alpha, dt);
     this.sigils.begin(state, c, alpha);
+    this.collars.begin();
     this.bodies.begin(state, alpha, dt);
     this.feedback.begin(state, dt);
     this.scenery.render(c);
@@ -568,6 +574,16 @@ export class ArenaScene {
           a.radius * contract.character.draw_multiplier,
           a.team === player.team ? 0x226580 : 0xe9a777,
           0.65,
+        );
+      const rune = rivalRune(state, a, player);
+      if (rune)
+        this.collars.draw(
+          rune,
+          foot,
+          c,
+          g,
+          this.sigils.manifest,
+          localStorage.getItem("mage-motion") === "reduced",
         );
       if (a.absorb && !a.tags.includes("DEFEATED")) {
         const angle = Math.atan2(a.facing.y, a.facing.x),
