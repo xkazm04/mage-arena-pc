@@ -6,10 +6,12 @@ import {
   idleInput,
   labReplay,
   makeTuning,
+  paceOf,
   replenishLab,
   resolveHit,
   stateHash,
   stepLab,
+  ticks,
   type InputFrame,
   type Vec,
 } from "@mage/core/arena";
@@ -147,7 +149,8 @@ describe("live creature Lab setup", () => {
       if (charge?.contacted && state.telegraphs.includes(charge)) travelled++;
     }
     const [hit] = hitsOn(lab, player.id, "unblockable");
-    expect(charge?.travelTicks).toBe(36);
+    // The authored 0.6 s run at the thornback's pace (Normal by default).
+    expect(charge?.travelTicks).toBe(ticks(0.6 / paceOf(thorn)));
     expect(hit!.tick).toBeGreaterThan(charge!.resolveTick);
     expect(travelled).toBeGreaterThan(1);
   });
@@ -196,7 +199,8 @@ describe("live creature Lab setup", () => {
     for (let i = 0; i < 600 && !hitsOn(flank, s.id).length; i++) {
       bash ??= state.telegraphs.find((t) => t.ownerId === s.id)?.activationId;
       if (bash === undefined) stepLab(flank, frame(s.pos));
-      else if (moved < 30) { moved++; stepLab(flank, frame(s.pos, { move: { x: 0.7, y: 1 } })); }
+      // 30 authored ticks of sidestep, covered in fewer at the player's pace, so the shot lands inside the bash warning.
+      else if (moved < 30 / paceOf(player)) { moved++; stepLab(flank, frame(s.pos, { move: { x: 0.7, y: 1 } })); }
       else { stepLab(flank, frame(s.pos, { cast: !fired })); fired = true; }
     }
     // The bash windup locked its shield toward where the player stood; the shot arrives from well outside that 120° front.

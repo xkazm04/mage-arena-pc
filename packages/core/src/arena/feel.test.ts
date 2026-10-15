@@ -13,6 +13,7 @@ import {
   mageInput,
   importTuning,
   exportTuning,
+  paceOf,
 } from "./index.ts";
 const setup = () =>
   createLab({ ...defaultLabConfig, dummyAttack: "still" }).training;
@@ -57,7 +58,8 @@ describe("shipping combat commitments", () => {
     stepArena(state, {
       [player.id]: { ...idleInput(dummy.pos), cast: true, slot: 0 },
     });
-    expect(player.recoveryUntil).toBe(state.tick + ticks(0.2));
+    // Release recovery is the player's own action: it runs at the player's pace.
+    expect(player.recoveryUntil).toBe(state.tick + ticks(0.2 / paceOf(player)));
     stepArena(state, {
       [player.id]: { ...idleInput(dummy.pos), cast: true, slot: 1 },
     });
@@ -70,16 +72,18 @@ describe("shipping combat commitments", () => {
   });
   it("accelerates and brakes promptly, with immediate aim and bounded roll recovery", () => {
     const { state, player, dummy } = setup(),
-      x = player.pos.x;
+      x = player.pos.x,
+      pace = paceOf(player);
     stepArena(state, {
       [player.id]: { ...idleInput(dummy.pos), move: { x: 1, y: 0 } },
     });
-    expect(player.pos.x - x).toBeCloseTo(60 / 3600);
+    // Acceleration scales by pace squared: one tick covers pace^2 times the authored distance.
+    expect(player.pos.x - x).toBeCloseTo((60 * pace * pace) / 3600);
     for (let i = 0; i < 5; i++)
       stepArena(state, {
         [player.id]: { ...idleInput(dummy.pos), move: { x: 1, y: 0 } },
       });
-    expect(player.velocity!.x).toBe(makeTuning().walkMps);
+    expect(player.velocity!.x).toBe(makeTuning().walkMps * pace);
     stepArena(state, {
       [player.id]: idleInput({ x: player.pos.x - 5, y: player.pos.y }),
     });
@@ -97,7 +101,7 @@ describe("shipping combat commitments", () => {
       stepArena(state, {
         [player.id]: { ...idleInput(dummy.pos), move: { x: 1, y: 0 } },
       });
-    expect(player.velocity!.x).toBeLessThanOrEqual(makeTuning().walkMps * 0.5);
+    expect(player.velocity!.x).toBeLessThanOrEqual(makeTuning().walkMps * pace * 0.5);
     expect(player.recoveryUntil).toBeGreaterThan(state.tick);
   });
   it("resists fan stunlock, staggers guarded chip, and resets residual movement/stagger", () => {

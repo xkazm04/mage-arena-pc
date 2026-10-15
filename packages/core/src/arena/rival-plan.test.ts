@@ -68,13 +68,13 @@ describe('rival plans (enemies.json mages.plans)', () => {
     const count = (plan: boolean) => seeds.reduce((n, seed) => { const b = undertowBout(seed, plan); return n + Number(b.entered && b.landed); }, 0);
     const off = count(false), on = count(true);
     expect(off).toBe(0);
-    expect(on).toBe(61);
+    expect(on).toBe(73); // at the default difficulty (Normal)
   });
 
   it('Mirror tide completes defend-then-counter cycles under a Rain Needle stream only with its plan on (Lab competence 2)', () => {
     const off = seeds.reduce((n, seed) => n + mirrorBout(seed, false).cycles, 0), on = seeds.map(seed => mirrorBout(seed, true).cycles);
     expect(off).toBe(0);
-    expect([on.reduce((a, b) => a + b, 0), on.filter(Boolean).length]).toEqual([69, 52]);
+    expect([on.reduce((a, b) => a + b, 0), on.filter(Boolean).length]).toEqual([77, 58]);
   });
 
   it('keeps the fairness rules with plans on: reaction floor, seeded draws logged, no perfect it did not roll', () => {

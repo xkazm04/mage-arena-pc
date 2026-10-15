@@ -46,7 +46,9 @@ describe('threat-answer ledger', () => {
         expect([lead, lead + 1]).toContain(c.ageTicks);
         expect(c.ageTicks! <= windowTicks ? { answer: c.answer } : { answer: c.answer, lateTicks: c.lateTicks }).toEqual(c.ageTicks! <= windowTicks ? { answer: 'perfect' } : { answer: 'held', lateTicks: c.ageTicks! - windowTicks });
       }
-      if (lead < windowTicks) expect(ledger.ages).toEqual({ [lead + 1]: bot.hits });
+      // The ward rises the tick the bot asks and the paced bog glob lands on the bot's estimate: a lead of n ages n
+      // (at the authored 1x the estimate sat on a float boundary, 10.5 m / 0.15 m per tick, and aged n + 1).
+      if (lead < windowTicks) expect(ledger.ages).toEqual({ [lead]: bot.hits });
       if (lead > windowTicks) expect(contacts.every(c => c.answer === 'held' && [lead - windowTicks, lead - windowTicks + 1].includes(c.lateTicks!))).toBe(true);
     }
   });

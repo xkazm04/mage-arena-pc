@@ -33,7 +33,8 @@ function fight(seed: number) {
 
 describe('reading a fought season bout', () => {
   let fought: ReturnType<typeof fight>;
-  beforeAll(() => { fought = fight(11); });
+  // Seed 12: at pace seed 11's read wave runs 1640 positions, under the 1800 this reading needs.
+  beforeAll(() => { fought = fight(12); });
 
   it('stops a replay at any tick of the read wave with the hash a fresh replay and the live bout had there', () => {
     const { bout, tape, hashes } = fought, r = readBout(bout, 180, tape), untaped = readBout(bout, 240), w = r.wave;

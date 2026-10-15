@@ -1,16 +1,13 @@
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { defaultLabConfig, forecastDeltas, makeTuning, runFight, runtime } from "@mage/core/arena";
 import { ForecastRunner, forecastLabel, forecastPolicy, labConfigOf, runForecast } from "./forecast-job.ts";
 
 // One runner across the suite: the Current forecast is computed once and cached, as in the worker.
 const runner = new ForecastRunner();
-// H1 evidence predates committed-body lunges (item L), which change the conscript wave only; that wave is checked
-// against the live census path instead, the others still against the recorded H1 fights.
-const lungeWaves = [1];
-const census = (wave: number): { seed: number; outcome: string; durationS: number; hash: string }[] => lungeWaves.includes(wave)
-  ? Array.from({ length: forecastPolicy.seedsPerWave }, (_, i) => runFight(runtime.games.censusSeedStart + i, wave - 1))
-  : JSON.parse(readFileSync(new URL(`../../../docs/waves/H1-evidence/census-wave-${wave}.json`, import.meta.url), "utf8")).fights;
+// H1 evidence predates committed-body lunges (item L) and the 2026-10-15 pace (every wave), so the forecast is checked
+// per fight against the live census path; it no longer replays docs/waves/H1-evidence.
+const census = (wave: number): { seed: number; outcome: string; durationS: number; hash: string }[] =>
+  Array.from({ length: forecastPolicy.seedsPerWave }, (_, i) => runFight(runtime.games.censusSeedStart + i, wave - 1));
 
 describe("Lab census forecast (the pure job the worker runs)", () => {
   it("reads its sample size and pacing from data and labels itself as a simulation", () => {
@@ -18,7 +15,7 @@ describe("Lab census forecast (the pure job the worker runs)", () => {
     expect(forecastLabel).toBe("simulated · reference policy · n=50");
     expect(labConfigOf({ ...defaultLabConfig, creature: "mire_maw" } as typeof defaultLabConfig)).toEqual(defaultLabConfig);
   });
-  it("Current reproduces the census seeds 40000-40049 per fight (H1 evidence where it still holds): outcome, durationS and hash", () => {
+  it("Current reproduces the census seeds 40000-40049 per fight: outcome, durationS and hash", () => {
     const r = runForecast({ id: 1, tuning: makeTuning(), lab: defaultLabConfig }, runner);
     expect(r.sameAsCurrent).toBe(true);
     expect(r.candidate).toEqual(r.current);
