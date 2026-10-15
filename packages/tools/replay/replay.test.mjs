@@ -145,3 +145,10 @@ test('hour-rule planted faults are rejected directly', () => {
     assert.ok(check(t,a.fixtures,a.prose,a.template).some(e => e.startsWith(expected)), expected);
   }
 });
+
+test('fixtures/ holds only what generate writes; a planted orphan is named', async () => {
+  const { orphanFixtures } = await import('./check.mjs');
+  const { readdirSync } = await import('node:fs');
+  assert.deepEqual(orphanFixtures(readdirSync(new URL('../../../docs/design/reconciled/fixtures/', import.meta.url))), []);
+  assert.deepEqual(orphanFixtures(['golden-nights.json', 'old-nights.json']), ['old-nights.json']);
+});

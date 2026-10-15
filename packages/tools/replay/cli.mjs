@@ -1,9 +1,9 @@
 import { hourDays } from './hour-days.mjs';
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { loadTables, designRoot } from './tables.mjs';
+import { loadTables, designRoot, canonical } from './tables.mjs';
 import { goldenNights } from './reference.mjs';
-import { check, render, readArtifacts } from './check.mjs';
+import { check, render, readArtifacts, orphanFixtures } from './check.mjs';
 import { itemSchema } from '../../director/src/schema.ts';
 import { branchNights } from './scenarios.mjs';
 
@@ -17,9 +17,10 @@ if (command === 'generate') {
   console.log('Generated golden nights and table-backed prose.');
 } else if (command === 'check') {
   const a = readArtifacts(), errors = check(t,a.fixtures,a.prose,a.template,a.schema);
-  if (JSON.stringify(JSON.parse(readFileSync(new URL('fixtures/hour-days.json',designRoot),'utf8')))!==JSON.stringify(hourDays(t))) errors.push('hour fixture drift');
+  if (canonical(JSON.parse(readFileSync(new URL('fixtures/hour-days.json',designRoot),'utf8')))!==canonical(hourDays(t))) errors.push('hour fixture drift');
   const branches=JSON.parse(readFileSync(new URL('fixtures/branch-nights.json',designRoot),'utf8'));
-  if (JSON.stringify(branches)!==JSON.stringify(branchNights(t))) errors.push('branch fixture drift');
+  if (canonical(branches)!==canonical(branchNights(t))) errors.push('branch fixture drift');
+  for (const name of orphanFixtures(readdirSync(new URL('fixtures/',designRoot)))) errors.push(`orphan fixture ${name}: not written by generate`);
   console.log(JSON.stringify({ contradictions: errors.length, errors, nights: a.fixtures.length, deltas: a.fixtures.reduce((n,f) => n+f.trace.length,0) },null,2));
   if (errors.length) process.exitCode = 1;
 } else if (command === 'build') {

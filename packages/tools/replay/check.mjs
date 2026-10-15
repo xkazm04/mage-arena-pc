@@ -87,6 +87,10 @@ export function check(t, fixtures, prose, template, schema = itemSchema(t)) {
   return errors;
 }
 
+/** Every file `cli.mjs generate` writes into fixtures/; anything else there is an orphan nothing re-derives. */
+export const generatedFixtures = ['golden-nights.json', 'branch-nights.json', 'hour-days.json'];
+export function orphanFixtures(names) { return names.filter(name => !generatedFixtures.includes(name)); }
+
 export function readArtifacts(root = designRoot) {
   return { fixtures: JSON.parse(readFileSync(new URL('fixtures/golden-nights.json',root),'utf8')),
     schema: JSON.parse(readFileSync(new URL('data/decision.schema.json',root),'utf8')),
