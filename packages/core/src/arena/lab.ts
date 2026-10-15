@@ -3,6 +3,7 @@ import { attachMageAI, mageInput } from "./mage-ai.ts";
 import { createTraining, scheduleTraining, type Training } from "./training.ts";
 import { combat, seconds, stepArena, reviveActor } from "./kernel.ts";
 import { createLedger, observeLedger, type ThreatLedger } from "./ledger.ts";
+import { enemyInputs, queueDeathEffects } from "./enemies.ts";
 import {
   makeTuning,
   schools,
@@ -23,6 +24,8 @@ export interface LabConfig {
   seed: number;
   randomSeed: boolean;
   composition: Composition;
+  /** Roster-creature targets only: "still" (absent = still) holds position; "live" runs the roster brain. */
+  targetMotion?: "still" | "live";
 }
 export const defaultLabConfig: LabConfig = {
   opponent: "dummy",
@@ -83,6 +86,7 @@ export function validateLabConfig(c: LabConfig): LabConfig {
     c.seed < 0 ||
     c.seed > 0xffffffff ||
     typeof c.randomSeed !== "boolean" ||
+    (c.targetMotion !== undefined && !["still", "live"].includes(c.targetMotion)) ||
     validateComposition(c.composition).length
   )
     throw Error("Invalid Lab setup.");
@@ -180,14 +184,20 @@ export function stepLab(
   record = true,
 ): void {
   const { state, player, dummy } = lab.training;
-  if (player.tags.includes("DEFEATED") || dummy.tags.includes("DEFEATED")) return;
+  const live = lab.config.targetMotion === "live" && !!dummy.enemy;
+  // A fallen live creature keeps the clock running until its death effect (ember burst) is queued and resolved.
+  const dying = live && (!dummy.enemy!.deathQueued || state.telegraphs.length > 0);
+  if (player.tags.includes("DEFEATED") || (dummy.tags.includes("DEFEATED") && !dying)) return;
   const first = state.events.length;
   if (lab.config.opponent === "dummy" && lab.config.dummyAttack !== "still")
     scheduleTraining(lab.training);
+  // Live pairing matches roster mode: the creature brain reads the tick first, then the player's frame applies.
   stepArena(state, {
+    ...(live ? enemyInputs(state) : {}),
     [player.id]: input,
     ...(dummy.mageAI ? { [dummy.id]: mageInput(state, dummy) } : {}),
   });
+  if (live) queueDeathEffects(state);
   observeLedger(lab.ledger, state);
   for (const e of state.events.slice(first)) {
     if (e.kind === "stagger") { if (e.actorId === player.id) lab.metrics.staggersReceived++; else lab.metrics.staggersDealt++; }
@@ -232,6 +242,8 @@ export function replenishLab(lab: CombatLab) {
     a.mana = a.maxMana;
     a.stamina = a.maxStamina;
     reviveActor(lab.training.state, a);
+    // A revived live creature owes its death effect again; still targets never queue one.
+    if (a.enemy) a.enemy.deathQueued = false;
   }
   lab.metrics.mixed = true;
   lab.changes.push({ tick: lab.training.state.tick, kind: "replenish" });

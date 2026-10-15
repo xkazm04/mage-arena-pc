@@ -247,7 +247,7 @@ export class LabUI {
       );
     choose(
       "opponent",
-      `Target: ${c.creature ? creatureName(c.creature) + " (still)" : c.opponent === "dummy" ? "Dummy" : "Mage AI"}`,
+      `Target: ${c.creature ? `${creatureName(c.creature)} (${c.targetMotion ?? "still"})` : c.opponent === "dummy" ? "Dummy" : "Mage AI"}`,
       106,
       228,
       () => {
@@ -290,12 +290,17 @@ export class LabUI {
     choose(
       "dummy",
       c.creature
-        ? "Creature target: stationary hit / death practice"
+        ? c.targetMotion === "live"
+          ? "Creature motion: Live (roster brain attacks)"
+          : "Creature motion: Still (hit / death practice)"
         : `Dummy action: ${title(c.dummyAttack)}`,
       106,
       412,
       () => {
-        if (c.creature) return;
+        if (c.creature) {
+          c.targetMotion = this.cycle(["still", "live"] as const, c.targetMotion ?? "still");
+          return;
+        }
         c.dummyAttack = this.cycle(
           ["still", "magic", "physical", "charge"],
           c.dummyAttack,
@@ -374,7 +379,7 @@ export class LabUI {
     );
     u.text(
       c.creature
-        ? "Creature targets stay still with roster health and poise. Choose their facing to inspect hits and defeat.\nCompetence, aggression and dummy action apply only to other target types. R resets; G revives."
+        ? "Roster health and poise. Still targets hold position and facing for hits and defeat; live ones move, attack and drain as in a bout.\nCompetence, aggression and dummy action apply only to other target types. R resets; G revives."
         : "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
       106,
       817,

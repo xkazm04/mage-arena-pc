@@ -135,4 +135,16 @@ describe("Combat Feel Lab", () => {
       pending.spell!.speedMps * 2,
     );
   });
+  it("ignores live target motion when the target is not a roster creature", () => {
+    for (const opponent of ["dummy", "mage"] as const) {
+      const a = createLab({ ...defaultLabConfig, opponent }),
+        b = createLab({ ...defaultLabConfig, opponent, targetMotion: "live" });
+      for (let i = 0; i < 240; i++) {
+        stepLab(a, idleInput(a.training.dummy.pos));
+        stepLab(b, idleInput(b.training.dummy.pos));
+      }
+      expect(stateHash(b.training.state)).toBe(stateHash(a.training.state));
+    }
+    expect(() => createLab({ ...defaultLabConfig, targetMotion: "run" as never })).toThrow();
+  });
 });
