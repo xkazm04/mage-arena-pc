@@ -223,6 +223,30 @@
     "caps": {
       "reactionDelayMinS": 0.25,
       "perfectAbsorbChanceMax": 0.45
+    },
+    "plans": {
+      "_about": "Rival plans keyed by Water preset name; opt-in only (Lab setup toggle, runtime games.rivalPlans for Tiro, default off). A plan steers spacing, ward budget and spell timing; competence still owns reactions, aim and perfect odds, and every opening it reads is at least the competence reaction delay old. Distances are fractions of the composition's own spell rangeM. Under a plan a curve row's denied-perfect raise also keeps deniedPerfectMarginS over the live impact, since plan movement makes impact estimates drift. close: when an opening is seen (target release, target roll, target ward down) a seeded draw against the summed weights starts a sprint toward the target (still casting on the way, pausing while its ward is planned), arms commitLine inside armFractionOfRange of its range and presses it inside engageFractionOfRange, then backs off for withdrawS and re-arms after rearmS; an approach gives up after approachMaxS. ranged: holds a band of its longest damaging composition range; when two enemy releases are seen within streamWindowS and their shots land faster than it can react, it raises its ward ahead of the next expected shot on that seen rhythm and flight, old enough to miss the perfect window, and drops it after the first guarded hit; with mana under wardReserveFraction it raises no ward (stream or reactive) for threats below lowValueDamage and takes them; once its ward is down it decides a damaging counter-cast within counterWindowS of each seen enemy release.",
+      "deniedPerfectMarginS": 0.05,
+      "Undertow": {
+        "style": "close",
+        "commitLine": "lash",
+        "engageFractionOfRange": 0.9,
+        "armFractionOfRange": 1.6,
+        "openingWeights": { "release": 0.6, "roll": 0.8, "wardDown": 0.03 },
+        "openingWindowS": 0.6,
+        "approachMaxS": 2.5,
+        "approachSprint": true,
+        "withdrawS": 0.9,
+        "rearmS": 3
+      },
+      "Mirror tide": {
+        "style": "ranged",
+        "holdFractionOfRange": [0.5, 0.75],
+        "wardReserveFraction": 0.3,
+        "lowValueDamage": 5,
+        "streamWindowS": 1.2,
+        "counterWindowS": 1
+      }
     }
   },
   "echo": {

@@ -4,6 +4,7 @@ import { newWaterState, presets, validateComposition } from './catalog.ts';
 import { addEnemy, enemyInputs, queueDeathEffects } from './enemies.ts';
 import { addMage, combat, createArena, random, resetWave, runtime, seconds, stateHash, stepArena, ticks } from './kernel.ts';
 import { attachMageAI, mageInput } from './mage-ai.ts';
+import { attachRivalPlan } from './rival-plan.ts';
 import { createLedger, observeLedger } from './ledger.ts';
 import { type Actor, type ArenaState, type Composition, type InputFrame, type Ranks } from './types.ts';
 import { validateTuning, type CombatTuning } from './tuning.ts';
@@ -40,6 +41,7 @@ function spawnWave(g: Games): void {
         actor = addMage(g.state, 1, pos, 'Tiro entrant · Water proxy');
         const presetName = runtime.games.opponentPresets[g.wave - 2]!;
         actor.water = newWaterState(presets.find(p => p.name === presetName)!); attachMageAI(actor, spawn.competence, g.state.tick);
+        if (runtime.games.rivalPlans) attachRivalPlan(actor);
       }
       if (g.state.tuning) actor.poise *= g.state.tuning.opponentPoise;
       g.spawnLog.push({ wave: g.wave + 1, id: actor.id, kind: 'enemy' in spawn ? spawn.enemy : `Water proxy ${spawn.competence}`, ...pos }); index++;

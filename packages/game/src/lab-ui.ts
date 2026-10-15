@@ -4,6 +4,8 @@ import {
   importTuning,
   labReplay,
   makeTuning,
+  presets,
+  rivalPlanPresets,
   replenishLab,
   schools,
   seconds,
@@ -248,13 +250,14 @@ export class LabUI {
       x: number,
       y: number,
       act: () => void,
+      width = 780,
     ) =>
       u.button(
         `lab-config-${id}`,
         label,
         x,
         y,
-        780,
+        width,
         70,
         () => {
           act();
@@ -304,7 +307,24 @@ export class LabUI {
     choose("competence", `Competence: ${c.competence} / 4`, 980, 320, () => {
       c.competence = (c.competence % 4) + 1;
     });
-    choose(
+    // A mage rival has no dummy action: that slot picks its Water preset and whether it plays the preset's plan.
+    const rival = c.opponent === "mage" && !c.creature,
+      rivalPreset = c.rivalPreset ?? presets[2]!.name;
+    if (rival) {
+      choose("rival-preset", `Rival: ${rivalPreset}`, 106, 412, () => {
+        c.rivalPreset = this.cycle(presets.map((p) => p.name), rivalPreset);
+      }, 380);
+      choose(
+        "rival-plan",
+        rivalPlanPresets.includes(rivalPreset) ? `Rival plan: ${c.rivalPlan ? "on" : "off"}` : "Rival plan: none",
+        506,
+        412,
+        () => {
+          if (rivalPlanPresets.includes(rivalPreset)) c.rivalPlan = !c.rivalPlan;
+        },
+        380,
+      );
+    } else choose(
       "dummy",
       c.creature
         ? c.targetMotion === "live"
@@ -397,7 +417,9 @@ export class LabUI {
     u.text(
       c.creature
         ? "Roster health and poise. Still targets hold position and facing for hits and defeat; live ones move, attack and drain as in a bout.\nCompetence, aggression and dummy action apply only to other target types. R resets; G revives."
-        : "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
+        : rival
+          ? "Rival plan: Undertow closes to Lash range after an opening, then backs off; Mirror tide holds range, budgets its ward and counter-casts.\nCompetence changes reactions and decisions, never health or damage. A plan changes tactics only."
+          : "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
       106,
       817,
       24,

@@ -27,6 +27,17 @@ describe("stationary creature Lab setup", () => {
       createLab(defaultLabConfig),
     );
   });
+  it("passes the rival preset and plan toggle through to the mage opponent", () => {
+    const mage = { ...defaultLabConfig, opponent: "mage" as const };
+    expect(createLabSetup(mage).training.dummy.mageAI!.rival).toBeUndefined();
+    for (const rivalPreset of ["Undertow", "Mirror tide"]) {
+      const off = createLabSetup({ ...mage, rivalPreset, rivalPlan: false }).training.dummy,
+        on = createLabSetup({ ...mage, rivalPreset, rivalPlan: true }).training.dummy;
+      expect(off.water.composition.name).toBe(rivalPreset);
+      expect(off.mageAI!.rival).toBeUndefined();
+      expect(on.mageAI!.rival!.preset).toBe(rivalPreset);
+    }
+  });
   it("uses roster bodies/stats, real damage, persistent defeat, replay, revive and reset for every facing", () => {
     for (const creature of creatureTargets)
       for (const creatureFacing of ["ne", "se", "sw", "nw"] as const) {
