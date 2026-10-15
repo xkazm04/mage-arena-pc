@@ -1,5 +1,6 @@
 import {
   exportTuning,
+  forecastDeltas,
   importTuning,
   labReplay,
   makeTuning,
@@ -7,6 +8,7 @@ import {
   schools,
   seconds,
   spellFor,
+  tiro,
   toggleLabDamage,
   tuningFields,
   tuningPresets,
@@ -25,8 +27,18 @@ import {
   creatureName,
   type LabSetup,
 } from "./lab-setup.ts";
+import { ForecastClient } from "./forecast-client.ts";
+import { forecastLabel } from "./forecast-job.ts";
 
 const title = (s: string) => s[0]!.toUpperCase() + s.slice(1);
+const signed = (n: number | null | undefined, digits: number, unit = "") =>
+  n === null || n === undefined ? "--" : `${Number(n.toFixed(digits)) < 0 ? "-" : "+"}${Math.abs(n).toFixed(digits)}${unit}`;
+interface ForecastTexts {
+  rows: BitmapText[][];
+  ttk: BitmapText;
+  dpm: BitmapText;
+  status: BitmapText;
+}
 /** All interaction is drawn by the canvas kit. Clipboard/drop is data transport only. */
 export class LabUI {
   private page = "Movement";
@@ -53,6 +65,9 @@ export class LabUI {
   private replayPaused = false;
   private spellSlot = 0;
   private spellTier = 1;
+  private forecastTexts?: ForecastTexts;
+  /** Census forecast runs in a worker; the panel only reads its summaries and never writes a band. */
+  private readonly forecast = new ForecastClient(() => this.showForecast());
   constructor(
     private u: CanvasUI,
     private game: ArenaGame,
@@ -105,6 +120,7 @@ export class LabUI {
     this.metricsText = undefined;
     this.statusText = undefined;
     this.text = undefined;
+    this.forecastTexts = undefined;
   }
   private heading(screen: string, name: string, subtitle: string) {
     this.clear();
@@ -174,6 +190,7 @@ export class LabUI {
     if (this.u.screen === "lab-tuning") this.drawTuning();
   }
   installHUD() {
+    this.forecast.cancel();
     this.clear();
     const u = this.u;
     u.panel(96, 168, 1728, 128);
@@ -513,6 +530,7 @@ export class LabUI {
       next.rollIFramesS = Math.min(value, next.rollDurationS);
     try {
       changeLabTuning(this.lab, next, "Custom");
+      this.forecast.want(this.tune, this.lab.config);
     } catch (e) {
       this.u.notice(String(e));
     }
@@ -585,22 +603,32 @@ export class LabUI {
         `lab-preset-${p}`,
         p,
         1320,
-        344 + i * 72,
+        326 + i * 70,
         440,
         64,
         () => {
           changeLabTuning(this.lab, makeTuning(p), p);
           this.drawTuning();
         },
-        { selected: this.lab.tuningName === p },
+        { selected: this.lab.tuningName === p, fontSize: 24 },
       ),
+    );
+    u.button("lab-export", "Export JSON", 1320, 536, 214, 64, () => this.export(), {
+      fontSize: 22,
+    });
+    u.button("lab-import", "Import JSON", 1546, 536, 214, 64, () => this.openImport(), {
+      fontSize: 22,
+    });
+    this.forecastPanel();
+    u.button("lab-tuning-close", "Return to combat", 106, 940, 390, 64, () =>
+      this.close(),
     );
     u.button(
       "lab-tuning-live",
       this.game.paused ? "P  Run while tuning" : "P  Freeze simulation",
-      1320,
-      576,
-      440,
+      516,
+      940,
+      390,
       64,
       () => {
         this.game.pause(!this.game.paused);
@@ -608,48 +636,78 @@ export class LabUI {
       },
       { fontSize: 24 },
     );
-    u.button(
-      "lab-export",
-      "Export tuning JSON",
-      1320,
-      648,
-      440,
-      64,
-      () => this.export(),
-      { fontSize: 24 },
-    );
-    u.button(
-      "lab-import",
-      "Import tuning JSON",
-      1320,
-      720,
-      440,
-      64,
-      () => this.openImport(),
-      { fontSize: 24 },
-    );
     u.text(
-      "Sliders: drag or Left / Right.\nClick a value to type it.\nWarnings keep their safe minimum.",
-      1340,
-      786,
-      24,
+      "Sliders: drag or Left / Right; click a value to type. Warnings keep their safe minimum.\nR reset   P freeze   . step   G refill   H damage   L setup   V replay",
+      936,
+      944,
+      20,
       colours.muted,
-      400,
-    );
-    u.button("lab-tuning-close", "Return to combat", 106, 940, 390, 64, () =>
-      this.close(),
-    );
-    u.text(
-      "R reset   P freeze   . step   G refill   H damage   L setup   V replay",
-      540,
-      959,
-      24,
-      colours.muted,
-      1220,
+      840,
     );
     u.onBack = () => this.close();
     u.onKey = this.keys;
     u.end();
+  }
+  /** Compact census forecast: per-wave median vs band and changes vs Current, plus Lab duel TTK and damage per mana. */
+  private forecastPanel() {
+    const u = this.u,
+      cols = [1336, 1446, 1534, 1620, 1694];
+    u.text("Census forecast vs Current", 1336, 612, 22, colours.gold, 440);
+    ["Wave", "Median", "Change", "Win", "Perfect"].forEach((h, i) =>
+      u.text(h, cols[i]!, 642, 18, colours.muted, 110),
+    );
+    const cell = (x: number, y: number, size = 20) => u.text("", x, y, size, 0xffffff, 440);
+    this.forecastTexts = {
+      rows: tiro.waves.map((_, i) => cols.map((x) => cell(x, 668 + i * 27))),
+      ttk: cell(1336, 780),
+      dpm: cell(1336, 806),
+      status: cell(1336, 840, 18),
+    };
+    u.text(forecastLabel, 1336, 866, 18, colours.muted, 440);
+    this.forecast.want(this.tune, this.lab.config);
+    this.showForecast();
+  }
+  private showForecast() {
+    const t = this.forecastTexts;
+    if (!t || this.u.screen !== "lab-tuning") return;
+    const v = this.forecast.view,
+      r = v.result,
+      fresh = v.status === "done",
+      deltas = r ? forecastDeltas(r.current.waves, r.candidate.waves) : [],
+      ink = fresh ? colours.text : colours.muted;
+    t.rows.forEach((row, i) => {
+      const band = tiro.waves[i]!.targetDurationS,
+        d = deltas[i],
+        values = [
+          `${i + 1}  ${band[0]}-${band[1]}s`,
+          d?.medianDurationS == null ? "--" : `${d.medianDurationS.toFixed(1)}s`,
+          signed(d?.medianDeltaS, 1, "s"),
+          d ? signed(d.winRateDelta * 100, 0, "%") : "--",
+          d ? signed(d.perfectRateDelta * 100, 1, "%") : "--",
+        ];
+      row.forEach((cell, c) => {
+        cell.text = values[c]!;
+        cell.tint = c === 1 && d && !d.inBand && fresh ? colours.danger : c === 0 ? colours.muted : ink;
+      });
+    });
+    const duel = r?.candidate.duel,
+      base = r?.current.duel,
+      ttkDelta = duel?.ttkMedianS != null && base?.ttkMedianS != null ? duel.ttkMedianS - base.ttkMedianS : null,
+      dpmDelta = duel?.damagePerMana != null && base?.damagePerMana != null ? duel.damagePerMana - base.damagePerMana : null;
+    t.ttk.text = `Duel TTK ${duel?.ttkMedianS == null ? "--" : duel.ttkMedianS.toFixed(1) + "s"} (${signed(ttkDelta, 1, "s")})   win ${duel ? Math.round(duel.winRate * 100) + "%" : "--"}`;
+    t.dpm.text = `Damage / mana ${duel?.damagePerMana == null ? "--" : duel.damagePerMana.toFixed(2)} (${signed(dpmDelta, 2)})`;
+    t.ttk.tint = t.dpm.tint = ink;
+    t.status.text =
+      v.status === "waiting"
+        ? "Change noticed; simulating shortly"
+        : v.status === "running"
+          ? `Simulating ${v.done} / ${v.total} fights`
+          : v.status === "error"
+            ? `Forecast failed: ${v.error ?? "unknown"}`.slice(0, 48)
+            : r
+              ? `${r.sameAsCurrent ? "Current baseline" : "Change vs Current"} in ${((v.ms ?? 0) / 1000).toFixed(1)} s`
+              : "";
+    t.status.tint = v.status === "error" ? colours.danger : colours.muted;
   }
   private spellRows() {
     const u = this.u,
@@ -719,6 +777,7 @@ export class LabUI {
           next.spells[s.id] = { ...spec, ...next.spells[s.id], [key]: n };
           try {
             changeLabTuning(this.lab, next, "Custom");
+            this.forecast.want(this.tune, this.lab.config);
           } catch (e) {
             u.notice(String(e));
           }
@@ -864,6 +923,7 @@ export class LabUI {
     return this.replayState;
   }
   dispose() {
+    this.forecast.dispose();
     this.lifetime.abort();
     this.frames = [];
   }
