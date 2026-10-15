@@ -1,9 +1,9 @@
 import { applyBoutInput, beginTrial, boutHash, bridgeRules, createSeason, exchangeTrial, prepareBout, receiveBout, receiveTrial, seasonDue, startBout, trialTell, type BoutInput, type SeasonProgress, type TrialStance } from '@mage/core';
-import type { Composition } from '@mage/core/arena';
+import type { Composition, Difficulty } from '@mage/core/arena';
 import { CampService, type CampCommand } from './camp-service.ts';
 import type { ParleyInput } from './parley.ts';
 
-export type SeasonCommand = { type: 'escort-trial' | 'trial' } | { type: 'exchange'; stance: TrialStance } | { type: 'receive-trial' } | { type: 'prepare'; composition: Composition } | { type: 'start' } | { type: 'receive' };
+export type SeasonCommand = { type: 'escort-trial' | 'trial' } | { type: 'exchange'; stance: TrialStance } | { type: 'receive-trial' } | { type: 'prepare'; composition: Composition; difficulty?: Difficulty } | { type: 'start' } | { type: 'receive' };
 export class SeasonService extends CampService {
   progress: SeasonProgress = createSeason();
   paused = false;
@@ -38,7 +38,7 @@ export class SeasonService extends CampService {
   }
   seasonCommand(command: SeasonCommand, revision: number) {
     this.ready(revision);
-    if (!command || Object.keys(command).sort().join() !== (command.type === 'prepare' ? 'composition,type' : command.type === 'exchange' ? 'stance,type' : 'type')) throw Error('Invalid season command envelope.');
+    if (!command || !(command.type === 'prepare' ? ['composition,type', 'composition,difficulty,type'] : [command.type === 'exchange' ? 'stance,type' : 'type']).includes(Object.keys(command).sort().join())) throw Error('Invalid season command envelope.');
     if (this.paused) throw Error('Resume the season first.');
     const p = this.progress;
     switch (command.type) {
@@ -49,7 +49,7 @@ export class SeasonService extends CampService {
       case 'trial': p.trial = beginTrial(this.tables, this.session, p); break;
       case 'exchange': if (!p.trial) throw Error('No Trial'); p.trial = exchangeTrial(this.tables, this.session, p.trial, command.stance); break;
       case 'receive-trial': this.session = receiveTrial(this.tables, this.session, p); this.startNight(); return this.view();
-      case 'prepare': p.bout = prepareBout(this.tables, this.session, p, command.composition); p.composition = structuredClone(command.composition); break;
+      case 'prepare': p.bout = prepareBout(this.tables, this.session, p, command.composition, command.difficulty); p.composition = structuredClone(command.composition); break;
       case 'start': if (!p.bout) throw Error('No prepared bout'); startBout(p.bout); break;
       case 'receive': this.session = receiveBout(this.tables, this.session, p); return this.view();
       default: throw Error('Unknown season action');

@@ -7,13 +7,15 @@ import { createLedger, observeLedger, type ThreatLedger } from "./ledger.ts";
 import { enemyInputs, queueDeathEffects } from "./enemies.ts";
 import { flowMark, flowShift } from "./water.ts";
 import {
+  defaultDifficulty,
   makeTuning,
   schools,
+  validDifficulty,
   validateTuning,
   type CombatTuning,
   type School,
 } from "./tuning.ts";
-import type { ArenaState, Composition, InputFrame } from "./types.ts";
+import type { ArenaState, Composition, Difficulty, InputFrame } from "./types.ts";
 
 export interface LabConfig {
   opponent: "dummy" | "mage";
@@ -31,6 +33,8 @@ export interface LabConfig {
   /** Mage opponents only: the rival's Water preset (absent = Rotation) and whether it plays its authored plan (absent = off). */
   rivalPreset?: string;
   rivalPlan?: boolean;
+  /** Paces the opponent (dummy, creature or rival) like a bout at this difficulty; absent = the default. */
+  difficulty?: Difficulty;
 }
 export const defaultLabConfig: LabConfig = {
   opponent: "dummy",
@@ -96,6 +100,7 @@ export function validateLabConfig(c: LabConfig): LabConfig {
     (c.targetMotion !== undefined && !["still", "live"].includes(c.targetMotion)) ||
     (c.rivalPreset !== undefined && !presets.some((p) => p.name === c.rivalPreset)) ||
     (c.rivalPlan !== undefined && typeof c.rivalPlan !== "boolean") ||
+    (c.difficulty !== undefined && !validDifficulty(c.difficulty)) ||
     validateComposition(c.composition).length
   )
     throw Error("Invalid Lab setup.");
@@ -110,6 +115,7 @@ export function createLab(
     training = createTraining(
       c.dummyAttack === "still" ? "magic" : c.dummyAttack,
       c.seed,
+      c.difficulty ?? defaultDifficulty,
     );
   const { state, player, dummy } = training;
   state.tuning = validateTuning(tuning);

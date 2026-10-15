@@ -6,20 +6,20 @@ import { addMage, combat, createArena, random, resetWave, runtime, seconds, stat
 import { attachMageAI, mageInput } from './mage-ai.ts';
 import { attachRivalPlan } from './rival-plan.ts';
 import { createLedger, observeLedger } from './ledger.ts';
-import { type Actor, type ArenaState, type Composition, type InputFrame, type Ranks } from './types.ts';
-import { validateTuning, type CombatTuning } from './tuning.ts';
+import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks } from './types.ts';
+import { defaultDifficulty, validateTuning, type CombatTuning } from './tuning.ts';
 export const tiro = arenaTiers.tiers[0];
 /** Anonymous Tiro mage entrants; presentation matches this label, so it lives here once. */
 export const tiroEntrantLabel = 'Tiro entrant · Water proxy';
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
 export interface Games { state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
 export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
-/** `tuning` is a Lab what-if: omitted, the state carries no tuning and every census hash is unchanged. */
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning): Games {
+/** `tuning` is a Lab what-if: omitted, the state carries no tuning. `difficulty` paces the opponents for the whole Games (the player's pace is fixed). */
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
   if (validateComposition(composition).length) throw Error('Invalid composition');
   if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
-  const state = createArena(seed), player = addMage(state, 0, runtime.games.playerSpawn, snapshot?.name ?? 'Cassia', snapshot?.ranks); player.water = newWaterState(composition);
+  const state = createArena(seed, difficulty), player = addMage(state, 0, runtime.games.playerSpawn, snapshot?.name ?? 'Cassia', snapshot?.ranks); player.water = newWaterState(composition);
   if (tuning) { state.tuning = validateTuning(tuning); player.poise *= state.tuning.playerPoise; }
   if (snapshot) { player.hp = Math.max(1, player.hp - snapshot.hpPenalty); player.maxStamina = Math.max(1, player.maxStamina - snapshot.staminaPenalty); player.stamina = player.maxStamina; }
   if (referencePlayer) attachMageAI(player, runtime.games.referenceCompetence);
@@ -77,9 +77,9 @@ export function advanceGames(g: Games): void {
   if (g.player.mageAI) attachMageAI(g.player, g.player.mageAI.competence, g.state.tick);
   g.state.actors = [g.player]; g.phase = 'active'; g.waveStartTick = g.state.tick; spawnWave(g);
 }
-export function runFight(seed: number, wave: number, maxSeconds = runtime.games.fightTimeoutS, tuning?: CombatTuning) {
+export function runFight(seed: number, wave: number, maxSeconds = runtime.games.fightTimeoutS, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty) {
   const composition = presets.find(p => p.name === runtime.games.referencePreset)!;
-  const g = createGames(seed, composition, wave, true, undefined, tuning), ledger = createLedger(g.state, g.player.id);
+  const g = createGames(seed, composition, wave, true, undefined, tuning, difficulty), ledger = createLedger(g.state, g.player.id);
   const deadAirBuckets: boolean[] = []; let bucketActive = false;
   while (g.phase === 'active' && g.state.tick < ticks(maxSeconds)) {
     const eventsBefore = g.state.events.length; stepGames(g); observeLedger(ledger, g.state);

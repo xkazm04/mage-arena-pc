@@ -1,7 +1,8 @@
 import { reviveActor, addMage, createArena, random, runtime, ticks, seconds, spawnProjectile, stepArena, stateHash, combat } from './kernel.ts';
 import { distance, sub, unit } from './math.ts';
-import { idleInput, type Actor, type ArenaState, type InputFrame } from './types.ts';
-import { enemyRoster } from './enemies.ts';
+import { idleInput, type Actor, type ArenaState, type Difficulty, type Family, type InputFrame } from './types.ts';
+import { enemyRoster, pacedWindupS } from './enemies.ts';
+import { defaultDifficulty, paceOf } from './tuning.ts';
 const canonAttack = (id: string) => {
   const attack = enemyRoster.flatMap(e => e.attacks).find(a => a.id === id);
   if (!attack) throw Error(`Unknown training attack ${id}`);
@@ -23,8 +24,8 @@ export const trainingAttacks = {
 export type TrainingKind = 'magic' | 'physical' | 'flanker' | 'charge' | 'stream' | 'performance';
 export type BotKind = 'perfect' | 'holder' | 'never' | 'late';
 export interface Training { state: ArenaState; player: Actor; dummy: Actor; kind: TrainingKind; nextAttack: number; attacks: number }
-export function createTraining(kind: TrainingKind = 'magic', seed = 1): Training {
-  const state = createArena(seed);
+export function createTraining(kind: TrainingKind = 'magic', seed = 1, difficulty: Difficulty = defaultDifficulty): Training {
+  const state = createArena(seed, difficulty);
   const player = addMage(state, 0, runtime.training.player, 'Cassia');
   const dummy = addMage(state, 1, kind === 'physical' ? runtime.training.side : runtime.training.front, 'Training target');
   dummy.dummy = true; dummy.hp = dummy.maxHp = runtime.training.dummyHp;
@@ -46,14 +47,16 @@ export function scheduleTraining(t: Training): void {
   if (t.kind === 'flanker') dummy.pos = { x: t.attacks % 2 ? runtime.training.front.x : 2 * runtime.training.player.x - runtime.training.front.x, y: runtime.training.front.y };
   const spec = t.kind === 'physical' ? trainingAttacks.physical : trainingAttacks.magic;
   const count = t.kind === 'stream' ? runtime.training.streamCount : 1;
+  const family: Family = t.kind === 'charge' ? 'unblockable' : t.kind === 'physical' ? 'physical' : 'magic';
+  // The dummy's canon attack runs at the dummy's pace like any enemy's; the drill cadence (interval, stream gap) stays in seconds.
+  const windupS = pacedWindupS(dummy, { family, windupS: t.kind === 'charge' ? trainingAttacks.charge.windupS : spec.windupS });
   for (let i = 0; i < count; i++) {
     const id = state.nextId++;
-    state.telegraphs.push({ id, activationId: id, ownerId: dummy.id,
-      family: t.kind === 'charge' ? 'unblockable' : t.kind === 'physical' ? 'physical' : 'magic',
+    state.telegraphs.push({ id, activationId: id, ownerId: dummy.id, family,
       damage: t.kind === 'charge' ? trainingAttacks.charge.damage : spec.damage, tier: spec.tier,
       source: { ...dummy.pos }, origin: { ...dummy.pos }, target: { ...player.pos }, startTick: state.tick + 1,
-      resolveTick: state.tick + 1 + ticks(t.kind === 'charge' ? trainingAttacks.charge.windupS : spec.windupS) + i * ticks(runtime.training.streamIntervalS),
-      kind: t.kind === 'charge' ? 'lane' : 'projectile', speedMps: spec.speedMps,
+      resolveTick: state.tick + 1 + ticks(windupS) + i * ticks(runtime.training.streamIntervalS),
+      kind: t.kind === 'charge' ? 'lane' : 'projectile', speedMps: spec.speedMps * paceOf(dummy),
       rangeM: t.kind === 'charge' ? trainingAttacks.charge.rangeM : spec.rangeM, widthM: trainingAttacks.charge.widthM });
   }
 }

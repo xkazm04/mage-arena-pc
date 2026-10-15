@@ -1,4 +1,4 @@
-import { tuningFor, feelPolicy } from './tuning.ts';
+import { paceOf, tuningFor, feelPolicy } from './tuning.ts';
 import { arenaContains, arenaGeometry } from './geometry.ts';
 import { enemyData } from './data.generated.ts';
 import { spellFor, spells, type Spell } from './catalog.ts';
@@ -62,6 +62,7 @@ export function threats(state: ArenaState, a: Actor): Threat[] {
   }
   return result;
 }
+const deniedDriftS = enemyData.mages.plans.deniedPerfectMarginS;
 const fitsBeforeRaise = (state: ArenaState, raiseTick: number, s: Spell): boolean =>
   raiseTick <= state.tick || raiseTick >= state.tick + ticks(Math.max(s.castS, s.telegraphS) + feelPolicy.ai.reactionCastSafetyS);
 export function mageInput(state: ArenaState, a: Actor): InputFrame {
@@ -123,6 +124,12 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
       if (!brain.plan.perfect && !a.absorb && state.tick + 1 >= brain.plannedReleaseTick - 1 - window) { brain.plannedRaiseTick = 1e9; brain.plan = undefined; }
     }
   }
+  // Curve rows: a ward still fresh drops once a roll-denied threat's live impact falls inside its perfect window (plus the drift margin):
+  // impact estimates assume the mage stands still, and at pace the mage and the shot close faster than they predict.
+  if (profile.curve && a.absorb && state.tick + 1 - a.absorbFreshTick <= window
+    && seen.some(t => t.aimedAtUs && brain.observed.find(m => m.id === t.id)?.denied && t.impactTick - a.absorbFreshTick <= window + ticks(deniedDriftS))) {
+    brain.plannedRaiseTick = 1e9; brain.plannedReleaseTick = state.tick; brain.plan = undefined;
+  }
   if (brain.rival) rivalTick(state, a, target, seen, window, ticks(profile.reactionDelayS));
   // Curve rows never spend a cadence inside a roll hold; the next decision waits for the hold to end.
   if (state.tick >= brain.nextDecisionTick && (!profile.curve || state.tick >= brain.defendUntil)) {
@@ -139,7 +146,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         // Turn inward at the arena edge instead of getting pinned by the clamp (a plan chasing its target already heads inward).
         if (!arenaContains(a.pos, runtime.games.spawnMarginM) && !(steer && steer.chase)) input.move = unit(sub(arenaGeometry.centre, a.pos));
         const aimPoint = target.water.decoy?.pos ?? target.pos;
-        const velocity = sub(target.pos, target.previousPos), lead = d / bolt.speedMps * combat.simStepHz * profile.aimLeadFraction;
+        const velocity = sub(target.pos, target.previousPos), lead = d / (bolt.speedMps * paceOf(a)) * combat.simStepHz * profile.aimLeadFraction;
         const prediction = target.water.decoy ? aimPoint : { x: aimPoint.x + velocity.x * lead, y: aimPoint.y + velocity.y * lead };
         const error = (random(state, `mage ${a.id} aim`) * 2 - 1) * profile.aimErrorDeg * Math.PI / 180;
         const aimDirection = rotate(sub(prediction, a.pos), error); input.aim = { x: a.pos.x + aimDirection.x, y: a.pos.y + aimDirection.y };

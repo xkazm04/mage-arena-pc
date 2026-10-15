@@ -1,4 +1,4 @@
-import { adjustedSpell, tuningFor } from './tuning.ts';
+import { adjustedSpell, paceOf, paced, tuningFor } from './tuning.ts';
 import { combat } from './data.generated.ts';
 import { newWaterState, spellFor, spells, type Spell } from './catalog.ts';
 import { constrainToArena } from './geometry.ts';
@@ -71,7 +71,7 @@ export function releaseSpell(state: ArenaState, a: Actor): void {
   const s = p.spell ?? adjustedSpell(spells.find(s => s.id === p.spellId)!, a, state); a.pending = undefined;
   emit(state, 'release', a, s.tier);
   Object.assign(state.events.at(-1)!, { activationId:p.activationId, spellId:s.id, at:{...(s.kind === 'zone' || s.effect === 'decoy' ? p.aim : s.kind === 'target' ? state.actors.find(t=>t.id===p.targetId)?.pos ?? p.aim : a.pos)} });
-  const recovery = tuningFor(state).castRecoveryS;
+  const recovery = paced(a, tuningFor(state).castRecoveryS);
   if (recovery > 0) a.recoveryUntil = Math.max(a.recoveryUntil, state.tick + ticks(recovery));
   const direction = unit(sub(p.aim, a.pos), a.facing), damage = s.damage * (p.damageMult ?? 1);
   const hit: Hit = { ownerId: a.id, activationId: p.activationId, damage, family: s.family, tier: s.tier, source: { ...a.pos }, bolt: s.line === 'bolt' };
@@ -99,7 +99,7 @@ export function releaseSpell(state: ArenaState, a: Actor): void {
     }
   } else if (s.kind === 'wave') {
     const stored = Math.min(a.water.stored, s.amount); a.water.stored = 0;
-    const projectile = spawnProjectile(state, { ...hit, damage: stored * (p.damageMult ?? 1) }, a.pos, direction, runtime.water.returnWaveSpeedMps, s.rangeM, runtime.water.returnWaveRadiusM);
+    const projectile = spawnProjectile(state, { ...hit, damage: stored * (p.damageMult ?? 1) }, a.pos, direction, runtime.water.returnWaveSpeedMps * paceOf(a), s.rangeM, runtime.water.returnWaveRadiusM);
     projectile.piercing = true;
   } else {
     if (s.effect === 'heal') heal(a, s.amount);

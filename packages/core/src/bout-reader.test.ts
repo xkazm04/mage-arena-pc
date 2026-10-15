@@ -16,7 +16,7 @@ function policy() {
 }
 /** Fight a season bout the way ArenaGame does: apply each entry locally, observe the ledger, reset it on advance, tape each wave start. */
 function fight(seed: number) {
-  const bout: SeasonBout = { id: `games:${seed}`, day: 7, seed, phase: 'prepared', spectator: false, composition: structuredClone(presets[2]!), games: null, log: [],
+  const bout: SeasonBout = { id: `games:${seed}`, day: 7, seed, phase: 'prepared', spectator: false, composition: structuredClone(presets[2]!), games: null, log: [], difficulty: 'normal',
     entrant: { id: 'p', name: 'Cassia', school: 'water', ranks: { vigor: 3, focus: 3, nerve: 3 }, mastery: 2, hpPenalty: 0, staminaPenalty: 0 } };
   startBout(bout);
   const frame = policy(), ledger = createLedger(bout.games!.state, bout.games!.player.id), tape: BoutCheckpoint[] = [boutCheckpoint(bout)], hashes = new Map<number, string>();

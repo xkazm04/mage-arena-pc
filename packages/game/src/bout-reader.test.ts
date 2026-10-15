@@ -6,7 +6,7 @@ import { answerMark } from "./answers.ts";
 
 /** ArenaGame's season loop without the canvas: step the client's bout, observe its ledger, reset on advance, tape wave starts. */
 function fight(seed: number) {
-  const bout: SeasonBout = { id: `games:${seed}`, day: 7, seed, phase: "prepared", spectator: false, composition: structuredClone(presets[2]!), games: null, log: [],
+  const bout: SeasonBout = { id: `games:${seed}`, day: 7, seed, phase: "prepared", spectator: false, composition: structuredClone(presets[2]!), games: null, log: [], difficulty: "normal",
     entrant: { id: "p", name: "Cassia", school: "water", ranks: { vigor: 3, focus: 3, nerve: 3 }, mastery: 2, hpPenalty: 0, staminaPenalty: 0 } };
   startBout(bout);
   let brain: MageBrain | undefined, rng = 71, wave = -1;
