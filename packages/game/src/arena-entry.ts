@@ -6,7 +6,7 @@ import { ArtFixture } from "./art-fixture.ts";
 import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
 import { audioData } from "./audio-policy.ts";
-import { BitmapText, Graphics } from "pixi.js";
+import { BitmapText, Container, Graphics } from "pixi.js";
 import {
   applyBoutInput,
   boutCheckpoint,
@@ -85,12 +85,19 @@ import {
 import feedbackData from "../data/combat-feedback.json" with { type: "json" };
 import { paletteForGames, type Palette } from "./arena-art.ts";
 import { colours } from "./ui/kit.ts";
+import { preloadPolicy, ReadyGate } from "./arena-preload.ts";
 import type { CanvasUI } from "./ui/ui.ts";
 
 export interface SeasonArenaOptions {
   bout: SeasonBout;
   send: (entries: BoutInput[], hash: string) => Promise<unknown>;
   finish: () => Promise<void>;
+}
+interface Prefetch {
+  games: Games;
+  wave: number;
+  ms?: number;
+  missing?: string[];
 }
 export class ArenaGame {
   readonly scene: ArenaScene;
@@ -134,6 +141,21 @@ export class ArenaGame {
   private disposed = false;
   private frames: number[] = [];
   private artFixture?: ArtFixture;
+  /** Closed while the bout's art loads: no stepping, no season input, no world frame. */
+  private gate = new ReadyGate();
+  private gateTimeoutMs = preloadPolicy.timeoutS * 1000;
+  private loadingCard?: {
+    root: Container;
+    kicker: BitmapText;
+    bar: Graphics;
+  };
+  /** The next Tiro wave's art, loaded while the intermission card is up. */
+  private prefetch?: Prefetch;
+  private loadingFrames = 0;
+  private framesSinceGate = 0;
+  /** The first frame after the gate shows the opening tick; stepping starts on the next. */
+  private holdFirstFrame = false;
+  private frameLog?: Record<string, unknown>[];
   private artDebugKey = (e: KeyboardEvent) => {
     if (e.code === "F8") {
       e.preventDefault();
@@ -180,10 +202,23 @@ export class ArenaGame {
       paletteForGames(season ? season.bout.day / 7 : undefined),
     );
     const params = new URLSearchParams(location.search);
+    if (params.has("harness")) {
+      this.frameLog = [];
+      const timeout = Number(params.get("preloadTimeoutS"));
+      if (timeout > 0) this.gateTimeoutMs = timeout * 1000;
+    }
+    if (season) {
+      this.scene.bodies.characters.set(
+        this.games!.player.id,
+        season.bout.entrant.id,
+      );
+      this.prepare();
+    }
     const base = {
       snapshot: () => this.snapshot(),
       project: (p: { x: number; y: number }) => groundToScreen(p, this.camera),
       performance: () => ({ frames: [...this.frames] }),
+      frameLog: () => structuredClone(this.frameLog ?? []),
     };
     Object.assign(window, {
       __arena: {
@@ -436,8 +471,7 @@ export class ArenaGame {
                     tier: 1,
                     source: dummy.pos,
                   });
-                  if (this.drill)
-                    observeLedger(this.drill.ledger, state);
+                  if (this.drill) observeLedger(this.drill.ledger, state);
                 }
               },
               visualFixture: (kind: string, direction = 0) => {
@@ -545,6 +579,141 @@ export class ArenaGame {
       arenaGeometry.centre,
       this.camera.zoom,
     );
+    this.prepare();
+  }
+  /** Hold the bout behind the loading card until the art its actors can draw is resident. */
+  private prepare() {
+    const renderer = this.ui.app.renderer;
+    this.framesSinceGate = 0;
+    void this.gate
+      .open(
+        this.scene.ready(this.training.state.actors, (source) =>
+          renderer.texture.initSource(source),
+        ),
+        this.gateTimeoutMs,
+        () => this.scene.progress().pending,
+      )
+      .then((report) => {
+        if (!report || this.disposed) return;
+        this.clock = new FixedStepper();
+        this.holdFirstFrame = true;
+      });
+  }
+  /** While the intermission card is up, load the next wave's bodies, sigils and effects. */
+  private prefetchNext() {
+    const g = this.games;
+    if (
+      g?.phase !== "intermission" ||
+      this.practice ||
+      (this.prefetch?.games === g && this.prefetch.wave === g.wave)
+    )
+      return;
+    const record: Prefetch = {
+        games: g,
+        wave: g.wave,
+      },
+      started = performance.now(),
+      renderer = this.ui.app.renderer;
+    this.prefetch = record;
+    const upcoming = createGames(
+      0,
+      presets[0]!,
+      g.wave + 1,
+    ).state.actors.filter((a) => a.team !== g.player.team);
+    void this.scene
+      .ready(
+        [g.player, ...upcoming],
+        (source) => renderer.texture.initSource(source),
+        true,
+      )
+      .then((missing) => {
+        record.ms = performance.now() - started;
+        record.missing = missing;
+      });
+  }
+  private drawLoading(show: boolean) {
+    if (!show) {
+      if (this.loadingCard) this.loadingCard.root.visible = false;
+      return;
+    }
+    const u = this.ui;
+    if (!this.loadingCard) {
+      const root = new Container();
+      u.root.addChildAt(root, u.root.getChildIndex(u.content) + 1);
+      // Opaque: the bout's raw layers never show behind the card.
+      root.addChild(
+        new Graphics().rect(-4000, -4000, 9920, 9080).fill(colours.ink),
+      );
+      u.panel(560, 372, 800, 336, "panel.modal", root);
+      const kicker = u.text("", 620, 410, 24, colours.gold, 680, false, root);
+      u.text(
+        "Preparing the arena",
+        620,
+        450,
+        48,
+        colours.text,
+        680,
+        true,
+        root,
+      );
+      u.text(
+        "The sand is raked. The grille rises when every figure stands ready.",
+        620,
+        522,
+        26,
+        colours.muted,
+        680,
+        false,
+        root,
+      );
+      const bar = new Graphics();
+      root.addChild(bar);
+      u.text(
+        "ESC / START  Pause",
+        620,
+        652,
+        22,
+        colours.muted,
+        680,
+        false,
+        root,
+      );
+      this.loadingCard = { root, kicker, bar };
+    }
+    const card = this.loadingCard,
+      { fraction } = this.scene.progress();
+    card.root.visible = true;
+    card.kicker.text =
+      this.mode === "tiro"
+        ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
+        : this.lab
+          ? "COMBAT FEEL LAB"
+          : "THE PROVING GROUND";
+    const pulse =
+      localStorage.getItem("mage-motion") === "reduced"
+        ? 1
+        : 0.7 + 0.3 * Math.sin(performance.now() / 260);
+    card.bar
+      .clear()
+      .rect(620, 614, 680, 14)
+      .fill(colours.panel)
+      .stroke({ color: colours.edge, width: 1 })
+      .rect(620, 614, 680 * fraction, 14)
+      .fill({ color: colours.water, alpha: pulse });
+  }
+  /** Send the season log once a second of ticks has queued or the wave has ended. */
+  private autoFlush() {
+    if (
+      this.season &&
+      !this.pending &&
+      this.queued.length &&
+      (this.queued.length >= combat.simStepHz || this.games?.phase !== "active")
+    )
+      void this.flush().catch(() =>
+        this.ui.notice(
+          "Checkpoint failed. Load the last accepted save to resume.",
+        ),
+      );
   }
   startLab(compose: () => void) {
     this.resetLab(defaultLabConfig);
@@ -566,6 +735,7 @@ export class ArenaGame {
     this.training = this.lab.training;
     this.composition = config.composition;
     this.mode = "lab";
+    this.prepare();
   }
   stepLabOnce() {
     if (this.lab && !this.labUI?.replayState)
@@ -587,6 +757,7 @@ export class ArenaGame {
       arenaGeometry.centre,
       this.camera.zoom,
     );
+    this.prepare();
     this.hud();
   }
   startRoster(id: string) {
@@ -598,6 +769,7 @@ export class ArenaGame {
     for (let i = 0; i < count; i++)
       addEnemy(this.training.state, id, openingPosition(i, count));
     this.training.dummy = this.training.state.actors[1]!;
+    this.prepare();
     this.hud();
   }
   pause(value: boolean) {
@@ -645,6 +817,7 @@ export class ArenaGame {
     this.lastPerfect = -1e9;
     this.impactClock.reset();
     this.pause(false);
+    this.prepare();
     this.hud();
   }
   endPractice(note = "Practice ended. The settled bout is unchanged.") {
@@ -699,6 +872,7 @@ export class ArenaGame {
       this.camera.zoom,
     );
     this.pause(false);
+    this.prepare();
     this.hud();
   }
   hud() {
@@ -957,7 +1131,12 @@ export class ArenaGame {
       const nowS = performance.now() / 1000,
         mark = flowMark(player.water);
       if (this.flowSeen?.player === player)
-        this.flowTip = nextFlowTip(this.flowTip, this.flowSeen.mark, mark, nowS);
+        this.flowTip = nextFlowTip(
+          this.flowTip,
+          this.flowSeen.mark,
+          mark,
+          nowS,
+        );
       this.flowSeen = { player, mark };
       tip.text = flowTipText(this.flowTip, player.water.flow, nowS);
       const { tier, untilS: until, progress } = collarClock(state, player);
@@ -1027,6 +1206,15 @@ export class ArenaGame {
         this.camera.centre,
         this.camera.zoom,
       );
+    this.prefetchNext();
+    const loading = this.gate.loading;
+    this.ui.world.visible = !loading;
+    this.drawLoading(loading && this.ui.screen === "arena");
+    if (loading) {
+      this.loadingFrames++;
+      this.autoFlush();
+      return;
+    }
     gameAudio.setScene(`arena:${this.training.player.tier}`);
     if (this.input.slot !== this.previousSlot) {
       this.previousSlot = this.input.slot;
@@ -1038,7 +1226,10 @@ export class ArenaGame {
       ? 0
       : this.impactClock.advance(dt, reduced);
     let alpha = 1;
+    const hold = this.holdFirstFrame;
+    this.holdFirstFrame = false;
     if (
+      !hold &&
       !this.paused &&
       !this.labUI?.replayState &&
       (!this.reader || this.ui.screen !== "bout-reader") &&
@@ -1078,17 +1269,7 @@ export class ArenaGame {
         if (this.drill?.state === this.training.state)
           observeLedger(this.drill.ledger, this.drill.state);
       });
-    if (
-      this.season &&
-      !this.pending &&
-      this.queued.length &&
-      (this.queued.length >= combat.simStepHz || this.games?.phase !== "active")
-    )
-      void this.flush().catch(() =>
-        this.ui.notice(
-          "Checkpoint failed. Load the last accepted save to resume.",
-        ),
-      );
+    this.autoFlush();
     this.consumeEvents(reduced);
     const read =
       this.reader && !this.practice && this.ui.screen === "bout-reader"
@@ -1127,6 +1308,32 @@ export class ArenaGame {
       false,
       dt,
     );
+    if (
+      this.frameLog &&
+      this.framesSinceGate++ < preloadPolicy.frameLogFramesPerGate
+    ) {
+      this.frameLog.push({
+        at: performance.now(),
+        gate: this.gate.opened,
+        screen: this.ui.screen,
+        mode: this.mode,
+        wave: this.games?.wave,
+        tick: shown.tick,
+        loadingFrames: this.loadingFrames,
+        ground: this.scene.scenery.source,
+        bodies: this.scene.bodies.snapshot().displayed.map((d) => ({
+          entity: d.entity,
+          source: d.source,
+          page: d.page,
+        })),
+        sigilsReady: !!this.scene.sigils.manifest,
+        sigilsDrawn: this.scene.sigils.snapshot().active,
+        effectsReady: !!this.scene.clips.manifest,
+        missingPages: this.scene.progress().pending,
+      });
+      if (this.frameLog.length > preloadPolicy.frameLogLimit)
+        this.frameLog.shift();
+    }
     this.hudUpdate();
     const phase =
       this.games?.phase ??
@@ -1171,8 +1378,7 @@ export class ArenaGame {
           this.training.state,
           p,
           e.value,
-          before ??
-            Math.max(0, p.water.flow - combat.flow.perfectAbsorbGives),
+          before ?? Math.max(0, p.water.flow - combat.flow.perfectAbsorbGives),
           e.tick,
         );
         if (!reduced) this.impactClock.hit(0, true);
@@ -1210,6 +1416,18 @@ export class ArenaGame {
       aim: this.input.aim,
       paused: this.paused,
       mode: this.mode,
+      loading: this.gate.loading,
+      preload: {
+        last: this.gate.last,
+        opened: this.gate.opened,
+        loadingFrames: this.loadingFrames,
+        progress: this.scene.progress(),
+        prefetch: this.prefetch && {
+          wave: this.prefetch.wave + 1,
+          ms: this.prefetch.ms,
+          missing: this.prefetch.missing,
+        },
+      },
       lab: this.lab && {
         config: this.lab.config,
         metrics: this.lab.metrics,
@@ -1241,6 +1459,9 @@ export class ArenaGame {
   }
   dispose() {
     this.disposed = true;
+    this.gate.cancel();
+    this.loadingCard?.root.destroy({ children: true });
+    this.ui.world.visible = true;
     window.removeEventListener("keydown", this.artDebugKey);
     this.flowBefore.dispose();
     if (this.drill) detachLedger(this.drill.ledger);

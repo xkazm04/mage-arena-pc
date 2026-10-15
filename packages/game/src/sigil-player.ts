@@ -71,8 +71,10 @@ export class SigilPlayer {
   private seen = new Set<string>();
   private castHolds = new Map<number, number>();
   private elements = new Map<number, Element>();
+  /** Settles once the A13 manifest is validated or has failed. */
+  readonly loaded: Promise<void>;
   constructor() {
-    void this.init();
+    this.loaded = this.init();
   }
   private async init() {
     try {

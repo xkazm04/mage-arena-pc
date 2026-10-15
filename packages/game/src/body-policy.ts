@@ -1,4 +1,9 @@
-import { runtime, type Actor, type ArenaState } from "@mage/core/arena";
+import {
+  runtime,
+  tiroEntrantLabel,
+  type Actor,
+  type ArenaState,
+} from "@mage/core/arena";
 import type { Body, BodyState, Clip, Direction } from "./animation-contract.ts";
 import policy from "../data/animation.json" with { type: "json" };
 
@@ -30,17 +35,18 @@ export interface BodySelection {
   clip: Clip;
   held: boolean;
 }
-export function bodyIdentity(a: Actor): string {
+/** `character` is the camp character a season entrant fights as; its label is only the display name. */
+export function bodyIdentity(a: Actor, character?: string): string {
   if (a.enemy) return a.enemy.id;
   if (a.dummy) return "dummy";
   if (a.school) return policy.schoolBodies[a.school];
+  // A character without a delivered body keeps its id and takes the explicit procedural fallback.
+  if (character) return character;
   const name = a.label.toLowerCase();
   for (const id of Object.values(policy.schoolBodies))
     if (name === id) return id;
-  // Anonymous Tiro entrants are explicitly Water proxies in core.
-  return name === "water mage" || name === "tiro entrant ? water proxy"
-    ? "cassia"
-    : "mage.unknown";
+  if (a.label === tiroEntrantLabel) return policy.rivalBody;
+  return name === "water mage" ? policy.schoolBodies.water : "mage.unknown";
 }
 /** No access to other entities: a fallback cannot change creature identity. */
 export function selectBodyClip(

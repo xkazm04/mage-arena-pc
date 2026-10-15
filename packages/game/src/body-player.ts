@@ -54,8 +54,16 @@ export class BodyPlayer {
   private disposed = false;
   private tick = 0;
   private displayed: Record<string, unknown>[] = [];
+  private missing = new Set<string>();
+  /** Actor id to camp character id, for season entrants whose label is a display name. */
+  readonly characters = new Map<number, string>();
+  /** Settles once the body manifest is validated or has failed. */
+  readonly loaded: Promise<void>;
   constructor() {
-    void this.init();
+    this.loaded = this.init();
+  }
+  identity(a: Actor) {
+    return bodyIdentity(a, this.characters.get(a.id));
   }
   private async init() {
     try {
@@ -92,7 +100,18 @@ export class BodyPlayer {
     this.tick = state.tick + alpha;
     this.displayed = [];
     for (const a of state.actors) {
-      const entity = bodyIdentity(a);
+      const entity = this.identity(a);
+      if (
+        this.manifest &&
+        !this.manifest.entities[entity] &&
+        entity !== "dummy" &&
+        !this.missing.has(entity)
+      ) {
+        this.missing.add(entity);
+        const line = `No painted body for ${entity}; procedural figure`;
+        this.diagnostics.push(line);
+        console.warn(line);
+      }
       let motion = this.actors.get(a.id);
       if (!motion || motion.entity !== entity) {
         motion = {
@@ -260,8 +279,19 @@ export class BodyPlayer {
     }
     const page = art.get(`a10.packed.${selected.clip.page}`);
     if (!page) {
-      if (art.snapshot().failed.includes(`a10.packed.${selected.clip.page}`))
-        this.logFallback(key, "procedural (entity page failed)");
+      const failed = art
+        .snapshot()
+        .failed.includes(`a10.packed.${selected.clip.page}`);
+      if (failed) this.logFallback(key, "procedural (entity page failed)");
+      this.displayed.push({
+        id: a.id,
+        entity: motion.entity,
+        requested: state,
+        direction,
+        source: "procedural",
+        page: selected.clip.page,
+        pageFailed: failed,
+      });
       return false;
     }
     if (

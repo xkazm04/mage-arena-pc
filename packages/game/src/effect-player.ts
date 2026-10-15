@@ -69,8 +69,10 @@ export class EffectPlayer {
   readonly counts: Record<string, number> = {};
   dropped = 0;
   cpuMs = 0;
+  /** Settles once the manifest is validated or has failed. */
+  readonly loaded: Promise<void>;
   constructor(private namespace: "a8" | "a13" = "a8") {
-    void this.init();
+    this.loaded = this.init();
   }
   private async init() {
     try {

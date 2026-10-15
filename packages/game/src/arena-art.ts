@@ -73,6 +73,32 @@ export class ArenaArt {
     const generation = ++this.generation;
     this.clear();
     this.source = "loading";
+    // Everything nameable from the palette starts at once; only the occluders wait for the manifest.
+    const early = [
+      `a12.plate.${palette}`,
+      `a13.cleanup.${palette}`,
+      `a13.page.floor.${palette}`,
+    ];
+    this.leases = [...early];
+    early.forEach((k) => art.retain(k));
+    const [platePage, cleanupPage, floorPage] = early.map((k) => art.load(k));
+    const floorData = Promise.all([
+      art.json("a13.floor") as Promise<{
+        palettes: Record<
+          Palette,
+          {
+            decals: {
+              clip: string;
+              centreUV: [number, number];
+              frameSizeMasterPx: [number, number];
+              opacity: number;
+            }[];
+          }
+        >;
+      }>,
+      art.json("a13.manifest") as Promise<SigilManifest>,
+    ]);
+    floorData.catch(() => {});
     try {
       const manifest = (await art.json("a12.manifest")) as Manifest;
       if (this.disposed || generation !== this.generation) return;
@@ -84,18 +110,22 @@ export class ArenaArt {
         p.occluders.some((o) => !o.baseWorldMetres.every(Number.isFinite))
       )
         throw Error("Invalid A12 contract");
-      const keys = [
-        `a12.plate.${palette}`,
-        ...p.occluders.map((o) => `a12.occluder.${palette}.${o.id}`),
-      ];
-      this.leases = keys;
-      keys.forEach((k) => art.retain(k));
-      const textures = await Promise.all(keys.map((k) => art.load(k)));
+      const occluderKeys = p.occluders.map(
+        (o) => `a12.occluder.${palette}.${o.id}`,
+      );
+      occluderKeys.forEach((k) => {
+        this.leases.push(k);
+        art.retain(k);
+      });
+      const [plate, ...occluders] = await Promise.all([
+        platePage,
+        ...occluderKeys.map((k) => art.load(k)),
+      ]);
       if (this.disposed || generation !== this.generation) return;
-      if (textures.some((t) => !t))
+      if (!plate || occluders.some((t) => !t))
         throw Error("Incomplete A12 palette; using tiled fallback");
       this.spec = p;
-      const sprite = new Sprite(textures[0]);
+      const sprite = new Sprite(plate);
       sprite.position.set(
         p.offsetWorldMetres[0] + contract.plate.delivery_offset[0]!,
         p.offsetWorldMetres[1] + contract.plate.delivery_offset[1]!,
@@ -106,35 +136,10 @@ export class ArenaArt {
       // A13 placements are registered in the already-projected A12 plate UVs.
       // This container's world transform supplies the projection; do not squash twice.
       try {
-        const [floor, sigils] = await Promise.all([
-          art.json("a13.floor") as Promise<{
-            palettes: Record<
-              Palette,
-              {
-                decals: {
-                  clip: string;
-                  centreUV: [number, number];
-                  frameSizeMasterPx: [number, number];
-                  opacity: number;
-                }[];
-              }
-            >;
-          }>,
-          art.json("a13.manifest") as Promise<SigilManifest>,
-        ]);
+        const [floor, sigils] = await floorData;
         if (this.disposed || generation !== this.generation) return;
         const decals = floor.palettes[palette].decals;
-        const floorKeys = [
-          `a13.cleanup.${palette}`,
-          `a13.page.floor.${palette}`,
-        ];
-        floorKeys.forEach((k) => {
-          this.leases.push(k);
-          art.retain(k);
-        });
-        const [cleanup, page] = await Promise.all(
-          floorKeys.map((k) => art.load(k)),
-        );
+        const [cleanup, page] = await Promise.all([cleanupPage, floorPage]);
         if (this.disposed || generation !== this.generation) return;
         if (cleanup) {
           const overlay = new Sprite(cleanup);
@@ -170,7 +175,7 @@ export class ArenaArt {
       }
       for (const [i, o] of p.occluders.entries()) {
         const root = new Container(),
-          sprite = new Sprite(textures[i + 1]);
+          sprite = new Sprite(occluders[i]);
         root.label = `prop:${palette}:${o.id}`;
         sprite.anchor.set(o.anchorPx[0] / o.size[0], o.anchorPx[1] / o.size[1]);
         root.addChild(sprite);
@@ -195,6 +200,10 @@ export class ArenaArt {
       this.source = "tiled-fallback";
       this.derivedBytes = this.fallback.derivedBytes;
     }
+  }
+  /** Art keys the current palette holds. */
+  get keys(): readonly string[] {
+    return this.leases;
   }
   render(c: Camera) {
     this.fallback?.render(c);
