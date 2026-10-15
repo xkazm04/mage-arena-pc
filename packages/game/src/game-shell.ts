@@ -217,6 +217,8 @@ export class GameShell {
     document.body.dataset.ready = "true";
   }
   private async refresh() {
+    // The arena does not poll the camp, so a camp status line has nothing to say over it.
+    if (this.arena) this.ui.status("");
     if (this.pollBusy || this.busy || this.disposed || this.arena) return;
     this.pollBusy = true;
     try {
@@ -247,10 +249,9 @@ export class GameShell {
   /** Held content stays on screen; a lost server is said quietly, with how old the scene is. */
   private showConnection() {
     if (this.disposed) return;
-    const heard = new Date(connection.lastHeard);
     this.ui.status(
       connection.failures >= 3
-        ? `Camp unreachable · last heard ${String(heard.getHours()).padStart(2, "0")}:${String(heard.getMinutes()).padStart(2, "0")} · retrying`
+        ? `Camp unreachable for ${Math.round((Date.now() - connection.lastHeard) / 1000)}s · retrying`
         : "",
     );
   }
@@ -450,6 +451,7 @@ export class GameShell {
   private campHeader(id: string, title: string) {
     gameAudio.setScene(`camp:${this.view.slot}`);
     gameAudio.pauseWorld(false);
+    if (id !== "board") this.morning = false;
     this.scene(
       id,
       title,
@@ -1028,7 +1030,7 @@ export class GameShell {
     else if (v.changesAtDawn)
       u.button(
         "night-ledger",
-        ledger ? "Read the chosen card" : "What the night left",
+        ledger ? "Hide the night's ledger" : "What the night left",
         900,
         870,
         500,
@@ -1086,7 +1088,7 @@ export class GameShell {
     );
     if (more)
       u.text(
-        `…and ${more} more ${more === 1 ? "change" : "changes"} in the camp's bonds.`,
+        `…and ${more} more ${more === 1 ? "change" : "changes"}.`,
         950,
         408 + rows.length * 48,
         26,

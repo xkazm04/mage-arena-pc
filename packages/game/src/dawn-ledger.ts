@@ -57,7 +57,10 @@ function playerRow(field: string, sub: string | undefined, c: Change): LedgerRow
       ? { text: `You fell sick${tail}`, tone: "loss" }
       : { text: "You recovered", tone: "gain" };
   if (field === "tent")
-    return { text: `You now live in ${String(c.after)}${tail}`, tone: "plain" };
+    return {
+      text: `You now live in the ${capital(String(c.after))} tent${tail}`,
+      tone: "plain",
+    };
   if (typeof c.before !== "number" || typeof c.after !== "number") return null;
   const delta = c.after - c.before;
   const label =

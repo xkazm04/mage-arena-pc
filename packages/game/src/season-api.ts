@@ -5,7 +5,8 @@ export const connection = { failures: 0, lastHeard: Date.now() };
 export async function request<T>(path: string, body?: unknown): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(`/api/${path}`, body === undefined ? {} : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    // A read that hangs counts as unreachable; actions may wait on the Director.
+    response = await fetch(`/api/${path}`, body === undefined ? { signal: AbortSignal.timeout(4000) } : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
   } catch {
     connection.failures++;
     throw Error('The camp could not be reached. Try again in a moment.');

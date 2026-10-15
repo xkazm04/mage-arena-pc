@@ -3,9 +3,9 @@ import ts from "typescript";
 import { describe, expect, it } from "vitest";
 
 // Every literal the season shell can draw, read from the source the way the compiler does.
-const literals = (file: string) => {
+const literals = (file: URL) => {
   const source = ts.createSourceFile(
-    file,
+    file.pathname,
     readFileSync(file, "utf8"),
     ts.ScriptTarget.Latest,
   );
@@ -28,7 +28,7 @@ const literals = (file: string) => {
 describe("camp text", () => {
   it("never shows a lost separator as a question mark", () => {
     // U3b shipped "The day is spent ? dawn awaits": a dash or middle dot lost to an encoding pass.
-    const garbled = literals("packages/game/src/game-shell.ts").filter((t) =>
+    const garbled = literals(new URL("./game-shell.ts", import.meta.url)).filter((t) =>
       /(^|\S) \?( |$)/.test(t),
     );
     expect(garbled).toEqual([]);
