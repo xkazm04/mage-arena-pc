@@ -8,6 +8,9 @@ import {
   rivalPlanPresets,
   replenishLab,
   schools,
+  difficulties,
+  defaultDifficulty,
+  paceOf,
   seconds,
   spellFor,
   tiro,
@@ -427,6 +430,16 @@ export class LabUI {
       1650,
     );
     u.button("lab-config-back", "Back", 106, 940, 240, 64, () => this.close());
+    choose(
+      "difficulty",
+      `Difficulty: ${title(c.difficulty ?? defaultDifficulty)}`,
+      380,
+      937,
+      () => {
+        c.difficulty = this.cycle(difficulties, c.difficulty ?? defaultDifficulty);
+      },
+      520,
+    );
     u.button("lab-config-start", "Start / reset bout", 1340, 940, 420, 64, () =>
       this.reset(c),
     );
@@ -571,7 +584,7 @@ export class LabUI {
     this.heading(
       "lab-tuning",
       `Live tuning / ${this.lab.tuningName}`,
-      "Applies to future actions. Current casts and projectiles retain their launch settings. R resets the comparison.",
+      `Applies to future actions. Current casts and projectiles retain their launch settings. R resets the comparison. Values are authored 1x; pace multiplies them (you x${paceOf(this.lab.training.player)}, opponent x${paceOf(this.lab.training.dummy)}).`,
     );
     const pages = [...new Set(tuningFields.map((f) => f.group)), "Spells"];
     pages.forEach((page, i) =>
@@ -743,7 +756,9 @@ export class LabUI {
   private spellRows() {
     const u = this.u,
       actor = { ...this.lab.training.player, tier: this.spellTier },
-      s = spellFor(actor, this.spellSlot, this.lab.training.state)!;
+      // Overrides are authored 1x values that pace then scales, so the editor reads the spell before the player's pace.
+      s = spellFor({ ...actor, pace: undefined }, this.spellSlot, this.lab.training.state)!,
+      paced = spellFor(actor, this.spellSlot, this.lab.training.state)!;
     u.button(
       "lab-spell-slot",
       `Spell slot ${this.spellSlot + 1}`,
@@ -817,7 +832,7 @@ export class LabUI {
       ),
     );
     u.text(
-      `Spell id: ${s.id}\nEffective warning: ${Math.max(s.castS, s.telegraphS).toFixed(2)} s. Overrides apply to this archetype on both sides.\nProjectile speed affects projectile spells; the other shapes have no travel speed.`,
+      `Spell id: ${s.id}\nEffective warning at your pace: ${Math.max(paced.castS, paced.telegraphS).toFixed(2)} s. Overrides apply to this archetype on both sides.\nProjectile speed affects projectile spells; the other shapes have no travel speed.`,
       120,
       768,
       23,

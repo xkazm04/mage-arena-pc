@@ -1,10 +1,12 @@
 import {
   censusForecast,
+  defaultDifficulty,
   drain,
   duelForecast,
   isCurrentTuning,
   makeTuning,
   type CombatTuning,
+  type Difficulty,
   type DuelForecast,
   type LabConfig,
   type WaveForecast,
@@ -17,7 +19,7 @@ export const forecastLabel = policy.label.replace("{n}", String(policy.seedsPerW
 export interface ForecastRequest { id: number; tuning: CombatTuning; lab: LabConfig }
 export interface ForecastSide { waves: WaveForecast[]; duel: DuelForecast }
 export interface ForecastResult { id: number; current: ForecastSide; candidate: ForecastSide; sameAsCurrent: boolean }
-const labKeys = ["opponent", "dummyAttack", "playerSchool", "opponentSchool", "competence", "aggression", "distanceM", "seed", "randomSeed", "composition"] as const;
+const labKeys = ["opponent", "dummyAttack", "playerSchool", "opponentSchool", "competence", "aggression", "distanceM", "seed", "randomSeed", "composition", "difficulty"] as const;
 /** Lab setups carry presentation extras (creature targets); the duel uses only the core setup, always vs the mage rival. */
 export function labConfigOf(setup: LabConfig): LabConfig {
   return structuredClone(Object.fromEntries(labKeys.map((k) => [k, setup[k]]))) as unknown as LabConfig;
@@ -37,23 +39,28 @@ class Memo<T> {
 }
 /** Current results persist across requests (and survive cancellation mid-run); candidates are rebuilt per request. */
 export class ForecastRunner {
-  private currentWaves = new Memo(censusForecast(undefined, policy.seedsPerWave), policy.seedsPerWave * 4);
+  /** Per difficulty: the Lab's difficulty paces the census opponents as it paces the Lab's own. */
+  private currentWavesBy = new Map<Difficulty, Memo<WaveForecast[]>>();
+  private census(tuning: CombatTuning | undefined, difficulty: Difficulty) {
+    return new Memo(censusForecast(tuning, policy.seedsPerWave, undefined, difficulty), policy.seedsPerWave * 4);
+  }
   private currentDuels = new Map<string, Memo<DuelForecast>>();
   private duelMemo(tuning: CombatTuning, lab: LabConfig) {
     return new Memo(duelForecast(tuning, { lab, duels: policy.labDuels, competence: policy.duelPlayerCompetence, capS: policy.duelCapS }), policy.labDuels);
   }
   /** Returns the remaining fight count and a generator that yields once per fight. */
   plan(req: ForecastRequest): { total: number; steps: Generator<number, ForecastResult> } {
-    const lab = labConfigOf(req.lab), key = JSON.stringify(lab), same = isCurrentTuning(req.tuning);
-    let duel = this.currentDuels.get(key);
+    const lab = labConfigOf(req.lab), key = JSON.stringify(lab), same = isCurrentTuning(req.tuning), difficulty = lab.difficulty ?? defaultDifficulty;
+    let duel = this.currentDuels.get(key), current = this.currentWavesBy.get(difficulty);
     if (!duel) this.currentDuels.set(key, (duel = this.duelMemo(makeTuning(), lab)));
-    const work: Memo<unknown>[] = [this.currentWaves, duel];
-    const waves = same ? this.currentWaves : new Memo(censusForecast(req.tuning, policy.seedsPerWave), policy.seedsPerWave * 4);
+    if (!current) this.currentWavesBy.set(difficulty, (current = this.census(undefined, difficulty)));
+    const work: Memo<unknown>[] = [current, duel];
+    const waves = same ? current : this.census(req.tuning, difficulty);
     const candidateDuel = same ? duel : this.duelMemo(req.tuning, lab);
     if (!same) work.push(waves, candidateDuel);
     const pending = [...new Set(work)].filter((m) => m.value === undefined);
     const total = pending.reduce((n, m) => n + m.left, 0);
-    const currentWaves = this.currentWaves, currentDuel = duel;
+    const currentWaves = current, currentDuel = duel;
     function* steps(): Generator<number, ForecastResult> {
       let done = 0;
       for (const m of pending) for (const _ of m.drive()) yield ++done;

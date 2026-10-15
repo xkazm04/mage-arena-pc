@@ -1,5 +1,6 @@
 import { Rectangle, Texture, type Sprite } from "pixi.js";
 import {
+  paceOf,
   tuningFor,
   combat,
   seconds,
@@ -330,7 +331,8 @@ export class BodyPlayer {
           ? durationMs
           : state === "death"
             ? (motion.deathElapsed ?? 0) * 1000
-            : seconds(this.tick - motion.since) * 1000;
+            : // The run cycle keeps step with the actor's pace (its speeds scale by it).
+              seconds(this.tick - motion.since) * 1000 * (state === "run" ? paceOf(a) : 1);
     const index = selected.held
       ? state === "death" && selected.clip === motion.selection?.clip
         ? motion.frame
