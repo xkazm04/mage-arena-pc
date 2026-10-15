@@ -854,7 +854,7 @@ export class LabUI {
     if (this.u.screen === "arena" && this.metricsText && this.statusText) {
       const m = this.lab.metrics,
         n = m.incomingMagic;
-      this.metricsText.text = `Hits ${m.landed}/${m.taken}   Absorb ${m.absorbs}/${n}   Perfect ${m.perfects}/${n}   Staggers dealt/taken ${m.staggersDealt}/${m.staggersReceived}   Cancels ${m.castInterrupts}   Damage/mana ${m.manaSpent ? (m.practiceDamage / m.manaSpent).toFixed(2) : "--"}   TTK ${m.timeToKillS === null ? "--" : m.timeToKillS.toFixed(2) + "s"}`;
+      this.metricsText.text = `Hits ${m.landed}/${m.taken}   Absorb ${m.absorbs}/${n}   Perfect ${m.perfects}/${n}   Staggers dealt/taken ${m.staggersDealt}/${m.staggersReceived}   Cancels ${m.castInterrupts}   Flow breaks ${m.flowBreaks}   Damage/mana ${m.manaSpent ? (m.practiceDamage / m.manaSpent).toFixed(2) : "--"}   TTK ${m.timeToKillS === null ? "--" : m.timeToKillS.toFixed(2) + "s"}`;
       if (this.answersText) this.answersText.text = labAnswerLine(this.lab.ledger);
       const actors = this.lab.training,
         phase = actors.player.tags.includes("DEFEATED")

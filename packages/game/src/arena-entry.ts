@@ -25,6 +25,7 @@ import {
   FixedStepper,
   runtime,
   seconds,
+  ticks,
   stepTraining,
   timingBot,
   newWaterState,
@@ -51,6 +52,9 @@ import {
   type Games,
   type ThreatLedger,
   type InputFrame,
+  type ArenaState,
+  type FlowMark,
+  flowMark,
 } from "@mage/core/arena";
 import { ArenaInput } from "./input.ts";
 import {
@@ -64,6 +68,17 @@ import {
 } from "./camera.ts";
 import { ArenaScene } from "./arena-scene.ts";
 import { collarClock } from "./rival-collar.ts";
+import {
+  FlowBeforeContact,
+  flowTipText,
+  hexColour,
+  idleTip,
+  nextFlowTip,
+  perfectGain,
+  slotPrice,
+  type PerfectGain,
+} from "./combat-readout.ts";
+import feedbackData from "../data/combat-feedback.json" with { type: "json" };
 import { paletteForGames, type Palette } from "./arena-art.ts";
 import { colours } from "./ui/kit.ts";
 import type { CanvasUI } from "./ui/ui.ts";
@@ -92,7 +107,12 @@ export class ArenaGame {
   private pending: Promise<void> | null = null;
   private bot?: BotKind;
   private lastPerfect = -1e9;
-  private lastRefund = 0;
+  private lastGain?: PerfectGain;
+  /** Training and roster ledger for the ward words; Tiro uses `ledger`, the Lab its own. */
+  private practice?: { state: ArenaState; ledger: ThreatLedger };
+  private flowBefore = new FlowBeforeContact();
+  private flowTip = idleTip();
+  private flowSeen?: { player: object; mark: FlowMark };
   private impactClock = new ImpactClock();
   private lastEvents = 0;
   private reference = false;
@@ -359,7 +379,8 @@ export class ArenaGame {
                 });
               },
               feedbackFixture: (
-                kind: "hit" | "perfect" | "cast" | "warning",
+                kind: "hit" | "perfect" | "held" | "cast" | "warning",
+                flow = 0,
               ) => {
                 this.composition = structuredClone(presets[2]!);
                 this.composition.branches.tide_orb = "A";
@@ -367,8 +388,12 @@ export class ArenaGame {
                 this.hud();
                 this.pause(true);
                 const { state, player, dummy } = this.training;
+                this.watchContacts();
                 state.tick = 60;
                 player.mana = 20;
+                player.water.flow = flow;
+                player.water.lastLine = flow ? "tide_orb" : "";
+                player.water.lastActivityTick = state.tick;
                 if (kind === "cast" || kind === "warning") {
                   player.tier = kind === "warning" ? 4 : 1;
                   player.mana = player.maxMana;
@@ -381,8 +406,12 @@ export class ArenaGame {
                     },
                   });
                 } else {
-                  player.absorb = kind === "perfect";
-                  player.absorbFreshTick = state.tick;
+                  player.absorb = kind !== "hit";
+                  player.absorbFreshTick =
+                    state.tick -
+                    (kind === "held"
+                      ? ticks(tuningFor(state).absorbWindowS) + 4
+                      : 0);
                   player.facing = { x: 1, y: 0 };
                   dummy.pos = { x: player.pos.x + 8, y: player.pos.y };
                   resolveHit(state, player, {
@@ -393,6 +422,8 @@ export class ArenaGame {
                     tier: 1,
                     source: dummy.pos,
                   });
+                  if (this.practice)
+                    observeLedger(this.practice.ledger, state);
                 }
               },
               visualFixture: (kind: string, direction = 0) => {
@@ -460,12 +491,29 @@ export class ArenaGame {
       this.training.dummy = this.games.state.actors[1]!;
     }
   }
+  /** The ledger whose grades put words on the player's hits: the Lab's, the Tiro bout's, or a practice one. */
+  private wardLedger(): ThreatLedger | undefined {
+    return this.lab?.ledger ?? this.ledger ?? this.practice?.ledger;
+  }
+  /** Attach the read-only contact taps to the state now on screen (practice ledger only where no other ledger exists). */
+  private watchContacts() {
+    const { state, player } = this.training;
+    this.flowBefore.watch(state, player.id);
+    if (this.lab || this.ledger || this.practice?.state === state) return;
+    if (this.practice) detachLedger(this.practice.ledger);
+    this.practice = { state, ledger: createLedger(state, player.id) };
+  }
   restart(kind: TrainingKind = "magic") {
     this.mode = "training";
     this.lab = undefined;
     this.games = undefined;
     if (this.ledger) detachLedger(this.ledger);
     this.ledger = undefined;
+    if (this.practice) detachLedger(this.practice.ledger);
+    this.practice = undefined;
+    this.flowTip = idleTip();
+    this.flowSeen = undefined;
+    this.lastGain = undefined;
     this.reference = false;
     this.training = createTraining(kind);
     this.training.player.water = newWaterState(this.composition);
@@ -631,6 +679,7 @@ export class ArenaGame {
       );
     const labels: BitmapText[] = [],
       detail: BitmapText[] = [],
+      repeats: BitmapText[] = [],
       masks: Graphics[] = [],
       slotFrames: Graphics[] = [],
       cooldownBars: ((value: number | null) => void)[] = [];
@@ -658,7 +707,17 @@ export class ArenaGame {
       labels.push(u.text("", x + 70, y + 24, 26, colours.text, 150));
       u.text(String(i + 1), x + 31, y + 92, 24, colours.gold, 34);
       cooldownBars.push(u.progress("cooldown", x + 76, y + 96, 146, 20));
-      detail.push(u.text("", x + 28, y + 122, 23, colours.muted, 188));
+      detail.push(u.text("", x + 28, y + 122, 23, colours.muted, 210));
+      repeats.push(
+        u.text(
+          feedbackData.slotPrice.repeat,
+          x + 76,
+          y + 94,
+          20,
+          hexColour(feedbackData.slotPrice.repeatFill),
+          160,
+        ),
+      );
       const mask = new Graphics();
       u.content.addChild(mask);
       masks.push(mask);
@@ -668,7 +727,14 @@ export class ArenaGame {
     }
     u.panel(1584, 866, 240, 160);
     const flow = u.text("", 1618, 897, 27, colours.water, 180),
-      tip = u.text("Alternate spells", 1618, 943, 24, colours.muted, 180);
+      tip = u.text(
+        feedbackData.flowTip.idle,
+        1618,
+        943,
+        24,
+        colours.muted,
+        180,
+      );
     const clock = new Graphics();
     u.content.addChild(clock);
     const artClock = u.kit.source !== "procedural";
@@ -770,17 +836,28 @@ export class ArenaGame {
         cooldownBars[i]!(
           remaining > 0 ? 1 - Math.min(1, remaining / s.cooldownS) : null,
         );
+        const price = slotPrice(player, s),
+          crest = price.crest && s.kind !== "passive";
         detail[i]!.text =
           remaining > 0
             ? `${remaining.toFixed(1)}s recovering`
             : s.kind === "passive"
               ? "Perfect counter"
-              : `${s.mana} mana  /  Tier ${player.tier}`;
+              : price.text;
+        detail[i]!.style.fill = crest
+          ? hexColour(feedbackData.slotPrice.crestFill)
+          : colours.muted;
+        repeats[i]!.visible = price.repeat && remaining <= 0;
         const x = 524 + i * 260;
         slotFrames[i]!.clear();
         if (this.input.slot === i && u.kit.source === "procedural")
           slotFrames[i]!.rect(x + 5, 879, 234, 142).stroke({
             color: colours.water,
+            width: 3,
+          });
+        if (crest)
+          slotFrames[i]!.rect(x + 2, 856, 240, 168).stroke({
+            color: hexColour(feedbackData.slotPrice.crestFill),
             width: 3,
           });
         masks[i]!.clear();
@@ -797,10 +874,12 @@ export class ArenaGame {
             .fill({ color: 0x030a13, alpha: 0.7 });
       }
       flow.text = `FLOW  ${player.water.flow} / ${combat.flow.max}`;
-      tip.text =
-        player.water.flow >= combat.flow.max
-          ? "FREE CREST"
-          : "Alternate spells";
+      const nowS = performance.now() / 1000,
+        mark = flowMark(player.water);
+      if (this.flowSeen?.player === player)
+        this.flowTip = nextFlowTip(this.flowTip, this.flowSeen.mark, mark, nowS);
+      this.flowSeen = { player, mark };
+      tip.text = flowTipText(this.flowTip, player.water.flow, nowS);
       const { tier, untilS: until, progress } = collarClock(state, player);
       rune.text = `COLLAR  ${["", "I", "II", "III", "IV"][tier]}`;
       next.text =
@@ -838,8 +917,11 @@ export class ArenaGame {
         .stroke({ color: colours.water, width: 3 });
       feedback.text =
         seconds(state.tick - this.lastPerfect) <
-        runtime.presentation.perfectFlashS
-          ? `PERFECT ABSORB  +${this.lastRefund.toFixed(1)} MANA`
+        Math.max(
+          runtime.presentation.perfectFlashS,
+          feedbackData.perfectGain.holdS,
+        )
+          ? (this.lastGain?.text ?? "PERFECT ABSORB")
           : player.absorb
             ? "WARD RAISED"
             : "";
@@ -871,6 +953,7 @@ export class ArenaGame {
       void gameAudio.play("ui.slot");
     }
     const reduced = localStorage.getItem("mage-motion") === "reduced";
+    this.watchContacts();
     const simulationDt = this.paused
       ? 0
       : this.impactClock.advance(dt, reduced);
@@ -910,6 +993,8 @@ export class ArenaGame {
             this.training,
             this.bot ? timingBot(this.training, this.bot) : this.input.frame(),
           );
+        if (this.practice?.state === this.training.state)
+          observeLedger(this.practice.ledger, this.practice.state);
       });
     if (
       this.season &&
@@ -944,6 +1029,7 @@ export class ArenaGame {
       reduced || this.paused ? 0 : shake.x,
       reduced || this.paused ? 0 : shake.y,
     );
+    this.scene.feedback.ledger = this.wardLedger();
     this.scene.render(
       this.artFixture?.state ?? shown,
       this.artFixture?.player ?? shownPlayer,
@@ -970,8 +1056,10 @@ export class ArenaGame {
     }
   }
   private consumeEvents(reduced: boolean) {
-    for (const e of this.training.state.events.slice(this.lastEvents)) {
-      const p = this.training.player,
+    const events = this.training.state.events;
+    for (let i = this.lastEvents; i < events.length; i++) {
+      const e = events[i]!,
+        p = this.training.player,
         actor = this.training.state.actors.find((a) => a.id === e.actorId);
       if (!actor) continue;
       const dx = actor.pos.x - p.pos.x,
@@ -985,7 +1073,15 @@ export class ArenaGame {
       };
       if (e.kind === "perfect" && e.actorId === p.id) {
         this.lastPerfect = e.tick;
-        this.lastRefund = e.value;
+        const before = this.flowBefore.before(this.training.state, i);
+        this.lastGain = perfectGain(
+          this.training.state,
+          p,
+          e.value,
+          before ??
+            Math.max(0, p.water.flow - combat.flow.perfectAbsorbGives),
+          e.tick,
+        );
         if (!reduced) this.impactClock.hit(0, true);
         void gameAudio.play("perfect");
       } else if (e.kind === "unlock" && e.actorId === p.id) {
@@ -1053,6 +1149,8 @@ export class ArenaGame {
   dispose() {
     this.disposed = true;
     window.removeEventListener("keydown", this.artDebugKey);
+    this.flowBefore.dispose();
+    if (this.practice) detachLedger(this.practice.ledger);
     this.ui.world.position.set(0, 0);
     this.labUI?.dispose();
     this.input.dispose();

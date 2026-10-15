@@ -16,6 +16,21 @@ export function flowCast(a: Actor, line: string, tick: number): { crest: boolean
   w.lastLine = line; w.lastCastTick = tick; w.lastActivityTick = tick;
   return { crest, damageMult: crest ? combat.flow.crest.damageMult : 1 + w.flow * combat.flow.perStackDamage };
 }
+/** The Flow-relevant part of a water state, compared across a tick or a frame by flowShift. */
+export interface FlowMark { flow: number; lastLine: string; lastCastTick: number; lastActivityTick: number; crests: number }
+export type FlowShift = { kind: 'rise'; from: string; to: string; flow: number } | { kind: 'break' | 'crest'; line: string } | { kind: 'perfect'; flow: number } | { kind: 'fade' };
+export const flowMark = (w: FlowMark): FlowMark => ({ flow: w.flow, lastLine: w.lastLine, lastCastTick: w.lastCastTick, lastActivityTick: w.lastActivityTick, crests: w.crests });
+/** Read how Flow moved between two marks of one actor, mirroring flowCast: a crest spent, a weave that rose, a repeat that broke it, a perfect that fed it, or a fade (idle or encased). Reads only. */
+export function flowShift(before: FlowMark, after: FlowMark): FlowShift | undefined {
+  const cast = after.lastCastTick !== before.lastCastTick;
+  if (after.crests > before.crests) return { kind: 'crest', line: after.lastLine };
+  if (cast && after.flow > before.flow) return { kind: 'rise', from: before.lastLine, to: after.lastLine, flow: after.flow };
+  if (cast && combat.flow.resetOnSameLineTwice && before.flow > 0 && after.flow === 0 && after.lastLine === before.lastLine
+    && after.lastCastTick - before.lastActivityTick < ticks(combat.flow.resetAfterIdleS)) return { kind: 'break', line: after.lastLine };
+  if (after.flow < before.flow && after.flow === 0) return { kind: 'fade' };
+  if (!cast && after.flow > before.flow) return { kind: 'perfect', flow: after.flow };
+  return undefined;
+}
 export function trySpellCast(state: ArenaState, a: Actor, input: InputFrame): boolean {
   if (activationBlocked(a)) return false;
   const s = spellFor(a, input.slot, state); if (!s || s.kind === 'passive' || state.tick < (a.water.cooldowns[s.line] ?? 0)) return false;
