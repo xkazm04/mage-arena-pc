@@ -9,10 +9,12 @@ import { idleInput, type Actor, type ArenaState, type InputFrame } from './types
 export function competence(level: number) {
   const rows = enemyData.mages.competence, bounded = clamp(level, rows[0].level, rows.at(-1)!.level);
   const lo = rows[Math.floor(bounded) - 1]!, hi = rows[Math.ceil(bounded) - 1]!, fraction = bounded - Math.floor(bounded);
+  const curve = (feelPolicy.ai.tierCurvePlay as string[]).includes(lo.usesTierCurve);
   const interpolate = (key: 'reactionDelayS' | 'absorbChanceVsAbsorbable' | 'perfectAbsorbChance' | 'aimErrorDeg' | 'decisionCadenceS'): number => lo[key] + (hi[key] - lo[key]) * fraction;
   return { level: bounded, reactionDelayS: Math.max(enemyData.mages.caps.reactionDelayMinS, interpolate('reactionDelayS')),
     absorbChance: interpolate('absorbChanceVsAbsorbable'), perfectChance: Math.min(enemyData.mages.caps.perfectAbsorbChanceMax, interpolate('perfectAbsorbChance')),
-    aimErrorDeg: interpolate('aimErrorDeg'), decisionCadenceS: interpolate('decisionCadenceS'), curve: (feelPolicy.ai.tierCurvePlay as string[]).includes(lo.usesTierCurve) };
+    aimErrorDeg: interpolate('aimErrorDeg'), decisionCadenceS: interpolate('decisionCadenceS'), curve,
+    aimLeadFraction: curve ? (feelPolicy.ai.curveAimLeadFraction as Record<string, number>)[lo.level]! : runtime.games.mageAimLeadFraction };
 }
 export function attachMageAI(a: Actor, level: number, tick = 0): void {
   a.mageAI = { competence: level, nextDecisionTick: tick, input: idleInput(), observed: [], defendUntil: 0, plannedRaiseTick: 1e9, plannedReleaseTick: 0,
@@ -124,7 +126,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         // Turn inward at the arena edge instead of getting pinned by the clamp.
         if (!arenaContains(a.pos, runtime.games.spawnMarginM)) input.move = unit(sub(arenaGeometry.centre, a.pos));
         const aimPoint = target.water.decoy?.pos ?? target.pos;
-        const velocity = sub(target.pos, target.previousPos), lead = d / bolt.speedMps * combat.simStepHz * runtime.games.mageAimLeadFraction;
+        const velocity = sub(target.pos, target.previousPos), lead = d / bolt.speedMps * combat.simStepHz * profile.aimLeadFraction;
         const prediction = target.water.decoy ? aimPoint : { x: aimPoint.x + velocity.x * lead, y: aimPoint.y + velocity.y * lead };
         const error = (random(state, `mage ${a.id} aim`) * 2 - 1) * profile.aimErrorDeg * Math.PI / 180;
         const aimDirection = rotate(sub(prediction, a.pos), error); input.aim = { x: a.pos.x + aimDirection.x, y: a.pos.y + aimDirection.y };

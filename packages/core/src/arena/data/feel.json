@@ -70,7 +70,9 @@
     "spellVarietyWeight": 8,
     "reactionCastSafetyS": 0.05,
     "_tierCurvePlay": "enemies.json mages.competence usesTierCurve rows that play the curve: a plain absorb is raised to be up for the hit but outside the perfect window, decisions continue until the raise, and unblockables punish a fresh absorb. A fractional competence uses the row of floor(level).",
-    "tierCurvePlay": ["baits absorbs before unblockables", "full curve play"]
+    "tierCurvePlay": ["baits absorbs before unblockables", "full curve play"],
+    "_curveAimLeadFraction": "Aim lead of curve rows, keyed by competence row (floor(level)); replaces runtime.games.mageAimLeadFraction for those rows only. Rows below 3, the reference player and Tiro keep the runtime value.",
+    "curveAimLeadFraction": { "3": 0.6, "4": 0.75 }
   },
   "poise": {
     "mage": 1,

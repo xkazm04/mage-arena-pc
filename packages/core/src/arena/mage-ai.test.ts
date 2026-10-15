@@ -7,6 +7,8 @@ describe('tier curve play (usesTierCurve rows 3-4)', () => {
   it('selects the curve row by floor(level); rows below 3 keep the old policy', () => {
     expect([1, 1.5, 2, 2.5, 2.99, 3, 3.5, 4].map(l => competence(l).curve)).toEqual([false, false, false, false, false, true, true, true]);
     expect(enemyData.mages.competence.map(r => r.usesTierCurve)).toHaveLength(4);
+    const base = runtime.games.mageAimLeadFraction;
+    expect([1, 1.5, 2, 2.5, 3, 3.5, 4].map(l => competence(l).aimLeadFraction)).toEqual([base, base, base, base, 0.6, 0.6, 0.75]);
   });
 
   it('an L4 mage casts on the tick its ward drops', () => {
@@ -44,24 +46,29 @@ describe('tier curve play (usesTierCurve rows 3-4)', () => {
     }
   });
 
-  it('never perfects a threat whose perfect roll failed, and reacts no faster than the floor', () => {
-    for (const level of [3, 4]) {
-      const chance = competence(level).perfectChance; let rolled = 0;
-      for (let i = 0; i < 30; i++) {
+  it('100-seed ladder: reference wins fall strictly from L2 to L4, no failed roll becomes a perfect, reactions respect the floor', () => {
+    const wins: number[] = [];
+    for (const level of [2, 3, 4]) {
+      const chance = competence(level).perfectChance; let won = 0, failedRollPerfects = 0;
+      for (let i = 0; i < 100; i++) {
         const g = createGames(runtime.games.censusSeedStart + i, presets.find(p => p.name === runtime.games.referencePreset)!, 2, true), opponent = g.state.actors[1]!;
         attachMageAI(opponent, level);
         while (g.phase === 'active' && g.state.tick < ticks(runtime.games.fightTimeoutS)) stepGames(g);
+        if (g.phase !== 'active' && g.phase !== 'lost') won++;
         const events = g.state.events;
         events.forEach((e, k) => {
           if (e.kind !== 'perfect' || e.actorId !== opponent.id) return;
           const hit = events.slice(k + 1).find(h => h.kind === 'hit' && h.actorId === opponent.id && h.tick === e.tick)!;
           const roll = g.state.randomLog.find(r => r.purpose === `mage ${opponent.id} perfect ${hit.activationId}`);
-          if (roll) { rolled++; expect(roll.value, `seed ${i} activation ${hit.activationId}`).toBeLessThan(chance); }
+          if (roll && roll.value >= chance) failedRollPerfects++;
         });
         expect(Math.min(...opponent.mageAI!.reactionAges)).toBeGreaterThanOrEqual(ticks(enemyData.mages.caps.reactionDelayMinS));
       }
-      expect(rolled).toBeGreaterThan(0);
+      if (competence(level).curve) expect(failedRollPerfects, `L${level}`).toBe(0);
+      wins.push(won);
     }
+    expect(wins).toEqual([47, 25, 5]);
+    expect(wins[0]! > wins[1]! && wins[1]! > wins[2]! && wins[2]! > 0).toBe(true);
   });
 
   it('baits with absorbable casts and punishes a raised or fresh ward with an unblockable', () => {
