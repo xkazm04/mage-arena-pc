@@ -28,6 +28,7 @@ import { picture, portrait, storyFor, sigil } from "./ui/artwork.ts";
 import { art } from "./art.ts";
 import castData from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
 import { colours } from "./ui/kit.ts";
+import { dawnLedger } from "./dawn-ledger.ts";
 
 type Moment = SeasonView["parley"]["moments"][number];
 const friendly = (text: string) =>
@@ -43,6 +44,7 @@ export class GameShell {
   private selected = "tent";
   private cardPage = 0;
   private cardSelected = 0;
+  private morning = false;
   private castPage = 0;
   private visitPage = 0;
   private returnScreen = "camp";
@@ -728,6 +730,7 @@ export class GameShell {
       else if (command.type === "dawn") {
         this.cardPage = 0;
         this.cardSelected = 0;
+        this.morning = true;
         this.cards("board");
       } else this.camp();
     });
@@ -932,6 +935,7 @@ export class GameShell {
           }))
         : v.journal;
     const page = cards.slice(this.cardPage * 4, this.cardPage * 4 + 4);
+    const ledger = kind === "board" && this.morning && v.changesAtDawn;
     u.text(
       kind === "board" ? "DEEDS, WHISPERS AND WITNESSES" : "PRIVATE KNOWINGS",
       96,
@@ -950,10 +954,11 @@ export class GameShell {
         112,
         () => {
           this.cardSelected = index;
+          this.morning = false;
           this.cards(kind);
         },
         {
-          selected: this.cardSelected === index,
+          selected: !ledger && this.cardSelected === index,
           fontSize: 28,
           kind: c.rumour ? "card.warning" : "card.normal",
           tooltip: c.rumour
@@ -964,43 +969,8 @@ export class GameShell {
     });
     const card = cards[this.cardSelected];
     u.panel(900, 307, 924, 554, "panel.story");
-    const subject = castData.characters.find(
-      (c) =>
-        card?.text.includes(c.name) ||
-        card?.text.includes(c.name.split(" ")[0]!),
-    );
-    if (kind === "journal" && subject)
-      portrait(u, subject.id, "neutral", 946, 410, 205, 256);
-    else picture(u, `story.${storyFor(card?.text ?? "")}`, 946, 410, 270, 176);
-    u.text(
-      card?.rumour ? "A RUMOUR" : "A THREAD IN THE CAMP",
-      950,
-      355,
-      26,
-      card?.rumour ? colours.danger : colours.gold,
-      750,
-    );
-    u.text(
-      card?.text ??
-        (kind === "board"
-          ? "The board waits for the first morning. Tonight’s choices will leave their marks here."
-          : "Some truths arrive softly. Listen at the tent flap, build trust, and keep what you learn."),
-      1246,
-      416,
-      30,
-      colours.text,
-      526,
-    );
-    u.text(
-      kind === "board"
-        ? "Public words carry farther than their authors."
-        : "Knowing opens a Parley when the right person is present.",
-      940,
-      752,
-      28,
-      colours.muted,
-      830,
-    );
+    if (ledger) this.nightLedger();
+    else this.cardStory(kind, card);
     u.button(
       "cards-previous",
       "Previous",
@@ -1038,13 +1008,115 @@ export class GameShell {
       u.button("journal-cast", "People of the camp", 900, 870, 500, 68, () =>
         this.castJournal(),
       );
+    else if (v.changesAtDawn)
+      u.button(
+        "night-ledger",
+        ledger ? "Read the chosen card" : "What the night left",
+        900,
+        870,
+        500,
+        68,
+        () => {
+          this.morning = !ledger;
+          this.cards(kind);
+        },
+      );
     this.back(() => this.camp(), "Camp map");
     this.footer(
-      kind === "board"
-        ? "A rumour remains a rumour. Choose a card to read it."
-        : "Private knowledge stays with you across the season.",
+      ledger
+        ? "The night is settled. Choose a card to read the Board."
+        : kind === "board"
+          ? "A rumour remains a rumour. Choose a card to read it."
+          : "Private knowledge stays with you across the season.",
     );
     u.end(`card-${this.cardSelected}`);
+  }
+  /** The Board's reading panel at dawn: what the settled night changed for the player. */
+  private nightLedger() {
+    const u = this.ui,
+      v = this.view;
+    const { rows, more } = dawnLedger(
+      v.changes,
+      v.playerId,
+      (id) =>
+        castData.characters.find((c) => c.id === id)?.name ?? friendly(id),
+    );
+    u.text("WHAT THE NIGHT LEFT YOU", 950, 355, 26, colours.gold, 750);
+    if (!rows.length)
+      u.text(
+        "A quiet night. Nothing changed for you or your bonds.",
+        950,
+        416,
+        30,
+        colours.text,
+        824,
+      );
+    rows.forEach((row, i) =>
+      u.text(
+        row.text,
+        950,
+        408 + i * 48,
+        28,
+        row.tone === "gain"
+          ? colours.water
+          : row.tone === "loss"
+            ? colours.danger
+            : colours.text,
+        824,
+      ),
+    );
+    if (more)
+      u.text(
+        `…and ${more} more ${more === 1 ? "change" : "changes"} in the camp's bonds.`,
+        950,
+        408 + rows.length * 48,
+        26,
+        colours.muted,
+        824,
+      );
+  }
+  private cardStory(
+    kind: "board" | "journal",
+    card: { text: string; rumour: boolean } | undefined,
+  ) {
+    const u = this.ui;
+    const subject = castData.characters.find(
+      (c) =>
+        card?.text.includes(c.name) ||
+        card?.text.includes(c.name.split(" ")[0]!),
+    );
+    if (kind === "journal" && subject)
+      portrait(u, subject.id, "neutral", 946, 410, 205, 256);
+    else picture(u, `story.${storyFor(card?.text ?? "")}`, 946, 410, 270, 176);
+    u.text(
+      card?.rumour ? "A RUMOUR" : "A THREAD IN THE CAMP",
+      950,
+      355,
+      26,
+      card?.rumour ? colours.danger : colours.gold,
+      750,
+    );
+    u.text(
+      card?.text ??
+        (kind === "board"
+          ? "The board waits for the first morning. Tonight’s choices will leave their marks here."
+          : "Some truths arrive softly. Listen at the tent flap, build trust, and keep what you learn."),
+      1246,
+      416,
+      30,
+      colours.text,
+      526,
+    );
+    u.text(
+      kind === "board"
+        ? "Public words carry farther than their authors."
+        : "Knowing opens a Parley when the right person is present.",
+      940,
+      752,
+      28,
+      colours.muted,
+      830,
+    );
   }
   private castJournal() {
     this.campHeader("cast", "Those beneath the collar");
