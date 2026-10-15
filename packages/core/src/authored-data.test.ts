@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import parley from "../../../docs/design/reconciled/data/parley.json" with { type: "json" };
 import bridge from "../../../docs/design/reconciled/data/season-bridge.json" with { type: "json" };
+import schools from "../../../docs/design/reconciled/data/schools.json" with { type: "json" };
+import characters from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
+import labSchools from "./arena/data/lab-schools.json" with { type: "json" };
 import { presets, validateComposition } from "./arena/catalog.ts";
 import type { Composition } from "./arena/types.ts";
 import { makeTuning, tuningPresets, validateTuning } from "./arena/tuning.ts";
@@ -24,6 +27,21 @@ describe("authored data meets the validators that guard runtime input", () => {
       !parley.stances.includes(c.stance) || !parley.effects.includes(c.effect);
     for (const card of parley.cards) expect(problem(card), card.id).toBe(false);
     expect(problem({ stance: "threaten", effect: parley.effects[0]! })).toBe(true);
+  });
+
+  it("lab-schools mirrors canon: school ids, a body of that school, and the tent's name as prefix", () => {
+    const problems = (profiles: Record<string, unknown>) =>
+      Object.entries(profiles).filter(([key]) => key !== "scope").flatMap(([key, value]) => {
+        const p = value as { body: string; prefix: string };
+        const school = schools.find((s) => s.id === key), body = characters.characters.find((c) => c.id === p.body);
+        return [
+          !school && `unknown school ${key}`,
+          body?.school !== key && `body ${p.body} is not of school ${key}`,
+          school && p.prefix !== school.tent[0]!.toUpperCase() + school.tent.slice(1) && `prefix ${p.prefix} is not tent ${school.tent}`,
+        ].filter(Boolean);
+      });
+    expect(problems(labSchools)).toEqual([]);
+    expect(problems({ ...labSchools, fire: { ...labSchools.fire, body: "cassia" } })).toEqual(["body cassia is not of school fire"]);
   });
 
   it("the trial's stances are exactly the stances its beats table ranks", () => {
