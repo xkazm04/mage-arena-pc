@@ -1,6 +1,16 @@
-import { Container, Sprite, Texture, Rectangle } from "pixi.js";
+import {
+  Container,
+  Matrix,
+  RenderTexture,
+  Sprite,
+  Texture,
+  Rectangle,
+  type Renderer,
+} from "pixi.js";
 import type { SigilManifest } from "./sigil-contract.ts";
 import { art } from "./art.ts";
+import { setDepth } from "./depth.ts";
+import { quality } from "./quality.ts";
 import {
   cameraMetrics,
   groundToScreen,
@@ -49,10 +59,12 @@ export class ArenaArt {
   private fallback?: TiledArenaArt;
   private spec?: Plate;
   private decalFrames: Texture[] = [];
+  private baked?: RenderTexture;
   derivedBytes = 0;
   constructor(
     private floor: Container,
     private figures: Container,
+    private renderer?: Renderer,
   ) {
     floor.addChild(this.plate);
   }
@@ -62,6 +74,9 @@ export class ArenaArt {
     for (const child of this.plate.removeChildren()) child.destroy();
     for (const texture of this.decalFrames) texture.destroy();
     this.decalFrames = [];
+    this.baked?.destroy(true);
+    this.baked = undefined;
+    this.derivedBytes = 0;
     for (const key of this.leases) art.release(key);
     this.leases = [];
     this.fallback?.dispose();
@@ -173,6 +188,8 @@ export class ArenaArt {
       } catch (error) {
         this.diagnostics.push(`Optional floor sigils: ${String(error)}`);
       }
+      if (this.disposed || generation !== this.generation) return;
+      this.bake(sprite, p, early);
       for (const [i, o] of p.occluders.entries()) {
         const root = new Container(),
           sprite = new Sprite(occluders[i]);
@@ -201,6 +218,37 @@ export class ArenaArt {
       this.derivedBytes = this.fallback.derivedBytes;
     }
   }
+  /**
+   * Plate, cleanup overlay and decals become one opaque texture at the plate's own texel density: one full-screen layer
+   * instead of two (the overlay is ~95% transparent), which the Fire TV's GPU fill rate needs. Their sources are released.
+   */
+  private bake(plate: Sprite, p: Plate, keys: string[]) {
+    if (!this.renderer || !quality.bakePlate) return;
+    const sx = p.size[0] / plate.width,
+      sy = p.size[1] / plate.height,
+      { x, y } = plate,
+      baked = RenderTexture.create({ width: p.size[0], height: p.size[1] }),
+      layers = new Container();
+    layers.addChild(...this.plate.children); // in draw order; removeChildren() returns them reversed
+    this.renderer.render({
+      container: layers,
+      target: baked,
+      transform: new Matrix(sx, 0, 0, sy, -x * sx, -y * sy),
+      clearColor: [0, 0, 0, 1],
+    });
+    layers.destroy({ children: true });
+    for (const texture of this.decalFrames) texture.destroy();
+    this.decalFrames = [];
+    const sprite = new Sprite(baked);
+    sprite.position.set(x, y);
+    sprite.width = p.worldSizeMetres[0];
+    sprite.height = p.worldSizeMetres[1];
+    this.plate.addChild(sprite);
+    this.baked = baked;
+    this.derivedBytes = p.size[0] * p.size[1] * 4;
+    for (const key of keys) art.release(key);
+    this.leases = this.leases.filter((k) => !keys.includes(k));
+  }
   /** Art keys the current palette holds. */
   get keys(): readonly string[] {
     return this.leases;
@@ -215,7 +263,7 @@ export class ArenaArt {
       p.root.scale.set(
         (m.pxPerMetreX * this.spec!.worldSizeMetres[0]) / this.spec!.size[0],
       );
-      p.root.zIndex = p.foot.y;
+      setDepth(p.root, p.foot.y);
     }
   }
   dispose() {

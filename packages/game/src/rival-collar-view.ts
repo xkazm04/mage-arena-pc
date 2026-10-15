@@ -21,7 +21,11 @@ export class RivalCollarView {
   private source?: Texture["source"];
   begin() {
     this.used = 0;
-    for (const s of this.sprites) s.visible = false;
+  }
+  /** Hides the runes this frame left unused. */
+  end() {
+    for (let i = this.used; i < this.sprites.length; i++)
+      this.sprites[i]!.visible = false;
   }
   /** Shares the page the HUD clock inscription already decodes; no lease, so it never unloads under the HUD. */
   private textures(manifest?: SigilManifest) {

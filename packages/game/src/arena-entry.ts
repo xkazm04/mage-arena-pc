@@ -7,6 +7,7 @@ import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
 import { audioData } from "./audio-policy.ts";
 import { BitmapText, Container, Graphics } from "pixi.js";
+import { frameGraphics } from "./pixi-fixes.ts";
 import {
   applyBoutInput,
   boutCheckpoint,
@@ -88,6 +89,7 @@ import { colours } from "./ui/kit.ts";
 import { preloadPolicy, ReadyGate } from "./arena-preload.ts";
 import { difficulty } from "./difficulty.ts";
 import type { CanvasUI } from "./ui/ui.ts";
+import { phase as markPhase } from "./frame-probe.ts";
 
 export interface SeasonArenaOptions {
   bout: SeasonBout;
@@ -981,10 +983,10 @@ export class ArenaGame {
           160,
         ),
       );
-      const mask = new Graphics();
+      const mask = frameGraphics();
       u.content.addChild(mask);
       masks.push(mask);
-      const frame = new Graphics();
+      const frame = frameGraphics();
       u.content.addChild(frame);
       slotFrames.push(frame);
     }
@@ -998,7 +1000,7 @@ export class ArenaGame {
         colours.muted,
         180,
       );
-    const clock = new Graphics();
+    const clock = frameGraphics();
     u.content.addChild(clock);
     const artClock = u.kit.source !== "procedural";
     const clockFace = artClock ? u.kit.sprite("clock.face") : undefined,
@@ -1231,6 +1233,7 @@ export class ArenaGame {
     }
     const reduced = localStorage.getItem("mage-motion") === "reduced";
     this.watchContacts();
+    markPhase("arena.pre");
     const simulationDt = this.paused
       ? 0
       : this.impactClock.advance(dt, reduced);
@@ -1278,6 +1281,7 @@ export class ArenaGame {
         if (this.drill?.state === this.training.state)
           observeLedger(this.drill.ledger, this.drill.state);
       });
+    markPhase("step");
     this.autoFlush();
     this.consumeEvents(reduced);
     const read =
@@ -1307,6 +1311,7 @@ export class ArenaGame {
       reduced || this.paused ? 0 : shake.y,
     );
     this.scene.feedback.ledger = this.wardLedger();
+    markPhase("events");
     this.scene.render(
       this.artFixture?.state ?? shown,
       this.artFixture?.player ?? shownPlayer,
@@ -1317,6 +1322,7 @@ export class ArenaGame {
       false,
       dt,
     );
+    markPhase("scene");
     if (
       this.frameLog &&
       this.framesSinceGate++ < preloadPolicy.frameLogFramesPerGate
@@ -1344,6 +1350,7 @@ export class ArenaGame {
         this.frameLog.shift();
     }
     this.hudUpdate();
+    markPhase("hud");
     const phase =
       this.games?.phase ??
       (this.training.player.tags.includes("DEFEATED") ? "failed" : "active");
