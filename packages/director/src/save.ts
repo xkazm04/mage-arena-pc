@@ -50,7 +50,10 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
     // Independent replay validates every arena field, not just the client's hash.
     if (hash(json(replay)) !== hash(json(b))) throw Error('Save arena replay differs from the checkpoint.');
     if (b.games?.result && hash(gamesResult(replay.games!)) !== hash(b.games.result)) throw Error('Save arena payout is invalid.');
-    linkBout(b);
+    // Resume from the replay, not the parsed JSON: equal values, but JSON drops keys a live run holds as undefined
+    // (an actor's cleared `pending`), and stateHash reads key order, so a parsed bout could hash apart from an
+    // uninterrupted one at the next cast.
+    p.progress.bout = linkBout(replay);
   }
   const n = p.camp.night;
   if (n) {
@@ -73,7 +76,7 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
 }
 export function encodeSave(service: SeasonService): SaveEnvelope {
   const logical = json({ camp: service.checkpointCamp(), progress: service.progress });
-  validatePayload(service.tables,logical);
+  validatePayload(service.tables,json(logical));
   const sources = sourceHash(), checkpoint = boutHashSafe(logical.progress);
   const games = logical.progress.bout?.games;
   // Persist references as IDs. Hydration restores one authoritative actor object.
