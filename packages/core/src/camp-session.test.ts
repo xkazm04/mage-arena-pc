@@ -18,7 +18,7 @@ describe("player changes", () => {
         "cassia",
       ),
     ).toEqual([
-      { path: "characters/cassia/gold", before: 8, after: 10, rule: "rules/effects/PROTECT/costGold" },
+      { path: "characters/cassia/gold", before: 8, after: 10, rule: "" },
       { path: "trust/brennic>cassia", before: 15, after: 19, rule: "rules/effects/BEFRIEND" },
     ]);
   });

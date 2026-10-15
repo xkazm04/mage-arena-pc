@@ -553,7 +553,12 @@ export function playerChanges(trace: readonly Trace[], player: string): Trace[] 
     )
       continue;
     const held = byPath.get(x.path);
-    byPath.set(x.path, { ...x, before: held ? held.before : x.before });
+    // Several rules moving one value have no single cause to name.
+    byPath.set(x.path, {
+      ...x,
+      before: held ? held.before : x.before,
+      rule: held && held.rule !== x.rule ? "" : x.rule,
+    });
   }
   return [...byPath.values()].filter(
     (x) => JSON.stringify(x.before) !== JSON.stringify(x.after),
