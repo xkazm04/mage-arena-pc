@@ -2,7 +2,8 @@ import { runFight, tiro } from './games.ts';
 import { ticks, runtime } from './kernel.ts';
 import { createLab, stepLab, type LabConfig } from './lab.ts';
 import { attachMageAI, mageInput } from './mage-ai.ts';
-import { makeTuning, tuningFields, validateTuning, type CombatTuning } from './tuning.ts';
+import { defaultDifficulty, makeTuning, tuningFields, validateTuning, type CombatTuning } from './tuning.ts';
+import type { Difficulty } from './types.ts';
 
 /** Census forecast for a Lab tuning: the reference policy fights fixed seeds; never a difficulty verdict. */
 export interface ForecastFight { seed: number; outcome: string; durationS: number; hash: string; perfects: number; incomingHits: number }
@@ -17,13 +18,13 @@ export function isCurrentTuning(t: CombatTuning): boolean {
   return tuningFields.every(f => t[f.key] === current[f.key]) && !Object.keys(t.spells).length;
 }
 /** Yields after each fight so a host can interleave cancellation; returns per-wave summaries like report-w4. */
-export function* censusForecast(tuning: CombatTuning | undefined, seedsPerWave: number, seedStart = runtime.games.censusSeedStart): Generator<number, WaveForecast[]> {
+export function* censusForecast(tuning: CombatTuning | undefined, seedsPerWave: number, seedStart = runtime.games.censusSeedStart, difficulty: Difficulty = defaultDifficulty): Generator<number, WaveForecast[]> {
   if (!Number.isInteger(seedsPerWave) || seedsPerWave < 1 || !Number.isInteger(seedStart) || seedStart < 0) throw Error('Invalid forecast plan');
   const effective = tuning && !isCurrentTuning(tuning) ? validateTuning(tuning) : undefined, waves: WaveForecast[] = [];
   for (let wave = 0; wave < tiro.waves.length; wave++) {
     const fights: ForecastFight[] = [];
     for (let i = 0; i < seedsPerWave; i++) {
-      const f = runFight(seedStart + i, wave, runtime.games.fightTimeoutS, effective);
+      const f = runFight(seedStart + i, wave, runtime.games.fightTimeoutS, effective, difficulty);
       fights.push({ seed: f.seed, outcome: f.outcome, durationS: f.durationS, hash: f.hash, perfects: f.perfects, incomingHits: f.incomingHits });
       yield fights.length + wave * seedsPerWave;
     }

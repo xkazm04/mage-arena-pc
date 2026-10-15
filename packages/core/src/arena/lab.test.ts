@@ -7,7 +7,7 @@ import {
   toggleLabDamage,
   changeLabTuning,
 } from "./lab.ts";
-import { makeTuning, exportTuning, importTuning, schools } from "./tuning.ts";
+import { makeTuning, exportTuning, importTuning, paceOf, schools } from "./tuning.ts";
 import { idleInput } from "./types.ts";
 import { stateHash, stepArena, resolveHit, ticks } from "./kernel.ts";
 import { spellFor } from "./catalog.ts";
@@ -92,12 +92,13 @@ describe("Combat Feel Lab", () => {
     t.hitStunS = 0.1;
     const l = createLab({ ...defaultLabConfig, dummyAttack: "still" }, t),
       { state, player, dummy } = l.training;
-    const x = player.pos.x;
+    const x = player.pos.x, pace = paceOf(player);
     stepLab(l, { ...idleInput(dummy.pos), move: { x: 1, y: 0 } });
-    expect(player.pos.x - x).toBeCloseTo(30 / 3600);
+    // The Lab's acceleration composes under the player's pace (squared); the roll keeps its distance in fewer ticks.
+    expect(player.pos.x - x).toBeCloseTo((30 * pace * pace) / 3600);
     const start = player.pos.x;
     stepLab(l, { ...idleInput(dummy.pos), move: { x: 1, y: 0 }, roll: true });
-    for (let i = 1; i < ticks(t.rollDurationS); i++)
+    for (let i = 1; i < ticks(t.rollDurationS / pace); i++)
       stepLab(l, idleInput(dummy.pos));
     expect(player.pos.x - start).toBeCloseTo(t.rollDistanceM);
     state.tick = player.immuneUntil + 1;

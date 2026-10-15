@@ -86,6 +86,7 @@ import feedbackData from "../data/combat-feedback.json" with { type: "json" };
 import { paletteForGames, type Palette } from "./arena-art.ts";
 import { colours } from "./ui/kit.ts";
 import { preloadPolicy, ReadyGate } from "./arena-preload.ts";
+import { difficulty } from "./difficulty.ts";
 import type { CanvasUI } from "./ui/ui.ts";
 
 export interface SeasonArenaOptions {
@@ -103,7 +104,7 @@ export class ArenaGame {
   readonly scene: ArenaScene;
   readonly input: ArenaInput;
   camera: Camera;
-  training = createTraining();
+  training = createTraining(undefined, undefined, difficulty());
   games?: Games;
   /** The player's threat answers for the current Tiro bout; observed beside the state, read by the results card. */
   ledger?: ThreatLedger;
@@ -563,7 +564,7 @@ export class ArenaGame {
     this.flowSeen = undefined;
     this.lastGain = undefined;
     this.reference = false;
-    this.training = createTraining(kind);
+    this.training = createTraining(kind, undefined, difficulty());
     this.training.player.water = newWaterState(this.composition);
     if (gameAudio.snapshot().scene.startsWith("arena:"))
       gameAudio.setScene("arena:1", true);
@@ -716,7 +717,7 @@ export class ArenaGame {
       );
   }
   startLab(compose: () => void) {
-    this.resetLab(defaultLabConfig);
+    this.resetLab({ ...defaultLabConfig, difficulty: difficulty() });
     this.labUI = new LabUI(this.ui, this, compose);
     this.hud();
     this.labUI.openSetup();
@@ -749,7 +750,15 @@ export class ArenaGame {
   startGames(seed = 4) {
     this.restart();
     this.mode = "tiro";
-    this.games = createGames(seed, this.composition);
+    this.games = createGames(
+      seed,
+      this.composition,
+      0,
+      false,
+      undefined,
+      undefined,
+      difficulty(),
+    );
     this.sync();
     this.ledger = createLedger(this.games.state, this.games.player.id);
     this.camera = makeCamera(

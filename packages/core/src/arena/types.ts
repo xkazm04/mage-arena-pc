@@ -2,6 +2,9 @@ import type { CombatTuning, School } from './tuning.ts';
 import type { Spell } from './catalog.ts';
 import type { Vec } from './math.ts';
 export type Family = 'magic' | 'physical' | 'unblockable';
+/** The one spelling of the difficulty ids (feel.json pace.enemy keys); the save schema and settings derive from it. */
+export const difficulties = ['easy', 'normal', 'hard'] as const;
+export type Difficulty = typeof difficulties[number];
 export interface Ranks { vigor: number; focus: number; nerve: number }
 /** The one spelling of the Water line ids: the type, the save schema and the spell-id pattern derive from it. */
 export const waterLines = ['tide_orb', 'lash', 'mire', 'mend', 'mirror'] as const;
@@ -24,6 +27,8 @@ export interface Actor {
   tags: ('DEFEATED' | 'STAGGERED')[]; poise: number; defeatedTick?: number; defeatDirection?: Vec; dummy: boolean; absorb: boolean; absorbFreshTick: number; releaseTick: number; absorbExhausted: boolean;
   water: WaterState;
   enemy?: EnemyBrain; mageAI?: MageBrain; speedMps?: number;
+  /** Time scale of this actor's own actions (tuning.ts pace), fixed at spawn; absent is the authored 1x. */
+  pace?: number;
   lastInput: InputFrame; rollUntil: number; immuneUntil: number; recoveryUntil: number; rollDirection: Vec;
   staminaUsedTick: number; cooldownUntil: number; pending?: PendingCast;
   waveStartTick: number; tier: number; lastUnlockTick: number; clockAdvanceTicks: number; unlockTicks: number[];
@@ -39,6 +44,8 @@ export interface ArenaEvent { direction?: Vec; spellId?: string; at?: Vec; famil
 export interface RandomDraw { tick: number; purpose: string; value: number }
 export interface ArenaState {
   tuning?: CombatTuning; lab?: { damageEnabled: boolean };
+  /** Fixed for the life of the state; absent (raw kernel tests, art fixtures) spawns every actor at the authored 1x. */
+  difficulty?: Difficulty;
   tick: number; seed: number; rng: number; nextId: number; actors: Actor[]; projectiles: Projectile[];
   telegraphs: Telegraph[]; zones: Zone[]; events: ArenaEvent[]; randomLog: RandomDraw[];
 }

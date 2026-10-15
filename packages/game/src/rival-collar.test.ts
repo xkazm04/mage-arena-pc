@@ -50,7 +50,7 @@ function perfect(g: Games, from: Actor) {
 
 describe("rival collar rune", () => {
   for (const wave of [2, 3])
-    for (const seed of [1, 7])
+    for (const seed of [1, 8]) // seed 7's wave 3 rival falls before its second unlock at pace
       it(`tracks actor.tier and predicts every unlock over a full Tiro bout (wave ${wave + 1}, seed ${seed})`, () => {
         const g = createGames(seed, reference, wave, true);
         expect(tiro.waves[wave]!.kind).not.toMatch(/soldiers|creatures/);

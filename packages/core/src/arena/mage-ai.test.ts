@@ -67,7 +67,7 @@ describe('tier curve play (usesTierCurve rows 3-4)', () => {
       if (competence(level).curve) expect(failedRollPerfects, `L${level}`).toBe(0);
       wins.push(won);
     }
-    expect(wins).toEqual([47, 25, 5]);
+    expect(wins).toEqual([45, 16, 6]); // at the default difficulty (Normal), pace 1.5 on both sides
     expect(wins[0]! > wins[1]! && wins[1]! > wins[2]! && wins[2]! > 0).toBe(true);
   }, 120_000); // ~25 s of fights alone; the 30 s default flakes when the machine is busy
 

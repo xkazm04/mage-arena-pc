@@ -3,6 +3,7 @@ import { addMage, combat, runtime, ticks, travelLine } from './kernel.ts';
 import { distance, sub, unit, type Vec } from './math.ts';
 import { idleInput, type Actor, type ArenaState, type Family, type InputFrame, type Telegraph } from './types.ts';
 import { hasLineOfSight } from './water.ts';
+import { paceOf, paced, pacedWarning, warningFloor } from './tuning.ts';
 export interface AttackSpec { id: string; family: Family; damage: number; windupS: number; recoveryS?: number; cooldownS?: number; rangeM?: number; projectileMps?: number; tier?: number; effect?: string; telegraph?: string; onWallHit?: string; travelM?: number; travelS?: number; reachM?: number }
 export interface EnemySpec { id: string; name: string; poise: number; hp: number; speedMps: number; attacks: readonly AttackSpec[]; behaviour: string; frontBlockDeg?: number; frontBlockMult?: number; armourMultVsBolt?: number; keepDistanceM?: readonly number[]; packSize?: number; onDeath?: { id: string; family: Family; tier: number; damage: number; radiusM: number; delayS: number } }
 export const enemyRoster: readonly EnemySpec[] = [...enemyData.soldiers, ...enemyData.creatures];
@@ -14,22 +15,26 @@ export function addEnemy(state: ArenaState, id: string, pos: Vec): Actor {
   return a;
 }
 const extract = (text: string | undefined, pattern: RegExp): number => { const match = text?.match(pattern); if (!match) throw Error(`Missing enemy magnitude: ${text}`); return Number(match[1]); };
+/** An enemy windup is a warning: paced, but never below its reaction-band floor (every enemy windup counts as positional). */
+export const pacedWindupS = (a: Actor, attack: Pick<AttackSpec, 'family' | 'windupS'>): number => pacedWarning(a, attack.windupS, warningFloor(attack.family, true));
+const backoffS = (a: Actor, spec: EnemySpec): number => paced(a, extract(spec.behaviour, /back off ([\d.]+) s/));
 function scheduleAttack(state: ArenaState, a: Actor, target: Actor, spec: EnemySpec, attack: AttackSpec): void {
-  const id = state.nextId++, brain = a.enemy!;
+  const id = state.nextId++, brain = a.enemy!, windupS = pacedWindupS(a, attack);
   const t: Telegraph = { id, activationId: id, ownerId: a.id, family: attack.family, tier: attack.tier ?? 0, damage: attack.damage, source: { ...a.pos },
     kind: attack.projectileMps ? 'projectile' : 'melee', origin: { ...a.pos }, target: { ...target.pos }, startTick: state.tick + 1,
-    resolveTick: state.tick + 1 + ticks(attack.windupS), speedMps: attack.projectileMps ?? 0,
+    resolveTick: state.tick + 1 + ticks(windupS), speedMps: (attack.projectileMps ?? 0) * paceOf(a),
     rangeM: attack.rangeM ?? (attack.projectileMps ? runtime.games.rangedRangeM : runtime.games.defaultMeleeRangeM), widthM: runtime.games.meleeArcDeg };
   if (attack.id === 'net_cast') { t.kind = 'area'; t.rangeM = runtime.games.netRangeM; t.widthM = extract(attack.telegraph, /([\d.]+) m/); t.rootS = extract(attack.effect, /root ([\d.]+) s/); }
   if (attack.id === 'tongue_pull') { t.kind = 'lane'; t.rangeM = runtime.games.tongueRangeM; t.widthM = runtime.games.tongueWidthM; t.pullM = extract(attack.effect, /pull ([\d.]+) m/); }
   if (attack.id === 'thorn_charge') { t.kind = 'charge'; t.widthM = extract(attack.telegraph, /lane ([\d.]+) m/); t.rangeM = extract(attack.telegraph, /x ([\d.]+) m/); t.wallStunS = extract(attack.onWallHit, /self-stun ([\d.]+) s/); }
   // The body travels after the full warning; travelM + reachM stays inside the authored range (compile-arena-data checks it).
-  if (attack.travelM !== undefined) { t.travelM = attack.travelM; t.travelTicks = ticks(attack.travelS!); if (attack.reachM !== undefined) t.reachM = attack.reachM; }
+  if (attack.travelM !== undefined) { t.travelM = attack.travelM; t.travelTicks = ticks(paced(a, attack.travelS!)); if (attack.reachM !== undefined) t.reachM = attack.reachM; }
   state.telegraphs.push(t); brain.attackIndex++;
-  const cooldown = attack.cooldownS ?? (spec.id === 'mire_maw' ? runtime.games.mawArtilleryCooldownS : spec.id === 'thornback' ? runtime.games.chargeCooldownS : attack.windupS + (attack.travelS ?? 0) + (attack.recoveryS ?? runtime.games.defaultRecoveryS));
+  const cooldown = attack.cooldownS !== undefined ? paced(a, attack.cooldownS) : spec.id === 'mire_maw' ? paced(a, runtime.games.mawArtilleryCooldownS) : spec.id === 'thornback' ? paced(a, runtime.games.chargeCooldownS)
+    : windupS + paced(a, attack.travelS ?? 0) + paced(a, attack.recoveryS ?? runtime.games.defaultRecoveryS);
   brain.readyTick = state.tick + 1 + ticks(cooldown);
-  if (spec.id === 'slinger') brain.recoveryUntil = state.tick + 1 + ticks(attack.windupS + runtime.games.slingerReloadS);
-  if (spec.id === 'conscript') { brain.backoffUntil = brain.readyTick + ticks(extract(spec.behaviour, /back off ([\d.]+) s/)); brain.readyTick = brain.backoffUntil; }
+  if (spec.id === 'slinger') brain.recoveryUntil = state.tick + 1 + ticks(windupS + paced(a, runtime.games.slingerReloadS));
+  if (spec.id === 'conscript') { brain.backoffUntil = brain.readyTick + ticks(backoffS(a, spec)); brain.readyTick = brain.backoffUntil; }
 }
 export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
   const inputs: Record<number, InputFrame> = {};
@@ -46,7 +51,7 @@ export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
     // A travelling body keeps facing along its committed line, even past the point it aimed at.
     if (windup) { const line = travelLine(windup); input.aim = windup.contacted ? { x: line.end.x + line.dir.x, y: line.end.y + line.dir.y } : { ...windup.target }; continue; }
     if (state.tick < (brain.recoveryUntil ?? 0)) continue;
-    if (spec.id === 'conscript' && state.tick < brain.backoffUntil - ticks(extract(spec.behaviour, /back off ([\d.]+) s/))) continue;
+    if (spec.id === 'conscript' && state.tick < brain.backoffUntil - ticks(backoffS(a, spec))) continue;
     const delta = sub(target.pos, a.pos), d = distance(target.pos, a.pos), toward = unit(delta);
     let desired = { ...toward };
     const attack = spec.attacks[brain.attackIndex % spec.attacks.length]!;

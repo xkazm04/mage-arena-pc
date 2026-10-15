@@ -4,7 +4,7 @@ import { calendar, seededUnit } from './camp.ts';
 import { spendHours, type CampSession } from './camp-session.ts';
 import type { Tables, Trace } from './types.ts';
 import { member } from './arena/doors.ts';
-import { advanceGames, attachMageAI, createGames, gamesResult, stateHash, stepGames, presets, validateComposition, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame } from './arena/index.ts';
+import { advanceGames, attachMageAI, createGames, defaultDifficulty, gamesResult, stateHash, stepGames, presets, validDifficulty, validateComposition, type Difficulty, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame } from './arena/index.ts';
 
 export const bridgeRules = data;
 export type TrialStance = keyof typeof data.trial.beats;
@@ -18,6 +18,8 @@ export type BoutInput = { type: 'tick'; tick: number; input: InputFrame } | { ty
 export interface SeasonBout {
   id: string; day: number; seed: number; phase: 'prepared' | 'active' | 'intermission' | 'terminal';
   entrant: GamesPlayer; spectator: boolean; composition: Composition; games: Games | null; log: BoutInput[];
+  /** Chosen before the bout and fixed for it; replayBout reproduces the hash from it. */
+  difficulty: Difficulty;
 }
 export interface Receipt { id: string; day: number; kind: 'trial' | 'games'; entrant: string; result?: GamesResult; hash: string; trace: Trace[] }
 export interface SeasonProgress { composition: Composition; trial: Trial | null; bout: SeasonBout | null; receipts: Receipt[] }
@@ -92,17 +94,17 @@ export function receiveTrial(t: Tables, before: CampSession, p: SeasonProgress):
   p.receipts.push({ id: trial.id, day: trial.day, kind: 'trial', entrant: trial.entrant, hash: JSON.stringify(trial), trace });
   return s;
 }
-export function prepareBout(t: Tables, s: CampSession, p: SeasonProgress, composition: Composition): SeasonBout {
-  if (s.hour !== t.season.gamesHour || seasonDue(t, s, p) !== 'games' || p.bout || validateComposition(composition).length) throw Error('The Games cannot open now.');
+export function prepareBout(t: Tables, s: CampSession, p: SeasonProgress, composition: Composition, difficulty: Difficulty = defaultDifficulty): SeasonBout {
+  if (s.hour !== t.season.gamesHour || seasonDue(t, s, p) !== 'games' || p.bout || validateComposition(composition).length || !validDifficulty(difficulty)) throw Error('The Games cannot open now.');
   const qualification = p.receipts.find(r => r.kind === 'trial' && r.day === s.camp.day - t.season.trialOffsetBeforeGames);
   if (!qualification) throw Error('The Tent Trial must settle before the Games.');
   const entrant = campPlayerSnapshot(t, s, qualification.entrant);
   const seed = Math.floor(seededUnit(s.camp.seed, s.camp.day, entrant.id, 'tiro-bout') * 0x100000000) >>> 0;
-  return { id: `games:${s.camp.seed}:${s.camp.day}`, day: s.camp.day, seed, phase: 'prepared', entrant, spectator: entrant.id !== s.camp.player, composition: structuredClone(composition), games: null, log: [] };
+  return { id: `games:${s.camp.seed}:${s.camp.day}`, day: s.camp.day, seed, phase: 'prepared', entrant, spectator: entrant.id !== s.camp.player, composition: structuredClone(composition), games: null, log: [], difficulty };
 }
 export function startBout(bout: SeasonBout): void {
   if (bout.phase !== 'prepared' || bout.games) throw Error('The bout has already started.');
-  bout.games = createGames(bout.seed, bout.composition, 0, false, bout.entrant);
+  bout.games = createGames(bout.seed, bout.composition, 0, false, bout.entrant, undefined, bout.difficulty);
   if (bout.spectator) attachMageAI(bout.games.player, data.trial.spectatorCompetence);
   bout.phase = 'active';
 }

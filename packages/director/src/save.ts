@@ -48,7 +48,7 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
   if (p.progress.bout) {
     const b = p.progress.bout;
     if (receipts.some(r=>r.id===b.id) || b.day !== camp.day || b.entrant.id !== (receipts.find(r=>r.kind==='trial' && r.day===b.day-t.season.trialOffsetBeforeGames)?.entrant)) throw Error('Save bout identity or receipt is invalid.');
-    const expected=prepareBout(t,s,{...p.progress,bout:null},b.composition);
+    const expected=prepareBout(t,s,{...p.progress,bout:null},b.composition,b.difficulty);
     if (hash(expected)!==hash({...b,phase:'prepared',games:null,log:[]}) || hash(b.composition)!==hash(p.progress.composition)) throw Error('Save entrant or seed differs from the camp snapshot.');
     const replay = replayBout(b);
     // Independent replay validates every arena field, not just the client's hash.

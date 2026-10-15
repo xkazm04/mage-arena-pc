@@ -1,9 +1,9 @@
-import { feelPolicy, profileFor, tuningFor } from './tuning.ts';
+import { feelPolicy, paceFor, paceOf, paced, profileFor, tuningFor } from './tuning.ts';
 import { combat, statRules, bolt, rankRange } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
 import { constrainToArena } from './geometry.ts';
 import { distance, inArc, length, sectorSweep, segmentHit, sub, unit, type Vec } from './math.ts';
-import { activationBlocked, idleInput, type Actor, type ArenaState, type Hit, type InputFrame, type Projectile, type Ranks, type Telegraph } from './types.ts';
+import { activationBlocked, idleInput, type Actor, type ArenaState, type Difficulty, type Hit, type InputFrame, type Projectile, type Ranks, type Telegraph } from './types.ts';
 import { newWaterState } from './catalog.ts';
 import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, updateWater, wardDrainMult, waterAbsorbed } from './water.ts';
 import { enemySpec } from './enemies.ts';
@@ -16,8 +16,11 @@ export const drainPerSecond = (rank: number): number => Math.max(0, statRules.dr
 export const perfectReturn = (tier: number, nerve: number): number => tier === 0 ? statRules.refund.tierZero : statRules.refund.perTier * tier * (1 + statRules.refund.perRank * nerve);
 const maximum = (rule: { base: number; perRank: number }, rank: number): number => rule.base + rule.perRank * rank;
 
-export function createArena(seed = 1): ArenaState {
-  return { tick: 0, seed: seed >>> 0, rng: seed >>> 0, nextId: 1, actors: [], projectiles: [], telegraphs: [], zones: [], events: [], randomLog: [] };
+/** A difficulty paces every actor spawned into the state (tuning.ts paceFor); without one, actors keep the authored 1x. */
+export function createArena(seed = 1, difficulty?: Difficulty): ArenaState {
+  const state: ArenaState = { tick: 0, seed: seed >>> 0, rng: seed >>> 0, nextId: 1, actors: [], projectiles: [], telegraphs: [], zones: [], events: [], randomLog: [] };
+  if (difficulty !== undefined) { paceFor(0, difficulty); state.difficulty = difficulty; }
+  return state;
 }
 // Mulberry32; even seed zero is a valid independent sequence. Every draw is serialized for replay.
 export function random(state: ArenaState, purpose: string): number {
@@ -39,6 +42,7 @@ export function addMage(state: ArenaState, team: number, pos: Vec, label = 'Wate
     clockAdvanceTicks: 0, unlockTicks: [state.tick],
     metrics: { perfects: 0, blocks: 0, hits: 0, damageDealt: 0, damageTaken: 0, manaDrained: 0, manaRaised: 0, manaReturned: 0, casts: 0, rolls: 0 }
   };
+  if (state.difficulty !== undefined) actor.pace = paceFor(team, state.difficulty);
   state.actors.push(actor); return actor;
 }
 export function emit(state: ArenaState, kind: ArenaState['events'][number]['kind'], actor: Actor, value = 0, targetId?: number): void {
@@ -148,14 +152,16 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   const canCancel = !a.pending || tune.castCommitFraction >= 1 || state.tick < a.pending.startTick + Math.ceil((a.pending.releaseTick - a.pending.startTick) * tune.castCommitFraction);
   const rooted = state.tick < a.water.rootUntil || a.pending?.spellId === 'mend:4:base';
   if (!rooted && canCancel && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost) {
-    a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(tune.rollDurationS);
-    a.immuneUntil = state.tick + ticks(tune.rollIFramesS); a.recoveryUntil = a.rollUntil + ticks(tune.rollRecoveryS); a.rollRecoveryUntil = a.recoveryUntil;
+    a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(paced(a, tune.rollDurationS));
+    a.immuneUntil = state.tick + ticks(paced(a, tune.rollIFramesS)); a.recoveryUntil = a.rollUntil + ticks(paced(a, tune.rollRecoveryS)); a.rollRecoveryUntil = a.recoveryUntil;
     a.stamina -= combat.roll.staminaCost; a.staminaUsedTick = state.tick; a.metrics.rolls++;
     a.absorb = false; if (input.absorb) a.absorbExhausted = true; interrupt(state, a); emit(state, 'roll', a);
   }
   let velocity = { x: 0, y: 0 };
+  const pace = paceOf(a);
   if (state.tick < a.rollUntil) {
-    const speed = tune.rollDistanceM / (ticks(tune.rollDurationS) * DT);
+    // The roll keeps its distance; pace only shortens it.
+    const speed = tune.rollDistanceM / (ticks(paced(a, tune.rollDurationS)) * DT);
     velocity = { x: a.rollDirection.x * speed, y: a.rollDirection.y * speed };
   } else if (!rooted && length(input.move) > 0) {
     const move = unit(input.move); let speed: number = a.speedMps ?? tune.walkMps;
@@ -164,7 +170,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
       speed = tune.sprintMps; a.stamina -= sprintCost; a.staminaUsedTick = state.tick;
     }
     if (state.tick < (a.rollRecoveryUntil ?? 0)) speed *= tune.rollRecoveryMoveMultiplier;
-    speed *= profileFor(a).move;
+    speed *= profileFor(a).move * pace;
     if (a.pending) speed *= tune.castMoveMultiplier;
     if (a.absorb) speed *= combat.absorb.moveSpeedWhileHeldMult;
     if (state.tick < a.water.slowUntil) speed *= a.water.slowMult;
@@ -172,7 +178,8 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   }
   if (state.tick >= a.rollUntil && !rooted && (tune.accelerationMps2 > 0 || tune.decelerationMps2 > 0)) {
     const previous = a.velocity ?? { x: 0, y: 0 }, dx = velocity.x - previous.x, dy = velocity.y - previous.y;
-    const acceleration = length(input.move) > 0 ? tune.accelerationMps2 : tune.decelerationMps2;
+    // Pace squared: time to top speed shrinks by the pace while the distance it takes is kept.
+    const acceleration = (length(input.move) > 0 ? tune.accelerationMps2 : tune.decelerationMps2) * pace * pace;
     const amount = acceleration === 0 ? 1 : Math.min(1, acceleration * DT / Math.max(1e-9, Math.hypot(dx, dy)));
     velocity = { x: previous.x + dx * amount, y: previous.y + dy * amount };
     a.velocity = { ...velocity };
@@ -188,13 +195,13 @@ function releaseCast(state: ArenaState, a: Actor): void {
   const direction = unit(sub(pending.aim, a.pos), a.facing);
   if (pending.kind === 'bolt') {
     spawnProjectile(state, { ownerId: a.id, activationId: pending.activationId, damage: bolt.damage, family: 'magic', tier: 0, source: { ...a.pos }, bolt: true },
-      a.pos, direction, bolt.speedMps, bolt.rangeM);
+      a.pos, direction, bolt.speedMps * paceOf(a), bolt.rangeM);
   } else {
     for (const target of state.actors) {
       if (target.team === a.team || target.tags.includes("DEFEATED") || distance(a.pos, target.pos) > combat.staffStrike.rangeM || !inArc(direction, sub(target.pos, a.pos), runtime.geometry.staffArcDeg)) continue;
       resolveHit(state, target, { ownerId: a.id, activationId: pending.activationId, damage: combat.staffStrike.damage, family: 'physical', tier: 0, source: { ...a.pos }, delivery: 'melee' });
     }
-    a.recoveryUntil = state.tick + ticks(combat.staffStrike.recoveryS);
+    a.recoveryUntil = state.tick + ticks(paced(a, combat.staffStrike.recoveryS));
   }
 }
 function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
@@ -203,8 +210,8 @@ function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
   if (nearby) {
     if (a.stamina < combat.staffStrike.staminaCost || state.tick < a.cooldownUntil) return;
     a.stamina -= combat.staffStrike.staminaCost; a.staminaUsedTick = state.tick;
-    a.pending = { kind: 'staff', startTick: state.tick, releaseTick: state.tick + ticks(combat.staffStrike.windupS), aim: { ...input.aim }, activationId: state.nextId++ };
-    a.cooldownUntil = a.pending.releaseTick + ticks(combat.staffStrike.recoveryS);
+    a.pending = { kind: 'staff', startTick: state.tick, releaseTick: state.tick + ticks(paced(a, combat.staffStrike.windupS)), aim: { ...input.aim }, activationId: state.nextId++ };
+    a.cooldownUntil = a.pending.releaseTick + ticks(paced(a, combat.staffStrike.recoveryS));
   } else {
     if (trySpellCast(state, a, input)) releaseCast(state, a);
     return;

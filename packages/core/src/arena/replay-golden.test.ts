@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createGames, presets, runtime, stateHash, stepGames, ticks } from './index.ts';
 import { createLab, defaultLabConfig, stepLab } from './lab.ts';
-import { idleInput } from './types.ts';
+import { idleInput, type Difficulty } from './types.ts';
 
 // Replay tests elsewhere compare replay(seed) with replay(seed) inside one process, which
 // cannot see a dependence on the host: an environment branch, an engine's math, data read
@@ -13,9 +13,10 @@ import { idleInput } from './types.ts';
 // one you meant, and paste the printed values into GOLDEN with the change that caused them.
 
 // games40000 is the semifinal (mages only); soldiers40000 is the conscript and slinger wave, so it pins
-// committed-body lunges as well as the seeded spawn jitter and reference-player draws.
-function games(seed: number, wave = 2) {
-  const g = createGames(seed, presets.find(p => p.name === runtime.games.referencePreset)!, wave, true);
+// committed-body lunges as well as the seeded spawn jitter and reference-player draws. Both run at the default
+// difficulty; hardSoldiers40000 replays the soldiers at Hard, where both windups sit on their warning floor.
+function games(seed: number, wave = 2, difficulty?: Difficulty) {
+  const g = createGames(seed, presets.find(p => p.name === runtime.games.referencePreset)!, wave, true, undefined, undefined, difficulty);
   const hashes: string[] = [];
   for (let i = 1; i <= ticks(20) && g.phase === 'active'; i++) { stepGames(g); if (i % 60 === 0) hashes.push(stateHash(g.state)); }
   return { draws: g.state.randomLog.length, hashes };
@@ -29,21 +30,26 @@ function lab(seed: number) {
 }
 
 const GOLDEN = {
-  games40000: { draws: 218, hashes: [
-    '11b47c3a','a3d93533','8f66dbce','831bb253','906e6e3a','5844b2c7','b5caf3ac','02f61022','cb57787d','429731e9',
-    'b0390189','36f44cbc','95151f55','0688e97c','29c5c2b7','e7e6e97d','96e8c2fd','bcb93b82','335651a3','e08cd578',
+  games40000: { draws: 195, hashes: [
+    'b8e06d71','f42f9761','bbf44b67','a2cceef1','50eb6755','25973e47','ef88e8b0','80098a5f','51a44bc3','69dc5370',
+    'd13f38f3','3f4c9acb','4432d709','774eec4f','3c4d6ba9','56893df7','6b9b3526','f5b8a67f','85513d3b','419d8e08',
   ] },
-  soldiers40000: { draws: 105, hashes: [
-    'bcecb066','92220c18','44f11cf8','750b72d1','6ce92851','d9ef52ee','16d4195c','e92551e7','5fb39e16','2c84c613',
-    'f95cbb53','325c21c9','b1ee40bb','e3420cac','81a4494a','b0b2d3af','470e7afd','b0de9fa2','44767412','13e1a3a2',
+  soldiers40000: { draws: 104, hashes: [
+    'dfee6260','ac2a9865','e2518e73','795923e8','b3ad1ee3','45d496d8','25a18120','c4168e50','df0fc231','7fd16ab0',
+    '80e49a92','6f7d68ae','4484f2f8','11a875c3','a0eb0c2e','bcc8a490','104785bc','11f55a5d','25ed4e47','448cca72',
   ] },
-  lab7331: { draws: 50, hashes: ['9bb9ebaf','4b79f57b','611e272c','823401be','ba0de3cd','f91276a3'] },
+  hardSoldiers40000: { draws: 94, hashes: [
+    'efb470fb','4786a702','f8d5ae73','a7e1e578','db0ae87e','69f69461','1c7bb07e','c97f0a5a','4f1d3589','4670bde3',
+    '9b8e5996','1807f814','0d5f0485','69aaca01','402b0b39','0b52f34f','fa5e5bb4','cf42fbf3','761728bf','91fb0463',
+  ] },
+  lab7331: { draws: 44, hashes: ['a4aa3649','8a63458e','f371651c','239c3da9','eb692769','c35c3394'] },
 };
 
 describe('golden replay', () => {
   it.each([
     ['games40000', () => games(40000)],
     ['soldiers40000', () => games(40000, 0)],
+    ['hardSoldiers40000', () => games(40000, 0, 'hard')],
     ['lab7331', () => lab(7331)],
   ] as const)('%s replays the pinned hashes', (name, run) => {
     const actual = run();

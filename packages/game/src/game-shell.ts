@@ -7,6 +7,7 @@ import type { CampCommand, ParleyInput, SeasonCommand } from "@mage/director";
 import {
   combat,
   enemyRoster,
+  pacePolicy,
   presets,
   spells,
   validateComposition,
@@ -15,6 +16,7 @@ import {
   type TrainingKind,
 } from "@mage/core/arena";
 import { ArenaGame } from "./arena-entry.ts";
+import { cycleDifficulty, difficulty, difficultyName } from "./difficulty.ts";
 import { boutAnswerLines } from "./answers.ts";
 import { request, seasonCommand, type SeasonView } from "./season-api.ts";
 import { CanvasUI } from "./ui/ui.ts";
@@ -1629,7 +1631,11 @@ export class GameShell {
         destination === "lab"
           ? "Compose your practice loadout"
           : "Compose your Water",
-        "BEFORE THE COLLAR OPENS",
+        `BEFORE THE COLLAR OPENS  /  DIFFICULTY: ${difficultyName(
+          (destination === "lab"
+            ? this.arena?.lab?.config.difficulty
+            : undefined) ?? difficulty(),
+        ).toUpperCase()}`,
         "arena",
       );
       u.text(
@@ -1732,7 +1738,7 @@ export class GameShell {
         u.text(
           s.kind === "passive"
             ? "Perfect absorb counter"
-            : `${s.mana} mana  /  ${s.cooldownS}s cooldown`,
+            : `${s.mana} mana  /  ${Number((s.cooldownS / pacePolicy.player).toFixed(1))}s cooldown`,
           x + 36,
           856,
           24,
@@ -1762,7 +1768,11 @@ export class GameShell {
             const errors = validateComposition(choice);
             if (errors.length) throw Error(errors.join(" "));
             if (destination === "season") {
-              await seasonCommand({ type: "prepare", composition: choice });
+              await seasonCommand({
+                type: "prepare",
+                composition: choice,
+                difficulty: difficulty(),
+              });
               await seasonCommand({ type: "start" });
               await this.continue();
             } else if (destination === "lab") {
@@ -2104,11 +2114,23 @@ export class GameShell {
         this.settings();
       },
     );
+    u.button(
+      "difficulty",
+      `Difficulty: ${difficultyName(difficulty())}`,
+      1240,
+      614,
+      584,
+      98,
+      () => {
+        cycleDifficulty();
+        this.settings();
+      },
+    );
     u.text(
-      "Aim at the feet. The camera stays fixed until you approach an edge.\n\nMagic can be absorbed. Steel and unblockable marks must be escaped.",
+      "Difficulty sets how fast rivals, soldiers and creatures move and attack, from the next bout.\n\nAim at the feet. The camera stays fixed until you approach an edge. Magic can be absorbed; steel and unblockable marks must be escaped.",
       1256,
-      643,
-      32,
+      740,
+      24,
       colours.muted,
       548,
     );

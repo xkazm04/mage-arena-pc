@@ -1,7 +1,7 @@
 import { combat } from "./data.generated.ts";
 import data from "./data/feel.json" with { type: "json" };
 import schoolData from "./data/lab-schools.json" with { type: "json" };
-import { waterLines, type Actor, type ArenaState } from "./types.ts";
+import { difficulties, waterLines, type Actor, type ArenaState, type Difficulty, type Family } from "./types.ts";
 import { spells, type Spell } from "./catalog.ts";
 
 export type School = "fire" | "water" | "earth" | "air";
@@ -249,16 +249,43 @@ const defaults = makeTuning();
 export function tuningFor(state: ArenaState): CombatTuning {
   return state.tuning ?? defaults;
 }
+/** Pace (feel.json pace): the player's side always runs at pace.player, the other side at its difficulty's pace. */
+export const pacePolicy = data.pace;
+export const defaultDifficulty = data.pace.default as Difficulty;
+export function validDifficulty(value: unknown): value is Difficulty {
+  return difficulties.includes(value as Difficulty);
+}
+export function paceFor(team: number, difficulty: Difficulty): number {
+  if (!validDifficulty(difficulty)) throw Error("Unknown difficulty.");
+  return team === 0 ? data.pace.player : data.pace.enemy[difficulty];
+}
+export const paceOf = (a: Actor): number => a.pace ?? 1;
+/** One of the actor's own action durations at its pace. */
+export const paced = (a: Actor, seconds: number): number => seconds / paceOf(a);
+/** The reaction-band floor a warning of this family and shape keeps at any pace (0: none). */
+export function warningFloor(family: Family, positional: boolean): number {
+  return family === "unblockable"
+    ? combat.reactionBands.minimumTelegraphUnblockableS
+    : positional
+      ? combat.reactionBands.minimumTelegraphPositionalS
+      : 0;
+}
+/** A warning at the actor's pace: never shortened below its floor, and one authored under the floor not at all. */
+export function pacedWarning(a: Actor, seconds: number, floor: number): number {
+  return Math.max(Math.min(seconds, floor), paced(a, seconds));
+}
 export function profileFor(a: Actor) {
   return schoolData[a.school ?? "water"];
 }
 export function adjustedSpell(s: Spell, a: Actor, state?: ArenaState): Spell {
   const t = state ? tuningFor(state) : defaults,
     p = profileFor(a),
+    pace = paceOf(a),
     override = t.spells[s.id];
   if (
     !state?.tuning &&
     !a.school &&
+    pace === 1 &&
     t.castTimeScale === 1 &&
     t.cooldownScale === 1 &&
     t.projectileSpeedScale === 1
@@ -270,18 +297,15 @@ export function adjustedSpell(s: Spell, a: Actor, state?: ArenaState): Spell {
       a.school && a.school !== "water"
         ? `${p.prefix} ${s.line === "bolt" ? "Needle" : s.line === "tide_orb" ? "Orb" : s.line === "lash" ? "Lash" : s.line === "mire" ? "Field" : s.line === "mend" ? "Renewal" : "Mirror"} ${s.tier || ""}`.trim()
         : s.name,
-    castS: override?.castS ?? s.castS * t.castTimeScale * p.cast,
+    // Pace composes over the Lab's feel tuning (overrides included); the warning floors hold over both.
+    castS: (override?.castS ?? s.castS * t.castTimeScale * p.cast) / pace,
     telegraphS: Math.max(
-      s.family === "unblockable"
-        ? combat.reactionBands.minimumTelegraphUnblockableS
-        : s.kind === "zone"
-          ? combat.reactionBands.minimumTelegraphPositionalS
-          : 0,
-      override?.castS ?? s.telegraphS * t.castTimeScale * p.cast,
+      warningFloor(s.family, s.kind === "zone"),
+      (override?.castS ?? s.telegraphS * t.castTimeScale * p.cast) / pace,
     ),
-    cooldownS: override?.cooldownS ?? s.cooldownS * t.cooldownScale,
+    cooldownS: (override?.cooldownS ?? s.cooldownS * t.cooldownScale) / pace,
     speedMps:
-      override?.speedMps ?? s.speedMps * t.projectileSpeedScale * p.projectile,
+      (override?.speedMps ?? s.speedMps * t.projectileSpeedScale * p.projectile) * pace,
     damage: s.damage * p.damage,
     durationS: s.durationS * p.control,
   };

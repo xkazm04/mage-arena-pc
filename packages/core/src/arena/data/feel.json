@@ -71,11 +71,18 @@
     "reactionCastSafetyS": 0.05,
     "_tierCurvePlay": "enemies.json mages.competence usesTierCurve rows that play the curve: a plain absorb is raised to be up for the hit but outside the perfect window, decisions continue until the raise, and unblockables punish a fresh absorb. A fractional competence uses the row of floor(level).",
     "tierCurvePlay": ["baits absorbs before unblockables", "full curve play"],
+    "_deniedFreshGuard": "Curve rows: a ward still inside its perfect window drops once the live impact of an aimed threat whose perfect roll failed lands within the window plus enemies.json mages.plans.deniedPerfectMarginS of the raise. Impact estimates assume the mage stands still; at pace the mage and the shot close faster than they predict, so without the guard a failed roll could still score a perfect.",
     "_curveAimLeadFraction": "Aim lead of curve rows, keyed by competence row (floor(level)); replaces runtime.games.mageAimLeadFraction for those rows only. Rows below 3, the reference player and Tiro keep the runtime value.",
     "curveAimLeadFraction": { "3": 0.6, "4": 0.75 }
   },
   "poise": {
     "mage": 1,
     "dummy": 1
+  },
+  "pace": {
+    "_about": "Owner direction 2026-10-15: one time scale per actor over the authored numbers, set at spawn by side (team 0 is the player's side) and difficulty. A pace p divides the actor's own action durations (cast, cooldown, release recovery, staff strike, roll duration with its i-frames and recovery, enemy windup, travel, recovery and reload) and multiplies its move speeds and projectile speeds; acceleration and braking scale by p squared so time to top speed shrinks while the distance to reach it is kept. A warning (spell telegraph or enemy windup) never drops below its reaction-band floor, and one authored under the floor is not shortened at all. Unchanged: resources per second and per cast, damage, HP, poise, stagger, effect durations, the collar clock, the perfect window and every AI reaction or decision time.",
+    "player": 1.5,
+    "enemy": { "easy": 1.2, "normal": 1.5, "hard": 1.8 },
+    "default": "normal"
   }
 }
