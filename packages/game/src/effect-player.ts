@@ -7,6 +7,7 @@ import {
   Sprite,
   Texture,
 } from "pixi.js";
+import { frameGraphics } from "./pixi-fixes.ts";
 import {
   combat,
   seconds,
@@ -54,6 +55,11 @@ export class EffectPlayer {
   readonly front = new Container();
   private frames = new Map<string, Texture>();
   private slots: Slot[] = [];
+  /** Slots stay under one layer, in draw order: moving one between layers rebuilds the stage's instructions. */
+  private layers = [
+    { parent: this.behind, slots: [] as Slot[], used: 0 },
+    { parent: this.front, slots: [] as Slot[], used: 0 },
+  ];
   private used = 0;
   private shots: Shot[] = [];
   private state?: ArenaState;
@@ -130,10 +136,10 @@ export class EffectPlayer {
     this.clock += Math.min(0.1, dt);
     this.budgetExceeded = false;
     this.used = 0;
+    for (const layer of this.layers) layer.used = 0;
     this.c = c;
     this.tick = state.tick + alpha;
     this.arcDeg = tuningFor(state).absorbArcDeg;
-    for (const slot of this.slots) slot.root.visible = false;
     if (this.namespace === "a13") {
       this.cpuMs = performance.now() - started;
       return;
@@ -267,24 +273,28 @@ export class EffectPlayer {
     const frame = clip.frames[index]!,
       key = `${clip.page}:${frame.rect.join()}`;
     let texture = this.frames.get(key);
-    if (!texture) {
+    // A page unloaded between waves and loaded again is a new source; a frame cut from the old one binds a destroyed texture.
+    if (!texture || texture.source !== page.source) {
+      texture?.destroy();
       texture = new Texture({
         source: page.source,
         frame: new Rectangle(...frame.rect),
       });
       this.frames.set(key, texture);
     }
-    let slot = this.slots[this.used++];
+    const layer = this.layers[options.behind ? 0 : 1]!;
+    this.used++;
+    let slot = layer.slots[layer.used++];
     if (!slot) {
       const root = new Container(),
         sprite = new Sprite(),
-        mask = new Graphics();
+        mask = frameGraphics();
       root.addChild(sprite, mask);
       slot = { root, sprite, mask };
       this.slots.push(slot);
+      layer.slots.push(slot);
+      layer.parent.addChild(root);
     }
-    const parent = options.behind ? this.behind : this.front;
-    if (slot.root.parent !== parent) parent.addChild(slot.root);
     const { root, sprite, mask } = slot,
       m = cameraMetrics(this.c),
       q = groundToScreen(at, this.c);
@@ -302,8 +312,6 @@ export class EffectPlayer {
     }
     sprite.blendMode = clip.blend === "lighter" ? "add" : "normal";
     sprite.alpha = options.opacity ?? policy.effects.impactOpacity;
-    sprite.mask = null;
-    mask.clear();
     const angle = options.angle ?? 0,
       squash = m.pxPerMetreY / m.pxPerMetreX;
     if (options.angle !== undefined || options.barrier) {
@@ -320,6 +328,7 @@ export class EffectPlayer {
       );
     }
     if (options.barrier) {
+      mask.clear();
       const r =
         contract.absorb.visual_radius_metres *
         m.pxPerMetreX *
@@ -332,12 +341,20 @@ export class EffectPlayer {
         mask.lineTo(Math.cos(a) * r * 1.14, Math.sin(a) * r * 1.14 * squash);
       }
       mask.closePath().fill(0xffffff);
-      sprite.mask = mask;
       sprite.width = r * 2.7;
       sprite.height = r * 2.7;
     }
+    // Assigned only on change: each mask (or visibility) flip rebuilds the stage's render instructions.
+    const wanted = options.barrier ? mask : null;
+    if (!wanted && sprite.mask) mask.clear();
+    if ((sprite.mask ?? null) !== wanted) sprite.mask = wanted;
     this.cpuMs += performance.now() - started;
     return true;
+  }
+  /** Hides the slots this frame left unused (hiding all in `begin` would flip every visible slot twice a frame). */
+  end() {
+    for (const { slots, used } of this.layers)
+      for (let i = used; i < slots.length; i++) slots[i]!.root.visible = false;
   }
   finish(state: ArenaState) {
     for (const s of this.shots) {

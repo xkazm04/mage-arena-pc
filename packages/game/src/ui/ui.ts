@@ -7,10 +7,13 @@ import {
   type NineSliceSprite,
   Sprite,
 } from "pixi.js";
+import { frameGraphics } from "../pixi-fixes.ts";
 import { colours, UiKit } from "./kit.ts";
 import { installFonts, fontDiagnostics, fontTextureBytes } from "./fonts.ts";
 import { art } from "../art.ts";
 import { PadNavigation } from "./gamepad.ts";
+import { quality } from "../quality.ts";
+import { phase, phaseStart, phases, resetPhases } from "../frame-probe.ts";
 import {
   contains,
   metrics,
@@ -59,7 +62,7 @@ export class CanvasUI {
   readonly root = new Container();
   readonly content = new Container();
   readonly feedback = new Container();
-  readonly cursor = new Graphics();
+  readonly cursor = frameGraphics();
   readonly kit = new UiKit();
   readonly lifetime = new AbortController();
   buttons: Button[] = [];
@@ -100,10 +103,10 @@ export class CanvasUI {
         width: innerWidth,
         height: innerHeight,
         background: colours.ink,
-        antialias: true,
+        antialias: quality.antialias,
         autoStart: false,
         preference: "webgl",
-        resolution: Math.min(devicePixelRatio, 2),
+        resolution: Math.min(devicePixelRatio, quality.maxResolution),
         autoDensity: true,
       }),
     ]);
@@ -153,6 +156,7 @@ export class CanvasUI {
           scene: gameAudio.setScene.bind(gameAudio),
           pause: gameAudio.pauseWorld.bind(gameAudio),
         },
+        __pixi: this.app,
       });
     this.app.canvas.addEventListener(
       "pointermove",
@@ -229,10 +233,13 @@ export class CanvasUI {
         performance: () => ({
           frames: [...this.frameTimes],
           cpu: [...this.cpuTimes],
+          phases: structuredClone(phases),
+          quality,
         }),
         resetPerformance: () => {
           this.frameTimes = [];
           this.cpuTimes = [];
+          resetPhases();
         },
       },
     });
@@ -490,7 +497,7 @@ export class CanvasUI {
     title.y = y + Math.max(8, (h - total) / 2);
     if (subtitle) subtitle.y = title.y + title.height + 2;
     if (options.icon) this.icon(options.icon, x + 42, y + h / 2, 26, root);
-    const ring = new Graphics();
+    const ring = frameGraphics();
     root.addChild(ring);
     const b: Button = {
       id,
@@ -531,7 +538,7 @@ export class CanvasUI {
     const b = this.button(id, "", x, y, w, 64, () => {}, {
       tooltip: "Drag, or focus and use Left / Right.",
     });
-    const ink = new Graphics();
+    const ink = frameGraphics();
     b.root.addChild(ink);
     const paint = (v: number) => {
       const fraction = (v - min) / (max - min);
@@ -727,7 +734,7 @@ export class CanvasUI {
       parent,
     );
     this.panel(x, y + 34, w, 22, "bar-track", parent);
-    const fill = new Graphics();
+    const fill = frameGraphics();
     const art =
       this.kit.source !== "procedural"
         ? this.kit.sprite(
@@ -772,7 +779,7 @@ export class CanvasUI {
       this.kit.source !== "procedural"
         ? this.kit.sprite(`bar.${kind}`)
         : undefined;
-    const clip = new Graphics();
+    const clip = frameGraphics();
     if (fill) {
       fill.position.set(x + 4, y + 4);
       fill.width = w - 8;
@@ -871,9 +878,12 @@ export class CanvasUI {
       actualElapsed = now - this.previous;
     const dt = Math.min(0.05, (now - this.previous) / 1000);
     this.previous = now;
+    phaseStart(cpuStart);
     this.pollPad(now);
     gameAudio.update();
+    phase("input");
     this.onFrame?.(dt, now);
+    phase("onFrame");
     for (const b of this.buttons) {
       b.ring.clear();
       const base =
@@ -1018,7 +1028,9 @@ export class CanvasUI {
       localStorage.getItem("mage-motion") === "reduced"
         ? 1
         : Math.min(1, (now - this.revealStart) / this.kit.motion.panelRevealMs);
+    phase("ui");
     this.app.renderer.render(this.app.stage);
+    phase("render");
     this.frameTimes.push(actualElapsed);
     this.cpuTimes.push(performance.now() - cpuStart);
     if (this.frameTimes.length > 360) {

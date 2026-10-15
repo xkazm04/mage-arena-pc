@@ -8,6 +8,7 @@ import {
   type Application,
   type TextureSource,
 } from "pixi.js";
+import { frameGraphics } from "./pixi-fixes.ts";
 import {
   arenaGeometry,
   runtime,
@@ -38,6 +39,8 @@ import { rivalRune } from "./rival-collar.ts";
 import type { Element } from "./animation-contract.ts";
 import animation from "../data/animation.json" with { type: "json" };
 import { art } from "./art.ts";
+import { quality } from "./quality.ts";
+import { depthOf, orderByDepth, setDepth } from "./depth.ts";
 import { preloadSigils } from "./ui/artwork.ts";
 import {
   bodyPages,
@@ -58,6 +61,8 @@ export class ArenaScene {
   readonly library: FigureLibrary;
   readonly scenery: ArenaArt;
   private floor = new Container();
+  /** The procedural floor; drawn only where the A12 plate (opaque) does not cover the view. */
+  private floorArt = new Graphics();
   private ground = new Graphics();
   private figures = new Container();
   private effects = new Graphics();
@@ -105,9 +110,10 @@ export class ArenaScene {
       this.debugPanel,
       this.debugLabel,
     );
-    this.figures.sortableChildren = true;
+    for (const g of [this.ground, this.effects, this.debugPanel])
+      frameGraphics(g);
     this.buildFloor();
-    this.scenery = new ArenaArt(this.floor, this.figures);
+    this.scenery = new ArenaArt(this.floor, this.figures, app.renderer);
   }
   palette(value: Palette) {
     this.sceneryLoad = this.scenery.load(value);
@@ -200,7 +206,7 @@ export class ArenaScene {
     };
   }
   depthSnapshot() {
-    return this.figures.children.map((c) => ({ id: c.label, y: c.zIndex }));
+    return this.figures.children.map((c) => ({ id: c.label, y: depthOf(c) }));
   }
   dispose() {
     this.disposed = true;
@@ -219,7 +225,7 @@ export class ArenaScene {
       c.destroy({ children: true });
   }
   private buildFloor(): void {
-    const g = new Graphics(),
+    const g = this.floorArt,
       { centre, widthM, heightM } = arenaGeometry;
     const rx = widthM / 2,
       ry = heightM / 2;
@@ -470,6 +476,11 @@ export class ArenaScene {
     this.feedback.reduced = localStorage.getItem("mage-motion") === "reduced";
     this.feedback.begin(state, dt);
     this.scenery.render(c);
+    this.floorArt.visible =
+      quality.floorUnderPlate ||
+      this.scenery.source !== "A12" ||
+      m.visibleGroundM.x > contract.plate.world_size[0]! ||
+      m.visibleGroundM.y > contract.plate.world_size[1]!;
     this.floor.scale.set(m.pxPerMetreX, m.pxPerMetreY);
     this.floor.position.set(
       c.width / 2 - c.centre.x * m.pxPerMetreX,
@@ -763,14 +774,14 @@ export class ArenaScene {
       if (!view) {
         const root = new Container(),
           sprite = new Sprite(),
-          details = new Graphics();
+          details = frameGraphics();
         root.label = `actor:${a.id}`;
         root.addChild(sprite, details);
         view = { root, sprite, details };
         this.actors.set(a.id, view);
         this.figures.addChild(root);
       }
-      view.root.zIndex = foot.y;
+      setDepth(view.root, foot.y);
       view.root.position.set(q.x, q.y);
       view.root.visible =
         q.x > -h && q.x < c.width + h && q.y > -h && q.y < c.height + h;
@@ -1001,5 +1012,9 @@ export class ArenaScene {
         },
       ]).stroke({ color: 0x243f47, width: 2 * m.resolutionScale, alpha: 0.7 });
     }
+    this.clips.end();
+    this.sigils.end();
+    this.collars.end();
+    orderByDepth(this.figures);
   }
 }

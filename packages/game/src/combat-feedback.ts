@@ -5,6 +5,7 @@ import {
   Graphics,
   type Sprite,
 } from "pixi.js";
+import { frameGraphics } from "./pixi-fixes.ts";
 import {
   tuningFor,
   seconds,
@@ -98,6 +99,7 @@ export class CombatFeedback {
   ledger?: ThreatLedger;
   reduced = false;
   constructor() {
+    frameGraphics(this.cue);
     this.layer.addChild(this.cue);
     this.white.matrix = [
       0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,

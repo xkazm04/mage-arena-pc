@@ -38,7 +38,8 @@ export function sigil(
       const page = await art.load(`a13.page.${clip.page}`);
       if (!page || root.destroyed) return;
       let texture = sigilFrames.get(id);
-      if (!texture) {
+      // A reloaded page is a new source; a frame cut from the old one would bind a destroyed texture.
+      if (!texture || texture.source !== page.source) {
         texture = new Texture({
           source: page.source,
           frame: new Rectangle(...clip.frames[0]!.rect),

@@ -8,6 +8,7 @@ import {
 } from "pixi.js";
 import { arenaGeometry } from "@mage/core/arena";
 import { art } from "./art.ts";
+import { setDepth } from "./depth.ts";
 import {
   cameraMetrics,
   groundToScreen,
@@ -214,7 +215,7 @@ export class TiledArenaArt {
         m.pxPerMetreX / this.native.pxPerMetreX,
         m.pxPerMetreY / this.native.pxPerMetreY,
       );
-      p.root.zIndex = p.foot.y;
+      setDepth(p.root, p.foot.y);
     }
   }
   dispose() {

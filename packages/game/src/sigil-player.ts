@@ -54,6 +54,19 @@ export class SigilPlayer {
   manifest?: SigilManifest;
   readonly diagnostics: string[] = [];
   private pool: ReturnType<typeof sigilMesh>[] = [];
+  /** Meshes stay under one layer, in draw order: moving a mesh between layers rebuilds the stage's instructions. */
+  private layers = [
+    {
+      parent: this.behind,
+      meshes: [] as ReturnType<typeof sigilMesh>[],
+      used: 0,
+    },
+    {
+      parent: this.front,
+      meshes: [] as ReturnType<typeof sigilMesh>[],
+      used: 0,
+    },
+  ];
   private used = 0;
   private leases = new Map<string, number>();
   private state?: ArenaState;
@@ -103,8 +116,8 @@ export class SigilPlayer {
     this.c = c;
     this.tick = state.tick + alpha;
     this.used = 0;
+    for (const layer of this.layers) layer.used = 0;
     this.serial++;
-    for (const mesh of this.pool) mesh.visible = false;
     if (this.state !== state || state.events.length < this.eventIndex) {
       this.state = state;
       this.eventIndex = Math.max(
@@ -189,16 +202,18 @@ export class SigilPlayer {
     if (index < 0) return true;
     if (this.used >= policy.maxDecals) return true;
     const start = performance.now();
-    let mesh = this.pool[this.used++];
+    const layer =
+      this.layers[
+        options.behind === false || clip.plane !== "unprojected ground" ? 1 : 0
+      ]!;
+    this.used++;
+    let mesh = layer.meshes[layer.used++];
     if (!mesh) {
       mesh = sigilMesh();
       this.pool.push(mesh);
+      layer.meshes.push(mesh);
+      layer.parent.addChild(mesh);
     }
-    const parent =
-      options.behind === false || clip.plane !== "unprojected ground"
-        ? this.front
-        : this.behind;
-    if (mesh.parent !== parent) parent.addChild(mesh);
     mesh.visible = true;
     mesh.alpha = options.opacity ?? 1;
     const m = cameraMetrics(this.c),
@@ -375,6 +390,11 @@ export class SigilPlayer {
         perfectWindowActive: true,
       });
     return drawn;
+  }
+  /** Hides the meshes this frame left unused (hiding all in `begin` would flip every visible mesh twice a frame). */
+  end() {
+    for (const { meshes, used } of this.layers)
+      for (let i = used; i < meshes.length; i++) meshes[i]!.visible = false;
   }
   finish() {
     for (const s of this.shots) {

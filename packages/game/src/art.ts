@@ -200,7 +200,8 @@ export class CovenantArt {
     const page = p && this.get(`portrait-page.${p.atlas}`);
     if (!page || !p) return;
     let frame = this.portraitFrames.get(p.id);
-    if (!frame) {
+    // A reloaded page is a new source; a frame cut from the old one would bind a destroyed texture.
+    if (!frame || frame.source !== page.source) {
       frame = new Texture({
         source: page.source,
         frame: new Rectangle(...p.rect),

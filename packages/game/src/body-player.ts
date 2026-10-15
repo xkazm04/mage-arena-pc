@@ -7,6 +7,7 @@ import {
   type ArenaState,
 } from "@mage/core/arena";
 import { art } from "./art.ts";
+import { depthOf } from "./depth.ts";
 import {
   bodyIdentity,
   mothContact,
@@ -339,7 +340,9 @@ export class BodyPlayer {
     const frame = selected.clip.frames[index] ?? selected.clip.frames[0]!;
     const frameKey = `${selected.clip.page}:${frame.rect.join()}`;
     let texture = this.frames.get(frameKey);
-    if (!texture) {
+    // A page unloaded between waves and loaded again is a new source; a frame cut from the old one binds a destroyed texture.
+    if (!texture || texture.source !== page.source) {
+      texture?.destroy();
       texture = new Texture({
         source: page.source,
         frame: new Rectangle(...frame.rect),
@@ -425,7 +428,7 @@ export class BodyPlayer {
         scaleY: sprite.scale.y,
         alpha: sprite.alpha,
         flashing: !!sprite.filters?.length,
-        groundDepth: sprite.parent?.zIndex,
+        groundDepth: sprite.parent ? depthOf(sprite.parent) : undefined,
         groundX: sprite.parent?.x,
         groundY: sprite.parent?.y,
       });

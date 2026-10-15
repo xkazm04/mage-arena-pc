@@ -1,5 +1,6 @@
 import { BitmapFont, BitmapFontManager, TextStyle } from "pixi.js";
 import { art } from "../art.ts";
+import { quality } from "../quality.ts";
 export const fontDiagnostics: string[] = [];
 export let fontTextureBytes = 0;
 let installed: Promise<void> | undefined;
@@ -47,7 +48,7 @@ export function installFonts(): Promise<void> {
           fontWeight: family === "CovenantTitle" ? "600" : "400",
         },
         chars: [[" ", "~"], ["\u00a0", "\u017f"], "…—–‘’“”•→←↑↓✦◆○"],
-        resolution: 2,
+        resolution: quality.fontResolution,
         padding: 4,
       });
       const font = BitmapFontManager.getFont(
