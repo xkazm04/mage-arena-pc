@@ -1,5 +1,6 @@
 import { campTime, placeOpen } from "./camp-time.ts";
 import data from "../../../docs/design/reconciled/data/parley.json" with { type: "json" };
+import { member } from "./arena/doors.ts";
 import { legalProblem, decision, lineProblem, seededUnit } from "./camp.ts";
 import {
   spendHours,
@@ -20,14 +21,24 @@ export function seedParleyFacts(before: CampSession): CampSession {
   }
   return s;
 }
-export type ParleyStance =
-  "intimidate" | "appeal" | "bargain" | "reveal" | "deceive";
-export type ParleyEffect =
-  | "shift_trust_small"
-  | "shift_trust_large"
-  | "flip_next_intent"
-  | "reveal_fact"
-  | "refuse";
+const parleyStances = ["intimidate", "appeal", "bargain", "reveal", "deceive"] as const;
+export type ParleyStance = (typeof parleyStances)[number];
+const parleyEffects = [
+  "shift_trust_small",
+  "shift_trust_large",
+  "flip_next_intent",
+  "reveal_fact",
+  "refuse",
+] as const;
+export type ParleyEffect = (typeof parleyEffects)[number];
+const cards = data.cards.map((card) => ({
+  ...card,
+  stance: member(card.stance, parleyStances, `parley card ${card.id} stance`),
+  effect: member(card.effect, parleyEffects, `parley card ${card.id} effect`),
+}));
+const friendlyIntents = data.friendlyIntents.map((intent) =>
+  member(intent, ["BEFRIEND", "PROTECT", "CONFIDE"], "parley friendly intent"),
+);
 export interface ParleyProposal {
   stance: ParleyStance;
   citedKnowings: string[];
@@ -93,7 +104,7 @@ export function knowingsAbout(s: CampSession, target: string): Fact[] {
 export function parleyCards(s: CampSession, target: string) {
   const known = knowingsAbout(s, target);
   if (!known.length) return [];
-  return data.cards.map((card, i) => ({
+  return cards.map((card, i) => ({
     id: card.id,
     title: card.title,
     knowingId: known[i % known.length].id,
@@ -106,12 +117,12 @@ export function authoredParley(
   target: string,
   cardId: string,
 ): ParleyProposal {
-  const card = data.cards.find((c) => c.id === cardId),
+  const card = cards.find((c) => c.id === cardId),
     visible = parleyCards(s, target).find((c) => c.id === cardId);
   if (!card || !visible) throw new Error("That approach is not available.");
   return {
-    stance: card.stance as ParleyStance,
-    effect: card.effect as ParleyEffect,
+    stance: card.stance,
+    effect: card.effect,
     citedKnowings: [visible.knowingId],
     npcReply: card.reply,
   };
@@ -271,7 +282,7 @@ export function applyParley(
       reason = "nothing-to-reveal";
     }
   } else if (effect === "flip_next_intent") {
-    const possible = data.friendlyIntents.some(
+    const possible = friendlyIntents.some(
       (intent) =>
         !legalProblem(
           t,
@@ -280,7 +291,7 @@ export function applyParley(
             t,
             s.camp,
             target,
-            intent as "BEFRIEND" | "PROTECT" | "CONFIDE",
+            intent,
             {
               target: player.id,
               ...(intent === "CONFIDE" ? { factId: npc.knowledge[0] } : {}),

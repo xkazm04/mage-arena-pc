@@ -5,6 +5,7 @@ import schools from "../../../docs/design/reconciled/data/schools.json" with { t
 import characters from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
 import labSchools from "./arena/data/lab-schools.json" with { type: "json" };
 import { presets, validateComposition } from "./arena/catalog.ts";
+import { member } from "./arena/doors.ts";
 import type { Composition } from "./arena/types.ts";
 import { makeTuning, tuningPresets, validateTuning } from "./arena/tuning.ts";
 
@@ -42,6 +43,11 @@ describe("authored data meets the validators that guard runtime input", () => {
       });
     expect(problems(labSchools)).toEqual([]);
     expect(problems({ ...labSchools, fire: { ...labSchools.fire, body: "cassia" } })).toEqual(["body cassia is not of school fire"]);
+  });
+
+  it("the load-time door narrows a known value and refuses a drifted one by name", () => {
+    expect(member("press", ["press", "brace"], "trial stance")).toBe("press");
+    expect(() => member("threaten", ["reveal", "bargain"], "parley card x stance")).toThrow(/Authored parley card x stance "threaten" is not one of reveal, bargain/);
   });
 
   it("the trial's stances are exactly the stances its beats table ranks", () => {

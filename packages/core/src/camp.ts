@@ -1,4 +1,5 @@
 import { activityFitsDay } from "./camp-time.ts";
+import { member } from "./arena/doors.ts";
 // Pure season reference extracted from W0. No IO, clock, model, or unseeded RNG.
 import type {
   Tables,
@@ -57,7 +58,7 @@ export function createState(
           mastery: r.initial.mastery,
           mood: "calm",
           knowledge: [...c.knowledgeSeed],
-          life: t["death-reservation"].defaults.lifeState as "Alive",
+          life: member(t["death-reservation"].defaults.lifeState, ["Alive"], "default life state"),
           sick: false,
           warned: false,
           stocks: false,

@@ -1,6 +1,7 @@
 import { adjustedSpell } from './tuning.ts';
 import { combat, waterRows } from './data.generated.ts';
 import runtime from './data/runtime.json' with { type: 'json' };
+import { member } from './doors.ts';
 import { waterLines, type Actor, type ArenaState, type Composition, type Family, type WaterState } from './types.ts';
 export interface Spell {
   id: string; line: string; tier: number; branch: string; name: string; castS: number; cooldownS: number; mana: number;
@@ -51,7 +52,15 @@ export const spells: Spell[] = waterRows.map(row => {
   } else throw Error('Unrecognized Water line');
   return s;
 });
-export const presets = runtime.water.presets as Composition[];
+const branch = (value: string, label: string) => member(value, ['A', 'B'], label);
+/** The authored loadouts, narrowed and validated at load like any player-built composition. */
+export const presets: Composition[] = runtime.water.presets.map(p => {
+  const c: Composition = { name: p.name, lines: p.lines.map(l => member(l, waterLines, `preset ${p.name} line`)),
+    branches: { lash: branch(p.branches.lash, `preset ${p.name} lash branch`), mirror: branch(p.branches.mirror, `preset ${p.name} mirror branch`), tide_orb: branch(p.branches.tide_orb, `preset ${p.name} tide_orb branch`) } };
+  const problems = validateComposition(c);
+  if (problems.length) throw Error(`Authored preset ${p.name}: ${problems.join(' ')}`);
+  return c;
+});
 export function validateComposition(c: Composition): string[] {
   const errors: string[] = [];
   if (c.lines.length !== combat.lines.slots || new Set(c.lines).size !== c.lines.length || c.lines.some(l => !waterLines.includes(l))) errors.push('Choose exactly three distinct Water lines.');

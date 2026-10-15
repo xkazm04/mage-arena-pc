@@ -3,10 +3,12 @@ import { trialWeights } from './arena/data.generated.ts';
 import { calendar, seededUnit } from './camp.ts';
 import { spendHours, type CampSession } from './camp-session.ts';
 import type { Tables, Trace } from './types.ts';
+import { member } from './arena/doors.ts';
 import { advanceGames, attachMageAI, createGames, gamesResult, stateHash, stepGames, presets, validateComposition, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame } from './arena/index.ts';
 
 export const bridgeRules = data;
 export type TrialStance = keyof typeof data.trial.beats;
+const trialStances = data.trial.stances.map(s => member(s, Object.keys(data.trial.beats) as TrialStance[], 'trial stance'));
 export interface Trial {
   id: string; day: number; rival: string; elder: string; stamina: [number, number];
   score: [number, number]; rounds: { stance: TrialStance; opponent: TrialStance; rolls: [number, number]; totals: [number, number]; won: boolean }[];
@@ -44,7 +46,7 @@ export function beginTrial(t: Tables, s: CampSession, p: SeasonProgress): Trial 
   return { id: `trial:${s.camp.seed}:${s.camp.day}`, day: s.camp.day, rival: rival.id, elder: elder.id, stamina, score: [0, 0], rounds: [], phase: 'active' };
 }
 export function trialTell(s: CampSession, trial: Trial): TrialStance {
-  return data.trial.stances[Math.floor(seededUnit(s.camp.seed, trial.day, trial.rival, `trial-tell:${trial.rounds.length}`) * data.trial.stances.length)] as TrialStance;
+  return trialStances[Math.floor(seededUnit(s.camp.seed, trial.day, trial.rival, `trial-tell:${trial.rounds.length}`) * trialStances.length)]!;
 }
 export function exchangeTrial(t: Tables, s: CampSession, before: Trial, stance: TrialStance): Trial {
   if (before.phase !== 'active' || !data.trial.stances.includes(stance)) throw Error('That Trial exchange is unavailable.');
