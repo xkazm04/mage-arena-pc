@@ -476,6 +476,18 @@ export function campView(t: Tables, s: CampSession) {
       school: s.camp.characters[id].school,
       trust: s.camp.trust[`${id}>${s.camp.player}`],
     })),
+    /** Trust both ways between the player and everyone else living in the camp. */
+    bonds: Object.fromEntries(
+      Object.values(s.camp.characters)
+        .filter((c) => c.id !== s.camp.player && c.life === "Alive")
+        .map((c) => [
+          c.id,
+          {
+            toYou: s.camp.trust[`${c.id}>${s.camp.player}`] ?? 0,
+            fromYou: s.camp.trust[`${s.camp.player}>${c.id}`] ?? 0,
+          },
+        ]),
+    ),
     actions:
       s.listening || s.nightFinished || s.camp.ended
         ? []
