@@ -31,3 +31,18 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
+dependencies {
+    // QR for the phone pairing card (the same library and version firetv-deathride uses).
+    implementation("com.google.zxing:core:3.5.3")
+}
+
+// The phone controller page and its tuning live in tv/controller as one source of truth; they are copied into the
+// APK's assets at build time (as firetv-deathride's companion sync does), so Playwright can test the same file.
+val controllerAssets = layout.buildDirectory.dir("generated/controllerAssets")
+val syncController by tasks.registering(Copy::class) {
+    from(rootProject.layout.projectDirectory.dir("controller"))
+    into(controllerAssets.map { it.dir("controller") })
+}
+android.sourceSets["main"].assets.srcDir(controllerAssets)
+tasks.withType<com.android.build.gradle.tasks.MergeSourceSetFolders>().configureEach { dependsOn(syncController) }

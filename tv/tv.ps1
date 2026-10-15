@@ -4,15 +4,19 @@
 
 .DESCRIPTION
   The game and its camp server keep running on this machine (`npm run camp`, port 5173). The TV runs
-  a 17 KB WebView shell (tv/app) that opens http://127.0.0.1:5173/ and reaches this PC through
-  `adb reverse` over the adb connection, so no firewall port has to open and the dev server can stay
-  bound to 127.0.0.1. Stages, in the order they should fail:
+  a small WebView shell (tv/app, about 670 KB with its QR library) that opens http://127.0.0.1:5173/
+  and reaches this PC through `adb reverse` over the adb connection, so no firewall port has to open
+  and the dev server can stay bound to 127.0.0.1. Stages, in the order they should fail:
     build   - assemble the debug APK (Gradle 8.14 / AGP 8.7.3 / Android Studio JBR, as firetv-deathride)
     connect - adb connect to the Stick and report model / Fire OS
     deploy  - refuse if another workstream's app is in front, adb reverse the game port, install,
               wake the TV, launch through the leanback intent, wait for the page to load
     shot    - save a TV screenshot to tv/artifacts/
     logs    - print the shell's log (URL, page console, load errors)
+    pair    - print the phone controller's URL and PIN (deploy prints them too)
+
+  Phone controller: the shell listens on the TV's LAN address (port in tv/controller/tuning.json, 8780) and shows a QR
+  and PIN. The phone talks to the TV directly; nothing on this PC is opened to the LAN.
 
   Device: -Device <ip[:port]>, else $env:TV_DEVICE, else the single Fire TV adb already has attached.
   The Stick's address is DHCP-assigned and moves (10.0.0.142 in older notes, 10.0.0.139 on 2026-10-15).
@@ -21,16 +25,20 @@
   ./tv/tv.ps1                         # build, connect, deploy
   ./tv/tv.ps1 -Stage deploy           # reinstall and relaunch only
   ./tv/tv.ps1 -Stage shot             # screenshot what the TV shows
+  ./tv/tv.ps1 -Stage pair             # controller URL and PIN of the running shell
   ./tv/tv.ps1 -Device 10.0.0.139 -Force
 #>
 param(
-  [ValidateSet('all', 'build', 'connect', 'deploy', 'shot', 'logs')]
+  [ValidateSet('all', 'build', 'connect', 'deploy', 'shot', 'logs', 'pair')]
   [string]$Stage = 'all',
   [string]$Device = $env:TV_DEVICE,
   # The game port on this PC: 5173 for `npm run camp`, 4173 for a production `vite preview`.
   [int]$Port = 5173,
   # Take the screen even when another workstream's app (Death Ride, telestrator) is in front.
-  [switch]$Force
+  [switch]$Force,
+  # How the phone's state reaches the page: 'pull' (the page reads it each frame, the default in tuning.json) or 'push'.
+  [ValidateSet('', 'pull', 'push')]
+  [string]$Feed = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -52,6 +60,12 @@ function Adb {
   } finally { $ErrorActionPreference = $prev }
 }
 function Step($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
+# The shell logs "controller http://<tv-ip>:<port>/?pin=NNNN" when its LAN listener starts.
+function Pairing {
+  $line = ((Adb logcat -d -v brief -s MageArena:I).Output -split "`n" | Select-String 'controller http' | Select-Object -Last 1) -as [string]
+  if ($line -match '(http://\S+)') { return $Matches[1] }
+  return $null
+}
 
 # Which device: explicit, env, or the one Fire TV (model AFT*) adb already knows.
 $script:deviceArgs = @()
@@ -108,7 +122,8 @@ if (& $run 'deploy') {
   (Adb shell am force-stop $pkg) | Out-Null
   (Adb logcat -c) | Out-Null
   $url = "http://127.0.0.1:$Port/"
-  $l = Adb shell "am start -n $pkg/.MainActivity --es url $url >/dev/null 2>&1"
+  $extra = if ($Feed) { " --es feed $Feed" } else { '' }
+  $l = Adb shell "am start -n $pkg/.MainActivity --es url $url$extra >/dev/null 2>&1"
   if ($l.Code) { throw "launch failed: $($l.Output)" }
 
   # Dev mode streams every module and atlas through the tunnel; the first load takes ~30 s.
@@ -121,6 +136,15 @@ if (& $run 'deploy') {
   }
   if ($loaded) { Write-Host "page loaded on the TV; art and audio may still be streaming in" -ForegroundColor Green }
   else { Write-Warning "no load confirmation yet; see: ./tv/tv.ps1 -Stage logs" }
+  $pair = Pairing
+  if ($pair) { Write-Host "phone controller: $pair   (PIN $($pair -replace '.*pin=',''))" -ForegroundColor Green }
+  else { Write-Warning "the controller listener did not report; see: ./tv/tv.ps1 -Stage logs" }
+}
+
+if ($Stage -eq 'pair') {
+  $pair = Pairing
+  if (-not $pair) { throw 'no controller line in the log; is the shell running? (./tv/tv.ps1 -Stage deploy)' }
+  Write-Host "phone controller: $pair   (PIN $($pair -replace '.*pin=',''))"
 }
 
 if (& $run 'shot') {
@@ -138,5 +162,5 @@ if ($Stage -eq 'logs') {
 
 if ($Stage -eq 'all') {
   Write-Host "`nOn the TV: remote D-pad moves focus, OK chooses, Back / Play-Pause open the pause menu." -ForegroundColor Green
-  Write-Host "The arena itself needs a gamepad (paired to the Stick over Bluetooth)." -ForegroundColor Green
+  Write-Host "The arena needs a gamepad: scan the TV's QR with a phone on the same Wi-Fi, or pair a Bluetooth pad." -ForegroundColor Green
 }
