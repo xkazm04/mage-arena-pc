@@ -1,4 +1,4 @@
-import { summarizeLedger, type ThreatLedger } from "@mage/core/arena";
+import { summarizeLedger, type Grade, type ThreatLedger } from "@mage/core/arena";
 
 const late = (ticks?: number) => (ticks === undefined ? "" : ` +${ticks}f`);
 
@@ -22,4 +22,15 @@ export function boutAnswerLines(l: ThreatLedger): string[] {
     u.total ? `Unblockable left ${u.rolled + u.avoided}/${u.total}${leave ? `, warded ${leave}` : ""}` : "Unblockable: none came",
     odd ? `Unclassified ${odd}` : "",
   ].filter(Boolean);
+}
+
+/** One timeline mark: the answer as the results card words it, and whether it was a miss (held late, behind, steel, leave, took, mid-cast). */
+export function answerMark(g: Grade): { label: string; family: string; miss: boolean } {
+  const family = g.family === "physical" ? "Steel" : g.family === "magic" ? "Magic" : "Unblockable";
+  const good: Record<string, string> = { perfect: "PERFECT", rolled: "ROLLED", encased: "ENCASED", avoided: "LEFT", unclassified: "UNCLASSIFIED" };
+  if (good[g.answer]) return { label: good[g.answer]!, family, miss: false };
+  const label = g.answer === "held" ? `HELD +${g.lateTicks ?? 0}f`
+    : g.answer === "cast-blocked" ? "MID-CAST"
+      : g.mistake === "steel" ? "STEEL" : g.mistake === "leave" ? "LEAVE" : g.mistake === "behind" ? "BEHIND" : "TOOK";
+  return { label, family, miss: true };
 }
