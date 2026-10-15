@@ -1,0 +1,12 @@
+{
+  // Compiles the whole core with no Node or DOM types: a host global used in core is a
+  // type error here, beside the lint wall in eslint.config.mjs (see the README core law).
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["ES2022"],
+    "types": []
+  },
+  "include": ["src/**/*.ts", "purity-env.d.ts"],
+  "exclude": ["src/**/*.test.ts"]
+}
