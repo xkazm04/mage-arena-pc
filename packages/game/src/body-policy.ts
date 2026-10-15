@@ -1,4 +1,9 @@
-import { runtime, type Actor, type ArenaState } from "@mage/core/arena";
+import {
+  runtime,
+  tiroEntrantLabel,
+  type Actor,
+  type ArenaState,
+} from "@mage/core/arena";
 import type { Body, BodyState, Clip, Direction } from "./animation-contract.ts";
 import policy from "../data/animation.json" with { type: "json" };
 
@@ -37,10 +42,10 @@ export function bodyIdentity(a: Actor): string {
   const name = a.label.toLowerCase();
   for (const id of Object.values(policy.schoolBodies))
     if (name === id) return id;
-  // Anonymous Tiro entrants are explicitly Water proxies in core.
-  return name === "water mage" || name === "tiro entrant ? water proxy"
-    ? "cassia"
-    : "mage.unknown";
+  if (a.label === tiroEntrantLabel) return policy.rivalBody;
+  // Core profiles every school-less mage as Water (profileFor): the default
+  // "Water mage" and the Games entrant, who carries the character's name.
+  return policy.schoolBodies.water;
 }
 /** No access to other entities: a fallback cannot change creature identity. */
 export function selectBodyClip(

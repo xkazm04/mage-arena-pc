@@ -9,6 +9,8 @@ import { createLedger, observeLedger } from './ledger.ts';
 import { type Actor, type ArenaState, type Composition, type InputFrame, type Ranks } from './types.ts';
 import { validateTuning, type CombatTuning } from './tuning.ts';
 export const tiro = arenaTiers.tiers[0];
+/** Anonymous Tiro mage entrants; presentation matches this label, so it lives here once. */
+export const tiroEntrantLabel = 'Tiro entrant · Water proxy';
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
 export interface Games { state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
 export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
@@ -38,7 +40,7 @@ function spawnWave(g: Games): void {
       let actor: Actor;
       if ('enemy' in spawn) actor = addEnemy(g.state, spawn.enemy, pos);
       else {
-        actor = addMage(g.state, 1, pos, 'Tiro entrant · Water proxy');
+        actor = addMage(g.state, 1, pos, tiroEntrantLabel);
         const presetName = runtime.games.opponentPresets[g.wave - 2]!;
         actor.water = newWaterState(presets.find(p => p.name === presetName)!); attachMageAI(actor, spawn.competence, g.state.tick);
         if (runtime.games.rivalPlans) attachRivalPlan(actor);
