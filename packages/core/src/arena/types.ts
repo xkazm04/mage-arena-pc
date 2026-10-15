@@ -11,7 +11,7 @@ export interface WaterState { composition: Composition; flow: number; lastLine: 
 export interface InputFrame { move: Vec; aim: Vec; slot: number; cast: boolean; absorb: boolean; roll: boolean; sprint: boolean }
 export interface Hit { ownerId: number; activationId: number; damage: number; family: Family; tier: number; source: Vec; bolt?: boolean; reaction?: boolean; delivery?: 'projectile' | 'area' | 'melee' }
 export interface EnemyBrain { id: string; readyTick: number; backoffUntil: number; stunnedUntil: number; attackIndex: number; deathQueued: boolean; recoveryUntil?: number }
-export interface MageBrain { aggression?: number; competence: number; nextDecisionTick: number; input: InputFrame; observed: { id: number; firstSeenTick: number; reacted: boolean }[]; defendUntil: number; plannedRaiseTick: number; plannedReleaseTick: number; targetPoint: Vec; decisionTicks: number[]; reactionAges: number[] }
+export interface MageBrain { aggression?: number; plan?: { threatId: number; perfect: boolean }; competence: number; nextDecisionTick: number; input: InputFrame; observed: { id: number; firstSeenTick: number; reacted: boolean; denied?: boolean }[]; defendUntil: number; plannedRaiseTick: number; plannedReleaseTick: number; targetPoint: Vec; decisionTicks: number[]; reactionAges: number[] }
 export interface PendingCast { spell?: Spell; kind: 'bolt' | 'staff' | 'spell'; releaseTick: number; startTick: number; aim: Vec; activationId: number; spellId?: string; damageMult?: number; targetId?: number }
 export interface Actor {
   school?: School; velocity?: Vec; staggerUntil?: number; staggerImmuneUntil?: number; rollRecoveryUntil?: number;

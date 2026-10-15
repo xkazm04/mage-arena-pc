@@ -1,7 +1,7 @@
 import { tuningFor, feelPolicy } from './tuning.ts';
 import { arenaContains, arenaGeometry } from './geometry.ts';
 import { enemyData } from './data.generated.ts';
-import { spellFor, spells } from './catalog.ts';
+import { spellFor, spells, type Spell } from './catalog.ts';
 import { bolt, combat, random, runtime, ticks } from './kernel.ts';
 import { clamp, distance, inArc, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
 import { hasLineOfSight } from './water.ts';
@@ -9,10 +9,12 @@ import { idleInput, type Actor, type ArenaState, type InputFrame } from './types
 export function competence(level: number) {
   const rows = enemyData.mages.competence, bounded = clamp(level, rows[0].level, rows.at(-1)!.level);
   const lo = rows[Math.floor(bounded) - 1]!, hi = rows[Math.ceil(bounded) - 1]!, fraction = bounded - Math.floor(bounded);
+  const curve = (feelPolicy.ai.tierCurvePlay as string[]).includes(lo.usesTierCurve);
   const interpolate = (key: 'reactionDelayS' | 'absorbChanceVsAbsorbable' | 'perfectAbsorbChance' | 'aimErrorDeg' | 'decisionCadenceS'): number => lo[key] + (hi[key] - lo[key]) * fraction;
   return { level: bounded, reactionDelayS: Math.max(enemyData.mages.caps.reactionDelayMinS, interpolate('reactionDelayS')),
     absorbChance: interpolate('absorbChanceVsAbsorbable'), perfectChance: Math.min(enemyData.mages.caps.perfectAbsorbChanceMax, interpolate('perfectAbsorbChance')),
-    aimErrorDeg: interpolate('aimErrorDeg'), decisionCadenceS: interpolate('decisionCadenceS') };
+    aimErrorDeg: interpolate('aimErrorDeg'), decisionCadenceS: interpolate('decisionCadenceS'), curve,
+    aimLeadFraction: curve ? (feelPolicy.ai.curveAimLeadFraction as Record<string, number>)[lo.level]! : runtime.games.mageAimLeadFraction };
 }
 export function attachMageAI(a: Actor, level: number, tick = 0): void {
   a.mageAI = { competence: level, nextDecisionTick: tick, input: idleInput(), observed: [], defendUntil: 0, plannedRaiseTick: 1e9, plannedReleaseTick: 0,
@@ -51,21 +53,43 @@ export function threats(state: ArenaState, a: Actor): Threat[] {
   }
   return result;
 }
+const fitsBeforeRaise = (state: ArenaState, raiseTick: number, s: Spell): boolean =>
+  raiseTick <= state.tick || raiseTick >= state.tick + ticks(Math.max(s.castS, s.telegraphS) + feelPolicy.ai.reactionCastSafetyS);
 export function mageInput(state: ArenaState, a: Actor): InputFrame {
   const brain = a.mageAI; if (!brain || a.tags.includes("DEFEATED")) return idleInput();
   const tune = tuningFor(state), baseProfile = competence(brain.competence);
   const profile = { ...baseProfile, reactionDelayS: Math.max(enemyData.mages.caps.reactionDelayMinS, baseProfile.reactionDelayS * tune.enemyReactionScale), aimErrorDeg: baseProfile.aimErrorDeg * tune.enemyAimErrorScale };
   const target = state.actors.filter(t => t.team !== a.team && !t.tags.includes("DEFEATED") && hasLineOfSight(state, a.pos, t.pos)).sort((x, y) => distance(a.pos, x.pos) - distance(a.pos, y.pos) || x.id - y.id)[0];
-  const seen = threats(state, a);
+  const seen = threats(state, a), window = ticks(tune.absorbWindowS);
+  // Curve rows: a plain absorb is up for the hit but older than the perfect window; a raise that would land inside it is skipped.
+  // A raise is also refused when it could be fresh for another threat whose own perfect roll failed (impact estimates drift, so either side of the raise counts).
+  const gifts = (raise: number, id: number): boolean => seen.some(t => t.id !== id && t.aimedAtUs && brain.observed.find(m => m.id === t.id)?.denied && Math.abs(t.impactTick - raise) <= window);
+  const wardRaise = (impactTick: number, perfect: boolean, id: number): number | undefined => {
+    const fresh = Math.max(state.tick + 1, impactTick - Math.floor(window / 2));
+    if (perfect && !gifts(fresh, id)) return fresh;
+    const raise = Math.max(state.tick + 1, impactTick - window - ticks(combat.absorb.minReleaseBeforeReRaiseS) - 1);
+    return raise < impactTick - window && !gifts(raise, id) ? raise : undefined;
+  };
   for (const threat of seen) {
     let memory = brain.observed.find(m => m.id === threat.id);
     if (!memory) { memory = { id: threat.id, firstSeenTick: state.tick, reacted: false }; brain.observed.push(memory); }
     if (memory.reacted || !threat.aimedAtUs || state.tick - memory.firstSeenTick < ticks(profile.reactionDelayS)) continue;
     memory.reacted = true; brain.reactionAges.push(state.tick - memory.firstSeenTick);
     if (threat.family === 'magic') {
+      // A threat landing while the planned ward is up rides that ward's decision; no second roll is drawn for it.
+      if (profile.curve && brain.plan && state.tick + 1 <= brain.plannedReleaseTick && threat.impactTick >= brain.plannedRaiseTick && threat.impactTick < brain.plannedReleaseTick + window) {
+        brain.plannedReleaseTick = Math.max(brain.plannedReleaseTick, threat.impactTick + 1); continue;
+      }
       if (random(state, `mage ${a.id} absorb ${threat.id}`) < profile.absorbChance) {
         brain.targetPoint = { ...threat.origin };
         const perfect = random(state, `mage ${a.id} perfect ${threat.id}`) < profile.perfectChance;
+        if (profile.curve) {
+          if (!perfect) memory.denied = true;
+          const holding = state.tick + 1 >= brain.plannedRaiseTick && state.tick + 1 <= brain.plannedReleaseTick, raise = wardRaise(threat.impactTick, perfect, threat.id);
+          if (holding) brain.plannedReleaseTick = Math.max(brain.plannedReleaseTick, threat.impactTick + 1);
+          else if (raise !== undefined) { brain.plan = { threatId: threat.id, perfect }; brain.plannedRaiseTick = raise; brain.plannedReleaseTick = threat.impactTick + 1; }
+          continue;
+        }
         brain.plannedRaiseTick = perfect ? Math.max(state.tick + 1, threat.impactTick - Math.floor(ticks(tune.absorbWindowS) / 2)) : state.tick + 1;
         brain.plannedReleaseTick = threat.impactTick + 1; brain.defendUntil = brain.plannedReleaseTick;
       }
@@ -76,7 +100,21 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
   }
   // Drop stale observation ids only after their activation is absent; projectile ids retain cast ids.
   brain.observed = brain.observed.filter(m => seen.some(t => t.id === m.id));
-  if (state.tick >= brain.nextDecisionTick) {
+  if (brain.plan) {
+    // Track the live impact (a pending cast becomes its projectile under the same id) until the raise; then only extend the hold.
+    const live = seen.find(t => t.id === brain.plan!.threatId);
+    if (state.tick + 1 < brain.plannedRaiseTick) {
+      const raise = live ? wardRaise(live.impactTick, brain.plan.perfect, live.id) : brain.plannedRaiseTick;
+      if (live) brain.plannedReleaseTick = live.impactTick + 1;
+      if (raise === undefined) { brain.plannedRaiseTick = 1e9; brain.plan = undefined; } else brain.plannedRaiseTick = raise;
+    } else {
+      if (live) brain.plannedReleaseTick = Math.max(brain.plannedReleaseTick, live.impactTick + 1);
+      // A raise the kernel delayed (pending cast, roll, re-raise gap) must not become a perfect the roll denied.
+      if (!brain.plan.perfect && !a.absorb && state.tick + 1 >= brain.plannedReleaseTick - 1 - window) { brain.plannedRaiseTick = 1e9; brain.plan = undefined; }
+    }
+  }
+  // Curve rows never spend a cadence inside a roll hold; the next decision waits for the hold to end.
+  if (state.tick >= brain.nextDecisionTick && (!profile.curve || state.tick >= brain.defendUntil)) {
     brain.nextDecisionTick = state.tick + ticks(profile.decisionCadenceS); brain.decisionTicks.push(state.tick);
     if (state.tick >= brain.defendUntil) {
       const input = idleInput(brain.targetPoint); brain.input = input;
@@ -89,19 +127,25 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         // Turn inward at the arena edge instead of getting pinned by the clamp.
         if (!arenaContains(a.pos, runtime.games.spawnMarginM)) input.move = unit(sub(arenaGeometry.centre, a.pos));
         const aimPoint = target.water.decoy?.pos ?? target.pos;
-        const velocity = sub(target.pos, target.previousPos), lead = d / bolt.speedMps * combat.simStepHz * runtime.games.mageAimLeadFraction;
+        const velocity = sub(target.pos, target.previousPos), lead = d / bolt.speedMps * combat.simStepHz * profile.aimLeadFraction;
         const prediction = target.water.decoy ? aimPoint : { x: aimPoint.x + velocity.x * lead, y: aimPoint.y + velocity.y * lead };
         const error = (random(state, `mage ${a.id} aim`) * 2 - 1) * profile.aimErrorDeg * Math.PI / 180;
         const aimDirection = rotate(sub(prediction, a.pos), error); input.aim = { x: a.pos.x + aimDirection.x, y: a.pos.y + aimDirection.y };
-        const available = Array.from({ length: combat.lines.slots + 1 }, (_, slot) => ({ slot, s: spellFor(a, slot, state)! })).filter(({ s }) => s.kind !== 'passive' && (a.water.cooldowns[s.line] ?? 0) <= state.tick + 1 && (a.water.flow >= combat.flow.max || s.mana <= a.mana) && (!s.rangeM || d <= s.rangeM));
+        // A curve row queues a spell that comes off cooldown by the time its planned ward drops.
+        const ready = profile.curve && brain.plannedRaiseTick <= brain.plannedReleaseTick ? Math.max(state.tick, brain.plannedReleaseTick) + 1 : state.tick + 1;
+        const available = Array.from({ length: combat.lines.slots + 1 }, (_, slot) => ({ slot, s: spellFor(a, slot, state)! })).filter(({ s }) => s.kind !== 'passive' && (a.water.cooldowns[s.line] ?? 0) <= ready && (a.water.flow >= combat.flow.max || s.mana <= a.mana) && (!s.rangeM || d <= s.rangeM));
         const useful = available.filter(({ s }) => s.damage > 0 || (['heal','hot'].includes(s.effect) && a.hp < a.maxHp) || (s.effect === 'font' && a.mana < a.maxMana) || (s.effect === 'ward' && seen.some(t => t.family === 'magic')) || s.kind === 'zone' || s.effect === 'decoy' || s.effect === 'sheen' || s.effect === 'encase');
-        const choices = (useful.length ? useful : available).filter(({s}) => brain.plannedRaiseTick <= state.tick || brain.plannedRaiseTick >= state.tick + ticks(Math.max(s.castS,s.telegraphS) + feelPolicy.ai.reactionCastSafetyS));
+        const candidates = useful.length ? useful : available, fitting = candidates.filter(({ s }) => fitsBeforeRaise(state, brain.plannedRaiseTick, s));
+        // Curve rows keep choosing while a raise is pending: a spell that cannot finish first waits for the ward to drop.
+        const choices = profile.curve && !fitting.length ? candidates : fitting;
         const variety = new Map(choices.map(c => [c.slot, random(state, `mage ${a.id} variety ${c.slot}`) * feelPolicy.ai.spellVarietyWeight]));
+        const bait = target.absorb || state.tick - target.absorbFreshTick <= ticks(profile.decisionCadenceS);
+        const prefers = (s: Spell): boolean => profile.curve ? bait === (s.family === 'unblockable') : profile.level >= 3 && target.absorb && s.family === 'unblockable';
         if (choices.length) {
           const choice = profile.level < 2 ? choices[Math.floor(random(state, `mage ${a.id} spell`) * choices.length)]!
             : choices.sort((x, y) => {
               const sustainX = ['heal','hot'].includes(x.s.effect) && a.hp < a.maxHp / 2, sustainY = ['heal','hot'].includes(y.s.effect) && a.hp < a.maxHp / 2;
-              const counterX = profile.level >= 3 && target.absorb && x.s.family === 'unblockable', counterY = profile.level >= 3 && target.absorb && y.s.family === 'unblockable';
+              const counterX = prefers(x.s), counterY = prefers(y.s);
               return Number(counterY) - Number(counterX) || Number(sustainY) - Number(sustainX) || Number(y.s.line !== a.water.lastLine) - Number(x.s.line !== a.water.lastLine) || (y.s.damage * y.s.count + variety.get(y.slot)!) - (x.s.damage * x.s.count + variety.get(x.slot)!) || x.slot - y.slot;
             })[0]!;
           input.slot = choice.slot; input.cast = brain.aggression === undefined || brain.aggression >= 1 || random(state, `mage ${a.id} aggression`) < brain.aggression;
@@ -111,7 +155,8 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
   }
   const result: InputFrame = { ...brain.input, move: { ...brain.input.move }, aim: { ...brain.input.aim } };
   result.absorb = state.tick + 1 >= brain.plannedRaiseTick && state.tick + 1 <= brain.plannedReleaseTick;
-  if (brain.plannedRaiseTick > state.tick && brain.plannedRaiseTick <= state.tick + ticks(profile.decisionCadenceS + feelPolicy.ai.reactionCastSafetyS)) result.cast = false;
+  if (profile.curve) { const s = spellFor(a, result.slot, state); if (s && !fitsBeforeRaise(state, brain.plannedRaiseTick, s)) result.cast = false; }
+  else if (brain.plannedRaiseTick > state.tick && brain.plannedRaiseTick <= state.tick + ticks(profile.decisionCadenceS + feelPolicy.ai.reactionCastSafetyS)) result.cast = false;
   if (result.absorb) { result.cast = false; result.aim = { ...brain.targetPoint }; }
   if (!target) { result.cast = false; result.move = { x: 0, y: 0 }; }
   brain.input.roll = false; return result;
