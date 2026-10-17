@@ -1,0 +1,50 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU5",
+  "file": "audition/r5/arena-A-hide-and-iron/section-3-development.wav",
+  "sha256": "69ea9471e3116f04168fc221d907ae4786c36c8e25aa25c8e3d97ef8343f5649",
+  "source": "audition/r5/arena-A-hide-and-iron.mp3",
+  "sourceSha256": "4f3cd58e3a39e2131fde2159c4f96481959fe5eb5cd23a7e1daa86cce802fd35",
+  "sourceSidecar": "audition/r5/arena-A-hide-and-iron.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-A-hide-and-iron r5",
+  "processing": {
+    "name": "Development",
+    "startSeconds": 45.0,
+    "endSeconds": 75.0,
+    "startSample": 2160000,
+    "endSample": 3600000,
+    "file": "audition/r5/arena-A-hide-and-iron/section-3-development.wav",
+    "boundaryStatus": "requested composition timing, not verified musical boundary"
+  },
+  "measurement": {
+    "file": "audition/r5/arena-A-hide-and-iron/section-3-development.wav",
+    "sha256": "69ea9471e3116f04168fc221d907ae4786c36c8e25aa25c8e3d97ef8343f5649",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 1440000,
+    "decodedSeconds": 30.0,
+    "containerSeconds": 30.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -25.96,
+    "truePeakDbTP": -13.83,
+    "loudnessRangeLU": 4.4,
+    "samplePeakDbFS": -13.832,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-25.96",
+      "input_tp": "-13.83",
+      "input_lra": "4.40",
+      "input_thresh": "-36.15",
+      "output_i": "-24.85",
+      "output_tp": "-12.02",
+      "output_lra": "3.10",
+      "output_thresh": "-35.06",
+      "normalization_type": "dynamic",
+      "target_offset": "-1.15"
+    }
+  },
+  "note": "PCM derived from the lossy provider MP3 (mp3_48000_192); no claim of native lossless master. Paid generation ledger records the original only."
+}

@@ -1,11 +1,20 @@
-"""Offline AU3 mastering and numerical screens. Never calls a paid service."""
+"""Offline AU3/AU5 mastering and numerical screens. Never calls a paid service.
+
+Usage: process-r4.py <track-id> [r4|r5]. r5 is the AU5 music_v2_5 take."""
 from pathlib import Path
 import hashlib, json, re, subprocess, sys
 import numpy as np
 from scipy import signal
 ROOT=Path(__file__).resolve().parents[2]
-E=ROOT/'docs/audio/evidence/r4'; E.mkdir(parents=True,exist_ok=True)
-OUT=ROOT/'docs/audio/audition/r4'
+ROUND=sys.argv[2] if len(sys.argv)>2 else 'r4'
+E=ROOT/'docs/audio/evidence'/ROUND; E.mkdir(parents=True,exist_ok=True)
+OUT=ROOT/'docs/audio/audition'/ROUND
+# AU5 conditions on the kept r1 audition, which the game ships byte-identical as arena-a.mp3.
+REFERENCE={'arena-A-hide-and-iron':ROOT/'packages/game/public/audio/arena-a.mp3'}
+def sections_of(request):
+    plan=request['composition_plan']
+    if 'sections' in plan: return [(s['section_name'],s['duration_ms']) for s in plan['sections']]
+    return [(c['text'].strip('[]'),c['duration_ms']) for c in plan['chunks']]
 RATE=48000
 def run(args):
     return subprocess.run([str(a) for a in args],check=True,capture_output=True)
@@ -60,14 +69,14 @@ def analysis(source,identity):
     # Five-second blocks at exact file offsets screen literal short-block tiling.
     n5=len(y)//(5*sr); c5=np.corrcoef(y[:n5*5*sr].reshape(n5,-1)); np.fill_diagonal(c5,0)
     tail={str(t):db(np.sqrt(np.mean(y[-int(t*sr):]**2))) for t in [5,2.5,1,.5,.1,.02]}
-    ref=ROOT/'docs/audio/audition/r2'/f'{identity}.mp3'
+    ref=REFERENCE.get(identity,ROOT/'docs/audio/audition/r2'/f'{identity}.mp3')
     def chroma_of(freq,mag):
         sel=(freq>=65)&(freq<=2000); notes=np.rint(69+12*np.log2(freq[sel]/440)).astype(int)%12
         return np.bincount(notes,weights=np.mean(mag[sel]**2,axis=1),minlength=12)
     chroma=chroma_of(freq,mag)
     ry=pcm(ref,16000,1)[:,0]; rf,rm,_=features(ry); rc=chroma_of(rf,rm)
     similarity=float(np.dot(chroma,rc)/(np.linalg.norm(chroma)*np.linalg.norm(rc)))
-    return dict(method='scipy STFT positive log spectral flux at 10 ms resolution; strongest autocorrelation peak in 60–200 BPM range, not a downbeat or melody transcription. Tempo aliases and missed/extra attacks possible.',estimatedBpm=bpm,requestedBpm=96,firstDetectedOnsetSeconds=float(peaks[0]) if len(peaks) else None,firstTrueDownbeatSeconds=None,boundaries=cells,windows=windows,gridVerified=False,gridStatus='not certified: detected attacks are not identified downbeats; no warp applied',literalRepeatScreen=dict(max15SecondBlockCorrelation=max(p['correlation'] for p in pairs),max5SecondBlockCorrelation=float(np.max(c5)),pairs=pairs,scope='Aligned waveform blocks only; excludes neither shifted reuse nor repeated musical phrases. No source audio was tiled by this pipeline.'),referenceChromaCosine=similarity,referenceChromaCaveat='Pitch-class distribution similarity is not melodic identity; exact kept motif was not transcribed or used as an audio reference.',tailRmsDbFS=tail,vocals='not assessed by listening; empty lyric lines and instrumental styles are requests, not evidence',release='tail envelope measured; musical resolution requires listening',listening='not performed by this execution environment; no auditory quality verdict claimed')
+    return dict(method='scipy STFT positive log spectral flux at 10 ms resolution; strongest autocorrelation peak in 60–200 BPM range, not a downbeat or melody transcription. Tempo aliases and missed/extra attacks possible.',estimatedBpm=bpm,requestedBpm=96,firstDetectedOnsetSeconds=float(peaks[0]) if len(peaks) else None,firstTrueDownbeatSeconds=None,boundaries=cells,windows=windows,gridVerified=False,gridStatus='not certified: detected attacks are not identified downbeats; no warp applied',literalRepeatScreen=dict(max15SecondBlockCorrelation=max(p['correlation'] for p in pairs),max5SecondBlockCorrelation=float(np.max(c5)),pairs=pairs,scope='Aligned waveform blocks only; excludes neither shifted reuse nor repeated musical phrases. No source audio was tiled by this pipeline.'),referenceChromaCosine=similarity,referenceChromaCaveat='Pitch-class distribution similarity is not melodic identity; exact kept motif was not transcribed'+(', but the kept audition conditioned the Entrance and Climax chunks (music_v2_5 conditioning_ref).' if ROUND=='r5' else ' or used as an audio reference.'),tailRmsDbFS=tail,vocals='not assessed by listening; empty lyric lines and instrumental styles are requests, not evidence',release='tail envelope measured; musical resolution requires listening',listening='not performed by this execution environment; no auditory quality verdict claimed')
 def process(identity):
     source=OUT/f'{identity}.mp3'; side=json.loads(source.with_suffix('.mp3.json').read_text(encoding='utf-8'))
     assert hashlib.sha256(source.read_bytes()).hexdigest()==side['sha256']
@@ -86,11 +95,11 @@ def process(identity):
     normalized=meter(master,identity+'-master'); assert abs(normalized['integratedLufs']+26)<=.3 and normalized['truePeakDbTP']<=-1 and normalized['samplesAtOrAboveFullScale']==0
     # Fixed-grid *indices*, no copied/tiled score or claimed time correction.
     sections=[]; start=0
-    for i,s in enumerate(side['request']['composition_plan']['sections']):
-        end=start+s['duration_ms']/1000; p=dest/f"section-{i+1}-{s['section_name'].lower().replace(' ','-')}.wav"
+    for i,(name,ms) in enumerate(sections_of(side['request'])):
+        end=start+ms/1000; p=dest/f"section-{i+1}-{name.lower().replace(' ','-')}.wav"
         stop=min(round(end*RATE),normalized['sampleCount'])
         ff(['-i',master,'-af',f'atrim=start_sample={round(start*RATE)}:end_sample={stop},asetpts=PTS-STARTPTS','-c:a','pcm_s16le',p])
-        sections.append(dict(name=s['section_name'],startSeconds=start,endSeconds=end,startSample=round(start*RATE),endSample=stop,file=rel(p),boundaryStatus='requested composition timing, not verified musical boundary'))
+        sections.append(dict(name=name,startSeconds=start,endSeconds=end,startSample=round(start*RATE),endSample=stop,file=rel(p),boundaryStatus='requested composition timing, not verified musical boundary'))
         start=end
     a=analysis(source,identity)
     # Sustain: continuous middle plus one-bar overlap of neighbouring material.
@@ -124,8 +133,8 @@ def process(identity):
     track['mastering']['method']='ffmpeg two-pass loudnorm, linear gain; PCM16 lossy-source derivative. No time warp, padding or repeated block. Near-silent provider overrun trimmed only where measured peak <= -60 dBFS.'
     save(E/f'{identity}-analysis.json',track)
     save(dest/'segments.json',dict(file=rel(master),sampleRate=RATE,cells=cells,sectionMap=sections,tierMap=track['tierMap'],adaptiveReady=False,loop=loopmeta))
-    manifestpath=ROOT/'docs/audio/manifest-au3.json'
-    manifest=json.loads(manifestpath.read_text(encoding='utf-8')) if manifestpath.exists() else dict(schemaVersion=1,wave='AU3',baseUrl='./',pathResolution='All files relative to this manifest in docs/audio/',status='technical delivery; owner listening pending',runtimeContract=dict(mode='linear until adaptiveReady and transitions approved',fullScoreLoop=False,musicVoicesMax=8,totalVoicesMax=32,nominalTierUnlockSeconds=[0,15,30,45],perfectAdvanceSeconds=2,minUnlockGapSeconds=6,pause='freeze transport and gameplay',waveReset='entrance',criticalFeedback='immediate, unquantized',mixTargetLufs=-20,mixTruePeakDbTP=-1,crossfadeHeadroomDb=6),tracks=[])
+    manifestpath=ROOT/f"docs/audio/manifest-{'au5' if ROUND=='r5' else 'au3'}.json"
+    manifest=json.loads(manifestpath.read_text(encoding='utf-8')) if manifestpath.exists() else dict(schemaVersion=1,wave='AU5' if ROUND=='r5' else 'AU3',baseUrl='./',pathResolution='All files relative to this manifest in docs/audio/',status='technical delivery; owner listening pending',runtimeContract=dict(mode='linear until adaptiveReady and transitions approved',fullScoreLoop=False,musicVoicesMax=8,totalVoicesMax=32,nominalTierUnlockSeconds=[0,15,30,45],perfectAdvanceSeconds=2,minUnlockGapSeconds=6,pause='freeze transport and gameplay',waveReset='entrance',criticalFeedback='immediate, unquantized',mixTargetLufs=-20,mixTruePeakDbTP=-1,crossfadeHeadroomDb=6),tracks=[])
     manifest['tracks']=[t for t in manifest['tracks'] if t['id']!=identity]+[track]
     save(manifestpath,manifest)
     print(json.dumps(dict(id=identity,duration=normalized['decodedSeconds'],rawLufs=raw['integratedLufs'],masterLufs=normalized['integratedLufs'],estimatedBpm=a['estimatedBpm'],boundaryErrorsMs=[v['errorMs'] for v in a['boundaries']],tail=a['tailRmsDbFS'],loopNumericalPass=loopmeta['numericalScreenPass'],stingSeconds=sm['decodedSeconds'])))

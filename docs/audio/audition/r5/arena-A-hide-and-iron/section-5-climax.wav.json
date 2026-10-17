@@ -1,0 +1,50 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "AU5",
+  "file": "audition/r5/arena-A-hide-and-iron/section-5-climax.wav",
+  "sha256": "4cecd4f021d79d56bc8253e4abf5e4e384ef1fa94faff186ef90345fd8571f49",
+  "source": "audition/r5/arena-A-hide-and-iron.mp3",
+  "sourceSha256": "4f3cd58e3a39e2131fde2159c4f96481959fe5eb5cd23a7e1daa86cce802fd35",
+  "sourceSidecar": "audition/r5/arena-A-hide-and-iron.mp3.json",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg",
+  "reproduce": "python tools/audio/process-r4.py arena-A-hide-and-iron r5",
+  "processing": {
+    "name": "Climax",
+    "startSeconds": 105.0,
+    "endSeconds": 135.0,
+    "startSample": 5040000,
+    "endSample": 6480000,
+    "file": "audition/r5/arena-A-hide-and-iron/section-5-climax.wav",
+    "boundaryStatus": "requested composition timing, not verified musical boundary"
+  },
+  "measurement": {
+    "file": "audition/r5/arena-A-hide-and-iron/section-5-climax.wav",
+    "sha256": "4cecd4f021d79d56bc8253e4abf5e4e384ef1fa94faff186ef90345fd8571f49",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 1440000,
+    "decodedSeconds": 30.0,
+    "containerSeconds": 30.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -24.97,
+    "truePeakDbTP": -13.68,
+    "loudnessRangeLU": 2.5,
+    "samplePeakDbFS": -13.686,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-24.97",
+      "input_tp": "-13.68",
+      "input_lra": "2.50",
+      "input_thresh": "-34.97",
+      "output_i": "-25.00",
+      "output_tp": "-13.25",
+      "output_lra": "1.00",
+      "output_thresh": "-35.00",
+      "normalization_type": "dynamic",
+      "target_offset": "-1.00"
+    }
+  },
+  "note": "PCM derived from the lossy provider MP3 (mp3_48000_192); no claim of native lossless master. Paid generation ledger records the original only."
+}

@@ -1,0 +1,67 @@
+{
+  "id": "fe4797bb-deb0-4abc-a613-e7e0636e4e86",
+  "wave": "AU5",
+  "step": "upload",
+  "ts": "2026-10-17T19:15:50.790Z",
+  "seconds": 20.062,
+  "estimatedCredits": 602,
+  "accountBefore": {
+    "observedAt": "2026-10-17T19:15:50.789Z",
+    "tier": "creator",
+    "used": 3589,
+    "limit": 143292,
+    "remaining": 139703,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "billingHeaders": {
+    "date": "Sat, 17 Oct 2026 19:15:59 GMT",
+    "song-id": "IwnTqXwHhbutKZinwBoe_upload"
+  },
+  "flags": [],
+  "reference": {
+    "file": "packages/game/public/audio/arena-a.mp3",
+    "sha256": "b2d7da157a4982c645967f8db2c75c5adc42b605a75829c1f237ce5a9db504e3",
+    "seconds": 20.062,
+    "why": "the owner-kept r1 Hide and iron audition (CHOICES: dramatic entrance and melody)"
+  },
+  "songId": "IwnTqXwHhbutKZinwBoe_upload",
+  "accountAfter": {
+    "observedAt": "2026-10-17T19:16:12.202Z",
+    "tier": "creator",
+    "used": 3865,
+    "limit": 143292,
+    "remaining": 139427,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 276,
+  "settlementReads": [
+    {
+      "observedAt": "2026-10-17T19:16:43.887Z",
+      "tier": "creator",
+      "used": 3865,
+      "limit": 143292,
+      "remaining": 139427,
+      "resetsAt": "2026-11-13T10:08:44.000Z"
+    },
+    {
+      "observedAt": "2026-10-17T19:17:16.385Z",
+      "tier": "creator",
+      "used": 3865,
+      "limit": 143292,
+      "remaining": 139427,
+      "resetsAt": "2026-11-13T10:08:44.000Z"
+    },
+    {
+      "observedAt": "2026-10-17T19:17:49.104Z",
+      "tier": "creator",
+      "used": 3865,
+      "limit": 143292,
+      "remaining": 139427,
+      "resetsAt": "2026-11-13T10:08:44.000Z"
+    }
+  ],
+  "settledDelta": 276,
+  "measuredCredits": null,
+  "chargedCredits": 602,
+  "deltaBasis": "Shared-account upper-bound proxy; may include other projects or delayed usage, not exclusive invoice attribution."
+}

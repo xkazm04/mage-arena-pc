@@ -1,0 +1,91 @@
+{
+  "jobCap": 6000,
+  "floor": 1000,
+  "totalConservativeCredits": 5102,
+  "totalObservedCredits": 2338,
+  "httpCount": 13,
+  "paidPosts": 2,
+  "statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "minimumRequestGapSeconds": 8.003,
+  "perCall": [
+    {
+      "step": "upload",
+      "seconds": 20.062,
+      "before": {
+        "observedAt": "2026-10-17T19:15:50.789Z",
+        "tier": "creator",
+        "used": 3589,
+        "limit": 143292,
+        "remaining": 139703,
+        "resetsAt": "2026-11-13T10:08:44.000Z"
+      },
+      "after": {
+        "observedAt": "2026-10-17T19:16:12.202Z",
+        "tier": "creator",
+        "used": 3865,
+        "limit": 143292,
+        "remaining": 139427,
+        "resetsAt": "2026-11-13T10:08:44.000Z"
+      },
+      "settled": {
+        "observedAt": "2026-10-17T19:17:49.104Z",
+        "tier": "creator",
+        "used": 3865,
+        "limit": 143292,
+        "remaining": 139427,
+        "resetsAt": "2026-11-13T10:08:44.000Z"
+      },
+      "observed": 276,
+      "debit": 602,
+      "estimate": 602,
+      "observedPerSecond": 13.75735220815472
+    },
+    {
+      "step": "compose",
+      "seconds": 150,
+      "before": {
+        "observedAt": "2026-10-17T19:18:04.284Z",
+        "tier": "creator",
+        "used": 3865,
+        "limit": 143292,
+        "remaining": 139427,
+        "resetsAt": "2026-11-13T10:08:44.000Z"
+      },
+      "after": {
+        "observedAt": "2026-10-17T19:18:49.767Z",
+        "tier": "creator",
+        "used": 3865,
+        "limit": 143292,
+        "remaining": 139427,
+        "resetsAt": "2026-11-13T10:08:44.000Z"
+      },
+      "settled": {
+        "observedAt": "2026-10-17T19:20:26.999Z",
+        "tier": "creator",
+        "used": 5927,
+        "limit": 143292,
+        "remaining": 137365,
+        "resetsAt": "2026-11-13T10:08:44.000Z"
+      },
+      "observed": 2062,
+      "debit": 4500,
+      "estimate": 4500,
+      "observedPerSecond": 13.746666666666666
+    }
+  ],
+  "pending": null
+}

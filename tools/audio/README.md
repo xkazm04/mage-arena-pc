@@ -1,6 +1,16 @@
 # Mage Arena audio tooling
 
-## Current handoff: AU3 / session 4
+## Current handoff: AU5 / Hide and iron
+
+**Closed-owner-review.** The deferred AU3 track, generated on `music_v2_5` with the kept r1 audition uploaded (`/v1/music/upload`) and used as `conditioning_ref` on the Entrance and Climax chunks. One upload and one 150 s compose: 2,338 observed / 5,102 conservative credits of a 6,000 cap. `run-r5.mjs credits | upload | compose` is the launcher; it refuses the closed budget. The key is also read from `C:/Users/kazda/kiro/kp/.env.local`. Report: `docs/waves/AU5-hide-and-iron.md`.
+
+```
+python tools/audio/process-r4.py arena-A-hide-and-iron r5
+python tools/audio/evidence-r5.py
+python packages/tools/audio/encode-full-tracks.py
+```
+
+## Historical handoff: AU3 / session 4
 
 **Closed-owner-review.** Reed oath and Lyre under iron each received one six-section 150 s `music_v1` render, in D39 order. Total **9,000/10,000 conservative credits**, final observed shared balance **1,689**, floor **1,000**. The old reserve/reset gate was explicitly superseded for this job. A at 150 s (4,500) or its authorized 90 s fallback (2,700) cannot fit the remaining 1,000 job credits or 689 account headroom; no A/retry/camp/Google/round-3 calls. C and D have separate commits, followed by the final review handoff.
 

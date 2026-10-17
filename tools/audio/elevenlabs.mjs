@@ -17,9 +17,9 @@ const stopPath = path.join(here, 'STOP.json');
 const statePath = path.join(here, 'state.json');
 const budget = () => {
   const b = json(path.join(here, 'budget.json'));
-  const limits = { AU2: { cap: 5000, floor: 14000 }, AU2b: { cap: 3000, floor: 13000 }, AU3: { cap: 10000, floor: 1000 } }[b.wave];
-  if (!limits || !Number.isFinite(b.capCredits) || b.capCredits > limits.cap || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < (b.wave === 'AU3' ? 1000 : 8000) || b.stopBelowCredits !== limits.floor || !Number.isFinite(b.minRequestGapMs) || b.minRequestGapMs < 8000 || !Number.isFinite(b.musicSettlementMs) || b.musicSettlementMs < 30000) throw Error('Invalid audition cap/reserve/floor/pacing');
-  if (b.wave === 'AU3' && (!Number.isFinite(b.bounds.musicPerSecond) || b.bounds.musicPerSecond < 30)) throw Error('AU3 music bound must be at least 30/s');
+  const limits = { AU2: { cap: 5000, floor: 14000 }, AU2b: { cap: 3000, floor: 13000 }, AU3: { cap: 10000, floor: 1000 }, AU5: { cap: 6000, floor: 1000 } }[b.wave];
+  if (!limits || !Number.isFinite(b.capCredits) || b.capCredits > limits.cap || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < (['AU3', 'AU5'].includes(b.wave) ? 1000 : 8000) || b.stopBelowCredits !== limits.floor || !Number.isFinite(b.minRequestGapMs) || b.minRequestGapMs < 8000 || !Number.isFinite(b.musicSettlementMs) || b.musicSettlementMs < 30000) throw Error('Invalid audition cap/reserve/floor/pacing');
+  if (['AU3', 'AU5'].includes(b.wave) && (!Number.isFinite(b.bounds.musicPerSecond) || b.bounds.musicPerSecond < 30)) throw Error(`${b.wave} music bound must be at least 30/s`);
   return b;
 };
 function latch(reason, extra = {}) {
@@ -27,7 +27,7 @@ function latch(reason, extra = {}) {
 }
 function apiKey() {
   if (process.env.ELEVENLABS_API_KEY) return process.env.ELEVENLABS_API_KEY;
-  for (const f of ['C:/Users/kazda/kiro/garden-vr/.env', 'C:/Users/kazda/kiro/pof/.env']) {
+  for (const f of ['C:/Users/kazda/kiro/kp/.env.local', 'C:/Users/kazda/kiro/garden-vr/.env', 'C:/Users/kazda/kiro/pof/.env']) {
     if (!fs.existsSync(f)) continue;
     const match = fs.readFileSync(f, 'utf8').match(/^\s*(?:export\s+)?ELEVENLABS_API_KEY\s*=\s*(.+)\s*$/m);
     if (match) return match[1].trim().replace(/^(["'])(.*)\1$/, '$2');
@@ -43,7 +43,7 @@ async function request(endpoint, body) {
     const pace = fs.existsSync(pacingPath) ? json(pacingPath) : {};
     await sleep(Math.max(0, (pace.completedAtMs || 0) + Math.max(b.minRequestGapMs, pace.gapMs || 0) - Date.now()));
     const startedAt = new Date().toISOString();
-    const r = await fetch(API + endpoint, { method: body ? 'POST' : 'GET', headers: { 'xi-api-key': apiKey(), ...(body ? { 'content-type': 'application/json', accept: 'audio/mpeg' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(b.wave === 'AU3' && body ? 1200000 : 240000) });
+    const r = await fetch(API + endpoint, { method: body ? 'POST' : 'GET', headers: { 'xi-api-key': apiKey(), ...(body && !(body instanceof FormData) ? { 'content-type': 'application/json', accept: 'audio/mpeg' } : {}) }, ...(body ? { body: body instanceof FormData ? body : JSON.stringify(body) } : {}), signal: AbortSignal.timeout(['AU3', 'AU5'].includes(b.wave) && body ? 1200000 : 240000) });
     const bytes = await r.arrayBuffer(); // Hold the process lock until the whole response finishes.
     const completedAtMs = Date.now();
     write(pacingPath, { ...pace, completedAtMs });
@@ -65,7 +65,7 @@ async function request(endpoint, body) {
       write(pacingPath, { completedAtMs, rateLimitCount: count, gapMs: Math.max(15000, pace.gapMs || 0), nextRetryWaitMs: waitMs });
       // One read-only recovery after at least 60 s; a second 429 latches.
       // Never repeat a paid POST whose billing outcome might be ambiguous.
-      if (b.wave !== 'AU3' && !body && count === 1 && attempt === 0) { await sleep(waitMs); continue; }
+      if (!['AU3', 'AU5'].includes(b.wave) && !body && count === 1 && attempt === 0) { await sleep(waitMs); continue; }
       latch('provider_quota_or_rate_limit', { ...event, rateLimitCount: count });
     } else if (r.status === 402 || /quota|rate_limit|credit|payment/.test(code)) latch('provider_quota_or_rate_limit', event);
     throw Error(`Provider request failed: HTTP ${r.status}, ${code}; no generation retry`);
@@ -109,7 +109,7 @@ function args(argv) {
 async function generate(kind, a) {
   if (fs.existsSync(stopPath)) throw Error('Generation stopped: persistent STOP.json exists');
   const b = budget();
-  if (b.wave === 'AU3') throw Error('AU3 requires the dedicated structured composition launcher');
+  if (['AU3', 'AU5'].includes(b.wave)) throw Error(`${b.wave} requires the dedicated structured composition launcher`);
   if (!['proofs', 'audition'].includes(b.status)) throw Error('Generation closed in budget.json');
   const previous = fs.existsSync(statePath) ? json(statePath) : { pending: null };
   if (previous.pending) throw Error('Unresolved billable reservation: reconcile before more generation');
