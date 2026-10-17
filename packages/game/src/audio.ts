@@ -20,9 +20,24 @@ interface Playing extends ActiveSound {
   gain: GainNode;
   pan: StereoPannerNode;
 }
+/** A music voice's source: a decoded buffer, or a streamed track. Ending disconnects it. */
+interface MusicSource {
+  connect(node: AudioNode): void;
+  start(at: number, offset: number): void;
+  stop(at: number): void;
+  ended(fn: () => void): void;
+}
+/** A full track kept as its verified compressed bytes and played through <audio> elements. */
+interface StreamTrack {
+  url: string;
+  duration: number;
+  bytes: number;
+  /** Elements already wired to this context; an element takes one source node for life. */
+  free: { el: HTMLAudioElement; node: MediaElementAudioSourceNode }[];
+}
 interface Music {
   id: string;
-  source: AudioBufferSourceNode;
+  source: MusicSource;
   gain: GainNode;
   started: number;
   offset: number;
@@ -40,6 +55,8 @@ export class AudioLoader {
   manifest?: AudioManifest;
   private loading?: Promise<void>;
   private buffers = new Map<string, Promise<AudioBuffer | null>>();
+  private tracks = new Map<string, Promise<StreamTrack | null>>();
+  readonly streamed = new Map<string, { duration: number; bytes: number }>();
   readonly decoded = new Map<
     string,
     { duration: number; channels: number; sampleRate: number; bytes: number }
@@ -79,27 +96,9 @@ export class AudioLoader {
         id,
         (async () => {
           try {
-            const asset = this.manifest?.assets[id];
-            if (!asset) throw Error("Unavailable asset");
-            const r = await fetch(`/audio/${asset.file}`, {
-              signal: AbortSignal.timeout(data.limits.fetchTimeoutMs),
-            });
-            if (!r.ok) throw Error(`HTTP ${r.status}`);
-            const bytes = await r.arrayBuffer();
-            if (bytes.byteLength > data.limits.maxAssetBytes)
-              throw Error("Asset too large");
-            const digest = [
-              ...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
-            ]
-              .map((n) => n.toString(16).padStart(2, "0"))
-              .join("");
-            if (digest !== asset.sha256) throw Error("Asset checksum mismatch");
+            const { asset, bytes } = await this.verified(id);
             const buffer = await context.decodeAudioData(bytes);
-            if (
-              buffer.duration > data.limits.maxDurationSeconds ||
-              Math.abs(buffer.duration - asset.duration) > 0.2
-            )
-              throw Error("Asset duration mismatch");
+            checkDuration(buffer.duration, asset.duration);
             const info = {
               duration: buffer.duration,
               channels: buffer.numberOfChannels,
@@ -117,6 +116,96 @@ export class AudioLoader {
       );
     return this.buffers.get(id)!;
   }
+  /**
+   * A full track, verified like a buffer but never decoded whole: a 150 s master decodes to
+   * 55 MB of PCM, and allocating that mid-bout stalled the Fire TV (P2). The bytes stay as a
+   * blob that <audio> elements stream from.
+   */
+  async track(id: string): Promise<StreamTrack | null> {
+    await this.init();
+    if (!this.tracks.has(id))
+      this.tracks.set(
+        id,
+        (async () => {
+          try {
+            const { asset, bytes } = await this.verified(id);
+            const url = URL.createObjectURL(
+              new Blob([bytes], { type: mime(asset.file) }),
+            );
+            const probe = new Audio();
+            probe.preload = "metadata";
+            const duration = await new Promise<number>((resolve, reject) => {
+              probe.onloadedmetadata = () => resolve(probe.duration);
+              probe.onerror = () => reject(Error("Track unplayable"));
+              probe.src = url;
+            });
+            probe.removeAttribute("src");
+            try {
+              checkDuration(duration, asset.duration);
+            } catch (e) {
+              URL.revokeObjectURL(url);
+              throw e;
+            }
+            const info = { duration, bytes: bytes.byteLength };
+            this.streamed.set(id, info);
+            this.log("streamed", id, info);
+            return { url, ...info, free: [] };
+          } catch (e) {
+            this.log("asset-silent", id, String(e));
+            return null;
+          }
+        })(),
+      );
+    return this.tracks.get(id)!;
+  }
+  /** Fetches an asset and checks its size and pinned hash; throws on any mismatch. */
+  private async verified(id: string) {
+    const asset = this.manifest?.assets[id];
+    if (!asset) throw Error("Unavailable asset");
+    const r = await fetch(`/audio/${asset.file}`, {
+      signal: AbortSignal.timeout(data.limits.fetchTimeoutMs),
+    });
+    if (!r.ok) throw Error(`HTTP ${r.status}`);
+    const bytes = await r.arrayBuffer();
+    if (bytes.byteLength > data.limits.maxAssetBytes)
+      throw Error("Asset too large");
+    const digest = [
+      ...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
+    ]
+      .map((n) => n.toString(16).padStart(2, "0"))
+      .join("");
+    if (digest !== asset.sha256) throw Error("Asset checksum mismatch");
+    return { asset, bytes };
+  }
+}
+function checkDuration(seconds: number, pinned: number) {
+  if (
+    !(seconds <= data.limits.maxDurationSeconds) ||
+    Math.abs(seconds - pinned) > 0.2
+  )
+    throw Error("Asset duration mismatch");
+}
+const mime = (file: string) =>
+  file.endsWith(".mp3")
+    ? "audio/mpeg"
+    : file.endsWith(".wav")
+      ? "audio/wav"
+      : "";
+/** Plays a decoded buffer once. */
+function bufferSource(context: AudioContext, buffer: AudioBuffer): MusicSource {
+  const node = context.createBufferSource();
+  node.buffer = buffer;
+  return {
+    connect: (to) => void node.connect(to),
+    start: (at, offset) => node.start(at, offset),
+    stop: (at) => node.stop(at),
+    ended: (fn) => {
+      node.onended = () => {
+        node.disconnect();
+        fn();
+      };
+    },
+  };
 }
 
 export class GameAudio {
@@ -131,6 +220,8 @@ export class GameAudio {
   private logs: Log[] = [];
   private music?: Music;
   private musicVoices = new Set<Music>();
+  /** Elements streaming a track; they follow the context when the page is hidden. */
+  private streams = new Set<HTMLAudioElement>();
   private scene = "silent";
   private playlistIndex = 0;
   private musicNextAt = Infinity;
@@ -388,10 +479,14 @@ export class GameAudio {
     if (!context || this.worldPaused || this.dead) return;
     const ticket = ++this.musicRequest;
     this.musicLoading = true;
-    const buffer = await this.loader.buffer(id, context);
+    await this.loader.init();
+    const media =
+      this.loader.manifest?.assets[id]?.kind === "track"
+        ? await this.loader.track(id)
+        : await this.loader.buffer(id, context);
     if (ticket !== this.musicRequest || this.dead || this.worldPaused) return;
     this.musicLoading = false;
-    if (!buffer) {
+    if (!media) {
       this.stopMusic();
       this.log("music-silent", id);
       return;
@@ -399,11 +494,14 @@ export class GameAudio {
     while (this.musicVoices.size >= data.limits.music)
       this.stopMusicVoice([...this.musicVoices][0]!, 0);
     const now = context.currentTime,
-      fade = Math.min(data.music.crossfadeSeconds, buffer.duration / 2);
-    const source = context.createBufferSource(),
+      fade = Math.min(data.music.crossfadeSeconds, media.duration / 2);
+    const source =
+        media instanceof AudioBuffer
+          ? bufferSource(context, media)
+          : this.streamSource(context, media),
       gain = context.createGain();
-    source.buffer = buffer;
-    source.connect(gain).connect(this.inputs.music);
+    source.connect(gain);
+    gain.connect(this.inputs.music);
     const tier = this.scene.startsWith("arena:")
       ? (data.music.tierGainDb[
           this.scene.split(":")[1] as keyof typeof data.music.tierGainDb
@@ -418,27 +516,27 @@ export class GameAudio {
       source,
       gain,
       started: now,
-      offset: Math.min(offset, buffer.duration - 0.01),
-      duration: buffer.duration,
+      offset: Math.min(offset, media.duration - 0.01),
+      duration: media.duration,
     };
     this.music = track;
     this.musicVoices.add(track);
-    source.onended = () => {
+    source.ended(() => {
       this.musicVoices.delete(track);
-      source.disconnect();
       gain.disconnect();
       if (this.music === track) {
         this.music = undefined;
         this.musicNextAt = 0;
       }
       this.duck();
-    };
+    });
     source.start(now, track.offset);
-    this.musicNextAt = now + nextTrackDelay(buffer.duration, track.offset);
+    this.musicNextAt = now + nextTrackDelay(media.duration, track.offset);
     this.duck();
     this.log("music-play", id, {
       scene: this.scene,
-      duration: buffer.duration,
+      streamed: !(media instanceof AudioBuffer),
+      duration: media.duration,
       offset: track.offset,
       crossfade: fade,
       nextAt: this.musicNextAt,
@@ -450,6 +548,49 @@ export class GameAudio {
     track.gain.gain.linearRampToValueAtTime(0, now + fade);
     track.source.stop(now + fade);
     if (!fade) this.musicVoices.delete(track);
+  }
+  /** Streams a track through an <audio> element; stopping parks the element for reuse. */
+  private streamSource(context: AudioContext, track: StreamTrack): MusicSource {
+    let voice = track.free.pop();
+    if (!voice) {
+      const el = new Audio(track.url);
+      el.preload = "auto";
+      voice = { el, node: context.createMediaElementSource(el) };
+    }
+    const { el, node } = voice;
+    let timer: ReturnType<typeof setTimeout> | undefined,
+      done = false,
+      onEnd = () => {};
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      el.onended = null;
+      el.pause();
+      node.disconnect();
+      this.streams.delete(el);
+      track.free.push({ el, node });
+      onEnd();
+    };
+    el.onended = finish;
+    return {
+      connect: (to) => void node.connect(to),
+      start: (_at, offset) => {
+        el.currentTime = offset;
+        this.streams.add(el);
+        if (!document.hidden) void el.play().catch(finish);
+      },
+      stop: (at) => {
+        clearTimeout(timer);
+        timer = setTimeout(
+          finish,
+          Math.max(0, (at - context.currentTime) * 1000),
+        );
+      },
+      ended: (fn) => {
+        onEnd = fn;
+      },
+    };
   }
   private stopMusic() {
     for (const track of this.musicVoices)
@@ -504,6 +645,9 @@ export class GameAudio {
   async hidden(hidden: boolean) {
     if (!this.context || this.dead) return;
     try {
+      for (const el of this.streams)
+        if (hidden) el.pause();
+        else void el.play().catch(() => {});
       if (hidden) await this.context.suspend();
       else await this.context.resume();
     } catch {
@@ -525,6 +669,7 @@ export class GameAudio {
         : null,
       musicVoices: this.musicVoices.size,
       decodedBuffers: Object.fromEntries(this.loader.decoded),
+      streamedTracks: Object.fromEntries(this.loader.streamed),
       decodedAudioBytes: [...this.loader.decoded.values()].reduce(
         (n, b) => n + b.bytes,
         0,
@@ -550,6 +695,7 @@ export class GameAudio {
     this.musicRequest++;
     for (const s of this.sounds.values()) this.stopSound(s.id, "closed");
     this.stopMusic();
+    for (const el of this.streams) el.pause();
     void this.context?.close();
   }
 }

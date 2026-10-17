@@ -1,0 +1,73 @@
+{
+  "kind": "offline-audio-derivative",
+  "wave": "P2",
+  "file": "arena-d-full.mp3",
+  "sha256": "5dd8780323646b28f1b736c0f671dfb3014635702123022d71c58ed3b4327bb9",
+  "source": "audition/r4/arena-D-lyre-under-iron/master-48k.wav",
+  "sourceSha256": "f1ce636acb2d1ea35578feb72e1cbd48e3b5055376e9c18f03df3b03e7ed16a3",
+  "sourceSidecar": "audition/r4/arena-D-lyre-under-iron/master-48k.wav.json",
+  "sourceRetrieval": "git lfs: 78cd0ed:packages/game/public/audio/arena-d-full.wav",
+  "additionalPaidCalls": 0,
+  "additionalCredits": 0,
+  "tool": "ffmpeg libmp3lame",
+  "encoder": "ffmpeg version 2025-02-17-git-b92577405b-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+  "reproduce": "python packages/tools/audio/encode-full-tracks.py",
+  "processing": {
+    "method": "MP3 CBR 256k, 48000 Hz, LAME gapless header; no gain, trim, resample or time change.",
+    "reason": "A 28.8 MB WAV loaded mid-bout stalled the Fire TV main thread; see docs/waves/P2-tv-bout-start.md."
+  },
+  "measurement": {
+    "file": "arena-d-full.mp3",
+    "sha256": "5dd8780323646b28f1b736c0f671dfb3014635702123022d71c58ed3b4327bb9",
+    "bytes": 4801536,
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 7200000,
+    "decodedSeconds": 150.0,
+    "containerSeconds": 150.024,
+    "codec": "mp3",
+    "bitRate": 256000,
+    "integratedLufs": -26.0,
+    "truePeakDbTP": -12.71,
+    "loudnessRangeLU": 9.0,
+    "loudnorm": {
+      "input_i": "-26.00",
+      "input_tp": "-12.71",
+      "input_lra": "9.00",
+      "input_thresh": "-36.37",
+      "output_i": "-24.50",
+      "output_tp": "-6.67",
+      "output_lra": "4.70",
+      "output_thresh": "-34.81",
+      "normalization_type": "dynamic",
+      "target_offset": "-1.50"
+    }
+  },
+  "masterMeasurement": {
+    "file": "audition/r4/arena-D-lyre-under-iron/master-48k.wav",
+    "sha256": "f1ce636acb2d1ea35578feb72e1cbd48e3b5055376e9c18f03df3b03e7ed16a3",
+    "sampleRate": 48000,
+    "channels": 2,
+    "sampleCount": 7200000,
+    "decodedSeconds": 150.0,
+    "containerSeconds": 150.0,
+    "codec": "pcm_s16le",
+    "integratedLufs": -26.0,
+    "truePeakDbTP": -12.75,
+    "loudnessRangeLU": 9.0,
+    "samplePeakDbFS": -12.778,
+    "samplesAtOrAboveFullScale": 0,
+    "loudnorm": {
+      "input_i": "-26.00",
+      "input_tp": "-12.75",
+      "input_lra": "9.00",
+      "input_thresh": "-36.37",
+      "output_i": "-24.50",
+      "output_tp": "-6.68",
+      "output_lra": "4.70",
+      "output_thresh": "-34.81",
+      "normalization_type": "dynamic",
+      "target_offset": "-1.50"
+    }
+  }
+}
