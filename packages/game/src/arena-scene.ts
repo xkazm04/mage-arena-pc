@@ -4,11 +4,15 @@ import {
   BitmapText,
   Container,
   Graphics,
+  RenderTexture,
   Sprite,
+  Texture,
   type Application,
+  type Renderer,
   type TextureSource,
 } from "pixi.js";
 import { frameGraphics } from "./pixi-fixes.ts";
+import { sigilMesh } from "./sigil-shader.ts";
 import {
   arenaGeometry,
   runtime,
@@ -207,6 +211,34 @@ export class ArenaScene {
   }
   depthSnapshot() {
     return this.figures.children.map((c) => ({ id: c.label, y: depthOf(c) }));
+  }
+  /**
+   * Draws `world` as last rendered, one painted sigil and one hit flash into a small offscreen
+   * target, so shader links, generated uniform code and geometry buffers are made behind the
+   * loading card instead of on the first frames of the fight. Nothing reaches the screen.
+   */
+  warm(renderer: Renderer, world: Container) {
+    const target = RenderTexture.create({ width: 256, height: 144 }),
+      probe = new Container(),
+      sigil = sigilMesh(),
+      flash = new Sprite(Texture.WHITE);
+    sigil.setSize(64, 64);
+    flash.setSize(64, 96);
+    flash.position.set(96, 0);
+    flash.filters = [this.feedback.white];
+    probe.addChild(sigil, flash);
+    const shown = world.visible,
+      group = world.isRenderGroup;
+    world.visible = true;
+    renderer.render({ container: world, target });
+    world.visible = shown;
+    // Rendering a container as the root makes it a render group for good, which costs the
+    // world its place in the stage's single instruction set (slower on the Stick, P1).
+    if (!group) world.disableRenderGroup();
+    renderer.render({ container: probe, target, clear: false });
+    flash.filters = null;
+    probe.destroy({ children: true });
+    target.destroy(true);
   }
   dispose() {
     this.disposed = true;
