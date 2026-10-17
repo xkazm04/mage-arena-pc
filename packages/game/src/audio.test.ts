@@ -19,7 +19,7 @@ describe("AU4 owner-kept audio contract", () => {
   it("pins every imported file and requires trims, durations and all cue/playlist assets", () => {
     const manifest = validateAudioManifest(manifestData);
     expect(audioDataProblems(manifest)).toEqual([]);
-    expect(Object.keys(manifest.assets)).toHaveLength(22);
+    expect(Object.keys(manifest.assets)).toHaveLength(23);
     for (const a of Object.values(manifest.assets)) {
       const bytes = readFileSync(
         new URL(`../public/audio/${a.file}`, import.meta.url),
@@ -122,10 +122,10 @@ describe("AU4 owner-kept audio contract", () => {
   });
   it("maps confirmed tiers and camp phases, schedules short loops and full tracks by duration", () => {
     expect([1, 2, 3, 4].map((t) => playlistFor(`arena:${t}`)[0])).toEqual([
-      "arena-a",
+      "arena-a-full",
       "arena-c",
       "arena-d",
-      "arena-a",
+      "arena-a-full",
     ]);
     expect(playlistFor("arena:4")).toHaveLength(3);
     expect(playlistFor("camp:night")).toEqual(["camp-night"]);
@@ -151,7 +151,7 @@ describe("AU4 owner-kept audio contract", () => {
 
 describe("U6b full-track delivery", () => {
   it("uses the measured 150-second masters once at unity trim and keeps unverified adaptive features off", () => {
-    for (const id of ["arena-c", "arena-d"] as const) {
+    for (const id of ["arena-c", "arena-d", "arena-a-full"] as const) {
       const asset = manifestData.assets[id];
       const side = JSON.parse(
         readFileSync(
@@ -174,7 +174,10 @@ describe("U6b full-track delivery", () => {
             side.masterMeasurement.integratedLufs,
         ),
       ).toBeLessThanOrEqual(0.05);
-      const delivered = manifestData.u6b.tracks.find((t) => t.id === id)!;
+      const delivered = [
+        ...manifestData.u6b.tracks,
+        ...manifestData.au5.tracks,
+      ].find((t) => t.id === id)!;
       expect(delivered.linearPlaybackReady).toBe(true);
       expect(delivered.adaptiveReady).toBe(false);
       expect(delivered.productionApproved).toBe(false);
@@ -182,5 +185,18 @@ describe("U6b full-track delivery", () => {
     expect(playlistFor("arena:2")).toEqual(["arena-c", "arena-d"]);
     expect(playlistFor("arena:3")).toEqual(["arena-d", "arena-c"]);
     expect(manifestData.assets["arena-a"].duration).toBeLessThan(150);
+  });
+  it("AU5 Hide and iron replaces the 20 s loop in tiers 1 and 4; the loop stays as its reference", () => {
+    expect(playlistFor("arena:1")).toEqual(["arena-a-full"]);
+    expect(playlistFor("arena:4")).toEqual([
+      "arena-a-full",
+      "arena-d",
+      "arena-c",
+    ]);
+    expect(manifestData.u6b.deferred).toEqual([]);
+    expect(manifestData.au5.reference.sha256).toBe(
+      manifestData.assets["arena-a"].sha256,
+    );
+    expect(manifestData.au5.tracks[0]!.adaptiveReady).toBe(false);
   });
 });

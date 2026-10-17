@@ -6,15 +6,23 @@ measured loudness of the master (192 kbps lost 0.28 LU to its lower lowpass) at 
 
 Each master is read from Git LFS at the commit that pinned it and checked against its sidecar hash,
 so the encode is reproducible without keeping the WAV in the served folder.
+
+AU5 adds Hide and iron (arena-a-full). Its master was never served as a WAV, so it is read only from
+the local r5 audition folder (process-r4.py arena-A-hide-and-iron r5) and checked the same way.
 """
 import hashlib, json, re, subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 AUDIO = ROOT / "packages/game/public/audio"
-MASTERS = ROOT / "docs/audio/audition/r4"
-PINNED = "78cd0ed"  # last commit serving the WAV masters
-TRACKS = [("arena-c", "arena-C-reed-oath"), ("arena-d", "arena-D-lyre-under-iron")]
+AUDITION = ROOT / "docs/audio/audition"
+PINNED = "78cd0ed"  # last commit serving the U6b WAV masters
+# (manifest key, served stem, master id, audition round, wave)
+TRACKS = [
+    ("arena-c", "arena-c-full", "arena-C-reed-oath", "r4", "P2"),
+    ("arena-d", "arena-d-full", "arena-D-lyre-under-iron", "r4", "P2"),
+    ("arena-a-full", "arena-a-full", "arena-A-hide-and-iron", "r5", "AU5"),
+]
 BITRATE = "256k"
 RATE, SAMPLES = 48000, 7200000
 
@@ -27,10 +35,11 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def master(key, source_id):
-    side = json.loads((MASTERS / source_id / "master-48k.wav.json").read_text(encoding="utf-8"))
-    local = MASTERS / source_id / "master-48k.wav"
-    data = local.read_bytes() if local.exists() else run(
+def master(key, source_id, round_):
+    folder = AUDITION / round_ / source_id
+    side = json.loads((folder / "master-48k.wav.json").read_text(encoding="utf-8"))
+    local = folder / "master-48k.wav"
+    data = local.read_bytes() if local.exists() or round_ != "r4" else run(
         ["git", "-C", ROOT, "lfs", "smudge"],
         run(["git", "-C", ROOT, "show", f"{PINNED}:packages/game/public/audio/{key}-full.wav"]),
     )
@@ -59,11 +68,11 @@ def measure(path):
 
 manifest = json.loads((AUDIO / "manifest.json").read_text(encoding="utf-8"))
 report = []
-for key, source_id in TRACKS:
-    data, side = master(key, source_id)
+for key, stem, source_id, round_, wave in TRACKS:
+    data, side = master(key, source_id, round_)
     wav = AUDIO / f"{key}-master.tmp.wav"
     wav.write_bytes(data)
-    out = AUDIO / f"{key}-full.mp3"
+    out = AUDIO / f"{stem}.mp3"
     try:
         # -map_metadata -1 and no ID3 keep the bytes a function of the master and the encoder only.
         run(["ffmpeg", "-hide_banner", "-nostdin", "-y", "-i", wav, "-map_metadata", "-1", "-id3v2_version", 0,
@@ -78,13 +87,14 @@ for key, source_id in TRACKS:
     assert got["truePeakDbTP"] <= -1, f"{key}: true peak {got['truePeakDbTP']}"
     sidecar = {
         "kind": "offline-audio-derivative",
-        "wave": "P2",
+        "wave": wave,
         "file": out.name,
         "sha256": got["sha256"],
         "source": side["file"],
         "sourceSha256": side["sha256"],
-        "sourceSidecar": f"audition/r4/{source_id}/master-48k.wav.json",
-        "sourceRetrieval": f"git lfs: {PINNED}:packages/game/public/audio/{key}-full.wav",
+        "sourceSidecar": f"audition/{round_}/{source_id}/master-48k.wav.json",
+        "sourceRetrieval": f"git lfs: {PINNED}:packages/game/public/audio/{stem}.wav" if round_ == "r4"
+        else f"local: docs/audio/audition/{round_}/{source_id}/master-48k.wav (gitignored, like every audition original)",
         "additionalPaidCalls": 0,
         "additionalCredits": 0,
         "tool": "ffmpeg libmp3lame",
@@ -98,11 +108,11 @@ for key, source_id in TRACKS:
         "masterMeasurement": master_m,
     }
     (AUDIO / f"{out.name}.json").write_text(json.dumps(sidecar, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
-    manifest["assets"][key].update(file=out.name, sha256=got["sha256"])
+    manifest["assets"].setdefault(key, dict(duration=150, trimDb=0, kind="track")).update(file=out.name, sha256=got["sha256"])
     for t in manifest["u6b"]["tracks"]:
         if t["id"] == key:
             t.update(file=out.name, sha256=got["sha256"])
-    for stale in [AUDIO / f"{key}-full.wav", AUDIO / f"{key}-full.wav.json"]:
+    for stale in [AUDIO / f"{stem}.wav", AUDIO / f"{stem}.wav.json"]:
         stale.unlink(missing_ok=True)
     report.append({k: got[k] for k in ["file", "bytes", "sampleCount", "integratedLufs", "truePeakDbTP"]} | {"masterLufs": master_m["integratedLufs"]})
 (AUDIO / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")

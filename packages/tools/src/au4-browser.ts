@@ -243,7 +243,7 @@ try {
     await click(p, "training-arena", "training");
     await click(p, "training-magic", "composition");
     await click(p, "composition-start", "arena");
-    await played(p, "arena-a", "music-play");
+    await played(p, "arena-a-full", "music-play", 30000);
     const aim = await p.evaluate(() => {
       const a = (window as unknown as Win).__arena;
       return a.project(a.snapshot().state.actors[1]!.pos);
