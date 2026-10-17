@@ -155,6 +155,9 @@ export class ArenaGame {
   /** The next Tiro wave's art, loaded while the intermission card is up. */
   private prefetch?: Prefetch;
   private loadingFrames = 0;
+  /** Set once the art is resident; the next loading frame warms the GPU, then the gate opens. */
+  private warmUp?: () => void;
+  private warmMs?: number;
   private framesSinceGate = 0;
   /** The first frame after the gate shows the opening tick; stepping starts on the next. */
   private holdFirstFrame = false;
@@ -588,11 +591,20 @@ export class ArenaGame {
   private prepare() {
     const renderer = this.ui.app.renderer;
     this.framesSinceGate = 0;
+    this.warmUp = undefined;
+    this.warmMs = undefined;
     void this.gate
       .open(
-        this.scene.ready(this.training.state.actors, (source) =>
-          renderer.texture.initSource(source),
-        ),
+        this.scene
+          .ready(this.training.state.actors, (source) =>
+            renderer.texture.initSource(source),
+          )
+          .then(
+            (missing) =>
+              new Promise<string[]>((resolve) => {
+                this.warmUp = () => resolve(missing);
+              }),
+          ),
         this.gateTimeoutMs,
         () => this.scene.progress().pending,
       )
@@ -601,6 +613,25 @@ export class ArenaGame {
         this.clock = new FixedStepper();
         this.holdFirstFrame = true;
       });
+  }
+  /** Draws the opening tick offscreen while the loading card is still up, then lets the gate open. */
+  private warm() {
+    const done = this.warmUp!,
+      started = performance.now();
+    this.warmUp = undefined;
+    this.scene.render(
+      this.training.state,
+      this.training.player,
+      this.camera,
+      1,
+      this.input.aim,
+      this.lastPerfect,
+      false,
+      0,
+    );
+    this.scene.warm(this.ui.app.renderer, this.ui.world);
+    this.warmMs = performance.now() - started;
+    done();
   }
   /** While the intermission card is up, load the next wave's bodies, sigils and effects. */
   private prefetchNext() {
@@ -1223,6 +1254,7 @@ export class ArenaGame {
     this.drawLoading(loading && this.ui.screen === "arena");
     if (loading) {
       this.loadingFrames++;
+      if (this.warmUp) this.warm();
       this.autoFlush();
       return;
     }
@@ -1437,6 +1469,7 @@ export class ArenaGame {
         last: this.gate.last,
         opened: this.gate.opened,
         loadingFrames: this.loadingFrames,
+        warmMs: this.warmMs,
         progress: this.scene.progress(),
         prefetch: this.prefetch && {
           wave: this.prefetch.wave + 1,

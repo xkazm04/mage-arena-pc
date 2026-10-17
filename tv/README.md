@@ -161,7 +161,7 @@ etiquette:
 - **adb servers.** Some Death Ride tools run a separate adb server (`adb -P 5043`) so they do not
   disturb each other. `tv.ps1` uses the default server (5037).
 - **The Stick's address moves.** It is DHCP-assigned: 10.0.0.142 in older notes, 10.0.0.139 on
-  2026-10-15. Pass `-Device <ip>` or set `TV_DEVICE` when it changes. Without either, `tv.ps1` uses
+  2026-10-15, 10.0.0.142 again on 2026-10-16 (when .139 was this PC). Pass `-Device <ip>` or set `TV_DEVICE` when it changes. Without either, `tv.ps1` uses
   the single Fire TV adb already has attached.
 
 ## Troubleshooting

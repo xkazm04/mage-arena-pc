@@ -25,10 +25,10 @@ describe("AU4 owner-kept audio contract", () => {
         new URL(`../public/audio/${a.file}`, import.meta.url),
       );
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(a.sha256);
-      expect(a.trimDb).toBeLessThanOrEqual(
-        a.file.endsWith("-full.wav") ? 0 : -3,
-      );
+      expect(a.trimDb).toBeLessThanOrEqual(a.kind === "track" ? 0 : -3);
       expect(bytes.length).toBeLessThanOrEqual(audioData.limits.maxAssetBytes);
+      // P2: a PCM track loaded mid-bout stalled the Fire TV; served tracks are compressed.
+      if (a.kind === "track") expect(a.file).not.toMatch(/\.wav$/i);
     }
     expect(manifest.assets["roll-step"]!.duration).toBe(0.45);
     expect(
@@ -166,6 +166,14 @@ describe("U6b full-track delivery", () => {
       expect(side.measurement.channels).toBe(2);
       expect(side.measurement.integratedLufs).toBeCloseTo(-26, 1);
       expect(side.measurement.truePeakDbTP).toBeLessThanOrEqual(-1);
+      // The MP3 is a derivative of the measured U6b master, at the master's loudness.
+      expect(side.sourceSha256).toBe(side.masterMeasurement.sha256);
+      expect(
+        Math.abs(
+          side.measurement.integratedLufs -
+            side.masterMeasurement.integratedLufs,
+        ),
+      ).toBeLessThanOrEqual(0.05);
       const delivered = manifestData.u6b.tracks.find((t) => t.id === id)!;
       expect(delivered.linearPlaybackReady).toBe(true);
       expect(delivered.adaptiveReady).toBe(false);
