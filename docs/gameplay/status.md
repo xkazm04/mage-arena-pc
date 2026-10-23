@@ -29,7 +29,8 @@ Legend: **built** = implemented and tested; **partial** = implemented in a reduc
 | Hit and death animation clips | partial | U6b, U6c | 12 creature rear views use front fallbacks |
 | Painted sigils / telegraph art | built | U6 (A13 import) | procedural fallback remains |
 | Fire / Earth / Air practice profiles | partial | CF1 | multipliers over Water archetypes, Lab only |
-| Fire / Earth / Air unique catalogues and resources (Heat, Footing, Momentum) | planned | plan W8 | |
+| Fire and Air unique catalogues and resources (Heat, Momentum) | partial | W8 (CR-002 and CR-007 parity suites) | kernel and AI opponents built; player loadouts, HUD, Lab and practice entry pending (W8 lane P); not owner-felt |
+| Earth catalogue and Footing | planned | none | no source in either channel |
 | Borrowed line from a cross-tent friend | planned | combat.json `lines.borrowedLine` | duality arc |
 | Crowd mana flask at renown ≥ 40 in a final | planned | stats.csv | not in kernel |
 | Gear (talisman, garment) bought with gold | planned | stats.csv | no item system |

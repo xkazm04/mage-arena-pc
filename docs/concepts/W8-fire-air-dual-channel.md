@@ -229,3 +229,22 @@ WP0 hash neutrality (land it alone and prove it). Parallel lanes share `kernel.t
   A lane that needs a different placement asks the Director.
 - **Proof.** The gate is green. The golden replay hashes are unchanged. Census digests for 2,000 fights per wave are equal before and after WP0 (wave 1 `0bf61caf`, wave 2 `df82257a`, wave 3 `0f671690`, wave 4 `9a9b4a79`).
 - **Inherited, not W8.** The census semifinal median is 38.9 s against a 45-75 s band on `main` before WP0, so `report:w4` prints "gate FAIL". The likely cause is the 1.5x player pace (`4127797`). It needs an owner decision; W8 does not tune it.
+
+### Build progress (2026-10-23)
+
+| Lane | State | Commits |
+|---|---|---|
+| WP0 / WP0b seams | landed, hash-neutral | `5b88caf`, `f1038cc` |
+| T tooling | landed: `docs/change-requests/`, `npm run vr:drift`, `vr:tuning-return`, `vr:vectors` | `8602307` |
+| F Fire | landed: every CR-002 hand check exact. The VR duels match outcome, phase, hp, waves and sunfall. Ticks and mana diverge from tick 0 on PC's post-pin variety draw (`mage-ai.ts`), documented, not tuned | `6a89060`, `ca08eba` |
+| A Air | landed: AirTests.cpp hand checks exact; no VR Air duel exists to compare | `c84524d`, adoption merge `9052086` |
+| Director kernel seams | hit flags, Air flight and evade, interrupted/busy/rooted hooks, onHit role, `createGames` balance/unpaced | `d09a474` |
+| R rivals (CR-005, CR-003 RangeM) | next | |
+| P presentation, Art Lio, B balance | after R | |
+
+Proof: gate green (470 tests, 0 skipped). Water goldens unchanged. Census digests equal to the pre-W8 baseline after every core commit.
+
+Findings for later lanes:
+- **Duel pacing (lane B).** A smoke run of six Air finals has Lio beating the reference player in 9-15 s at Momentum 100. VR's Air census is also short (DF-008). The pacing fix goes into the PC overlay and is returned to VR with `vr:tuning-return`.
+- **VR pin drift (T3).** `vr:drift --vectors` passes 2 of VR's 45 conformance vectors at PC HEAD. The causes are PC changes after the pin: release and stagger events, Games spawn spacing, pace, and AI draws. A re-pin needs a deliberate review, not a byte copy.
+- **Still open.** Air event kinds (evade, deflect), an aim seam for Slipstream (it writes the brain input today), the generic threat reader's straight-line view of a curving bolt, and the `schools.ts` import-order trap (a test must import `kernel.ts` before `fire.ts`/`air.ts`).

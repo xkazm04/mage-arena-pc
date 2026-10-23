@@ -28,11 +28,11 @@ Statuses: `received`, `accepted` (with scope), `declined`, `ported`, `re-pinned`
 | CR | VR title | VR text | Status | Owner decision (2026-10-23) | PC owner |
 | --- | --- | --- | --- | --- | --- |
 | [CR-001](CR-001.md) | Blink input and rune pads | `CR-001-blink-and-pads.md` | declined | Declined for PC: blink pads are VR-only | - |
-| [CR-002](CR-002.md) | Fire school and Heat | `CR-002-fire-school.md` | accepted | Accepted; porting in W8 | W8 lane F |
+| [CR-002](CR-002.md) | Fire school and Heat | `CR-002-fire-school.md` | ported | Accepted; porting in W8 | W8 lane F |
 | [CR-003](CR-003.md) | Threat geometry: enemies stay off the dais | `CR-003-threat-geometry.md` | accepted (partial) | Accepted for the shared `Attack.RangeM` edit only; the rest is VR-only | W8 lane R |
 | [CR-004](CR-004.md) | Cinder hounds spit embers | `CR-004-hound-ember-spit.md` | declined | Declined for PC | - |
 | [CR-005](CR-005.md) | Named rivals: HP-gated phases, collar surge, granted signature | `CR-005-rival-phases.md` | accepted (partial) | Accepted: the rule, not VR's numbers | W8 lane R |
-| [CR-007](CR-007.md) | Air school and Momentum (AIR.md, VR T23) | not filed by VR; PC writes it | accepted | Accepted 2026-10-23; text drafted by W8 lane A | W8 lane A |
+| [CR-007](CR-007.md) | Air school and Momentum (AIR.md, VR T23) | not filed by VR; PC writes it | ported | Accepted 2026-10-23; text drafted by W8 lane A | W8 lane A |
 
 VR texts live under `mage-arena-vr/docs/change-requests/` (default checkout `C:/Users/kazda/kiro/mage-arena-vr`).
 CR-006 is not a VR CR known to PC at the time of writing.
