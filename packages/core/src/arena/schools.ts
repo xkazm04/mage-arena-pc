@@ -7,6 +7,7 @@ import { fireRules } from './fire.ts';
 import { airRules } from './air.ts';
 /** The Veering Bolt's curved flight step, used by the kernel's projectile update (Air owns the geometry). */
 export { curvedStep } from './air.ts';
+import type { Vec } from './math.ts';
 import { slotSchools, type Actor, type ArenaState, type Family, type Hit, type InputFrame, type Projectile, type SchoolState, type SlotComposition, type SlotSchool } from './types.ts';
 
 /** One Fire/Air row with its numeric cells read; `shape`, `gain` and `notes` stay prose for the school module to read. */
@@ -96,6 +97,9 @@ export interface SchoolRules {
   tick(state: ArenaState, a: Actor): void;
   /** Press on a slot; true when a cast started (mana spent, pending set). */
   tryCast(state: ArenaState, a: Actor, input: InputFrame): boolean;
+  /** A named rival's granted signature (VR CR-005): start `spellId` unpaid, skipping the tier gate and the cooldown;
+   * false when the hands are busy or the spell is not this school's. */
+  grantedCast?(state: ArenaState, a: Actor, spellId: string, aim: Vec): boolean;
   release(state: ArenaState, a: Actor): void;
   drainMult(state: ArenaState, a: Actor): number;
   staminaRegenMult(state: ArenaState, a: Actor): number;
@@ -122,6 +126,7 @@ const of = (a: Actor | undefined): SchoolRules | undefined => a?.schoolState ? r
 export const schoolTick = (state: ArenaState, a: Actor): void => of(a)?.tick(state, a);
 export const hasSchoolLoadout = (a: Actor): boolean => a.schoolState !== undefined;
 export const trySchoolCast = (state: ArenaState, a: Actor, input: InputFrame): boolean => of(a)?.tryCast(state, a, input) ?? false;
+export const startGrantedSchoolCast = (state: ArenaState, a: Actor, spellId: string, aim: Vec): boolean => of(a)?.grantedCast?.(state, a, spellId, aim) ?? false;
 export const releaseSchoolSpell = (state: ArenaState, a: Actor): void => of(a)?.release(state, a);
 export const schoolDrainMult = (state: ArenaState, a: Actor): number => of(a)?.drainMult(state, a) ?? 1;
 export const schoolStaminaRegenMult = (state: ArenaState, a: Actor): number => of(a)?.staminaRegenMult(state, a) ?? 1;

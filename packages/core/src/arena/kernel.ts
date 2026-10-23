@@ -81,6 +81,16 @@ export function tapContacts(state: ArenaState, tap: ContactTap): () => void {
   const list = contactTaps.get(state) ?? []; list.push(tap); contactTaps.set(state, list);
   return () => { const i = list.indexOf(tap); if (i >= 0) list.splice(i, 1); };
 }
+/** Rule seam kept outside the hashed state (like tapContacts), so a state without hooks steps exactly as before.
+ * `beforeCast` runs in the actor's step after its release and before its own cast press (true: a cast was started and
+ * releases now if due); `afterHits` runs once per tick after every hit has landed and before the tier clocks.
+ * The named-rival phases (rival-phases.ts, VR CR-005) are the client. A cloned state carries no hooks. */
+export interface ArenaHooks { beforeCast?(state: ArenaState, a: Actor, input: InputFrame): boolean; afterHits?(state: ArenaState): void }
+const arenaHooks = new WeakMap<ArenaState, ArenaHooks[]>();
+export function hookArena(state: ArenaState, hooks: ArenaHooks): () => void {
+  const list = arenaHooks.get(state) ?? []; list.push(hooks); arenaHooks.set(state, list);
+  return () => { const i = list.indexOf(hooks); if (i >= 0) list.splice(i, 1); };
+}
 export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean; evaded?: true } {
   for (const tap of contactTaps.get(state) ?? []) tap(state, target, hit);
   if (target.tags.includes("DEFEATED") || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
@@ -332,6 +342,7 @@ export function updateClock(state: ArenaState, a: Actor): void {
 /** Exactly one fixed simulation tick. Inputs are absolute and do not contain timestamps. */
 export function stepArena(state: ArenaState, inputs: Readonly<Record<number, InputFrame>> = {}): void {
   state.tick++;
+  const hooks = arenaHooks.get(state);
   for (const a of state.actors) {
     if (a.tags.includes("DEFEATED")) continue;
     if (state.tick >= (a.staggerUntil ?? 0)) a.tags = a.tags.filter(tag => tag !== "STAGGERED");
@@ -343,11 +354,15 @@ export function stepArena(state: ArenaState, inputs: Readonly<Record<number, Inp
     if (state.tick < (a.staggerUntil ?? 0)) { a.previousPos = { ...a.pos }; updateWard(state, a, inputs[a.id] ?? idleInput()); if (a.velocity) a.velocity = { x: 0, y: 0 }; continue; }
     const input = inputs[a.id] ?? idleInput({ x: a.pos.x + a.facing.x, y: a.pos.y + a.facing.y });
     a.facing = unit(sub(input.aim, a.pos), a.facing);
-    updateWard(state, a, input); moveActor(state, a, input); schoolAfterMove(state, a); releaseCast(state, a); startCast(state, a, input);
+    updateWard(state, a, input); moveActor(state, a, input); schoolAfterMove(state, a); releaseCast(state, a);
+    if (hooks) for (const h of hooks) if (h.beforeCast?.(state, a, input)) releaseCast(state, a);
+    startCast(state, a, input);
     a.lastInput = { ...input, move: { ...input.move }, aim: { ...input.aim } };
   }
   // VR steps trails and beams before projectiles (Kernel UpdateFireOngoing); a no-op without school effects.
   updateTelegraphs(state); stepSchoolEffects(state); updateProjectiles(state); state.zones = state.zones.filter(z => z.until > state.tick);
+  // Every hit of this tick has landed: a rule hook (a rival's phase break and its surge) goes before the normal clock.
+  if (hooks) for (const h of hooks) h.afterHits?.(state);
   for (const a of state.actors) if (!a.tags.includes("DEFEATED")) updateClock(state, a);
 }
 export function resetWave(state: ArenaState, actor: Actor): void {

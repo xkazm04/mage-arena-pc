@@ -126,6 +126,21 @@ export function fireWindupTicks(a: Actor, spell: SchoolSpell): number {
   const shape = fireShape(spell.id)!;
   return ticks(shape.sequential ? paced(a, spell.castS) : Math.max(paced(a, spell.castS), warning(a, spell, shape)));
 }
+/** The cast start every Fire row shares (VR BeginFireCast). `pay` false is the granted signature: no mana leaves the pool;
+ * the cooldown, windup, root and cast event are the row's own. */
+function beginCast(state: ArenaState, a: Actor, s: SchoolState, spell: SchoolSpell, aim: Vec, pay: boolean): void {
+  const shape = fireShape(spell.id)!;
+  if (pay) {
+    a.mana -= spell.mana;
+    if (state.lab) a.metrics.manaCast = (a.metrics.manaCast ?? 0) + spell.mana;
+  }
+  s.cooldowns[spell.id] = state.tick + ticks(paced(a, spell.cooldownS));
+  const releaseTick = state.tick + fireWindupTicks(a, spell);
+  a.pending = { kind: 'spell', startTick: state.tick, releaseTick, aim: placed(shape) ? placedPoint(a, aim, spell.rangeM) : { ...aim }, activationId: state.nextId++, spellId: spell.id };
+  // VR roots through the release tick's move (FireCastRoots while pending); an interrupt clears it (interrupted below).
+  if (shape.roots) s.rootUntil = releaseTick + 1;
+  a.metrics.casts++; emit(state, 'cast', a, spell.tier);
+}
 const heatPaid = (shape: FireShape): number => shape.heatMode === 'hit' || shape.heatMode === 'target' || shape.heatMode === 'tick' ? shape.heat : 0;
 
 export const fireRules: SchoolRules = {
@@ -144,16 +159,15 @@ export const fireRules: SchoolRules = {
   tryCast(state, a, input) {
     const s = fireState(a); if (!s || a.pending || ownerBeam(state, a)) return false;
     const spell = slotSpell(a, input.slot, state); if (!spell) return false;
-    const shape = fireShape(spell.id)!;
     if (state.tick < (s.cooldowns[spell.id] ?? 0) || a.mana < spell.mana) return false;
-    a.mana -= spell.mana;
-    if (state.lab) a.metrics.manaCast = (a.metrics.manaCast ?? 0) + spell.mana;
-    s.cooldowns[spell.id] = state.tick + ticks(paced(a, spell.cooldownS));
-    const releaseTick = state.tick + fireWindupTicks(a, spell);
-    a.pending = { kind: 'spell', startTick: state.tick, releaseTick, aim: placed(shape) ? placedPoint(a, input.aim, spell.rangeM) : { ...input.aim }, activationId: state.nextId++, spellId: spell.id };
-    // VR roots through the release tick's move (FireCastRoots while pending); an interrupt clears it (interrupted below).
-    if (shape.roots) s.rootUntil = releaseTick + 1;
-    a.metrics.casts++; emit(state, 'cast', a, spell.tier);
+    beginCast(state, a, s, spell, input.aim, true);
+    return true;
+  },
+  // VR StartGrantedFireCast (CR-005): a named rival's signature skips the tier gate, the cooldown and the mana once.
+  grantedCast(state, a, spellId, aim) {
+    const s = fireState(a); if (!s || a.pending || ownerBeam(state, a)) return false;
+    const row = schoolSpellById(spellId); if (!row || row.school !== 'fire') return false;
+    beginCast(state, a, s, balancedSpell(row, state), aim, false);
     return true;
   },
   release(state, a) {

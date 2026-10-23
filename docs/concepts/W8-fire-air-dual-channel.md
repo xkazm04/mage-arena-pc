@@ -239,7 +239,7 @@ WP0 hash neutrality (land it alone and prove it). Parallel lanes share `kernel.t
 | F Fire | landed: every CR-002 hand check exact. The VR duels match outcome, phase, hp, waves and sunfall. Ticks and mana diverge from tick 0 on PC's post-pin variety draw (`mage-ai.ts`), documented, not tuned | `6a89060`, `ca08eba` |
 | A Air | landed: AirTests.cpp hand checks exact; no VR Air duel exists to compare | `c84524d`, adoption merge `9052086` |
 | Director kernel seams | hit flags, Air flight and evade, interrupted/busy/rooted hooks, onHit role, `createGames` balance/unpaced | `d09a474` |
-| R rivals (CR-005, CR-003 RangeM) | next | |
+| R rivals (CR-005, CR-003 RangeM) | landed: named-only phases via `hookArena` (outside the hash), granted signature through `grantedCast` in fire.ts/air.ts, `rivals.json` at VR values. CR-003 approach range reads `attack.rangeM` | lane R commit |
 | P presentation, Art Lio, B balance | after R | |
 
 Proof: gate green (470 tests, 0 skipped). Water goldens unchanged. Census digests equal to the pre-W8 baseline after every core commit.
@@ -248,3 +248,5 @@ Findings for later lanes:
 - **Duel pacing (lane B).** A smoke run of six Air finals has Lio beating the reference player in 9-15 s at Momentum 100. VR's Air census is also short (DF-008). The pacing fix goes into the PC overlay and is returned to VR with `vr:tuning-return`.
 - **VR pin drift (T3).** `vr:drift --vectors` passes 2 of VR's 45 conformance vectors at PC HEAD. The causes are PC changes after the pin: release and stagger events, Games spawn spacing, pace, and AI draws. A re-pin needs a deliberate review, not a byte copy.
 - **Still open.** Air event kinds (evade, deflect), an aim seam for Slipstream (it writes the brain input today), the generic threat reader's straight-line view of a curving bolt, and the `schools.ts` import-order trap (a test must import `kernel.ts` before `fire.ts`/`air.ts`).
+
+Lane R measurement (20 seeds, 70001-70020, reference player at competence 2): the reference player loses **all 40** named duels. The Brennic semifinal median is 13.9 s with phases on and off. The Lio final median is 14.6 s with phases on and 15.0 s off. The rival reached its last phase in only 2/20 duels of each, because it rarely drops below 33%. Phases cannot be judged until lane B makes the duels winnable: the rivals run competence 1 and 1.5, yet beat the reference build easily, so the Fire and Air kits outclass the Water reference loadout at VR's numbers.

@@ -7,6 +7,8 @@ import labSchools from "./arena/data/lab-schools.json" with { type: "json" };
 import { presets, validateComposition } from "./arena/catalog.ts";
 import { overlayProblems, schoolPresets, validateLoadout } from "./arena/schools.ts";
 import balance from "./arena/data/school-balance.pc.json" with { type: "json" };
+import rivalData from "./arena/data/rivals.json" with { type: "json" };
+import { rivalProblems } from "./arena/rival-phases.ts";
 import { member } from "./arena/doors.ts";
 import type { Composition } from "./arena/types.ts";
 import { makeTuning, tuningPresets, validateTuning } from "./arena/tuning.ts";
@@ -24,6 +26,18 @@ describe("authored data meets the validators that guard runtime input", () => {
     expect(validateLoadout({ ...schoolPresets.fire[0]!, slots: ["fire_flick", "fire_flick", "fire_kindle", "fire_ring"] })).not.toEqual([]);
     expect(overlayProblems(balance.overrides)).toEqual([]);
     expect(overlayProblems({ "fire_lance.reach": 1 })).not.toEqual([]);
+  });
+
+  it("the named-rival phases bind a real wave and school, fall in HP order and open with a spell of the rival's school", () => {
+    expect(rivalProblems(rivalData)).toEqual([]);
+    const brennic = rivalData.rivals.brennic;
+    const plant = (patch: Record<string, unknown>) => rivalProblems({ ...rivalData, rivals: { ...rivalData.rivals, brennic: { ...brennic, ...patch } } });
+    expect(plant({ phases: [brennic.phases[0], { ...brennic.phases[1], opensWith: "air_tempest" }] })).toEqual(["rivals.json brennic phase 1: opensWith air_tempest is not one of the fire spells"]);
+    expect(plant({ phases: [brennic.phases[1], brennic.phases[0]] })).toEqual(["rivals.json brennic phase 1: atHpFraction 0.66 is not in (0, 0.33)"]);
+    expect(plant({ school: "air" })).toEqual(["rivals.json brennic: the named bracket spawns fire on wave 2, not air", "rivals.json brennic phase 1: opensWith fire_sunfall is not one of the air spells"]);
+    expect(plant({ wave: 1 })).toEqual(["rivals.json brennic: wave 1 is not a Tiro mage wave"]);
+    expect(plant({ surgeTiers: 4 })).toEqual(["rivals.json brennic: surgeTiers 4 is not an integer 0..3"]);
+    expect(plant({ phase: [] })).toEqual(["rivals.json brennic: unknown key phase"]);
   });
 
   it("every tuning preset passes validateTuning", () => {

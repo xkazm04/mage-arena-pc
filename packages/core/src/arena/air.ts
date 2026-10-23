@@ -256,20 +256,36 @@ function tryCast(state: ArenaState, a: Actor, input: InputFrame): boolean {
   if (!s || activationBlocked(a) || a.pending || airChannelBusy(state, a)) return false;
   const spell = slotSpell(a, input.slot, state), row = spell && airRow(spell.id);
   if (!spell || !row || !airCastLegal(state, a, spell)) return false;
-  if (state.lab) a.metrics.manaCast = (a.metrics.manaCast ?? 0) + spell.mana;
-  a.mana -= spell.mana;
-  // Air Form's "spends 40" is paid at the press, with the mana; under Eye of the Storm the lock restores it next tick.
-  if (row.momentum.mode === 'spend') { const m = momentumRules(state); s.value = clamp(s.value - row.momentum.amount, m.min, m.max); }
+  beginCast(state, a, s, spell, row, input.aim, true);
+  return true;
+}
+/** VR StartGrantedAirCast (CR-005): a named rival's signature skips the tier gate, the cooldown, the mana and any
+ * Momentum need or spend once; the cooldown, windup and resolution are the row's own. */
+function grantedCast(state: ArenaState, a: Actor, spellId: string, aim: Vec): boolean {
+  const s = air(a);
+  if (!s || activationBlocked(a) || a.pending || airChannelBusy(state, a)) return false;
+  const base = schoolSpellById(spellId), row = base && base.school === 'air' ? airRow(base.id) : undefined;
+  if (!base || !row) return false;
+  beginCast(state, a, s, balancedSpell(base, state), row, aim, false);
+  return true;
+}
+/** The cast start every Air row shares (VR BeginAirCast); `pay` false is the granted signature. */
+function beginCast(state: ArenaState, a: Actor, s: SchoolState, spell: SchoolSpell, row: AirRow, inputAim: Vec, pay: boolean): void {
+  if (pay) {
+    if (state.lab) a.metrics.manaCast = (a.metrics.manaCast ?? 0) + spell.mana;
+    a.mana -= spell.mana;
+    // Air Form's "spends 40" is paid at the press, with the mana; under Eye of the Storm the lock restores it next tick.
+    if (row.momentum.mode === 'spend') { const m = momentumRules(state); s.value = clamp(s.value - row.momentum.amount, m.min, m.max); }
+  }
   s.cooldowns[spell.id] = state.tick + ticks(paced(a, spell.cooldownS));
-  let aim = { ...input.aim };
+  let aim = { ...inputAim };
   if (row.kind === 'zone') {
     // A placed circle lands at the aim point, no farther than the range (x1.3 at Momentum 80).
-    const d = unit(sub(input.aim, a.pos), a.facing), reach = Math.min(distance(a.pos, input.aim), spell.rangeM * airSpellRangeMult(state, a));
+    const d = unit(sub(inputAim, a.pos), a.facing), reach = Math.min(distance(a.pos, inputAim), spell.rangeM * airSpellRangeMult(state, a));
     aim = { x: a.pos.x + d.x * reach, y: a.pos.y + d.y * reach };
   }
   a.pending = { kind: 'spell', startTick: state.tick, releaseTick: state.tick + airWindupTicks(a, spell, row), aim, activationId: state.nextId++, spellId: spell.id };
   a.metrics.casts++; emit(state, 'cast', a, spell.tier);
-  return true;
 }
 
 function release(state: ArenaState, a: Actor): void {
@@ -404,6 +420,7 @@ export const airRules: SchoolRules = {
     if (state.tick < a.water.encasedUntil || state.tick < (a.staggerUntil ?? 0)) updateMomentum(state, a, 0);
   },
   tryCast,
+  grantedCast,
   release,
   drainMult,
   staminaRegenMult: () => 1,

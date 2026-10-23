@@ -56,7 +56,8 @@ export function enemyInputs(state: ArenaState): Record<number, InputFrame> {
     let desired = { ...toward };
     const attack = spec.attacks[brain.attackIndex % spec.attacks.length]!;
     let attackRange = attack.rangeM ?? runtime.games.defaultMeleeRangeM;
-    if (attack.projectileMps) attackRange = runtime.games.rangedRangeM;
+    // A projectile attack approaches to its own rangeM when set, the shared ranged range otherwise (VR CR-003 Attack.RangeM).
+    if (attack.projectileMps && attack.rangeM === undefined) attackRange = runtime.games.rangedRangeM;
     // A kiter must reach its authored engagement band before planting to shoot.
     // Projectile travel range remains unchanged in scheduleAttack.
     if (spec.keepDistanceM) attackRange = spec.keepDistanceM[1]!;

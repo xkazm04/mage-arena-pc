@@ -7,6 +7,7 @@ import { attachMageAI, mageInput } from './mage-ai.ts';
 import { attachRivalPlan } from './rival-plan.ts';
 import { createLedger, observeLedger } from './ledger.ts';
 import { makeSchoolRival, type SchoolRivals } from './school-rivals.ts';
+import { beginRivalWave, bindRival, enableRivalPhases } from './rival-phases.ts';
 import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks } from './types.ts';
 import { defaultDifficulty, validateTuning, type CombatTuning } from './tuning.ts';
 export const tiro = arenaTiers.tiers[0];
@@ -16,8 +17,9 @@ export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number
 export interface Games { schoolRivals?: SchoolRivals; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
 export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
 /** `tuning` is a Lab what-if: omitted, the state carries no tuning. `difficulty` paces the opponents for the whole Games (the player's pace is fixed).
- * `options.schoolRivals` turns the mage duelists into Fire/Air rivals (school-rivals.ts); omitted, the Water proxies. */
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true } = {}): Games {
+ * `options.schoolRivals` turns the mage duelists into Fire/Air rivals (school-rivals.ts); omitted, the Water proxies.
+ * In 'named' mode Brennic and Lio fight in HP-gated phases (rival-phases.ts, VR CR-005); `rivalPhases: false` turns them off (measurement). */
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false } = {}): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
   if (validateComposition(composition).length) throw Error('Invalid composition');
   if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
@@ -28,10 +30,12 @@ export function createGames(seed: number, composition: Composition = presets[0]!
   if (referencePlayer) attachMageAI(player, runtime.games.referenceCompetence);
   const games: Games = { state, player, wave: startWave, phase: 'active', wavesCleared: 0, waveStartTick: state.tick, spawnLog: [] };
   if (options.schoolRivals) games.schoolRivals = options.schoolRivals;
+  if (options.schoolRivals === 'named' && options.rivalPhases !== false) enableRivalPhases(state);
   spawnWave(games); return games;
 }
 function spawnWave(g: Games): void {
   const wave = tiro.waves[g.wave]!; let index = 0;
+  beginRivalWave(g.state);
   const total = wave.spawns.reduce((n, spawn) => n + ('count' in spawn ? spawn.count : 1), 0);
   for (const spawn of wave.spawns) {
     const count = 'count' in spawn ? spawn.count : 1;
@@ -48,7 +52,7 @@ function spawnWave(g: Games): void {
         const presetName = runtime.games.opponentPresets[g.wave - 2]!;
         actor.water = newWaterState(presets.find(p => p.name === presetName)!); attachMageAI(actor, spawn.competence, g.state.tick);
         if (runtime.games.rivalPlans) attachRivalPlan(actor);
-        if (g.schoolRivals) kind = `${makeSchoolRival(actor, g.schoolRivals, g.wave)} ${spawn.competence}`;
+        if (g.schoolRivals) { kind = `${makeSchoolRival(actor, g.schoolRivals, g.wave)} ${spawn.competence}`; bindRival(g.state, actor, g.wave); }
       }
       if (g.state.tuning) actor.poise *= g.state.tuning.opponentPoise;
       g.spawnLog.push({ wave: g.wave + 1, id: actor.id, kind, ...pos }); index++;

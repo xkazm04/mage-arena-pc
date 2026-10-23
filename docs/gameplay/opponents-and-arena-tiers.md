@@ -51,6 +51,11 @@ Behaviour (W4, CF2):
 - Aggression (0–1) is the chance to cast when a cast is possible.
 - Fog Bank blocks target acquisition; Mirage redirects aim.
 - Season mage opponents are **Water proxies** using the Undertow or Mirror tide presets, labelled as training proxies until W8.
+- **Named school rivals (W8, opt-in).** `createGames(..., { schoolRivals: 'named' })` makes the semifinal Brennic (Fire, CR-002) and the final Lio (Air, CR-007), each casting from its whole catalogue. Only these named rivals fight in **HP-gated phases** (VR CR-005, the rule).
+  - Breaks come at 66% and 33% of max HP. Each break emits a `phase` event and surges both sides one tier, capped at IV, ignoring the minimum unlock gap.
+  - The last phase grants one free signature cast: Brennic's Sunfall, Lio's Tempest Lance. It costs no mana and skips the tier and cooldown checks. If the rival is busy it waits for the first free tick, and an interrupt during the cast loses it.
+  - Numbers: `packages/core/src/arena/data/rivals.json`, starting at VR's values. Code: `rival-phases.ts`, through `hookArena` in `kernel.ts`.
+  - The season keeps the Water proxies until the W8 balance pass brings these duels into band. Measured on 20 seeds: the reference player loses every named duel in a median of about 14 s.
 
 Known issue: level 4 over-defends and can win less often than level 3 (W4 ladder, logged for W9).
 
