@@ -1,5 +1,7 @@
 # Repository layout: two repositories, one checkout each
 
+> **2026-10-23 retarget (D40 in `MAGE-ARENA-PLAN.md`):** Fire TV is descoped. The two channels are now **PC** (this repository) and **VR**. "TV / desktop" below reads as PC; the TV shell is preserved only at tag `tv-final`.
+
 Owner decision 2026-10-07 (recorded in `mage-arena-vr/docs/DECISIONS.md`). It supersedes the VR monorepo plan. The same text is in both repositories.
 
 ## The two repositories

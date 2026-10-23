@@ -71,7 +71,7 @@ Legend: **built** = implemented and tested; **partial** = implemented in a reduc
 | Combat Feel Lab | built | CF1, CF2, H1, U6c | |
 | Audio engine with buses, ducking, collar-driven music | built | AU4, U6b | musical sections not beat-aligned |
 | Desktop shell (Electron/Tauri) | planned | Q4, plan W14 | browser for now |
-| Fire TV port | planned | D4 | post-G2 spike only |
+| Fire TV port | descoped | D40 | shipped as a spike (P1, P2), then dropped 2026-10-23; tag `tv-final` |
 
 ## Gates
 

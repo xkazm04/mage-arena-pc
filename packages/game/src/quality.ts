@@ -4,19 +4,14 @@ export type QualityName = keyof typeof data.profiles;
 export type Quality = (typeof data.profiles)[QualityName] & {
   name: QualityName;
 };
-/** `?quality=tv|desktop` wins; otherwise a Fire TV user agent selects the TV profile. `?q.<key>=<value>` overrides one knob (profiling). */
+/** `?quality=<profile>` picks a profile (desktop is the only one since the 2026-10-23 TV descope); `?q.<key>=<value>` overrides one knob (profiling). */
 export function pickQuality(
   search = globalThis.location?.search ?? "",
-  userAgent = globalThis.navigator?.userAgent ?? "",
 ): Quality {
   const params = new URLSearchParams(search),
     asked = params.get("quality");
   const name: QualityName =
-    asked && asked in data.profiles
-      ? (asked as QualityName)
-      : userAgent.includes(data.tvUserAgent)
-        ? "tv"
-        : "desktop";
+    asked && asked in data.profiles ? (asked as QualityName) : "desktop";
   const q: Record<string, unknown> = { ...data.profiles[name], name };
   for (const [key, value] of params)
     if (key.startsWith("q.") && key.slice(2) in q) {

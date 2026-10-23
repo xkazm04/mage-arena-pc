@@ -33,6 +33,7 @@ camp board and the phrase-bank fallback; its deterministic planner is the Direct
 | D7 | **Art: Grok image generation through a budgeted, gated pipeline**, a wider palette of style directions first. Every style proof is **two images: Arena fight and Camp screen (a map with places to go, with time slots)**. | owner direction | yes |
 | D8 | **Roles:** Sonnet orchestrates (plans, merges, reconciles, checks the claims), Astra implements, Fable 5.1 reviews at gates, the owner certifies feel and chooses style. | owner direction | yes |
 | D9 | Original names, text, art and rules only; the Roman-era elemental-mage setting is the owner's. No copying of any game, film or book. | brief | no |
+| D40 | **Channel retarget (owner, 2026-10-23): Fire TV is descoped completely; the game keeps two channels, VR (`mage-arena-vr`, competition build due 2026-11-18) and PC (this repository), in separate repositories.** PC is where VR mechanics are also tested ("duality"), so PC implements Fire and Air (W8, plan in `docs/concepts/W8-fire-air-dual-channel.md`). After the VR hackathon, development wraps there and continues on PC only. The last TV state is tag `tv-final` (WebView shell, phone controller, TV quality profile); platform-neutral TV-era wins (baked plate, rebuild churn, streamed MP3 tracks, shader warm-up) stay. Supersedes the Fire TV part of D4. | owner direction | yes (tag `tv-final`) |
 
 ## d. The death system (design intent; implemented in W10, the data model is reserved from W0)
 

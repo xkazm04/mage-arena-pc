@@ -11,7 +11,7 @@ function pad(down: number[] = [], axes = [0, 0, 0, 0]): Pad {
     })),
   };
 }
-describe("TV standard gamepad", () => {
+describe("Standard gamepad", () => {
   it("only activates on an edge, releases on disconnect, and does not repeat accept", () => {
     const n = new PadNavigation();
     expect(n.poll(pad([0]), 0).accept).toBe(true);
