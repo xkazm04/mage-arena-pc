@@ -13,7 +13,6 @@ import { hasLineOfSight } from './water.ts';
 import type { SchoolBrain } from './mage-ai-schools.ts';
 import type { Threat } from './mage-ai.ts';
 import type { Actor } from './types.ts';
-import type { ShapeEffect } from './shapes.ts';
 
 const sunfallId = 'fire_sunfall';
 /** Slots this actor can press: a catalogue rival walks the ten rows (slot n = row n); a loadout walks bolt + four. */
@@ -70,7 +69,7 @@ export const fireBrain: SchoolBrain = {
           damage: p.kind === 'staff' ? combat.staffStrike.damage : (spell?.damage ?? 0) * (p.damageMult ?? 1) * mult });
       }
     }
-    for (const effect of (state.schoolEffects ?? []) as ShapeEffect[]) {
+    for (const effect of state.schoolEffects ?? []) {
       if (effect.ownerId !== owner.id) continue;
       if (effect.kind === 'detonation' && hasLineOfSight(state, a.pos, effect.origin)) {
         // The committed shadow reads as VR's area telegraph: aimed when the body is inside, impact on its landing tick.
@@ -78,7 +77,7 @@ export const fireBrain: SchoolBrain = {
       } else if (effect.kind === 'beam' && hasLineOfSight(state, a.pos, owner.pos)) {
         // An active beam is a threat with a stable id (minus the owner id) along the owner's current facing.
         const end = { x: owner.pos.x + owner.facing.x * effect.lengthM!, y: owner.pos.y + owner.facing.y * effect.lengthM! };
-        result.push({ id: -owner.id, family: effect.family, origin: { ...owner.pos }, impactTick: effect.nextTick, aimedAtUs: segmentHit(owner.pos, end, a.pos, a.radius) !== undefined, damage: effect.hit.damage * mult });
+        result.push({ id: -owner.id, family: effect.family, origin: { ...owner.pos }, impactTick: effect.nextTick, aimedAtUs: segmentHit(owner.pos, end, a.pos, a.radius) !== undefined, damage: (effect.hit?.damage ?? effect.damage) * mult });
       }
     }
     return result;

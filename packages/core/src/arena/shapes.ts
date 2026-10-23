@@ -9,18 +9,11 @@ import { constrainToArena } from './geometry.ts';
 import { distance, segmentHit, unit, type Vec } from './math.ts';
 import { activationBlocked, type Actor, type ArenaState, type Hit, type SchoolEffect, type SlotSchool } from './types.ts';
 
-/** A school hit: `heat` is paid to a Fire owner when the blow connects (CR-002 HeatOnHit); `pierceShields` skips a Scutum
- * front block; `suppressPerfect` refuses the fresh-raise window (Brand Wrath after its first tick).
- * Interim until types.ts carries them (lane F request R1): resolveHit has no flags, so pierce rides `delivery: 'area'`
- * (its only shield bypass) and suppress masks the target's absorbFreshTick for the one call. */
-export type SchoolHit = Hit & { heat?: number; pierceShields?: boolean; suppressPerfect?: boolean };
-
-/** The fields a shape needs across ticks beyond SchoolEffect (lane F request R2 asks types.ts to carry them). */
-export interface ShapeEffect extends SchoolEffect {
-  /** The contact template every tick copies (base damage, before any live multiplier). */
-  hit: SchoolHit;
-  everyTicks?: number; lengthM?: number; radiusM?: number; perfectFirstTickOnly?: boolean; ticksDone?: number;
-}
+/** A school hit: the Hit flags types.ts carries since d09a474 (`heat`, `pierceShields`, `suppressPerfect`), which
+ * resolveHit honours directly. Kept as an alias for the callers that name it. */
+export type SchoolHit = Hit;
+/** A shape effect: a SchoolEffect whose contact template is present (every effect this file creates sets `hit`). */
+export type ShapeEffect = SchoolEffect & { hit: Hit };
 
 /** Per-school answers a shape reads at resolve time, filled by the school module at load (no state, no closures in state).
  * `liveDamageMult` is read on every trail and beam tick (CR-002: "each trail tick and each beam tick read live heat").
@@ -32,18 +25,15 @@ export const shapeHooks: {
 
 const hostile = (owner: Actor, target: Actor): boolean => !target.tags.includes('DEFEATED') && target.team !== owner.team && target.id !== owner.id;
 const liveMult = (state: ArenaState, owner: Actor): number => (owner.schoolState && shapeHooks.liveDamageMult[owner.schoolState.school]?.(state, owner)) ?? 1;
-/** One contact. A fresh object per call: hooks key on the hit identity (fire.ts onHit guard). */
-export function contact(state: ArenaState, target: Actor, hit: SchoolHit): { damage: number; perfect: boolean } {
-  const sent: SchoolHit = { ...hit, source: { ...hit.source }, ...(hit.pierceShields ? { delivery: 'area' as const } : {}) };
-  if (!hit.suppressPerfect) return resolveHit(state, target, sent);
-  const fresh = target.absorbFreshTick; target.absorbFreshTick = -1e9;
-  try { return resolveHit(state, target, sent); } finally { target.absorbFreshTick = fresh; }
+/** One contact through the kernel, with the school flags passed straight through (a fresh object per call). */
+export function contact(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean } {
+  return resolveHit(state, target, { ...hit, source: { ...hit.source } });
 }
 function addEffect(state: ArenaState, effect: ShapeEffect): ShapeEffect {
   (state.schoolEffects ??= []).push(effect);
   return effect;
 }
-const base = (state: ArenaState, owner: Actor, hit: SchoolHit, kind: SchoolEffect['kind'], spellId: string, origin: Vec, target: Vec, nextTick: number, endTick: number): ShapeEffect => ({
+const base = (state: ArenaState, owner: Actor, hit: Hit, kind: SchoolEffect['kind'], spellId: string, origin: Vec, target: Vec, nextTick: number, endTick: number): ShapeEffect => ({
   id: state.nextId++, ownerId: owner.id, activationId: hit.activationId, spellId, kind, startTick: state.tick, nextTick, endTick,
   origin: { ...origin }, target: { ...target }, damage: hit.damage, family: hit.family, tier: hit.tier, hitLog: [], hit: { ...hit, source: { ...hit.source } },
 });
@@ -70,7 +60,8 @@ export function queueDetonation(state: ArenaState, owner: Actor, hit: Hit, at: V
 export function startBeam(state: ArenaState, owner: Actor, hit: Hit, lengthM: number, everyTicks: number, durationTicks: number, options: { perfectFirstTickOnly?: boolean; spellId?: string } = {}): SchoolEffect {
   const every = Math.max(1, everyTicks), end = { x: owner.pos.x + owner.facing.x * lengthM, y: owner.pos.y + owner.facing.y * lengthM };
   const effect = base(state, owner, hit, 'beam', options.spellId ?? '', owner.pos, end, state.tick + every, state.tick + durationTicks);
-  Object.assign(effect, { everyTicks: every, lengthM, ticksDone: 0 }, options.perfectFirstTickOnly ? { perfectFirstTickOnly: true } : {});
+  effect.everyTicks = every; effect.lengthM = lengthM; effect.ticksDone = 0;
+  if (options.perfectFirstTickOnly) effect.perfectFirstTickOnly = true;
   return addEffect(state, effect);
 }
 /** Move the owner up to `distanceM` along `direction` (arena clamp); with `trail`, leave a burning segment. Returns the segment travelled. */
@@ -86,15 +77,12 @@ export function dash(state: ArenaState, owner: Actor, direction: Vec, distanceM:
   return { from, to: { ...owner.pos } };
 }
 
-/** A beam stops when its owner is interrupted (VR Interrupt -> CancelFireChannel). PC's interrupt() has no school hook
- * (lane F request R3), so the PC causes are read here: a roll, a stagger or a defeat this tick, or an encasement. */
-function ownerInterrupted(state: ArenaState, owner: Actor): boolean {
-  if (owner.tags.includes('DEFEATED') || state.tick < owner.water.encasedUntil) return true;
-  for (let i = state.events.length - 1; i >= 0 && state.events[i]!.tick === state.tick; i--) {
-    const e = state.events[i]!;
-    if (e.actorId === owner.id && (e.kind === 'roll' || e.kind === 'stagger' || e.kind === 'down')) return true;
-  }
-  return false;
+/** End every beam this owner runs (VR Interrupt -> CancelFireChannel); a school's `interrupted` hook calls it.
+ * Returns true when a beam was cancelled (the kernel counts that as a cancelled cast for its interrupt event). */
+export function cancelOwnedBeams(state: ArenaState, owner: Actor): boolean {
+  if (!state.schoolEffects?.some(e => e.kind === 'beam' && e.ownerId === owner.id)) return false;
+  state.schoolEffects = state.schoolEffects.filter(e => !(e.kind === 'beam' && e.ownerId === owner.id));
+  return true;
 }
 const note = (effect: ShapeEffect, tick: number, ids: number[]): void => { effect.hitLog = ids.map(targetId => ({ tick, targetId })); };
 /** One trail tick (VR UpdateFireOngoing): live damage, a fresh activation id, targets deduped per owner per tick. */
@@ -116,7 +104,7 @@ function stepBeam(state: ArenaState, effect: ShapeEffect, owner: Actor): boolean
   const length = effect.lengthM!;
   effect.origin = { ...owner.pos }; effect.target = { x: owner.pos.x + owner.facing.x * length, y: owner.pos.y + owner.facing.y * length };
   if (state.tick >= effect.nextTick && state.tick <= effect.endTick) {
-    const hit: SchoolHit = { ...effect.hit, activationId: state.nextId++, damage: effect.hit.damage * liveMult(state, owner), source: { ...owner.pos } };
+    const hit: Hit = { ...effect.hit, activationId: state.nextId++, damage: effect.hit.damage * liveMult(state, owner), source: { ...owner.pos } };
     const ids = resolveLine(state, owner, hit, owner.pos, effect.target, 0, { piercing: effect.hit.pierceShields, suppressPerfect: !!effect.perfectFirstTickOnly && (effect.ticksDone ?? 0) > 0 });
     note(effect, state.tick, ids);
     effect.ticksDone = (effect.ticksDone ?? 0) + 1; effect.nextTick += effect.everyTicks!;
@@ -137,7 +125,7 @@ function stepDetonation(state: ArenaState, effect: ShapeEffect, owner: Actor | u
   return false;
 }
 /** Advance every live school effect one tick. No-op while the state has none, so Water states step unchanged.
- * Order: per owner in actor order its trails then its beam (VR steps them inside each actor's turn), then detonations
+ * Runs before projectiles (kernel). Order: per owner in actor order its trails then its beam (VR steps them inside each actor's turn), then detonations
  * and other kinds in creation order. A defeated owner's trails and beams stop; a committed shadow survives its owner. */
 export function stepSchoolEffects(state: ArenaState): void {
   if (!state.schoolEffects?.length) return;
@@ -147,7 +135,7 @@ export function stepSchoolEffects(state: ArenaState): void {
     if (!own.length) continue;
     const claimed = new Set<number>();
     for (const effect of own.filter(e => e.kind === 'trail')) if (owner.tags.includes('DEFEATED') || !stepTrail(state, effect, owner, claimed)) done.add(effect);
-    for (const effect of own.filter(e => e.kind === 'beam')) if (ownerInterrupted(state, owner) || !stepBeam(state, effect, owner)) done.add(effect);
+    for (const effect of own.filter(e => e.kind === 'beam')) if (owner.tags.includes('DEFEATED') || !stepBeam(state, effect, owner)) done.add(effect);
   }
   for (const effect of effects) {
     if (effect.kind === 'trail' || effect.kind === 'beam') { if (!state.actors.some(a => a.id === effect.ownerId)) done.add(effect); continue; }

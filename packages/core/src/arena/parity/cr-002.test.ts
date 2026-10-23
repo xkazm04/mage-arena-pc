@@ -11,9 +11,9 @@ import { runtime } from '../kernel.ts';
 import { newSchoolState, schoolPresets } from '../schools.ts';
 import { makeTuning, type CombatTuning } from '../tuning.ts';
 import { fireShapes, fireState, heatValue } from '../fire.ts';
-import type { SchoolHit, ShapeEffect } from '../shapes.ts';
+import type { ShapeEffect } from '../shapes.ts';
 import { segmentHit, unit, type Vec } from '../math.ts';
-import { idleInput, type Actor, type ArenaState, type InputFrame } from '../types.ts';
+import { idleInput, type Actor, type ArenaState, type Hit, type InputFrame } from '../types.ts';
 import fixture from './cr-002.json' with { type: 'json' };
 
 const vrFeel = (): CombatTuning => ({ ...makeTuning(), hitStunS: 0, hitStunPerDamageS: 0, knockbackM: 0, accelerationMps2: 0, decelerationMps2: 0, castMoveMultiplier: 1, castCommitFraction: 1, castRecoveryS: 0 });
@@ -106,7 +106,7 @@ describe('CR-002 hand checks: Heat', () => {
     advance(state, ticks(0.5));
     near(heat(actor), 100);
     expect(fireState(actor)!.lockedUntil).toBe(31 + 360);
-    const gift: SchoolHit = { ownerId: actor.id, activationId: 1, damage: 0, family: 'magic', tier: 0, source: { x: 20, y: 10 }, heat: 50 };
+    const gift: Hit = { ownerId: actor.id, activationId: 1, damage: 0, family: 'magic', tier: 0, source: { x: 20, y: 10 }, heat: 50 };
     resolveHit(state, target, gift);
     near(heat(actor), 100);
     while (state.tick < 390) advance(state, 1);
@@ -252,7 +252,8 @@ describe('CR-002 hand checks: Sunfall', () => {
     expect(caster.pending?.spellId).toBe('fire_sunfall');
     advance(state, ticks(0.25));
     expect(caster.pending).toBeUndefined();
-    expect(fireState(caster)!.cooldowns['fire_sunfall.loosed']).toBeUndefined();
+    expect(fireState(caster)!.sunfallLoosed).toBeUndefined();
+    expect(fireState(caster)!.rootUntil).toBeUndefined();
     expect(effects(state)).toHaveLength(0);
     near(1000 - caster.hp, 6);
   });
@@ -352,9 +353,8 @@ describe('CR-002 hand checks: shapes', () => {
 
 describe('CR-002 VR scenarios (outcome fields; known divergence located, not tuned)', () => {
   const run = (seed: number, wave: number, vrEquivalent: boolean) => {
-    const g = createGames(seed, presets.find(p => p.name === runtime.games.referencePreset)!, wave, true, undefined, undefined, 'normal', { schoolRivals: 'fire' });
-    g.state.balance = 'canonical';
-    if (vrEquivalent) { delete g.state.difficulty; for (const a of g.state.actors) delete a.pace; g.state.tuning = vrFeel(); }
+    const g = createGames(seed, presets.find(p => p.name === runtime.games.referencePreset)!, wave, true, undefined, vrEquivalent ? vrFeel() : undefined, 'normal',
+      vrEquivalent ? { schoolRivals: 'fire', balance: 'canonical', unpaced: true } : { schoolRivals: 'fire', balance: 'canonical' });
     while (g.phase === 'active' && g.state.tick < ticks(runtime.games.fightTimeoutS)) stepGames(g);
     const sunfall = g.state.events.filter(e => e.kind === 'release' && e.spellId === 'fire_sunfall').length;
     return { outcome: g.phase === 'lost' ? 'loss' : g.phase === 'active' ? 'timeout' : 'win', phase: g.phase, ticks: g.state.tick, hp: g.player.hp, mana: g.player.mana, wavesCleared: g.wavesCleared, sunfall, kind: g.spawnLog[0]!.kind };

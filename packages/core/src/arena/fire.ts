@@ -7,7 +7,7 @@
 import { fireRows, schoolIdentity } from './data.generated.ts';
 import { DT, emit, spawnProjectile, ticks } from './kernel.ts';
 import { balancedSpell, identityNumber, schoolSpellById, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
-import { dash, ownerBeam, queueDetonation, resolveLine, shapeHooks, startBeam, contact, type SchoolHit } from './shapes.ts';
+import { cancelOwnedBeams, contact, dash, ownerBeam, queueDetonation, resolveLine, shapeHooks, startBeam } from './shapes.ts';
 import { paceOf, paced, pacedWarning, warningFloor } from './tuning.ts';
 import { constrainToArena } from './geometry.ts';
 import { clamp, distance, inArc, sub, unit, type Vec } from './math.ts';
@@ -108,9 +108,8 @@ export function gainHeat(state: ArenaState, a: Actor, amount: number): void {
   const [min, max] = heatRange(state);
   s.value = clamp(s.value + amount, min, max); s.lastGainTick = state.tick; s.gained = true;
 }
-/** Release tick of this actor's first Sunfall this bout (VR bSunfallLoosed). Kept in cooldowns until SchoolState carries it (request R4). */
-export const sunfallLoosedKey = 'fire_sunfall.loosed';
-export const sunfallLoosed = (a: Actor): boolean => fireState(a)?.cooldowns[sunfallLoosedKey] !== undefined;
+/** The first Sunfall of this bout has released (VR bSunfallLoosed; ends the CR-002 bank rule). */
+export const sunfallLoosed = (a: Actor): boolean => fireState(a)?.sunfallLoosed === true;
 
 const hostile = (a: Actor, t: Actor): boolean => !t.tags.includes('DEFEATED') && t.team !== a.team && t.id !== a.id;
 const placed = (shape: FireShape): boolean => shape.kind === 'zone' || shape.kind === 'meteor';
@@ -128,13 +127,12 @@ export function fireWindupTicks(a: Actor, spell: SchoolSpell): number {
   return ticks(shape.sequential ? paced(a, spell.castS) : Math.max(paced(a, spell.castS), warning(a, spell, shape)));
 }
 const heatPaid = (shape: FireShape): number => shape.heatMode === 'hit' || shape.heatMode === 'target' || shape.heatMode === 'tick' ? shape.heat : 0;
-// Both the target's and the owner's school are asked about one contact; when both are Fire the same call arrives twice.
-const answered = new WeakMap<Hit, true>();
 
 export const fireRules: SchoolRules = {
   // CR-002 resource tick: start of the actor step, before its release and before projectile hits.
   tick(state, a) {
     const s = fireState(a); if (!s) return;
+    if (s.rootUntil !== undefined && state.tick >= s.rootUntil) delete s.rootUntil;
     if (state.tick < s.lockedUntil) { const [min, max] = heatRange(state); s.value = clamp(lockRow.heat, min, max); return; }
     const near = state.actors.filter(o => o.id !== a.id && o.team !== a.team && !o.tags.includes('DEFEATED') && distance(a.pos, o.pos) <= heatNearM).length;
     if (near > 0) gainHeat(state, a, num(`gain.${nearKey}`, state) * near * DT);
@@ -153,8 +151,8 @@ export const fireRules: SchoolRules = {
     s.cooldowns[spell.id] = state.tick + ticks(paced(a, spell.cooldownS));
     const releaseTick = state.tick + fireWindupTicks(a, spell);
     a.pending = { kind: 'spell', startTick: state.tick, releaseTick, aim: placed(shape) ? placedPoint(a, input.aim, spell.rangeM) : { ...input.aim }, activationId: state.nextId++, spellId: spell.id };
-    // VR roots through the release tick's move (FireCastRoots while pending). Interim for a kernel root hook (request R5).
-    if (shape.roots) a.water.rootUntil = Math.max(a.water.rootUntil, releaseTick + 1);
+    // VR roots through the release tick's move (FireCastRoots while pending); an interrupt clears it (interrupted below).
+    if (shape.roots) s.rootUntil = releaseTick + 1;
     a.metrics.casts++; emit(state, 'cast', a, spell.tier);
     return true;
   },
@@ -168,7 +166,7 @@ export const fireRules: SchoolRules = {
     Object.assign(state.events.at(-1)!, { activationId: p.activationId, spellId: spell.id, at: { ...(placed(shape) ? p.aim : a.pos) } });
     const baseDamage = spell.damage * (p.damageMult ?? 1), damage = baseDamage * heatDamageMult(state, a), heat = heatPaid(shape);
     const direction = unit(sub(p.aim, a.pos), a.facing);
-    const hit: SchoolHit = { ownerId: a.id, activationId: p.activationId, damage, family: hitFamily(spell), tier: spell.tier, source: { ...a.pos },
+    const hit: Hit = { ownerId: a.id, activationId: p.activationId, damage, family: hitFamily(spell), tier: spell.tier, source: { ...a.pos },
       ...(shape.bolt ? { bolt: true } : {}), ...(heat > 0 ? { heat } : {}), ...(shape.pierceShields ? { pierceShields: true } : {}) };
     switch (shape.kind) {
       case 'projectile': spawnProjectile(state, hit, a.pos, direction, shape.speedMps * paceOf(a), spell.rangeM); break;
@@ -193,7 +191,7 @@ export const fireRules: SchoolRules = {
       case 'meteor':
         // Sunfall: the shadow is a committed area that survives its owner and any later interrupt.
         queueDetonation(state, a, hit, p.aim, shape.radiusM, ticks(warning(a, spell, shape)), { survivesOwner: true, spellId: spell.id });
-        if (!sunfallLoosed(a)) fireState(a)!.cooldowns[sunfallLoosedKey] = state.tick;
+        fireState(a)!.sunfallLoosed = true;
         break;
       case 'dash':
         dash(state, a, direction, shape.dashM, { hit: { ...hit, damage: baseDamage }, everyTicks: ticks(shape.tickS), durationTicks: ticks(shape.durationS), spellId: spell.id });
@@ -220,12 +218,9 @@ export const fireRules: SchoolRules = {
   staminaRegenMult: (state, a) => band(state, a, 'staminaRegenMult'),
   rollStaminaMult: () => 1,
   evades: () => false,
-  onHit(state, target, owner, hit, result) {
-    if (answered.has(hit)) return;
-    answered.set(hit, true);
+  onHit(state, target, owner, hit, result, role) {
     // The caster receives the spell's own heat when the blow connects, a perfect absorb included.
-    const heat = (hit as SchoolHit).heat;
-    if (owner && heat) gainHeat(state, owner, heat);
+    if (role === 'owner') { if (owner && hit.heat) gainHeat(state, owner, hit.heat); return; }
     // perHitTakenUnabsorbed: incoming above 0 and an absorb reduction of 0 (a chip, a perfect or a negated blow pays nothing).
     if (fireState(target) && result.reduction <= 0 && result.damage > 0) gainHeat(state, target, num('gain.perHitTakenUnabsorbed', state));
   },
@@ -235,6 +230,15 @@ export const fireRules: SchoolRules = {
   reset(a) {
     const s = fireState(a); if (!s) return;
     s.value = 0; s.lastGainTick = 0; s.lockedUntil = 0; s.gained = false; s.cooldowns = {}; s.formUntil = 0;
+    delete s.sunfallLoosed; delete s.rootUntil;
   },
+  // VR Interrupt: the pending cast ends (the kernel clears it), its root with it, and the beam channel stops.
+  interrupted(state, a) {
+    const s = fireState(a); if (!s) return false;
+    delete s.rootUntil;
+    return cancelOwnedBeams(state, a);
+  },
+  // VR FireChannelBusy: while a beam runs, no cast and no staff strike.
+  busy: (state, a) => fireState(a) !== undefined && ownerBeam(state, a) !== undefined,
 };
 shapeHooks.liveDamageMult.fire = heatDamageMult;

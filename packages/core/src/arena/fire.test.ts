@@ -1,7 +1,7 @@
 // Fire rules, strict row reading and the Ember mage AI (lane F). The CR-002 hand checks live in parity/cr-002.test.ts.
 // kernel.ts is imported first: fire.ts must load through schools.ts (see the fire.ts header).
 import { describe, expect, it } from 'vitest';
-import { addMage, createArena, resetWave, stateHash, stepArena, ticks } from './kernel.ts';
+import { addMage, createArena, interrupt, resetWave, stateHash, stepArena, ticks } from './kernel.ts';
 import { attachMageAI, mageInput, threats } from './mage-ai.ts';
 import { createGames, stepGames } from './games.ts';
 import { presets } from './catalog.ts';
@@ -9,7 +9,7 @@ import { runtime } from './kernel.ts';
 import { newSchoolState, schoolPresets } from './schools.ts';
 import { makeTuning } from './tuning.ts';
 import { fireBrain } from './mage-ai-fire.ts';
-import { fireShape, fireShapes, fireState, heatNearM, heatValue, readFireShape, sunfallLoosedKey } from './fire.ts';
+import { fireShape, fireShapes, fireState, heatNearM, heatValue, readFireShape } from './fire.ts';
 import { fireRows } from './data.generated.ts';
 import { idleInput, type Actor, type ArenaState, type InputFrame } from './types.ts';
 import type { Vec } from './math.ts';
@@ -87,6 +87,24 @@ describe('Fire rules', () => {
       expect(actor.pos.x).toBe(x);
     }
   });
+  it('an interrupted Kindle releases its root at once (schoolState.rootUntil cleared by interrupted)', () => {
+    const { state, actor, target } = pair();
+    stepArena(state, { [actor.id]: cast(target.pos, slot('fire_kindle')) });
+    expect(fireState(actor)!.rootUntil).toBe(1 + 24 + 1);
+    interrupt(state, actor);
+    expect(actor.pending).toBeUndefined(); expect(fireState(actor)!.rootUntil).toBeUndefined();
+    stepArena(state, { [actor.id]: { ...idleInput(target.pos), move: { x: 0, y: 1 } } });
+    expect(actor.pos.y).toBeGreaterThan(10);
+  });
+  it('refuses the staff strike too while its beam runs (VR FireChannelBusy via SchoolRules.busy)', () => {
+    const { state, actor, target } = pair(3);
+    stepArena(state, { [actor.id]: cast(target.pos, slot('fire_wrath')) });
+    for (let i = 0; i < 14; i++) stepArena(state, { [actor.id]: idleInput(target.pos) });
+    target.pos = { x: 11, y: 10 };
+    const stamina = actor.stamina;
+    stepArena(state, { [actor.id]: cast(target.pos, 0) });
+    expect(actor.pending).toBeUndefined(); expect(actor.stamina).toBe(stamina);
+  });
   it('a beam stops when its owner rolls (VR Interrupt cancels the channel)', () => {
     const { state, actor, target } = pair();
     stepArena(state, { [actor.id]: cast(target.pos, slot('fire_wrath')) });
@@ -148,7 +166,7 @@ describe('Ember mage AI (VR ChooseFireSpell, SunfallBeat)', () => {
     expect(drew(state, `mage ${actor.id} spell`)).toBe(true);
   });
   it('once Sunfall is loosed, level 2 sorts by damage: Pyre at 6 m', () => {
-    const { input } = decide(95, 2, (s, a) => { fireState(a)!.cooldowns[sunfallLoosedKey] = 0; fireState(a)!.cooldowns.fire_sunfall = 1e6; });
+    const { input } = decide(95, 2, (s, a) => { fireState(a)!.sunfallLoosed = true; fireState(a)!.cooldowns.fire_sunfall = 1e6; });
     expect(input).toMatchObject({ cast: true, slot: slot('fire_pyre') });
   });
   it('withholds when nothing is legal, and aims its lead with Ember Dart 18 m/s', () => {
