@@ -1,6 +1,6 @@
 # Combat-system depth: builds, not triangles
 
-Status: **WP1 built** 2026-10-23 (progression core: Agility, spell ranks, enemy levels). WP2 (archetypes and rival builds), WP3 (ultimates) and WP4 (builds census and Lab pickers) follow in that order; WP3 and WP4 may run in parallel. The design comes from the owner's spark session of 2026-10-23 (`.spark/Spark/ideas/combat-system-depth.md`, outside git). This document is PC-only: nothing here changes VR's canonical numbers, and VR change requests come later, from evidence.
+Status: **built and on main** 2026-10-23 (WP1 progression core, WP2 archetypes and rival builds, WP3 ultimates, WP4 Lab pickers; campaign week sets the enemy level at `995fab3`). Follow-up directions: `docs/concepts/D1-combat-followup-and-progression.md`.
 
 ## 1. The owner's doctrine (verbatim)
 
