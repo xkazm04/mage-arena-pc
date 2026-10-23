@@ -269,6 +269,7 @@ Lane R measurement (20 seeds, 70001-70020, reference player at competence 2): th
   - Either Sunfall is not what decides these duels, or **the granted signature cast does not read the PC overlay**.
   - Check this first: `rival-phases.ts` `tryGrantedCast` -> `fire.ts` `grantedCast`; compare `balancedSpell` against
     `canonicalSpells`.
+  - **Checked 2026-10-23 (combat session): the seam is sound.** `grantedCast` reads `balancedSpell(row, state)`. Planting `fire_sunfall.damage` 20 on 60 named semifinal seeds moved player damage taken 4589 -> 4553 and wins 36 -> 38, so the overlay applies. Sunfall is simply a weak lever: the census ledger shows unblockable contacts avoided 5585 against 286 taken, so the reference player dodges it almost every time. Treat the signature as a telegraph the player reads, not as damage.
 
 **What the simulation tooling now offers the combat work.**
 
