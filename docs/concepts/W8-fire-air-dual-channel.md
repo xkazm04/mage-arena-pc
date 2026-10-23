@@ -1,6 +1,6 @@
 # W8: Fire and Air on PC, built for two channels
 
-Status: concept, 2026-10-23. Not started. The owner's direction (D40 in `../MAGE-ARENA-PLAN.md`): Fire TV is descoped. The game has two channels, **VR** (`kiro/mage-arena-vr`, competition build due **2026-11-18**) and **PC** (this repository), in separate repositories. PC is also where VR's mechanics get tested ("duality"), so PC implements **Fire and Air**. After the hackathon, VR wraps up and development continues on PC only.
+Status: **designed** 2026-10-23 (spark rounds 1-4 with the owner; section 8 is the buildable brief and supersedes sections 4 and 6). Not started. The owner's direction (D40 in `../MAGE-ARENA-PLAN.md`): Fire TV is descoped. The game has two channels, **VR** (`kiro/mage-arena-vr`, competition build due **2026-11-18**) and **PC** (this repository), in separate repositories. PC is also where VR's mechanics get tested ("duality"), so PC implements **Fire and Air**. After the hackathon, VR wraps up and development continues on PC only.
 
 This document fixes what the scouts could prove and lists what still needs a decision. The open items in section 6 are the agenda for the next `/spark` session with the owner: **how PC's playstyle deviates, the art, and the tooling dual development needs.** That session decides them; this one does not.
 
@@ -110,7 +110,7 @@ The effort is split so the AI-opponent half, which serves VR now, lands before t
 - **Pin drift is invisible today.** 31 PC commits have touched `packages/core/src/arena` since VR's pin (`baeac66`). VR's `check-pin.mjs --source` only checks bytes at the pinned commit. See T3.
 - **Doc staleness.** The status tables are dated 2026-10-07. W8 should refresh `docs/gameplay/status.md` and `docs/campaign/status.md` as part of its doc surface.
 
-## 6. Open for the next spark session (owner decides)
+## 6. Questions put to the owner (all answered 2026-10-23; see section 8)
 
 ### Playstyle deviations (PC vs VR)
 
@@ -149,3 +149,59 @@ The effort is split so the AI-opponent half, which serves VR now, lands before t
 - PC scouts, 2026-10-23: kernel, catalogue, guards and presentation (section 3).
 - VR, read-only: `docs/change-requests/CR-001..005`, `docs/schools/FIRE.md`, `AIR.md`, `docs/DECISIONS.md`, `docs/campaign/02-vr-run-as-campaign.md`, `03-tv-divergence.md`, `docs/REPO-LAYOUT.md`, `apps/vr/tools/conformance/`, `apps/vr/data/PINNED.json`.
 - Repo decisions: D40 (`../MAGE-ARENA-PLAN.md`), `../REPO-LAYOUT.md`, `../gameplay/open-questions.md` #10-11.
+
+## 8. Design brief (spark 2026-10-23, owner answers)
+
+### Decisions
+
+| # | Answer | Implication |
+|---|---|---|
+| P1 | **Bolt + 4 free slots, no branches** for Fire and Air (authored sheet; presets Pit-dog, Brand, Sunfall gambit; Air presets authored the same way) | `Composition` becomes a per-school union; a second composition-screen layout |
+| P2 | **Momentum as pinned** (+20/s above 4 m/s, -25/s still), walking counts | The census measures saturation; any change goes into the PC overlay |
+| P3-P5 | PC takes **CR-005 rival phases (the rule, not VR's numbers)** and **CR-003's shared `Attack.RangeM` edit only**; CR-001 and CR-004 stay VR-only | Named-rival duels on PC get breaks at 0.66/0.33, a surge, and the `opensWith` signature |
+| P6 | **AIR.md as built by VR's T23, rival Lio**: pierce = one extra target; still = zero displacement; deflect replaces Mirror; Shear diverges; the evade RNG key and activation parity follow VR | PC writes the accepted text as CR-007 in its CR inbox |
+| P7 | Director, by convention: **PC keeps missio-ends-the-day** (season channel) | none |
+| A1 | **Procedural shape art** from the a8 fire/air clips, plus new sigil extents (`circle-fill`, `beam`, `arc`); no generation | `sigil-contract.ts` gains shapes |
+| A2 | **Rune meter** built procedurally from the a13 glyphs and inscriptions, marked at 50/80 (Heat) and 40/80 (Momentum), on the player HUD and at the opponent's feet | Replaces the text panel for school resources; Flow keeps its panel |
+| A3 | Director, by convention: **PC keeps its own art direction**; VR's style pick does not apply | none |
+| A4 | **Generate Lio** as an A15 body: about 8-10 agy calls, two attempts per slot, under the 398 target | Art lane; Grok stays latched |
+| WP6 | **Lab + practice entry** can play Fire (Brennic body) and Air (Iskar body); **season character pick stays Water** (W8b) | Lab setup and the training select gain a player-school choice |
+| T1/T5 | **CR inbox** `docs/change-requests/` (received, accepted, ported, re-pinned) plus **canonical** `spells-fire.csv` and `spells-air.csv` in `docs/design/reconciled/data/arena/` holding **VR's numbers** | VR pins them like the Water data |
+| T2 | **Outcome-parity suite**: CR hand checks plus VR scenario summaries, compared field by field; a shared hash is revisited after 18 Nov | `packages/core/src/arena/parity/` |
+| T3 | **Pin drift report**: core/data diff since VR's `PINNED.json` commit, plus VR's 45 vectors re-run at HEAD | `npm run vr:drift` |
+| T4 | **Reverse vectors**: PC defines the format and builds the replayer and checker; **the VR recorder is filed as a CR in mage-arena-vr (doc only)** | No VR code from W8 |
+| T6 | **Tuning return export**: a census- or Lab-backed number set plus evidence written as a CR addendum for VR | Closes the PC-tunes-VR loop |
+| Balance | **PC tunes locally** through an overlay: canonical CSVs keep VR's numbers, and `school-balance.pc.json` per-key overrides apply at load. Parity runs with the overlay **off**; Lab, census and practice run with it **on** | Each overlay key is a visible deviation and a CR candidate |
+| Order | **Parallel lanes** after WP0 | WP0 is committed by the Director as wire types plus compilable stubs before the fan-out |
+
+### Wire contract (every lane builds against these names)
+
+- School ids: `'water' | 'fire' | 'air'` (the existing `School` type, `tuning.ts:7`).
+- Spell ids: the CSV `id` column verbatim (`fire_bolt` ... `fire_wrath`, `air_bolt` ... `air_cyclone`). Water keeps `line:tier:branch`.
+- Composition: `WaterComposition` (today's shape) | `SlotComposition = { school: 'fire' | 'air'; name: string; bolt: SpellId; slots: [SpellId, SpellId, SpellId, SpellId] }`.
+- Actor resource: `Actor.school?: School`, plus exactly one of `water` (existing), `heat?: HeatState`, `momentum?: MomentumState`. Shared control fields (`encasedUntil`, `rootUntil`, `slowUntil`) move to `Actor.control`.
+- **Absent-value convention: a non-school actor omits the resource key.** Never `null` or `0`, so Water state hashes stay byte-equal.
+- Overlay: `{ "version": "school-balance-1", "overrides": { "<spellId>.<column>": number, "<school>.identity.<key>": number } }`. Unknown keys are refused at load. File: `packages/core/src/arena/data/school-balance.pc.json`, empty in WP0.
+- Games flag: `runtime.games.schoolRivals: boolean` (default `false`). When true, the semifinal and final use named rivals, Brennic (fire) and Lio (air), with their own schools.
+- Parity fixtures: `packages/core/src/arena/parity/<cr-id>.json`, outcome fields `{seed, wave, outcome, phase, ticks, hp, mana, wavesCleared, extra}`.
+
+### Work packages
+
+| Lane | Content | Files (primary) | Acceptance | Doc owner |
+|---|---|---|---|---|
+| **WP0 seam** (Director, before fan-out) | Wire types, compilable stubs, compiler reads both school CSVs, empty overlay loader, save schema union | `types.ts`, `catalog.ts`, `arena-data.mjs`, `save-schema.ts`, `tuning.ts` | All goldens and census digests unchanged; gate green | this doc |
+| **F: Fire** | Heat, ten rows, line/detonation/meteor/beam/dash-trail/knockback shapes, Ember mage AI (18 m/s lead, Sunfall bank), Lab opponent school; CR-002 parity suite; deliberate `lab7331` re-pin | `fire.ts`, `kernel.ts` (shape hooks), `mage-ai.ts`, `parity/cr-002.*` | Every CR-002 hand check exact; both VR scenarios match on outcome fields; parity runs overlay-off | `docs/gameplay/casting-and-spells.md` (Fire section) |
+| **A: Air** | Momentum, ten rows, curving arc, sequenced volley, evade RNG, deflect, Gale mage AI (Lio); CR-007 text; parity from the T23 readings | `air.ts`, `mage-ai.ts` (air branch), `parity/cr-007.*` | Hand checks from the CR-007 text pass; draw order per VR | emits a section to scratch; the Director merges it into F's doc |
+| **R: rivals** | CR-005 phases on named rivals; CR-003 `RangeM` edit | `games.ts`, `rival-plan.ts`, `enemies.ts` | Breaks at 0.66/0.33, surge capped at 4, signature granted once; a killing blow is a win, not a break | `docs/gameplay/opponents-and-arena-tiers.md` |
+| **T: tooling** | CR inbox; `vr:drift`; tuning return export; reverse-vector format plus PC replayer; VR recorder CR doc | `docs/change-requests/`, `packages/tools/vr/` | Drift report runs against `C:/Users/kazda/kiro/mage-arena-vr`; replayer passes a hand-made vector and fails a planted one | `docs/change-requests/README.md` |
+| **P: presentation** (after F/A merge) | Rune meters, procedural shape telegraphs, sigil extents, bolt+4 composition screen and presets, player school in Lab and practice entry, Brennic/Iskar player bodies | `packages/game/src/*` | Native 1080p/1440p captures; desktop stress at 60 fps with beams and trails | `docs/START-HERE.md` |
+| **Art: Lio** | A15.1 Lio body, nine states | `tools/art`, `assets/accepted` | Delivery gates of the art pipeline; at most 10 calls | art ledger |
+| **B: balance** (after F/A) | PC census of Fire and Air duels; overlay keys; T6 export for VR (DF-006/007/008) | `school-balance.pc.json`, census reports | Duels in the 45-80 s band with the overlay on; parity is still green with it off | `docs/gameplay/status.md` |
+
+### Non-goals
+
+Earth; season character pick for Fire or Air (W8b); any code in `mage-arena-vr`; painted shape art; PC numbers in the canonical CSVs; CR-001 and CR-004 on PC; a shared portable hash.
+
+### Risks
+
+WP0 hash neutrality (land it alone and prove it). Parallel lanes share `kernel.ts` and `mage-ai.ts`: WP0 stubs give each school its own module, and kernel edits are limited to named hook points. Air spec drift: port from AIR.md and the CSV at a recorded VR commit. Old saves are refused after WP0; say so in START-HERE.
