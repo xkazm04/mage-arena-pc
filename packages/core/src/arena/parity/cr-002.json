@@ -1,0 +1,17 @@
+{
+  "cr": "CR-002",
+  "source": "mage-arena-vr apps/vr/data/scenarios-vr/fire-duel-competence-1.json and fire-duel-competence-1-5.json, transcribed field by field (the CR text quotes older hashes aadba881 / 90bf9014; the files are the record). hash is the C++ FNV state hash and is not compared.",
+  "run": "createGames(seed, the runtime.games.referencePreset composition, wave, true, undefined, undefined, difficulty, { schoolRivals: 'fire' }) with state.balance = 'canonical'. wave is the 0-based Tiro wave in both channels (2 semifinal, 3 final). VR has no pace and no PC feel layer, so the 'vr-equivalent' run also strips every actor's pace and runs the feel tuning VR's kernel has (no hit stun, no generic knockback, instant acceleration, no cast-move slow, no cast commit point, no spell recovery).",
+  "scenarios": [
+    { "seed": 40000, "wave": 2, "outcome": "loss", "phase": "lost", "ticks": 960, "hp": 0, "mana": 20.875, "wavesCleared": 0,
+      "extra": { "durationS": 16, "kind": "Ember mage 1", "sunfall": 0, "sunfallCast": 0, "sunfallRelease": 0, "hash": "45f36cbd" } },
+    { "seed": 40001, "wave": 3, "outcome": "loss", "phase": "lost", "ticks": 1103, "hp": 0, "mana": 18.75, "wavesCleared": 0,
+      "extra": { "durationS": 18.383333333333334, "kind": "Ember mage 1.5", "sunfall": 0, "sunfallCast": 0, "sunfallRelease": 0, "hash": "df9bc103" } }
+  ],
+  "knownDivergence": {
+    "fields": ["ticks", "mana"],
+    "firstDivergence": "tick 0, random draw 4: PC draws 'mage 1 variety 3' (mage-ai.ts spell variety, feel.json ai.spellVarietyWeight) for the reference player's level-2 sort; VR MageAI.cpp ChooseSpell has no such draw, so every later draw value is shifted. Located against VR's own Water vectors for the same seeds and waves (apps/vr/data/conformance/duel-competence-1*.json): tick-0 state is equal (positions, rng, nextId), the first differing event is tick 31 (VR cast tier 0, PC cast tier 1).",
+    "alsoAfterBaeac66": ["mage-ai strafe phase offset and spacing variation", "player pace 1.5x and opponent pace by difficulty (feel.json pace)", "hit stun, generic knockback, acceleration, cast move multiplier, cast commit fraction, spell recovery (feel.json defaults)"],
+    "policy": "Not tuned (W8 brief, CR-002 'do not retune'). The outcome, phase, hp, waves cleared and the Sunfall count match."
+  }
+}

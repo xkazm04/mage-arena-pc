@@ -41,10 +41,10 @@ describe('W8 school seam (WP0)', () => {
     expect(slotSpell(fire, 4, state)).toBeUndefined();
     fire.tier = 4;
     expect(slotSpell(fire, 4, state)?.id).toBe('fire_sunfall');
-    // WP0 stubs cast nothing: a Fire actor pressing every slot steps without a cast or an effect.
+    // A Fire actor pressing every slot casts through its school while the Water actor's state gains no school keys.
     for (let t = 0; t < 120; t++) stepArena(state, { [fire.id]: { ...idleInput({ x: 5, y: 5 }), cast: true, slot: t % 5 } });
-    expect(fire.metrics.casts).toBe(0);
-    expect('schoolEffects' in state).toBe(false);
+    expect(fire.metrics.casts).toBeGreaterThan(0);
+    expect('schoolState' in water).toBe(false);
     expect(stateHash(state)).toMatch(/^[0-9a-f]{8}$/);
   });
   it('turns Tiro duelists into school rivals only when asked, choosing from the whole catalogue', () => {
@@ -58,8 +58,8 @@ describe('W8 school seam (WP0)', () => {
     expect(slotSpell(rival, 9, ember.state)?.id).toBe('fire_wrath');
     const named = createGames(40001, undefined, 3, true, undefined, undefined, undefined, { schoolRivals: 'named' });
     expect(named.state.actors[1]).toMatchObject({ school: 'air', label: 'Lio' });
-    // WP0 brains withhold every cast; the bout still runs to a result.
+    // The Ember mage fights from its catalogue.
     for (let t = 0; t < 600 && ember.phase === 'active'; t++) stepGames(ember);
-    expect(rival.metrics.casts).toBe(0);
+    expect(rival.metrics.casts).toBeGreaterThan(0);
   });
 });
