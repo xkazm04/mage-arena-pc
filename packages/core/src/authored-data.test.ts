@@ -38,6 +38,8 @@ describe("authored data meets the validators that guard runtime input", () => {
     expect(plant({ wave: 1 })).toEqual(["rivals.json brennic: wave 1 is not a Tiro mage wave"]);
     expect(plant({ surgeTiers: 4 })).toEqual(["rivals.json brennic: surgeTiers 4 is not an integer 0..3"]);
     expect(plant({ phase: [] })).toEqual(["rivals.json brennic: unknown key phase"]);
+    expect(plant({ maxHp: 125 })).toEqual([]);
+    expect(plant({ maxHp: 0 })).toEqual(["rivals.json brennic: maxHp 0 is not a positive number"]);
   });
 
   it("every tuning preset passes validateTuning", () => {

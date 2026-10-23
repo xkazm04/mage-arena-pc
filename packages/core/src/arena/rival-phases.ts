@@ -11,7 +11,9 @@ import { activationBlocked, isDefeated, slotSchools, type Actor, type ArenaState
 import type { Vec } from './math.ts';
 
 export interface RivalPhase { atHpFraction: number; opensWith?: string }
-export interface RivalSpec { id: string; school: SlotSchool; wave: number; phases: RivalPhase[]; surgeTiers: number }
+export interface RivalSpec { id: string; school: SlotSchool; wave: number; phases: RivalPhase[]; surgeTiers: number;
+  /** The named rival's max HP (PC balance, owner 2026-10-23); absent keeps the ranks' HP. */
+  maxHp?: number }
 /** The collar's last tier (kernel updateClock stops at IV; VR TierCap 4). */
 export const tierCap = 4;
 
@@ -25,7 +27,7 @@ export function rivalProblems(candidate: unknown): string[] {
   for (const [id, rival] of Object.entries(candidate.rivals)) {
     const at = `rivals.json ${id}`;
     if (!isRecord(rival)) { out.push(`${at}: not an object`); continue; }
-    out.push(...unknownKeys(rival, ['school', 'wave', 'phases', 'surgeTiers']).map(k => `${at}: unknown key ${k}`));
+    out.push(...unknownKeys(rival, ['school', 'wave', 'phases', 'surgeTiers', 'maxHp']).map(k => `${at}: unknown key ${k}`));
     const school = rival.school, wave = rival.wave;
     if (typeof school !== 'string' || !(slotSchools as readonly string[]).includes(school)) out.push(`${at}: school ${String(school)} is not fire or air`);
     if (typeof wave !== 'number' || !Number.isInteger(wave) || wave < 0 || wave >= waves.length || !waves[wave]!.spawns.some(s => 'competence' in s)) out.push(`${at}: wave ${String(wave)} is not a Tiro mage wave`);
@@ -34,6 +36,7 @@ export function rivalProblems(candidate: unknown): string[] {
       seen.add(wave);
       if (school !== rivalSchool('named', wave)) out.push(`${at}: the named bracket spawns ${rivalSchool('named', wave)} on wave ${wave}, not ${String(school)}`);
     }
+    if (rival.maxHp !== undefined && (typeof rival.maxHp !== 'number' || !Number.isFinite(rival.maxHp) || rival.maxHp <= 0)) out.push(`${at}: maxHp ${String(rival.maxHp)} is not a positive number`);
     const tiers = rival.surgeTiers;
     if (typeof tiers !== 'number' || !Number.isInteger(tiers) || tiers < 0 || tiers >= tierCap) out.push(`${at}: surgeTiers ${String(tiers)} is not an integer 0..${tierCap - 1}`);
     const phases = rival.phases;
@@ -55,7 +58,12 @@ const loadProblems = rivalProblems(rivalData);
 if (loadProblems.length) throw Error(loadProblems.join(' '));
 /** The authored rivals, in file order. */
 export const rivals: RivalSpec[] = Object.entries(rivalData.rivals).map(([id, r]) => ({ id, school: r.school as SlotSchool, wave: r.wave,
-  phases: r.phases.map(p => ({ atHpFraction: p.atHpFraction, ...('opensWith' in p ? { opensWith: p.opensWith } : {}) })), surgeTiers: r.surgeTiers }));
+  phases: r.phases.map(p => ({ atHpFraction: p.atHpFraction, ...('opensWith' in p ? { opensWith: p.opensWith } : {}) })), surgeTiers: r.surgeTiers, ...('maxHp' in r && typeof r.maxHp === 'number' ? { maxHp: r.maxHp } : {}) }));
+/** Named bracket: give the spawned rival of this wave its authored HP (with or without phases). */
+export function applyRivalHp(actor: Actor, wave: number, specs: RivalSpec[] = rivals): void {
+  const rival = specs.find(r => r.wave === wave && r.school === actor.schoolState?.school);
+  if (rival?.maxHp !== undefined) { actor.maxHp = rival.maxHp; actor.hp = rival.maxHp; }
+}
 
 /** Phase runtime of one duel (VR FVrRivalRuntime): cleared on every wave spawn, never in the state hash. */
 export interface RivalRuntime {

@@ -7,7 +7,7 @@ import { attachMageAI, mageInput } from './mage-ai.ts';
 import { attachRivalPlan } from './rival-plan.ts';
 import { createLedger, observeLedger } from './ledger.ts';
 import { makeSchoolRival, type SchoolRivals } from './school-rivals.ts';
-import { beginRivalWave, bindRival, enableRivalPhases } from './rival-phases.ts';
+import { applyRivalHp, beginRivalWave, bindRival, enableRivalPhases } from './rival-phases.ts';
 import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks } from './types.ts';
 import { defaultDifficulty, validateTuning, type CombatTuning } from './tuning.ts';
 export const tiro = arenaTiers.tiers[0];
@@ -52,7 +52,7 @@ function spawnWave(g: Games): void {
         const presetName = runtime.games.opponentPresets[g.wave - 2]!;
         actor.water = newWaterState(presets.find(p => p.name === presetName)!); attachMageAI(actor, spawn.competence, g.state.tick);
         if (runtime.games.rivalPlans) attachRivalPlan(actor);
-        if (g.schoolRivals) { kind = `${makeSchoolRival(actor, g.schoolRivals, g.wave)} ${spawn.competence}`; bindRival(g.state, actor, g.wave); }
+        if (g.schoolRivals) { kind = `${makeSchoolRival(actor, g.schoolRivals, g.wave)} ${spawn.competence}`; if (g.schoolRivals === 'named') applyRivalHp(actor, g.wave); bindRival(g.state, actor, g.wave); }
       }
       if (g.state.tuning) actor.poise *= g.state.tuning.opponentPoise;
       g.spawnLog.push({ wave: g.wave + 1, id: actor.id, kind, ...pos }); index++;

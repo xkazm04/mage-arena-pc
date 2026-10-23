@@ -253,3 +253,37 @@ Findings for later lanes:
 - **Still open.** Air event kinds (evade, deflect), an aim seam for Slipstream (it writes the brain input today), the generic threat reader's straight-line view of a curving bolt, and the `schools.ts` import-order trap (a test must import `kernel.ts` before `fire.ts`/`air.ts`).
 
 Lane R measurement (20 seeds, 70001-70020, reference player at competence 2): the reference player loses **all 40** named duels. The Brennic semifinal median is 13.9 s with phases on and off. The Lio final median is 14.6 s with phases on and 15.0 s off. The rival reached its last phase in only 2/20 duels of each, because it rarely drops below 33%. Phases cannot be judged until lane B makes the duels winnable: the rivals run competence 1 and 1.5, yet beat the reference build easily, so the Fire and Air kits outclass the Water reference loadout at VR's numbers.
+
+## 9. Next session: the combat system (owner direction 2026-10-23)
+
+> "We should not focus that much on pacing now, the measured times are looking relatively well, it would be the combat system - balancing of spells and way how each class attacks and contra spells we should focus on next session. The mechanics are very generic, more sophisticated variants we will come up with, the more we leverage simulation tooling you designed in this session."
+
+**Where the semifinal stands (accepted for now).**
+- Brennic semifinal median 34.1 s against a 45-75 s band, at 52% reference wins. The Lio final is in band.
+- Option 4 (more rival HP) was measured on 300 seeds, with rivals.json `maxHp` now supported but unset:
+  - 125 HP gives a median of 39.4 s at 22.7% wins;
+  - 130 HP gives 40.0 s at 16.0% wins.
+
+  HP alone trades the win rate away without reaching the band, so no value was committed.
+- Adding `fire_sunfall.damage` 55 on top of 125 HP produced numbers identical to 125 HP alone (39.4 s, 22.7%).
+  - Either Sunfall is not what decides these duels, or **the granted signature cast does not read the PC overlay**.
+  - Check this first: `rival-phases.ts` `tryGrantedCast` -> `fire.ts` `grantedCast`; compare `balancedSpell` against
+    `canonicalSpells`.
+
+**What the simulation tooling now offers the combat work.**
+
+| Tool | Command or location | Use |
+|---|---|---|
+| Default census (Water season) | `npm --prefix packages/core run report:w4` | baseline digests in `docs/waves/W8-evidence/w8x*` |
+| Named census (Brennic, Lio) | `npm --prefix packages/core run census:named` | win rate, median, phase readings |
+| Threat-answer ledger | `ledger.ts` | why each contact landed: perfect, held, rolled, took, ... |
+| PC balance overlay | `school-balance.pc.json` | what PC deviates from VR |
+| VR addendum | `npm run vr:tuning-return` | returns those deviations to VR with evidence |
+| Parity suites | `parity/cr-002`, `parity/cr-007` | guard VR's rules while variants are explored |
+| Lab forecast | in the Lab | about 400 fights in 6 s in the browser |
+
+**Starting questions for that spark.**
+- How should each school attack: rhythm, range bands, signature setups? Today the AIs pick by damage and competence, and darts dominate.
+- What counter-spells and answers exist: school-specific counters to Sunfall, Tempest, the volley and the beam; read and punish windows?
+- How do the four kits relate to each other: a Fire vs Air vs Water triangle, or something else?
+- Which numbers come out of the census rather than out of hand-tuning: target answer mixes per school from the ledger?

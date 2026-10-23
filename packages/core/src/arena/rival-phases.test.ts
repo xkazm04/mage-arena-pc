@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { presets } from './catalog.ts';
 import { advanceGames, createGames, stepGames, type Games } from './games.ts';
 import { combat, interrupt, runtime, spawnProjectile, stateHash, stepArena, ticks } from './kernel.ts';
-import { rivalRuntime, rivals } from './rival-phases.ts';
+import { applyRivalHp, rivalRuntime, rivals } from './rival-phases.ts';
 import { balancedSpell, schoolSpellById } from './schools.ts';
 import { paced } from './tuning.ts';
 import type { ArenaEvent } from './types.ts';
@@ -227,5 +227,16 @@ describe('neutrality', () => {
     const first = run(), second = run();
     expect(stateHash(first.state)).toBe(stateHash(second.state));
     expect(first.state.events.filter(e => e.kind === 'phase')).toEqual(second.state.events.filter(e => e.kind === 'phase'));
+  });
+});
+
+describe('named rival HP (rivals.json maxHp)', () => {
+  it('sets the bound rival to its authored HP in the named bracket only', () => {
+    const named = createGames(40000, undefined, 2, true, undefined, undefined, undefined, { schoolRivals: 'named' }), rival = named.state.actors[1]!;
+    applyRivalHp(rival, 2, [{ id: 'brennic', school: 'fire', wave: 2, phases: [{ atHpFraction: 0.5 }], surgeTiers: 1, maxHp: 125 }]);
+    expect([rival.maxHp, rival.hp]).toEqual([125, 125]);
+    const before = rival.maxHp;
+    applyRivalHp(rival, 3, [{ id: 'brennic', school: 'fire', wave: 2, phases: [{ atHpFraction: 0.5 }], surgeTiers: 1, maxHp: 140 }]);
+    expect(rival.maxHp).toBe(before);
   });
 });
