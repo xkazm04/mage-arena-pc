@@ -1,0 +1,61 @@
+{
+  "cr": "CR-007",
+  "title": "Air school and Momentum, as mage-arena-vr T23 built it (accepted 2026-10-23)",
+  "source": {
+    "vrCommit": "41050f3",
+    "airCsvCommit": "f134847",
+    "rules": "mage-arena-vr docs/schools/AIR.md (Kernel readings)",
+    "tests": "mage-arena-vr apps/vr/Game/Source/MageArenaVR/Tests/AirTests.cpp",
+    "kernel": "mage-arena-vr apps/vr/Game/Source/MageArenaVR/Kernel/Air.cpp"
+  },
+  "balance": "canonical",
+  "scenarios": [],
+  "scenariosNote": "VR has no Air scenario summary: apps/vr/data/scenarios-vr at 41050f3 holds only fire-duel-competence-1.json and fire-duel-competence-1-5.json. docs/design-findings/DF-008-census/lio-summary.json is a 20-seed census under the VR rules overlay and the seated reference script (aggregate medians and rates), not per-seed outcome fields, so there is nothing to compare field by field.",
+  "rows": [
+    { "id": "air_bolt", "kind": "projectile", "tier": 0, "castS": 0, "cooldownS": 0.3, "mana": 4, "damage": 7, "family": "magic", "telegraphS": 0, "rangeM": 14, "momentumMode": "hit", "momentum": 2, "windupTicks": 0, "cooldownTicks": 18 },
+    { "id": "air_shear", "kind": "twin", "tier": 1, "castS": 0.12, "cooldownS": 3, "mana": 12, "damage": 9, "family": "magic", "telegraphS": 0.12, "rangeM": 12, "momentumMode": "hit", "momentum": 4, "windupTicks": 8, "cooldownTicks": 180 },
+    { "id": "air_slipstream", "kind": "dash", "tier": 1, "castS": 0, "cooldownS": 5, "mana": 12, "damage": 0, "family": "self", "telegraphS": 0, "rangeM": 6, "momentumMode": "instant", "momentum": 30, "windupTicks": 0, "cooldownTicks": 300 },
+    { "id": "air_veer", "kind": "veer", "tier": 2, "castS": 0.45, "cooldownS": 7, "mana": 22, "damage": 24, "family": "magic", "telegraphS": 0.5, "rangeM": 14, "momentumMode": "hit", "momentum": 6, "windupTicks": 30, "cooldownTicks": 420 },
+    { "id": "air_downdraft", "kind": "zone", "tier": 2, "castS": 0.4, "cooldownS": 9, "mana": 20, "damage": 26, "family": "magic", "telegraphS": 0.7, "rangeM": 12, "momentumMode": "target", "momentum": 5, "windupTicks": 42, "cooldownTicks": 540 },
+    { "id": "air_form", "kind": "form", "tier": 2, "castS": 0.15, "cooldownS": 14, "mana": 10, "damage": 0, "family": "self", "telegraphS": 0, "rangeM": 0, "momentumMode": "spend", "momentum": 40, "windupTicks": 9, "cooldownTicks": 840 },
+    { "id": "air_squall", "kind": "squall", "tier": 3, "castS": 0.3, "cooldownS": 11, "mana": 34, "damage": 11, "family": "magic", "telegraphS": 0.3, "rangeM": 12, "momentumMode": "hit", "momentum": 3, "windupTicks": 18, "cooldownTicks": 660 },
+    { "id": "air_eye", "kind": "self", "tier": 3, "castS": 0.4, "cooldownS": 16, "mana": 28, "damage": 0, "family": "self", "telegraphS": 0, "rangeM": 0, "momentumMode": "lock", "momentum": 0, "windupTicks": 24, "cooldownTicks": 960 },
+    { "id": "air_tempest", "kind": "line", "tier": 4, "castS": 0.9, "cooldownS": 25, "mana": 70, "damage": 85, "family": "unblockable", "telegraphS": 1.2, "rangeM": 16, "momentumMode": "target", "momentum": 10, "windupTicks": 72, "cooldownTicks": 1500 },
+    { "id": "air_cyclone", "kind": "beam", "tier": 4, "castS": 0.2, "cooldownS": 20, "mana": 60, "damage": 12, "family": "magic", "telegraphS": 0.2, "rangeM": 10, "momentumMode": "tick", "momentum": 2, "windupTicks": 12, "cooldownTicks": 1200 }
+  ],
+  "shapes": {
+    "boltSpeedMps": 24, "shearSpeedMps": 22, "shearCount": 2, "shearSpreadDeg": 24, "slipstreamDashM": 6, "veerSpeedMps": 16, "veerEntryDeg": 60,
+    "downdraftRadiusM": 2.5, "formDurationS": 3, "formEvadePhysical": 0.6, "formEvadeMagic": 0.3, "formNeedMomentum": 40,
+    "squallCount": 4, "squallSpeedMps": 14, "squallIntervalS": 0.25, "eyeLockValue": 100, "eyeLockS": 5, "eyeDrainMult": 1.5,
+    "tempestRoots": true, "cycloneDurationS": 2, "cycloneTickS": 0.25
+  },
+  "momentumRules": { "min": 0, "max": 100, "gainPerS": 20, "movingAboveMps": 4, "decayPerS": 25, "drainMult": 1.2,
+    "bands": [ { "at": 40, "spellsPierce": 1, "rollStaminaMult": 0.6 }, { "at": 80, "spellRangeMult": 1.3 } ] },
+  "momentum": { "walkTicks": 30, "afterWalk": 10, "stillTicks": 12, "afterStill": 5, "heldWalkFrom": 30, "heldWalkTicks": 10, "clampFrom": 99.9, "clamp": 100 },
+  "thresholds": {
+    "levels": [0, 39.999, 40, 79.999, 80, 100],
+    "rollStamina": { "at50": 15, "at0": 25 },
+    "dartRange": { "at80": 18.2, "at79": 14 },
+    "pierce": { "first": 7, "secondAt40": 7, "secondAt39": 0 },
+    "drain": { "air": 1.2, "eye": 1.8 }
+  },
+  "hits": [
+    { "id": "air_bolt", "distance": 5, "damage": 7, "momentum": 2, "maxTicks": 40 },
+    { "id": "air_shear", "distance": 2, "damage": 18, "momentum": 8, "maxTicks": 40 },
+    { "id": "air_veer", "distance": 10, "damage": 24, "momentum": 6, "maxTicks": 120, "needs": "kernel R1" },
+    { "id": "air_downdraft", "distance": 6, "damage": 26, "momentum": 5, "maxTicks": 60, "needs": "lane F" },
+    { "id": "air_squall", "distance": 6, "damage": 11, "momentum": 3, "maxTicks": 60 },
+    { "id": "air_tempest", "distance": 8, "damage": 85, "momentum": 10, "maxTicks": 90, "needs": "lane F" },
+    { "id": "air_cyclone", "distance": 6, "damage": 12, "momentum": 2, "maxTicks": 60, "needs": "lane F" }
+  ],
+  "totals": { "air_squall": 44, "air_cyclone": 96 },
+  "squall": { "distance": 12, "windupTicks": 18, "offsets": [0, 15, 30, 45], "activations": 4, "landed": 44 },
+  "slipstream": { "distanceM": 6, "momentum": 30 },
+  "tempest": { "throughWard": 85, "rootedMovementM": 0 },
+  "form": { "refusedAt": 39, "castAt": 50, "afterPress": 9.583333333333334, "durationTicks": 180 },
+  "eye": { "lock": 100, "lockTicks": 300, "afterLock": 99.58333333333333 },
+  "veer": { "chord": 10, "entryDeg": 60, "radius": 5.773502691896258, "length": 12.091995761561452, "launchX": 0.5, "launchY": 0.8660254037844386, "midX": 5, "midY": 2.886751345948129,
+    "evenSide": 1, "oddSide": -1, "flightTargetM": 10, "hitFlightTick": 44, "damage": 24 },
+  "evasion": { "seed": 23023, "firstDraw": 0.015370714943856001, "hits": 100, "magicLand": 72, "physicalLand": 37 },
+  "deflect": { "seed": 5, "boltSpeedMps": 12, "boltDamage": 10, "galeTier": 2, "wardFromStep": 11, "deflectedTiers": [0], "refusedTiers": [3] }
+}
