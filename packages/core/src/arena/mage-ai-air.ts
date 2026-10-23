@@ -6,16 +6,21 @@ import { combat, random, runtime, ticks } from './kernel.ts';
 import { arenaContains } from './geometry.ts';
 import { distance, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
 import { hasLineOfSight } from './water.ts';
-import { airCastLegal, airRow, airSheet, airSpellRangeMult, momentumOf, veerArc, veerSide, type AirRow, type AirSchoolState } from './air.ts';
+import { airCastLegal, airRow, airSheet, airSpellRangeMult, momentumOf, veerArc, veerSide, type AirKind, type AirRow, type AirSchoolState } from './air.ts';
 import { balancedSpell, schoolSpellById, slotSpell, type SchoolSpell } from './schools.ts';
+import { archetypeChoose, rivalBuildOf } from './archetypes.ts';
 import type { SchoolBrain } from './mage-ai-schools.ts';
-import type { Threat } from './mage-ai.ts';
+import type { ShapeClass, Threat } from './mage-ai.ts';
 import type { Actor, ArenaState } from './types.ts';
 
 const boltRow = airRow('air_bolt')!;
 const formRow = airSheet.find(r => r.kind === 'form')!;
 const reaches = (row: AirRow): boolean => row.kind !== 'dash' && row.kind !== 'self' && row.kind !== 'form';
 const useful = (spell: SchoolSpell, row: AirRow): boolean => spell.damage > 0 || row.kind === 'zone';
+/** The shape class an Air blow presents to its defender (mage-ai.ts ShapeClass). */
+export function airShapeClass(kind: AirKind): ShapeClass {
+  return kind === 'beam' ? 'beam' : kind === 'line' ? 'line' : kind === 'zone' ? 'area' : kind === 'dash' || kind === 'self' || kind === 'form' ? 'close' : 'projectile';
+}
 
 /** VR AirOfferable: tier (slotSpell), the cooldown by `readyTick` (the press lands next step), mana, Momentum need, range x the 80 band. */
 export function airOfferable(state: ArenaState, a: Actor, spell: SchoolSpell, row: AirRow, distanceM: number, readyTick = state.tick + 1): boolean {
@@ -45,6 +50,12 @@ export const airBrain: SchoolBrain = {
   choose(state, a, { target, distanceM, seen, profile, readyTick }) {
     const s = a.schoolState as AirSchoolState | undefined; if (!s) return undefined;
     const slots = offered(state, a), can = (c: { spell: SchoolSpell; row: AirRow }): boolean => airOfferable(state, a, c.spell, c.row, distanceM, readyTick);
+    // A build rival plays its archetype plan (archetypes.ts) in place of the priorities and the competence pick.
+    if (rivalBuildOf(a)) {
+      const pick = archetypeChoose(state, a, target, distanceM, seen, slots.map(c => ({ slot: c.slot, spell: c.spell, can: can(c) })));
+      if (pick?.aim && a.mageAI) a.mageAI.input.aim = pick.aim;
+      return pick && { slot: pick.slot, cast: true };
+    }
     // 1. Tempest Lance from tier IV whenever legal and the target is not blinking.
     const tempest = slots.find(c => c.row.kind === 'line' && c.spell.family === 'unblockable' && a.tier >= 4 && state.tick >= target.rollUntil && can(c));
     if (tempest) return { slot: tempest.slot, cast: true };
@@ -72,7 +83,7 @@ export const airBrain: SchoolBrain = {
     const out: Threat[] = [];
     if (!hasLineOfSight(state, a.pos, owner.pos)) return out;
     const projectileR = runtime.geometry.projectileRadiusM, p = owner.pending;
-    if (p?.kind === 'staff') out.push({ id: p.activationId, family: 'physical', origin: { ...owner.pos }, impactTick: p.releaseTick, aimedAtUs: true, damage: combat.staffStrike.damage });
+    if (p?.kind === 'staff') out.push({ id: p.activationId, family: 'physical', origin: { ...owner.pos }, impactTick: p.releaseTick, aimedAtUs: true, damage: combat.staffStrike.damage, shape: 'close' });
     const base = p?.kind === 'spell' && p.spellId ? schoolSpellById(p.spellId) : undefined, row = base && airRow(base.id);
     if (p && base && row && reaches(row)) {
       const spell = balancedSpell(base, state), range = spell.rangeM * airSpellRangeMult(state, owner), dir = unit(sub(p.aim, owner.pos), owner.facing);
@@ -89,20 +100,20 @@ export const airBrain: SchoolBrain = {
         const spread = row.kind === 'twin' ? [-row.spreadDeg / 2, row.spreadDeg / 2] : [0];
         aimedAtUs = spread.some(deg => along(rotate(dir, deg * Math.PI / 180), a.radius + projectileR)); impactTick += ticks(distance(owner.pos, a.pos) / row.speedMps);
       }
-      out.push({ id: p.activationId, family, origin, impactTick, aimedAtUs, damage: spell.damage * row.count * (p.damageMult ?? 1) });
+      out.push({ id: p.activationId, family, origin, impactTick, aimedAtUs, damage: spell.damage * row.count * (p.damageMult ?? 1), shape: airShapeClass(row.kind) });
     }
     const v = (owner.schoolState as AirSchoolState | undefined)?.volley, volleyRow = v && airRow(v.spellId), volleyBase = v && schoolSpellById(v.spellId);
     if (v && volleyRow && volleyBase) {
       const range = balancedSpell(volleyBase, state).rangeM * v.rangeMult, dir = unit(sub(v.aim, owner.pos), owner.facing);
       out.push({ id: -(owner.id * 100 + v.left), family: 'magic', origin: { ...owner.pos }, impactTick: v.nextTick + ticks(distance(owner.pos, a.pos) / volleyRow.speedMps),
-        aimedAtUs: segmentHit(owner.pos, { x: owner.pos.x + dir.x * range, y: owner.pos.y + dir.y * range }, a.pos, a.radius + projectileR) !== undefined, damage: v.damage });
+        aimedAtUs: segmentHit(owner.pos, { x: owner.pos.x + dir.x * range, y: owner.pos.y + dir.y * range }, a.pos, a.radius + projectileR) !== undefined, damage: v.damage, shape: 'projectile' });
     }
     for (const e of state.schoolEffects ?? []) {
       if (e.ownerId !== owner.id || e.kind !== 'beam' || e.endTick < state.tick) continue;
       const beamRow = airRow(e.spellId), beamBase = schoolSpellById(e.spellId);
       const len = beamRow && beamBase ? balancedSpell(beamBase, state).rangeM * airSpellRangeMult(state, owner) : distance(e.origin, e.target);
       out.push({ id: -owner.id, family: e.family, origin: { ...owner.pos }, impactTick: e.nextTick,
-        aimedAtUs: segmentHit(owner.pos, { x: owner.pos.x + owner.facing.x * len, y: owner.pos.y + owner.facing.y * len }, a.pos, a.radius) !== undefined, damage: e.damage });
+        aimedAtUs: segmentHit(owner.pos, { x: owner.pos.x + owner.facing.x * len, y: owner.pos.y + owner.facing.y * len }, a.pos, a.radius) !== undefined, damage: e.damage, shape: 'beam' });
     }
     return out;
   },

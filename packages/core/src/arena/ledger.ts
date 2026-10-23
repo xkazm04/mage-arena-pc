@@ -3,6 +3,7 @@ import { tapContacts, ticks } from './kernel.ts';
 import { threats } from './mage-ai.ts';
 import { inArc, sub } from './math.ts';
 import { tuningFor } from './tuning.ts';
+import { agilityPerfectWindowAddS } from './progression.ts';
 import { isDefeated, type ArenaState, type Family } from './types.ts';
 
 export const families = ['magic', 'physical', 'unblockable'] as const satisfies readonly Family[];
@@ -59,7 +60,7 @@ export function createLedger(state: ArenaState, actorId: number): ThreatLedger {
     const tune = tuningFor(s);
     l.raw.push({ tick: s.tick, activationId: hit.activationId, ownerId: hit.ownerId, family: hit.family,
       ...(s.tick < target.immuneUntil ? { immune: 'roll' as const } : s.tick < target.water.encasedUntil ? { immune: 'encase' as const } : {}),
-      wardUp: target.absorb, inArc: inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg), ageTicks: s.tick - target.absorbFreshTick, windowTicks: ticks(tune.absorbWindowS) });
+      wardUp: target.absorb, inArc: inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg), ageTicks: s.tick - target.absorbFreshTick, windowTicks: ticks(tune.absorbWindowS + agilityPerfectWindowAddS(target, s)) });
   }));
   return l;
 }

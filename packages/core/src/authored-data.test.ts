@@ -12,6 +12,8 @@ import { rivalProblems } from "./arena/rival-phases.ts";
 import progressionData from "./arena/data/progression.pc.json" with { type: "json" };
 import season from "../../../docs/design/reconciled/data/season.json" with { type: "json" };
 import { progressionProblems } from "./arena/progression.ts";
+import buildData from "./arena/data/rival-builds.json" with { type: "json" };
+import { rivalBuildProblems } from "./arena/archetypes.ts";
 import { readFileSync } from "node:fs";
 import { member } from "./arena/doors.ts";
 import type { Composition } from "./arena/types.ts";
@@ -38,12 +40,31 @@ describe("authored data meets the validators that guard runtime input", () => {
     const plant = (patch: Record<string, unknown>) => rivalProblems({ ...rivalData, rivals: { ...rivalData.rivals, brennic: { ...brennic, ...patch } } });
     expect(plant({ phases: [brennic.phases[0], { ...brennic.phases[1], opensWith: "air_tempest" }] })).toEqual(["rivals.json brennic phase 1: opensWith air_tempest is not one of the fire spells"]);
     expect(plant({ phases: [brennic.phases[1], brennic.phases[0]] })).toEqual(["rivals.json brennic phase 1: atHpFraction 0.66 is not in (0, 0.33)"]);
-    expect(plant({ school: "air" })).toEqual(["rivals.json brennic: the named bracket spawns fire on wave 2, not air", "rivals.json brennic phase 1: opensWith fire_sunfall is not one of the air spells"]);
-    expect(plant({ wave: 1 })).toEqual(["rivals.json brennic: wave 1 is not a Tiro mage wave"]);
+    expect(plant({ school: "air" })).toEqual(["rivals.json brennic: the named bracket spawns fire on wave 2, not air", "rivals.json brennic: build fire_close is fire on wave 2, not air on wave 2", "rivals.json brennic phase 1: opensWith fire_sunfall is not one of the air spells"]);
+    expect(plant({ build: "air_light" })).toEqual(["rivals.json brennic: build air_light is air on wave 3, not fire on wave 2"]);
+    expect(plant({ build: "fire_mystery" })).toEqual(["rivals.json brennic: build fire_mystery is not a rival-builds.json build"]);
+    expect(plant({ wave: 1 })).toEqual(["rivals.json brennic: wave 1 is not a Tiro mage wave", "rivals.json brennic: build fire_close is fire on wave 2, not fire on wave 1"]);
     expect(plant({ surgeTiers: 4 })).toEqual(["rivals.json brennic: surgeTiers 4 is not an integer 0..3"]);
     expect(plant({ phase: [] })).toEqual(["rivals.json brennic: unknown key phase"]);
     expect(plant({ maxHp: 125 })).toEqual([]);
     expect(plant({ maxHp: 0 })).toEqual(["rivals.json brennic: maxHp 0 is not a positive number"]);
+  });
+
+  it("every authored rival build passes its load door (archetype, wave, four ranks, own-loadout spell ranks 1-4); planted-bad controls are refused", () => {
+    expect(rivalBuildProblems(buildData)).toEqual([]);
+    const base = buildData.builds.fire_close;
+    const plant = (patch: Record<string, unknown>) => rivalBuildProblems({ ...buildData, builds: { ...buildData.builds, fire_close: { ...base, ...patch } } });
+    expect(plant({ archetype: "tank" })).toEqual(["rival-builds.json fire_close: archetype tank is not close, light or heavy"]);
+    expect(plant({ wave: 1 })).toEqual(["rival-builds.json fire_close: wave 1 is not a Tiro mage wave (2 or 3)"]);
+    expect(plant({ ranks: { vigor: 3, focus: 2, nerve: 3 } })).toEqual(["rival-builds.json fire_close: ranks.agility undefined is not an integer 1..5"]);
+    expect(plant({ ranks: { ...base.ranks, vigor: 6 } })).toEqual(["rival-builds.json fire_close: ranks.vigor 6 is not an integer 1..5"]);
+    expect(plant({ spellRanks: { fire_pyre: 2 } })).toEqual(["rival-builds.json fire_close: spellRanks fire_pyre is not in the build's loadout"]);
+    expect(plant({ spellRanks: { fire_flick: 5 } })).toEqual(["rival-builds.json fire_close: spellRanks fire_flick is rank 5 (ultimates are not authored yet)"]);
+    expect(plant({ spellRanks: { fire_flick: 0 } })).toEqual(["rival-builds.json fire_close: Spell rank fire_flick=0 is not an integer 1..5."]);
+    expect(plant({ loadout: { bolt: "fire_bolt", slots: ["fire_flick", "fire_flick", "fire_ring", "fire_lance"] } })).toEqual(["rival-builds.json fire_close: Choose four distinct spells."]);
+    expect(plant({ loadout: { bolt: "fire_bolt", slots: ["air_shear", "fire_flick", "fire_ring", "fire_lance"] } })).toEqual(["rival-builds.json fire_close: air_shear is not a fire slot spell."]);
+    expect(plant({ school: "water" })).toEqual(["rival-builds.json fire_close: school water is not fire or air"]);
+    expect(plant({ stance: "low" })).toEqual(["rival-builds.json fire_close: unknown key stance"]);
   });
 
   it("the PC progression file (agility, spell ranks, enemy levels) passes its load door; planted-bad controls are refused", () => {

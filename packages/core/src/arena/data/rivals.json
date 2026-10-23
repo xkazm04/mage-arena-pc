@@ -1,9 +1,10 @@
 {
-  "_about": "PC named-rival phases (VR CR-005, owner decision 2026-10-23: the rule, not the numbers). Read by arena/rival-phases.ts, only when the Games run with schoolRivals 'named'. Per rival: school (fire|air, must be the school the named bracket spawns on that wave), wave (0-based Tiro wave index: 2 semifinal, 3 final), phases in order [{ atHpFraction, opensWith? }] (fractions strictly falling in (0,1); opensWith a spell id of the rival's school, granted once per duel), surgeTiers (tiers both sides rise per break, capped at tier IV). Starting values equal VR combat.vr.json rivals (Brennic and Lio) so any later PC tuning is a visible diff.",
+  "_about": "PC named-rival phases (VR CR-005, owner decision 2026-10-23: the rule, not the numbers). Read by arena/rival-phases.ts, only when the Games run with schoolRivals 'named'. Per rival: school (fire|air, must be the school the named bracket spawns on that wave), wave (0-based Tiro wave index: 2 semifinal, 3 final), phases in order [{ atHpFraction, opensWith? }] (fractions strictly falling in (0,1); opensWith a spell id of the rival's school, granted once per duel), surgeTiers (tiers both sides rise per break, capped at tier IV), build (optional, WP2: the rival-builds.json build the named rival plays, same school and wave; absent = the catalogue rival). Starting values equal VR combat.vr.json rivals (Brennic and Lio) so any later PC tuning is a visible diff.",
   "rivals": {
     "brennic": {
       "school": "fire",
       "wave": 2,
+      "build": "fire_close",
       "phases": [
         { "atHpFraction": 0.66 },
         { "atHpFraction": 0.33, "opensWith": "fire_sunfall" }
@@ -13,6 +14,7 @@
     "lio": {
       "school": "air",
       "wave": 3,
+      "build": "air_light",
       "phases": [
         { "atHpFraction": 0.66 },
         { "atHpFraction": 0.33, "opensWith": "air_tempest" }

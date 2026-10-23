@@ -23,7 +23,7 @@ export function rivalSkipsWard(a: Actor, damage: number): boolean {
   return data.style === 'ranged' && a.mana < data.wardReserveFraction * a.maxMana && damage < data.lowValueDamage;
 }
 /** Per-tick plan bookkeeping; may pull the next decision forward (own phase change, or a counter after a seen release) or hold a stream ward. */
-export function rivalTick(state: ArenaState, a: Actor, target: Actor | undefined, seen: Threat[], window: number, reactionTicks: number): void {
+export function rivalTick(state: ArenaState, a: Actor, target: Actor | undefined, seen: Threat[], window: number, reactionTicks: number, reRaiseGap = ticks(combat.absorb.minReleaseBeforeReRaiseS)): void {
   const brain = a.mageAI!, plan = brain.rival!, data = rivalPlanData(plan.preset)!;
   if (data.style === 'close') {
     // The committed line is cast and released (its cooldown runs) or the approach timed out: back off through the recovery.
@@ -60,7 +60,7 @@ export function rivalTick(state: ArenaState, a: Actor, target: Actor | undefined
     const period = plan.seenRelease - plan.prevRelease, stream = ticks(data.streamWindowS);
     if (target && plan.flight > 0 && plan.flight <= reactionTicks && period > 0 && period <= stream) {
       let impact = plan.seenRelease + period + plan.flight; while (impact <= state.tick + 1 + window) impact += period;
-      if (impact - plan.seenRelease - plan.flight <= stream && state.tick + 1 >= impact - window - ticks(combat.absorb.minReleaseBeforeReRaiseS) - 1 && !a.pending && state.tick >= a.rollUntil
+      if (impact - plan.seenRelease - plan.flight <= stream && state.tick + 1 >= impact - window - reRaiseGap - 1 && !a.pending && state.tick >= a.rollUntil
         && a.mana >= data.wardReserveFraction * a.maxMana && !gift(state.tick + 1)) {
         brain.plan = undefined; brain.plannedRaiseTick = state.tick + 1; brain.plannedReleaseTick = impact + window; brain.targetPoint = { ...target.pos }; plan.wardFrom = state.tick + 1;
       }

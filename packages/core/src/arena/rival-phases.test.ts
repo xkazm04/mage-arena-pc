@@ -4,7 +4,8 @@
 import { describe, expect, it } from 'vitest';
 import { presets } from './catalog.ts';
 import { advanceGames, createGames, stepGames, type Games } from './games.ts';
-import { combat, interrupt, runtime, spawnProjectile, stateHash, stepArena, ticks } from './kernel.ts';
+import { combat, interrupt, runtime, spawnProjectile, stateHash, statRules, stepArena, ticks } from './kernel.ts';
+import { rivalBuilds } from './archetypes.ts';
 import { applyRivalHp, rivalRuntime, rivals } from './rival-phases.ts';
 import { balancedSpell, schoolSpellById } from './schools.ts';
 import { paced } from './tuning.ts';
@@ -48,8 +49,9 @@ describe.each(cases)('$name named duel', ({ name, wave, school, rivalId, signatu
 
   it('breaks at 0.66 and 0.33 of the actor maxHp, one phase per threshold, with the phase event fields', () => {
     const { g, rival } = duel(wave), max = rival.maxHp;
-    expect(max).toBe(95);
-    // 62.7 and 31.35 at vigor 1: just above does nothing, exactly on the threshold breaks (Hp <= fraction x MaxHp).
+    // The named rival plays its build (rivals.json build, WP2): HP follows the build's vigor on the shared stat rule.
+    expect(max).toBe(statRules.hp.base + statRules.hp.perRank * rivalBuilds[rivals.find(r => r.id === rivalId)!.build!]!.ranks.vigor);
+    // Just above the threshold does nothing, exactly on it breaks (Hp <= fraction x MaxHp).
     rival.hp = 0.66 * max + 1e-6; let from = tick(g);
     expect(since(g, from, 'phase')).toEqual([]);
     rival.hp = 0.66 * max; from = tick(g);

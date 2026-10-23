@@ -78,3 +78,22 @@ Reading: the reference player clears wave 1 untouched, so wave 1 measures clear 
 ## 5. Not in WP1
 
 Camp training for agility (no camp stat earns it yet; saves only accept it), the week-to-level wiring in the season bout, player Fire/Air in Games, mixed-school spellbooks, movement effects from agility, and VR change requests.
+
+
+### WP2 as built: archetypes and rival builds
+
+**Builds** live in `arena/data/rival-builds.json` and are validated at load by `archetypes.ts`. Each build has a school, an archetype, a wave (0-based: 2 semifinal, 3 final), four ranks including agility, spell ranks 1-4 for its own rows, and a bolt + 4 loadout. `createGames(..., { rivalBuild: id })` spawns that build in place of the wave's rival on the build's wave. With `schoolRivals: 'named'`, Brennic plays `fire_close` and Lio plays `air_light` (the `build` key in `rivals.json`); their phases are unchanged. A build rival carries its build as its loadout name (`build:<id>`), so the state alone selects the plan. Water mages and catalogue (parity) rivals never reach the plan code, so the goldens, the default census digests and CR-002/CR-007 stay identical.
+
+**Plans** (`archetypes.ts`) are code over row shapes. A row's role (bolt, dash, build, answer, hit, payoff, signature) comes from its shape; its metres and costs come from its row. Every plan answers first: Ring of Cinders against close pressure, Air Form against an aimed projectile, and Tide Ward against a beam on the Water side. Then:
+- **Close (brawler):** holds 0.5-0.85 of its shortest hitter's reach and dashes in when far. It builds its resource with its short rows, cashes it with the strongest payoff at the resource's top threshold, and presses the dart once per decision.
+- **Light (skirmisher):** holds 0.7-1.0 of the dart's reach and dashes out when pressed (Air also dashes to keep Momentum up). It alternates its damaging rows so a slow one and a fast one land together, and holds the dart down for a stream.
+- **Heavy (controller):** holds 0.75-0.95 of its shortest unlocked payoff's reach. Until tier III it keeps its hands free for the ward while anything is seen coming. After that it casts the strongest unlocked payoff and banks the mana its next payoff needs.
+
+**Measured (200 seeds per build):** every build lands 44-56% reference wins. fire_light wins all 18 of its fights that end before the reference's tier III. fire_heavy wins 55% and air_heavy 51% of the fights that reach tier IV. Close builds hold 4.4-5.5 m and spend 21-28% of their casts on hitters and dashes; light and heavy builds hold 8.2-8.8 m; heavy builds spend 7-15% on payoffs and signatures. Air Form never fires into another shape class: every cast that meets a threat meets a projectile.
+
+**Open (structural):**
+- Close duels end in 16-32 s, because both sides land everything at 5 m.
+- Air's light build never gets a short fight at the final (0.9 darts, competence 1.5).
+- Tide Ward and the beam rows sit on different collar tiers, so the beam answer never fires in play.
+- The reference player's chase keeps light and heavy builds at about 8.5 m instead of their bands.
+- Defensive stats (focus, nerve) swing a duel by 30-45 points per rank, so builds stay within a rank of the reference's 1/1/1.

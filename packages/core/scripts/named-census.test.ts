@@ -50,13 +50,13 @@ describe('W8 lane B: the named duels play the PC overlay', () => {
     });
   });
 
-  // The claim the full census (docs/waves/W8-evidence/named*.json) makes, pinned on the first 50 census seeds per duel.
-  // Lio's final sits in its band with the win rate in range. Brennic's semifinal meets the win rate but stays under its
-  // band: the reference player kills a harmless 95 HP Fire mage in a median of 35.4 s at pace 1.5 whatever the overlay
-  // does (lane X: AI reaction now runs at pace and the rivals ward again, which raised that ceiling only from 33.8 s; Fire
-  // has no evade, and at pace 1.5 every cast comes 1.5x sooner while HP is unpaced), so the median cannot reach 45 s.
-  it('50 seeds per named duel: win rate in range, Lio in band, Brennic under band (structural), census rules hold', () => {
-    const results = namedWaves.map(wave => summariseNamedWave(Array.from({ length: 50 }, (_, i) => runNamedFight(runtime.games.censusSeedStart + i, wave)), wave));
+  // The claim the full census (docs/waves/W8-evidence/named*.json) makes, pinned on the first 100 census seeds per duel.
+  // Since WP2 (spark combat-system-depth) Brennic and Lio play their authored builds (rival-builds.json: fire close, air light).
+  // Lio's final sits in its band with the win rate in range. Brennic's semifinal meets the win rate but stays far under its
+  // band: the brawler fights at ~4.5 m where both sides land nearly every blow, so the duel ends in a median of ~16 s
+  // (structural: the reference player's damage at that range, not a number the overlay can move without breaking the win rate).
+  it('100 seeds per named duel: win rate in range, Lio in band, Brennic under band (structural), census rules hold', () => {
+    const results = namedWaves.map(wave => summariseNamedWave(Array.from({ length: 100 }, (_, i) => runNamedFight(runtime.games.censusSeedStart + i, wave)), wave));
     for (const r of results) {
       expect(r.winRate, `wave ${r.wave} win rate`).toBeGreaterThanOrEqual(winRateTarget[0]);
       expect(r.winRate, `wave ${r.wave} win rate`).toBeLessThanOrEqual(winRateTarget[1]);

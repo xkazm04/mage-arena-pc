@@ -14,6 +14,7 @@
     "report:w3": "npm run data && tsx scripts/report-w3.ts",
     "report:w4": "npm run data && tsx scripts/report-w4.ts",
     "report:w4:ladder": "npm run data && tsx scripts/report-ladder.ts",
-    "census:named": "npm run data && tsx scripts/report-named.ts"
+    "census:named": "npm run data && tsx scripts/report-named.ts",
+    "census:builds": "npm run data && tsx scripts/report-builds.ts"
   }
 }
