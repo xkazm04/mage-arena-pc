@@ -1,0 +1,400 @@
+{
+  "label": "simulated",
+  "layout": "94 x 62 m compact oval; scale-contract-v3; original opening separation",
+  "supplementalHashes": {
+    "art/scale-contract-v3.json": "b61d5c45d5dbcc63106e01ced26eb87d6b971a608e0188fc426315c6b09b9f79",
+    "packages/core/src/arena/data/runtime.json": "bf7aa161756df1c8a137153541e635fcc660c465f7d807f1f760c6b0d1011915",
+    "packages/core/src/arena/data/feel.json": "74d1e0b0f4f014b3c230f26d1305b4432908551c30ce28013accf8182c48b247",
+    "packages/core/src/arena/data/lab-schools.json": "b39886915a991748f77f95b53cec2a7aaeb2075b549c12258a85a20920fe732c",
+    "packages/core/src/arena/kernel.ts": "ffeea2131a59507e106abfe9d24d7de52f0a401562fd0a119aa49e22771677eb",
+    "packages/core/src/arena/mage-ai.ts": "8fe8d9a22547fbbb3edcc0863017734ddadef13568043a9bed63638bb34fa2e3",
+    "packages/core/src/arena/water.ts": "f7e8d14f08d6fd7dbe4da87ac16a01b2325f8653aa6a3d638859434c63719f93"
+  },
+  "command": "npm --prefix packages/core run report:w4 -- --tag w8x --evidence W8-evidence",
+  "countPerWave": 2000,
+  "seedRange": [
+    40000,
+    41999
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation",
+    "ranks": {
+      "vigor": 1,
+      "focus": 1,
+      "nerve": 1
+    }
+  },
+  "methodology": "Independent fresh wave starts, baseline enemy HP/counts/attacks. Both sides use fixed-step combat and resource rules; the reference player is an explicitly authored input policy. Completed-bout median includes wins and losses. No resource refill, forced outcome, duration padding, or dropped seeds. Remaining hostile hazards settle before a clear.",
+  "wallSecondsMeasured": 272.0316944,
+  "waves": [
+    {
+      "wave": 1,
+      "kind": "soldiers",
+      "fights": 2000,
+      "targetDurationS": [
+        25,
+        45
+      ],
+      "wins": 2000,
+      "losses": 0,
+      "timeouts": 0,
+      "durationS": {
+        "min": 23.033333333333335,
+        "p10": 30.233333333333334,
+        "p50": 35.8,
+        "p90": 42.483333333333334,
+        "max": 61.05
+      },
+      "winDurationS": {
+        "min": 23.033333333333335,
+        "p10": 30.233333333333334,
+        "p50": 35.8,
+        "p90": 42.483333333333334,
+        "max": 61.05
+      },
+      "inBandFraction": 0.9525,
+      "deadAirFraction": 0,
+      "perfectRate": 0,
+      "finalMana": {
+        "min": 0,
+        "p10": 1.375,
+        "p50": 3.25,
+        "p90": 8.375,
+        "max": 13.25
+      },
+      "finalHp": {
+        "min": 51,
+        "p10": 88,
+        "p50": 95,
+        "p90": 95,
+        "max": 95
+      },
+      "answers": {
+        "magic": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 0,
+          "took": 0,
+          "unclassified": 0
+        },
+        "physical": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 363,
+          "encased": 0,
+          "avoided": 83562,
+          "took": 556,
+          "unclassified": 0
+        },
+        "unblockable": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 0,
+          "took": 0,
+          "unclassified": 0
+        }
+      },
+      "failures": {
+        "medianOutOfBand": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": true,
+      "digest": "d51d8530eba23a632e877d13687150905a66246f8bceac11ea7cdd6bd8d266ee"
+    },
+    {
+      "wave": 2,
+      "kind": "creatures",
+      "fights": 2000,
+      "targetDurationS": [
+        35,
+        60
+      ],
+      "wins": 2000,
+      "losses": 0,
+      "timeouts": 0,
+      "durationS": {
+        "min": 27.6,
+        "p10": 35.8,
+        "p50": 43.03333333333333,
+        "p90": 51.6,
+        "max": 67.5
+      },
+      "winDurationS": {
+        "min": 27.6,
+        "p10": 35.8,
+        "p50": 43.03333333333333,
+        "p90": 51.6,
+        "max": 67.5
+      },
+      "inBandFraction": 0.9175,
+      "deadAirFraction": 0.00004695717505634861,
+      "perfectRate": 0.062398263700488336,
+      "finalMana": {
+        "min": 0,
+        "p10": 0.82500000000001,
+        "p50": 1.9249999999999972,
+        "p90": 8.175000000000008,
+        "max": 15.625
+      },
+      "finalHp": {
+        "min": 36.900000000000006,
+        "p10": 78.15,
+        "p50": 92.9,
+        "p90": 95,
+        "max": 95
+      },
+      "answers": {
+        "magic": {
+          "perfect": 115,
+          "held": 642,
+          "guarded": 0,
+          "cast-blocked": 2,
+          "wrong-facing": 3,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 17215,
+          "took": 1066,
+          "unclassified": 0
+        },
+        "physical": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 78,
+          "encased": 0,
+          "avoided": 20510,
+          "took": 15,
+          "unclassified": 0
+        },
+        "unblockable": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 0,
+          "took": 0,
+          "unclassified": 0
+        }
+      },
+      "failures": {
+        "medianOutOfBand": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": true,
+      "digest": "c115fe14a4a07e717d03c547e7c17d5f2c3068f525cb696cda44b466e0f46056"
+    },
+    {
+      "wave": 3,
+      "kind": "semifinal",
+      "fights": 2000,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "wins": 1752,
+      "losses": 248,
+      "timeouts": 0,
+      "durationS": {
+        "min": 19.166666666666668,
+        "p10": 32.28333333333333,
+        "p50": 41.06666666666667,
+        "p90": 51.06666666666667,
+        "max": 89.2
+      },
+      "winDurationS": {
+        "min": 19.166666666666668,
+        "p10": 31.85,
+        "p50": 40.56666666666667,
+        "p90": 50.56666666666667,
+        "max": 68.96666666666667
+      },
+      "inBandFraction": 0.309,
+      "deadAirFraction": 0.00007412165834856946,
+      "perfectRate": 0.010570268928665284,
+      "finalMana": {
+        "min": 0,
+        "p10": 1.199999999999985,
+        "p50": 2.625,
+        "p90": 4.524999999999981,
+        "max": 6.59999999999998
+      },
+      "finalHp": {
+        "min": 0,
+        "p10": 0,
+        "p50": 23.41500000000006,
+        "p90": 45.55400000000006,
+        "max": 72.20400000000002
+      },
+      "answers": {
+        "magic": {
+          "perfect": 724,
+          "held": 104,
+          "guarded": 0,
+          "cast-blocked": 25,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 56967,
+          "took": 67641,
+          "unclassified": 0
+        },
+        "physical": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 0,
+          "took": 0,
+          "unclassified": 0
+        },
+        "unblockable": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 0,
+          "took": 0,
+          "unclassified": 0
+        }
+      },
+      "failures": {
+        "medianOutOfBand": true,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": false,
+      "digest": "016c24a2431a771b649a9f873333b5eaab5290426c7388d981deda80b76088e2"
+    },
+    {
+      "wave": 4,
+      "kind": "final",
+      "fights": 2000,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "wins": 1174,
+      "losses": 826,
+      "timeouts": 0,
+      "durationS": {
+        "min": 26.05,
+        "p10": 39.55,
+        "p50": 48.06666666666667,
+        "p90": 58.63333333333333,
+        "max": 77.6
+      },
+      "winDurationS": {
+        "min": 26.05,
+        "p10": 38.21666666666667,
+        "p50": 47.583333333333336,
+        "p90": 57.71666666666667,
+        "max": 77.6
+      },
+      "inBandFraction": 0.682,
+      "deadAirFraction": 0,
+      "perfectRate": 0.012111238251970326,
+      "finalMana": {
+        "min": 0,
+        "p10": 1,
+        "p50": 2.600000000000005,
+        "p90": 4.44999999999996,
+        "max": 8
+      },
+      "finalHp": {
+        "min": 0,
+        "p10": 0,
+        "p50": 5.742000000000052,
+        "p90": 34.812000000000054,
+        "max": 69.662
+      },
+      "answers": {
+        "magic": {
+          "perfect": 942,
+          "held": 158,
+          "guarded": 0,
+          "cast-blocked": 22,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 77483,
+          "took": 76657,
+          "unclassified": 0
+        },
+        "physical": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 7,
+          "took": 0,
+          "unclassified": 0
+        },
+        "unblockable": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 0,
+          "took": 0,
+          "unclassified": 0
+        }
+      },
+      "failures": {
+        "medianOutOfBand": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": true,
+      "digest": "869772b45718ff447d9d8a9dc51d8f33a83696047ed2888a2bddd1d6ec90dc07"
+    }
+  ],
+  "fullCensus": true,
+  "allPassed": false,
+  "sourceHashes": {
+    "combat.json": "8ea48b8ed2bb3b7c7a568cecd67d70309fa912334078ebdecc01bb3b0c9c9f16",
+    "spells-water.csv": "f10aad3aefafe35295e10eb61ae65e8da94465a14bee136bb2659a5b4390fa2e",
+    "enemies.json": "3d122a2d63cf225281bda8aa4f352b4d377056782ef445ff06ef50269ec068fc",
+    "arena-tiers.json": "bff43f06703c86fa9f98f6e011f8cc0f5e6b2e94160808d34d0609f324c4dd93"
+  }
+}

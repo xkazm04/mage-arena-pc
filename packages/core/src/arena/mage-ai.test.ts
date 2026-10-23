@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { enemyData } from './data.generated.ts';
-import { addMage, attachMageAI, competence, createArena, createGames, mageInput, newWaterState, presets, runtime, spellFor, stateHash, stepArena, stepGames, ticks, tuningFor } from './index.ts';
+import { addMage, attachMageAI, competence, createArena, createGames, mageInput, newWaterState, paceOf, presets, runtime, spellFor, stateHash, stepArena, stepGames, ticks, tuningFor } from './index.ts';
 import type { InputFrame } from './types.ts';
 
 describe('tier curve play (usesTierCurve rows 3-4)', () => {
@@ -62,12 +62,13 @@ describe('tier curve play (usesTierCurve rows 3-4)', () => {
           const roll = g.state.randomLog.find(r => r.purpose === `mage ${opponent.id} perfect ${hit.activationId}`);
           if (roll && roll.value >= chance) failedRollPerfects++;
         });
-        expect(Math.min(...opponent.mageAI!.reactionAges)).toBeGreaterThanOrEqual(ticks(enemyData.mages.caps.reactionDelayMinS));
+        // The floor is authored seconds at the mage's own pace (W8 lane X).
+        expect(Math.min(...opponent.mageAI!.reactionAges)).toBeGreaterThanOrEqual(ticks(enemyData.mages.caps.reactionDelayMinS / paceOf(opponent)));
       }
       if (competence(level).curve) expect(failedRollPerfects, `L${level}`).toBe(0);
       wins.push(won);
     }
-    expect(wins).toEqual([45, 16, 6]); // at the default difficulty (Normal), pace 1.5 on both sides
+    expect(wins).toEqual([52, 16, 7]); // at the default difficulty (Normal), pace 1.5 on both sides; AI reaction at pace (W8 lane X: was 45, 16, 6)
     expect(wins[0]! > wins[1]! && wins[1]! > wins[2]! && wins[2]! > 0).toBe(true);
   }, 120_000); // ~25 s of fights alone; the 30 s default flakes when the machine is busy
 

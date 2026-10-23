@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { enemyData } from './data.generated.ts';
-import { attachMageAI, attachRivalPlan, bolt, competence, createGames, createLab, defaultLabConfig, distance, idleInput, mageInput, presets, rivalPlanData, rivalPlanPresets, rivalSteer, runtime, stateHash, stepGames, stepLab, ticks } from './index.ts';
+import { attachMageAI, attachRivalPlan, bolt, competence, createGames, createLab, defaultLabConfig, distance, idleInput, mageInput, paceOf, presets, rivalPlanData, rivalPlanPresets, rivalSteer, runtime, stateHash, stepGames, stepLab, ticks } from './index.ts';
 import type { Actor, ArenaState, InputFrame } from './types.ts';
 
 const seeds = Array.from({ length: 100 }, (_, i) => 1000 + i), boutTicks = ticks(30);
@@ -68,19 +68,19 @@ describe('rival plans (enemies.json mages.plans)', () => {
     const count = (plan: boolean) => seeds.reduce((n, seed) => { const b = undertowBout(seed, plan); return n + Number(b.entered && b.landed); }, 0);
     const off = count(false), on = count(true);
     expect(off).toBe(0);
-    expect(on).toBe(73); // at the default difficulty (Normal)
+    expect(on).toBe(70); // at the default difficulty (Normal); AI reaction at pace (W8 lane X: was 73)
   });
 
   it('Mirror tide completes defend-then-counter cycles under a Rain Needle stream only with its plan on (Lab competence 2)', () => {
     const off = seeds.reduce((n, seed) => n + mirrorBout(seed, false).cycles, 0), on = seeds.map(seed => mirrorBout(seed, true).cycles);
     expect(off).toBe(0);
-    expect([on.reduce((a, b) => a + b, 0), on.filter(Boolean).length]).toEqual([77, 58]);
+    expect([on.reduce((a, b) => a + b, 0), on.filter(Boolean).length]).toEqual([145, 69]); // AI reaction at pace (W8 lane X: was 77, 58)
   });
 
   it('keeps the fairness rules with plans on: reaction floor, seeded draws logged, no perfect it did not roll', () => {
     for (const seed of seeds.slice(0, 20)) {
       for (const { state, dummy } of [undertowBout(seed, true), mirrorBout(seed, true), mirrorBout(seed, true, 4)]) {
-        expect(Math.min(...dummy.mageAI!.reactionAges)).toBeGreaterThanOrEqual(ticks(enemyData.mages.caps.reactionDelayMinS));
+        expect(Math.min(...dummy.mageAI!.reactionAges)).toBeGreaterThanOrEqual(ticks(enemyData.mages.caps.reactionDelayMinS / paceOf(dummy))); // authored floor at the mage's pace
         if (competence(dummy.mageAI!.competence).curve) expect(unearnedPerfects(state, dummy)).toBe(0);
         expect(state.randomLog.every(r => !r.purpose.includes('plan') || r.purpose === `mage ${dummy.id} plan approach`)).toBe(true);
       }

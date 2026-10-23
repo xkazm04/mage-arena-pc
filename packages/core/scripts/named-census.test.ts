@@ -52,8 +52,9 @@ describe('W8 lane B: the named duels play the PC overlay', () => {
 
   // The claim the full census (docs/waves/W8-evidence/named*.json) makes, pinned on the first 50 census seeds per duel.
   // Lio's final sits in its band with the win rate in range. Brennic's semifinal meets the win rate but stays under its
-  // band: the reference player kills an undefended 95 HP Fire mage in about 34-37 s whatever the overlay does (no AI
-  // reacts at pace 1.5, and Fire has no evade), so the median cannot reach 45 s (lane B report, structural cause).
+  // band: the reference player kills a harmless 95 HP Fire mage in a median of 35.4 s at pace 1.5 whatever the overlay
+  // does (lane X: AI reaction now runs at pace and the rivals ward again, which raised that ceiling only from 33.8 s; Fire
+  // has no evade, and at pace 1.5 every cast comes 1.5x sooner while HP is unpaced), so the median cannot reach 45 s.
   it('50 seeds per named duel: win rate in range, Lio in band, Brennic under band (structural), census rules hold', () => {
     const results = namedWaves.map(wave => summariseNamedWave(Array.from({ length: 50 }, (_, i) => runNamedFight(runtime.games.censusSeedStart + i, wave)), wave));
     for (const r of results) {

@@ -43,6 +43,8 @@ AI mages use the **same kernel** as the player: same spells, ward, tier clock an
 
 Caps: reaction delay never below 0.25 s; perfect chance never above 0.45. Fractional competence (Tiro final 1.5) interpolates between rows.
 
+**Reaction runs at the mage's pace** (owner decision 2026-10-23, W8 lane X). The reaction delay is one of the mage's own durations, so it is divided by the mage's pace like its casts and rolls: `paced(max(0.25, delay x enemyReactionScale))`. The table and the 0.25 s floor are authored seconds. The floor applies first and pace second, so competence keeps its order at every pace. At Normal (1.5x) the delays are 22 / 18 / 14 / 12 ticks for levels 1-4, and the floor is 10 ticks. Easy (1.2x) reacts more slowly than the 1.5x player's shots arrive, and Hard (1.8x) reacts faster. Before this change the delays stayed at 1x while every shot flew at 1.5x: no AI mage warded or rolled in a Games duel. Decision cadence is still unpaced.
+
 Behaviour (W4, CF2):
 
 - Preferred distance 5–8 m, scaled by aggression (`× (1.3 − 0.3 × aggression)`) plus a seeded spacing variation of ±0.75 m (`feel.json/ai/spacingVariationM` 1.5); strafe period 2.4 s with a seeded phase (1.7 s); aim lead 45% of predicted travel; defence hold 0.35 s.
@@ -55,7 +57,7 @@ Behaviour (W4, CF2):
   - Breaks come at 66% and 33% of max HP. Each break emits a `phase` event and surges both sides one tier, capped at IV, ignoring the minimum unlock gap.
   - The last phase grants one free signature cast: Brennic's Sunfall, Lio's Tempest Lance. It costs no mana and skips the tier and cooldown checks. If the rival is busy it waits for the first free tick, and an interrupt during the cast loses it.
   - Numbers: `packages/core/src/arena/data/rivals.json`, starting at VR's values. Code: `rival-phases.ts`, through `hookArena` in `kernel.ts`.
-  - The season keeps the Water proxies until the W8 balance pass brings these duels into band. Measured on 20 seeds: the reference player loses every named duel in a median of about 14 s.
+  - The season keeps the Water proxies until both duels are in band. Named census (2,000 per duel, PC overlay, AI reaction at pace, `W8-evidence/named.json`): Lio's final is in band (54.3 % reference wins, median 52.2 s). Brennic's semifinal is not (51.6 % wins, median 34.1 s against 45-75 s), because a harmless Brennic still dies in a median of 35.4 s at pace 1.5.
 
 Known issue: level 4 over-defends and can win less often than level 3 (W4 ladder, logged for W9).
 
@@ -93,7 +95,18 @@ Arena palettes per Games (U5): Games 1–2 verdigris, 3–4 rust-sand, 5–6 moo
 
 Command: `npm --prefix packages/core run report:w4 -- --evidence <dir> --tag census`. 2,000 seeded fights per Tiro wave (seeds from 40000), a fixed reference controller (Water Rotation, competence 2, rank-one stats) against the wave. Gate: completed-bout median inside the wave's target band, timeouts ≤ 1%, no player defeat before 5 s, finite states, exact replay of sampled seeds. Losing seeds and tails are always kept.
 
-Current target bands (`arena-tiers.json/tiers/tiro/waves/targetDurationS`) and the latest census (H1, `H1-evidence/census.json`):
+Latest census (W8 lane X, 2026-10-23, `W8-evidence/w8x.json`, Normal difficulty, AI reaction at pace). The bands are unchanged:
+
+| Wave | Target band s | Median s | p10-p90 s | Reference wins | Gate |
+|---|---|---|---|---|---|
+| Soldiers | 25–45 | 35.8 | 30.2–42.5 | 2000 | pass |
+| Creatures | 35–60 | 43.0 | 35.8–51.6 | 2000 | pass |
+| Semifinal | 45–75 | **41.1** | 32.3–51.1 | 1752 | **FAIL** (median) |
+| Final | 45–80 | 48.1 | 39.5–58.6 | 1174 | pass |
+
+**Semifinal FAIL, cause located: pace.** At 1.5x, casts, cooldowns and projectiles come 1.5x sooner, but HP and damage are unpaced, so a damage race ends sooner. The same semifinal at pace 1 runs a median of 56.7 s (400 seeds). Pacing the reaction moved it only from 38.9 s to 41.1 s. Fixing it needs an owner decision: pace HP or damage, re-band the duels for pace, or run the census reference at 1x.
+
+Earlier census (H1, `H1-evidence/census.json`, before pace):
 
 | Wave | Target band s | Median s | In-band fraction | Notes |
 |---|---|---|---|---|
@@ -124,7 +137,9 @@ Census medians by stage (s):
 | W7 pacing fix | 38.23 | 44.63 | 45.48 | 58.00 |
 | U5 compact ellipse | 38.48 | 45.08 | 45.48 | 58.00 |
 | CF2 feel pass | 36.02 | 45.85 | 60.88 | 67.35 |
-| H1 hit reactions (current) | 36.03 | 45.93 | 57.10 | 62.00 |
+| H1 hit reactions | 36.03 | 45.93 | 57.10 | 62.00 |
+| Pace 1.5x (`4127797`, before W8, FAIL) | 34.8 | 42.6 | 38.9 | 48.0 |
+| W8 lane X, reaction at pace (current, `W8-evidence/w8x.json`, FAIL) | 35.8 | 43.0 | 41.1 | 48.1 |
 
 Note: `combat.json/pacingTargets` (soldier 25–40, creature 30–48, duel 45–85) is an older copy used only for the dead-air bucket size (2 s). The census uses `arena-tiers.json`. See [open-questions.md](open-questions.md).
 

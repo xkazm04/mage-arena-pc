@@ -147,7 +147,9 @@ describe("shipping combat commitments", () => {
       stepArena(copy, { [dummy.id]: mageInput(copy, copy.actors[1]) });
     }
     expect(stateHash(copy)).toBe(stateHash(state));
-    expect(dummy.mageAI!.reactionAges.every((n) => n >= 15)).toBe(true);
+    // The 0.25 s reaction floor is authored seconds at the mage's own pace (W8 lane X): 10 ticks at the Lab's Normal 1.5x.
+    expect(dummy.mageAI!.reactionAges.length).toBeGreaterThan(0);
+    expect(dummy.mageAI!.reactionAges.every((n) => n >= ticks(0.25 / paceOf(dummy)))).toBe(true);
   });
   it("imports v1 experiments with legacy values for newly introduced parameters", () => {
     const old = JSON.parse(exportTuning(makeTuning(), "legacy"));

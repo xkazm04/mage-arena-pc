@@ -15,6 +15,7 @@ import { idleInput, type Difficulty } from './types.ts';
 // games40000 is the semifinal (mages only); soldiers40000 is the conscript and slinger wave, so it pins
 // committed-body lunges as well as the seeded spawn jitter and reference-player draws. Both run at the default
 // difficulty; hardSoldiers40000 replays the soldiers at Hard, where both windups sit on their warning floor.
+// Re-pinned W8 lane X (2026-10-23): AI mage reaction delays now run at the mage's pace (mage-ai.ts); lab7331 is unpaced and kept.
 function games(seed: number, wave = 2, difficulty?: Difficulty) {
   const g = createGames(seed, presets.find(p => p.name === runtime.games.referencePreset)!, wave, true, undefined, undefined, difficulty);
   const hashes: string[] = [];
@@ -30,17 +31,17 @@ function lab(seed: number) {
 }
 
 const GOLDEN = {
-  games40000: { draws: 195, hashes: [
-    'b8e06d71','f42f9761','bbf44b67','a2cceef1','50eb6755','25973e47','ef88e8b0','80098a5f','51a44bc3','69dc5370',
-    'd13f38f3','3f4c9acb','4432d709','774eec4f','3c4d6ba9','56893df7','6b9b3526','f5b8a67f','85513d3b','419d8e08',
+  games40000: { draws: 198, hashes: [
+    '7af6e5ee','74f4bcf1','fbc508e1','1ecdc2ea','02983e10','363562a3','4a5161ed','782d4f37','fb250617','49111973',
+    '0f602cac','0b31069b','9cd28f96','ac82fd31','5874ba5b','a8c62faa','947b21dc','afd22d32','cb62023f','8bb2bad4',
   ] },
-  soldiers40000: { draws: 104, hashes: [
-    'dfee6260','ac2a9865','e2518e73','795923e8','b3ad1ee3','45d496d8','25a18120','c4168e50','df0fc231','7fd16ab0',
-    '80e49a92','6f7d68ae','4484f2f8','11a875c3','a0eb0c2e','bcc8a490','104785bc','11f55a5d','25ed4e47','448cca72',
+  soldiers40000: { draws: 98, hashes: [
+    'dfee6260','ac2a9865','e2518e73','795923e8','b3ad1ee3','45d496d8','ee4882b2','2bc0839a','b5e0132c','88774c7b',
+    '54841063','8ed8cf59','8cc0080a','877f5f52','266a9ae6','db3147ff','1818b826','5dd922de','eb6ffe37','ca8e3eed',
   ] },
-  hardSoldiers40000: { draws: 94, hashes: [
-    'efb470fb','4786a702','f8d5ae73','a7e1e578','db0ae87e','69f69461','1c7bb07e','c97f0a5a','4f1d3589','4670bde3',
-    '9b8e5996','1807f814','0d5f0485','69aaca01','402b0b39','0b52f34f','fa5e5bb4','cf42fbf3','761728bf','91fb0463',
+  hardSoldiers40000: { draws: 95, hashes: [
+    'efb470fb','453e75af','8ec65898','63baa567','01ae1b1d','642c78c3','765eda3f','56d3c361','03d712e3','6d80b7f4',
+    '8a52b726','db03e2e9','5653c56f','cb069c83','0f71b131','908921aa','31e6ad2b','1b04a5a9','8db878cf','9aebc595',
   ] },
   lab7331: { draws: 44, hashes: ['a4aa3649','8a63458e','f371651c','239c3da9','eb692769','c35c3394'] },
 };

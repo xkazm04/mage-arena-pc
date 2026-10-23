@@ -1,4 +1,4 @@
-import { paceOf, tuningFor, feelPolicy } from './tuning.ts';
+import { paceOf, paced, tuningFor, feelPolicy } from './tuning.ts';
 import { arenaContains, arenaGeometry } from './geometry.ts';
 import { enemyData } from './data.generated.ts';
 import { spellFor, spells, type Spell } from './catalog.ts';
@@ -72,7 +72,9 @@ const fitsBeforeRaise = (state: ArenaState, raiseTick: number, s: Pick<Spell, 'c
 export function mageInput(state: ArenaState, a: Actor): InputFrame {
   const brain = a.mageAI; if (!brain || a.tags.includes("DEFEATED")) return idleInput();
   const tune = tuningFor(state), baseProfile = competence(brain.competence);
-  const profile = { ...baseProfile, reactionDelayS: Math.max(enemyData.mages.caps.reactionDelayMinS, baseProfile.reactionDelayS * tune.enemyReactionScale), aimErrorDeg: baseProfile.aimErrorDeg * tune.enemyAimErrorScale };
+  // Reaction is the mage's own duration, so it runs at the mage's pace (owner decision 2026-10-23): the authored delay and its floor
+  // (caps.reactionDelayMinS, the Lab's 250 ms) are authored seconds, floored first and then paced, so competence keeps its order at any pace.
+  const profile = { ...baseProfile, reactionDelayS: paced(a, Math.max(enemyData.mages.caps.reactionDelayMinS, baseProfile.reactionDelayS * tune.enemyReactionScale)), aimErrorDeg: baseProfile.aimErrorDeg * tune.enemyAimErrorScale };
   const target = state.actors.filter(t => t.team !== a.team && !t.tags.includes("DEFEATED") && hasLineOfSight(state, a.pos, t.pos)).sort((x, y) => distance(a.pos, x.pos) - distance(a.pos, y.pos) || x.id - y.id)[0];
   const seen = threats(state, a), window = ticks(tune.absorbWindowS);
   // Curve rows: a plain absorb is up for the hit but older than the perfect window; a raise that would land inside it is skipped.
