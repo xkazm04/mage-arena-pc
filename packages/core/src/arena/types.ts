@@ -13,6 +13,24 @@ export interface Composition { name: string; lines: WaterLine[]; branches: { las
 export interface WaterState { composition: Composition; flow: number; lastLine: string; lastCastTick: number; lastActivityTick: number; cooldowns: Record<string, number>; stored: number;
   rootUntil: number; encasedUntil: number; slowUntil: number; slowMult: number; wardUntil: number; sheenUntil: number; hotUntil: number; hotPerTick: number;
   crests: number; healing: number; controlTicks: number; decoy?: { pos: Vec; until: number } }
+/** W8 schools with their own catalogue and resource (VR CR-002 Fire, CR-007 Air); Water keeps `WaterState`. */
+export const slotSchools = ['fire', 'air'] as const;
+export type SlotSchool = typeof slotSchools[number];
+/** Bolt fixed, four free slots, no branches (the authored Fire sheet). Ids are the school CSV `id` column verbatim. */
+export interface SlotComposition { school: SlotSchool; name: string; bolt: string; slots: [string, string, string, string] }
+/** Heat (Fire) or Momentum (Air), 0..100. Present only on a Fire or Air actor, so Water actors serialize exactly as before. */
+export interface SchoolState {
+  school: SlotSchool; loadout: SlotComposition; value: number;
+  /** Tick of the last gain (Heat's decay idle) and the tick a lock (Furnace Heart, Eye of the Storm) ends; 0 = none. */
+  lastGainTick: number; lockedUntil: number; gained: boolean;
+  cooldowns: Record<string, number>;
+  /** Air Form's evasion window end; 0 = none. */
+  formUntil: number;
+}
+/** A spell-owned effect that lives across ticks (beam, trail, delayed detonation, volley). Owned and stepped by arena/shapes.ts. */
+export interface SchoolEffect { id: number; ownerId: number; activationId: number; spellId: string; kind: 'beam' | 'trail' | 'detonation' | 'volley';
+  startTick: number; nextTick: number; endTick: number; origin: Vec; target: Vec; damage: number; family: Family; tier: number;
+  hitLog: { tick: number; targetId: number }[]; survivesOwner?: boolean; remaining?: number }
 export interface InputFrame { move: Vec; aim: Vec; slot: number; cast: boolean; absorb: boolean; roll: boolean; sprint: boolean }
 export interface Hit { ownerId: number; activationId: number; damage: number; family: Family; tier: number; source: Vec; bolt?: boolean; reaction?: boolean; delivery?: 'projectile' | 'area' | 'melee' }
 export interface EnemyBrain { id: string; readyTick: number; backoffUntil: number; stunnedUntil: number; attackIndex: number; deathQueued: boolean; recoveryUntil?: number }
@@ -26,6 +44,8 @@ export interface Actor {
   ranks: Ranks; hp: number; maxHp: number; mana: number; maxMana: number; stamina: number; maxStamina: number;
   tags: ('DEFEATED' | 'STAGGERED')[]; poise: number; defeatedTick?: number; defeatDirection?: Vec; dummy: boolean; absorb: boolean; absorbFreshTick: number; releaseTick: number; absorbExhausted: boolean;
   water: WaterState;
+  /** Fire/Air resource and loadout (arena/schools.ts). Absent for Water and non-mages: never null or zeroed. */
+  schoolState?: SchoolState;
   enemy?: EnemyBrain; mageAI?: MageBrain; speedMps?: number;
   /** Time scale of this actor's own actions (tuning.ts pace), fixed at spawn; absent is the authored 1x. */
   pace?: number;
@@ -48,6 +68,10 @@ export interface ArenaState {
   difficulty?: Difficulty;
   tick: number; seed: number; rng: number; nextId: number; actors: Actor[]; projectiles: Projectile[];
   telegraphs: Telegraph[]; zones: Zone[]; events: ArenaEvent[]; randomLog: RandomDraw[];
+  /** Created on the first Fire/Air effect; absent otherwise, so Water states hash as before. */
+  schoolEffects?: SchoolEffect[];
+  /** 'canonical' runs VR's numbers (parity suites); absent applies the PC balance overlay (school-balance.pc.json). */
+  balance?: 'canonical';
 }
 export const idleInput = (aim: Vec = { x: 32, y: 10 }): InputFrame => ({ move: { x: 0, y: 0 }, aim, slot: 0, cast: false, absorb: false, roll: false, sprint: false });
 

@@ -1,0 +1,65 @@
+{
+  "_about": "Arena identity of the Fire and Air schools (Heat, Momentum). Canonical for both channels: PC compiles it, VR pins it. Numbers are VR's; PC deviations live only in packages/core/src/arena/data/school-balance.pc.json. Air is read as mage-arena-vr docs/schools/AIR.md (T23), accepted 2026-10-23 as CR-007.",
+  "sources": {
+    "fire": "mage-arena-tv baeac66: docs/design/baseline-fourteen-nights/design/data/schools.json (fire.combatIdentity) and docs/design/reference-the-ledger/design/data/spells-fire.csv (VR CR-002)",
+    "air": "mage-arena-tv baeac66: schools.json (air.combatIdentity); mage-arena-vr f134847: apps/vr/data/vr/schools/spells-air.csv"
+  },
+  "fire": {
+    "resource": "heat",
+    "range": [
+      0,
+      100
+    ],
+    "gain": {
+      "perBoltHit": 2,
+      "perFlickTarget": 6,
+      "perHitTakenUnabsorbed": 12,
+      "perSecondEnemyWithin3m": 3
+    },
+    "decay": {
+      "perSecond": 6,
+      "afterNoGainSeconds": 2
+    },
+    "thresholds": [
+      {
+        "at": 50,
+        "name": "Kindled",
+        "spellDamageMult": 1.15
+      },
+      {
+        "at": 80,
+        "name": "Blazing",
+        "spellDamageMult": 1.3,
+        "absorbDrainMult": 1.5,
+        "staminaRegenMult": 0.7
+      }
+    ],
+    "perfectAbsorbExtra": "none beyond the shared reward; Fire is paid for staying close and hitting"
+  },
+  "air": {
+    "resource": "momentum",
+    "range": [
+      0,
+      100
+    ],
+    "gain": {
+      "perSecondMovingAbove4Mps": 20
+    },
+    "decay": {
+      "perSecondStill": 25
+    },
+    "thresholds": [
+      {
+        "at": 40,
+        "spellsPierce": 1,
+        "rollStaminaMult": 0.6
+      },
+      {
+        "at": 80,
+        "spellRangeMult": 1.3
+      }
+    ],
+    "absorbDrainMult": 1.2,
+    "perfectAbsorbExtra": "deflect: an absorbed projectile of tier <= own unlocked tier is redirected along the aim direction"
+  }
+}

@@ -7,6 +7,8 @@ import { activationBlocked, idleInput, type Actor, type ArenaState, type Difficu
 import { newWaterState } from './catalog.ts';
 import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, updateWater, wardDrainMult, waterAbsorbed } from './water.ts';
 import { enemySpec } from './enemies.ts';
+import { hasSchoolLoadout, releaseSchoolSpell, resetSchool, schoolAfterMove, schoolDeflects, schoolDrainMult, schoolEvades, schoolOnHit, schoolRollStaminaMult, schoolStaminaRegenMult, schoolTick, trySchoolCast } from './schools.ts';
+import { stepSchoolEffects } from './shapes.ts';
 
 export { combat, statRules, bolt, runtime };
 export const DT = 1 / combat.simStepHz;
@@ -81,6 +83,7 @@ export function tapContacts(state: ArenaState, tap: ContactTap): () => void {
 export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean } {
   for (const tap of contactTaps.get(state) ?? []) tap(state, target, hit);
   if (target.tags.includes("DEFEATED") || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
+  if (schoolEvades(state, target, hit)) return { damage: 0, perfect: false };
   const tune = tuningFor(state);
   const spec = target.enemy ? enemySpec(target) : undefined;
   const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
@@ -120,6 +123,7 @@ export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage
     }
     if (tune.knockbackM > 0) { const amount = tune.knockbackM * Math.min(2, hpRemoved / 10) / Math.max(1,target.poise); target.pos = constrainToArena({ x: target.pos.x + direction.x * amount, y: target.pos.y + direction.y * amount }, target.radius); }
   }
+  schoolOnHit(state, target, owner, hit, { damage, perfect, reduction });
   if (target.hp === 0) defeatActor(state, target, unit(sub(target.pos, hit.source)));
   return { damage, perfect };
 }
@@ -140,7 +144,7 @@ function updateWard(state: ArenaState, a: Actor, input: InputFrame): void {
     } else a.absorbExhausted = true;
   }
   if (a.absorb) {
-    const cost = drainPerSecond(a.ranks.nerve) * wardDrainMult(state, a) * tuningFor(state).absorbDrainScale * DT;
+    const cost = drainPerSecond(a.ranks.nerve) * wardDrainMult(state, a) * schoolDrainMult(state, a) * tuningFor(state).absorbDrainScale * DT;
     const paid = Math.min(a.mana, cost); a.mana -= paid; a.metrics.manaDrained += paid;
     if (paid < cost || a.mana <= 1e-9) { a.mana = Math.max(0, a.mana); a.absorb = false; a.absorbExhausted = true; }
   }
@@ -151,10 +155,10 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   const tune = tuningFor(state);
   const canCancel = !a.pending || tune.castCommitFraction >= 1 || state.tick < a.pending.startTick + Math.ceil((a.pending.releaseTick - a.pending.startTick) * tune.castCommitFraction);
   const rooted = state.tick < a.water.rootUntil || a.pending?.spellId === 'mend:4:base';
-  if (!rooted && canCancel && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost) {
+  if (!rooted && canCancel && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost * schoolRollStaminaMult(state, a)) {
     a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(paced(a, tune.rollDurationS));
     a.immuneUntil = state.tick + ticks(paced(a, tune.rollIFramesS)); a.recoveryUntil = a.rollUntil + ticks(paced(a, tune.rollRecoveryS)); a.rollRecoveryUntil = a.recoveryUntil;
-    a.stamina -= combat.roll.staminaCost; a.staminaUsedTick = state.tick; a.metrics.rolls++;
+    a.stamina -= combat.roll.staminaCost * schoolRollStaminaMult(state, a); a.staminaUsedTick = state.tick; a.metrics.rolls++;
     a.absorb = false; if (input.absorb) a.absorbExhausted = true; interrupt(state, a); emit(state, 'roll', a);
   }
   let velocity = { x: 0, y: 0 };
@@ -189,7 +193,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
 function releaseCast(state: ArenaState, a: Actor): void {
   if (activationBlocked(a)) return;
   const pending = a.pending; if (!pending || state.tick < pending.releaseTick) return;
-  if (pending.kind === 'spell') { releaseSpell(state, a); return; }
+  if (pending.kind === 'spell') { if (hasSchoolLoadout(a)) releaseSchoolSpell(state, a); else releaseSpell(state, a); return; }
   a.pending = undefined;
   emit(state, 'release', a); Object.assign(state.events.at(-1)!, { activationId: pending.activationId, at: {...a.pos} });
   const direction = unit(sub(pending.aim, a.pos), a.facing);
@@ -213,7 +217,7 @@ function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
     a.pending = { kind: 'staff', startTick: state.tick, releaseTick: state.tick + ticks(paced(a, combat.staffStrike.windupS)), aim: { ...input.aim }, activationId: state.nextId++ };
     a.cooldownUntil = a.pending.releaseTick + ticks(paced(a, combat.staffStrike.recoveryS));
   } else {
-    if (trySpellCast(state, a, input)) releaseCast(state, a);
+    if (hasSchoolLoadout(a) ? trySchoolCast(state, a, input) : trySpellCast(state, a, input)) releaseCast(state, a);
     return;
   }
   a.metrics.casts++; emit(state, 'cast', a); releaseCast(state, a);
@@ -300,7 +304,7 @@ function updateProjectiles(state: ArenaState): void {
     if (first) {
       // Incoming direction is the last segment, even when the original caster moved.
       p.source = { ...p.pos }; const result = resolveHit(state, first, { ...p, delivery: p.burstRadiusM || p.piercing ? 'area' : 'projectile' }); p.hitIds.push(first.id);
-      if (result.perfect) reflectProjectile(state, first, p);
+      if (result.perfect && !schoolDeflects(state, first, p)) reflectProjectile(state, first, p);
       if (p.burstRadiusM && !result.perfect) {
         for (const target of state.actors) if (!target.tags.includes("DEFEATED") && target.team !== owner?.team && !p.hitIds.includes(target.id) && distance(target.pos, first.pos) <= p.burstRadiusM) {
           resolveHit(state, target, { ...p, source: { ...first.pos }, delivery: 'area' }); p.hitIds.push(target.id);
@@ -325,17 +329,18 @@ export function stepArena(state: ArenaState, inputs: Readonly<Record<number, Inp
   for (const a of state.actors) {
     if (a.tags.includes("DEFEATED")) continue;
     if (state.tick >= (a.staggerUntil ?? 0)) a.tags = a.tags.filter(tag => tag !== "STAGGERED");
+    schoolTick(state, a);
     updateWater(state, a);
     a.mana = Math.min(a.maxMana, a.mana + maximum(statRules.manaRegen, a.ranks.focus) * tuningFor(state).manaRegenScale * DT);
-    if (state.tick - a.staminaUsedTick >= ticks(combat.stamina.regenDelayS)) a.stamina = Math.min(a.maxStamina, a.stamina + combat.stamina.regenPerSecond * DT);
+    if (state.tick - a.staminaUsedTick >= ticks(combat.stamina.regenDelayS)) a.stamina = Math.min(a.maxStamina, a.stamina + combat.stamina.regenPerSecond * schoolStaminaRegenMult(state, a) * DT);
     if (state.tick < a.water.encasedUntil) { a.previousPos = { ...a.pos }; continue; }
     if (state.tick < (a.staggerUntil ?? 0)) { a.previousPos = { ...a.pos }; updateWard(state, a, inputs[a.id] ?? idleInput()); if (a.velocity) a.velocity = { x: 0, y: 0 }; continue; }
     const input = inputs[a.id] ?? idleInput({ x: a.pos.x + a.facing.x, y: a.pos.y + a.facing.y });
     a.facing = unit(sub(input.aim, a.pos), a.facing);
-    updateWard(state, a, input); moveActor(state, a, input); releaseCast(state, a); startCast(state, a, input);
+    updateWard(state, a, input); moveActor(state, a, input); schoolAfterMove(state, a); releaseCast(state, a); startCast(state, a, input);
     a.lastInput = { ...input, move: { ...input.move }, aim: { ...input.aim } };
   }
-  updateTelegraphs(state); updateProjectiles(state); state.zones = state.zones.filter(z => z.until > state.tick);
+  updateTelegraphs(state); updateProjectiles(state); stepSchoolEffects(state); state.zones = state.zones.filter(z => z.until > state.tick);
   for (const a of state.actors) if (!a.tags.includes("DEFEATED")) updateClock(state, a);
 }
 export function resetWave(state: ArenaState, actor: Actor): void {
@@ -346,7 +351,7 @@ export function resetWave(state: ArenaState, actor: Actor): void {
   actor.absorb = false; actor.absorbExhausted = false; actor.absorbFreshTick = -1e9; actor.releaseTick = -1e9;
   actor.pending = undefined; actor.cooldownUntil = state.tick; actor.rollUntil = state.tick; actor.immuneUntil = state.tick; actor.recoveryUntil = state.tick;
   actor.velocity = {x:0,y:0}; actor.staggerUntil = state.tick; actor.staggerImmuneUntil = state.tick; actor.rollRecoveryUntil = state.tick;
-  actor.lastInput = idleInput(); state.projectiles = []; state.telegraphs = []; state.zones = []; resetWater(actor);
+  actor.lastInput = idleInput(); state.projectiles = []; state.telegraphs = []; state.zones = []; if (state.schoolEffects) state.schoolEffects = []; resetWater(actor); resetSchool(actor);
 }
 /** FNV-1a of the complete serializable state, including cooldowns, RNG and pending actions. */
 export function stateHash(state: ArenaState): string {

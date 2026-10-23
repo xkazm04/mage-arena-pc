@@ -179,7 +179,7 @@ The effort is split so the AI-opponent half, which serves VR now, lands before t
 - School ids: `'water' | 'fire' | 'air'` (the existing `School` type, `tuning.ts:7`).
 - Spell ids: the CSV `id` column verbatim (`fire_bolt` ... `fire_wrath`, `air_bolt` ... `air_cyclone`). Water keeps `line:tier:branch`.
 - Composition: `WaterComposition` (today's shape) | `SlotComposition = { school: 'fire' | 'air'; name: string; bolt: SpellId; slots: [SpellId, SpellId, SpellId, SpellId] }`.
-- Actor resource: `Actor.school?: School`, plus exactly one of `water` (existing), `heat?: HeatState`, `momentum?: MomentumState`. Shared control fields (`encasedUntil`, `rootUntil`, `slowUntil`) move to `Actor.control`.
+- Actor resource (**amended by WP0**): `Actor.school?: School` plus one optional `Actor.schoolState?: SchoolState` (`school`, `loadout`, `value` = Heat or Momentum, `lastGainTick`, `lockedUntil`, `gained`, `cooldowns`, `formUntil`). Every actor keeps `water` (CR-002 keeps the water composition on a Fire mage), and the shared control fields stay where they are: moving them would rehash every golden. Cross-tick spell effects live in an optional `ArenaState.schoolEffects?: SchoolEffect[]`, and a parity run sets `ArenaState.balance = 'canonical'`.
 - **Absent-value convention: a non-school actor omits the resource key.** Never `null` or `0`, so Water state hashes stay byte-equal.
 - Overlay: `{ "version": "school-balance-1", "overrides": { "<spellId>.<column>": number, "<school>.identity.<key>": number } }`. Unknown keys are refused at load. File: `packages/core/src/arena/data/school-balance.pc.json`, empty in WP0.
 - Games flag: `runtime.games.schoolRivals: boolean` (default `false`). When true, the semifinal and final use named rivals, Brennic (fire) and Lio (air), with their own schools.
@@ -189,7 +189,7 @@ The effort is split so the AI-opponent half, which serves VR now, lands before t
 
 | Lane | Content | Files (primary) | Acceptance | Doc owner |
 |---|---|---|---|---|
-| **WP0 seam** (Director, before fan-out) | Wire types, compilable stubs, compiler reads both school CSVs, empty overlay loader, save schema union | `types.ts`, `catalog.ts`, `arena-data.mjs`, `save-schema.ts`, `tuning.ts` | All goldens and census digests unchanged; gate green | this doc |
+| **WP0 seam** (Director, before fan-out) | Wire types, compilable stubs, compiler reads both school CSVs, empty overlay loader, kernel hook points (`schools.ts` dispatch). **No save-schema change in W8**: season saves stay Water | `types.ts`, `catalog.ts`, `arena-data.mjs`, `save-schema.ts`, `tuning.ts` | All goldens and census digests unchanged; gate green | this doc |
 | **F: Fire** | Heat, ten rows, line/detonation/meteor/beam/dash-trail/knockback shapes, Ember mage AI (18 m/s lead, Sunfall bank), Lab opponent school; CR-002 parity suite; deliberate `lab7331` re-pin | `fire.ts`, `kernel.ts` (shape hooks), `mage-ai.ts`, `parity/cr-002.*` | Every CR-002 hand check exact; both VR scenarios match on outcome fields; parity runs overlay-off | `docs/gameplay/casting-and-spells.md` (Fire section) |
 | **A: Air** | Momentum, ten rows, curving arc, sequenced volley, evade RNG, deflect, Gale mage AI (Lio); CR-007 text; parity from the T23 readings | `air.ts`, `mage-ai.ts` (air branch), `parity/cr-007.*` | Hand checks from the CR-007 text pass; draw order per VR | emits a section to scratch; the Director merges it into F's doc |
 | **R: rivals** | CR-005 phases on named rivals; CR-003 `RangeM` edit | `games.ts`, `rival-plan.ts`, `enemies.ts` | Breaks at 0.66/0.33, surge capped at 4, signature granted once; a killing blow is a win, not a break | `docs/gameplay/opponents-and-arena-tiers.md` |
@@ -205,3 +205,27 @@ Earth; season character pick for Fire or Air (W8b); any code in `mage-arena-vr`;
 ### Risks
 
 WP0 hash neutrality (land it alone and prove it). Parallel lanes share `kernel.ts` and `mage-ai.ts`: WP0 stubs give each school its own module, and kernel edits are limited to named hook points. Air spec drift: port from AIR.md and the CSV at a recorded VR commit. Old saves are refused after WP0; say so in START-HERE.
+
+### WP0 as landed (2026-10-23)
+
+- **Data.** `spells-fire.csv` is byte-identical to the blob at `baeac66` that VR pins. `spells-air.csv` comes from VR `f134847`. `schools-combat.json` holds the Fire and Air `combatIdentity` from `baeac66`. The compiler exports `fireRows`, `airRows` and `schoolIdentity`, and checks headers and numeric cells.
+- **Seam.** `arena/schools.ts` holds the catalogues, the overlay (unknown keys fail at load), presets, `slotSpell`, and `SchoolRules` dispatch. `arena/fire.ts` and `arena/air.ts` are stubs. `arena/shapes.ts` declares the shared shapes and is owned by lane F.
+- **Kernel hook points** (`kernel.ts`), the only places lanes plug into the kernel:
+
+  | Hook | Where |
+  |---|---|
+  | `schoolTick` | before `updateWater` |
+  | `schoolStaminaRegenMult` | stamina regen |
+  | `schoolDrainMult` | ward drain |
+  | `schoolRollStaminaMult` | roll cost |
+  | `schoolAfterMove` | after `moveActor` |
+  | `trySchoolCast` / `releaseSchoolSpell` | the cast/release branch |
+  | `schoolEvades` | after the immune check in `resolveHit` |
+  | `schoolOnHit` | before the defeat check |
+  | `schoolDeflects` | before `reflectProjectile` |
+  | `stepSchoolEffects` | after `updateProjectiles` |
+  | `resetSchool` | in `resetWave` |
+
+  A lane that needs a different placement asks the Director.
+- **Proof.** The gate is green. The golden replay hashes are unchanged. Census digests for 2,000 fights per wave are equal before and after WP0 (wave 1 `0bf61caf`, wave 2 `df82257a`, wave 3 `0f671690`, wave 4 `9a9b4a79`).
+- **Inherited, not W8.** The census semifinal median is 38.9 s against a 45-75 s band on `main` before WP0, so `report:w4` prints "gate FAIL". The likely cause is the 1.5x player pace (`4127797`). It needs an owner decision; W8 does not tune it.

@@ -1,0 +1,13 @@
+{
+  "_about": "Authored Fire/Air loadouts: bolt fixed plus four free slots, validated at load like a player-built composition. Fire is the authored spell sheet (docs/design/reference-the-ledger/design/spell-sheet-fire.md). Air is provisional (W8 WP0, Director-authored on the same early/middle/late curve); lane A confirms it.",
+  "fire": [
+    { "name": "Pit-dog", "slots": ["fire_flick", "fire_cinderstep", "fire_kindle", "fire_ring"] },
+    { "name": "Brand", "slots": ["fire_flick", "fire_cinderstep", "fire_lance", "fire_pyre"] },
+    { "name": "Sunfall gambit", "slots": ["fire_flick", "fire_lance", "fire_furnace", "fire_sunfall"] }
+  ],
+  "air": [
+    { "name": "Skirmisher", "slots": ["air_shear", "air_slipstream", "air_veer", "air_downdraft"] },
+    { "name": "Storm", "slots": ["air_shear", "air_veer", "air_squall", "air_cyclone"] },
+    { "name": "Tempest gambit", "slots": ["air_shear", "air_veer", "air_eye", "air_tempest"] }
+  ]
+}

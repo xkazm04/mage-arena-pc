@@ -1,0 +1,5 @@
+{
+  "version": "school-balance-1",
+  "_about": "PC-only deviations from the canonical Fire/Air numbers (docs/design/reconciled/data/arena/spells-*.csv and schools-combat.json, which carry VR's numbers). Keys: '<spellId>.<column>' (castS, cooldownS, mana, damage, telegraphS, rangeM) or '<school>.identity.<dotted key>'. Unknown keys fail at load. Parity suites run with ArenaState.balance = 'canonical', which ignores this file. Every key is a deviation and a CR candidate for VR (docs/concepts/W8-fire-air-dual-channel.md section 8).",
+  "overrides": {}
+}
