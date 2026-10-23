@@ -103,7 +103,7 @@ describe('CR-007 Air parity (VR AirTests.cpp hand checks, canonical balance)', (
     expect(airRules.drainMult(state, target)).toBe(1);
   });
 
-  it.skip('Thresholds: a dart at Momentum 40 pierces one extra target, at 39 it does not (needs kernel R1: updateProjectiles honours pierceLeft)', () => {
+  it('Thresholds: a dart at Momentum 40 pierces one extra target, at 39 it does not', () => {
     for (const level of [40, 39]) {
       const { state, gale, target } = makeAir(4); lock(gale, level);
       const second = addMage(state, 1, { x: gale.pos.x + 6, y: gale.pos.y }, 'Second'); second.maxHp = second.hp = 1000;
@@ -116,7 +116,6 @@ describe('CR-007 Air parity (VR AirTests.cpp hand checks, canonical balance)', (
 
   it('Rows: mana at the press, the cooldown, the windup and one cast event; a press inside the cooldown does nothing', () => {
     for (const row of cr.rows) {
-      if (row.id === 'air_slipstream') continue; // releases on the press through shapes.ts dash: see the skipped Slipstream case
       const { state, gale, target } = makeAir(5); ss(gale).value = 50;
       step(state, gale, castAt(target.pos, slotOf(row.id)));
       expect(500 - gale.mana).toBeCloseTo(row.mana, 9);
@@ -124,7 +123,6 @@ describe('CR-007 Air parity (VR AirTests.cpp hand checks, canonical balance)', (
       expect(count(state, 'cast', gale.id)).toBe(1);
       if (row.windupTicks > 0) expect(gale.pending!.releaseTick - gale.pending!.startTick).toBe(row.windupTicks);
       else expect(gale.pending).toBeUndefined();
-      if (['air_downdraft', 'air_tempest', 'air_cyclone'].includes(row.id)) continue; // their release calls shapes.ts (lane F)
       for (let i = 0; i < row.windupTicks + 2; i++) step(state, gale, idleInput(target.pos));
       const manaBefore = gale.mana;
       step(state, gale, castAt(target.pos, slotOf(row.id)));
@@ -143,8 +141,7 @@ describe('CR-007 Air parity (VR AirTests.cpp hand checks, canonical balance)', (
     return { damage: 1000 - target.hp, momentum: momentum(gale) };
   };
   for (const hit of cr.hits) {
-    const run = hit.needs ? it.skip : it;
-    run(`Hits: ${hit.id} first connecting damage ${hit.damage}, Momentum paid ${hit.momentum}${hit.needs ? ` (needs ${hit.needs === 'lane F' ? 'lane F shapes.ts' : 'kernel R1: curved flight in updateProjectiles'})` : ''}`, () => {
+    it(`Hits: ${hit.id} first connecting damage ${hit.damage}, Momentum paid ${hit.momentum}`, () => {
       expect(firstHit(hit.id, hit.distance, hit.maxTicks)).toEqual({ damage: hit.damage, momentum: hit.momentum });
     });
   }
@@ -155,7 +152,7 @@ describe('CR-007 Air parity (VR AirTests.cpp hand checks, canonical balance)', (
     return 1000 - target.hp;
   };
   it('Hits: Squall lands four orbs of 11 (44)', () => expect(total('air_squall')).toBe(cr.totals.air_squall));
-  it.skip('Hits: Cyclone lands eight 0.25 s ticks of 12 (96) (needs lane F shapes.ts)', () => expect(total('air_cyclone')).toBe(cr.totals.air_cyclone));
+  it('Hits: Cyclone lands eight 0.25 s ticks of 12 (96)', () => expect(total('air_cyclone')).toBe(cr.totals.air_cyclone));
 
   it('SquallTicks: windup 18, orbs on R, R+15, R+30, R+45, each its own activation id, all four land, the volley ends', () => {
     const { state, gale, target } = makeAir(cr.squall.distance), aim = { ...target.pos };
@@ -171,20 +168,20 @@ describe('CR-007 Air parity (VR AirTests.cpp hand checks, canonical balance)', (
     expect(ss(gale).volley).toBeUndefined();
   });
 
-  it.skip('Slipstream: 6 m along the aim at once and +30 Momentum (needs lane F shapes.ts)', () => {
+  it('Slipstream: 6 m along the aim at once and +30 Momentum', () => {
     const { state, gale } = makeAir(10), start = { ...gale.pos };
     step(state, gale, castAt({ x: start.x, y: start.y + 20 }, slotOf('air_slipstream')));
     expect(distance(start, gale.pos)).toBeCloseTo(cr.slipstream.distanceM, 9);
     expect(momentum(gale)).toBe(cr.slipstream.momentum);
   });
-  it.skip('Tempest Lance: 85 through a held ward (needs lane F shapes.ts)', () => {
+  it('Tempest Lance: 85 through a held ward', () => {
     const { state, gale, target } = makeAir(8);
     stepArena(state, { [gale.id]: castAt(target.pos, slotOf('air_tempest')), [target.id]: { ...idleInput(gale.pos), absorb: true } });
     for (let t = 0; t < 80; t++) stepArena(state, { [gale.id]: idleInput(target.pos), [target.id]: { ...idleInput(gale.pos), absorb: true } });
     expect(target.metrics.manaRaised).toBeGreaterThan(0);
     expect(1000 - target.hp).toBe(cr.tempest.throughWard);
   });
-  it.skip('Tempest Lance roots its caster for the windup (needs kernel R3: moveActor reads a school root)', () => {
+  it('Tempest Lance roots its caster for the windup', () => {
     const { state, gale, target } = makeAir(8), start = { ...gale.pos };
     step(state, gale, castAt(target.pos, slotOf('air_tempest')));
     for (let t = 0; t < 30; t++) step(state, gale, { ...idleInput(target.pos), move: { x: 0, y: 1 } });
@@ -247,7 +244,7 @@ describe('CR-007 Air parity (VR AirTests.cpp hand checks, canonical balance)', (
     expect(bolt.remainingM + 16 / 60).toBeCloseTo(arc.lengthM + Math.max(0, 14 - cr.veer.flightTargetM), 9);
   });
 
-  it.skip('VeerArc: the kernel flies the arc, 16 k / 60 m after k ticks, and hits on the 44th flight tick for 24 (needs kernel R1: curved flight)', () => {
+  it('VeerArc: the kernel flies the arc, 16 k / 60 m after k ticks, and hits on the 44th flight tick for 24', () => {
     const fly = (seed: number): string => {
       const { state, gale, target } = makeAir(cr.veer.flightTargetM, seed), caster = { ...gale.pos }, aim = { ...target.pos };
       step(state, gale, castAt(aim, slotOf('air_veer')));

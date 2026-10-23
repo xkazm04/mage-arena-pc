@@ -7,7 +7,7 @@ import { combat, DT, emit, interrupt, random, spawnProjectile, ticks } from './k
 import { airRows, schoolIdentity } from './data.generated.ts';
 import { pacedWarning, paceOf, paced, warningFloor } from './tuning.ts';
 import { clamp, distance, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
-import { dash, queueDetonation, resolveLine, startBeam } from './shapes.ts';
+import { cancelOwnedBeams, dash, queueDetonation, resolveLine, startBeam } from './shapes.ts';
 import { identityNumber, schoolSpellById, balancedSpell, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
 import { activationBlocked, type Actor, type ArenaState, type Family, type Hit, type InputFrame, type Projectile, type SchoolState } from './types.ts';
 
@@ -141,11 +141,11 @@ export function momentumRules(state?: ArenaState): { min: number; max: number; g
 
 export interface AirVolley { spellId: string; startTick: number; aim: Vec; left: number; intervalTicks: number; nextTick: number; damage: number; rangeMult: number; pierceLeft: number }
 export type AirSchoolState = SchoolState & { volley?: AirVolley; lockValue?: number; lockDrainMult?: number };
-/** A hit that pays its owner Momentum when it resolves (VR FHit::MomentumOnHit); spawnProjectile copies the key onto the projectile. */
-export type AirHit = Hit & { momentumOnHit?: number };
+/** A hit that pays its owner Momentum when it resolves (VR FHit::MomentumOnHit; types.ts `Hit.momentumOnHit`). */
+export type AirHit = Hit;
 /** The fixed-curvature flight of a Veering Bolt (VR FProjectile bCurved, ArcCentre, ArcRadiusM, ArcAngle, ArcSign, ArcLeftM). */
 export interface ProjectileArc { centre: Vec; radiusM: number; angle: number; sign: number; leftM: number }
-export type AirProjectile = Projectile & { momentumOnHit?: number; pierceLeft?: number; arc?: ProjectileArc };
+export type AirProjectile = Projectile;
 
 const air = (a: Actor | undefined): AirSchoolState | undefined => a?.schoolState?.school === 'air' ? a.schoolState as AirSchoolState : undefined;
 export const isAir = (a: Actor | undefined): boolean => air(a) !== undefined;
@@ -207,7 +207,7 @@ export function arcPoint(arc: AirArc, distanceM: number): Vec {
   const tangent = { x: -arc.turnSign * Math.sin(angle), y: arc.turnSign * Math.cos(angle) };
   return { x: point.x + tangent.x * (distanceM - arc.lengthM), y: point.y + tangent.y * (distanceM - arc.lengthM) };
 }
-/** This tick's end of a curved flight, plus the arc state to commit when the projectile moves on (kernel request R1). */
+/** This tick's end of a curved flight, plus the arc state to commit when the projectile moves on (kernel updateProjectiles). */
 export function curvedStep(p: AirProjectile, travel: number): { end: Vec; arc?: ProjectileArc; velocity: Vec } {
   const arc = p.arc, speed = Math.hypot(p.velocity.x, p.velocity.y);
   if (!arc || !(arc.leftM > 0) || !(arc.radiusM > 0)) {
@@ -227,9 +227,9 @@ export function curvedStep(p: AirProjectile, travel: number): { end: Vec; arc?: 
 export const airCooldownUntil = (a: Actor, id: string): number => air(a)?.cooldowns[id] ?? 0;
 /** A live beam this actor owns (shapes.ts startBeam). */
 const ownBeams = (state: ArenaState, a: Actor) => (state.schoolEffects ?? []).filter(e => e.ownerId === a.id && e.kind === 'beam' && e.endTick >= state.tick);
-/** A Cyclone channel or the rest of a Squall volley keeps the hands busy (VR AirChannelBusy). */
+/** A Cyclone channel or the rest of a Squall volley keeps the hands busy (VR AirChannelBusy); SchoolRules.busy gates startCast. */
 export const airChannelBusy = (state: ArenaState, a: Actor): boolean => air(a)?.volley !== undefined || ownBeams(state, a).length > 0;
-/** The pending cast roots its caster (Tempest Lance's notes say "rooted"; kernel request R3 reads it in moveActor). */
+/** The pending cast roots its caster (Tempest Lance's notes say "rooted"); SchoolRules.rooted, read by moveActor. */
 export const airCastRoots = (a: Actor): boolean => isAir(a) && a.pending?.kind === 'spell' && airRow(a.pending.spellId ?? '')?.roots === true;
 /** Tier (slotSpell), cooldown, mana and Air Form's Momentum need: the cast and the AI ask the same question (VR AirCastLegal). */
 export function airCastLegal(state: ArenaState, a: Actor, spell: SchoolSpell, readyTick = state.tick): boolean {
@@ -310,16 +310,19 @@ function release(state: ArenaState, a: Actor): void {
       break;
     }
     case 'zone':
-      queueDetonation(state, a, { ...makeHit(a, spell, row, pending.activationId, damage), source: { ...pending.aim }, delivery: 'area' } as AirHit, pending.aim, row.radiusM, 0);
+      // Lands this tick: VR resolves the circle at release, so it is already committed. shapes.ts steps it after the actor
+      // loop (before projectiles); survivesOwner keeps a stagger or defeat of the caster later in this tick from cancelling it.
+      queueDetonation(state, a, { ...makeHit(a, spell, row, pending.activationId, damage), source: { ...pending.aim }, delivery: 'area' }, pending.aim, row.radiusM, 0, { spellId: spell.id, survivesOwner: true });
       break;
     case 'line':
       // Tempest Lance: one 16 m line from the caster along the aim fixed at the press; every body on it (width: the body).
-      resolveLine(state, a, { ...makeHit(a, spell, row, pending.activationId, damage), delivery: 'area' } as AirHit, { ...a.pos },
-        { x: a.pos.x + direction.x * range, y: a.pos.y + direction.y * range }, 0, { piercing: true });
+      // shapes.ts `piercing` means "skips a front shield" (Brand Lance); an unblockable already does, so it is not asked for.
+      resolveLine(state, a, { ...makeHit(a, spell, row, pending.activationId, damage), delivery: 'area' }, { ...a.pos },
+        { x: a.pos.x + direction.x * range, y: a.pos.y + direction.y * range }, 0);
       break;
     case 'beam':
       // Cyclone: the Brand Wrath channel along the live facing, each tick its own activation, EVERY tick perfectable.
-      startBeam(state, a, makeHit(a, spell, row, pending.activationId, damage), range, Math.max(1, ticks(row.tickS)), ticks(row.durationS), { perfectFirstTickOnly: false });
+      startBeam(state, a, makeHit(a, spell, row, pending.activationId, damage), range, Math.max(1, ticks(row.tickS)), ticks(row.durationS), { perfectFirstTickOnly: false, spellId: spell.id });
       break;
     case 'dash':
       // Slipstream: Cinder Step's dash without the trail, along the aim, not lengthened at Momentum 80.
@@ -340,20 +343,13 @@ function release(state: ArenaState, a: Actor): void {
   }
 }
 
-/** An interrupt since `tick` (roll, stagger, encase all move these marks past the tick the effect started). */
-const interruptedSince = (a: Actor, tick: number): boolean => a.rollUntil > tick || (a.staggerUntil ?? 0) > tick || a.water.encasedUntil > tick;
-/** VR CancelAirChannel: the volley's unthrown orbs and this actor's beam end. */
-export function cancelAirChannel(state: ArenaState, a: Actor): void {
-  const s = air(a); if (!s) return;
+/** VR CancelAirChannel, from the kernel's interrupt() (SchoolRules.interrupted): the unthrown orbs and this actor's beam end.
+ * True when something was cancelled. */
+export function cancelAirChannel(state: ArenaState, a: Actor): boolean {
+  const s = air(a); if (!s) return false;
+  const volley = s.volley !== undefined;
   delete s.volley;
-  if (state.schoolEffects?.some(e => e.ownerId === a.id && e.kind === 'beam')) state.schoolEffects = state.schoolEffects.filter(e => !(e.ownerId === a.id && e.kind === 'beam'));
-}
-/** The kernel's interrupt() does not reach school channels (kernel request R2), so air.ts reads the interrupt marks itself. */
-function dropInterrupted(state: ArenaState, a: Actor): void {
-  const s = air(a)!;
-  if (s.volley && interruptedSince(a, s.volley.startTick)) delete s.volley;
-  if (state.schoolEffects?.some(e => e.ownerId === a.id && e.kind === 'beam' && interruptedSince(a, e.startTick)))
-    state.schoolEffects = state.schoolEffects.filter(e => !(e.ownerId === a.id && e.kind === 'beam' && interruptedSince(a, e.startTick)));
+  return cancelOwnedBeams(state, a) || volley;
 }
 function stepVolley(state: ArenaState, a: Actor): void {
   const s = air(a)!, v = s.volley; if (!v) return;
@@ -376,20 +372,13 @@ function evades(state: ArenaState, target: Actor, hit: Hit): boolean {
   const chance = hit.family === 'physical' ? row.evadePhysical : row.evadeMagic;
   return random(state, `air ${target.id} evade ${hit.activationId}`) < chance;
 }
-// schoolOnHit calls a school once for the target and once for the owner with the same arguments; an Air-versus-Air contact
-// would pay twice. The result object is fresh per resolveHit call, so it marks the contact as handled (lane A report R5).
-const handled = new WeakSet<object>();
-function onHit(state: ArenaState, target: Actor, owner: Actor | undefined, hit: Hit, result: { damage: number; perfect: boolean; reduction: number }): void {
-  if (handled.has(result)) return;
-  handled.add(result);
+function onHit(state: ArenaState, target: Actor, owner: Actor | undefined, hit: Hit, result: { damage: number; perfect: boolean; reduction: number }, role: 'target' | 'owner'): void {
   // The owner's Momentum: every hit that lands or is warded pays its row's amount (VR AirOnHitResolved).
-  const paid = (hit as AirHit).momentumOnHit;
-  if (owner && paid && owner.id === hit.ownerId) gainMomentum(state, owner, paid);
-  // A connecting staff strike interrupts an Air cast (combat.json staffStrike.interruptsCasts; AIR.md Tempest Lance).
+  if (role === 'owner') { if (owner && hit.momentumOnHit && owner.id === hit.ownerId) gainMomentum(state, owner, hit.momentumOnHit); return; }
+  // A connecting staff strike interrupts an Air cast (combat.json staffStrike.interruptsCasts, which the PC kernel does not
+  // read; AIR.md Tempest Lance). interrupt() reaches cancelAirChannel through SchoolRules.interrupted.
   if (isAir(target) && combat.staffStrike.interruptsCasts && hit.delivery === 'melee' && owner && !owner.enemy && result.damage > 0
-    && !target.tags.includes('DEFEATED') && (target.pending || airChannelBusy(state, target))) {
-    interrupt(state, target); cancelAirChannel(state, target);
-  }
+    && !target.tags.includes('DEFEATED') && (target.pending || airChannelBusy(state, target))) interrupt(state, target);
 }
 /** Perfect absorb by an Air actor: the school's deflect, never the Water mirror (true even when nothing is deflected). */
 function deflects(state: ArenaState, target: Actor, p: Projectile): boolean {
@@ -411,7 +400,6 @@ function drainMult(state: ArenaState, a: Actor): number {
 export const airRules: SchoolRules = {
   tick: (state, a) => {
     if (!air(a)) return;
-    dropInterrupted(state, a);
     // An encased or staggered actor skips moveActor (and afterMove) this tick: zero displacement, so "still".
     if (state.tick < a.water.encasedUntil || state.tick < (a.staggerUntil ?? 0)) updateMomentum(state, a, 0);
   },
@@ -425,10 +413,12 @@ export const airRules: SchoolRules = {
   deflects,
   afterMove: (state, a) => {
     if (!air(a)) return;
-    dropInterrupted(state, a);
     updateMomentum(state, a, distance(a.pos, a.previousPos) / DT);
     stepVolley(state, a);
   },
+  interrupted: (state, a) => cancelAirChannel(state, a),
+  busy: (state, a) => airChannelBusy(state, a),
+  rooted: (_state, a) => airCastRoots(a),
   reset: a => {
     const s = air(a); if (!s) return;
     s.value = 0; s.lockedUntil = 0; s.formUntil = 0; s.cooldowns = {}; s.lastGainTick = 0; s.gained = false;
