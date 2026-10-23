@@ -42,11 +42,11 @@
   "hits": [
     { "id": "air_bolt", "distance": 5, "damage": 7, "momentum": 2, "maxTicks": 40 },
     { "id": "air_shear", "distance": 2, "damage": 18, "momentum": 8, "maxTicks": 40 },
-    { "id": "air_veer", "distance": 10, "damage": 24, "momentum": 6, "maxTicks": 120, "needs": "kernel R1" },
-    { "id": "air_downdraft", "distance": 6, "damage": 26, "momentum": 5, "maxTicks": 60, "needs": "lane F" },
+    { "id": "air_veer", "distance": 10, "damage": 24, "momentum": 6, "maxTicks": 120 },
+    { "id": "air_downdraft", "distance": 6, "damage": 26, "momentum": 5, "maxTicks": 60 },
     { "id": "air_squall", "distance": 6, "damage": 11, "momentum": 3, "maxTicks": 60 },
-    { "id": "air_tempest", "distance": 8, "damage": 85, "momentum": 10, "maxTicks": 90, "needs": "lane F" },
-    { "id": "air_cyclone", "distance": 6, "damage": 12, "momentum": 2, "maxTicks": 60, "needs": "lane F" }
+    { "id": "air_tempest", "distance": 8, "damage": 85, "momentum": 10, "maxTicks": 90 },
+    { "id": "air_cyclone", "distance": 6, "damage": 12, "momentum": 2, "maxTicks": 60 }
   ],
   "totals": { "air_squall": 44, "air_cyclone": 96 },
   "squall": { "distance": 12, "windupTicks": 18, "offsets": [0, 15, 30, 45], "activations": 4, "landed": 44 },

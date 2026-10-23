@@ -2,7 +2,7 @@
 // interrupt, stagger and encase, deflect replacing the Water mirror, the evade's Momentum rule, the AI's threats and dash end.
 // kernel.ts is imported first: air.ts sits in the kernel -> schools -> air import cycle.
 import { describe, expect, it } from 'vitest';
-import { addMage, createArena, DT, resolveHit, spawnProjectile, stateHash, stepArena } from './kernel.ts';
+import { addMage, createArena, DT, interrupt, resolveHit, spawnProjectile, stateHash, stepArena } from './kernel.ts';
 import { airChannelBusy, airSheet, parseAirRows, type AirHit, type AirSchoolState } from './air.ts';
 import { airBrain, slipstreamAim } from './mage-ai-air.ts';
 import { threats } from './mage-ai.ts';
@@ -125,6 +125,17 @@ describe('Air volley and interrupts', () => {
     for (let t = 0; t < 60; t++) step(state, gale, idleInput(target.pos));
     expect(thrown(state, gale)).toBeLessThanOrEqual(before);
   });
+  it('keeps the staff strike out too while the volley runs (SchoolRules.busy), and the kernel interrupt drops the volley', () => {
+    const { state, gale, target } = makeAir(1.2);
+    step(state, gale, castAt({ x: gale.pos.x - 8, y: gale.pos.y }, slotOf('air_squall')));
+    while (gale.pending) step(state, gale, idleInput({ x: gale.pos.x - 8, y: gale.pos.y }));
+    step(state, gale, castAt(target.pos, 0));
+    expect(gale.pending).toBeUndefined();
+    expect(gale.stamina).toBe(gale.maxStamina);
+    interrupt(state, gale);
+    expect(ss(gale).volley).toBeUndefined();
+    expect(state.events.at(-1)).toMatchObject({ kind: 'interrupt', actorId: gale.id });
+  });
   it('a connecting staff strike interrupts a pending Air cast (combat.json interruptsCasts), with the PC hit stun off', () => {
     const { state, gale, target } = makeAir(1.2);
     step(state, gale, castAt({ x: gale.pos.x - 5, y: gale.pos.y }, slotOf('air_tempest')));
@@ -206,41 +217,62 @@ describe('Air hash neutrality', () => {
   });
 });
 
-describe('Air shapes from lane F (skipped until shapes.ts lands)', () => {
-  it.skip('Downdraft lands at the aim point clamped to 12 m (x1.3 at Momentum 80) for 26 and pays 5 per target (needs lane F shapes.ts)', () => {
+describe('Air shapes through shapes.ts (lane F)', () => {
+  it('Downdraft still lands when its caster is staggered later in the release tick (VR resolves it at release)', () => {
     const { state, gale, target } = makeAir(6);
+    delete state.tuning; // the PC hit stun on, so a hit staggers
     step(state, gale, castAt(target.pos, slotOf('air_downdraft')));
-    for (let t = 0; t < 45; t++) step(state, gale, idleInput(target.pos));
+    const release = gale.pending!.releaseTick;
+    while (state.tick < release - 1) step(state, gale, idleInput(target.pos));
+    // An area telegraph resolving on the release tick hits the caster after the actor loop, before shapes.ts lands the circle.
+    state.telegraphs.push({ ownerId: target.id, activationId: state.nextId++, damage: 5, family: 'physical', tier: 0, source: { ...target.pos }, id: state.nextId++,
+      kind: 'area', origin: { ...target.pos }, target: { ...gale.pos }, resolveTick: release, startTick: state.tick, speedMps: 0, rangeM: 0, widthM: 0.5 });
+    stepArena(state, { [gale.id]: idleInput(target.pos) });
+    expect(gale.tags).toContain('STAGGERED');
+    expect(1000 - target.hp).toBe(26);
+  });
+  it('Downdraft lands at the aim point clamped to 12 m (x1.3 at Momentum 80) for 26 and pays 5 per target', () => {
+    const { state, gale, target } = makeAir(6);
+    step(state, gale, castAt({ x: target.pos.x + 20, y: target.pos.y }, slotOf('air_downdraft')));
+    expect(gale.pending!.aim.x).toBeCloseTo(gale.pos.x + 12, 9); // aimed 26 m out, placed at the 12 m range
+    target.pos = { ...gale.pending!.aim };
+    for (let t = 0; t < 45 && target.hp >= 1000; t++) step(state, gale, idleInput(target.pos));
     expect(1000 - target.hp).toBe(26);
     expect(ss(gale).value).toBe(5);
+    expect(state.schoolEffects ?? []).toHaveLength(0);
   });
-  it.skip('Cyclone: every 0.25 s tick is its own activation and a fresh ward perfects any tick, not only the first (needs lane F shapes.ts)', () => {
+  it('Cyclone: every 0.25 s tick is its own activation and a fresh ward perfects any tick, not only the first', () => {
     const { state, gale, target } = makeAir(6);
     step(state, gale, castAt(target.pos, slotOf('air_cyclone')));
-    for (let t = 0; t < 40; t++) stepArena(state, { [gale.id]: idleInput(target.pos), [target.id]: { ...idleInput(gale.pos), absorb: t >= 35 } });
-    expect(target.metrics.perfects).toBeGreaterThanOrEqual(1);
+    const release = gale.pending!.releaseTick, second = release + 30;
+    // The first tick (release + 15) lands unwarded; a ward raised 3 ticks before the second tick perfects it.
+    while (state.tick < second) stepArena(state, { [gale.id]: idleInput(target.pos), [target.id]: { ...idleInput(gale.pos), absorb: state.tick + 1 >= second - 3 } });
+    expect(target.metrics.perfects).toBe(1);
+    expect(1000 - target.hp).toBe(12);
     const ids = state.events.filter(e => e.kind === 'hit' && e.targetId === gale.id).map(e => e.activationId);
-    expect(new Set(ids).size).toBe(ids.length);
+    expect(ids).toHaveLength(2);
+    expect(new Set(ids).size).toBe(2);
   });
-  it.skip('Slipstream displacement is not locomotion: the tick after the dash, Momentum is +30 minus nothing gained from the dash (needs lane F shapes.ts)', () => {
+  it('Slipstream displacement is not locomotion: the tick after the dash, Momentum is +30 minus nothing gained from the dash', () => {
     const { state, gale } = makeAir(10);
     step(state, gale, castAt({ x: gale.pos.x, y: gale.pos.y + 20 }, slotOf('air_slipstream')));
     expect(ss(gale).value).toBe(30);
     step(state, gale, idleInput({ x: gale.pos.x + 1, y: gale.pos.y }));
     expect(ss(gale).value).toBeCloseTo(30 - 25 * DT, 12);
   });
-  it.skip('Tempest Lance hits every body on the 16 m line, unblockable, and a blink through it is not hit (needs lane F shapes.ts)', () => {
+  it('Tempest Lance hits every body on the 16 m line, pays 10 per target, and a body past 16 m is not hit', () => {
     const { state, gale, target } = makeAir(8);
-    const second = addMage(state, 1, { x: gale.pos.x + 14, y: gale.pos.y }, 'Second'); second.maxHp = second.hp = 1000;
+    const second = addMage(state, 1, { x: gale.pos.x + 14, y: gale.pos.y }, 'Second'), far = addMage(state, 1, { x: gale.pos.x + 17, y: gale.pos.y }, 'Far');
+    for (const a of [second, far]) a.maxHp = a.hp = 1000;
     step(state, gale, castAt(target.pos, slotOf('air_tempest')));
-    for (let t = 0; t < 80; t++) step(state, gale, idleInput(target.pos));
-    expect([1000 - target.hp, 1000 - second.hp]).toEqual([85, 85]);
+    for (let t = 0; t < 80 && target.hp >= 1000; t++) step(state, gale, idleInput(target.pos));
+    expect([1000 - target.hp, 1000 - second.hp, 1000 - far.hp]).toEqual([85, 85, 0]);
     expect(ss(gale).value).toBe(20);
   });
 });
 
-describe('Air in the kernel (skipped until kernel request R1 lands)', () => {
-  it.skip('an evaded projectile flies on through the formed body and cannot hit it again (needs kernel R1)', () => {
+describe('Air in the kernel updateProjectiles', () => {
+  it('an evaded projectile flies on through the formed body and cannot hit it again', () => {
     const { state, gale, target } = makeAir(4);
     target.schoolState = newSchoolState(schoolPresets.air[0]!); ss(target).formUntil = 1000;
     const behind = addMage(state, 1, { x: gale.pos.x + 7, y: gale.pos.y }, 'Behind'); behind.maxHp = behind.hp = 1000;
