@@ -44,6 +44,7 @@ Legend: **built** = implemented and tested; **partial** = implemented in a reduc
 | Soldier roster (4) and creature roster (4) | built | W4; roster tests; proving ground | |
 | AI mage on the shared kernel, competence 1–4, aggression | built | W4, CF2 | level 4 over-defends |
 | Mage opponents of other schools | partial | W4, CF1 | season opponents are Water proxies |
+| Named Fire/Air rivals (Brennic semifinal, Lio final) with CR-005 phases | partial | W8 lanes R and B; `npm --prefix packages/core run census:named` (`docs/waves/W8-evidence/named.json`) | behind `createGames(..., { schoolRivals: 'named' })`, PC overlay on. Full census: Lio 45.3 % wins, median 47.6 s (in band); Brennic 47.5 % wins, median 32.5 s, **under the 45-75 s band**: no AI wards or rolls at pace 1.5 and Fire has no evade, so the reference player kills an undefended rival in ~34 s whatever the overlay does. Phase 3 reached 89 % / 85 %, signature cast 89 % / 85 % |
 | Tiro Games: 4 bouts, intermission, missio, payout | built | W4, W7; census | |
 | Pacing census, 2,000 fights per wave | built | H1 census, all 4 waves pass | simulated, not human |
 | Veteranus, Primus tiers | planned | arena-tiers.json; plan W9 | data exists |

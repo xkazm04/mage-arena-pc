@@ -227,7 +227,7 @@ WP0 hash neutrality (land it alone and prove it). Parallel lanes share `kernel.t
   | `resetSchool` | in `resetWave` |
 
   A lane that needs a different placement asks the Director.
-- **Proof.** The gate is green. The golden replay hashes are unchanged. Census digests for 2,000 fights per wave are equal before and after WP0 (wave 1 `0bf61caf`, wave 2 `df82257a`, wave 3 `0f671690`, wave 4 `9a9b4a79`).
+- **Proof.** The gate is green. The golden replay hashes are unchanged. Census digests for 2,000 fights per wave are equal before and after WP0 (wave 1 `0bf61caf`, wave 2 `df82257a`, wave 3 `0f671697`, wave 4 `9a9b4a79`).
 - **Inherited, not W8.** The census semifinal median is 38.9 s against a 45-75 s band on `main` before WP0, so `report:w4` prints "gate FAIL". The likely cause is the 1.5x player pace (`4127797`). It needs an owner decision; W8 does not tune it.
 
 ### Build progress (2026-10-23)
@@ -240,7 +240,8 @@ WP0 hash neutrality (land it alone and prove it). Parallel lanes share `kernel.t
 | A Air | landed: AirTests.cpp hand checks exact; no VR Air duel exists to compare | `c84524d`, adoption merge `9052086` |
 | Director kernel seams | hit flags, Air flight and evade, interrupted/busy/rooted hooks, onHit role, `createGames` balance/unpaced | `d09a474` |
 | R rivals (CR-005, CR-003 RangeM) | landed: named-only phases via `hookArena` (outside the hash), granted signature through `grantedCast` in fire.ts/air.ts, `rivals.json` at VR values. CR-003 approach range reads `attack.rangeM` | lane R commit |
-| P presentation, Art Lio, B balance | after R | |
+| B balance | Lio's final in band, Brennic's semifinal not (structural): overlay of seven keys (darts 2.1 / 1.1 damage, 2 mana; Air Form 0 s cast, 3 s cooldown, 0 mana), `rivals.json` unchanged. Full named census (2,000 per duel, `npm --prefix packages/core run census:named`): Lio 45.3 % wins, median 47.6 s, PASS; Brennic 47.5 % wins, median 32.5 s against 45-75 s, FAIL. Cause: no AI actor wards or rolls in a Tiro duel at pace 1.5 (threats stay visible ~23 ticks, reaction delays are 27-33 ticks and unpaced), so a duel is a DPS race, and with every Fire damage cell at 0 the reference player still kills Brennic in a median of 33.8 s. Needs an owner decision (pace law or the reaction model, or named-rival HP), not overlay numbers. Default census digests unchanged | lane B commit |
+| P presentation, Art Lio | after R | |
 
 Proof: gate green (470 tests, 0 skipped). Water goldens unchanged. Census digests equal to the pre-W8 baseline after every core commit.
 

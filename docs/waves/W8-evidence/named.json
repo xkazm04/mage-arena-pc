@@ -1,0 +1,274 @@
+{
+  "label": "simulated",
+  "mode": "createGames(..., { schoolRivals: 'named' }), PC overlay on, rival phases on",
+  "command": "npm --prefix packages/core run census:named -- --count 2000",
+  "countPerWave": 2000,
+  "seedRange": [
+    40000,
+    41999
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation",
+    "ranks": {
+      "vigor": 1,
+      "focus": 1,
+      "nerve": 1
+    }
+  },
+  "winRateTarget": [
+    0.4,
+    0.65
+  ],
+  "winRateTargetSource": "Director target 2026-10-23 (W8 lane B brief), not canon",
+  "methodology": "Independent fresh wave starts at the semifinal and the final, the named Fire/Air rivals in place of the Water proxies. Same loop, checks and digest as report-w4 (runFight), plus the win-rate check and the CR-005 phase readings. No resource refill, forced outcome, duration padding, or dropped seeds.",
+  "wallSecondsMeasured": 217.1736488,
+  "waves": [
+    {
+      "wave": 3,
+      "kind": "semifinal",
+      "rival": "Brennic",
+      "school": "fire",
+      "fights": 2000,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "wins": 949,
+      "losses": 1051,
+      "timeouts": 0,
+      "winRate": 0.4745,
+      "winRateTarget": [
+        0.4,
+        0.65
+      ],
+      "durationS": {
+        "min": 9.016666666666667,
+        "p10": 20.1,
+        "p50": 32.46666666666667,
+        "p90": 44.45,
+        "max": 66.35
+      },
+      "winDurationS": {
+        "min": 14.65,
+        "p10": 26.85,
+        "p50": 35.85,
+        "p90": 45.766666666666666,
+        "max": 66.35
+      },
+      "lossDurationS": {
+        "min": 9.016666666666667,
+        "p10": 17.7,
+        "p50": 28.283333333333335,
+        "p90": 41.43333333333333,
+        "max": 63.7
+      },
+      "inBandFraction": 0.0905,
+      "phases": {
+        "reachedPhase2": 0.995,
+        "reachedPhase3": 0.8925,
+        "signatureCast": 0.891
+      },
+      "rivalMeanResource": 88.9996321614949,
+      "deadAirFraction": 0,
+      "perfectRate": 0,
+      "finalMana": {
+        "min": 0,
+        "p10": 1.25,
+        "p50": 2.875,
+        "p90": 5,
+        "max": 15
+      },
+      "finalHp": {
+        "min": 0,
+        "p10": 0,
+        "p50": 0,
+        "p90": 41.02999999999993,
+        "max": 77.14999999999999
+      },
+      "answers": {
+        "magic": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 12,
+          "encased": 0,
+          "avoided": 48265,
+          "took": 46064,
+          "unclassified": 0
+        },
+        "physical": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 383,
+          "took": 7,
+          "unclassified": 0
+        },
+        "unblockable": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 2,
+          "encased": 0,
+          "avoided": 15477,
+          "took": 374,
+          "unclassified": 0
+        }
+      },
+      "failures": {
+        "medianOutOfBand": true,
+        "winRateOutOfRange": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": false,
+      "digest": "ae484ddbef4b58d9bfb2fb9a1564fc6391e6361ee50b06047290fa7ff085cd64"
+    },
+    {
+      "wave": 4,
+      "kind": "final",
+      "rival": "Lio",
+      "school": "air",
+      "fights": 2000,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "wins": 906,
+      "losses": 1094,
+      "timeouts": 0,
+      "winRate": 0.453,
+      "winRateTarget": [
+        0.4,
+        0.65
+      ],
+      "durationS": {
+        "min": 13.333333333333334,
+        "p10": 33.583333333333336,
+        "p50": 47.63333333333333,
+        "p90": 60.483333333333334,
+        "max": 80.9
+      },
+      "winDurationS": {
+        "min": 18.466666666666665,
+        "p10": 39.416666666666664,
+        "p50": 49.95,
+        "p90": 61.666666666666664,
+        "max": 80.9
+      },
+      "lossDurationS": {
+        "min": 13.333333333333334,
+        "p10": 30.05,
+        "p50": 44.75,
+        "p90": 59.31666666666667,
+        "max": 79.91666666666667
+      },
+      "inBandFraction": 0.5985,
+      "phases": {
+        "reachedPhase2": 0.9965,
+        "reachedPhase3": 0.848,
+        "signatureCast": 0.8465
+      },
+      "rivalMeanResource": 87.98445503464124,
+      "deadAirFraction": 0,
+      "perfectRate": 0.0021699234755710476,
+      "finalMana": {
+        "min": 0,
+        "p10": 1,
+        "p50": 2.75,
+        "p90": 5.099999999999966,
+        "max": 7.599999999999994
+      },
+      "finalHp": {
+        "min": 0,
+        "p10": 0,
+        "p50": 0,
+        "p90": 30.80000000000002,
+        "max": 70.80000000000013
+      },
+      "answers": {
+        "magic": {
+          "perfect": 188,
+          "held": 3,
+          "guarded": 0,
+          "cast-blocked": 3,
+          "wrong-facing": 2,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 67473,
+          "took": 86439,
+          "unclassified": 0
+        },
+        "physical": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 0,
+          "encased": 0,
+          "avoided": 1,
+          "took": 0,
+          "unclassified": 0
+        },
+        "unblockable": {
+          "perfect": 0,
+          "held": 0,
+          "guarded": 0,
+          "cast-blocked": 0,
+          "wrong-facing": 0,
+          "rolled": 1,
+          "encased": 0,
+          "avoided": 931,
+          "took": 4,
+          "unclassified": 0
+        }
+      },
+      "failures": {
+        "medianOutOfBand": false,
+        "winRateOutOfRange": false,
+        "timeoutRate": false,
+        "earlyDowns": [],
+        "invalidStates": [],
+        "replayFailures": []
+      },
+      "passed": true,
+      "digest": "b7dd23f315b606b556cfb9274d9352983a9feef0274c9f7b981f52c4c2f83011"
+    }
+  ],
+  "fullCensus": true,
+  "allPassed": false,
+  "supplementalHashes": {
+    "packages/core/src/arena/data/school-balance.pc.json": "736c18e53785d298ff00eb5a1c45b01f7b2bf75fa864914bc2e68a8bb72b18cc",
+    "packages/core/src/arena/data/rivals.json": "6b92861f40623fd1022d0584ba82b424b84fd45696b6ab9185dcc943177f71d7",
+    "packages/core/src/arena/data/runtime.json": "bf7aa161756df1c8a137153541e635fcc660c465f7d807f1f760c6b0d1011915",
+    "packages/core/src/arena/data/feel.json": "921a3eee13a83dcd3c1cf6a20ed91f3a451a62eb26842b4dc7645f1892c311c0",
+    "packages/core/src/arena/fire.ts": "97e70b69dcb04bec0fd04593c07e183ea65583320a830477417500edc1ace6dc",
+    "packages/core/src/arena/air.ts": "38c1b8a026762de75efc3eba663a4abd869a664df7f51f29fc67a5196d239ffd",
+    "packages/core/src/arena/mage-ai.ts": "2709e891d15f22074cee2b847a5d9cb0d73b7e783c61c246cfc2b40e4888173c",
+    "packages/core/src/arena/mage-ai-fire.ts": "628f5db191c1e4b06fdcdba9e4fbef7929d5d3a0e0a46a9f7daeaabb3f653349",
+    "packages/core/src/arena/mage-ai-air.ts": "1fc1fbdc5cb4761695d7951b1db1d64d3f31fb3a843383fc8bfe16cffc64d129",
+    "packages/core/src/arena/rival-phases.ts": "4a3cb18fa336948cf2f09b52dbb3d231d1fce9f6ea4e4365198f625a5070b287",
+    "packages/core/src/arena/kernel.ts": "ffeea2131a59507e106abfe9d24d7de52f0a401562fd0a119aa49e22771677eb"
+  },
+  "sourceHashes": {
+    "combat.json": "8ea48b8ed2bb3b7c7a568cecd67d70309fa912334078ebdecc01bb3b0c9c9f16",
+    "spells-water.csv": "f10aad3aefafe35295e10eb61ae65e8da94465a14bee136bb2659a5b4390fa2e",
+    "spells-fire.csv": "0d6ce4f83ac9079553dbba772ebadcaeca8fee89f1faea33385f67913e4ea29b",
+    "spells-air.csv": "45df014c42cb414dc6c7be96eb4dbb7a0fe58b40425ea1d8426cd98f1f0657aa",
+    "schools-combat.json": "98acdf280d5851e710096e72fbff1a3af42fe5852b8ae7871e3d3c5825e7aaaa",
+    "enemies.json": "3d122a2d63cf225281bda8aa4f352b4d377056782ef445ff06ef50269ec068fc",
+    "arena-tiers.json": "bff43f06703c86fa9f98f6e011f8cc0f5e6b2e94160808d34d0609f324c4dd93"
+  }
+}

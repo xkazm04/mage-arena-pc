@@ -31,12 +31,16 @@ function plantedOverlay(dir, overrides) {
   return file;
 }
 
-test('vr:tuning-return says "no deviations" for the real overlay today', () => {
-  assert.deepEqual(JSON.parse(readFileSync(DEFAULT_OVERLAY, 'utf8')).overrides, {}, 'the real overlay gained a key: update this test');
-  const r = cli();
-  assert.equal(r.status, 0, r.stderr);
-  assert.match(r.stdout, /no deviations/);
-  assert.doesNotMatch(r.stdout, /-> PC/);
+test('vr:tuning-return says "no deviations" for an empty overlay, and lists every key of the real overlay', () => {
+  withTemp((dir) => {
+    const r = cli('--overlay', plantedOverlay(dir, {}));
+    assert.equal(r.status, 0, r.stderr);
+    assert.match(r.stdout, /no deviations/);
+    assert.doesNotMatch(r.stdout, /-> PC/);
+  });
+  const keys = Object.keys(JSON.parse(readFileSync(DEFAULT_OVERLAY, 'utf8')).overrides), real = cli();
+  assert.equal(real.status, 0, real.stderr);
+  for (const key of keys) assert.ok(real.stdout.includes(`\`${key}\``), `${key} missing from the addendum`);
 });
 
 test('a planted override prints VR canonical -> PC, read from the canon CSV and schools-combat.json', () => {
@@ -54,7 +58,7 @@ test('a planted override prints VR canonical -> PC, read from the canon CSV and 
 test('--out writes the addendum with the census evidence summary', () => {
   withTemp((dir) => {
     const out = join(dir, 'addendum.md');
-    const r = cli('--evidence', evidence, '--out', out);
+    const r = cli('--evidence', evidence, '--out', out, '--overlay', plantedOverlay(dir, {}));
     assert.equal(r.status, 0, r.stderr);
     assert.equal(r.stdout, '');
     const text = readFileSync(out, 'utf8');
