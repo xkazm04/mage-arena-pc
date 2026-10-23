@@ -1,8 +1,16 @@
 # D2. Combat visuals: an original art direction, animation and sound for PC
 
-Status: **direction menu**, written 2026-10-23 for future sessions; nothing here is built. The best-case target images
-to generate first are in `docs/concepts/D4-visual-target-prompts.md`. Those images feed the engine spike in section 5,
-which decides between PixiJS and a native engine.
+Status: **direction menu**, written 2026-10-23 for future sessions; nothing here is built.
+
+**Decision (owner, 2026-10-24): painted 2.5D is the primary direction.** The owner compared the Leonardo targets
+(`docs/concepts/D4-visual-target-prompts.md`) and chose the **A variants**:
+
+> "Im sold to 2.5D, adjust the documents so we can try to reach it and master as primary choice over 3D"
+
+What follows from that:
+- PixiJS is the engine we commit to.
+- Stylised 3D and a native engine are a **fallback only**, opened if the mastery slice in section 5 fails its bar.
+- The A images saved in `art/targets/` are the reference every asset is judged against.
 
 ## 1. The owner's words
 
@@ -44,18 +52,37 @@ rules, and the style bible's element-identity rules.
 2. Every school and every rival **reads at a glance**: body, colour language, spell shapes, resource state.
 3. Animation that **sells cause and effect**: windup, release, travel, contact, reaction.
 4. Every combat event the player must answer **has a sound**, and the mix tells you what is dangerous.
-5. The style and pipeline decision (Pixi or native) made from **evidence**, not taste alone.
+5. The painted 2.5D look **mastered in PixiJS**, proven by a measured slice before the asset production starts.
 
 ## 4. Candidate directions
 
-### 4.1 Camera and art direction (decide first, it determines every asset)
+### 4.1 Camera and art direction: painted 2.5D (chosen)
 
-| Option | Look | Cost |
+**The target:**
+- **Camera:** a closer three-quarter camera, 35-45° elevation instead of today's far 55°.
+- **Bodies:** painted billboards at **140-200 px** at 1080p, with normal-mapped lighting.
+- **Arenas:** painted plates in layers for parallax and lighting.
+- **Spells:** they light bodies and floor.
+
+This is what targets T1-A and T2-A show.
+
+**The 2.5D techniques to master in Pixi:**
+
+| Technique | What it buys | Pixi route |
 |---|---|---|
-| **A. Closer 3/4 painted 2.5D** (recommended to test first) | lower camera (35-45°), bodies at 140-200 px, painted billboards with normal-mapped lighting | keeps the Pixi stack; every body re-generated at the new scale |
-| B. Stylised 3D | low-poly or toon-shaded 3D models, real lights, rigged animation | likely a native engine; new pipeline (modelling, rigging) |
-| C. Hybrid | 3D-rendered character sprites baked to atlases, painted arenas | Pixi stays; a 3D pipeline only offline |
-| D. Remaster the current direction | same camera, upscaled and repainted assets | cheapest, but does not answer the owner's fear |
+| Normal-mapped painted sprites | bodies and props lit by spells and torches, not just tinted | a lighting filter or shader with a normal atlas per body (the provider paints the normal map from the colour map, or a tool derives it) |
+| Dynamic 2D lights | the meteor, beams and flames light the floor and bodies | additive light layer and a deferred-style light buffer rendered to a texture |
+| Layered arena plates | depth: floor, walls, balconies, crowd, sky | separate plates with small parallax; baked plate kept as the fallback quality tier |
+| Depth and sorting | bodies pass in front of and behind props correctly | today's `depth.ts` sorting, extended for the closer camera |
+| Shadows | grounded bodies, cast shadows from spell light | blurred contact shadows (exist today) plus projected light shadows |
+| Atmosphere | dust, haze, embers, drizzle | particle containers and screen-space shaders, within `animation.json` budgets |
+| Colour grading | the dusk and night moods of the targets | a final LUT filter per arena palette |
+
+**Not chosen, kept as the fallback** (open only if section 5 fails its bar):
+- **Stylised 3D** in a native engine.
+- **Hybrid:** 3D-rendered sprites baked to atlases.
+
+**Rejected:** a remaster of the current far camera. It does not answer the owner's concern about reuse.
 
 ### 4.2 Art content
 
@@ -70,7 +97,8 @@ rules, and the style bible's element-identity rules.
 - Per-spell cast clips (Brand Lance draws back, Sunfall raises both arms) instead of one cast per element.
 - Movement clips: dash (Cinder Step, Slipstream), knockback (Ring of Cinders), stagger, root, slow.
 - Choreography: windup -> release -> travel -> contact -> reaction, timed to the sim's ticks and never altering them.
-- Skeletal animation (Spine or a native rig) instead of frame atlases, if the engine spike allows it.
+- Skeletal animation for painted 2.5D (a Spine-style runtime for Pixi, cut-out painted parts) versus more painted frames
+  per clip: the mastery slice tries both on one body and keeps the one that holds the painted look.
 
 ### 4.4 Procedural and shader effects
 
@@ -87,23 +115,40 @@ rules, and the style bible's element-identity rules.
 - Fix the dangling `stagger` cue.
 - An owner listening pass with a scripted bout as the fixed test.
 
-## 5. The engine spike (shared with D3)
+## 5. The 2.5D mastery slice (shared with D3)
 
-**Question:** can PixiJS reach the target images, or does the PC channel move to a native engine after the hackathon?
+**Goal:** prove PixiJS reaches the chosen A targets before any asset production. The slice is not a contest between
+engines; it is the first build of the chosen look.
 
-1. Generate the target images from `D4-visual-target-prompts.md` (two variants each: painted 2.5D and stylised 3D).
-2. The owner picks a target look.
-3. Build one **vertical-slice frame** in Pixi: one close duel, two bodies at the new scale, one beam, one filled-circle
-   telegraph, floor lighting, at 1440p.
-4. Measure it: frame time at 1440p and 4K, the visual gap to the target, and authoring cost per body.
-5. Decide with these criteria: Pixi stays if it matches the target within an agreed gap at 60 fps; otherwise price a
-   native port. The deterministic TS core would need a port, a bridge, or a TS-to-native transpile.
+1. **Scene:**
+   - one close duel in one arena at the new camera;
+   - two painted bodies at the new scale, the water mage and the fire mage of T1-A;
+   - a flame cone and a meteor with a filled-circle telegraph;
+   - a lightning beam;
+   - floor and body lighting from the spells;
+   - layered plates, colour grade and atmosphere.
+2. **Assets:**
+   - generate only what the slice needs: two bodies with their normal maps, one arena plate set;
+   - each asset is judged next to its target image.
+3. **Measure:**
+   - frame time at 1440p and 4K with the stress scene, via `frame-probe.ts`;
+   - the visual gap to T1-A and T2-A, owner-judged side by side;
+   - authoring cost per body: generation calls and cleanup time.
+4. **Bar:** the slice passes when the owner judges it "the A look" and it holds 60 fps at 1440p. Each shortfall is fixed
+   inside Pixi first (shader, lighting, asset quality).
+5. **Fallback:** only if the bar cannot be met after a fix round, price the native 3D route. That includes how the
+   deterministic TS core would move: a port, a bridge, or a transpile.
 
 ## 6. Recommended first slice
 
-1. Generate the target images (D4) and pick the look.
-2. The Pixi vertical-slice frame and its measurement (section 5).
-3. In parallel, engine-independent work: the missing sound cues, and the procedural sigil shapes (they port either way).
+1. Save the chosen A targets in `art/targets/` as the reference set.
+2. The 2.5D mastery slice and its measurement (section 5).
+3. In parallel, work that does not depend on the slice:
+   - the missing sound cues;
+   - the procedural sigil shapes (filled circle, beam, arc), drawn for the new camera;
+   - a normal-map and lighting test on one existing body.
+4. After the slice passes: the asset production plan (bodies, rivals, creatures, arenas), priced against a new
+   generation budget.
 
 ## 7. How success is measured
 
@@ -114,7 +159,7 @@ rules, and the style bible's element-identity rules.
 
 ## 8. Open questions for the spark
 
-1. Which camera (4.1 A-D)? The target images should answer this.
-2. How much new generation budget, and from which providers?
-3. Skeletal animation or frame atlases?
+1. The exact camera angle and body size inside the chosen range (35-45°, 140-200 px)? The slice settles it.
+2. How much new generation budget, and from which providers? Painted normal maps double the cost per body.
+3. Skeletal cut-out animation or more painted frames?
 4. Does PC keep VR's element-identity rules exactly, or diverge in look (W8 decision A3 says PC keeps its own direction)?

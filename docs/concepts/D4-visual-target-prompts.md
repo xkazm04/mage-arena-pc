@@ -1,6 +1,15 @@
 # D4. Visual target prompts (Leonardo): the best-case look for D1-D3
 
-Status: **prompt pack**, written 2026-10-23. Not generated yet. The owner generates these images in Leonardo. They
+Status: **prompt pack, generated; decision made 2026-10-24.**
+
+> Owner: "Im sold to 2.5D, adjust the documents so we can try to reach it and master as primary choice over 3D"
+
+What follows from that:
+- The **A (painted 2.5D) variants are the reference look** for combat (D2) and for the menu, HUD and campaign (D3).
+- The B prompts stay below as the record of the fallback that was not chosen.
+- When re-generating or extending targets, use the A prompts.
+
+Original intent, kept for context: The owner generates these images in Leonardo. They
 are deliberately imprecise "ceiling" pictures: they show how good the game could look, so the engine spike (D2
 section 5) can ask whether PixiJS can chase that look or the PC channel should move to a native engine.
 
@@ -99,5 +108,6 @@ Stylised 3D key art title screen: young water mage in pale robes in the centre o
 | T4 campaign | | | |
 | T5 title | | | |
 
-If most picks are **A**, the Pixi vertical-slice frame (D2 section 5) is the next step. If most are **B**, price the
-native-engine port first, including how the deterministic TS core moves with it.
+**Outcome:** the owner chose **A** (painted 2.5D) across the board. The next step is the 2.5D mastery slice in PixiJS
+(D2 section 5). The native-engine port is priced only if that slice fails its bar. Fill in the per-target rows
+above as images are saved to `art/targets/`.

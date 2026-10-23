@@ -1,7 +1,14 @@
 # D3. Non-combat presentation: menu, HUD and campaign, rebuilt for PC
 
-Status: **direction menu**, written 2026-10-23 for future sessions; nothing here is built. The target images are in
-`docs/concepts/D4-visual-target-prompts.md`. The engine question is shared with D2 (section 5 there).
+Status: **direction menu**, written 2026-10-23 for future sessions; nothing here is built.
+
+**Decision (owner, 2026-10-24): painted 2.5D, in PixiJS, is the primary direction** ("Im sold to 2.5D [...] master as
+primary choice over 3D").
+
+The references:
+- the menu, HUD and campaign are judged against the painted **A** targets T3-A (HUD), T4-A (camp map and calendar) and
+  T5-A (title) in `docs/concepts/D4-visual-target-prompts.md`;
+- the camp map is an illustrated painting with sigil markers and plaques, not a 3D diorama.
 
 ## 1. The owner's words
 
@@ -42,7 +49,7 @@ settings.
 |---|---|---|
 | **A. Screen modules on the current kit** (recommended) | split `game-shell.ts` into one module per screen behind a small router; add anchors and a layout helper (edges, columns, safe area, UI scale) to `CanvasUI` | low risk, incremental; still a canvas kit |
 | B. DOM/HTML UI over the canvas | menus and campaign in HTML/CSS (rich text, scrolling, accessibility); the canvas keeps combat | fast iteration, real layout; two rendering worlds to keep consistent |
-| C. Native engine UI | follows a D2 decision to move engines | only if the engine spike says so |
+| C. Native engine UI | only if D2's 2.5D mastery slice fails and the fallback opens | not planned |
 
 ### 4.2 School-aware HUD
 
@@ -69,7 +76,11 @@ settings.
 
 ### 4.5 Look and feel
 
-- A title screen with key art (from D4's target image once chosen).
+- A title screen built on T5-A: painted key art with layered parallax, the moonlit arena, and the menu column on dark
+  enamel plaques.
+- The camp map built on T4-A: a painted map with time-of-day lighting layers, sigil markers, plaque labels and lantern
+  and smoke particles. These are the same Pixi lighting and particle techniques D2's slice proves.
+- The HUD built on T3-A: aged-silver slot frames, a curved rune meter, rank pips and the rival's phase gems.
 - Screen transitions, button motion and sound, a consistent kicker and heading system.
 - One palette and type system: retire `interface-style-v1.json`, settle the body font.
 - Move "Combat Feel Lab" and "The proving ground" behind a developer menu.
@@ -79,7 +90,8 @@ settings.
 1. **Screen modules and the layout helper (4.1 A)**, with no visual change, proven by the existing UI tests and
    `camp-browser` screenshots at 1080p and 1440p.
 2. **School-aware HUD (4.2)**: it unblocks playing Fire and Air in the Lab today.
-3. **Settings and widescreen (4.4)**, then the title screen and transitions (4.5) once D4's target look is picked.
+3. **Settings and widescreen (4.4)**, then the title screen and camp map against T5-A and T4-A (4.5). These reuse the
+   lighting and particle work from D2's mastery slice.
 
 ## 6. How success is measured
 
@@ -91,7 +103,7 @@ settings.
 
 ## 7. Open questions for the spark
 
-1. Canvas kit, HTML overlay, or wait for the engine decision (4.1)?
+1. Canvas kit or HTML overlay (4.1)? The engine is settled: PixiJS.
 2. Which screens matter most for the first visual pass: title, camp map, calendar, or results?
 3. Should weeks 3-6 come before or after the visual pass?
 4. Is the Lab a player feature (polished) or a developer tool (hidden)?
