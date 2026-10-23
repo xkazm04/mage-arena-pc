@@ -146,7 +146,9 @@ export function reflectProjectile(state: ArenaState, target: Actor, p: Projectil
   if (p.reflected || p.family !== 'magic' || p.tier > target.tier || target.tier < 2 || !target.water.composition.lines.includes('mirror') || target.water.composition.branches.mirror !== 'A') return;
   const owner = state.actors.find(a => a.id === p.ownerId);
   const origin = owner?.pos ?? p.source;
-  const reflected = spawnProjectile(state, { ...p, ownerId: target.id, activationId: state.nextId++, source: { ...target.pos } }, target.pos, sub(origin, target.pos), Math.hypot(p.velocity.x, p.velocity.y), Math.max(p.remainingM, distance(target.pos, origin) + target.radius));
+  // A reflection is a plain Water bolt: it never inherits an Air arc, pierce budget or Momentum payment.
+  const { arc: _arc, pierceLeft: _pierce, momentumOnHit: _momentum, ...plain } = p;
+  const reflected = spawnProjectile(state, { ...plain, ownerId: target.id, activationId: state.nextId++, source: { ...target.pos } }, target.pos, sub(origin, target.pos), Math.hypot(p.velocity.x, p.velocity.y), Math.max(p.remainingM, distance(target.pos, origin) + target.radius));
   reflected.reflected = true;
 }
 export function hasLineOfSight(state: ArenaState, a: Vec, b: Vec): boolean {

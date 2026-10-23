@@ -28,13 +28,23 @@ export interface SchoolState {
   formUntil: number;
   /** An AI rival that chooses from the whole catalogue: slot n is row n (VR CR-002 slots 0-9), ignoring the loadout. */
   catalogue?: true;
+  /** Fire: the first Sunfall has released (ends the CR-002 bank rule). */
+  sunfallLoosed?: true;
+  /** A school root (Kindle, Sunfall, Tempest windups) ends at this tick; absent = none. */
+  rootUntil?: number;
 }
 /** A spell-owned effect that lives across ticks (beam, trail, delayed detonation, volley). Owned and stepped by arena/shapes.ts. */
 export interface SchoolEffect { id: number; ownerId: number; activationId: number; spellId: string; kind: 'beam' | 'trail' | 'detonation' | 'volley';
   startTick: number; nextTick: number; endTick: number; origin: Vec; target: Vec; damage: number; family: Family; tier: number;
-  hitLog: { tick: number; targetId: number }[]; survivesOwner?: boolean; remaining?: number }
+  hitLog: { tick: number; targetId: number }[]; survivesOwner?: boolean; remaining?: number;
+  /** The contact template each tick copies (base damage before live multipliers), and the shape's geometry and cadence. */
+  hit?: Hit; everyTicks?: number; lengthM?: number; radiusM?: number; perfectFirstTickOnly?: boolean; ticksDone?: number }
 export interface InputFrame { move: Vec; aim: Vec; slot: number; cast: boolean; absorb: boolean; roll: boolean; sprint: boolean }
-export interface Hit { ownerId: number; activationId: number; damage: number; family: Family; tier: number; source: Vec; bolt?: boolean; reaction?: boolean; delivery?: 'projectile' | 'area' | 'melee' }
+export interface Hit { ownerId: number; activationId: number; damage: number; family: Family; tier: number; source: Vec; bolt?: boolean; reaction?: boolean; delivery?: 'projectile' | 'area' | 'melee';
+  /** W8 school hits only (absent on Water hits): Heat paid to a Fire owner when the blow connects; skips a front shield block (Brand Lance); refuses the fresh-raise perfect (Brand Wrath after its first tick). */
+  heat?: number; pierceShields?: boolean; suppressPerfect?: boolean;
+  /** Momentum paid to an Air owner when the blow connects (W8; absent on Water hits). */
+  momentumOnHit?: number }
 export interface EnemyBrain { id: string; readyTick: number; backoffUntil: number; stunnedUntil: number; attackIndex: number; deathQueued: boolean; recoveryUntil?: number }
 /** A rival plan (mage-ai rival-plan.ts); present only when plans are enabled, so disabled runs serialize exactly as before. */
 export interface RivalPlan { preset: string; phase: 'hold' | 'approach' | 'withdraw'; until: number; rearmTick: number; seenRelease: number; prevRelease: number; flight: number; counterUntil: number; armed: boolean; counterTick: number; wardFrom: number }
@@ -56,7 +66,9 @@ export interface Actor {
   waveStartTick: number; tier: number; lastUnlockTick: number; clockAdvanceTicks: number; unlockTicks: number[];
   metrics: { manaCast?: number; perfects: number; blocks: number; hits: number; damageDealt: number; damageTaken: number; manaDrained: number; manaRaised: number; manaReturned: number; casts: number; rolls: number };
 }
-export interface Projectile extends Hit { id: number; pos: Vec; previousPos: Vec; velocity: Vec; radius: number; remainingM: number; hitIds: number[]; burstRadiusM?: number; piercing?: boolean; reflected?: boolean }
+export interface Projectile extends Hit { id: number; pos: Vec; previousPos: Vec; velocity: Vec; radius: number; remainingM: number; hitIds: number[]; burstRadiusM?: number; piercing?: boolean; reflected?: boolean;
+  /** Air (W8, absent otherwise): extra bodies this projectile may still pass (CR-007 spellsPierce), and a Veering Bolt's fixed-curvature flight. */
+  pierceLeft?: number; arc?: { centre: Vec; radiusM: number; angle: number; sign: number; leftM: number } }
 export interface Zone { id: number; ownerId: number; pos: Vec; radiusM: number; until: number; kind: 'slow' | 'fog'; slowMult: number }
 export interface Telegraph extends Hit { id: number; kind: 'projectile' | 'lane' | 'melee' | 'area' | 'charge'; origin: Vec; target: Vec; resolveTick: number; startTick: number; speedMps: number; rangeM: number; widthM: number; rootS?: number; pullM?: number; survivesOwner?: boolean; wallStunS?: number;
   /** Committed body attack: after resolveTick the owner travels travelM over travelTicks along origin->target (a lunge carries a reachM weapon sector).

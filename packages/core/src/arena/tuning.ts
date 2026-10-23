@@ -274,8 +274,10 @@ export function warningFloor(family: Family, positional: boolean): number {
 export function pacedWarning(a: Actor, seconds: number, floor: number): number {
   return Math.max(Math.min(seconds, floor), paced(a, seconds));
 }
+/** Lab practice profile: multipliers over Water archetypes for an actor tagged with a school. A real Fire/Air actor
+ * (schoolState, W8) plays its own catalogue and moves at the authored 1x, so it reads the identity Water profile. */
 export function profileFor(a: Actor) {
-  return schoolData[a.school ?? "water"];
+  return schoolData[a.schoolState ? "water" : a.school ?? "water"];
 }
 export function adjustedSpell(s: Spell, a: Actor, state?: ArenaState): Spell {
   const t = state ? tuningFor(state) : defaults,

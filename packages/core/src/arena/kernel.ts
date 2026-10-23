@@ -7,7 +7,7 @@ import { activationBlocked, idleInput, type Actor, type ArenaState, type Difficu
 import { newWaterState } from './catalog.ts';
 import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, updateWater, wardDrainMult, waterAbsorbed } from './water.ts';
 import { enemySpec } from './enemies.ts';
-import { hasSchoolLoadout, releaseSchoolSpell, resetSchool, schoolAfterMove, schoolDeflects, schoolDrainMult, schoolEvades, schoolOnHit, schoolRollStaminaMult, schoolStaminaRegenMult, schoolTick, trySchoolCast } from './schools.ts';
+import { curvedStep, hasSchoolLoadout, releaseSchoolSpell, resetSchool, schoolBusy, schoolInterrupted, schoolRooted, schoolAfterMove, schoolDeflects, schoolDrainMult, schoolEvades, schoolOnHit, schoolRollStaminaMult, schoolStaminaRegenMult, schoolTick, trySchoolCast } from './schools.ts';
 import { stepSchoolEffects } from './shapes.ts';
 
 export { combat, statRules, bolt, runtime };
@@ -51,7 +51,8 @@ export function emit(state: ArenaState, kind: ArenaState['events'][number]['kind
   state.events.push({ tick: state.tick, kind, actorId: actor.id, value, ...(targetId === undefined ? {} : { targetId }) });
 }
 export function interrupt(state: ArenaState, actor: Actor): void {
-  const hadCast = actor.pending !== undefined || state.telegraphs.some(t => t.ownerId === actor.id);
+  const channel = schoolInterrupted(state, actor);
+  const hadCast = channel || actor.pending !== undefined || state.telegraphs.some(t => t.ownerId === actor.id);
   actor.pending = undefined; state.telegraphs = state.telegraphs.filter(t => t.ownerId !== actor.id);
   if (hadCast) emit(state, 'interrupt', actor);
 }
@@ -80,16 +81,16 @@ export function tapContacts(state: ArenaState, tap: ContactTap): () => void {
   const list = contactTaps.get(state) ?? []; list.push(tap); contactTaps.set(state, list);
   return () => { const i = list.indexOf(tap); if (i >= 0) list.splice(i, 1); };
 }
-export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean } {
+export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean; evaded?: true } {
   for (const tap of contactTaps.get(state) ?? []) tap(state, target, hit);
   if (target.tags.includes("DEFEATED") || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
-  if (schoolEvades(state, target, hit)) return { damage: 0, perfect: false };
+  if (schoolEvades(state, target, hit)) return { damage: 0, perfect: false, evaded: true };
   const tune = tuningFor(state);
   const spec = target.enemy ? enemySpec(target) : undefined;
-  const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
+  const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && !hit.pierceShields && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
   const incomingDamage = hit.damage * (hit.bolt ? spec?.armourMultVsBolt ?? 1 : 1) * (shielded ? spec?.frontBlockMult ?? 1 : 1);
   const guarded = target.absorb && inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg);
-  const perfect = guarded && hit.family === 'magic' && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS);
+  const perfect = guarded && hit.family === 'magic' && !hit.suppressPerfect && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS);
   const reduction = guarded ? (perfect ? combat.absorb.perfect.reduction : combat.absorb.reduction[hit.family]) : combat.absorb.reduction.outsideArc;
   const damage = incomingDamage * (1 - reduction);
   if (perfect) {
@@ -154,7 +155,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   a.previousPos = { ...a.pos };
   const tune = tuningFor(state);
   const canCancel = !a.pending || tune.castCommitFraction >= 1 || state.tick < a.pending.startTick + Math.ceil((a.pending.releaseTick - a.pending.startTick) * tune.castCommitFraction);
-  const rooted = state.tick < a.water.rootUntil || a.pending?.spellId === 'mend:4:base';
+  const rooted = state.tick < a.water.rootUntil || a.pending?.spellId === 'mend:4:base' || schoolRooted(state, a);
   if (!rooted && canCancel && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost * schoolRollStaminaMult(state, a)) {
     a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(paced(a, tune.rollDurationS));
     a.immuneUntil = state.tick + ticks(paced(a, tune.rollIFramesS)); a.recoveryUntil = a.rollUntil + ticks(paced(a, tune.rollRecoveryS)); a.rollRecoveryUntil = a.recoveryUntil;
@@ -209,7 +210,7 @@ function releaseCast(state: ArenaState, a: Actor): void {
   }
 }
 function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
-  if (activationBlocked(a) || !input.cast || a.pending || a.absorb || state.tick < a.rollUntil || state.tick < a.recoveryUntil) return;
+  if (activationBlocked(a) || !input.cast || a.pending || a.absorb || state.tick < a.rollUntil || state.tick < a.recoveryUntil || schoolBusy(state, a)) return;
   const nearby = input.slot === 0 && state.actors.some(t => t.team !== a.team && !t.tags.includes("DEFEATED") && distance(a.pos, t.pos) <= combat.staffStrike.rangeM && inArc(a.facing, sub(t.pos, a.pos), runtime.geometry.staffArcDeg));
   if (nearby) {
     if (a.stamina < combat.staffStrike.staminaCost || state.tick < a.cooldownUntil) return;
@@ -293,7 +294,9 @@ function updateProjectiles(state: ArenaState): void {
   for (const p of [...state.projectiles]) {
     const travel = Math.min(length(p.velocity) * DT, p.remainingM), direction = unit(p.velocity);
     p.previousPos = { ...p.pos };
-    const end = { x: p.pos.x + direction.x * travel, y: p.pos.y + direction.y * travel };
+    const curved = p.arc ? curvedStep(p, travel) : undefined;
+    const end = curved?.end ?? { x: p.pos.x + direction.x * travel, y: p.pos.y + direction.y * travel };
+    const moveOn = (): void => { p.pos = end; p.remainingM -= travel; if (curved) { p.velocity = curved.velocity; if (curved.arc) p.arc = curved.arc; } };
     const owner = state.actors.find(a => a.id === p.ownerId);
     let first: Actor | undefined, firstT = Infinity;
     for (const a of state.actors) {
@@ -304,15 +307,18 @@ function updateProjectiles(state: ArenaState): void {
     if (first) {
       // Incoming direction is the last segment, even when the original caster moved.
       p.source = { ...p.pos }; const result = resolveHit(state, first, { ...p, delivery: p.burstRadiusM || p.piercing ? 'area' : 'projectile' }); p.hitIds.push(first.id);
+      // Air Form: an evaded projectile flies on through the body.
+      if (result.evaded) { moveOn(); continue; }
       if (result.perfect && !schoolDeflects(state, first, p)) reflectProjectile(state, first, p);
       if (p.burstRadiusM && !result.perfect) {
         for (const target of state.actors) if (!target.tags.includes("DEFEATED") && target.team !== owner?.team && !p.hitIds.includes(target.id) && distance(target.pos, first.pos) <= p.burstRadiusM) {
           resolveHit(state, target, { ...p, source: { ...first.pos }, delivery: 'area' }); p.hitIds.push(target.id);
         }
       }
-      if (!p.piercing || result.perfect) p.remainingM = 0;
-      else { p.pos = end; p.remainingM -= travel; }
-    } else { p.pos = end; p.remainingM -= travel; }
+      if (!p.piercing && !result.perfect && (p.pierceLeft ?? 0) > 0) { p.pierceLeft!--; moveOn(); }
+      else if (!p.piercing || result.perfect) p.remainingM = 0;
+      else moveOn();
+    } else moveOn();
   }
   state.projectiles = state.projectiles.filter(p => p.remainingM > 1e-9);
 }
@@ -340,7 +346,8 @@ export function stepArena(state: ArenaState, inputs: Readonly<Record<number, Inp
     updateWard(state, a, input); moveActor(state, a, input); schoolAfterMove(state, a); releaseCast(state, a); startCast(state, a, input);
     a.lastInput = { ...input, move: { ...input.move }, aim: { ...input.aim } };
   }
-  updateTelegraphs(state); updateProjectiles(state); stepSchoolEffects(state); state.zones = state.zones.filter(z => z.until > state.tick);
+  // VR steps trails and beams before projectiles (Kernel UpdateFireOngoing); a no-op without school effects.
+  updateTelegraphs(state); stepSchoolEffects(state); updateProjectiles(state); state.zones = state.zones.filter(z => z.until > state.tick);
   for (const a of state.actors) if (!a.tags.includes("DEFEATED")) updateClock(state, a);
 }
 export function resetWave(state: ArenaState, actor: Actor): void {

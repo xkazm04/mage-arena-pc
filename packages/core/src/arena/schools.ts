@@ -5,6 +5,8 @@ import balance from './data/school-balance.pc.json' with { type: 'json' };
 import presetData from './data/school-presets.json' with { type: 'json' };
 import { fireRules } from './fire.ts';
 import { airRules } from './air.ts';
+/** The Veering Bolt's curved flight step, used by the kernel's projectile update (Air owns the geometry). */
+export { curvedStep } from './air.ts';
 import { slotSchools, type Actor, type ArenaState, type Family, type Hit, type InputFrame, type Projectile, type SchoolState, type SlotComposition, type SlotSchool } from './types.ts';
 
 /** One Fire/Air row with its numeric cells read; `shape`, `gain` and `notes` stay prose for the school module to read. */
@@ -101,11 +103,18 @@ export interface SchoolRules {
   /** Before damage: true when the hit is evaded (Air Form). */
   evades(state: ArenaState, target: Actor, hit: Hit): boolean;
   /** After a contact resolved, for the target's and the owner's resource. */
-  onHit(state: ArenaState, target: Actor, owner: Actor | undefined, hit: Hit, result: { damage: number; perfect: boolean; reduction: number }): void;
+  /** `role` says whose resource this call is for: the struck target's or the hit owner's (called once per role). */
+  onHit(state: ArenaState, target: Actor, owner: Actor | undefined, hit: Hit, result: { damage: number; perfect: boolean; reduction: number }, role: 'target' | 'owner'): void;
   /** A perfect absorb of a projectile; true when the school handled it (Air deflect replaces the Water reflection). */
   deflects(state: ArenaState, target: Actor, p: Projectile): boolean;
   afterMove(state: ArenaState, a: Actor): void;
   reset(a: Actor): void;
+  /** The kernel interrupted this actor; stop channels. True when something was cancelled (counts as a cast for the event). */
+  interrupted?(state: ArenaState, a: Actor): boolean;
+  /** Hands busy (a beam or a volley runs): no staff strike and no new cast. */
+  busy?(state: ArenaState, a: Actor): boolean;
+  /** Rooted by a school cast this tick (beside `schoolState.rootUntil`). */
+  rooted?(state: ArenaState, a: Actor): boolean;
 }
 const rules: Record<SlotSchool, SchoolRules> = { fire: fireRules, air: airRules };
 const of = (a: Actor | undefined): SchoolRules | undefined => a?.schoolState ? rules[a.schoolState.school] : undefined;
@@ -119,9 +128,12 @@ export const schoolStaminaRegenMult = (state: ArenaState, a: Actor): number => o
 export const schoolRollStaminaMult = (state: ArenaState, a: Actor): number => of(a)?.rollStaminaMult(state, a) ?? 1;
 export const schoolEvades = (state: ArenaState, target: Actor, hit: Hit): boolean => of(target)?.evades(state, target, hit) ?? false;
 export function schoolOnHit(state: ArenaState, target: Actor, owner: Actor | undefined, hit: Hit, result: { damage: number; perfect: boolean; reduction: number }): void {
-  of(target)?.onHit(state, target, owner, hit, result);
-  if (owner && owner !== target) of(owner)?.onHit(state, target, owner, hit, result);
+  of(target)?.onHit(state, target, owner, hit, result, 'target');
+  if (owner && owner !== target) of(owner)?.onHit(state, target, owner, hit, result, 'owner');
 }
 export const schoolDeflects = (state: ArenaState, target: Actor, p: Projectile): boolean => of(target)?.deflects(state, target, p) ?? false;
 export const schoolAfterMove = (state: ArenaState, a: Actor): void => of(a)?.afterMove(state, a);
 export const resetSchool = (a: Actor): void => of(a)?.reset(a);
+export const schoolInterrupted = (state: ArenaState, a: Actor): boolean => of(a)?.interrupted?.(state, a) ?? false;
+export const schoolBusy = (state: ArenaState, a: Actor): boolean => of(a)?.busy?.(state, a) ?? false;
+export const schoolRooted = (state: ArenaState, a: Actor): boolean => (a.schoolState?.rootUntil !== undefined && state.tick < a.schoolState.rootUntil) || (of(a)?.rooted?.(state, a) ?? false);
