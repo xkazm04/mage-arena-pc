@@ -9,6 +9,7 @@ import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, 
 import { enemySpec } from './enemies.ts';
 import { curvedStep, hasSchoolLoadout, releaseSchoolSpell, resetSchool, schoolBusy, schoolInterrupted, schoolRooted, schoolAfterMove, schoolDeflects, schoolDrainMult, schoolEvades, schoolOnHit, schoolRollStaminaMult, schoolStaminaRegenMult, schoolTick, trySchoolCast } from './schools.ts';
 import { stepSchoolEffects } from './shapes.ts';
+import { agileRecoveryS, agilityDrainMult, agilityPerfectWindowAddS, agilityRecoveryMult } from './progression.ts';
 
 export { combat, statRules, bolt, runtime };
 export const DT = 1 / combat.simStepHz;
@@ -32,7 +33,9 @@ export function random(state: ArenaState, purpose: string): number {
   state.randomLog.push({ tick: state.tick, purpose, value }); return value;
 }
 export function addMage(state: ArenaState, team: number, pos: Vec, label = 'Water mage', ranks: Ranks = runtime.training.defaultRanks): Actor {
-  if (Object.keys(ranks).length !== 3 || ['vigor', 'focus', 'nerve'].some(key => !Number.isInteger(ranks[key as keyof Ranks]) || ranks[key as keyof Ranks] < rankRange.min || ranks[key as keyof Ranks] > rankRange.max)) throw Error('Arena ranks are outside the shared mapping');
+  // Three stats, or four with the optional agility (progression.ts); every present rank is an integer on the shared mapping.
+  const keys = Object.keys(ranks);
+  if (!(keys.length === 3 || (keys.length === 4 && keys.includes('agility'))) || ['vigor', 'focus', 'nerve', ...(keys.length === 4 ? ['agility'] : [])].some(key => { const r = ranks[key as keyof Ranks]; return !Number.isInteger(r) || r! < rankRange.min || r! > rankRange.max; })) throw Error('Arena ranks are outside the shared mapping');
   const actor: Actor = {
     id: state.nextId++, team, label, pos: { ...pos }, previousPos: { ...pos }, facing: { x: 1, y: 0 }, radius: runtime.geometry.mageRadiusM,
     ranks: { ...ranks }, hp: maximum(statRules.hp, ranks.vigor), maxHp: maximum(statRules.hp, ranks.vigor),
@@ -100,7 +103,7 @@ export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage
   const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && !hit.pierceShields && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
   const incomingDamage = hit.damage * (hit.bolt ? spec?.armourMultVsBolt ?? 1 : 1) * (shielded ? spec?.frontBlockMult ?? 1 : 1);
   const guarded = target.absorb && inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg);
-  const perfect = guarded && hit.family === 'magic' && !hit.suppressPerfect && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS);
+  const perfect = guarded && hit.family === 'magic' && !hit.suppressPerfect && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS + agilityPerfectWindowAddS(target, state));
   const reduction = guarded ? (perfect ? combat.absorb.perfect.reduction : combat.absorb.reduction[hit.family]) : combat.absorb.reduction.outsideArc;
   const damage = incomingDamage * (1 - reduction);
   if (perfect) {
@@ -148,14 +151,14 @@ function updateWard(state: ArenaState, a: Actor, input: InputFrame): void {
   if (!input.absorb) {
     if (a.lastInput.absorb || a.absorb) a.releaseTick = state.tick;
     a.absorb = false; a.absorbExhausted = false;
-  } else if (!a.absorb && !a.absorbExhausted && state.tick >= a.rollUntil && !a.pending && state.tick - a.releaseTick >= ticks(combat.absorb.minReleaseBeforeReRaiseS)) {
+  } else if (!a.absorb && !a.absorbExhausted && state.tick >= a.rollUntil && !a.pending && state.tick - a.releaseTick >= ticks(combat.absorb.minReleaseBeforeReRaiseS * agilityRecoveryMult(a, state))) {
     if (a.mana >= combat.absorb.raiseCostMana) {
       a.mana -= combat.absorb.raiseCostMana; a.metrics.manaRaised += combat.absorb.raiseCostMana;
       a.absorb = true; a.absorbFreshTick = state.tick;
     } else a.absorbExhausted = true;
   }
   if (a.absorb) {
-    const cost = drainPerSecond(a.ranks.nerve) * wardDrainMult(state, a) * schoolDrainMult(state, a) * tuningFor(state).absorbDrainScale * DT;
+    const cost = drainPerSecond(a.ranks.nerve) * wardDrainMult(state, a) * schoolDrainMult(state, a) * agilityDrainMult(a, state) * tuningFor(state).absorbDrainScale * DT;
     const paid = Math.min(a.mana, cost); a.mana -= paid; a.metrics.manaDrained += paid;
     if (paid < cost || a.mana <= 1e-9) { a.mana = Math.max(0, a.mana); a.absorb = false; a.absorbExhausted = true; }
   }
@@ -168,7 +171,7 @@ function moveActor(state: ArenaState, a: Actor, input: InputFrame): void {
   const rooted = state.tick < a.water.rootUntil || a.pending?.spellId === 'mend:4:base' || schoolRooted(state, a);
   if (!rooted && canCancel && input.roll && !a.lastInput.roll && state.tick >= a.rollUntil && state.tick >= a.recoveryUntil && a.stamina >= combat.roll.staminaCost * schoolRollStaminaMult(state, a)) {
     a.rollDirection = unit(input.move, a.facing); a.rollUntil = state.tick + ticks(paced(a, tune.rollDurationS));
-    a.immuneUntil = state.tick + ticks(paced(a, tune.rollIFramesS)); a.recoveryUntil = a.rollUntil + ticks(paced(a, tune.rollRecoveryS)); a.rollRecoveryUntil = a.recoveryUntil;
+    a.immuneUntil = state.tick + ticks(paced(a, tune.rollIFramesS)); a.recoveryUntil = a.rollUntil + ticks(agileRecoveryS(a, tune.rollRecoveryS, state)); a.rollRecoveryUntil = a.recoveryUntil;
     a.stamina -= combat.roll.staminaCost * schoolRollStaminaMult(state, a); a.staminaUsedTick = state.tick; a.metrics.rolls++;
     a.absorb = false; if (input.absorb) a.absorbExhausted = true; interrupt(state, a); emit(state, 'roll', a);
   }
@@ -216,7 +219,7 @@ function releaseCast(state: ArenaState, a: Actor): void {
       if (target.team === a.team || target.tags.includes("DEFEATED") || distance(a.pos, target.pos) > combat.staffStrike.rangeM || !inArc(direction, sub(target.pos, a.pos), runtime.geometry.staffArcDeg)) continue;
       resolveHit(state, target, { ownerId: a.id, activationId: pending.activationId, damage: combat.staffStrike.damage, family: 'physical', tier: 0, source: { ...a.pos }, delivery: 'melee' });
     }
-    a.recoveryUntil = state.tick + ticks(paced(a, combat.staffStrike.recoveryS));
+    a.recoveryUntil = state.tick + ticks(agileRecoveryS(a, combat.staffStrike.recoveryS, state));
   }
 }
 function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
@@ -226,7 +229,7 @@ function startCast(state: ArenaState, a: Actor, input: InputFrame): void {
     if (a.stamina < combat.staffStrike.staminaCost || state.tick < a.cooldownUntil) return;
     a.stamina -= combat.staffStrike.staminaCost; a.staminaUsedTick = state.tick;
     a.pending = { kind: 'staff', startTick: state.tick, releaseTick: state.tick + ticks(paced(a, combat.staffStrike.windupS)), aim: { ...input.aim }, activationId: state.nextId++ };
-    a.cooldownUntil = a.pending.releaseTick + ticks(paced(a, combat.staffStrike.recoveryS));
+    a.cooldownUntil = a.pending.releaseTick + ticks(agileRecoveryS(a, combat.staffStrike.recoveryS, state));
   } else {
     if (hasSchoolLoadout(a) ? trySchoolCast(state, a, input) : trySpellCast(state, a, input)) releaseCast(state, a);
     return;

@@ -1,4 +1,5 @@
-import { adjustedSpell, paceOf, paced, tuningFor } from './tuning.ts';
+import { adjustedSpell, paceOf, tuningFor, warningFloor } from './tuning.ts';
+import { agileCastS, agileRecoveryS, agileWarningS, rankedWaterSpell } from './progression.ts';
 import { combat } from './data.generated.ts';
 import { newWaterState, spellFor, spells, type Spell } from './catalog.ts';
 import { constrainToArena } from './geometry.ts';
@@ -33,7 +34,8 @@ export function flowShift(before: FlowMark, after: FlowMark): FlowShift | undefi
 }
 export function trySpellCast(state: ArenaState, a: Actor, input: InputFrame): boolean {
   if (activationBlocked(a)) return false;
-  const s = spellFor(a, input.slot, state); if (!s || s.kind === 'passive' || state.tick < (a.water.cooldowns[s.line] ?? 0)) return false;
+  // The row as this actor plays it: paced (adjustedSpell) and ranked (progression.ts; identity at rank 1).
+  const found = spellFor(a, input.slot, state), s = found && rankedWaterSpell(found, a, state); if (!s || s.kind === 'passive' || state.tick < (a.water.cooldowns[s.line] ?? 0)) return false;
   const cost = a.water.flow >= combat.flow.max ? combat.flow.crest.manaCost : s.mana;
   if (a.mana < cost) return false;
   let targetId: number | undefined;
@@ -47,9 +49,14 @@ export function trySpellCast(state: ArenaState, a: Actor, input: InputFrame): bo
   a.mana -= cost; a.water.cooldowns[s.line] = state.tick + ticks(s.cooldownS);
   const d = unit(sub(input.aim, a.pos), a.facing), range = Math.min(distance(a.pos, input.aim), s.rangeM);
   const aim = s.kind === 'zone' || s.effect === 'decoy' ? { x: a.pos.x + d.x * range, y: a.pos.y + d.y * range } : { ...input.aim };
-  a.pending = { kind: 'spell', startTick: state.tick, releaseTick: state.tick + ticks(Math.max(s.castS, s.telegraphS)), aim, activationId: state.nextId++, spellId: s.id, damageMult: flow.damageMult, targetId };
+  a.pending = { kind: 'spell', startTick: state.tick, releaseTick: state.tick + waterWindupTicks(state, a, s), aim, activationId: state.nextId++, spellId: s.id, damageMult: flow.damageMult, targetId };
   a.pending.spell = { ...s };
   a.metrics.casts++; emit(state, 'cast', a, s.tier); return true;
+}
+/** Press to release: the longer of cast and telegraph (already paced and floored by adjustedSpell), each shortened by
+ * agility with the telegraph's reaction-band floor kept; identity at agility 1 and under canonical balance. */
+export function waterWindupTicks(state: ArenaState, a: Actor, s: Spell): number {
+  return ticks(Math.max(agileCastS(a, s.castS, state), agileWarningS(a, s.telegraphS, warningFloor(s.family, s.kind === 'zone'), state)));
 }
 function applyControl(state: ArenaState, a: Actor, target: Actor, s: Spell): void {
   if (target.tags.includes("DEFEATED") || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return;
@@ -68,10 +75,10 @@ function heal(a: Actor, amount: number): void {
 export function releaseSpell(state: ArenaState, a: Actor): void {
   if (activationBlocked(a)) return;
   const p = a.pending; if (!p || p.kind !== 'spell') return;
-  const s = p.spell ?? adjustedSpell(spells.find(s => s.id === p.spellId)!, a, state); a.pending = undefined;
+  const s = p.spell ?? rankedWaterSpell(adjustedSpell(spells.find(s => s.id === p.spellId)!, a, state), a, state); a.pending = undefined;
   emit(state, 'release', a, s.tier);
   Object.assign(state.events.at(-1)!, { activationId:p.activationId, spellId:s.id, at:{...(s.kind === 'zone' || s.effect === 'decoy' ? p.aim : s.kind === 'target' ? state.actors.find(t=>t.id===p.targetId)?.pos ?? p.aim : a.pos)} });
-  const recovery = paced(a, tuningFor(state).castRecoveryS);
+  const recovery = agileRecoveryS(a, tuningFor(state).castRecoveryS, state);
   if (recovery > 0) a.recoveryUntil = Math.max(a.recoveryUntil, state.tick + ticks(recovery));
   const direction = unit(sub(p.aim, a.pos), a.facing), damage = s.damage * (p.damageMult ?? 1);
   const hit: Hit = { ownerId: a.id, activationId: p.activationId, damage, family: s.family, tier: s.tier, source: { ...a.pos }, bolt: s.line === 'bolt' };
@@ -136,7 +143,7 @@ export function waterAbsorbed(state: ArenaState, a: Actor, hit: Hit, prevented: 
   // A perfect starts the idle grace too, otherwise a fresh stack would disappear next tick.
   a.water.lastActivityTick = state.tick;
   if (hit.reaction || !a.water.composition.lines.includes('mirror') || a.tier < 2 || a.water.composition.branches.mirror !== 'B') return;
-  const ripple = effectSpell('ripple');
+  const ripple = rankedWaterSpell(effectSpell('ripple'), a, state);
   const activationId = state.nextId++;
   for (const target of state.actors) if (!target.tags.includes("DEFEATED") && target.team !== a.team && distance(a.pos, target.pos) <= ripple.rangeM) resolveHit(state, target, {
     ownerId: a.id, activationId, damage: ripple.damage, family: 'magic', tier: ripple.tier, source: { ...a.pos }, reaction: true, delivery: 'area'

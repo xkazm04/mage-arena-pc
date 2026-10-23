@@ -8,7 +8,8 @@ import { airRows, schoolIdentity } from './data.generated.ts';
 import { pacedWarning, paceOf, paced, warningFloor } from './tuning.ts';
 import { clamp, distance, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
 import { cancelOwnedBeams, dash, queueDetonation, resolveLine, startBeam } from './shapes.ts';
-import { identityNumber, schoolSpellById, balancedSpell, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
+import { identityNumber, schoolSpellById, balancedSpell, rankedSpell, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
+import { agileCastS, agileWarningS } from './progression.ts';
 import { activationBlocked, type Actor, type ArenaState, type Family, type Hit, type InputFrame, type Projectile, type SchoolState } from './types.ts';
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -247,9 +248,13 @@ function spawnAir(state: ArenaState, a: Actor, row: AirRow, hit: AirHit, directi
   if (pierceLeft > 0) p.pierceLeft = pierceLeft;
   return p;
 }
-/** Windup: one, the longer of cast_s and telegraph_s (every Fire row but Sunfall), at the actor's pace above its warning floor. */
-export const airWindupTicks = (a: Actor, spell: SchoolSpell, row: AirRow): number =>
-  ticks(pacedWarning(a, Math.max(spell.castS, spell.telegraphS), warningFloor(hitFamily(spell), row.kind === 'zone')));
+/** Windup: one, the longer of cast_s and telegraph_s (every Fire row but Sunfall), at the actor's pace above its warning floor.
+ * Agility (progression.ts) shortens it with the floor kept; a state that runs canonical ignores it. */
+export const airWindupTicks = (a: Actor, spell: SchoolSpell, row: AirRow, state?: ArenaState): number => {
+  const floor = warningFloor(hitFamily(spell), row.kind === 'zone'), windup = pacedWarning(a, Math.max(spell.castS, spell.telegraphS), floor);
+  // A warning keeps its floor; a windup that is only cast time (no telegraph) is the caster's own and shortens freely.
+  return ticks(spell.telegraphS > 0 ? agileWarningS(a, windup, floor, state) : agileCastS(a, windup, state));
+};
 
 function tryCast(state: ArenaState, a: Actor, input: InputFrame): boolean {
   const s = air(a);
@@ -284,7 +289,7 @@ function beginCast(state: ArenaState, a: Actor, s: SchoolState, spell: SchoolSpe
     const d = unit(sub(inputAim, a.pos), a.facing), reach = Math.min(distance(a.pos, inputAim), spell.rangeM * airSpellRangeMult(state, a));
     aim = { x: a.pos.x + d.x * reach, y: a.pos.y + d.y * reach };
   }
-  a.pending = { kind: 'spell', startTick: state.tick, releaseTick: state.tick + airWindupTicks(a, spell, row), aim, activationId: state.nextId++, spellId: spell.id };
+  a.pending = { kind: 'spell', startTick: state.tick, releaseTick: state.tick + airWindupTicks(a, spell, row, state), aim, activationId: state.nextId++, spellId: spell.id };
   a.metrics.casts++; emit(state, 'cast', a, spell.tier);
 }
 
@@ -294,7 +299,7 @@ function release(state: ArenaState, a: Actor): void {
   a.pending = undefined;
   const base = pending.spellId ? schoolSpellById(pending.spellId) : undefined, row = base && airRow(base.id);
   if (!base || !row) return;
-  const spell = balancedSpell(base, state);
+  const spell = rankedSpell(base, a, state);
   emit(state, 'release', a, spell.tier);
   Object.assign(state.events.at(-1)!, { activationId: pending.activationId, spellId: spell.id, at: { ...(row.kind === 'zone' ? pending.aim : a.pos) } });
   const damage = spell.damage * (pending.damageMult ?? 1), rangeMult = airSpellRangeMult(state, a), range = spell.rangeM * rangeMult;

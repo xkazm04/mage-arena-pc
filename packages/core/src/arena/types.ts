@@ -5,7 +5,11 @@ export type Family = 'magic' | 'physical' | 'unblockable';
 /** The one spelling of the difficulty ids (feel.json pace.enemy keys); the save schema and settings derive from it. */
 export const difficulties = ['easy', 'normal', 'hard'] as const;
 export type Difficulty = typeof difficulties[number];
-export interface Ranks { vigor: number; focus: number; nerve: number }
+/** Arena stat ranks 1-5. `agility` (PC build depth, progression.ts) is optional: absent = rank 1 = no effect, so a
+ * state without it serializes exactly as before. */
+export interface Ranks { vigor: number; focus: number; nerve: number; agility?: number }
+/** Spell ranks 1-5 keyed by Fire/Air spell id or Water line row `<line>:<tier>` (progression.ts); absent key = rank 1. */
+export type SpellRanks = Record<string, number>;
 /** The one spelling of the Water line ids: the type, the save schema and the spell-id pattern derive from it. */
 export const waterLines = ['tide_orb', 'lash', 'mire', 'mend', 'mirror'] as const;
 export type WaterLine = typeof waterLines[number];
@@ -58,6 +62,8 @@ export interface Actor {
   water: WaterState;
   /** Fire/Air resource and loadout (arena/schools.ts). Absent for Water and non-mages: never null or zeroed. */
   schoolState?: SchoolState;
+  /** Spell ranks (progression.ts); present only when set, so unranked actors serialize exactly as before. */
+  spellRanks?: SpellRanks;
   enemy?: EnemyBrain; mageAI?: MageBrain; speedMps?: number;
   /** Time scale of this actor's own actions (tuning.ts pace), fixed at spawn; absent is the authored 1x. */
   pace?: number;

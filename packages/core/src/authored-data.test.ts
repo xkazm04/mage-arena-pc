@@ -9,6 +9,10 @@ import { overlayProblems, schoolPresets, validateLoadout } from "./arena/schools
 import balance from "./arena/data/school-balance.pc.json" with { type: "json" };
 import rivalData from "./arena/data/rivals.json" with { type: "json" };
 import { rivalProblems } from "./arena/rival-phases.ts";
+import progressionData from "./arena/data/progression.pc.json" with { type: "json" };
+import season from "../../../docs/design/reconciled/data/season.json" with { type: "json" };
+import { progressionProblems } from "./arena/progression.ts";
+import { readFileSync } from "node:fs";
 import { member } from "./arena/doors.ts";
 import type { Composition } from "./arena/types.ts";
 import { makeTuning, tuningPresets, validateTuning } from "./arena/tuning.ts";
@@ -40,6 +44,31 @@ describe("authored data meets the validators that guard runtime input", () => {
     expect(plant({ phase: [] })).toEqual(["rivals.json brennic: unknown key phase"]);
     expect(plant({ maxHp: 125 })).toEqual([]);
     expect(plant({ maxHp: 0 })).toEqual(["rivals.json brennic: maxHp 0 is not a positive number"]);
+  });
+
+  it("the PC progression file (agility, spell ranks, enemy levels) passes its load door; planted-bad controls are refused", () => {
+    expect(progressionProblems(progressionData)).toEqual([]);
+    // Agility trains on the same points curve as the other arena stats (stats.csv, read here rather than copied).
+    const stats = readFileSync(new URL("../../../docs/design/reconciled/data/arena/stats.csv", import.meta.url), "utf8").replace(/\r\n/g, "\n");
+    const vigor = stats.split("\n").find((line) => line.startsWith("vigor,"))!.split(",")[2]!;
+    expect(progressionData.agility.pointsForRank.join(";")).toBe(vigor);
+    // One enemy level per campaign week.
+    expect(progressionData.enemyLevels.hpMult).toHaveLength(season.weeks);
+    const plant = (patch: (d: typeof progressionData) => unknown) => progressionProblems(patch(structuredClone(progressionData)));
+    expect(plant((d) => ({ ...d, extra: 1 }))).toEqual(["progression.pc.json: unknown key extra"]);
+    expect(plant((d) => ({ ...d, agility: { ...d.agility, castMultPerRank: 0.04 } }))).toEqual(["agility.castMultPerRank 0.04 must be <= 0 and keep rank 5 above 0"]);
+    expect(plant((d) => ({ ...d, agility: { ...d.agility, drainMultPerRank: -0.3 } }))).toEqual(["agility.drainMultPerRank -0.3 must be <= 0 and keep rank 5 above 0"]);
+    expect(plant((d) => ({ ...d, agility: { ...d.agility, perfectWindowAddSPerRank: -0.01 } }))).toEqual(["agility.perfectWindowAddSPerRank -0.01 must be >= 0"]);
+    expect(plant((d) => ({ ...d, agility: { ...d.agility, pointsForRank: [0, 6, 14, 24] } }))).toEqual(["agility.pointsForRank must be 5 rising integers from 0"]);
+    expect(plant((d) => ({ ...d, agility: { ...d.agility, speedMult: 1 } }))).toEqual(["agility: unknown key speedMult"]);
+    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, power: [1.1, 1.2, 1.3, 1.4] } }))).toEqual(["spellRanks.power must be 4 non-falling multipliers starting at 1"]);
+    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, power: [1, 1.2, 1.1, 1.3] } }))).toEqual(["spellRanks.power must be 4 non-falling multipliers starting at 1"]);
+    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, maxRank: 6 } }))).toContain("spellRanks.maxRank 6 must be 5 (ranks 1-4 power, rank 5 the ultimate form)");
+    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, ultimates: { fire_lancer: { summary: "x" } } } }))).toEqual(["spellRanks.ultimates: fire_lancer is not a Fire/Air spell id"]);
+    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, ultimates: { fire_lance: { summary: "x", damage: 9 } } } }))).toEqual(["spellRanks.ultimates.fire_lance: unknown key damage"]);
+    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, ultimates: { fire_lance: { summary: "x" } } } }))).toEqual([]);
+    expect(plant((d) => ({ ...d, enemyLevels: { hpMult: [1.1, 1.2] } }))).toEqual(["enemyLevels.hpMult must start at 1 and never fall"]);
+    expect(plant((d) => ({ ...d, enemyLevels: { hpMult: [1, 1.2, 1.1] } }))).toEqual(["enemyLevels.hpMult must start at 1 and never fall"]);
   });
 
   it("every tuning preset passes validateTuning", () => {

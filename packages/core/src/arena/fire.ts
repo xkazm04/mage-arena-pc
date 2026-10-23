@@ -6,9 +6,10 @@
 // schools.ts reads `fireRules` at its own load. Nothing below touches kernel.ts or schools.ts exports at load.
 import { fireRows, schoolIdentity } from './data.generated.ts';
 import { DT, emit, spawnProjectile, ticks } from './kernel.ts';
-import { balancedSpell, identityNumber, schoolSpellById, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
+import { balancedSpell, identityNumber, rankedSpell, schoolSpellById, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
 import { cancelOwnedBeams, contact, dash, ownerBeam, queueDetonation, resolveLine, shapeHooks, startBeam } from './shapes.ts';
 import { paceOf, paced, pacedWarning, warningFloor } from './tuning.ts';
+import { agileCastS, agileWarningS } from './progression.ts';
 import { constrainToArena } from './geometry.ts';
 import { clamp, distance, inArc, sub, unit, type Vec } from './math.ts';
 import type { Actor, ArenaState, Family, Hit, SchoolState } from './types.ts';
@@ -119,12 +120,16 @@ function placedPoint(a: Actor, aim: Vec, rangeM: number): Vec {
   return { x: a.pos.x + d.x * reach, y: a.pos.y + d.y * reach };
 }
 const hitFamily = (spell: SchoolSpell): Family => spell.family === 'self' ? 'magic' : spell.family;
-/** The warning a pace may not shorten below its reaction-band floor (PC pace law; 1x at parity). */
-const warning = (a: Actor, spell: SchoolSpell, shape: FireShape): number => pacedWarning(a, spell.telegraphS, warningFloor(hitFamily(spell), placed(shape)));
-/** Ticks from press to release: max(cast, telegraph), except Sunfall whose cast and shadow are sequential (cast only). */
-export function fireWindupTicks(a: Actor, spell: SchoolSpell): number {
-  const shape = fireShape(spell.id)!;
-  return ticks(shape.sequential ? paced(a, spell.castS) : Math.max(paced(a, spell.castS), warning(a, spell, shape)));
+/** The warning a pace or agility may not shorten below its reaction-band floor (PC pace law; 1x at parity). */
+const warning = (a: Actor, spell: SchoolSpell, shape: FireShape, state?: ArenaState): number => {
+  const floor = warningFloor(hitFamily(spell), placed(shape));
+  return agileWarningS(a, pacedWarning(a, spell.telegraphS, floor), floor, state);
+};
+/** Ticks from press to release: max(cast, telegraph), except Sunfall whose cast and shadow are sequential (cast only).
+ * Agility (progression.ts) shortens both; a state that runs canonical ignores it. */
+export function fireWindupTicks(a: Actor, spell: SchoolSpell, state?: ArenaState): number {
+  const shape = fireShape(spell.id)!, cast = agileCastS(a, paced(a, spell.castS), state);
+  return ticks(shape.sequential ? cast : Math.max(cast, warning(a, spell, shape, state)));
 }
 /** The cast start every Fire row shares (VR BeginFireCast). `pay` false is the granted signature: no mana leaves the pool;
  * the cooldown, windup, root and cast event are the row's own. */
@@ -135,7 +140,7 @@ function beginCast(state: ArenaState, a: Actor, s: SchoolState, spell: SchoolSpe
     if (state.lab) a.metrics.manaCast = (a.metrics.manaCast ?? 0) + spell.mana;
   }
   s.cooldowns[spell.id] = state.tick + ticks(paced(a, spell.cooldownS));
-  const releaseTick = state.tick + fireWindupTicks(a, spell);
+  const releaseTick = state.tick + fireWindupTicks(a, spell, state);
   a.pending = { kind: 'spell', startTick: state.tick, releaseTick, aim: placed(shape) ? placedPoint(a, aim, spell.rangeM) : { ...aim }, activationId: state.nextId++, spellId: spell.id };
   // VR roots through the release tick's move (FireCastRoots while pending); an interrupt clears it (interrupted below).
   if (shape.roots) s.rootUntil = releaseTick + 1;
@@ -175,7 +180,7 @@ export const fireRules: SchoolRules = {
     a.pending = undefined;
     const row = p.spellId ? schoolSpellById(p.spellId) : undefined, shape = row && fireShape(row.id);
     if (!row || !shape) return;
-    const spell = balancedSpell(row, state);
+    const spell = rankedSpell(row, a, state);
     emit(state, 'release', a, spell.tier);
     Object.assign(state.events.at(-1)!, { activationId: p.activationId, spellId: spell.id, at: { ...(placed(shape) ? p.aim : a.pos) } });
     const baseDamage = spell.damage * (p.damageMult ?? 1), damage = baseDamage * heatDamageMult(state, a), heat = heatPaid(shape);
@@ -204,7 +209,7 @@ export const fireRules: SchoolRules = {
         break;
       case 'meteor':
         // Sunfall: the shadow is a committed area that survives its owner and any later interrupt.
-        queueDetonation(state, a, hit, p.aim, shape.radiusM, ticks(warning(a, spell, shape)), { survivesOwner: true, spellId: spell.id });
+        queueDetonation(state, a, hit, p.aim, shape.radiusM, ticks(warning(a, spell, shape, state)), { survivesOwner: true, spellId: spell.id });
         fireState(a)!.sunfallLoosed = true;
         break;
       case 'dash':

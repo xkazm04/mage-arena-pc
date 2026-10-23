@@ -8,28 +8,35 @@ import { attachRivalPlan } from './rival-plan.ts';
 import { createLedger, observeLedger } from './ledger.ts';
 import { makeSchoolRival, type SchoolRivals } from './school-rivals.ts';
 import { applyRivalHp, beginRivalWave, bindRival, enableRivalPhases } from './rival-phases.ts';
-import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks } from './types.ts';
+import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks, type SpellRanks } from './types.ts';
+import { enemyHpMult, setSpellRanks, validEnemyLevel } from './progression.ts';
 import { defaultDifficulty, validateTuning, type CombatTuning } from './tuning.ts';
 export const tiro = arenaTiers.tiers[0];
 /** Anonymous Tiro mage entrants; presentation matches this label, so it lives here once. */
 export const tiroEntrantLabel = 'Tiro entrant · Water proxy';
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
-export interface Games { schoolRivals?: SchoolRivals; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
+export interface Games { schoolRivals?: SchoolRivals; /** Regular enemies' level (progression.ts); present only when set. */ enemyLevel?: number; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
 export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
 /** `tuning` is a Lab what-if: omitted, the state carries no tuning. `difficulty` paces the opponents for the whole Games (the player's pace is fixed).
  * `options.schoolRivals` turns the mage duelists into Fire/Air rivals (school-rivals.ts); omitted, the Water proxies.
- * In 'named' mode Brennic and Lio fight in HP-gated phases (rival-phases.ts, VR CR-005); `rivalPhases: false` turns them off (measurement). */
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false } = {}): Games {
+ * In 'named' mode Brennic and Lio fight in HP-gated phases (rival-phases.ts, VR CR-005); `rivalPhases: false` turns them off (measurement).
+ * `enemyLevel` (1..6, the campaign week; progression.ts) scales regular enemies' HP; named rivals and mage entrants keep theirs.
+ * `spellRanks` ranks the player's spells for this Games (a what-if like `tuning`; the save carries none yet). Both omitted:
+ * level 1 and rank 1, exactly today's Games. */
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false; enemyLevel?: number; spellRanks?: SpellRanks } = {}): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
   if (validateComposition(composition).length) throw Error('Invalid composition');
   if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
+  if (options.enemyLevel !== undefined && !validEnemyLevel(options.enemyLevel)) throw Error('Invalid enemy level');
   const state = createArena(seed, options.unpaced ? undefined : difficulty), player = addMage(state, 0, runtime.games.playerSpawn, snapshot?.name ?? 'Cassia', snapshot?.ranks); player.water = newWaterState(composition);
   if (options.balance) state.balance = options.balance;
+  setSpellRanks(player, options.spellRanks);
   if (tuning) { state.tuning = validateTuning(tuning); player.poise *= state.tuning.playerPoise; }
   if (snapshot) { player.hp = Math.max(1, player.hp - snapshot.hpPenalty); player.maxStamina = Math.max(1, player.maxStamina - snapshot.staminaPenalty); player.stamina = player.maxStamina; }
   if (referencePlayer) attachMageAI(player, runtime.games.referenceCompetence);
   const games: Games = { state, player, wave: startWave, phase: 'active', wavesCleared: 0, waveStartTick: state.tick, spawnLog: [] };
   if (options.schoolRivals) games.schoolRivals = options.schoolRivals;
+  if (options.enemyLevel !== undefined) games.enemyLevel = options.enemyLevel;
   if (options.schoolRivals === 'named' && options.rivalPhases !== false) enableRivalPhases(state);
   spawnWave(games); return games;
 }
@@ -46,7 +53,11 @@ function spawnWave(g: Games): void {
           ? runtime.games.enemySpawn.x - runtime.games.playerSpawn.x - openingSeparationM - runtime.games.spawnJitterM
           : total > 1 ? runtime.games.multiEnemyApproachReductionM : 0);
       let actor: Actor, kind = 'enemy' in spawn ? spawn.enemy : `Water proxy ${spawn.competence}`;
-      if ('enemy' in spawn) actor = addEnemy(g.state, spawn.enemy, pos);
+      if ('enemy' in spawn) {
+        actor = addEnemy(g.state, spawn.enemy, pos);
+        const hpMult = enemyHpMult(g.enemyLevel ?? 1, g.state);
+        if (hpMult !== 1) actor.hp = actor.maxHp = actor.maxHp * hpMult;
+      }
       else {
         actor = addMage(g.state, 1, pos, tiroEntrantLabel);
         const presetName = runtime.games.opponentPresets[g.wave - 2]!;

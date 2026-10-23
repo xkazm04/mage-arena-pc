@@ -34,7 +34,9 @@ export function seasonDue(t: Tables, s: CampSession, p: SeasonProgress): 'trial'
 export function campPlayerSnapshot(t: Tables, s: CampSession, id = s.camp.player): GamesPlayer {
   const c = s.camp.characters[id];
   if (!c || c.school !== data.playableSchool || c.life !== 'Alive') throw Error('Only a living Water entrant is available in this chapter.');
-  return { id, name: c.name, school: 'water', ranks: { vigor: c.stats.vigor, focus: c.stats.focus, nerve: c.stats.nerve }, mastery: c.mastery,
+  // Agility (PC build depth, arena/progression.ts) rides along only when the character has it; no camp stat trains it yet.
+  const ranks = { vigor: c.stats.vigor, focus: c.stats.focus, nerve: c.stats.nerve, ...(c.stats.agility === undefined ? {} : { agility: c.stats.agility }) };
+  return { id, name: c.name, school: 'water', ranks, mastery: c.mastery,
     hpPenalty: c.sick ? -t.rules.schemes.poison.nextGamesHp : 0,
     staminaPenalty: c.fatigue * data.fatigueStaminaPerPoint + (c.sick ? -t.rules.schemes.poison.nextGamesStamina : 0) };
 }

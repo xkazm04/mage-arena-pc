@@ -5,6 +5,7 @@ import balance from './data/school-balance.pc.json' with { type: 'json' };
 import presetData from './data/school-presets.json' with { type: 'json' };
 import { fireRules } from './fire.ts';
 import { airRules } from './air.ts';
+import { rankPower, spellRank } from './progression.ts';
 /** The Veering Bolt's curved flight step, used by the kernel's projectile update (Air owns the geometry). */
 export { curvedStep } from './air.ts';
 import type { Vec } from './math.ts';
@@ -58,6 +59,13 @@ export function balancedSpell(spell: SchoolSpell, state?: ArenaState): SchoolSpe
     if (value !== undefined) out = { ...out, [column]: value };
   }
   return out;
+}
+/** A row as this actor plays it at release: the balanced row with its spell rank's power on damage (progression.ts;
+ * ranks 1-4 power, rank 5 = rank 4 power). Cost, cast time and cooldown stay the balanced row's. Identity at rank 1 and
+ * under canonical balance. The one place a Fire/Air rank multiplies a number. */
+export function rankedSpell(spell: SchoolSpell, a: Actor, state?: ArenaState): SchoolSpell {
+  const out = balancedSpell(spell, state), power = rankPower(spellRank(a, spell.id, state));
+  return power === 1 ? out : { ...out, damage: out.damage * power };
 }
 /** A numeric identity value (dotted path under schools-combat.json `<school>`), overlay applied unless canonical. */
 export function identityNumber(school: SlotSchool, path: string, state?: ArenaState): number {

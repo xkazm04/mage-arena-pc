@@ -1,0 +1,19 @@
+{
+  "version": "progression-1",
+  "_about": "PC-only build depth (docs/concepts/combat-system-depth.md; spark combat-system-depth WP1, 2026-10-23). Every input is neutral at its default: absent agility = rank 1 = no effect, absent spell rank = rank 1 = the row's own numbers, absent enemy level = level 1 = today's HP; effects scale with (rank - 1). States that run balance 'canonical' (the VR parity suites) ignore this whole file. agility: a fourth arena stat with no movement effect, trained on the same points curve as vigor/focus/nerve (stats.csv 0;6;14;24;36). castMultPerRank scales the caster's cast and windup (a defender-facing warning never drops below its reaction-band floor); perfectWindowAddSPerRank widens the perfect-absorb window; recoveryMultPerRank scales recovery after casts, ward releases (the re-raise gap), staff strikes and rolls; drainMultPerRank scales the absorb drain and stacks multiplicatively with nerve, which keeps its own rule. spellRanks: ranks 1-4 are power only (power[r-1] multiplies damage and effect size; cost, cast time and cooldown unchanged); rank 5 is rank 4 power plus the row's ultimate form when one is registered in ultimates (keyed by spell id; WP3 fills it). enemyLevels: regular enemies (soldiers, creatures) at level L (= campaign week, season.json weeks) have hpMult[L-1] times their authored HP; named rivals and mage entrants are not scaled. Unknown keys and out-of-shape numbers fail at load.",
+  "agility": {
+    "pointsForRank": [0, 6, 14, 24, 36],
+    "castMultPerRank": -0.04,
+    "perfectWindowAddSPerRank": 0.0125,
+    "recoveryMultPerRank": -0.05,
+    "drainMultPerRank": -0.03
+  },
+  "spellRanks": {
+    "maxRank": 5,
+    "power": [1, 1.1, 1.2, 1.3],
+    "ultimates": {}
+  },
+  "enemyLevels": {
+    "hpMult": [1, 1.1, 1.2, 1.3, 1.4, 1.5]
+  }
+}
