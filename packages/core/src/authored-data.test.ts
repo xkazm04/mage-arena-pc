@@ -5,6 +5,8 @@ import schools from "../../../docs/design/reconciled/data/schools.json" with { t
 import characters from "../../../docs/design/reconciled/data/characters.json" with { type: "json" };
 import labSchools from "./arena/data/lab-schools.json" with { type: "json" };
 import { presets, validateComposition } from "./arena/catalog.ts";
+import { overlayProblems, schoolPresets, validateLoadout } from "./arena/schools.ts";
+import balance from "./arena/data/school-balance.pc.json" with { type: "json" };
 import { member } from "./arena/doors.ts";
 import type { Composition } from "./arena/types.ts";
 import { makeTuning, tuningPresets, validateTuning } from "./arena/tuning.ts";
@@ -16,6 +18,12 @@ describe("authored data meets the validators that guard runtime input", () => {
     for (const p of presets) expect(validateComposition(p), p.name).toEqual([]);
     const planted: Composition = { ...presets[0]!, lines: [presets[0]!.lines[0]!, presets[0]!.lines[0]!, presets[0]!.lines[1]!] };
     expect(validateComposition(planted)).not.toEqual([]);
+  });
+  it("every Fire/Air preset is a legal bolt + four loadout, and the PC balance overlay names only real keys", () => {
+    for (const school of ["fire", "air"] as const) for (const p of schoolPresets[school]) expect(validateLoadout(p), p.name).toEqual([]);
+    expect(validateLoadout({ ...schoolPresets.fire[0]!, slots: ["fire_flick", "fire_flick", "fire_kindle", "fire_ring"] })).not.toEqual([]);
+    expect(overlayProblems(balance.overrides)).toEqual([]);
+    expect(overlayProblems({ "fire_lance.reach": 1 })).not.toEqual([]);
   });
 
   it("every tuning preset passes validateTuning", () => {

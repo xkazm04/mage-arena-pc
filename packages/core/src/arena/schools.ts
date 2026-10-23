@@ -84,9 +84,8 @@ export function newSchoolState(loadout: SlotComposition): SchoolState {
 /** The spell on a slot this tick: slot 0 is the bolt; a slot whose tier the collar has not unlocked is dark (undefined). */
 export function slotSpell(actor: Actor, slot: number, state?: ArenaState): SchoolSpell | undefined {
   const s = actor.schoolState; if (!s) return undefined;
-  const id = slot === 0 ? s.loadout.bolt : s.loadout.slots[slot - 1];
-  const spell = id === undefined ? undefined : schoolSpellById(id);
-  return spell && spell.tier <= (slot === 0 ? 0 : actor.tier) ? balancedSpell(spell, state) : undefined;
+  const spell = s.catalogue ? canonicalSpells[s.school][slot] : schoolSpellById((slot === 0 ? s.loadout.bolt : s.loadout.slots[slot - 1]) ?? '');
+  return spell && spell.tier <= (spell.tier === 0 ? 0 : actor.tier) ? balancedSpell(spell, state) : undefined;
 }
 
 /** What a school module answers for the kernel. Defaults are the Water behaviour (no change). */

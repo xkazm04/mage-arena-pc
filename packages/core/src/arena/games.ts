@@ -6,16 +6,18 @@ import { addMage, combat, createArena, random, resetWave, runtime, seconds, stat
 import { attachMageAI, mageInput } from './mage-ai.ts';
 import { attachRivalPlan } from './rival-plan.ts';
 import { createLedger, observeLedger } from './ledger.ts';
+import { makeSchoolRival, type SchoolRivals } from './school-rivals.ts';
 import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks } from './types.ts';
 import { defaultDifficulty, validateTuning, type CombatTuning } from './tuning.ts';
 export const tiro = arenaTiers.tiers[0];
 /** Anonymous Tiro mage entrants; presentation matches this label, so it lives here once. */
 export const tiroEntrantLabel = 'Tiro entrant · Water proxy';
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
-export interface Games { state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
+export interface Games { schoolRivals?: SchoolRivals; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
 export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
-/** `tuning` is a Lab what-if: omitted, the state carries no tuning. `difficulty` paces the opponents for the whole Games (the player's pace is fixed). */
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty): Games {
+/** `tuning` is a Lab what-if: omitted, the state carries no tuning. `difficulty` paces the opponents for the whole Games (the player's pace is fixed).
+ * `options.schoolRivals` turns the mage duelists into Fire/Air rivals (school-rivals.ts); omitted, the Water proxies. */
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals } = {}): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
   if (validateComposition(composition).length) throw Error('Invalid composition');
   if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
@@ -24,6 +26,7 @@ export function createGames(seed: number, composition: Composition = presets[0]!
   if (snapshot) { player.hp = Math.max(1, player.hp - snapshot.hpPenalty); player.maxStamina = Math.max(1, player.maxStamina - snapshot.staminaPenalty); player.stamina = player.maxStamina; }
   if (referencePlayer) attachMageAI(player, runtime.games.referenceCompetence);
   const games: Games = { state, player, wave: startWave, phase: 'active', wavesCleared: 0, waveStartTick: state.tick, spawnLog: [] };
+  if (options.schoolRivals) games.schoolRivals = options.schoolRivals;
   spawnWave(games); return games;
 }
 function spawnWave(g: Games): void {
@@ -37,16 +40,17 @@ function spawnWave(g: Games): void {
         y: (random(g.state, `wave ${g.wave} spawn y`) * 2 - 1) * runtime.games.spawnJitterM }, wave.kind === 'soldiers'
           ? runtime.games.enemySpawn.x - runtime.games.playerSpawn.x - openingSeparationM - runtime.games.spawnJitterM
           : total > 1 ? runtime.games.multiEnemyApproachReductionM : 0);
-      let actor: Actor;
+      let actor: Actor, kind = 'enemy' in spawn ? spawn.enemy : `Water proxy ${spawn.competence}`;
       if ('enemy' in spawn) actor = addEnemy(g.state, spawn.enemy, pos);
       else {
         actor = addMage(g.state, 1, pos, tiroEntrantLabel);
         const presetName = runtime.games.opponentPresets[g.wave - 2]!;
         actor.water = newWaterState(presets.find(p => p.name === presetName)!); attachMageAI(actor, spawn.competence, g.state.tick);
         if (runtime.games.rivalPlans) attachRivalPlan(actor);
+        if (g.schoolRivals) kind = `${makeSchoolRival(actor, g.schoolRivals, g.wave)} ${spawn.competence}`;
       }
       if (g.state.tuning) actor.poise *= g.state.tuning.opponentPoise;
-      g.spawnLog.push({ wave: g.wave + 1, id: actor.id, kind: 'enemy' in spawn ? spawn.enemy : `Water proxy ${spawn.competence}`, ...pos }); index++;
+      g.spawnLog.push({ wave: g.wave + 1, id: actor.id, kind, ...pos }); index++;
     }
   }
 }

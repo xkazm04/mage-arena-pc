@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { addMage, createArena, stateHash, stepArena } from './kernel.ts';
 import { balancedSpell, canonicalSpells, identityNumber, newSchoolState, overlayProblems, schoolPresets, slotSpell, validateLoadout } from './schools.ts';
 import { idleInput } from './types.ts';
+import { createGames, stepGames } from './games.ts';
 
 describe('W8 school seam (WP0)', () => {
   it('reads both school catalogues as VR pinned them, with CR-002 family and damage rules', () => {
@@ -45,5 +46,20 @@ describe('W8 school seam (WP0)', () => {
     expect(fire.metrics.casts).toBe(0);
     expect('schoolEffects' in state).toBe(false);
     expect(stateHash(state)).toMatch(/^[0-9a-f]{8}$/);
+  });
+  it('turns Tiro duelists into school rivals only when asked, choosing from the whole catalogue', () => {
+    const water = createGames(40000, undefined, 2, true);
+    expect(water.state.actors[1]!.schoolState).toBeUndefined();
+    expect(water.spawnLog[0]!.kind).toBe('Water proxy 1');
+    const ember = createGames(40000, undefined, 2, true, undefined, undefined, undefined, { schoolRivals: 'fire' }), rival = ember.state.actors[1]!;
+    expect(rival).toMatchObject({ school: 'fire', label: 'Ember mage', schoolState: { school: 'fire', catalogue: true } });
+    expect(ember.spawnLog[0]!.kind).toBe('Ember mage 1');
+    rival.tier = 4;
+    expect(slotSpell(rival, 9, ember.state)?.id).toBe('fire_wrath');
+    const named = createGames(40001, undefined, 3, true, undefined, undefined, undefined, { schoolRivals: 'named' });
+    expect(named.state.actors[1]).toMatchObject({ school: 'air', label: 'Lio' });
+    // WP0 brains withhold every cast; the bout still runs to a result.
+    for (let t = 0; t < 600 && ember.phase === 'active'; t++) stepGames(ember);
+    expect(rival.metrics.casts).toBe(0);
   });
 });

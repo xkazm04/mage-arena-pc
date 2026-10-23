@@ -26,6 +26,8 @@ export interface SchoolState {
   cooldowns: Record<string, number>;
   /** Air Form's evasion window end; 0 = none. */
   formUntil: number;
+  /** An AI rival that chooses from the whole catalogue: slot n is row n (VR CR-002 slots 0-9), ignoring the loadout. */
+  catalogue?: true;
 }
 /** A spell-owned effect that lives across ticks (beam, trail, delayed detonation, volley). Owned and stepped by arena/shapes.ts. */
 export interface SchoolEffect { id: number; ownerId: number; activationId: number; spellId: string; kind: 'beam' | 'trail' | 'detonation' | 'volley';
