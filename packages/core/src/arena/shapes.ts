@@ -4,7 +4,8 @@
 // Semantics follow the VR C++ kernel (mage-arena-vr Kernel/Fire.cpp HitAlongSegment, UpdateFireOngoing; ArenaThreats.cpp
 // UpdateTelegraphs for the detonation). Every contact goes through the kernel's resolveHit, so perfects, the ledger tap,
 // stagger and the school onHit hooks behave as for any other hit.
-import { resolveHit } from './kernel.ts';
+import { resolveHit, ticks } from './kernel.ts';
+import { actorUltimate, onHitUltimate, type UltimateForm } from './progression.ts';
 import { constrainToArena } from './geometry.ts';
 import { distance, segmentHit, unit, type Vec } from './math.ts';
 import { activationBlocked, type Actor, type ArenaState, type Hit, type SchoolEffect, type SlotSchool } from './types.ts';
@@ -147,3 +148,40 @@ export function stepSchoolEffects(state: ArenaState): void {
 }
 /** Live beams of an owner (casting is refused while one runs, VR FireChannelBusy). */
 export const ownerBeam = (state: ArenaState, owner: Actor): SchoolEffect | undefined => state.schoolEffects?.find(e => e.kind === 'beam' && e.ownerId === owner.id);
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Rank-5 ultimate forms (spark combat-system-depth WP3; progression.pc.json spellRanks.ultimates). fire.ts and air.ts ask
+// `actorUltimate` once per release and pass the form here; nothing below runs for a form-less cast, so every unranked state
+// (Water, the goldens, the parity suites under canonical balance) steps exactly as before.
+
+/** The release's hit template with the ultimate's blow-borne part: more Heat or Momentum paid on connect, or the on-hit tag
+ * (root, slow) that `ultimateContact` reads when the blow lands. Identity without a form. */
+export function ultimateHit(hit: Hit, spellId: string, form: UltimateForm | undefined): Hit {
+  if (!form) return hit;
+  if (form.effect === 'heat') return { ...hit, heat: (hit.heat ?? 0) + form.heatPerHit };
+  if (form.effect === 'momentum') return { ...hit, momentumOnHit: (hit.momentumOnHit ?? 0) + form.momentumPerHit };
+  return onHitUltimate(form) ? { ...hit, ultimate: spellId } : hit;
+}
+/** A blow carrying an on-hit ultimate reached `target` (the owner role of a school's onHit). It applies when damage got through
+ * and the absorb was not perfect (the Ring of Cinders knockback rule), and only when the owner still plays that spell at rank 5
+ * (a reflected blow keeps the tag but changes owner). Root and slow use the kernel's own movement gates (Water root and slow). */
+export function ultimateContact(state: ArenaState, target: Actor, owner: Actor | undefined, hit: Hit, result: { damage: number; perfect: boolean }): void {
+  if (!hit.ultimate || !owner || owner.id !== hit.ownerId || result.perfect || !(result.damage > 0) || target.tags.includes('DEFEATED')) return;
+  const form = actorUltimate(owner, hit.ultimate, state), w = target.water;
+  if (form?.effect === 'root') w.rootUntil = Math.max(w.rootUntil, state.tick + ticks(form.rootS));
+  else if (form?.effect === 'slow') {
+    // A running slow keeps the stronger multiplier; the longer end wins.
+    w.slowMult = state.tick < w.slowUntil ? Math.min(w.slowMult, form.slowMult) : form.slowMult;
+    w.slowUntil = Math.max(w.slowUntil, state.tick + ticks(form.slowS));
+  }
+}
+/** Embers (a placed circle's ultimate): after the circle lands at `at`, one area contact every tickS for durationS at the same
+ * point and radius, each its own activation, `damage` each (the caller snapshots its live multiplier). The ground pays no
+ * resource and survives its owner, like a committed shadow. */
+export function queueEmbers(state: ArenaState, owner: Actor, hit: Hit, at: Vec, radiusM: number, landsInTicks: number, form: UltimateForm & { effect: 'embers' }, damage: number, spellId: string): void {
+  const every = Math.max(1, ticks(form.tickS)), count = Math.floor(ticks(form.durationS) / every);
+  const plain: Hit = { ...hit };
+  delete plain.heat; delete plain.momentumOnHit; delete plain.ultimate;
+  for (let i = 1; i <= count; i++)
+    queueDetonation(state, owner, { ...plain, activationId: state.nextId++, damage, source: { ...at }, delivery: 'area' }, at, radiusM, landsInTicks + i * every, { survivesOwner: true, spellId });
+}

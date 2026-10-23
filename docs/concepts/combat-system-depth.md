@@ -97,3 +97,55 @@ Camp training for agility (no camp stat earns it yet; saves only accept it), the
 - Tide Ward and the beam rows sit on different collar tiers, so the beam answer never fires in play.
 - The reference player's chase keeps light and heavy builds at about 8.5 m instead of their bands.
 - Defensive stats (focus, nerve) swing a duel by 30-45 points per rank, so builds stay within a rank of the reference's 1/1/1.
+
+### WP3 as built: rank-5 ultimate forms
+
+**Rule.** Spell ranks 1-4 add power only. Rank 5 keeps rank-4 power and adds the row's ultimate form, when the row has one. The owner's words: "4 levels power only, final 5th level an ultimate form with additional effect". Version 1 registers six forms: one signature row per archetype per school. Every other row's rank 5 is power only, and that includes all Water rows.
+
+**Data.** The forms live in `progression.pc.json` under `spellRanks.ultimates.<spellId>` as `{ name, summary, effect, ...params }`. There are six effect kinds, each with exact parameters:
+- `root` (rootS);
+- `slow` (slowMult, slowS);
+- `heat` (heatPerHit);
+- `momentum` (momentumPerHit);
+- `extraProjectiles` (count);
+- `embers` (tickDamage, tickS, durationS).
+
+`progression.ts` refuses a form at load if its effect is unknown, it has a missing or extra key, a number is out of range, or the row's canonical shape cannot carry the effect. A rival build may hold rank 5 only on a row with a form.
+
+**Code.** Each school's release asks `actorUltimate(actor, spellId, state)` once. The answer is undefined below rank 5, for an unranked actor, and under canonical balance. The form then shapes the hit template:
+- heat and momentum add to the payment on connect;
+- root and slow tag the blow with `Hit.ultimate`, and the owner's `onHit` applies them through the kernel's own root and slow gates, only when damage got through without a perfect absorb;
+- the two shape kinds change the fan's blade count or queue embers at a ground circle.
+
+Nothing is added to a state that has no rank-5 cast, so the goldens, the default census and the CR-002/CR-007 parity suites step exactly as before.
+
+| archetype | row | form | effect |
+|---|---|---|---|
+| Fire close | Flick Flame | Searing Hold | root 0.6 s |
+| Fire light | Ember Dart | Kindling Darts | +2 Heat per connect |
+| Fire heavy | Brand Wrath | Brand Drag | slow x0.5 for 0.4 s per tick |
+| Air close | Shear | Third Blade | +1 blade down the aim line |
+| Air light | Gale Dart | Headwind | slow x0.7 for 0.5 s |
+| Air heavy | Cyclone | Eye-wall | root 0.3 s per tick |
+
+**Judged by the builds census.** Each row was run at rank 4 and rank 5 inside its build, 200 seeds each; the rank override was temporary. The ultimate's own effect on the rival's win rate:
+- Third Blade: +36.5 pp. Close fights go from 68% to 97% rival wins.
+- Headwind: +5.5 pp. Tier IV share +6.8 pp.
+- Searing Hold: +3.2 pp at 1000 seeds.
+- Kindling Darts: short wins go from 20 to 26 at the same win rate.
+- Eye-wall: +1 pp.
+- Brand Drag: neutral, because the heavy plan rarely presses Wrath.
+
+The first Fire heavy draft (Pyre embers) made the heavy win before tier IV: short fights went from 4 to 48 and the tier IV share fell. It read less like a heavy build, so it was moved to the tier IV beam. No rank-5 row is committed to rival-builds.json: rank-4 power alone already takes every build under the 40% reference floor except fire_heavy.
+
+**Open.** Third Blade is overwhelming against a rank-4 reference. Brand Drag needs a heavy plan that presses Wrath before it can matter.
+
+### WP4 as built: Lab build pickers
+
+Both Lab sides now pick a whole build: school (Water, Fire, Air), an archetype preset, vigor, focus, nerve and agility (ranks 1-5), a spell rank per row (1-5), and for Fire and Air the bolt plus four rows from the school's spellbook. Water keeps its three-line composition (the compose screen for the player, the preset for the rival) and ranks each line across its four collar tiers. The Lab's forecast duel runs on these picks, both on the Builds page (live on the draft) and in the Tuning panel.
+
+**Model.** `LabConfig` gains optional `playerBuild` and `opponentBuild` (`LabBuild`: `ranks`, `spellRanks`, `loadout`, `plan`), checked by `labBuildProblems` in `arena/lab.ts`. The check covers ranks on the shared mapping, known spell-rank keys, the loadout through `validateLoadout` on the side's own school, and a plan that names a rival build whose bolt + 4 the loadout is. `createLab` sizes HP, mana and stamina from the ranks with the kernel's own formula, turns a Fire or Air loadout into a real school actor, and carries the spell ranks. With no build, nothing changes: the default Lab, the goldens and the census stay identical. An archetype preset loads a `rival-builds.json` build as a starting point. Its plan keeps running while the loadout is still that build's own; stats and ranks are free to edit.
+
+**Pick memory.** The last pick per side is saved on every bout start (`localStorage` `mage-arena.lab-pick.v1.<side>`) and seeds the first setup of the next Lab session. A missing, unreadable or invalid record is ignored, and the Lab works without storage.
+
+**Not in WP4.** The live HUD still labels a Fire or Air player's slots with Water names (the bout itself plays the school rows). Per-row Fire/Air tuning in the Lab, and Water ranks per tier in the picker, are also not covered.

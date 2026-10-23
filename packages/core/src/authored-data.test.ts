@@ -59,7 +59,9 @@ describe("authored data meets the validators that guard runtime input", () => {
     expect(plant({ ranks: { vigor: 3, focus: 2, nerve: 3 } })).toEqual(["rival-builds.json fire_close: ranks.agility undefined is not an integer 1..5"]);
     expect(plant({ ranks: { ...base.ranks, vigor: 6 } })).toEqual(["rival-builds.json fire_close: ranks.vigor 6 is not an integer 1..5"]);
     expect(plant({ spellRanks: { fire_pyre: 2 } })).toEqual(["rival-builds.json fire_close: spellRanks fire_pyre is not in the build's loadout"]);
-    expect(plant({ spellRanks: { fire_flick: 5 } })).toEqual(["rival-builds.json fire_close: spellRanks fire_flick is rank 5 (ultimates are not authored yet)"]);
+    // Rank 5 only on a row with an ultimate form (WP3): Flick Flame has one, Ring of Cinders does not.
+    expect(plant({ spellRanks: { fire_flick: 5 } })).toEqual([]);
+    expect(plant({ spellRanks: { fire_ring: 5 } })).toEqual(["rival-builds.json fire_close: spellRanks fire_ring is rank 5 but fire_ring has no ultimate form"]);
     expect(plant({ spellRanks: { fire_flick: 0 } })).toEqual(["rival-builds.json fire_close: Spell rank fire_flick=0 is not an integer 1..5."]);
     expect(plant({ loadout: { bolt: "fire_bolt", slots: ["fire_flick", "fire_flick", "fire_ring", "fire_lance"] } })).toEqual(["rival-builds.json fire_close: Choose four distinct spells."]);
     expect(plant({ loadout: { bolt: "fire_bolt", slots: ["air_shear", "fire_flick", "fire_ring", "fire_lance"] } })).toEqual(["rival-builds.json fire_close: air_shear is not a fire slot spell."]);
@@ -85,9 +87,25 @@ describe("authored data meets the validators that guard runtime input", () => {
     expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, power: [1.1, 1.2, 1.3, 1.4] } }))).toEqual(["spellRanks.power must be 4 non-falling multipliers starting at 1"]);
     expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, power: [1, 1.2, 1.1, 1.3] } }))).toEqual(["spellRanks.power must be 4 non-falling multipliers starting at 1"]);
     expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, maxRank: 6 } }))).toContain("spellRanks.maxRank 6 must be 5 (ranks 1-4 power, rank 5 the ultimate form)");
-    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, ultimates: { fire_lancer: { summary: "x" } } } }))).toEqual(["spellRanks.ultimates: fire_lancer is not a Fire/Air spell id"]);
-    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, ultimates: { fire_lance: { summary: "x", damage: 9 } } } }))).toEqual(["spellRanks.ultimates.fire_lance: unknown key damage"]);
-    expect(plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, ultimates: { fire_lance: { summary: "x" } } } }))).toEqual([]);
+    // Ultimates (WP3): six forms load; a planted-bad form is refused by id, effect, keys, range and the row's shape.
+    expect(Object.keys(progressionData.spellRanks.ultimates).sort()).toEqual(["air_bolt", "air_cyclone", "air_shear", "fire_bolt", "fire_flick", "fire_wrath"]);
+    const ult = (id: string, form: unknown) => plant((d) => ({ ...d, spellRanks: { ...d.spellRanks, ultimates: { ...d.spellRanks.ultimates, [id]: form } } }));
+    const root = { name: "Hold", summary: "x", effect: "root", rootS: 0.5 };
+    expect(ult("fire_lance", root)).toEqual([]);
+    expect(ult("fire_lancer", root)).toEqual(["spellRanks.ultimates: fire_lancer is not a Fire/Air spell id"]);
+    expect(ult("fire_lance", { ...root, damage: 9 })).toEqual(["spellRanks.ultimates.fire_lance: unknown key damage"]);
+    expect(ult("fire_lance", { name: "Hold", summary: "x", effect: "root" })).toEqual(["spellRanks.ultimates.fire_lance: missing rootS"]);
+    expect(ult("fire_lance", { ...root, effect: "teleport" })).toEqual(["spellRanks.ultimates.fire_lance: effect teleport is not one of root, slow, heat, momentum, extraProjectiles, embers"]);
+    expect(ult("fire_lance", { ...root, rootS: 0 })).toEqual(["spellRanks.ultimates.fire_lance.rootS 0 must be in (0, 2]"]);
+    expect(ult("fire_lance", { ...root, summary: "" })).toEqual(["spellRanks.ultimates.fire_lance: name and summary must be text"]);
+    expect(ult("fire_kindle", root)).toEqual(["spellRanks.ultimates.fire_kindle: root needs a damaging row"]);
+    expect(ult("air_bolt", { name: "S", summary: "x", effect: "slow", slowMult: 1, slowS: 0.5 })).toEqual(["spellRanks.ultimates.air_bolt.slowMult 1 must be in (0, 1)"]);
+    expect(ult("air_bolt", { name: "H", summary: "x", effect: "heat", heatPerHit: 2 })).toEqual(["spellRanks.ultimates.air_bolt: heat needs a damaging Fire row"]);
+    expect(ult("fire_bolt", { name: "M", summary: "x", effect: "momentum", momentumPerHit: 2 })).toEqual(["spellRanks.ultimates.fire_bolt: momentum needs a damaging Air row"]);
+    expect(ult("air_squall", { name: "B", summary: "x", effect: "extraProjectiles", count: 1 })).toEqual(["spellRanks.ultimates.air_squall: extraProjectiles needs a fan row"]);
+    expect(ult("air_shear", { name: "B", summary: "x", effect: "extraProjectiles", count: 1.5 })).toEqual(["spellRanks.ultimates.air_shear.count 1.5 must be an integer 1..4"]);
+    expect(ult("fire_lance", { name: "E", summary: "x", effect: "embers", tickDamage: 6, tickS: 0.5, durationS: 2 })).toEqual(["spellRanks.ultimates.fire_lance: embers needs a placed ground circle row"]);
+    expect(ult("fire_pyre", { name: "E", summary: "x", effect: "embers", tickDamage: 6, tickS: 3, durationS: 2 })).toEqual(["spellRanks.ultimates.fire_pyre: tickS must not exceed durationS"]);
     expect(plant((d) => ({ ...d, enemyLevels: { hpMult: [1.1, 1.2] } }))).toEqual(["enemyLevels.hpMult must start at 1 and never fall"]);
     expect(plant((d) => ({ ...d, enemyLevels: { hpMult: [1, 1.2, 1.1] } }))).toEqual(["enemyLevels.hpMult must start at 1 and never fall"]);
   });

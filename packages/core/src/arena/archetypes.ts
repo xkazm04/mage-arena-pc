@@ -14,7 +14,7 @@ import buildData from './data/rival-builds.json' with { type: 'json' };
 import { balancedSpell, identityNumber, schoolSpellById, validateLoadout, type SchoolSpell } from './schools.ts';
 import { fireShape, heatValue } from './fire.ts';
 import { airRow, momentumOf } from './air.ts';
-import { spellRanksProblems } from './progression.ts';
+import { maxSpellRank, spellRanksProblems, ultimateFor } from './progression.ts';
 import { paced } from './tuning.ts';
 import { arenaContains } from './geometry.ts';
 import { rotate, sub, unit, type Vec } from './math.ts';
@@ -71,8 +71,8 @@ export function rivalBuildProblems(candidate: unknown): string[] {
       out.push(...spellRanksProblems(spellRanks).map(p => `${at}: ${p}`));
       for (const [key, rank] of Object.entries(spellRanks)) {
         if (own.length && !own.includes(key)) out.push(`${at}: spellRanks ${key} is not in the build's loadout`);
-        // Rank 5 is an ultimate form (WP3); a build waits for it.
-        if (rank === 5) out.push(`${at}: spellRanks ${key} is rank 5 (ultimates are not authored yet)`);
+        // Rank 5 is an ultimate form (WP3): a build may play it only on a row that has one (every other row stops at rank 4).
+        if (rank === maxSpellRank && !ultimateFor(key, rank)) out.push(`${at}: spellRanks ${key} is rank 5 but ${key} has no ultimate form`);
       }
     }
   }

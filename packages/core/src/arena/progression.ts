@@ -9,8 +9,28 @@ import { paced } from './tuning.ts';
 import type { Spell } from './catalog.ts';
 import type { Actor, ArenaState, SpellRanks } from './types.ts';
 
-/** A rank-5 ultimate form; WP3 authors the fields. The registry is keyed by Fire/Air spell id. */
-export interface UltimateForm { summary: string }
+/** A rank-5 ultimate form (WP3): the row's rank 4 power plus one extra effect, keyed by Fire/Air spell id. Effect kinds:
+ * - `root` (rootS): a target the blow reaches (damage through, not a perfect absorb) cannot walk or roll for rootS;
+ * - `slow` (slowMult, slowS): the same target moves at slowMult of its speed for slowS;
+ * - `heat` (heatPerHit): the Fire caster gains heatPerHit more Heat each time the blow connects;
+ * - `momentum` (momentumPerHit): the Air caster gains momentumPerHit more Momentum each time the blow connects;
+ * - `extraProjectiles` (count): a fan row (Shear) throws count more projectiles, the fan spread kept;
+ * - `embers` (tickDamage, tickS, durationS): a placed circle (Pyre, Downdraft) keeps burning at its point after it lands,
+ *   one area contact per tickS for durationS, each its own activation. */
+export type UltimateEffect =
+  | { effect: 'root'; rootS: number }
+  | { effect: 'slow'; slowMult: number; slowS: number }
+  | { effect: 'heat'; heatPerHit: number }
+  | { effect: 'momentum'; momentumPerHit: number }
+  | { effect: 'extraProjectiles'; count: number }
+  | { effect: 'embers'; tickDamage: number; tickS: number; durationS: number };
+export type UltimateForm = { name: string; summary: string } & UltimateEffect;
+/** Each effect's parameter keys (beside name, summary, effect). */
+export const ultimateParams: Record<UltimateEffect['effect'], string[]> = {
+  root: ['rootS'], slow: ['slowMult', 'slowS'], heat: ['heatPerHit'], momentum: ['momentumPerHit'], extraProjectiles: ['count'], embers: ['tickDamage', 'tickS', 'durationS'],
+};
+/** On-hit kinds ride the blow (Hit.ultimate) and apply when it reaches its target. */
+export const onHitUltimate = (form: UltimateForm | undefined): boolean => form?.effect === 'root' || form?.effect === 'slow';
 export interface Progression {
   version: string; _about: string;
   agility: { pointsForRank: number[]; castMultPerRank: number; perfectWindowAddSPerRank: number; recoveryMultPerRank: number; drainMultPerRank: number };
@@ -21,6 +41,10 @@ export interface Progression {
 /** Every spell-rank key: a Fire/Air spell id, or a Water line row `<line>:<tier>` (the bolt is `bolt:0`). */
 export const waterRankKey = (spell: Pick<Spell, 'line' | 'tier'>): string => `${spell.line}:${spell.tier}`;
 const slotSpellIds: readonly string[] = [...fireRows, ...airRows].map(r => r.id);
+const slotRow = (id: string): { school: 'fire' | 'air'; shape: string; damage: string } | undefined => {
+  const fire = fireRows.find(r => r.id === id); if (fire) return { school: 'fire', shape: fire.shape, damage: fire.damage };
+  const air = airRows.find(r => r.id === id); return air ? { school: 'air', shape: air.shape, damage: air.damage } : undefined;
+};
 export const spellRankKeys: readonly string[] = [...slotSpellIds, ...new Set(waterRows.map(r => `${r.line}:${r.tier}`))];
 
 const finite = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
@@ -29,6 +53,33 @@ const exactKeys = (where: string, value: unknown, keys: string[]): string[] => {
   const have = Object.keys(value);
   return [...have.filter(k => !keys.includes(k)).map(k => `${where}: unknown key ${k}`), ...keys.filter(k => !have.includes(k)).map(k => `${where}: missing ${k}`)];
 };
+/** Problems with one ultimate form: a known effect, exactly its parameters, numbers in range, and an effect the row's shape can carry
+ * (read from the canonical row: on-hit effects need a damaging row, heat a Fire row, momentum an Air row, extra projectiles a fan row,
+ * embers a placed ground circle). */
+function ultimateProblems(id: string, form: unknown): string[] {
+  const at = `spellRanks.ultimates.${id}`, row = slotRow(id);
+  if (!row) return [`spellRanks.ultimates: ${id} is not a Fire/Air spell id`];
+  if (!form || typeof form !== 'object' || Array.isArray(form)) return [`${at} is not an object`];
+  const f = form as Record<string, unknown>, kind = f.effect as UltimateEffect['effect'];
+  if (typeof kind !== 'string' || !Object.hasOwn(ultimateParams, kind)) return [`${at}: effect ${String(f.effect)} is not one of ${Object.keys(ultimateParams).join(', ')}`];
+  const keys = exactKeys(at, form, ['name', 'summary', 'effect', ...ultimateParams[kind]]);
+  if (keys.length) return keys;
+  const out: string[] = [];
+  if (typeof f.name !== 'string' || !f.name.trim() || typeof f.summary !== 'string' || !f.summary.trim()) out.push(`${at}: name and summary must be text`);
+  const positive = (key: string, max: number): void => { const v = f[key]; if (!finite(v) || v <= 0 || v > max) out.push(`${at}.${key} ${String(v)} must be in (0, ${max}]`); };
+  const damaging = /^\d/.test(row.damage) && parseFloat(row.damage) > 0;
+  switch (kind) {
+    case 'root': positive('rootS', 2); if (!damaging) out.push(`${at}: root needs a damaging row`); break;
+    case 'slow': positive('slowS', 3); if (!finite(f.slowMult) || f.slowMult <= 0 || f.slowMult >= 1) out.push(`${at}.slowMult ${String(f.slowMult)} must be in (0, 1)`); if (!damaging) out.push(`${at}: slow needs a damaging row`); break;
+    case 'heat': positive('heatPerHit', 100); if (row.school !== 'fire' || !damaging) out.push(`${at}: heat needs a damaging Fire row`); break;
+    case 'momentum': positive('momentumPerHit', 100); if (row.school !== 'air' || !damaging) out.push(`${at}: momentum needs a damaging Air row`); break;
+    case 'extraProjectiles': if (!Number.isInteger(f.count) || (f.count as number) < 1 || (f.count as number) > 4) out.push(`${at}.count ${String(f.count)} must be an integer 1..4`); if (!/projectiles .* at \+-/.test(row.shape)) out.push(`${at}: extraProjectiles needs a fan row`); break;
+    case 'embers': positive('tickDamage', 100); positive('tickS', 5); positive('durationS', 10);
+      if (finite(f.tickS) && finite(f.durationS) && f.tickS > f.durationS) out.push(`${at}: tickS must not exceed durationS`);
+      if (!row.shape.startsWith('ground circle')) out.push(`${at}: embers needs a placed ground circle row`); break;
+  }
+  return out;
+}
 /** Problems with a progression file (empty = valid). Exported for the planted-bad controls in authored-data.test.ts. */
 export function progressionProblems(candidate: unknown): string[] {
   const top = exactKeys('progression.pc.json', candidate, ['version', '_about', 'agility', 'spellRanks', 'enemyLevels']);
@@ -53,10 +104,7 @@ export function progressionProblems(candidate: unknown): string[] {
     if (!Array.isArray(sr.power) || sr.power.length !== sr.maxRank - 1 || sr.power[0] !== 1 || sr.power.some((p, i) => !finite(p) || (i > 0 && p < sr.power[i - 1]!)))
       out.push(`spellRanks.power must be ${sr.maxRank - 1} non-falling multipliers starting at 1`);
     if (!sr.ultimates || typeof sr.ultimates !== 'object' || Array.isArray(sr.ultimates)) out.push('spellRanks.ultimates is not an object');
-    else for (const [id, form] of Object.entries(sr.ultimates)) {
-      if (!slotSpellIds.includes(id)) out.push(`spellRanks.ultimates: ${id} is not a Fire/Air spell id`);
-      else out.push(...exactKeys(`spellRanks.ultimates.${id}`, form, ['summary']));
-    }
+    else for (const [id, form] of Object.entries(sr.ultimates)) out.push(...ultimateProblems(id, form));
   }
   // Enemy levels: one multiplier per campaign week, level 1 = authored HP, never falling.
   const el = c.enemyLevels, elKeys = exactKeys('enemyLevels', el, ['hpMult']);
@@ -123,10 +171,13 @@ export function rankPower(rank: number): number {
   const power = progression.spellRanks.power;
   return power[Math.min(Math.max(1, rank), power.length) - 1]!;
 }
-/** The rank-5 ultimate form of a Fire/Air row, when one is registered (WP3 fills the registry; empty in WP1). */
+/** The rank-5 ultimate form of a Fire/Air row, when one is registered (six in WP3: one signature row per archetype per school). */
 export function ultimateFor(spellId: string, rank: number): UltimateForm | undefined {
-  return rank >= maxSpellRank ? progression.spellRanks.ultimates[spellId] : undefined;
+  return rank >= maxSpellRank && Object.hasOwn(progression.spellRanks.ultimates, spellId) ? progression.spellRanks.ultimates[spellId] : undefined;
 }
+/** The ultimate this actor's cast of `spellId` carries in this state: rank 5 and registered; never under canonical balance
+ * (spellRank reads 1 there) and never for an unranked actor. The one question every rank-5 hook asks. */
+export const actorUltimate = (a: Actor, spellId: string, state?: ArenaState): UltimateForm | undefined => ultimateFor(spellId, spellRank(a, spellId, state));
 /** Water's ranked row: damage and effect size (heals, the Font's mana, Return Tide's stored cap) times the rank's power.
  * Ratios (slow, ward, sheen), displacement and durations keep the row's numbers. Identity at rank 1. */
 const scaledWaterEffects = new Set(['heal', 'hot', 'font', 'return']);

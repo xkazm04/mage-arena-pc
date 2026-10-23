@@ -152,7 +152,7 @@ describe('agility never shortens a defender-facing warning below its reaction-ba
   });
 });
 
-describe('spell ranks: ranks 1-4 power only, rank 5 = rank 4 power plus an ultimate form (none registered in WP1)', () => {
+describe('spell ranks: ranks 1-4 power only, rank 5 = rank 4 power plus an ultimate form', () => {
   it('rankedSpell multiplies damage by the rank power over the balanced row; cost, cast and cooldown unchanged', () => {
     const state = createArena(1);
     for (const id of ['fire_lance', 'fire_bolt', 'air_shear', 'air_tempest']) for (const r of [1, 2, 3, 4]) {
@@ -175,10 +175,14 @@ describe('spell ranks: ranks 1-4 power only, rank 5 = rank 4 power plus an ultim
     expect(dart(3) / dart(undefined)).toBeCloseTo(rankPower(3), 12);
     expect(dart(1)).toBe(dart(undefined));
   });
-  it('rank 5 keeps rank 4 power and no ultimate is registered yet', () => {
+  it('rank 5 keeps rank 4 power; an ultimate answers only at rank 5 and only for a registered row (WP3: six)', () => {
     expect(rankPower(5)).toBe(rankPower(4));
-    for (const row of [...canonicalSpells.fire, ...canonicalSpells.air]) for (const r of [1, 2, 3, 4, 5]) expect(ultimateFor(row.id, r)).toBeUndefined();
-    expect(progression.spellRanks.ultimates).toEqual({});
+    const registered = Object.keys(progression.spellRanks.ultimates);
+    expect(registered).toHaveLength(6);
+    for (const row of [...canonicalSpells.fire, ...canonicalSpells.air]) {
+      for (const r of [1, 2, 3, 4]) expect(ultimateFor(row.id, r)).toBeUndefined();
+      expect(ultimateFor(row.id, 5) !== undefined).toBe(registered.includes(row.id));
+    }
   });
   it('spell-rank maps refuse unknown keys and ranks off 1..5; an empty map leaves the actor key absent', () => {
     expect(spellRanksProblems({ fire_lance: 5, 'tide_orb:2': 3, 'bolt:0': 1 })).toEqual([]);

@@ -7,9 +7,9 @@
 import { fireRows, schoolIdentity } from './data.generated.ts';
 import { DT, emit, spawnProjectile, ticks } from './kernel.ts';
 import { balancedSpell, identityNumber, rankedSpell, schoolSpellById, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
-import { cancelOwnedBeams, contact, dash, ownerBeam, queueDetonation, resolveLine, shapeHooks, startBeam } from './shapes.ts';
+import { cancelOwnedBeams, contact, dash, ownerBeam, queueDetonation, queueEmbers, resolveLine, shapeHooks, startBeam, ultimateContact, ultimateHit } from './shapes.ts';
 import { paceOf, paced, pacedWarning, warningFloor } from './tuning.ts';
-import { agileCastS, agileWarningS } from './progression.ts';
+import { actorUltimate, agileCastS, agileWarningS } from './progression.ts';
 import { constrainToArena } from './geometry.ts';
 import { clamp, distance, inArc, sub, unit, type Vec } from './math.ts';
 import type { Actor, ArenaState, Family, Hit, SchoolState } from './types.ts';
@@ -181,12 +181,14 @@ export const fireRules: SchoolRules = {
     const row = p.spellId ? schoolSpellById(p.spellId) : undefined, shape = row && fireShape(row.id);
     if (!row || !shape) return;
     const spell = rankedSpell(row, a, state);
+    // The rank-5 hook (progression.ts): the one place a Fire release asks for its ultimate form; absent below rank 5.
+    const ultimate = actorUltimate(a, row.id, state);
     emit(state, 'release', a, spell.tier);
     Object.assign(state.events.at(-1)!, { activationId: p.activationId, spellId: spell.id, at: { ...(placed(shape) ? p.aim : a.pos) } });
     const baseDamage = spell.damage * (p.damageMult ?? 1), damage = baseDamage * heatDamageMult(state, a), heat = heatPaid(shape);
     const direction = unit(sub(p.aim, a.pos), a.facing);
-    const hit: Hit = { ownerId: a.id, activationId: p.activationId, damage, family: hitFamily(spell), tier: spell.tier, source: { ...a.pos },
-      ...(shape.bolt ? { bolt: true } : {}), ...(heat > 0 ? { heat } : {}), ...(shape.pierceShields ? { pierceShields: true } : {}) };
+    const hit: Hit = ultimateHit({ ownerId: a.id, activationId: p.activationId, damage, family: hitFamily(spell), tier: spell.tier, source: { ...a.pos },
+      ...(shape.bolt ? { bolt: true } : {}), ...(heat > 0 ? { heat } : {}), ...(shape.pierceShields ? { pierceShields: true } : {}) }, spell.id, ultimate);
     switch (shape.kind) {
       case 'projectile': spawnProjectile(state, hit, a.pos, direction, shape.speedMps * paceOf(a), spell.rangeM); break;
       case 'cone': case 'ring': {
@@ -206,6 +208,8 @@ export const fireRules: SchoolRules = {
       case 'zone':
         // Pyre: its windup was the fill telegraph; one detonation now, nothing left behind (VR resolves it at release).
         for (const target of state.actors) if (hostile(a, target) && distance(p.aim, target.pos) <= shape.radiusM + target.radius) contact(state, target, { ...hit, source: { ...p.aim }, delivery: 'area' });
+        // Rank 5 (Ember Field): the circle keeps burning, each ember at the Heat this release snapshotted.
+        if (ultimate?.effect === 'embers') queueEmbers(state, a, hit, p.aim, shape.radiusM, 0, ultimate, ultimate.tickDamage * heatDamageMult(state, a), spell.id);
         break;
       case 'meteor':
         // Sunfall: the shadow is a committed area that survives its owner and any later interrupt.
@@ -239,7 +243,7 @@ export const fireRules: SchoolRules = {
   evades: () => false,
   onHit(state, target, owner, hit, result, role) {
     // The caster receives the spell's own heat when the blow connects, a perfect absorb included.
-    if (role === 'owner') { if (owner && hit.heat) gainHeat(state, owner, hit.heat); return; }
+    if (role === 'owner') { if (owner && hit.heat) gainHeat(state, owner, hit.heat); ultimateContact(state, target, owner, hit, result); return; }
     // perHitTakenUnabsorbed: incoming above 0 and an absorb reduction of 0 (a chip, a perfect or a negated blow pays nothing).
     if (fireState(target) && result.reduction <= 0 && result.damage > 0) gainHeat(state, target, num('gain.perHitTakenUnabsorbed', state));
   },

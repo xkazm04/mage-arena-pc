@@ -7,9 +7,9 @@ import { combat, DT, emit, interrupt, random, spawnProjectile, ticks } from './k
 import { airRows, schoolIdentity } from './data.generated.ts';
 import { pacedWarning, paceOf, paced, warningFloor } from './tuning.ts';
 import { clamp, distance, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
-import { cancelOwnedBeams, dash, queueDetonation, resolveLine, startBeam } from './shapes.ts';
+import { cancelOwnedBeams, dash, queueDetonation, queueEmbers, resolveLine, startBeam, ultimateContact, ultimateHit } from './shapes.ts';
 import { identityNumber, schoolSpellById, balancedSpell, rankedSpell, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
-import { agileCastS, agileWarningS } from './progression.ts';
+import { actorUltimate, agileCastS, agileWarningS, type UltimateForm } from './progression.ts';
 import { activationBlocked, type Actor, type ArenaState, type Family, type Hit, type InputFrame, type Projectile, type SchoolState } from './types.ts';
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -239,9 +239,10 @@ export function airCastLegal(state: ArenaState, a: Actor, spell: SchoolSpell, re
   return !(row.needMomentum > 0) || s.value >= row.needMomentum;
 }
 const hitFamily = (spell: SchoolSpell): Family => spell.family === 'self' ? 'magic' : spell.family;
-function makeHit(a: Actor, spell: SchoolSpell, row: AirRow, activationId: number, damage: number): AirHit {
+/** Every Air blow's template; `ultimate` is the release's rank-5 form (absent below rank 5), so a volley's later orbs carry it too. */
+function makeHit(a: Actor, spell: SchoolSpell, row: AirRow, activationId: number, damage: number, ultimate?: UltimateForm): AirHit {
   const paid = row.momentum.mode === 'hit' || row.momentum.mode === 'target' || row.momentum.mode === 'tick' ? row.momentum.amount : 0;
-  return { ownerId: a.id, activationId, damage, family: hitFamily(spell), tier: spell.tier, source: { ...a.pos }, ...(row.bolt ? { bolt: true } : {}), ...(paid > 0 ? { momentumOnHit: paid } : {}) };
+  return ultimateHit({ ownerId: a.id, activationId, damage, family: hitFamily(spell), tier: spell.tier, source: { ...a.pos }, ...(row.bolt ? { bolt: true } : {}), ...(paid > 0 ? { momentumOnHit: paid } : {}) }, spell.id, ultimate);
 }
 function spawnAir(state: ArenaState, a: Actor, row: AirRow, hit: AirHit, direction: Vec, rangeM: number, pierceLeft: number): AirProjectile {
   const p = spawnProjectile(state, hit, a.pos, direction, row.speedMps * paceOf(a), rangeM) as AirProjectile;
@@ -300,32 +301,36 @@ function release(state: ArenaState, a: Actor): void {
   const base = pending.spellId ? schoolSpellById(pending.spellId) : undefined, row = base && airRow(base.id);
   if (!base || !row) return;
   const spell = rankedSpell(base, a, state);
+  // The rank-5 hook (progression.ts): the one place an Air release asks for its ultimate form; absent below rank 5.
+  const ultimate = actorUltimate(a, base.id, state);
   emit(state, 'release', a, spell.tier);
   Object.assign(state.events.at(-1)!, { activationId: pending.activationId, spellId: spell.id, at: { ...(row.kind === 'zone' ? pending.aim : a.pos) } });
   const damage = spell.damage * (pending.damageMult ?? 1), rangeMult = airSpellRangeMult(state, a), range = spell.rangeM * rangeMult;
   const direction = unit(sub(pending.aim, a.pos), a.facing), pierce = airSpellsPierce(state, a);
   switch (row.kind) {
     case 'projectile':
-      spawnAir(state, a, row, makeHit(a, spell, row, pending.activationId, damage), direction, range, pierce);
+      spawnAir(state, a, row, makeHit(a, spell, row, pending.activationId, damage, ultimate), direction, range, pierce);
       break;
     case 'twin': {
       // The Twin Tides fan: Count bolts spread evenly over the full spread, one activation (Shear diverges; CR-007).
-      const hit = makeHit(a, spell, row, pending.activationId, damage);
-      for (let i = 0; i < row.count; i++) spawnAir(state, a, row, hit, rotate(direction, (-row.spreadDeg / 2 + i * row.spreadDeg / (row.count - 1)) * Math.PI / 180), range, pierce);
+      const hit = makeHit(a, spell, row, pending.activationId, damage, ultimate);
+      // Rank 5 (Third Blade): more blades over the same spread, so one flies down the aim line.
+      const count = row.count + (ultimate?.effect === 'extraProjectiles' ? ultimate.count : 0);
+      for (let i = 0; i < count; i++) spawnAir(state, a, row, hit, rotate(direction, (-row.spreadDeg / 2 + i * row.spreadDeg / (count - 1)) * Math.PI / 180), range, pierce);
       break;
     }
     case 'veer': {
       // The aim point is the arc's end, clamped to the range (the 14 m limits the chord); past it the bolt flies on straight.
       const chord = Math.min(distance(a.pos, pending.aim), range), to = { x: a.pos.x + direction.x * chord, y: a.pos.y + direction.y * chord };
       const arc = veerArc(a.pos, to, row.entryDeg, veerSide(pending.activationId));
-      const p = spawnAir(state, a, row, makeHit(a, spell, row, pending.activationId, damage), arc.launchDir, arc.lengthM + Math.max(0, range - chord), pierce);
+      const p = spawnAir(state, a, row, makeHit(a, spell, row, pending.activationId, damage, ultimate), arc.launchDir, arc.lengthM + Math.max(0, range - chord), pierce);
       if (!arc.straight) p.arc = { centre: arc.centre, radiusM: arc.radiusM, angle: arc.startAngle, sign: arc.turnSign, leftM: arc.lengthM };
       break;
     }
     case 'squall': {
       // The first orb leaves now with the cast's activation; the rest follow, each its own activation, from where the caster
       // stands then, toward the aim fixed at the press. Range and pierce are snapshotted here.
-      spawnAir(state, a, row, makeHit(a, spell, row, pending.activationId, damage), direction, range, pierce);
+      spawnAir(state, a, row, makeHit(a, spell, row, pending.activationId, damage, ultimate), direction, range, pierce);
       const intervalTicks = Math.max(1, ticks(row.intervalS));
       if (row.count > 1) s.volley = { spellId: spell.id, startTick: state.tick, aim: { ...pending.aim }, left: row.count - 1, intervalTicks, nextTick: state.tick + intervalTicks, damage, rangeMult, pierceLeft: pierce };
       break;
@@ -333,17 +338,19 @@ function release(state: ArenaState, a: Actor): void {
     case 'zone':
       // Lands this tick: VR resolves the circle at release, so it is already committed. shapes.ts steps it after the actor
       // loop (before projectiles); survivesOwner keeps a stagger or defeat of the caster later in this tick from cancelling it.
-      queueDetonation(state, a, { ...makeHit(a, spell, row, pending.activationId, damage), source: { ...pending.aim }, delivery: 'area' }, pending.aim, row.radiusM, 0, { spellId: spell.id, survivesOwner: true });
+      queueDetonation(state, a, { ...makeHit(a, spell, row, pending.activationId, damage, ultimate), source: { ...pending.aim }, delivery: 'area' }, pending.aim, row.radiusM, 0, { spellId: spell.id, survivesOwner: true });
+      // Rank 5 embers: the pad keeps blowing at the same point after it lands.
+      if (ultimate?.effect === 'embers') queueEmbers(state, a, makeHit(a, spell, row, pending.activationId, damage), pending.aim, row.radiusM, 0, ultimate, ultimate.tickDamage, spell.id);
       break;
     case 'line':
       // Tempest Lance: one 16 m line from the caster along the aim fixed at the press; every body on it (width: the body).
       // shapes.ts `piercing` means "skips a front shield" (Brand Lance); an unblockable already does, so it is not asked for.
-      resolveLine(state, a, { ...makeHit(a, spell, row, pending.activationId, damage), delivery: 'area' }, { ...a.pos },
+      resolveLine(state, a, { ...makeHit(a, spell, row, pending.activationId, damage, ultimate), delivery: 'area' }, { ...a.pos },
         { x: a.pos.x + direction.x * range, y: a.pos.y + direction.y * range }, 0);
       break;
     case 'beam':
       // Cyclone: the Brand Wrath channel along the live facing, each tick its own activation, EVERY tick perfectable.
-      startBeam(state, a, makeHit(a, spell, row, pending.activationId, damage), range, Math.max(1, ticks(row.tickS)), ticks(row.durationS), { perfectFirstTickOnly: false, spellId: spell.id });
+      startBeam(state, a, makeHit(a, spell, row, pending.activationId, damage, ultimate), range, Math.max(1, ticks(row.tickS)), ticks(row.durationS), { perfectFirstTickOnly: false, spellId: spell.id });
       break;
     case 'dash':
       // Slipstream: Cinder Step's dash without the trail, along the aim, not lengthened at Momentum 80.
@@ -377,7 +384,8 @@ function stepVolley(state: ArenaState, a: Actor): void {
   const base = schoolSpellById(v.spellId), row = airRow(v.spellId);
   if (base && row && state.tick >= v.nextTick && v.left > 0) {
     const spell = balancedSpell(base, state);
-    spawnAir(state, a, row, makeHit(a, spell, row, state.nextId++, v.damage), unit(sub(v.aim, a.pos), a.facing), spell.rangeM * v.rangeMult, v.pierceLeft);
+    // The volley continues its release: its later orbs carry the same rank-5 form (the rank cannot change mid-volley).
+    spawnAir(state, a, row, makeHit(a, spell, row, state.nextId++, v.damage, actorUltimate(a, base.id, state)), unit(sub(v.aim, a.pos), a.facing), spell.rangeM * v.rangeMult, v.pierceLeft);
     v.left--; v.nextTick += v.intervalTicks;
   }
   if (!base || !row || v.left <= 0) delete s.volley;
@@ -395,7 +403,7 @@ function evades(state: ArenaState, target: Actor, hit: Hit): boolean {
 }
 function onHit(state: ArenaState, target: Actor, owner: Actor | undefined, hit: Hit, result: { damage: number; perfect: boolean; reduction: number }, role: 'target' | 'owner'): void {
   // The owner's Momentum: every hit that lands or is warded pays its row's amount (VR AirOnHitResolved).
-  if (role === 'owner') { if (owner && hit.momentumOnHit && owner.id === hit.ownerId) gainMomentum(state, owner, hit.momentumOnHit); return; }
+  if (role === 'owner') { if (owner && hit.momentumOnHit && owner.id === hit.ownerId) gainMomentum(state, owner, hit.momentumOnHit); ultimateContact(state, target, owner, hit, result); return; }
   // A connecting staff strike interrupts an Air cast (combat.json staffStrike.interruptsCasts, which the PC kernel does not
   // read; AIR.md Tempest Lance). interrupt() reaches cancelAirChannel through SchoolRules.interrupted.
   if (isAir(target) && combat.staffStrike.interruptsCasts && hit.delivery === 'melee' && owner && !owner.enemy && result.damage > 0

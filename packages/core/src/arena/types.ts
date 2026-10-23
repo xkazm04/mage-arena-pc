@@ -48,7 +48,9 @@ export interface Hit { ownerId: number; activationId: number; damage: number; fa
   /** W8 school hits only (absent on Water hits): Heat paid to a Fire owner when the blow connects; skips a front shield block (Brand Lance); refuses the fresh-raise perfect (Brand Wrath after its first tick). */
   heat?: number; pierceShields?: boolean; suppressPerfect?: boolean;
   /** Momentum paid to an Air owner when the blow connects (W8; absent on Water hits). */
-  momentumOnHit?: number }
+  momentumOnHit?: number;
+  /** PC rank-5 ultimate whose on-hit effect this blow carries (progression.ts; the spell id). Present only on a rank-5 cast. */
+  ultimate?: string }
 export interface EnemyBrain { id: string; readyTick: number; backoffUntil: number; stunnedUntil: number; attackIndex: number; deathQueued: boolean; recoveryUntil?: number }
 /** A rival plan (mage-ai rival-plan.ts); present only when plans are enabled, so disabled runs serialize exactly as before. */
 export interface RivalPlan { preset: string; phase: 'hold' | 'approach' | 'withdraw'; until: number; rearmTick: number; seenRelease: number; prevRelease: number; flight: number; counterUntil: number; armed: boolean; counterTick: number; wardFrom: number }
