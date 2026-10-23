@@ -2,7 +2,11 @@ import { newWaterState, presets, validateComposition } from "./catalog.ts";
 import { attachMageAI, mageInput } from "./mage-ai.ts";
 import { attachRivalPlan } from "./rival-plan.ts";
 import { createTraining, scheduleTraining, type Training } from "./training.ts";
-import { combat, seconds, stepArena, reviveActor } from "./kernel.ts";
+import { addMage, combat, createArena, seconds, stepArena, reviveActor } from "./kernel.ts";
+import { rankRange } from "./data.generated.ts";
+import { canonicalSpells, newSchoolState, schoolPresets, validateLoadout, type SchoolSpell } from "./schools.ts";
+import { setSpellRanks, spellRanksProblems } from "./progression.ts";
+import { buildLoadoutPrefix, rivalBuilds } from "./archetypes.ts";
 import { createLedger, observeLedger, type ThreatLedger } from "./ledger.ts";
 import { enemyInputs, queueDeathEffects } from "./enemies.ts";
 import { flowMark, flowShift } from "./water.ts";
@@ -15,7 +19,18 @@ import {
   type CombatTuning,
   type School,
 } from "./tuning.ts";
-import type { ArenaState, Composition, Difficulty, InputFrame } from "./types.ts";
+import { slotSchools, type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks, type SlotComposition, type SlotSchool, type SpellRanks } from "./types.ts";
+
+/** One Lab side's build (spark combat-system-depth WP4, "Lab build pickers"): stats incl. agility, spell ranks and, for a Fire or
+ * Air side, the bolt + 4 loadout that makes it a real school actor (absent: the CF1 practice profile over Water rows, as before).
+ * `plan` names the rival build (rival-builds.json) whose loadout this is; that build's archetype plan then runs. Absent = today's side. */
+export interface LabBuild { ranks?: Ranks; spellRanks?: SpellRanks; loadout?: SlotComposition; plan?: string }
+/** The loadout name a Lab pick wears when it plays no plan (never the build prefix, so archetypes.ts leaves it alone). */
+export const labLoadoutName = "lab pick";
+/** The Lab pickers' read of a school's spellbook (schools.ts is not on the arena index): its rows (tier 0 = the bolt, tiers I-IV the
+ * slot rows) and its first authored preset as a Lab loadout. */
+export const labSpellbook = (school: SlotSchool): readonly SchoolSpell[] => canonicalSpells[school];
+export const labDefaultLoadout = (school: SlotSchool): SlotComposition => ({ ...structuredClone(schoolPresets[school][0]!), name: labLoadoutName });
 
 export interface LabConfig {
   opponent: "dummy" | "mage";
@@ -35,6 +50,10 @@ export interface LabConfig {
   rivalPlan?: boolean;
   /** Paces the opponent (dummy, creature or rival) like a bout at this difficulty; absent = the default. */
   difficulty?: Difficulty;
+  /** The player's build (absent = today's practice mage). */
+  playerBuild?: LabBuild;
+  /** The mage opponent's build (absent = today's rival); ignored by dummy and creature targets. */
+  opponentBuild?: LabBuild;
 }
 export const defaultLabConfig: LabConfig = {
   opponent: "dummy",
@@ -104,7 +123,66 @@ export function validateLabConfig(c: LabConfig): LabConfig {
     validateComposition(c.composition).length
   )
     throw Error("Invalid Lab setup.");
+  const problems = [...labBuildProblems(c.playerBuild, c.playerSchool, "Your build"), ...labBuildProblems(c.opponentBuild, c.opponentSchool, "Opponent build")];
+  if (problems.length) throw Error(`Invalid Lab setup. ${problems.join(" ")}`);
   return structuredClone(c);
+}
+const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
+const statKeys = ["vigor", "focus", "nerve", "agility"] as const;
+/** Problems with one side's build (empty = valid; absent = valid). The loadout must be the side's own Fire/Air school and pass
+ * `validateLoadout`; a plan must name a rival build of that school whose bolt + 4 the loadout is, slot for slot. */
+export function labBuildProblems(build: unknown, school: string, at = "Build"): string[] {
+  if (build === undefined) return [];
+  if (!isRecord(build)) return [`${at} is not an object.`];
+  const out = Object.keys(build).filter((k) => !["ranks", "spellRanks", "loadout", "plan"].includes(k)).map((k) => `${at}: unknown key ${k}.`);
+  const { ranks, spellRanks, loadout, plan } = build;
+  if (ranks !== undefined) {
+    if (!isRecord(ranks)) out.push(`${at}: ranks is not an object.`);
+    else {
+      out.push(...Object.keys(ranks).filter((k) => !(statKeys as readonly string[]).includes(k)).map((k) => `${at}: unknown stat ${k}.`));
+      for (const key of statKeys) {
+        const r = ranks[key];
+        if (key === "agility" && r === undefined) continue;
+        if (!Number.isInteger(r) || (r as number) < rankRange.min || (r as number) > rankRange.max) out.push(`${at}: ${key} ${String(r)} is not an integer ${rankRange.min}..${rankRange.max}.`);
+      }
+    }
+  }
+  if (spellRanks !== undefined) out.push(...spellRanksProblems(spellRanks).map((p) => `${at}: ${p}`));
+  let own: SlotComposition | undefined;
+  if (loadout !== undefined) {
+    if (!isRecord(loadout) || typeof loadout.school !== "string" || typeof loadout.name !== "string" || typeof loadout.bolt !== "string" || !Array.isArray(loadout.slots) || loadout.slots.length !== 4 || loadout.slots.some((s) => typeof s !== "string"))
+      out.push(`${at}: a loadout needs a school, a name, a bolt and four slot ids.`);
+    else if (!(slotSchools as readonly string[]).includes(loadout.school) || loadout.school !== school)
+      out.push(`${at}: a ${loadout.school} loadout cannot play on a ${school} side.`);
+    else {
+      own = loadout as unknown as SlotComposition;
+      out.push(...validateLoadout(own).map((p) => `${at}: ${p}`));
+    }
+  }
+  if (plan !== undefined) {
+    const rival = typeof plan === "string" ? rivalBuilds[plan] : undefined;
+    if (!rival) out.push(`${at}: plan ${String(plan)} is not a rival build.`);
+    else if (!own || own.school !== rival.school || own.bolt !== rival.loadout.bolt || own.slots.some((id, i) => id !== rival.loadout.slots[i]))
+      out.push(`${at}: plan ${plan} needs its own bolt + 4 loadout.`);
+  }
+  return out;
+}
+/** Apply a validated build to a Lab actor: the ranks size HP, mana and stamina exactly as `addMage` does; a loadout makes it a
+ * real Fire/Air actor (named for its plan, else `labLoadoutName`); spell ranks ride on the actor. No build, no change. */
+function applyLabBuild(a: Actor, build: LabBuild | undefined) {
+  if (!build) return;
+  if (build.ranks) {
+    const sized = addMage(createArena(), a.team, a.pos, a.label, build.ranks);
+    a.ranks = sized.ranks;
+    a.hp = a.maxHp = sized.maxHp;
+    a.mana = a.maxMana = sized.maxMana;
+    a.stamina = a.maxStamina = sized.maxStamina;
+  }
+  if (build.loadout) {
+    a.school = build.loadout.school;
+    a.schoolState = newSchoolState({ ...build.loadout, name: build.plan ? `${buildLoadoutPrefix}${build.plan}` : labLoadoutName });
+  }
+  setSpellRanks(a, build.spellRanks);
 }
 export function createLab(
   config: LabConfig = defaultLabConfig,
@@ -138,7 +216,9 @@ export function createLab(
     attachMageAI(dummy, c.competence);
     dummy.mageAI!.aggression = c.aggression;
     if (c.rivalPlan) attachRivalPlan(dummy);
+    applyLabBuild(dummy, c.opponentBuild);
   }
+  applyLabBuild(player, c.playerBuild);
   const lab: CombatLab = {
     config: c,
     training,

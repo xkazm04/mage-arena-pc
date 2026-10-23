@@ -7,7 +7,6 @@ import {
   presets,
   rivalPlanPresets,
   replenishLab,
-  schools,
   difficulties,
   defaultDifficulty,
   paceOf,
@@ -17,6 +16,7 @@ import {
   toggleLabDamage,
   tuningFields,
   tuningPresets,
+  validateLabConfig,
   type ArenaState,
   type TuningKey,
   type SpellOverride,
@@ -34,7 +34,31 @@ import {
   type LabSetup,
 } from "./lab-setup.ts";
 import { ForecastClient } from "./forecast-client.ts";
-import { forecastLabel } from "./forecast-job.ts";
+import { forecastLabel, forecastPolicy } from "./forecast-job.ts";
+import {
+  labSides,
+  loadPicks,
+  nextSlotSpell,
+  pickSchools,
+  presetOptions,
+  rankChoices,
+  rankRows,
+  savePicks,
+  sideBuild,
+  sideComposition,
+  sideProblems,
+  sideRanks,
+  sideSchool,
+  statKeys,
+  withPreset,
+  withRivalPreset,
+  withSchool,
+  withSlot,
+  withSpellRank,
+  withStat,
+  type LabSide,
+  type PickSchool,
+} from "./lab-picks.ts";
 
 const title = (s: string) => s[0]!.toUpperCase() + s.slice(1);
 const signed = (n: number | null | undefined, digits: number, unit = "") =>
@@ -73,6 +97,9 @@ export class LabUI {
   private spellSlot = 0;
   private spellTier = 1;
   private forecastTexts?: ForecastTexts;
+  /** The builds page's forecast line (the draft's duel), and whether the stored last picks seeded a setup draft yet. */
+  private buildsForecastText?: BitmapText;
+  private picksSeeded = false;
   /** Census forecast runs in a worker; the panel only reads its summaries and never writes a band. */
   private readonly forecast = new ForecastClient(() => this.showForecast());
   constructor(
@@ -129,6 +156,7 @@ export class LabUI {
     this.statusText = undefined;
     this.text = undefined;
     this.forecastTexts = undefined;
+    this.buildsForecastText = undefined;
   }
   private heading(screen: string, name: string, subtitle: string) {
     this.clear();
@@ -228,12 +256,19 @@ export class LabUI {
     if (chosen.randomSeed)
       chosen.seed = crypto.getRandomValues(new Uint32Array(1))[0]!;
     this.game.resetLab(chosen);
+    // The last pick per side seeds the next Lab's setup (storage failures are ignored inside).
+    savePicks(chosen);
     this.game.hud();
   }
   openSetup() {
     this.stopReplay();
     this.game.pause(true);
     this.draft = structuredClone(this.lab.config);
+    // The first setup of a Lab session defaults each side to its last stored pick; without storage it is the setup as given.
+    if (!this.picksSeeded) {
+      this.picksSeeded = true;
+      this.draft = loadPicks(this.draft);
+    }
     this.drawSetup();
   }
   private cycle<T>(items: readonly T[], value: T): T {
@@ -288,7 +323,7 @@ export class LabUI {
       980,
       228,
       () => {
-        c.playerSchool = this.cycle(schools, c.playerSchool);
+        this.draft = withSchool(c, "player", this.cycle(pickSchools, c.playerSchool as PickSchool));
       },
     );
     choose(
@@ -304,7 +339,7 @@ export class LabUI {
             ["se", "sw", "nw", "ne"] as const,
             c.creatureFacing ?? "se",
           );
-        else c.opponentSchool = this.cycle(schools, c.opponentSchool);
+        else this.draft = withSchool(c, "opponent", this.cycle(pickSchools, c.opponentSchool as PickSchool));
       },
     );
     choose("competence", `Competence: ${c.competence} / 4`, 980, 320, () => {
@@ -406,12 +441,13 @@ export class LabUI {
     );
     u.button(
       "lab-compose",
-      "Choose the four spell slots",
+      c.playerSchool === "water" ? "Choose the four spell slots" : `Choose the ${c.playerSchool} bolt + 4`,
       980,
       720,
       780,
       70,
       () => {
+        if (c.playerSchool !== "water") return this.drawBuilds();
         this.lab.config = structuredClone(c);
         this.compose();
       },
@@ -422,7 +458,7 @@ export class LabUI {
         ? "Roster health and poise. Still targets hold position and facing for hits and defeat; live ones move, attack and drain as in a bout.\nCompetence, aggression and dummy action apply only to other target types. R resets; G revives."
         : rival
           ? "Rival plan: Undertow closes to Lash range after an opening, then backs off; Mirror tide holds range, budgets its ward and counter-casts.\nCompetence changes reactions and decisions, never health or damage. A plan changes tactics only."
-          : "Fire / Earth / Air are distinct practice profiles over shared spell archetypes. Their unique season catalogues are pending.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
+          : "Fire and Air play their own spellbooks (B: builds, stats, spell ranks); Water composes three lines.\nCompetence changes reactions and decisions, never health or damage. Dummy action applies only to the dummy.",
       106,
       817,
       24,
@@ -440,12 +476,150 @@ export class LabUI {
       },
       520,
     );
+    u.button("lab-config-builds", "B  Builds", 920, 940, 400, 64, () => this.drawBuilds());
     u.button("lab-config-start", "Start / reset bout", 1340, 940, 420, 64, () =>
-      this.reset(c),
+      this.start(c),
     );
     u.onBack = () => this.close();
-    u.onKey = this.keys;
+    u.onKey = (e) => {
+      if (e.code === "KeyB" && !e.repeat && !this.numeric && !this.importing) {
+        this.drawBuilds();
+        return true;
+      }
+      return this.keys(e);
+    };
     u.end("lab-config-start");
+  }
+  /** Start a bout on the draft; an unplayable pick stays on screen with its reason instead of throwing. */
+  private start(c: LabSetup) {
+    try {
+      validateLabConfig(c);
+    } catch (e) {
+      this.u.notice(String(e).replace(/^Error: /, ""));
+      return;
+    }
+    this.reset(c);
+  }
+  /** Both sides' builds: school, archetype preset, stats incl. agility, and the bolt + 4 with a rank per row. The forecast duel
+   * (you as the reference AI against this rival) runs on the draft whenever both sides are playable. */
+  private drawBuilds() {
+    const u = this.u;
+    this.heading(
+      "lab-builds",
+      "Builds and spellbook",
+      "Both sides: school, archetype preset, stats (rank 1-5) and the bolt + 4 with spell ranks 1-5. The forecast duel plays these picks.",
+    );
+    const set = (next: LabSetup) => {
+      this.draft = next;
+      this.drawBuilds();
+    };
+    const act = (id: string, label: string, x: number, y: number, w: number, f: () => void) =>
+      u.button(
+        id,
+        label,
+        x,
+        y,
+        w,
+        64,
+        () => {
+          try {
+            f();
+          } catch (e) {
+            u.notice(String(e).replace(/^Error: /, ""));
+          }
+        },
+        { fontSize: 22 },
+      );
+    labSides.forEach((side, column) => this.buildColumn(side, column === 0 ? 106 : 980, act, set));
+    const problems = labSides.flatMap((side) => sideProblems(this.draft, side));
+    this.buildsForecastText = u.text("", 106, 868, 22, colours.text, 1650);
+    if (problems.length) {
+      this.buildsForecastText.text = "Forecast waits for playable picks on both sides.";
+      this.buildsForecastText.tint = colours.muted;
+    } else {
+      this.forecast.want(this.tune, this.draft);
+      this.showForecast();
+    }
+    u.button("lab-builds-back", "Back to setup", 106, 940, 360, 64, () => this.drawSetup());
+    u.button("lab-builds-start", "Start / reset bout", 1340, 940, 420, 64, () => this.start(this.draft));
+    u.onBack = () => this.drawSetup();
+    u.onKey = this.keys;
+    u.end("lab-builds-start");
+  }
+  private buildColumn(
+    side: LabSide,
+    x: number,
+    act: (id: string, label: string, x: number, y: number, w: number, f: () => void) => unknown,
+    set: (next: LabSetup) => void,
+  ) {
+    const u = this.u,
+      c = this.draft,
+      school = sideSchool(c, side),
+      build = sideBuild(c, side),
+      id = (name: string) => `lab-build-${side}-${name}`,
+      liveRival = c.opponent === "mage" && !c.creature,
+      presetNames = presets.map((p) => p.name);
+    u.text(
+      side === "player" ? "You" : liveRival ? "Opponent (the Mage AI rival)" : "Opponent (forecast rival; the live target is not a mage)",
+      x,
+      226,
+      24,
+      colours.gold,
+      780,
+    );
+    act(id("school"), `School: ${title(school)}`, x, 262, 380, () =>
+      set(withSchool(c, side, this.cycle(pickSchools, school as PickSchool))),
+    );
+    // Fire/Air presets are the authored rival builds of the school; a Water side's preset is its composition.
+    if (school === "water") {
+      const comp = sideComposition(c, side);
+      act(id("preset"), `Preset: ${comp.name}`, x + 400, 262, 380, () => {
+        const next = this.cycle(presetNames, comp.name);
+        if (side === "opponent") set(withRivalPreset(c, next));
+        else set({ ...structuredClone(c), composition: structuredClone(presets.find((p) => p.name === next)!) });
+      });
+    } else {
+      const options = presetOptions(c, side);
+      act(id("preset"), `Preset: ${build.plan ?? "custom"}`, x + 400, 262, 380, () => {
+        const at = options.findIndex((b) => b.id === build.plan);
+        set(withPreset(c, side, options[(at + 1) % options.length]!.id));
+      });
+    }
+    const ranks = sideRanks(c, side);
+    statKeys.forEach((key, i) =>
+      act(id(`stat-${key}`), `${title(key).slice(0, 3)} ${ranks[key]}`, x + i * 196, 342, 188, () =>
+        set(withStat(c, side, key, (ranks[key] % rankChoices.length) + 1)),
+      ),
+    );
+    rankRows(c, side).forEach((row) => {
+      const y = 422 + row.slot * 72,
+        label = row.slot === 0 ? `Bolt: ${row.label}` : `${row.slot}. ${row.label}`;
+      act(id(`slot-${row.slot}`), label, x, y, 560, () => {
+        if (row.slot === 0) return u.notice("The bolt slot is fixed: each school's own bolt.");
+        if (school !== "water") return set(withSlot(c, side, row.slot, nextSlotSpell(c, side, row.slot)));
+        if (side === "opponent") return set(withRivalPreset(c, this.cycle(presetNames, sideComposition(c, side).name)));
+        this.lab.config = structuredClone(c);
+        this.compose();
+      });
+      act(id(`rank-${row.slot}`), `Rank ${row.rank}`, x + 580, y, 200, () =>
+        set(withSpellRank(c, side, row.slot, (row.rank % rankChoices.length) + 1)),
+      );
+    });
+    const problems = sideProblems(c, side);
+    u.text(
+      problems.length
+        ? problems.join(" ").slice(0, 220)
+        : school === "water"
+          ? "Water: one rank covers a line's four collar tiers. Lines compose on their own screen (you) or by preset (rival)."
+          : build.plan
+            ? `Plays the ${build.plan} archetype plan (its own bolt + 4).`
+            : "Custom loadout: the school brain plays it (no archetype plan).",
+      x,
+      790,
+      20,
+      problems.length ? colours.danger : colours.muted,
+      780,
+    );
   }
   private row(
     id: string,
@@ -712,6 +886,21 @@ export class LabUI {
     this.showForecast();
   }
   private showForecast() {
+    const b = this.buildsForecastText;
+    if (b && this.u.screen === "lab-builds") {
+      const v = this.forecast.view,
+        duel = v.status === "done" ? v.result?.candidate.duel : undefined;
+      b.text =
+        v.status === "running"
+          ? `Forecast duel: simulating ${v.done} / ${v.total} fights`
+          : v.status === "error"
+            ? `Forecast failed: ${v.error ?? "unknown"}`.slice(0, 120)
+            : duel
+              ? `Forecast duel (you as the competence ${forecastPolicy.duelPlayerCompetence} reference AI vs this rival, ${duel.duels} seeds): win ${Math.round(duel.winRate * 100)}%   median TTK ${duel.ttkMedianS == null ? "--" : duel.ttkMedianS.toFixed(1) + " s"}`
+              : "Forecast duel: change noticed; simulating shortly";
+      b.tint = v.status === "error" ? colours.danger : duel ? colours.text : colours.muted;
+      return;
+    }
     const t = this.forecastTexts;
     if (!t || this.u.screen !== "lab-tuning") return;
     const v = this.forecast.view,

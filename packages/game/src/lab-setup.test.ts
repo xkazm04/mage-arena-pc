@@ -2,6 +2,13 @@ import { describe, expect, it } from "vitest";
 import {
   createLab,
   defaultLabConfig,
+  drain,
+  duelForecast,
+  labDefaultLoadout,
+  labLoadoutName,
+  rivalBuildOf,
+  rivalBuilds,
+  validateLabConfig,
   enemyRoster,
   idleInput,
   labReplay,
@@ -22,6 +29,23 @@ import {
   type LabSession,
   type LabSetup,
 } from "./lab-setup.ts";
+import { forecastPolicy, labConfigOf } from "./forecast-job.ts";
+import {
+  loadPicks,
+  nextSlotSpell,
+  pickStorageKey,
+  presetOptions,
+  rankRows,
+  savePicks,
+  sideBuild,
+  sideProblems,
+  withPreset,
+  withRivalPreset,
+  withSchool,
+  withSlot,
+  withSpellRank,
+  withStat,
+} from "./lab-picks.ts";
 
 describe("stationary creature Lab setup", () => {
   it("leaves the default Lab state byte-identical", () => {
@@ -250,5 +274,140 @@ describe("live creature Lab setup", () => {
       for (let i = 0; i < 120; i++) { stepLab(a, idleInput(a.training.dummy.pos)); stepLab(b, idleInput(b.training.dummy.pos)); }
       expect(stateHash(b.training.state)).toBe(stateHash(a.training.state));
     }
+  });
+});
+
+// Lab build pickers (spark combat-system-depth WP4): both sides pick school, archetype preset, stats incl. agility, spell ranks and
+// the bolt + 4; the Lab and its forecast duel play the pick; the last pick per side persists; a neutral pick is the default Lab.
+describe("Lab build pickers", () => {
+  const memoryStore = () => {
+    const m = new Map<string, string>();
+    return { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), m };
+  };
+  /** Player: Air, custom bolt + 4, agility 4, a rank-3 slot. Opponent: Fire heavy preset, nerve raised (plan kept). */
+  const picked = (): LabSetup => {
+    let c: LabSetup = { ...structuredClone(defaultLabConfig), opponent: "mage" };
+    c = withSchool(c, "player", "air");
+    c = withSlot(c, "player", 1, "air_form");
+    c = withStat(c, "player", "agility", 4);
+    c = withStat(c, "player", "vigor", 3);
+    c = withSpellRank(c, "player", 1, 3);
+    c = withSchool(c, "opponent", "fire");
+    c = withPreset(c, "opponent", "fire_heavy");
+    c = withStat(c, "opponent", "nerve", 2);
+    return c;
+  };
+  it("keeps the default Lab unchanged: no build keys, a neutral pick normalises away, empty storage seeds nothing", () => {
+    expect(defaultLabConfig.playerBuild).toBeUndefined();
+    expect(defaultLabConfig.opponentBuild).toBeUndefined();
+    expect(Object.keys(labConfigOf(defaultLabConfig))).not.toContain("playerBuild");
+    let c: LabSetup = structuredClone(defaultLabConfig);
+    c = withStat(c, "player", "agility", 3);
+    c = withSpellRank(c, "player", 1, 2);
+    c = withStat(c, "player", "agility", 1);
+    c = withSpellRank(c, "player", 1, 1);
+    expect(c).toEqual(defaultLabConfig);
+    expect(loadPicks(defaultLabConfig, memoryStore())).toEqual(defaultLabConfig);
+    expect(loadPicks(defaultLabConfig, undefined)).toEqual(defaultLabConfig);
+    expect(createLabSetup(c)).toEqual(createLab(defaultLabConfig));
+    const a = createLabSetup({ ...c, opponent: "mage" }),
+      b = createLab({ ...defaultLabConfig, opponent: "mage" });
+    for (let i = 0; i < 240; i++) { stepLab(a, idleInput(a.training.dummy.pos)); stepLab(b, idleInput(b.training.dummy.pos)); }
+    expect(stateHash(a.training.state)).toBe(stateHash(b.training.state));
+  });
+  it("a picked build round-trips into the forecast config and the duel's actors play it", () => {
+    const c = picked(),
+      forecastLab = labConfigOf(c);
+    expect(forecastLab.playerBuild).toEqual(c.playerBuild);
+    expect(forecastLab.opponentBuild).toEqual(c.opponentBuild);
+    expect(c.playerBuild).toEqual({
+      ranks: { vigor: 3, focus: 1, nerve: 1, agility: 4 },
+      spellRanks: { air_form: 3 },
+      loadout: { school: "air", name: labLoadoutName, bolt: "air_bolt", slots: ["air_form", ...labDefaultLoadout("air").slots.slice(1)] },
+    });
+    expect(c.opponentBuild!.plan).toBe("fire_heavy");
+    // duelForecast builds each duel with createLab over this config, always against the mage rival.
+    const { player, dummy } = createLab({ ...forecastLab, opponent: "mage", randomSeed: false }).training;
+    expect(player.school).toBe("air");
+    expect(player.schoolState!.loadout.slots[0]).toBe("air_form");
+    expect(rivalBuildOf(player)).toBeUndefined();
+    expect(player.ranks).toEqual({ vigor: 3, focus: 1, nerve: 1, agility: 4 });
+    expect(player.spellRanks).toEqual({ air_form: 3 });
+    expect(player.maxHp).toBeGreaterThan(createLab().training.player.maxHp);
+    expect(dummy.school).toBe("fire");
+    expect(rivalBuildOf(dummy)?.id).toBe("fire_heavy");
+    expect(dummy.ranks).toEqual({ vigor: rivalBuilds.fire_heavy!.ranks.vigor, focus: rivalBuilds.fire_heavy!.ranks.focus, nerve: 2 });
+    expect(dummy.spellRanks).toEqual(rivalBuilds.fire_heavy!.spellRanks);
+    const plan = { duels: 2, competence: forecastPolicy.duelPlayerCompetence, capS: 60 };
+    const mine = drain(duelForecast(makeTuning(), { ...plan, lab: forecastLab })),
+      base = drain(duelForecast(makeTuning(), { ...plan, lab: labConfigOf(defaultLabConfig) }));
+    expect(mine.duels).toBe(2);
+    expect(mine).not.toEqual(base);
+  }, 60000);
+  it("the plan follows the loadout, slots skip taken rows, and an invalid loadout reports validateLoadout's reason", () => {
+    let c = withPreset(withSchool(structuredClone(defaultLabConfig), "opponent", "air"), "opponent", "air_close");
+    expect(presetOptions(c, "opponent").map((b) => b.id)).toEqual(["air_light", "air_close", "air_heavy"]);
+    expect(sideBuild(c, "opponent").plan).toBe("air_close");
+    const original = sideBuild(c, "opponent").loadout!.slots[3]!,
+      next = nextSlotSpell(c, "opponent", 4);
+    expect(sideBuild(c, "opponent").loadout!.slots).not.toContain(next);
+    c = withSlot(c, "opponent", 4, next);
+    expect(sideBuild(c, "opponent").plan).toBeUndefined();
+    expect(sideProblems(c, "opponent")).toEqual([]);
+    c = withSlot(c, "opponent", 4, original);
+    expect(sideBuild(c, "opponent").plan).toBe("air_close");
+    const dup = withSlot(c, "opponent", 4, sideBuild(c, "opponent").loadout!.slots[0]!);
+    expect(sideProblems(dup, "opponent").join(" ")).toContain("Choose four distinct spells.");
+    expect(() => validateLabConfig(dup)).toThrow(/Choose four distinct spells/);
+    const wrongSide = { ...structuredClone(c), opponentSchool: "water" as const };
+    expect(sideProblems(wrongSide, "opponent").join(" ")).toContain("cannot play on a water side");
+    expect(() => withPreset(c, "opponent", "fire_close")).toThrow();
+    // Planted-bad builds: each is refused by core's check with its reason.
+    const bad = (opponentBuild: unknown) => sideProblems({ ...structuredClone(c), opponentBuild } as typeof c, "opponent").join(" ");
+    expect(bad({ ...sideBuild(c, "opponent"), colour: "red" })).toContain("unknown key colour");
+    expect(bad({ ranks: { vigor: 6, focus: 1, nerve: 1 } })).toContain("vigor 6");
+    expect(bad({ ranks: { vigor: 1, focus: 1, nerve: 1, agility: 0 } })).toContain("agility 0");
+    expect(bad({ spellRanks: { air_shear: 6 } })).toContain("air_shear=6");
+    expect(bad({ loadout: labDefaultLoadout("air"), plan: "air_heavy" })).toContain("plan air_heavy needs its own bolt + 4");
+    expect(bad({ loadout: { ...labDefaultLoadout("air"), bolt: "fire_bolt" } })).toContain("The bolt slot holds air_bolt.");
+    // Back to Water: the loadout and the old spellbook's ranks go, the stats stay.
+    const water = withSchool(c, "opponent", "water");
+    const { agility: _one, ...stats } = rivalBuilds.air_close!.ranks;
+    expect(_one).toBe(1);
+    expect(sideBuild(water, "opponent")).toEqual({ ranks: stats });
+  });
+  it("a school's first preset that is a rival build's own loadout plays that build's plan", () => {
+    const air = withSchool(structuredClone(defaultLabConfig), "player", "air");
+    expect(sideBuild(air, "player").plan).toBe("air_light");
+    expect(sideBuild(withSchool(air, "player", "fire"), "player").plan).toBeUndefined();
+  });
+  it("Water sides rank the bolt and each line across its four collar tiers", () => {
+    let c = withSpellRank(structuredClone(defaultLabConfig), "player", 2, 4);
+    const lines = defaultLabConfig.composition.lines;
+    expect(rankRows(c, "player").map((r) => r.label)).toHaveLength(4);
+    expect(c.playerBuild!.spellRanks).toEqual(Object.fromEntries([1, 2, 3, 4].map((t) => [`${lines[1]}:${t}`, 4])));
+    c = withRivalPreset({ ...c, opponent: "mage" }, "Undertow");
+    c = withSpellRank(c, "opponent", 0, 2);
+    const { player, dummy } = createLabSetup(c).training;
+    expect(player.spellRanks![`${lines[1]}:3`]).toBe(4);
+    expect(dummy.water.composition.name).toBe("Undertow");
+    expect(dummy.spellRanks).toEqual({ "bolt:0": 2 });
+  });
+  it("persists the last pick per side and ignores unreadable, invalid or failing storage", () => {
+    const store = memoryStore(),
+      c = picked();
+    savePicks(c, store);
+    expect([...store.m.keys()].sort()).toEqual([pickStorageKey("opponent"), pickStorageKey("player")]);
+    const restored = loadPicks(structuredClone(defaultLabConfig), store);
+    expect(restored.playerBuild).toEqual(c.playerBuild);
+    expect(restored.opponentBuild).toEqual(c.opponentBuild);
+    expect(restored.playerSchool).toBe("air");
+    expect(restored.opponentSchool).toBe("fire");
+    store.m.set(pickStorageKey("player"), "{not json");
+    store.m.set(pickStorageKey("opponent"), JSON.stringify({ school: "water", build: { loadout: labDefaultLoadout("fire") } }));
+    expect(loadPicks(defaultLabConfig, store)).toEqual(defaultLabConfig);
+    const failing = { getItem: () => { throw Error("blocked"); }, setItem: () => { throw Error("full"); } };
+    expect(() => savePicks(c, failing)).not.toThrow();
+    expect(loadPicks(defaultLabConfig, failing)).toEqual(defaultLabConfig);
   });
 });

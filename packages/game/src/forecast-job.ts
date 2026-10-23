@@ -19,10 +19,11 @@ export const forecastLabel = policy.label.replace("{n}", String(policy.seedsPerW
 export interface ForecastRequest { id: number; tuning: CombatTuning; lab: LabConfig }
 export interface ForecastSide { waves: WaveForecast[]; duel: DuelForecast }
 export interface ForecastResult { id: number; current: ForecastSide; candidate: ForecastSide; sameAsCurrent: boolean }
-const labKeys = ["opponent", "dummyAttack", "playerSchool", "opponentSchool", "competence", "aggression", "distanceM", "seed", "randomSeed", "composition", "difficulty"] as const;
-/** Lab setups carry presentation extras (creature targets); the duel uses only the core setup, always vs the mage rival. */
+const labKeys = ["opponent", "dummyAttack", "playerSchool", "opponentSchool", "competence", "aggression", "distanceM", "seed", "randomSeed", "composition", "difficulty", "rivalPreset", "rivalPlan", "playerBuild", "opponentBuild"] as const;
+/** Lab setups carry presentation extras (creature targets); the duel uses only the core setup (incl. both sides' build picks and the
+ * Water rival's preset), always vs the mage rival. Absent keys stay absent, so a default setup keys and runs as before. */
 export function labConfigOf(setup: LabConfig): LabConfig {
-  return structuredClone(Object.fromEntries(labKeys.map((k) => [k, setup[k]]))) as unknown as LabConfig;
+  return structuredClone(Object.fromEntries(labKeys.flatMap((k) => (setup[k] === undefined ? [] : [[k, setup[k]]])))) as unknown as LabConfig;
 }
 class Memo<T> {
   value?: T;
