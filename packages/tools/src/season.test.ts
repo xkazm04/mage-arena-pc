@@ -1,5 +1,5 @@
 import { afterAll, describe, it, expect } from 'vitest';
-import { applyBoutInput, beginTrial, boutHash, campPlayerSnapshot, createCampSession, createSeason, linkBout, prepareBout, startBout, trialTell, type BoutInput } from '@mage/core';
+import { applyBoutInput, beginTrial, boutHash, campPlayerSnapshot, createCampSession, createSeason, linkBout, prepareBout, replayBout, startBout, trialTell, type BoutInput } from '@mage/core';
 import { createGames, idleInput, presets } from '@mage/core/arena';
 import { hash, loadTables } from '@mage/director';
 import { fourteenDays, fixtureService, removeFixtureDirs, trialPolicy } from './season-fixtures.ts';
@@ -37,6 +37,19 @@ describe('W7 season authority', () => {
     expect(() => service.boutInputs(b.id, [entry], boutHash(b))).toThrow();
     expect(() => service.boutInputs(b.id, [{ ...entry, tick: 3 }], boutHash(b))).toThrow();
     expect(() => service.seasonCommand({ type: 'receive' }, service.session.revision)).toThrow(); service.close();
+  });
+  it('sets regular enemies to the campaign week and replays it (owner 2026-10-23)', () => {
+    const service = fixtureService(); service.session.camp.day = 6; service.session.slot = 'dusk'; service.session.hour = t.season.trialHour; service.session.location = 'pit'; trialPolicy(service);
+    service.session.camp.day = 7; service.session.slot = 'day'; service.session.hour = t.season.gamesHour; service.session.nightFinished = false;
+    const week1 = prepareBout(t, service.session, service.progress, presets[2]!);
+    expect('enemyLevel' in week1).toBe(false);
+    const week2 = { ...structuredClone(week1), enemyLevel: 2 }, base = structuredClone(week1);
+    startBout(week2); startBout(base);
+    const foes = (b: typeof base) => b.games!.state.actors.filter(a => a.team !== 0).map(a => a.maxHp);
+    expect(foes(week2)).not.toEqual(foes(base));
+    for (const b of [week2, base]) applyBoutInput(b, { type: 'tick', tick: 0, input: idleInput() });
+    const replay = replayBout(week2); expect(replay.enemyLevel).toBe(2); expect(boutHash(replay)).toBe(boutHash(week2));
+    service.close();
   });
   it('plays fourteen deterministic days with authentic rewards, rumours, social changes and missio', async () => {
     const a = await fourteenDays(), b = await fourteenDays();

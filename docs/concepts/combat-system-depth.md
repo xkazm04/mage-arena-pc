@@ -149,3 +149,6 @@ Both Lab sides now pick a whole build: school (Water, Fire, Air), an archetype p
 **Pick memory.** The last pick per side is saved on every bout start (`localStorage` `mage-arena.lab-pick.v1.<side>`) and seeds the first setup of the next Lab session. A missing, unreadable or invalid record is ignored, and the Lab works without storage.
 
 **Not in WP4.** The live HUD still labels a Fire or Air player's slots with Water names (the bout itself plays the school rows). Per-row Fire/Air tuning in the Lab, and Water ranks per tier in the picker, are also not covered.
+
+### Campaign week sets the enemy level (owner 2026-10-23)
+`prepareBout` (`packages/core/src/season.ts`) records `enemyLevel = min(6, ceil(day / daysPerWeek))` on the bout, omitted in week 1, and `startBout` passes it to `createGames`. The save schema accepts it as an optional integer 2-6. Bouts saved before this change have no key, so they replay as level 1 and their hashes are unchanged; a recorded level replays exactly (`packages/tools/src/season.test.ts`).
