@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "npm --prefix packages/core run data && tsc -p tsconfig.json && tsc -p packages/core/tsconfig.arena.json && tsc -p packages/core/tsconfig.purity.json",
-    "test": "vitest run && node --test packages/tools/replay/*.test.mjs packages/core/scripts/*.test.mjs",
+    "test": "vitest run && node --test packages/tools/replay/*.test.mjs packages/core/scripts/*.test.mjs packages/tools/vr/*.test.mjs",
     "lint": "eslint packages --max-warnings 0",
     "check:design": "node packages/tools/replay/cli.mjs check",
     "gate": "npm run build && npm run lint && npm run test && npm run check:design",
@@ -29,7 +29,10 @@
     "smoke:audio": "npm run build:game && tsx packages/tools/src/au4-browser.ts",
     "smoke:u4": "npm run build:game && tsx packages/tools/src/u4-browser.ts && tsx packages/tools/src/u4-tour.ts",
     "smoke:preload": "npm run build:game && tsx packages/tools/src/preload-browser.ts",
-    "audit:u4": "tsx packages/tools/src/u4-audit.ts"
+    "audit:u4": "tsx packages/tools/src/u4-audit.ts",
+    "vr:drift": "node packages/tools/vr/drift.mjs",
+    "vr:tuning-return": "node packages/tools/vr/tuning-return.mjs",
+    "vr:vectors": "node packages/tools/vr/vectors.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

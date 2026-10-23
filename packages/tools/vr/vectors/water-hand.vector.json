@@ -1,0 +1,491 @@
+{
+  "format": "mage-arena-vector-1",
+  "name": "water-hand",
+  "note": "Hand-authored Water bout, Tiro wave 1 (soldiers), Water proxies, Normal, canonical balance. The player steps right, fires two bolts at the nearest Funditor, holds a ward through the slinger volley, then rolls back. Inputs and checkpoint ticks are written by hand; checkpoint values were recorded from the PC kernel with vectors.mjs --record.",
+  "recordedBy": "pc f1038cc packages/tools/vr/vectors.mjs --record",
+  "setup": {
+    "seed": 7,
+    "wave": 0,
+    "schoolRivals": null,
+    "difficulty": "normal",
+    "balance": "canonical",
+    "preset": "Rotation",
+    "referencePlayer": false,
+    "autoAdvance": false
+  },
+  "ticks": 240,
+  "inputs": [
+    {
+      "from": 1,
+      "to": 30,
+      "input": {
+        "move": {
+          "x": 1,
+          "y": 0
+        },
+        "aim": {
+          "x": 14.41,
+          "y": 9.45
+        },
+        "slot": 0,
+        "cast": false,
+        "absorb": false,
+        "roll": false,
+        "sprint": false
+      }
+    },
+    {
+      "from": 31,
+      "to": 31,
+      "input": {
+        "move": {
+          "x": 0,
+          "y": 0
+        },
+        "aim": {
+          "x": 14.41,
+          "y": 9.45
+        },
+        "slot": 0,
+        "cast": true,
+        "absorb": false,
+        "roll": false,
+        "sprint": false
+      }
+    },
+    {
+      "from": 32,
+      "to": 59,
+      "input": {
+        "move": {
+          "x": 0,
+          "y": 0
+        },
+        "aim": {
+          "x": 14.41,
+          "y": 9.45
+        },
+        "slot": 0,
+        "cast": false,
+        "absorb": false,
+        "roll": false,
+        "sprint": false
+      }
+    },
+    {
+      "from": 60,
+      "to": 60,
+      "input": {
+        "move": {
+          "x": 0,
+          "y": 0
+        },
+        "aim": {
+          "x": 14.41,
+          "y": 9.45
+        },
+        "slot": 0,
+        "cast": true,
+        "absorb": false,
+        "roll": false,
+        "sprint": false
+      }
+    },
+    {
+      "from": 61,
+      "to": 150,
+      "input": {
+        "move": {
+          "x": 0,
+          "y": 0
+        },
+        "aim": {
+          "x": 14.41,
+          "y": 9.45
+        },
+        "slot": 0,
+        "cast": false,
+        "absorb": true,
+        "roll": false,
+        "sprint": false
+      }
+    },
+    {
+      "from": 151,
+      "to": 151,
+      "input": {
+        "move": {
+          "x": -1,
+          "y": 0
+        },
+        "aim": {
+          "x": 14.41,
+          "y": 9.45
+        },
+        "slot": 0,
+        "cast": false,
+        "absorb": false,
+        "roll": true,
+        "sprint": false
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "tick": 30,
+      "phase": "active",
+      "wave": 0,
+      "actors": [
+        {
+          "id": 1,
+          "team": 0,
+          "hp": 95,
+          "mana": 95,
+          "stamina": 70,
+          "x": 11.2625,
+          "y": 10,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 2,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 62.5,
+          "x": 11.779935,
+          "y": 12.936891,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 3,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 62.5,
+          "x": 19.130356,
+          "y": 4.925681,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 4,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 62.5,
+          "x": 17.834652,
+          "y": 9.904464,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 5,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 62.5,
+          "x": 18.362918,
+          "y": 14.889525,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 6,
+          "team": 1,
+          "hp": 28,
+          "mana": 95,
+          "stamina": 70,
+          "x": 14.885321,
+          "y": 2.767715,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 7,
+          "team": 1,
+          "hp": 28,
+          "mana": 95,
+          "stamina": 70,
+          "x": 14.412505,
+          "y": 9.449517,
+          "school": null,
+          "down": false
+        }
+      ],
+      "events": {
+        "cast": 0,
+        "hit": 0,
+        "down": 0
+      }
+    },
+    {
+      "tick": 90,
+      "phase": "active",
+      "wave": 0,
+      "actors": [
+        {
+          "id": 1,
+          "team": 0,
+          "hp": 78,
+          "mana": 77.24999999999991,
+          "stamina": 70,
+          "x": 11.188431,
+          "y": 9.894893,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 2,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 63.33333333333335,
+          "x": 11.375018,
+          "y": 10.838242,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 3,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 51,
+          "x": 12.686533,
+          "y": 9.01158,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 4,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 54.5,
+          "x": 12.536638,
+          "y": 10.306233,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 5,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 51.75,
+          "x": 12.438287,
+          "y": 11.354395,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 6,
+          "team": 1,
+          "hp": 28,
+          "mana": 95,
+          "stamina": 70,
+          "x": 14.885321,
+          "y": 2.767715,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 7,
+          "team": 1,
+          "hp": 23.9,
+          "mana": 95,
+          "stamina": 70,
+          "x": 16.508792,
+          "y": 9.107708,
+          "school": null,
+          "down": false
+        }
+      ],
+      "events": {
+        "cast": 2,
+        "hit": 4,
+        "down": 0
+      }
+    },
+    {
+      "tick": 150,
+      "phase": "active",
+      "wave": 0,
+      "actors": [
+        {
+          "id": 1,
+          "team": 0,
+          "hp": 47.2,
+          "mana": 57.749999999999744,
+          "stamina": 70,
+          "x": 10.744977,
+          "y": 9.854047,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 2,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 67.75,
+          "x": 11.292511,
+          "y": 11.478535,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 3,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 60.000000000000064,
+          "x": 13.626493,
+          "y": 8.998894,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 4,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 68.16666666666667,
+          "x": 13.743718,
+          "y": 10.653792,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 5,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 61.75000000000007,
+          "x": 13.264037,
+          "y": 11.641819,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 6,
+          "team": 1,
+          "hp": 28,
+          "mana": 95,
+          "stamina": 70,
+          "x": 14.885321,
+          "y": 2.767715,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 7,
+          "team": 1,
+          "hp": 23.9,
+          "mana": 95,
+          "stamina": 70,
+          "x": 16.888125,
+          "y": 9.05859,
+          "school": null,
+          "down": false
+        }
+      ],
+      "events": {
+        "cast": 2,
+        "hit": 9,
+        "down": 0
+      }
+    },
+    {
+      "tick": 240,
+      "phase": "active",
+      "wave": 0,
+      "actors": [
+        {
+          "id": 1,
+          "team": 0,
+          "hp": 13.200000000000003,
+          "mana": 68.99999999999974,
+          "stamina": 59.0000000000001,
+          "x": 6.226216,
+          "y": 9.921571,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 2,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 67.75,
+          "x": 9.780072,
+          "y": 10.348214,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 3,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 49.416666666666714,
+          "x": 7.742658,
+          "y": 8.732319,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 4,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 60.25,
+          "x": 7.47192,
+          "y": 9.749098,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 5,
+          "team": 1,
+          "hp": 38,
+          "mana": 95,
+          "stamina": 58.6666666666667,
+          "x": 7.381221,
+          "y": 10.147576,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 6,
+          "team": 1,
+          "hp": 28,
+          "mana": 95,
+          "stamina": 70,
+          "x": 13.914468,
+          "y": 3.605268,
+          "school": null,
+          "down": false
+        },
+        {
+          "id": 7,
+          "team": 1,
+          "hp": 23.9,
+          "mana": 95,
+          "stamina": 70,
+          "x": 16.090239,
+          "y": 9.105814,
+          "school": null,
+          "down": false
+        }
+      ],
+      "events": {
+        "cast": 2,
+        "hit": 13,
+        "down": 0
+      }
+    }
+  ]
+}
