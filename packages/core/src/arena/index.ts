@@ -20,3 +20,4 @@ export * from './archetypes.ts';
 export * from './contact.ts';
 
 export * from './mage-build.ts';
+export { rivalRuntime, type RivalRuntime, type RivalSpec } from './rival-phases.ts';

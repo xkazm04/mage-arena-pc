@@ -42,6 +42,7 @@ import {
 } from "./school-hud.ts";
 import { runeMeter } from "./rune-meter.ts";
 import { hudAnchors } from "./hud-anchors.ts";
+import { phaseGemRow } from "./phase-gems.ts";
 
 /** What the HUD reads from (and the few HUD fields it writes back to) the arena game. */
 export interface HudHost {
@@ -266,11 +267,18 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
     colours.text,
     1000,
   );
+  const drawGems = phaseGemRow(
+    u,
+    1824 + dr,
+    246,
+    () => localStorage.getItem("mage-motion") === "reduced",
+  );
   const castBar = u.progress("cast", 524, 785, 1020, 22);
   const castLabel = u.text("", 524, 750, 24, colours.water, 1020);
   return () => {
     if (u.screen !== "arena") return;
     const { state, player } = game.training;
+    drawGems(state);
     hp(player.hp);
     mana(player.mana);
     stamina(player.stamina);
