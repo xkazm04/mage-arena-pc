@@ -38,7 +38,7 @@ PC resolution. Sound aims at full cue coverage per the Audio Bible, then an owne
 | Budgets | `maxSprites` 256, `maxOneShots` 64, `cpuBudgetMs` 2; desktop at 60 fps (TV-era measurement) | `data/animation.json`, `docs/waves/P1-tv-performance.md` |
 | Generation | agy is the only working provider (Grok latched on HTTP 402); about 382 of 398 budgeted images used; no true inpainting or alpha | `art/budget.json`, `docs/PROVIDER-LEDGER.md` |
 | Sound | 25 files (casts per element, one hit, one impact, roll, collar, UI, voice, 6 music tracks); AU4 mix awaits the owner's listening | `packages/game/public/audio`, `data/audio.json` |
-| Sound gaps | no death, absorb raise/hold/contact, telegraph/warning, status, projectile travel or crowd cues; one hit sample; `stagger` is triggered but has no cue; no Heat/Momentum or beam sounds | `arena-entry.ts:1415-1454`, `docs/audio/AUDIO-BIBLE.md` |
+| Sound gaps | no death, absorb raise/hold/contact, telegraph/warning, status, projectile travel or crowd cues; one hit sample; `stagger` resolves to the existing `hit-a` sample (pitched down; fixed in 3e349a4, pinned by `audio-events.test.ts`); no Heat/Momentum or beam sounds | `arena-entry.ts:1415-1454`, `docs/audio/AUDIO-BIBLE.md` |
 
 **Reuse audit (the owner's fear, checked against the code):** the painted assets are tied to the far 55° camera and
 the 60 px body scale. A closer or lower camera makes the bodies, plates and effects read as too small or too flat, so
@@ -150,6 +150,13 @@ engines; it is the first build of the chosen look.
 4. After the slice passes: the asset production plan (bodies, rivals, creatures, arenas), priced against a new
    generation budget.
 
+## 6.1 Step 3 groundwork status (2026-10-24)
+
+Built with no generation spend; none of it is wired into `arena-entry.ts` yet (lane 3's HUD extraction merges first):
+- **Procedural sigils:** filled disc, beam and arc in `sigil-contract.ts` (exact signed-distance witnesses), `sigil-shader.ts` and `SigilPlayer.procedural()`; data in `data/sigils.json`; tests in `sigil.test.ts`.
+- **Normal map and light test:** `packages/tools/art/derive-normal-map.py` derives `public/normal-maps/cassia.png` from the Cassia A10 page (luminance height, blur, Sobel; deterministic, no generation) and a lit proof strip; `packages/game/src/lighting/` holds the shared point-light model, a lit-body shader mesh and `lighting.test.ts`. The shader is written but **not yet run in a GL context**; the proof strip is rendered on the CPU with the same constants, and a test pins the constants together.
+- **Audio cues:** `audio-events.test.ts` enumerates the sim event kinds (read from core's `ArenaEvent`) against `data/audio.json`. Kinds with no cue, allowlisted for 4.5: `cast`, `down`, `interrupt`, `phase`.
+
 ## 7. How success is measured
 
 - The owner judges the slice frame against the target images (side by side).
@@ -157,9 +164,26 @@ engines; it is the first build of the chosen look.
 - Every answerable event has a cue: a test enumerates sim event kinds against `data/audio.json`.
 - Every rival has its own body; no Cassia re-skins remain.
 
+### 7.1 Frame probe, 1440p baseline (2026-10-24)
+
+Method: `node --import tsx packages/tools/art/frame-probe-1440.mts 1440 12` after `npm run build:game`. It opens the preview build at 2560x1440 (deviceScaleFactor 1), enters the training arena, starts the art fixture `stress`, waits 2 s, resets the counters, samples 12 s through `__ui.performance()` and the per-phase log of `frame-probe.ts`. Headless Chromium on ANGLE/D3D11, NVIDIA GeForce RTX 4090. The fixture is the heaviest scene that exists without new assets: 100 projectiles, 12 painted A10 figures, 104 live effect clips.
+
+| Measure (last 360 frames) | Result |
+|---|---|
+| Frame time | mean 16.67 ms, p95 16.80, max 16.80 (60.0 fps, vsync-locked) |
+| Frame CPU | mean 1.35 ms, p95 1.80, p99 2.00, max 2.40 |
+| Phase CPU (mean) | scene 0.62 ms, render 0.52 ms, hud 0.06 ms, all others under 0.03 ms |
+| Effects budget | 104 active, 0 dropped, 0.10 ms of the 2 ms budget |
+
+What this does and does not show:
+- It holds 60 fps at 1440p on the **current look** with the existing stress fixture. The frame time is pinned to the display's refresh, so GPU headroom is **not measured**; CPU time is the usable number.
+- **Not evaluated:** the section 7 bar scene (two beams, trails, eight bodies in the new camera with lit bodies and layered plates), the 4K case, and any GPU below an RTX 4090. The fixture has no beams or trails, and the new lighting and procedural sigils are not wired in, so the bar itself is still open.
+- Re-run the probe, with the procedural sigils and the lit bodies added to the fixture, once `arena-entry.ts` is free.
+
 ## 8. Open questions for the spark
 
 1. The exact camera angle and body size inside the chosen range (35-45°, 140-200 px)? The slice settles it.
 2. How much new generation budget, and from which providers? Painted normal maps double the cost per body.
 3. Skeletal cut-out animation or more painted frames?
 4. Does PC keep VR's element-identity rules exactly, or diverge in look (W8 decision A3 says PC keeps its own direction)?
+   **Provisional answer:** PC keeps its own look direction per W8 A3, Director default 2026-10-24, owner to confirm.
