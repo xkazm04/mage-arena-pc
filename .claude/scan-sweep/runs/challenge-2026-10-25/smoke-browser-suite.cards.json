@@ -1,0 +1,137 @@
+{
+  "context": "smoke-browser-suite",
+  "scout": "claude-opus-5-5",
+  "read": [
+    "packages/tools/src/au4-browser.ts", "packages/tools/src/camp-browser.ts", "packages/tools/src/cf1-browser.ts",
+    "packages/tools/src/d3-widescreen-browser.ts", "packages/tools/src/forecast-browser.ts", "packages/tools/src/h1-browser.ts",
+    "packages/tools/src/parley-browser.ts", "packages/tools/src/preload-browser.ts", "packages/tools/src/season-browser.ts",
+    "packages/tools/src/u1-browser.ts", "packages/tools/src/u1-kit-browser.ts", "packages/tools/src/u2-art-browser.ts",
+    "packages/tools/src/u2-assets.ts", "packages/tools/src/u2-audit.ts", "packages/tools/src/u2-browser.ts",
+    "packages/tools/src/u3-browser.ts", "packages/tools/src/u3-gallery.ts", "packages/tools/src/u4-assets.ts",
+    "packages/tools/src/u4-audit.ts", "packages/tools/src/u4-browser.ts", "packages/tools/src/u4-gallery.ts",
+    "packages/tools/src/u4-tour.ts", "packages/tools/src/u5-browser.ts", "packages/tools/src/u6-assets.ts",
+    "packages/tools/src/u6-browser.ts", "packages/tools/src/u6-tour.ts", "packages/tools/src/u6c-gallery.ts",
+    "packages/tools/src/u6c-verify.ts", "packages/tools/src/w7-director-browser.ts", "packages/tools/src/w7-gallery.ts",
+    "packages/tools/src/w7-scenes-browser.ts",
+    "packages/tools/src/u6b-audio.ts (assertion/flow skim)", "packages/tools/src/u6b-browser.ts (assertion/flow skim)",
+    "packages/tools/src/u6b-performance.ts (assertion/flow skim)", "packages/tools/src/u6c-browser.ts (assertion/flow skim)",
+    "packages/tools/src/u6c-performance.ts (assertion/flow skim)",
+    "package.json", ".claude/scan-sweep/config.md", "tiger/backlog.md", ".spark/Spark/ideas/*.md (grep)",
+    "packages/game/src/arena-entry.ts:200-260 (harness globals)", "packages/game/src/ui/ui.ts:230-245",
+    "docs/concepts/D3-non-combat-presentation.md (smoke refs)"
+  ],
+  "cards": [
+    {
+      "context": "smoke-browser-suite",
+      "slot": "A",
+      "lens": "architecture-challenger",
+      "title": "Smoke kit: one preview lifecycle, typed harness contract, one canvas driver",
+      "size": "L",
+      "effort": 7,
+      "impact": 8,
+      "risk": 5,
+      "write_set": [
+        "packages/tools/src/smoke/preview.ts",
+        "packages/tools/src/smoke/driver.ts",
+        "packages/tools/src/smoke/checks.ts",
+        "packages/tools/src/smoke/budgets.ts",
+        "packages/tools/src/smoke/checks.test.ts",
+        "packages/tools/src/smoke/preview.test.ts",
+        "packages/game/src/harness-contract.ts",
+        "packages/game/src/arena-entry.ts",
+        "packages/game/src/ui/ui.ts",
+        "packages/tools/src/u3-browser.ts",
+        "packages/tools/src/d3-widescreen-browser.ts",
+        "packages/tools/src/forecast-browser.ts"
+      ],
+      "new_files": [
+        "packages/tools/src/smoke/preview.ts",
+        "packages/tools/src/smoke/driver.ts",
+        "packages/tools/src/smoke/checks.ts",
+        "packages/tools/src/smoke/budgets.ts",
+        "packages/tools/src/smoke/checks.test.ts",
+        "packages/tools/src/smoke/preview.test.ts",
+        "packages/game/src/harness-contract.ts"
+      ],
+      "shared_surfaces": [
+        "packages/game/src/arena-entry.ts (type annotation on the __arena object only, no runtime change)",
+        "packages/game/src/ui/ui.ts (type annotation on the __ui object only)"
+      ],
+      "acceptance": [
+        "case 1: checks.shotViolations(snapshot with button {id:'x',x:10,y:100,w:80,h:80}, viewport 1920x1080) -> ['x outside safe area']; same button at x:120 -> []",
+        "case 2: checks.shotViolations(button 60x60 at 1080p) -> ['x target too small']; 64x64 at 1080p -> []; 80x80 at 1440p -> ['x target too small'] (threshold 64*1440/1080 = 85.3)",
+        "case 3: checks.unreachable(buttons a,b,c where c is not reachable by nextFocus from a in any direction) -> ['c']; a full 2x2 grid -> []",
+        "case 4: preview.freePort() called twice concurrently -> two distinct ports, each bindable on 127.0.0.1 (no hand-picked port, no strictPort collision)",
+        "case 5: preview.waitReady(url, {exited: () => 1, log: 'boom'}) -> rejects with an Error whose message contains 'boom' before the 10 s budget (today only u1/u2/u3/d3 check server.exitCode; cf1/h1/u4/u5/u6 loop 100 x 100 ms and proceed silently)",
+        "case 6: budgets.frame('stress') returns one {fpsMin, cpuP95Max} and budgets.textureMiB('arena') one ceiling; a vitest scans packages/tools/src/*.ts and finds 0 literal `fps >=` / `* 1048576)` assertions outside smoke/budgets.ts in the migrated files (u3-browser, d3, forecast)",
+        "case 7: tsc over packages/tools with a suite calling __arena.reset() typed through HarnessWindow compiles; calling a nonexistent __arena.fooFixture() fails tsc (today each suite hand-declares its own Win type, so drift compiles)"
+      ],
+      "premise": [
+        "packages/tools/src/u1-browser.ts:52 - each suite spawns its own `vite preview` child; 20 of the 36 context files contain the same spawn block (grep -c 'vite.js'), e.g. u3-browser.ts:60, cf1-browser.ts:31, h1-browser.ts:33, d3-widescreen-browser.ts:446-470 in the read",
+        "packages/tools/src/cf1-browser.ts:43, packages/tools/src/u5-browser.ts:39, packages/tools/src/u6b-audio.ts:43 - all hard-code port 4195; also 4197 (forecast-browser.ts:12, u6-browser.ts:40, u6c-performance.ts:58), 4189 (u1-kit-browser.ts:23, u2-art-browser.ts:34), 4188, 4193, 4196, 4198, 4199 are each claimed by two suites, so any two can't run together under --strictPort",
+        "packages/tools/src/u1-browser.ts:23 - a hand-written `type Win` re-declares the game's harness globals; 21 files each carry their own copy, and they disagree: cf1-browser.ts:22 declares `reset(): void`, u1-browser.ts:38 declares `reset(kind: string)`, while the real one is `reset: (kind: TrainingKind = \"magic\")` in packages/game/src/arena-entry.ts:262 (block starting at arena-entry.ts:222)",
+        "packages/tools/src/cf1-browser.ts:74-79 - click asserts the button exists then sleeps 250 ms; u3-browser.ts:117-132 waits for !busy and enabled, clicks, waits !busy again; d3-widescreen-browser.ts:493-506 waits then sleeps 250 ms: three click semantics for the same canvas UI",
+        "packages/tools/src/u3-browser.ts:569, u4-browser.ts:236, u6-browser.ts:223 - frame budgets fps >= 50, >= 58, >= 58.8 hand-typed per suite; texture ceilings u5-browser.ts:170 (300 MiB) vs u4-browser.ts:239 (400 MiB, its own comment says 387 MiB is measured and 400 is a stopgap)",
+        "packages/tools/src/u6-tour.ts:491 vs packages/tools/src/u3-browser.ts:513 - the two tour clones (u6-tour is u3-browser plus about 20 lines, per diff) have drifted: u3 got the palette-named prop fix (comment at u3-browser.ts:512), u6-tour still takes the first `prop:` entry. u1-browser.ts:430 and u2-browser.ts:447 still assert figureHeightPx = height*0.0375 while u3-browser.ts:486 asserts the scale-contract-v3 value 0.05625",
+        "packages/tools/src/u4-tour.ts:1-2 - precedent: a tour profile is already expressed as an env flag over u3-browser.ts:51"
+      ],
+      "rollback": "Three commits: (1) smoke/ kit + tests + harness-contract.ts type-only file, (2) satisfies annotations in arena-entry.ts/ui.ts, (3) migrate u3-browser/d3/forecast. Each reverts on its own; the migrated suites keep their evidence paths and output JSON shape, so reverting (3) restores the standalone scripts byte-for-byte.",
+      "gate": "architecture",
+      "runner_up": "Collapse u6-tour.ts into a MAGE_EVIDENCE=U6 profile of u3-browser.ts (as u4-tour.ts:1-2 already does), deleting about 740 duplicated lines and the stale prop lookup at u6-tour.ts:491.",
+      "body": "## Summary\nThe browser smoke suites are 27 standalone scripts, and each one owns everything itself: the vite preview child, a port picked by hand, a hand-written type for the game's window harness, its own click semantics and its own performance budgets. The copies drift, and nothing catches it. Extract a `packages/tools/src/smoke/` kit and type the harness contract once, in the game. Migrate the live tour (u3-browser, which u4-tour runs) plus d3 and forecast as the proof.\n\n## Description\nThe drift is already in the tree. u6-tour lost the prop-depth fix u3 received. u1/u2 assert a figure height from before scale contract v3. cf1 and u1 disagree about the signature of `__arena.reset`. Eight ports are each claimed by two suites under `--strictPort`, so suites can't run side by side. Suites that never check `server.exitCode` hide a failed preview behind a 10 s retry loop. The kit has four parts. `preview.ts` takes an OS-assigned port, waits for readiness with a fast fail that carries the server log, and tears down. `driver.ts` holds the canvas-UI verbs every tour reimplements: snap, screen, click (one semantics: wait !busy and enabled, click, wait !busy), pad, visit, train, saveLoad, listenNight, playGames. `checks.ts` holds the pure per-shot assertions: safe area, 64 px targets, D-pad reachability through `nextFocus`, no DOM controls, no overflow. `budgets.ts` is the single source for the fps, CPU p95 and texture ceilings already in the suites; their values are copied, not changed. `packages/game/src/harness-contract.ts` declares `HarnessWindow`. The objects assigned at arena-entry.ts:222 and ui.ts:234 get `satisfies` annotations, so a renamed fixture breaks tsc instead of a 20-minute run.\n\n## Flow\n- Write checks.test.ts and preview.test.ts first (cases 1-6). They fail because the modules don't exist.\n- Add harness-contract.ts and the satisfies annotations; type-only, no runtime change (case 7).\n- Rewrite u3-browser.ts on the kit, which removes about 250 lines of boilerplate. Its screen list, evidence path and browser.json shape stay the same.\n- Move d3-widescreen-browser.ts and forecast-browser.ts onto preview + driver.\n- npm run gate && npm run build:game. The coordinator runs smoke:u3 / smoke:d3 / smoke:u4 to confirm the evidence JSON is unchanged in shape.\n\n## Expected impact\nA new suite is about 60 lines of intent instead of about 300 lines of copy. A harness rename fails at compile time. Any set of suites can run concurrently. A budget change is one edit. The remaining 20 suites can then migrate one per commit, and the u6-tour/u1/u2 clone drift can be retired against a shared driver.\n\n## Evaluation\nClaim: the kit makes per-shot checks, port allocation, readiness failure and harness typing single-sourced and testable without a browser.\nBefore: 0 of 7 acceptance cases pass (no smoke/ module, no HarnessWindow; 8 duplicated ports; 21 Win copies).\nAfter: 7 of 7\nMethod: gate - vitest packages/tools/src/smoke/*.test.ts + tsc (npm run gate), plus npm run build:game for the two game annotations. Smoke runs stay with the coordinator.\nResult: better\nGate: architecture",
+      "evidence": "grep -c 'vite.js' over the context: 20 files spawn preview. Port lines: cf1-browser.ts:43 \"4195\", u5-browser.ts:39 \"4195\", u6b-audio.ts:43 \"4195\"; forecast-browser.ts:12 port = 4197, u6-browser.ts:40 \"4197\", u6c-performance.ts:58 \"4197\"; u1-kit-browser.ts:23 / u2-art-browser.ts:34 \"4189\"; u1-browser.ts:64 / u2-browser.ts:66 \"4188\"; u3-browser.ts:72 / u6-tour.ts:66 \"4193\"; u4-browser.ts:44 / u6b-performance.ts:40 \"4196\"; h1-browser.ts:45 / u6c-browser.ts:54 \"4198\"; preload-browser.ts:37 / u6b-browser.ts:47 \"4199\". grep -c 'type Win' = 1 in 21 files. Budgets: u3-browser.ts:569 `assert(fps >= 50`, u4-browser.ts:236 `assert(fps >= 58`, u6-browser.ts:223 `assert(fps >= 58.8`, u5-browser.ts:170 `bytes < 300 * 1048576`, u4-browser.ts:239 `bytes < 400 * 1048576`. Drift: u6-tour.ts:491 `prop = s.depthOrder.findIndex((v) => v.id.startsWith(\"prop:\"))` vs u3-browser.ts:513 the 0.8 m-from-foot lookup; u1-browser.ts:430 / u2-browser.ts:447 `height * 0.0375` vs u3-browser.ts:486 `height * 0.05625`. diff u3-browser.ts u6-tour.ts body: about 20 changed lines over 757."
+    },
+    {
+      "context": "smoke-browser-suite",
+      "slot": "B",
+      "lens": "ux-elevation",
+      "title": "`npm run smoke` operator CLI: registry, list/status, safe parallel run, one summary",
+      "size": "M",
+      "effort": 6,
+      "impact": 8,
+      "risk": 4,
+      "write_set": [
+        "packages/tools/src/smoke/registry.ts",
+        "packages/tools/src/smoke/plan.ts",
+        "packages/tools/src/smoke/status.ts",
+        "packages/tools/src/smoke/cli.ts",
+        "packages/tools/src/smoke/registry.test.ts",
+        "packages/tools/src/smoke/plan.test.ts",
+        "packages/tools/src/smoke/status.test.ts",
+        "package.json"
+      ],
+      "new_files": [
+        "packages/tools/src/smoke/registry.ts",
+        "packages/tools/src/smoke/plan.ts",
+        "packages/tools/src/smoke/status.ts",
+        "packages/tools/src/smoke/cli.ts",
+        "packages/tools/src/smoke/registry.test.ts",
+        "packages/tools/src/smoke/plan.test.ts",
+        "packages/tools/src/smoke/status.test.ts"
+      ],
+      "shared_surfaces": ["package.json (scripts block only: add `smoke`, keep existing smoke:* as aliases)"],
+      "acceptance": [
+        "case 1: registry coverage - the set of packages/tools/src/*-browser.ts, *-tour.ts, *-performance.ts and u6b-audio.ts files -> every file appears in the registry exactly once (today 8 of 27 have any npm entry point; registry does not exist)",
+        "case 2: plan(['u3','d3']) -> steps ['build:game', 'u3', 'd3'], with build:game exactly once and no two suite steps sharing a port (today smoke:u3 + smoke:d3 rebuild the game twice)",
+        "case 3: plan(['w7-director']) without allowPaid -> throws an Error mentioning 'paid' and 'CAMP_DIRECTOR=claude'; plan(['w7-director'], {allowPaid:true}) -> includes it; plan(['all']) never includes a paid suite",
+        "case 4: plan(['camp']) -> refused with status 'retired' and reason naming the missing DOM selector (e.g. '[data-place]'); derived check: for every registry entry whose source uses `[data-` / `#settings-dialog` locators that do not occur under packages/game/src, registry status must be 'retired' (camp, parley, season, w7-scenes, w7-director today)",
+        "case 5: status() over a fixture evidence dir with browser.json {passed:true} -> {state:'pass', at:<mtime>}; with a newer browser-failure.json {error:'AssertionError: x'} -> {state:'fail', error:'AssertionError: x'}; no files -> {state:'never-run'}",
+        "case 6: summarize([{suite:'u3',ok:true,ms:61000},{suite:'d3',ok:false,ms:9000,error:'left edge'}]) -> one row per suite with evidence path, and exitCode 1; all ok -> exitCode 0",
+        "case 7: every existing package.json `smoke:*` script resolves to a registry entry (no orphan alias), and `audit:u4` maps to the u4-audit entry"
+      ],
+      "premise": [
+        "package.json:25-33 - only 8 smoke:* / audit entries (u1, u2, u2:art, u3, audio, u4, d3, preload) for 27 browser/tour/performance scripts; cf1, h1, u5, u6, u6b*, u6c*, forecast, season, camp, parley, w7-* have no entry point, and the operator must know each file name and its env flags (MAGE_EVIDENCE at u3-browser.ts:51 and cf1-browser.ts:27, W7_EVIDENCE at camp-browser.ts:5, W7_OFFLINE at parley-browser.ts:31, U6C_COLLAPSE_ONLY in u6c-browser.ts)",
+        "package.json:25-32 - every smoke:* script prefixes `npm run build:game &&`, so running three suites builds the game three times",
+        "packages/tools/src/camp-browser.ts:22,33 - waits for `body[data-ready=\"true\"]` and counts `[data-place]`; season-browser.ts:16 clicks `#settings` / `#settings-dialog`; w7-scenes-browser.ts:28 `#prepare-games`. grep over packages/game/src finds none of `data-place`, `data-visit`, `data-command`, `settings-dialog` (only the canvas button id 'prepare-games' at packages/game/src/screens/chrome.ts:197). These DOM-era suites are silently dead since the canvas camp (u1-browser.ts:147-150 asserts zero DOM controls), and nothing marks them retired",
+        "packages/tools/src/w7-director-browser.ts:10 - spawns preview with CAMP_DIRECTOR:'claude' (paid Director calls) and sits next to free suites with the same naming; its only guard is an existsSync on prior evidence (w7-director-browser.ts:6). config.md 'Never touch / never run' requires CAMP_DIRECTOR to stay offline",
+        "packages/tools/src/u3-browser.ts:764-773 and u1-browser.ts:642-651 - each suite writes its own failure artifact (browser-failure.json, failure.json, d3-failure.json at d3-widescreen-browser.ts:770, art-browser-failure.json in u4-browser.ts) under its own wave dir; no surface answers 'which suites pass right now'",
+        "packages/tools/src/w7-gallery.ts:5-14, u4-gallery.ts:2-25, u6c-gallery.ts:2-27 - galleries are per-wave hand lists, not reading a registry"
+      ],
+      "rollback": "Purely additive: new smoke/ files plus one `smoke` script in package.json. Reverting the single commit removes the CLI and leaves all smoke:* scripts and suite files untouched.",
+      "gate": "direction",
+      "runner_up": "A cross-wave evidence index (`smoke status --html`) that replaces the per-wave hand-coded galleries (u3/u4/u6c/w7-gallery) with one page that reads the registry and each suite's browser.json.",
+      "body": "## Summary\nThe person running the smoke suites has no surface. There are 27 scripts and 8 npm entries, plus env flags that are documented only in source. Five suites silently target a DOM camp that no longer exists. One suite makes paid Director calls and is named like the free ones. Every run rebuilds the game, and pass/fail is scattered across about 15 wave folders. Add `npm run smoke` backed by a registry: `list`, `status`, `run <suites|all>` with build-once, collision-free ports, a paid-call refusal and one summary table plus exit code.\n\n## Description\n`registry.ts` declares each suite: id, file, evidence dir, env profile, surface (canvas|dom), status (live|retired with reason), and paid. It sits on top of the files, not inside them, so it adds nothing to Slot A's write set. A registry test cross-checks the source tree, so a new suite can't be added unregistered. A second derived check finds DOM locators absent from packages/game/src and forces 'retired'. That way a dead suite is visible in `list` instead of failing 20 minutes into a run. `plan.ts` turns a request into steps: build:game once; skip retired suites with their reason; refuse paid suites unless `--allow-paid`; run suites as child processes, serially by default, with `--parallel N` once the Slot A kit provides free ports. `status.ts` reads each evidence dir (browser.json vs the newer *failure.json, mtime) and reports pass / fail (first error line) / never-run. `cli.ts` prints a table and writes `.smoke/last-run.json` (gitignored). The command is the operator's one place to answer 'is the browser surface green, and what do I run next'.\n\n## Flow\n- Write registry.test.ts, plan.test.ts and status.test.ts first (cases 1-7). They fail because the modules don't exist.\n- Write registry.ts by reading each suite's header and env flags. Mark camp/parley/season/w7-scenes/w7-director retired or paid with the cited reason.\n- Write plan.ts and status.ts as pure functions over the registry and fs fixtures.\n- Write cli.ts: list | status | run; existing smoke:* scripts stay as aliases.\n- npm run gate. The coordinator does one live `npm run smoke -- run u3 d3` to confirm the summary.\n\n## Expected impact\nThe operator no longer has to know file names. Running N suites goes from N builds to one. The paid Director path can't be started by `all`. Dead suites are labelled instead of discovered by failure. 'What passes now' is one command instead of opening about 15 JSON files.\n\n## Evaluation\nClaim: the registry, planner and status reader make the smoke surface listable, safe and summarised without running a browser.\nBefore: 0 of 7 acceptance cases pass (no registry; 8 of 27 suites reachable by npm; 5 DOM-era suites unmarked; paid suite unguarded beyond an existsSync).\nAfter: 7 of 7\nMethod: gate - vitest packages/tools/src/smoke/{registry,plan,status}.test.ts over fs fixtures (npm run gate); no Playwright in the test path.\nResult: better\nGate: direction",
+      "evidence": "package.json lines 25-33: smoke:u1, smoke:u2, smoke:u2:art, smoke:u3, smoke:audio, smoke:u4, smoke:d3, smoke:preload, audit:u4; each smoke:* starts `npm run build:game &&`. grep -rn 'dataset.ready|data-place|settings-dialog|data-visit|data-command' packages/game/src -> only packages/game/src/game-shell.ts:183 `document.body.dataset.ready = \"true\"` (so data-ready survives, but data-place/data-visit/data-command/settings-dialog are gone). camp-browser.ts:33 `locator(\"[data-place]\").count(), 8`; season-browser.ts:16 `#settings-dialog[open]`; w7-scenes-browser.ts:28 `#prepare-games` (DOM id; game has only a canvas button id at screens/chrome.ts:197). w7-director-browser.ts:10 `env:{...process.env,CAMP_DIRECTOR:'claude'}`. git log: camp-browser.ts last touched 951cf33 'U3a: replace camp slots with data-driven hours', season-browser.ts 3a131a0 (2026-10-02)."
+    }
+  ]
+}

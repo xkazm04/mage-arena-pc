@@ -1,0 +1,161 @@
+{
+  "context": "evidence-judging",
+  "scout": "claude-opus-5-5",
+  "read": [
+    "packages/tools/src/archive.ts",
+    "packages/tools/src/audit.test.ts",
+    "packages/tools/src/audit.ts",
+    "packages/tools/src/blind-check.ts",
+    "packages/tools/src/blind.ts",
+    "packages/tools/src/cache-replay.ts",
+    "packages/tools/src/camp-evidence.test.ts",
+    "packages/tools/src/camp-fixtures-write.ts",
+    "packages/tools/src/camp-fixtures.ts",
+    "packages/tools/src/camp-local-night.ts",
+    "packages/tools/src/cf-report.ts",
+    "packages/tools/src/evidence.ts",
+    "packages/tools/src/experiment.ts",
+    "packages/tools/src/h1-report.ts",
+    "packages/tools/src/historical-prompt.ts",
+    "packages/tools/src/hours.test.ts",
+    "packages/tools/src/import-camp-art.ts",
+    "packages/tools/src/judge-calibration.ts",
+    "packages/tools/src/judge-format.ts",
+    "packages/tools/src/judge.ts",
+    "packages/tools/src/parley-archive.ts",
+    "packages/tools/src/parley-audit.test.ts",
+    "packages/tools/src/parley-fixtures.ts",
+    "packages/tools/src/parley-injections.ts",
+    "packages/tools/src/parley-local-suite.ts",
+    "packages/tools/src/parley-report.ts",
+    "packages/tools/src/provenance.ts",
+    "packages/tools/src/report.ts",
+    "packages/tools/src/save.test.ts",
+    "packages/tools/src/season-fixtures.ts",
+    "packages/tools/src/season-policy.ts",
+    "packages/tools/src/season.test.ts",
+    "packages/tools/src/soak.ts",
+    "packages/tools/src/u1-replay.ts",
+    "packages/tools/src/u2-replay.ts",
+    "packages/tools/src/u3-replay.ts",
+    "packages/tools/src/w7-authorities.ts",
+    "packages/tools/src/w7-director.ts",
+    "packages/tools/src/w7-replay.ts",
+    "packages/tools/src/w7-soak.ts",
+    "packages/tools/src/camp.test.ts (lines 1-80)",
+    "packages/tools/src/parley.test.ts (lines 1-60)",
+    ".claude/scan-sweep/config.md",
+    "tiger/backlog.md",
+    "docs/campaign/status.md (lines 40-50)",
+    "packages/director/src/save.ts (lines 22-30)"
+  ],
+  "cards": [
+    {
+      "context": "evidence-judging",
+      "slot": "A",
+      "lens": "architecture-challenger",
+      "title": "One evidence-record kernel: registry-driven replay-save and school census",
+      "size": "M",
+      "effort": 6,
+      "impact": 7,
+      "risk": 5,
+      "write_set": [
+        "packages/tools/src/evidence-record.ts",
+        "packages/tools/src/evidence-record.test.ts",
+        "packages/tools/src/replay-save.ts",
+        "packages/tools/src/school-census.ts",
+        "packages/tools/src/u1-replay.ts",
+        "packages/tools/src/u2-replay.ts",
+        "packages/tools/src/u3-replay.ts",
+        "packages/tools/src/w7-replay.ts",
+        "packages/tools/src/h1-report.ts",
+        "packages/tools/src/cf-report.ts"
+      ],
+      "new_files": [
+        "packages/tools/src/evidence-record.ts",
+        "packages/tools/src/evidence-record.test.ts",
+        "packages/tools/src/replay-save.ts",
+        "packages/tools/src/school-census.ts"
+      ],
+      "shared_surfaces": [
+        "docs/waves/*-evidence/replay-save.json (record shape is read by wave reports; keys must stay identical)",
+        "packages/tools/src/cf1-browser.ts:27 and packages/tools/src/u3-browser.ts:51 also hand-parse MAGE_EVIDENCE (can adopt the registry later; not in this write set)"
+      ],
+      "acceptance": [
+        "case 1: resolveWave('W8') with docs/waves/W8-evidence present -> 'docs/waves/W8-evidence/replay-save.json' (today u3-replay.ts:48 regex rejects W8 with 'Invalid evidence destination')",
+        "case 2: resolveWave('X9') (no docs/waves/X9-evidence dir) -> throws /Invalid evidence destination/",
+        "case 3: replaySaveRecord({wave:'CF2', make: () => fixtureService()}) -> record.command === 'npx tsx packages/tools/src/replay-save.ts --wave CF2' (today the CF2 record says 'npx tsx packages/tools/src/u3-replay.ts', which reruns into U3)",
+        "case 4: replaySaveRecord with a make() whose two runs encode differently -> record.passed === false and the CLI exits non-zero (today passed:true is a literal, u1-replay.ts:45)",
+        "case 5: Object.keys(replaySaveRecord({...}).record) deep-equals Object.keys of the committed docs/waves/U6c-evidence/replay-save.json (label, command, sourceHash, policyHash, firstHash, secondHash, loadedHash, bytes, day, receipts, exactBytes, passed)",
+        "case 6: schoolCensus({seeds:[7331,7332], extras:[]}).summary[i] keys === cf-report.ts summary keys; schoolCensus({..., extras:['staggers','cancelledCasts','hitsToDefeat']}) adds exactly h1-report.ts's extra keys and the shared columns are value-identical between the two variants",
+        "case 7: legacy shim u1-replay.ts still targets docs/waves/U1-evidence/replay-save.json (path preserved for the commands quoted in docs/waves/*.md)"
+      ],
+      "premise": [
+        "packages/tools/src/u1-replay.ts:12-56 - full 14-day double replay + round-trip + record; u2-replay.ts is identical except lines 31 and 48 (diff shows only the command string and output path)",
+        "packages/tools/src/u3-replay.ts:47-48 - destination is a hand-maintained regex /^(U[3456]|CF[12]|H1|U6b|U6c)$/; docs/waves/W8-evidence exists (git ls-files) but has no replay-save.json and cannot get one without editing the regex",
+        "packages/tools/src/w7-replay.ts:5-13 - fourth copy of the same script, compressed onto one line per step",
+        "packages/tools/src/u1-replay.ts:45 - passed: true is hard-coded; the asserts at :16-27 throw instead of recording a failed verdict",
+        "docs/waves/CF2-evidence/replay-save.json - command field is 'npx tsx packages/tools/src/u3-replay.ts' (no MAGE_EVIDENCE), so the stamped command does not reproduce the record; same for CF1, H1, U4, U5, U6, U6b, U6c records",
+        "docs/waves/CF-report.md:104, docs/waves/H1-report.md:93, docs/waves/U4-report.md:94 - the real command needs $env:MAGE_EVIDENCE, which the record never captures",
+        "packages/tools/src/h1-report.ts:28-72 vs packages/tools/src/cf-report.ts:25-43 - same census loop (schools x seeds 7331..7430), same method string (:103 vs :69), same median/summary; diff is 51 lines, h1 only adds staggers/cancelledCasts/hitsToDefeat",
+        "no packages/**/*.test.ts reads any replay-save.json (grep 'replay-save' over *.test.ts returns nothing) - the 12 records are unchecked by the gate",
+        "packages/director/src/save.ts:24 - sourceHash covers data, packages/core/src and packages/director/src only, not packages/tools/src, so moving the recorder code changes no record's sourceHash; policyHash (u1-replay.ts:33-37) hashes season-policy.ts + season-fixtures.ts, which this card does not touch"
+      ],
+      "rollback": "Series of 3 commits (kernel+tests, replay-save + shims, school-census + shims); each reverts alone. Shims keep every documented command path working, so a revert leaves no orphaned docs. No simulator code or evidence JSON is modified.",
+      "gate": "architecture",
+      "runner_up": "Split report.ts (451-line top-level script mixing tamper validation, aggregation and Markdown) into pure w1-verify/w1-summary/w1-render modules with tests on the tamper throws at report.ts:85-101.",
+      "body": "## Summary\nFour copies of the season replay-save script (u1, u2, u3, w7) and two copies of the school census (h1-report, cf-report) are the evidence spine for every wave since U1, yet each new wave means editing a hand-maintained regex, the records stamp a command that does not reproduce them, and `passed` is a literal. Fold them into one evidence-record kernel with a derived wave registry.\n\n## Description\n`evidence-record.ts` owns `resolveWave(id)` (derived from `docs/waves/<id>-evidence/` existing, replacing u3-replay.ts:48's regex), `stampCommand(entry, args)` (the record's `command` is the argv that actually ran, including `--wave`), and `writeRecord(path, record)` (stable key order, trailing newline, as today). `replay-save.ts` is the one parameterized replay: `replaySaveRecord({wave, make})` runs `make` twice, round-trips, and derives `passed` from the hash equalities instead of asserting and then writing `true`. `school-census.ts` is the one census loop with an `extras` column set; h1-report.ts and cf-report.ts become 3-line shims selecting their wave and extras. u1/u2/u3/w7-replay.ts become shims so every command quoted in docs/waves/*.md still works.\n\n## Flow\n- Builder writes evidence-record.test.ts cases 1-7 first (red: modules missing).\n- Extract the kernel; port replay-save with an injectable `make` so tests use a day-1 fixtureService, not two 14-day seasons.\n- Port the census with an injectable seed list; shims for the six legacy entry points.\n- `npm run gate` green; replay goldens and VR vectors untouched (no packages/core change).\n\n## Expected impact\nNew waves (W8 today) get a replay-save record with zero code edits; every record's `command` reproduces it; a failed double replay is recorded as `passed:false` instead of a crash with no record; about 250 duplicated lines become one tested module.\n\n## Evaluation\nClaim: the evidence recorders become one tested, registry-driven kernel.\nBefore: 0 of 7 acceptance cases pass (no kernel; W8 rejected; CF2 command wrong; passed literal)\nAfter: 7 of 7\nMethod: gate - vitest evidence-record.test.ts inside `npm run gate`\nResult: better\nGate: architecture",
+      "evidence": "diff u1-replay.ts u2-replay.ts -> only lines 31 (command) and 48 (path) differ. diff u2 u3 -> command line + lines 47-48 MAGE_EVIDENCE regex. diff h1-report.ts cf-report.ts | wc -l -> 51. docs/waves/*/replay-save.json: 12 records; 9 carry command 'npx tsx packages/tools/src/u3-replay.ts' including CF1, CF2, H1, U4, U5, U6, U6b, U6c (all passed:true). ls docs/waves: W8-evidence exists, no replay-save.json. grep replay-save over packages/**/*.test.ts -> none."
+    },
+    {
+      "context": "evidence-judging",
+      "slot": "B",
+      "lens": "ux-elevation",
+      "title": "Owner blind read that records its verdict: capture, unblind, report",
+      "size": "M",
+      "effort": 6,
+      "impact": 7,
+      "risk": 5,
+      "write_set": [
+        "packages/tools/src/blind-pair.ts",
+        "packages/tools/src/blind-pair.test.ts",
+        "packages/tools/src/blind.ts",
+        "packages/tools/src/blind-score.ts",
+        "packages/tools/src/blind-check.ts",
+        "packages/tools/src/report.ts",
+        "package.json"
+      ],
+      "new_files": [
+        "packages/tools/src/blind-pair.ts",
+        "packages/tools/src/blind-pair.test.ts",
+        "packages/tools/src/blind-score.ts"
+      ],
+      "shared_surfaces": [
+        "docs/waves/W1-evidence/OWNER-READ.html and blind-source-map.json (regenerated by blind.ts; not listed in archive.ts:10-20 so not an archive-manifest file)",
+        "docs/campaign/status.md:46 row (the owner updates it from the scored result; the card does not edit it)"
+      ],
+      "acceptance": [
+        "case 1: renderBlindPage(three pairs) -> HTML with 3 <section>, 6 <article>, and per morning a radio group name='morning-N' with values A|B|tie plus a notes <textarea>; body text does not match blind-check.ts:21's source-label regex",
+        "case 2: exportResponses(formState) -> JSON {pageHash, responses:[{morning, choice, notes}]} containing no source label string (sonnet|claude|ollama|planner|live)",
+        "case 3: parseResponses with choice 'C', an unknown morning 4, or a duplicate morning -> throws; a valid 3-row file -> parsed rows",
+        "case 4: parseResponses with pageHash != hash(current OWNER-READ.html) -> throws /stale page/ (answers are bound to the page that was read)",
+        "case 5: unblind(mapping where mornings 1 and 3 have live on A and morning 2 has live on B, responses [A, A, tie]) -> {live:1, planner:1, tie:1, unanswered:0}",
+        "case 6: ownerReadLine(null) -> 'Owner blind read: pending.'; ownerReadLine({live:1,planner:1,tie:1,unanswered:0}) -> 'Owner blind read: recorded 3/3 - live 1, planner 1, tie 1 (owner, felt, n=3).'",
+        "case 7: side assignment for sample i is deterministic and alternates as blind.ts:60 does today (liveLeft = sample % 2 === 0), so regenerating the page keeps the committed blind-source-map.json identical"
+      ],
+      "premise": [
+        "packages/tools/src/blind.ts:70 - the only response channel is a printed line 'Preference: A / B / no preference  Notes: ____'; nothing on the page can be selected or saved",
+        "packages/tools/src/blind.ts:60-69 - the A/B to source mapping is written to blind-source-map.json, but no code reads it back (grep: blind.ts writes it, blind-check.ts:21 lists it only as a forbidden word)",
+        "packages/tools/src/report.ts:424 - 'Owner blind reading remains pending. Nothing is labelled felt.' is a hard-coded string; the W1 decision at report.ts:426 can never incorporate the owner read",
+        "docs/campaign/status.md:46 - 'Owner blind read of generated mornings | pending | W1'; docs/campaign/status.md:48 owner feel 'not measured'",
+        "docs/MAGE-ARENA-PLAN.md:116 - the W1 gate names the blind owner read, and its KILL option is to promote the planner to the default with the model narrating only - the live-vs-planner question this read answers",
+        "packages/tools/src/blind-check.ts:16-22 - the browser check asserts 3 sections, 6 articles and no source labels; the capture form must keep all three true"
+      ],
+      "rollback": "Two commits (blind-pair module + tests + page form; blind-score + report line). Reverting the second leaves a page that captures but is not scored; reverting both restores the paper form. The regenerated OWNER-READ.html is the only evidence file touched and blind.ts reproduces it.",
+      "gate": "direction",
+      "runner_up": "Judge diagnostic status surface: `judge --status` reads judge.jsonl + judge-attempts.jsonl and prints per-night coverage, failed attempts and the next resumable index before any call is reserved (judge.ts:46-49).",
+      "body": "## Summary\nThe owner blind read of Director mornings has been 'pending' since W1 because the page is a paper form: there is nowhere to click, nothing to save, and no code that unblinds an answer. Make the page capture A/B/tie and notes, export a label-free response file bound to the page hash, and score it against the kept mapping so the W1 report states the owner's verdict.\n\n## Description\n`blind-pair.ts` holds the pure parts: deterministic side assignment (unchanged rule), `renderBlindPage` with an inline, dependency-free form (radios + textarea + a 'Save my answers' button that downloads `owner-read-responses.json`), `exportResponses`, `parseResponses` (closed vocabulary, unique mornings, pageHash binding), `unblind` and `ownerReadLine`. blind.ts uses it to render; `blind-score.ts` (`npm run blind:score -- <file>`) unblinds into `docs/waves/W1-evidence/owner-read-result.json` labelled 'owner, felt, n=3'; report.ts:424 renders `ownerReadLine(result)` instead of a constant. The page still shows no source label; the mapping never enters the page or the response file.\n\n## Flow\n- Owner opens OWNER-READ.html, picks A/B/tie per morning, adds notes, clicks Save (one step instead of print, write, transcribe, unblind by hand).\n- Operator runs `npm run blind:score -- owner-read-responses.json`; `npm run report` shows the verdict.\n- A stale or tampered response file is refused with the reason.\n\n## Expected impact\nThe first owner-felt measurement in the evidence system gets a path from the page to the report; the live-Director vs planner decision (PLAN 116) gets its owner input. The module is reusable for any later blind A/B read.\n\n## Evaluation\nClaim: the blind read can be answered, saved, unblinded and reported.\nBefore: 0 of 7 acceptance cases pass (no form, no export, no scorer, constant report line)\nAfter: 7 of 7\nMethod: gate - vitest blind-pair.test.ts inside `npm run gate`; blind-check.ts (Playwright) stays a coordinator smoke\nResult: better\nGate: direction",
+      "evidence": "blind.ts:70 '<p class=\"response\">Preference: A / B / no preference &nbsp; Notes: ______</p>'; report.ts:424 'Fable's six W0 fixes ... Owner blind reading remains pending. Nothing is labelled felt.'; status.md:46 '| Owner blind read of generated mornings | pending | W1 | |'; grep blind-source-map packages -> blind.ts (writer), blind-check.ts (forbidden-word list), no reader."
+    }
+  ]
+}

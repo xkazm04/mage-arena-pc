@@ -1,0 +1,143 @@
+{
+  "context": "vr-replay-tools",
+  "scout": "claude-opus-5-5",
+  "base_sha": "2d83a1e",
+  "read": [
+    "packages/tools/package.json",
+    "packages/tools/vr/README.md",
+    "packages/tools/vr/VECTORS.md",
+    "packages/tools/vr/conformance.mjs",
+    "packages/tools/vr/drift.mjs",
+    "packages/tools/vr/drift.test.mjs",
+    "packages/tools/vr/tuning-return.mjs",
+    "packages/tools/vr/tuning-return.test.mjs",
+    "packages/tools/vr/vectors.mjs",
+    "packages/tools/vr/vectors.test.mjs",
+    "packages/tools/vr/vectors/water-hand.vector.json (head + structure)",
+    "packages/tools/replay/check.mjs",
+    "packages/tools/replay/cli.mjs",
+    "packages/tools/replay/hour-days.mjs",
+    "packages/tools/replay/reference.mjs",
+    "packages/tools/replay/replay.test.mjs",
+    "packages/tools/replay/request-key.mjs",
+    "packages/tools/replay/scenarios.mjs",
+    "packages/tools/replay/tables.mjs",
+    "packages/tools/w1b-supervisor.mjs",
+    "packages/tools/art/import-u6b.py",
+    "packages/tools/art/import-u6c.py",
+    "packages/tools/art/pack-a10.py",
+    "packages/tools/audio/import-kept.py",
+    "packages/tools/art/derive-normal-map.py (header)",
+    "packages/tools/audio/encode-full-tracks.py (header)",
+    "packages/tools/art/frame-probe-1440.mts (header)",
+    "packages/tools/art/gl-proof/gl-proof.mts (header)",
+    ".claude/scan-sweep/config.md",
+    "tiger/backlog.md",
+    ".spark/Spark/ideas/*.md (headers + grep for tools/vectors)",
+    "docs/change-requests/README.md",
+    "docs/change-requests/CR-008.md",
+    "packages/core/src/arena/games.ts:29-47",
+    "packages/core/src/arena/types.ts:87",
+    "packages/core/src/arena/data/school-balance.pc.json"
+  ],
+  "cards": [
+    {
+      "context": "vr-replay-tools",
+      "slot": "A",
+      "lens": "architecture-challenger",
+      "title": "One VR parity harness: shared bout builder, comparator and diff record",
+      "size": "M",
+      "effort": 6,
+      "impact": 7,
+      "risk": 5,
+      "write_set": [
+        "packages/tools/vr/harness.mjs",
+        "packages/tools/vr/harness.test.mjs",
+        "packages/tools/vr/conformance.mjs",
+        "packages/tools/vr/vectors.mjs",
+        "packages/tools/vr/drift.mjs",
+        "packages/tools/vr/vectors.test.mjs",
+        "packages/tools/vr/drift.test.mjs",
+        "packages/tools/vr/README.md"
+      ],
+      "new_files": [
+        "packages/tools/vr/harness.mjs",
+        "packages/tools/vr/harness.test.mjs"
+      ],
+      "shared_surfaces": [],
+      "acceptance": [
+        "case 1: harness.createBout(k, {seed:7, preset:'Rotation', startWave:0, referencePlayer:false, difficulty:null, balance:'canonical'}) -> games.state has no 'difficulty' key, no actor has 'pace', state.balance==='canonical', built through createGames options {unpaced:true, balance:'canonical'} (no post-create deletes)",
+        "case 2: 600 idle stepGames ticks from harness.createBout(difficulty:null) -> actors' hp/pos and event count deepEqual the old hand-strip path (delete state.difficulty + actor.pace) on seed 7",
+        "case 3: conformance games vector (driver 'games', e.g. a synthetic soldiers-bout setup) built through the harness -> 'difficulty' in games.state === false (today conformance.mjs:258 builds it paced, so this is red first)",
+        "case 4: harness.compare with the reverse-vector policy -> actors[0].x off by 9e-7 passes, by 2e-6 fails with path 'actors[0].x'; with the conformance policy -> {rng:4000000000} vs {rng:4000000001} fails at 'rng', stateHash differences are skipped, {d:null} vs {d:undefined} passes",
+        "case 5: replayVector(planted water-hand) and replayConformance(planted bolt-hit-shaped vector) -> both return diff records with the same keys {tick, when, path, expected, actual, detail}; harness.renderDiff gives one line format for both",
+        "case 6: source scan of packages/tools/vr/*.mjs (non-test) -> no 'delete games.state' and no 'delete a.pace' remain; water-hand.vector.json still passes and recordVector(skeleton) re-records it deepEqual (existing test unchanged)"
+      ],
+      "premise": [
+        "packages/tools/vr/vectors.mjs:47-60 - createBout builds a Games then mutates kernel state: delete games.state.difficulty, delete each actor.pace, sets state.balance by assignment",
+        "packages/tools/vr/vectors.mjs:54 - the comment still files '(Request: an unpaced createGames option.)'",
+        "packages/core/src/arena/games.ts:29 - createGames already takes options { balance?: 'canonical'; unpaced?: true; ... } (added in d09a474, after lane T's 8602307)",
+        "packages/core/src/arena/games.ts:35-36 - unpaced passes undefined difficulty to createArena; balance is set from options",
+        "packages/tools/vr/conformance.mjs:258 - the conformance games driver calls k.createGames(v.seed, preset, startWave, referencePlayer) with the default difficulty, so VR's games vectors replay PACED",
+        "packages/tools/vr/VECTORS.md:50 - 'VR records null' (unpaced, how VR runs); the pinned kernel baeac66 createGames has no difficulty parameter at all (git show baeac66:packages/core/src/arena/games.ts:11)",
+        "packages/tools/vr/conformance.mjs:28-72 and packages/tools/vr/vectors.mjs:98-123 - two comparators re-implementing the same tolerance rule (close/firstDiff vs compareNumber/checkpointMismatch)",
+        "packages/tools/vr/drift.mjs:101 and packages/tools/vr/vectors.mjs:173-178 - two diff shapes ({tick,when,field,detail} vs {tick,checkpoint,path,expected,actual}) and two renderers"
+      ],
+      "rollback": "Series of 3 commits (harness + tests; vectors.mjs onto harness; conformance.mjs + drift.mjs onto harness). Tool-only, no kernel or vector file touched; git revert of the series restores both replayers byte for byte.",
+      "gate": "architecture",
+      "runner_up": "Design-artifact registry for packages/tools/replay: one {path, derive(t)} table drives cli.mjs generate, check drift and orphanFixtures (today the 5 writes in cli.mjs:12-16, the drift checks in cli.mjs:20-23 and check.mjs:118 generatedFixtures are three hand-lists).",
+      "body": "## Summary\nThe VR parity tooling has two replay engines that answer the same question - does PC's kernel still play a VR-recorded bout - with two bout builders, two comparators, two diff shapes and two renderers. They already disagree: reverse vectors replay unpaced (as VR runs), conformance games vectors replay paced. Pull the shared parts into one `harness.mjs` that every vector format adapts onto.\n\n## Description\n`vectors.mjs` builds a Games and then deletes kernel state (`state.difficulty`, every `actor.pace`) to unpace it, with a comment requesting an unpaced createGames option. That option now exists (`games.ts:29`, `unpaced` and `balance`), but the tool was never migrated. `conformance.mjs:258` builds VR's 7 games vectors with the default (paced) difficulty, although the pinned kernel (baeac66) had no pace, so every games-driver result in `vr:drift --vectors` is read under a rule VR never ran. The tolerance rule is written twice (`close`/`firstDiff`, `compareNumber`/`checkpointMismatch`), and the two diff records do not share keys, so a third vector source (Fire/Air reverse vectors from VR, W8) would be a third copy.\n\n## Flow\n- harness.mjs: `createBout(k, setup)` using only createGames options; `compare(expected, actual, policy)` with a field-policy table (ints exact, positions 1e-6 abs, else 1e-6 rel / 1e-9 abs, skip set); one `Diff` record; `renderDiff`; `cliMain(import.meta.url, fn)` guard.\n- vectors.mjs: setup -> harness.createBout; checkpointMismatch -> harness.compare with the reverse policy.\n- conformance.mjs: games createContext -> harness.createBout(difficulty:null); firstDiff -> harness.compare with the conformance policy; Mismatch carries a Diff.\n- drift.mjs renders through renderDiff.\n\n## Expected impact\nOne place states how PC replays a VR bout. Conformance games vectors stop being compared under PC-only pacing. A new vector format is a 30-line adapter, not a fourth copy of the comparator. No simulation outcome moves: the kernel is only called, never edited.\n\n## Evaluation\nClaim: both replayers build bouts only through kernel options and share one comparator and diff record.\nBefore: 0 of 6 acceptance cases pass (no harness.mjs; conformance games bouts are paced; tools mutate kernel state).\nAfter: 6 of 6\nMethod: gate - node --test packages/tools/vr/*.test.mjs, then npm run gate (replay golden hashes and parity vectors unchanged; tool-only change).\nResult: better\nGate: architecture",
+      "evidence": "Probe (scratch, read-only): createGames(7, Rotation, 0, false, ..., {}) + hand-strip vs createGames(..., {unpaced:true, balance:'canonical'}), 600 idle ticks -> actors' hp/pos equal, 31 vs 31 events, 'difficulty' in state false, no actor pace. So the hand-strip is replaceable by the kernel option with identical outcomes. `git show baeac66:packages/core/src/arena/games.ts` line 11: `createGames(seed, composition, startWave, referencePlayer)` - no difficulty in the pinned kernel. Re-running VR's games vectors unpaced moves duel-competence-1-5's first diff from events[2] to events[4], so pacing is a live factor in today's games-vector report. grep: vectors.mjs:55 `delete games.state.difficulty`; conformance.mjs:258 4-argument createGames."
+    },
+    {
+      "context": "vr-replay-tools",
+      "slot": "B",
+      "lens": "ux-elevation",
+      "title": "vr:drift --vectors triage: mask PC-only events, group diffs by cause, flag residue",
+      "size": "M",
+      "effort": 6,
+      "impact": 8,
+      "risk": 5,
+      "write_set": [
+        "packages/tools/vr/conformance.mjs",
+        "packages/tools/vr/drift.mjs",
+        "packages/tools/vr/triage.mjs",
+        "packages/tools/vr/triage.test.mjs",
+        "packages/tools/vr/divergences.json",
+        "packages/tools/vr/drift.test.mjs",
+        "packages/tools/vr/README.md",
+        "docs/change-requests/README.md"
+      ],
+      "new_files": [
+        "packages/tools/vr/triage.mjs",
+        "packages/tools/vr/triage.test.mjs",
+        "packages/tools/vr/divergences.json"
+      ],
+      "shared_surfaces": [
+        "packages/tools/vr/conformance.mjs (also in slot A's write set: build after A, or land the mask as a replayConformance option A keeps)"
+      ],
+      "acceptance": [
+        "case 1: replayConformance(k, v, {maskEventKinds:['release']}) on a vector recorded from the PC kernel with its 'release' events removed (and eventCount rows recomputed) -> pass; the same vector with no mask -> fails at an events[i] path whose PC event kind is 'release'",
+        "case 2: a vector whose own events list contains a masked kind -> result is an error 'mask hides kind release that the vector carries' (a mask may never hide a kind VR emits)",
+        "case 3: groupDiffs over 5 failing games results with field actors[1].x at tick 0 and 4 training results at telegraphs[0].resolveTick -> 2 groups keyed {driver, field with indices normalised}, counts 5 and 4, vector names listed",
+        "case 4: a divergences.json entry {id:'x', cr:'CR-003', match:{driver:'games', field:'actors[].x', tick:0}} -> matching results tagged explained:'x (CR-003)'; a planted diff on a field no entry matches -> stays unexplained",
+        "case 5: renderText with a triaged report -> header 'Conformance vectors against PC HEAD: P/T pass (masked: release, stagger, phase; --strict for raw)', then 'explained' groups with their CR, then 'unexplained' groups with count and names",
+        "case 6: parseArgs(['--vectors','--strict']) -> no mask applied and results equal today's replay (raw 2/45 on the real checkout); parseArgs(['--vectors','--fail-on-unexplained']) with one unexplained group -> process exit code 1, 0 when all are pass or explained",
+        "case 7 (real VR checkout, skips when absent): masked pass count >= strict pass count, and every masked kind is absent from every VR vector's events list"
+      ],
+      "premise": [
+        "packages/tools/vr/drift.mjs:99-101 - the --vectors section prints 'P/T pass' then one first-diff line per vector, with no grouping or cause",
+        "packages/core/src/arena/types.ts:87 - ArenaEvent kinds include 'release', 'stagger', 'phase'; the 45 VR vectors' events hold only cast, hit, down, interrupt, roll, unlock, perfect (counted across mage-arena-vr apps/vr/data/conformance/*.json)",
+        "packages/core/src/arena/kernel.ts:216 and :284, packages/core/src/arena/water.ts:79 - PC emits 'release' on every Water release, so nearly every Water vector's first diff is that PC-only event",
+        "packages/tools/vr/conformance.mjs:75-77 - the precedent: a declared PC adapter (isDown) so a representation change is not reported as a rule change",
+        "packages/tools/vr/conformance.mjs:123, :142-144, :310 - eventCount, exportEvents and the event prefix read state.events whole; a mask belongs in the exported view only (state.events is never filtered, rival-plan.ts:38 reads release events)",
+        "docs/change-requests/README.md (Flow step 5) - vr:drift is the operator's surface for deciding what PC changed since the pin; the ledger names CR-003 threat geometry as ported"
+      ],
+      "rollback": "Three commits (mask option in conformance.mjs + tests; triage.mjs + divergences.json + tests; drift.mjs rendering/flags + docs). --strict keeps today's output, so reverting only the last commit restores the old report; full revert of the series is clean (tool-only, no kernel or vector file touched).",
+      "gate": "direction",
+      "runner_up": "vr:tuning-return writes into the CR it answers: a marked managed region (today --out overwrites the whole file, and CR-008 records '--out docs/change-requests/CR-008.md'), several --evidence files in one run, and the overlay's non-override blocks (exchange.*, hand-written in CR-008:14) listed as rule-absent rows.",
+      "body": "## Summary\n`npm run vr:drift -- --vectors` tells the operator '2/45 pass' and then 43 first-diff lines. Most of those lines are the same non-rule difference: PC emits a `release` event kind VR's kernel never recorded. Masking the PC-only kinds as a declared adapter lifts the same run to 17/45, and the 28 left fall into about seven groups. Turn the report from a wall of diffs into a triage: masked noise, explained groups linked to their CR, and a short unexplained residue the operator acts on.\n\n## Description\nAdd `maskEventKinds` to replayConformance (exported view only: exportEvents, eventCount and the event prefix filter the kinds; kernel state is untouched). Seed `divergences.json` with the proven mask (release, stagger, phase: in types.ts:87, absent from all 45 VR vectors) and a schema for cause entries `{id, cr, note, match:{driver?, field, tick?}}`; cluster entries are added only when their cause is verified, so v1 ships the mask and an empty cause list. `triage.mjs` groups results by driver and normalised field, tags matches, and returns `{pass, explained[], unexplained[]}`. drift.mjs renders it, keeps `--strict` for the raw report and adds `--fail-on-unexplained` so a CI or pre-re-pin check can gate on the residue.\n\n## Flow\n- Operator runs vr:drift --vectors.\n- Header: P/T pass with the masked kinds named.\n- Explained groups (CR-linked) collapse to one line each.\n- Unexplained groups list count, field, tick span and vector names: the work queue before VR re-pins.\n- --json carries the same triage for the CR ledger.\n\n## Expected impact\nThe pre-re-pin decision (CR README step 5) goes from reading 43 diffs to reading about 7 groups. A real rule regression stands out as a new unexplained group instead of hiding among 40 'release' lines. Simulation outcomes do not change: this is read-side only.\n\n## Evaluation\nClaim: the conformance report separates PC-only representation noise and known causes from unexplained diffs.\nBefore: 0 of 7 acceptance cases pass (no mask option, no triage, no flags).\nAfter: 7 of 7\nMethod: gate - node --test packages/tools/vr/*.test.mjs (hermetic cases 1-6, real-checkout case 7 skips when VR is absent), then npm run gate.\nResult: better\nGate: direction",
+      "evidence": "Live run at 2d83a1e: `node packages/tools/vr/drift.mjs --vectors` -> 'Conformance vectors against PC HEAD: 2/45 pass' (reset-waves, tier-clock); first diffs are dominated by a PC event {kind:'release'} (bolt-hit, bot-duel, flow-crest, mirror-*, perfect-*, lash-*, mend-*, mire-*, tide-orb-*). Scratch probe (a copy of conformance.mjs whose exported view filters kinds release,stagger,phase; kernel state untouched) -> 17/45 pass. Remaining 28 group as: arena actors[1].x small offsets (11: bolt-hit, lash-1/2b/3/4, mire-1/3, mirror-2b/4, tide-orb-1/2/4a), games actors[1].x at tick 0 off by 8-9.2 m (5: creature-bout, soldiers-bout, tiro-ladder, tiro-sequence, wave-reset), training telegraphs[0].resolveTick (4: dummy-wave, held-ward, physical-ward, unblockable-ward), games event ticks (2), and singletons flow-crest events count, mage-react value, perfect-outside actors[0].x, soldier-wave nextId, bot-duel events[4].tick. VR vector event kinds counted across 45 files: cast 1674, hit 717, unlock 62, roll 33, down 26, perfect 13, interrupt 4 - no release/stagger/phase."
+    }
+  ]
+}

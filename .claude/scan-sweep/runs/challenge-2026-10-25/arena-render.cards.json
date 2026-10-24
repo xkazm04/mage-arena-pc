@@ -1,0 +1,134 @@
+{
+ "context": "arena-render",
+ "scout": "claude-opus-5-5",
+ "base_sha": "2d83a1e",
+ "read": [
+  "packages/game/src/animation-contract.ts",
+  "packages/game/src/arena-art.ts (head)",
+  "packages/game/src/arena-entry.ts",
+  "packages/game/src/arena-scene.ts",
+  "packages/game/src/body-player.ts",
+  "packages/game/src/body-policy.ts",
+  "packages/game/src/camera.ts",
+  "packages/game/src/combat-feedback.ts",
+  "packages/game/src/combat-readout.ts",
+  "packages/game/src/depth.ts",
+  "packages/game/src/effect-player.ts",
+  "packages/game/src/feet-meter.ts",
+  "packages/game/src/frame-probe.ts",
+  "packages/game/src/pixi-fixes.ts",
+  "packages/game/src/quality.ts",
+  "packages/game/src/sigil-contract.ts",
+  "packages/game/src/sigil-player.ts",
+  "packages/game/src/bout-reader.test.ts (1-80)",
+  "packages/game/src/bout-reader-ui.ts (50-80)",
+  "packages/game/src/lab-ui.ts (1128-1160)",
+  "packages/core/src/arena/mage-ai.ts (20-80)",
+  "packages/core/src/arena/ledger.ts (1-66)",
+  "packages/core/src/arena/math.ts (8-14)",
+  "packages/core/src/arena/water.ts (161-163)",
+  "packages/game/data/combat-feedback.json",
+  "docs/concepts/D2-combat-visuals-art-animation-sound.md (1-140)",
+  ".claude/scan-sweep/config.md",
+  "tiger/backlog.md",
+  ".spark/Spark/ideas/*.md (headers)"
+ ],
+ "cards": [
+  {
+   "context": "arena-render",
+   "slot": "A",
+   "lens": "architecture-challenger",
+   "title": "ArenaSession: one driver per arena mode instead of ArenaGame's flag soup",
+   "size": "L",
+   "effort": 7,
+   "impact": 8,
+   "risk": 6,
+   "write_set": [
+    "packages/game/src/arena-entry.ts",
+    "packages/game/src/arena-session.ts",
+    "packages/game/src/arena-session.test.ts",
+    "packages/game/src/bout-reader.test.ts"
+   ],
+   "new_files": [
+    "packages/game/src/arena-session.ts",
+    "packages/game/src/arena-session.test.ts"
+   ],
+   "shared_surfaces": [
+    "ArenaGame public fields read by hud/arena-hud.ts, lab-ui.ts, game-shell.ts, screens/*.ts (mode, games, lab, practice, paused, training, pause(), resetLab(), stepLabOnce(), endPractice()) - kept as facade getters, so those files are NOT in the write set"
+   ],
+   "acceptance": [
+    "case 1: TiroSeason session driven by the bout-reader fight(12) inputs (applied via session.step) -> bout.log deep-equals the flushed entries and the tape holds one checkpoint per wave start; bout-reader.test.ts's hand-rolled loop (line 7: 'ArenaGame's season loop without the canvas') is replaced by the real session and its 3 existing assertions still pass",
+    "case 2: TiroLocal session seed 4, 600 ticks of a fixed InputFrame -> stateHash equals direct stepGames x600 + observeLedger on a twin createGames(4, presets[0]) and the session ledger entries deep-equal the twin's",
+    "case 3: Practice session entered from BoutReader.at mid-wave, stepped 120 ticks -> boutHash(bout) and JSON(bout.log) unchanged; exitPractice returns a session whose games object and ledger are the very (===) live ones",
+    "case 4: every transition (restart, startGames, startRoster, resetLab, next, takeOver, endPractice) returns the same PresentationReset shape {eventsFrom: state.events.length, lastPerfect: -1e9, impactReset: true, lastPhase: <live phase or ''>} -> endPractice now resets lastPerfect too (today it does not, arena-entry.ts:858-871)",
+    "case 5: ledger precedence table: lab -> lab.ledger; tiro/practice -> bout ledger or undefined; training/roster -> a drill ledger attached to the current state; leaving a training session detaches its drill ledger (tap count on the old state returns to 0)",
+    "case 6: canStep table -> false when player DEFEATED, a flush is pending, syncError set, reader screen up, Lab replay active, or holdFirstFrame; true otherwise (the 9-term gate of arena-entry.ts:960-969 as one tested predicate)",
+    "case 7: Roster session step -> stateHash equals direct stepArena({...enemyInputs(state), [player]: input}) + queueDeathEffects on a twin",
+    "case 8: npm run gate green with replay-golden.test.ts and VR vectors unchanged (no core file in the write set)"
+   ],
+   "premise": [
+    "packages/game/src/arena-entry.ts:102-116 - mode is carried by six independent optional fields (games, ledger, lab, labUI, reader, practice) plus a separate mode union and paused; nothing ties them together",
+    "packages/game/src/arena-entry.ts:960-1000 - the per-tick step is a 9-condition gate followed by a 6-branch if-ladder (lab / practice / season / local tiro / roster / training) inside frame()",
+    "packages/game/src/arena-entry.ts:1004-1013 - which state is shown is a second ladder (reader vs lab replay vs live)",
+    "packages/game/src/arena-entry.ts:553-582, 838-857, 858-871, 892-912 - restart, takeOver, endPractice and next each hand-reset lastEvents / lastPerfect / impactClock / lastPhase; endPractice omits lastPerfect, takeOver omits flowTip",
+    "packages/game/src/arena-entry.ts:542-544 - ledger precedence lab ?? ledger ?? drill is an implicit rule, recomputed every frame",
+    "packages/game/src/bout-reader.test.ts:7 - the season loop is re-implemented in a test because ArenaGame needs a Pixi CanvasUI to exist, so the real loop has no unit test",
+    "packages/game/src/arena-entry.ts:816-822 - seasonStep (apply, observe, tape on advance, queue) is the contract the test re-implements"
+   ],
+   "rollback": "Two commits: (1) add arena-session.ts + tests (pure, unused); (2) route ArenaGame through it with facade getters and swap bout-reader.test.ts to the real session. Revert (2) alone restores today's ArenaGame; revert both removes the module.",
+   "gate": "architecture",
+   "runner_up": "One PresentationEventFeed shared by CombatFeedback, SigilPlayer, EffectPlayer, BodyPlayer and ArenaGame.consumeEvents: five hand-copied event cursors with their own swap/rewind detection and staleness windows (60 ticks vs combat.simStepHz).",
+   "body": "## Summary\nArenaGame (1,210 lines) is the arena's mode machine, but the mode lives in six optional fields and two if-ladders. Extract a pure `arena-session.ts`: one driver per mode (Training, Roster, TiroLocal, TiroSeason, Practice, Lab) behind one interface, and one `enter()` transition that owns the presentation reset.\n\n## Description\nToday a new mode, or a fix to an existing transition, means editing the step gate (arena-entry.ts:960-969), the step ladder (970-1000), the shown-state ladder (1004-1013), the ledger precedence (542-544) and each of four hand-copied reset sequences, which already disagree (endPractice keeps lastPerfect). The season loop, the one path whose output is sent to the server, cannot be unit-tested, so bout-reader.test.ts re-implements it (line 7).\n\nThe move:\n- `ArenaSession` interface: `kind`, `state`, `player`, `step(input)`, `ledger()`, `phase()`, `canStep(ctx)`, `exit()`.\n- Six small drivers wrapping the exact core calls used today: stepLab, stepGames + observeLedger, seasonStep, stepArena + enemyInputs + queueDeathEffects, stepTraining / timingBot.\n- `enter(next)` returns a `PresentationReset` that ArenaGame applies in one place.\n- ArenaGame keeps `mode`, `games`, `lab`, `practice` as getters, so hud/arena-hud.ts, lab-ui.ts, game-shell.ts and screens/* do not change.\n\nThe harness fixture block (arena-entry.ts:216-511) stays where it is: moving it would break the line budget, and it is a separate follow-up.\n\n## Flow\n- frame(): `if (session.canStep(ctx)) alpha = clock.advance(dt, () => session.step(input.frame()))`\n- shown = session.shown(reader, labUI); ledger = session.ledger()\n- takeOver / endPractice / next / restart -> `apply(host.enter(...))`\n\n## Expected impact\n- The season loop and every transition get real unit tests; the duplicate loop in bout-reader.test.ts goes away.\n- A new mode becomes one driver class (tiger C, the Lab replay takeover, already kept in tiger/backlog.md, would become a Practice driver over a Lab frame; that card is not built here).\n- The endPractice reset divergence is closed by construction.\n\n## Evaluation\nClaim: the six modes step through one tested interface, with outcomes identical to today's direct core calls.\nBefore: 0 of 8 acceptance cases pass (arena-session.ts does not exist; the season loop is only covered by a re-implementation).\nAfter: 8 of 8\nMethod: gate - vitest twin-state hash equality per driver (cases 2, 3, 7), the bout-reader suite on the real driver (case 1), table tests (4-6), plus npm run gate and npm run build:game.\nResult: better\nGate: architecture (restructures ArenaGame across modules; no core change)",
+   "evidence": "arena-entry.ts:116 `mode: \"training\" | \"roster\" | \"tiro\" | \"lab\"` beside :102 games?, :104 ledger?, :105 lab?, :110 reader?, :112 practice?. Reset copies: :572-575 (lastEvents=0, lastPerfect, impactClock.reset, lastPhase), :850-853 (all four), :865-867 (lastEvents, lastPhase, impactClock; no lastPerfect), :900-903 (all four). bout-reader.test.ts:7 '/** ArenaGame's season loop without the canvas: step the client's bout, observe its ledger, reset on advance, tape wave starts. */'. Consumers of ArenaGame fields (grep game.<field>): hud/arena-hud.ts 15 refs, lab-ui.ts 6, game-shell.ts arena.paused/games/pause/hud/flush."
+  },
+  {
+   "context": "arena-render",
+   "slot": "B",
+   "lens": "ux-elevation",
+   "title": "Answer cues: the ward word before the contact, graded by the kernel's own rule",
+   "size": "M",
+   "effort": 6,
+   "impact": 8,
+   "risk": 5,
+   "write_set": [
+    "packages/game/src/answer-cue.ts",
+    "packages/game/src/answer-cue.test.ts",
+    "packages/game/src/arena-scene.ts",
+    "packages/game/src/combat-feedback.ts",
+    "packages/game/data/combat-feedback.json",
+    "packages/game/src/arena-entry.ts"
+   ],
+   "new_files": [
+    "packages/game/src/answer-cue.ts",
+    "packages/game/src/answer-cue.test.ts"
+   ],
+   "shared_surfaces": [
+    "packages/game/data/combat-feedback.json (new answerCues block beside wardWords)",
+    "__arena.snapshot().feedback (adds cues[] for the harness)"
+   ],
+   "acceptance": [
+    "case 1: unblockable telegraph aimed at the player, ward up -> answerCues(state, player) returns one cue {activationId, mistake: 'leave', text: 'LEAVE'} and gradeContact on the same predicted facts agrees",
+    "case 2: magic projectile aimed, ward up, origin outside facing +/- absorbArcDeg/2 -> mistake 'behind' ('BEHIND' / turn); rotate facing toward the origin -> no mistake and expect 'perfect' when the predicted ageTicks <= windowTicks",
+    "case 3: magic threat aimed, ward down, impactTick - tick > windowTicks -> cue phase 'wait' with raiseInTicks = impactTick - windowTicks - tick; at impactTick - tick <= windowTicks -> phase 'raise' (windowTicks uses tuningFor(state).absorbWindowS + agilityPerfectWindowAddS, the ledger's formula)",
+    "case 4: physical (staff / lunge) threat aimed with the ward held -> mistake 'steel'",
+    "case 5: threat with aimedAtUs false, or one behind a live fog zone (hasLineOfSight false) -> no cue; the scene's emphasis set excludes its activationId",
+    "case 6: three aimed threats -> the cues are ordered by impactTick and only the first carries a word; a second word inside wardWords.minGapS is suppressed (reuses wordAllowed)",
+    "case 7: purity -> stateHash(state) before and after answerCues(state, player) is equal over 300 ticks of a training bout with the timing bot",
+    "case 8: policy -> answerCues.modes defaults to ['training','roster','lab']; cuesEnabled('tiro') is false until the owner opts the season in"
+   ],
+   "premise": [
+    "packages/game/src/combat-feedback.ts:145-150 - a ward word (STEEL / LEAVE / BEHIND / HELD +nf) exists only after a hit event: the player learns the right answer once it is too late to act on it",
+    "packages/core/src/arena/ledger.ts:39-51 - gradeContact(facts) is a pure, exported rule that maps {family, wardUp, inArc, ageTicks, windowTicks} to the mistake; ledger.ts:63 shows how the facts are computed from the actor at contact",
+    "packages/core/src/arena/mage-ai.ts:31-33 - threats(state, a) already returns per activation the family, origin, impactTick and aimedAtUs that the AI defends with; the game never calls it (grep threats( in packages/game/src: 0 hits)",
+    "packages/core/src/arena/water.ts:161-163 - line of sight (fog) is part of threats(), so a cue never shows what the AI could not see",
+    "packages/game/src/arena-scene.ts:61-66, 560-637 - every telegraph is drawn by family colour alone; nothing marks which of several threats will actually reach the player",
+    "packages/game/src/combat-readout.ts:16 - the module contract 'pure readers that put the kernel's own numbers on screen' is the home this extends"
+   ],
+   "rollback": "Single feature commit plus a data commit; answerCues.enabled=false in combat-feedback.json switches it off without a revert; reverting the commit removes answer-cue.ts and the scene hook.",
+   "gate": "direction",
+   "runner_up": "Art-debug overlay (F8) as an actionable operator panel: today it lists only body fallbacks (arena-scene.ts:1041-1063); page it to sigil/effect misses, dropped one-shots and the gate's pending pages from snapshot(), with one key to copy the frame-log record.",
+   "body": "## Summary\nShow the answer before the contact. For each threat that will reach the player, `answer-cue.ts` predicts the ContactFacts at impact and runs the kernel's own `gradeContact`. The scene then marks the threats that will land and shows one word: LEAVE, BEHIND, STEEL, or a RAISE timing cue for the perfect window.\n\n## Description\nThe ward words teach well, but only after the hit (combat-feedback.ts:145-150). Core already knows, before contact, which threats are aimed at the player, when they land and from where (mage-ai.ts:33 `threats`). It also knows how a contact will be graded (ledger.ts:39 `gradeContact`). The game reads neither, so a player facing three telegraphs cannot tell which one matters or whether the ward will catch it.\n\nThe new module calls only pure core readers (threats, gradeContact, inArc, tuningFor, agilityPerfectWindowAddS) and never writes state. Because the post-hoc word and the cue come from the same rule, they cannot drift apart.\n\nPresentation:\n- the threat sigil of each cued activation is drawn at full opacity and the others are dimmed;\n- the first cue's word sits above the player, through the CombatFeedback word pool, rate-limited by wardWords.minGapS.\n\nPresentation policy lives in data/combat-feedback.json `answerCues` (enabled, modes, dimOpacity, raiseLeadTicks). The default covers Training, Roster and the Lab. Whether cues appear in the season is the owner's call, so it is off there.\n\n## Flow\n- arena-entry frame(): `scene.feedback.cues = cuesEnabled(mode) ? answerCues(shown, shownPlayer) : []`\n- arena-scene telegraph/pending loops: the opacity comes from `cueFor(activationId)`\n- CombatFeedback.draw: one cue word over the player; snapshot().cues for the harness\n\n## Expected impact\n- The Proving Ground and the Lab become coaching surfaces: every ward mistake the ledger grades can be seen one reaction window earlier.\n- Several telegraphs on screen at once can be read: only the threats that will reach the player are emphasised.\n- No simulation change: replay goldens and VR vectors stay untouched (core is read only).\n\n## Evaluation\nClaim: the cue predicts the same mistake the ledger grades at contact, is pure, and is gated by mode.\nBefore: 0 of 8 acceptance cases pass (answer-cue.ts does not exist; the game never calls threats()).\nAfter: 8 of 8\nMethod: gate - vitest on answer-cue.ts with hand-built ArenaStates (cases 1-6, 8) and a timing-bot purity run (case 7); npm run gate and npm run build:game; the harness snapshot cues[] is available for a smoke run by the coordinator.\nResult: better\nGate: direction (a new player-facing capability; presentation only; season opt-in left to the owner)",
+   "evidence": "combat-feedback.ts:145-150: `let word = e.kind === \"hit\" && e.actorId === this.ledger?.actorId ? wardWord(gradeFor(this.ledger, e.tick, e.activationId)) : undefined; ... const label = e.kind === \"hit\" ? hitLabel(word, damage) : undefined;`. ledger.ts:12 `export type Mistake = 'steel' | 'leave' | 'behind' | 'late' | 'cast'`; :39 `export function gradeContact(f: ContactFacts): Grade`; :63 the facts `inArc: inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg), ageTicks: s.tick - target.absorbFreshTick, windowTicks: ticks(tune.absorbWindowS + agilityPerfectWindowAddS(target, s))`. mage-ai.ts:31 `interface Threat { id; family; origin; impactTick; aimedAtUs; damage; shape? }`, :33 `export function threats(state, a)`. index.ts re-exports mage-ai.ts, ledger.ts, math.ts, progression.ts. grep 'threats(|aimedAtUs|impactTick' packages/game/src (non-test): 0 hits."
+  }
+ ]
+}

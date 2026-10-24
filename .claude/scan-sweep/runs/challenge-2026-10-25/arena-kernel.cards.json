@@ -1,0 +1,77 @@
+{
+ "context": "arena-kernel",
+ "scout": "claude-opus-5-5",
+ "read": ["packages/core/src/arena/kernel.ts", "packages/core/src/arena/catalog.ts", "packages/core/src/arena/doors.ts", "packages/core/src/arena/enemies.ts", "packages/core/src/arena/exchange.ts", "packages/core/src/arena/geometry.ts", "packages/core/src/arena/index.ts", "packages/core/src/arena/math.ts", "packages/core/src/arena/types.ts", "packages/core/src/arena/shapes.ts", "packages/core/src/arena/fdlibm.ts", "packages/core/src/arena/replay-golden.test.ts", "packages/core/src/determinism-wall.test.ts", "packages/core/src/arena/ledger.ts", "packages/game/src/answers.ts", ".claude/scan-sweep/config.md", "tiger/backlog.md", ".spark/Spark/ideas/ (headings)"],
+ "cards": [
+  {
+   "context": "arena-kernel",
+   "slot": "A",
+   "lens": "architecture-challenger",
+   "title": "One contact verdict: the kernel decides guard/perfect, the ledger reads it",
+   "size": "M", "effort": 7, "impact": 8, "risk": 6,
+   "write_set": ["packages/core/src/arena/contact.ts", "packages/core/src/arena/contact.test.ts", "packages/core/src/arena/kernel.ts", "packages/core/src/arena/ledger.ts", "packages/core/src/arena/ledger.test.ts", "packages/game/src/answers.ts", "packages/game/src/answers.test.ts"],
+   "new_files": ["packages/core/src/arena/contact.ts", "packages/core/src/arena/contact.test.ts"],
+   "shared_surfaces": ["packages/core/src/arena/ledger.ts (arena-progression-tuning)", "packages/game/src/answers.ts (game: Lab answer line, Tiro results card, bout-reader marks)"],
+   "acceptance": [
+    "case 1: reference preset vs rival build fire_close, seeds 1-4, PC overlay on, player ledger -> 0 unclassified of 272 graded contacts (today 202 of 272); under exchangeOff the grades are identical to today (0 unclassified of 42)",
+    "case 2: target with ward DOWN holding an exchange window from owner (exchange.ts), owner within closeRangeM, magic blow -> contactVerdict = {guard:'window', reduction: exchangeRule.guardReduction, perfect:false}; ledger answer 'window' (new answer), not 'unclassified'",
+    "case 3: Air Form actor evades a projectile (air.ts evades draws the RNG) -> verdict channel reports outcome 'evaded' and no hit event exists; that actor's ledger records 'evaded', not 'unclassified'; randomLog length equals a run with no tap attached",
+    "case 4: fresh ward (age 0) vs a Brand Wrath beam tick after its first (hit.suppressPerfect) -> verdict.perfect false; ledger answer 'held', not 'perfect' or 'unclassified'",
+    "case 5: enemy with frontBlockDeg takes a front bolt -> verdict.shielded true and verdict.damage === the hit event's contactDamage",
+    "case 6: agreement property over games40000, soldiers40000 and one fire_close fight: for every contact verdict.damage === event.contactDamage, verdict.perfect === (perfect event present), (verdict.guard !== undefined && reduction > 0) === event.guarded",
+    "case 7: replay-golden.test.ts, parity/cr-002.test.ts, parity/cr-007.test.ts and packages/tools/vr drift/vectors tests pass with zero edits to those files",
+    "case 8: labAnswerLine / boutAnswerLines for case 1's ledger print the 'window' count and no 'Unclassified' line"
+   ],
+   "premise": [
+    "packages/core/src/arena/kernel.ts:106 - the ward rule (target.absorb && inArc(facing, source, tune.absorbArcDeg)) is decided here",
+    "packages/core/src/arena/kernel.ts:109 - an exchange window guards the blow when the ward did not (exchangeGuard); guarded = warded || windowReduction !== undefined",
+    "packages/core/src/arena/kernel.ts:110 - perfect also requires family magic and !hit.suppressPerfect, with the agility window add",
+    "packages/core/src/arena/kernel.ts:101 - Air Form evade returns before any event; it draws the seeded RNG (packages/core/src/arena/air.ts:403)",
+    "packages/core/src/arena/kernel.ts:99 - contact taps fire before resolveHit decides anything, so a tap cannot see the verdict",
+    "packages/core/src/arena/ledger.ts:63 - the ledger tap re-derives wardUp/inArc/ageTicks/windowTicks itself from raw state",
+    "packages/core/src/arena/ledger.ts:37 - gradeContact guarded = wardUp && inArc: blind to exchange windows, shields, evades, suppressPerfect",
+    "packages/core/src/arena/ledger.ts:94 - a mismatch with the kernel's hit event downgrades the grade to unclassified",
+    "packages/core/src/arena/exchange.ts:55 - exchangeGuard, the rule the ledger copy never sees",
+    "packages/game/src/answers.ts:23 - the Tiro results card prints 'Unclassified N' to the player; answers.ts:10 the Lab line"
+   ],
+   "rollback": "Three commits (contact.ts + resolveHit calls it; verdict channel + ledger on it; answers.ts wording). git revert in reverse order; contact.ts is new and kernel.ts returns to inline arithmetic. No hashed state, data or vector changes, so nothing else to undo.",
+   "gate": "architecture",
+   "runner_up": "Split kernel.ts (398 lines) into ward / movement / telegraph-travel / projectile step modules behind stepArena - real, but a tidy-up next to the verdict seam.",
+   "body": "## Summary\nThe ward/perfect/guard decision for a contact exists twice: in kernel.ts resolveHit, and re-derived in ledger.ts from raw facts before the kernel runs. Every rule the kernel gained since (front shields, Air Form evade, suppressPerfect beams, D1 exchange windows) made the copy wrong, and the ledger turns each disagreement into 'unclassified'. In a fire_close fight that is 202 of the reference player's 272 graded contacts (74%); the player reads 'Unclassified 202' on the Tiro results card and the Lab line, and counter-coverage / bout-reader marks inherit the hole.\n\n## Description\nExtract `contactVerdict(state, target, owner, hit)` into a new leaf-ward `arena/contact.ts`: pure, no writes, no RNG; returns {shielded, warded, inArc, guard: 'ward'|'window'|undefined, perfect, reduction, incomingDamage, damage, ageTicks, windowTicks}. resolveHit keeps its gates (defeated, immunity, the RNG-drawing evade) in the same order, then calls the verdict and applies it with the same floating-point expressions in the same order, so every hash is unchanged. A second observer channel `tapVerdicts` (WeakMap beside tapContacts, outside the hashed state, never cloned) fires once per contact with the gate outcome ('roll'|'encase'|'evaded'|'resolved') and the verdict. The ledger grades from the verdict instead of re-deriving it; gradeContact stays the pure classifier but takes the kernel's guard and perfect as facts, with two new honest answers: 'window' (taken by an exchange window) and 'evaded' (Air Form). The event cross-check stays as an assertion so the next kernel rule that moves fails a test instead of silently costing data. tapContacts is kept as is (combat-readout and counter-coverage read pre-contact state through it).\n\n## Flow\n- characterize first: cases 1-5 and 8 red at 2d83a1e; 6-7 are the safety net\n- contact.ts: lift kernel.ts:102-112 into contactVerdict; resolveHit calls it; goldens + parity green\n- tapVerdicts channel; ledger.ts consumes it (RawContact keeps tap-time facts only for immunity)\n- answers.ts: 'window'/'evaded' wording on the Lab line, results card and timeline marks\n\n## Expected impact\nThe kernel stops being the reason the ledger and every surface built on it misreport Fire/Air close fights; the next kernel guard rule changes one module and the ledger follows for free.\n\n## Evaluation\nClaim: the ledger grades every contact from the kernel's own verdict, without moving a hash.\nBefore: 0 of 8 acceptance cases pass as written (no verdict exists; fire_close 202/272 player contacts unclassified, air_close 54/178, air_heavy rival 46/235)\nAfter: 8 of 8\nMethod: gate - npm run gate; replay-golden, cr-002, cr-007 and packages/tools/vr tests untouched and green\nResult: better\nGate: architecture",
+   "evidence": "tsx probe at 2d83a1e (4 seeds per rival build, reference preset, overlay on). Player unclassified/graded: fire_close 202/272, air_close 54/178, air_heavy 1/69, fire_light 3/184, air_light 3/312, fire_heavy 0/65. Rival ledgers: fire_close 527/686, air_close 144/327, air_heavy 46/235. By cause, every player unclassified is 'kernel hit event guarded=true, ledger grade guarded=false' (fire_close 202, air_close 54, air_heavy 1). Same fights inside exchangeOff: fire_close 0/42, air_close 0/104, air_heavy 0/67 -> the exchange window (exchange.ts:55 via kernel.ts:109) is the entire player-side cause; the ledger copy (ledger.ts:37, :63) cannot see it."
+  },
+  {
+   "context": "arena-kernel",
+   "slot": "B-architecture (no UI surface)",
+   "lens": "architecture-challenger",
+   "title": "Compile enemy behaviour once: a typed table replaces 17 id branches and prose regex",
+   "size": "M", "effort": 6, "impact": 7, "risk": 6,
+   "write_set": ["packages/core/src/arena/enemies.ts", "packages/core/src/arena/enemy-behaviour.ts", "packages/core/src/arena/enemy-behaviour.test.ts"],
+   "new_files": ["packages/core/src/arena/enemy-behaviour.ts", "packages/core/src/arena/enemy-behaviour.test.ts"],
+   "shared_surfaces": [],
+   "acceptance": [
+    "case 1 (pinned first, at 2d83a1e): for each roster id (every enemyRoster entry; cinder_hound as a pack of 3) a 20 s duel vs an addMage that holds absorb, plus one mixed creature wave -> stateHash every 60 ticks equals the series recorded before the refactor commit",
+    "case 2: replay-golden soldiers40000 and hardSoldiers40000, lunge.test.ts, kernel.test.ts -> pass with zero edits",
+    "case 3: grep -c \"spec.id ===\\|spec.id !==\\|attack.id ===\" packages/core/src/arena/enemies.ts -> 0 (today 17)",
+    "case 4: compileBehaviour on a spec whose behaviour prose says 'back off' without seconds -> throws at compile/load naming the enemy id (today it throws mid-bout at enemies.ts:20 the first time a conscript schedules)",
+    "case 5: vi.spyOn(String.prototype, 'match') across 600 ticks of a cinder_hound pack + hush_moth + thornback + conscript -> 0 calls during enemyInputs (today enemies.ts:20/54, :66, :76, :81 parse prose every tick per actor)",
+    "case 6: a test-only spec (projectile attack, keepDistanceM band) compiled by compileBehaviour and stepped by the table -> holds its band and schedules a projectile telegraph, with no id string for it anywhere in enemies.ts"
+   ],
+   "premise": [
+    "packages/core/src/arena/enemies.ts:27 - net_cast reshapes the telegraph by attack id, magnitudes regex-parsed from prose (also :28 tongue_pull, :29 thorn_charge)",
+    "packages/core/src/arena/enemies.ts:33 - cooldown policy chosen by spec.id (mire_maw, thornback) inline",
+    "packages/core/src/arena/enemies.ts:36 - slinger reload and :37 conscript backoff are id branches inside scheduleAttack",
+    "packages/core/src/arena/enemies.ts:46 - hush_moth target priority by id inside the shared target sort",
+    "packages/core/src/arena/enemies.ts:64 - attack-range overrides by attack id (:64-66); movement modes by spec id (:69 mire_maw, :70 netter, :71 conscript)",
+    "packages/core/src/arena/enemies.ts:76 - cinder_hound engagement slots regex-parsed from behaviour prose every tick for every hound",
+    "packages/core/src/arena/enemies.ts:81 - hush_moth drain regex-parsed every tick",
+    "packages/core/src/arena/enemies.ts:20 - backoffS re-parses 'back off N s' on every call (:37 and :54)"
+   ],
+   "rollback": "Two commits: (1) the characterization test pinned at base; (2) enemy-behaviour.ts + enemies.ts on the table. Reverting (2) alone restores the id branches; (1) stays as a regression guard.",
+   "gate": "architecture",
+   "runner_up": "Lift the per-tick contact passes (kernel.ts:276-341 telegraphs/projectiles, shapes.ts:131 school effects) into one ordered contact-pass module so the VR step order is written once.",
+   "body": "## Summary\nEnemy behaviour is not data. enemies.ts decides what each creature does with 17 string compares on spec.id / attack.id and pulls its magnitudes out of authored prose with regex extracts, several of them every tick. A new creature, or a VR change request touching one, means editing up to 8 sites across scheduleAttack and enemyInputs, and a typo in the prose surfaces as a mid-bout throw instead of a load error.\n\n## Description\nAdd `arena/enemy-behaviour.ts`: `compileBehaviour(spec): EnemyBehaviour`, run once over enemyRoster at module load (the way catalog.ts compiles spells and validates presets), producing a typed record per id: target priority (nearest | holds-absorb first), approach mode (close | kite band | stationary | net-strafe | backoff | contact-drain), pack engagement slots, per-attack shape (melee | projectile | area-net | lane-pull | charge | lunge travel) with its parsed magnitudes, cooldown policy, reload, sprint rule. scheduleAttack and enemyInputs read the table; every expression keeps its exact arithmetic and evaluation order, including the nextId draw order (the hash proof). Load-time validation throws by enemy id. Authored data (docs/design/reconciled, data.generated.ts) is untouched; no balance value moves.\n\n## Flow\n- pin case 1 characterization series at 2d83a1e (green); write cases 3-6 red\n- compileBehaviour + table; migrate scheduleAttack, then enemyInputs, re-running case 1 after each step\n- delete the id branches and the hot-path extract() calls\n\n## Expected impact\nThe roster becomes extensible from data plus one compile rule, prose errors fail at load, per-tick regex parsing leaves every creature wave, and the enemy semantics VR mirrors live in one readable table.\n\n## Evaluation\nClaim: enemies are table-driven with identical outcomes.\nBefore: 2 of 6 (cases 1-2 green by construction; 3-6 fail: 17 id compares, mid-bout throw, per-tick match calls, a new spec needs code)\nAfter: 6 of 6\nMethod: gate - npm run gate; characterization hashes pinned before the refactor commit; goldens and parity untouched\nResult: better\nGate: architecture",
+   "evidence": "grep -c \"spec.id ===\\|spec.id !==\\|attack.id ===\" packages/core/src/arena/enemies.ts -> 17. extract( call sites in enemies.ts -> 7 (:20 backoffS, :27, :29, :66, :76, :81, plus :17 the helper). Golden coverage of enemies today: soldiers40000/hardSoldiers40000 (conscript + slinger) only; netter, hush_moth, mire_maw each appear in one test file; packages/tools/vr/vectors names only slinger -> the case 1 characterization series is the instrument this refactor needs, recorded before it lands."
+  }
+ ]
+}

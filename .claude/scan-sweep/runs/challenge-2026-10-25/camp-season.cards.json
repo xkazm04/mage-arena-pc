@@ -1,0 +1,130 @@
+{
+  "context": "camp-season",
+  "scout": "claude-opus-5-5",
+  "read": [
+    "packages/core/package.json",
+    "packages/core/purity-env.d.ts",
+    "packages/core/src/authored-data.test.ts (lines 1-40)",
+    "packages/core/src/bout-reader.test.ts (structure)",
+    "packages/core/src/bout-reader.ts",
+    "packages/core/src/camp-session.ts",
+    "packages/core/src/camp-time.ts",
+    "packages/core/src/camp.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/parley.ts",
+    "packages/core/src/season.ts",
+    "packages/core/src/types.ts",
+    "packages/core/tsconfig.arena.json",
+    "packages/core/tsconfig.purity.json",
+    ".claude/scan-sweep/config.md",
+    "tiger/backlog.md",
+    ".spark/Spark/ideas/ (grep for camp/parley/odds overlap)",
+    "docs/concepts/D3-non-combat-presentation.md (grep camp/parley)",
+    "packages/game/src/screens/camp.ts (lines 105-160)",
+    "packages/director/src/director.test.ts (lines 50-66, golden-nights oracle)"
+  ],
+  "cards": [
+    {
+      "context": "camp-season",
+      "slot": "A",
+      "lens": "architecture-challenger",
+      "title": "One camp rulebook: each intent's legality, effect, preview and options in one row",
+      "size": "L",
+      "effort": 8,
+      "impact": 8,
+      "risk": 6,
+      "write_set": [
+        "packages/core/src/camp.ts",
+        "packages/core/src/camp-session.ts",
+        "packages/core/src/camp-rules.ts",
+        "packages/core/src/camp-rules.test.ts",
+        "packages/core/src/index.ts"
+      ],
+      "new_files": [
+        "packages/core/src/camp-rules.ts",
+        "packages/core/src/camp-rules.test.ts"
+      ],
+      "shared_surfaces": [
+        "packages/core/src/camp.ts resolve() intent switch (camp.ts:520-792) - Slot B's contest helper lands inside these branches; build A first or rebase B onto it",
+        "packages/core/src/camp-session.ts actionPreview (camp-session.ts:537-584) - Slot B edits the same function"
+      ],
+      "acceptance": [
+        "case 1: Object.keys(campRules).sort() vs Object.keys(t.intents).sort() for the shipped Tables -> identical lists (fails before: camp-rules.ts does not exist)",
+        "case 2: for every BEFRIEND/TRAIN/WORK/REST/PLOT action campActions(t, s) offers on the default session at each open location, the number in rule.preview(t, s, d) -> equals the trace delta actCamp(t, s, d) writes on that path (trust/<player>><target>, points/<stat>, gold, fatigue, bondProgress) on an unclamped state",
+        "case 3: capFor(t, day, intent) on a Games-eve day for SCHEME -> t.rules.caps.SCHEME_eve, and playerProblem, remainingCaps and reconcile all reject the (cap+1)-th SCHEME on that day with the same count (fails before: three hand-written cap reads at camp-session.ts:146-156, 181-189 and camp.ts:338-344)",
+        "case 4: boardLine({visibility:'secret',text:'x'}) / 'witnessed' / 'public' -> 'Journal: x' / 'Someone saw: x' / 'x', and resolve + settleCamp both import it (grep finds the ternary in one file only)",
+        "case 5: campActions(t, s) ids and labels on 6 planted sessions (day 1 each open location; eve day at the pit; player in stocks) -> byte-equal to a fixture captured at 2d83a1e before the refactor",
+        "case 6: goldenNights(t) canonical -> equals docs/design/reconciled/fixtures/golden-nights.json unchanged (packages/director/src/director.test.ts:55-65), and packages/tools/src/camp-evidence.test.ts (golden-mornings.json) stays green unchanged",
+        "case 7: a planted rule row whose preview reads effects.BEFRIEND.trust while its effect reads a different key -> the case-2 property test fails (the test proves the preview and effect share one rule row, so drift cannot recur silently)"
+      ],
+      "premise": [
+        "packages/core/src/camp.ts:520-792 - resolve() is one 273-line switch over 13 intents mixing effect math, contests, fact emission and trace writes",
+        "packages/core/src/camp-session.ts:541-566 - actionPreview re-derives TRAIN points and BEFRIEND gain by hand, a copy of camp.ts:525-546",
+        "packages/core/src/camp-session.ts:177 - playerProblem hand-lists ['BEFRIEND','PROTECT','CONFIDE','WATCH','RECRUIT'] as presence-needing intents, while legalProblem derives target need from t.intents args (camp.ts:211)",
+        "packages/core/src/camp-session.ts:389-416 - campActions hand-enumerates each intent's argument space (TRAIN stat, DEFECT toTent, CONFIDE factId, SCHEME kind/topic, OFFER terms) in an if/else ladder",
+        "packages/core/src/camp-session.ts:146-156, :181-189 and packages/core/src/camp.ts:338-344 - the SCHEME_eve cap rule is written three times",
+        "packages/core/src/camp.ts:927-935 and packages/core/src/camp-session.ts:356-364 - the 'Journal: / Someone saw:' board text is duplicated",
+        "packages/core/src/camp-session.ts:422-425 - action labels special-case PLOT inline rather than reading a per-intent label",
+        "packages/director/src/director.test.ts:55-65 - the golden-nights oracle replays resolve canonically, so a behaviour-preserving refactor has a ready proof"
+      ],
+      "rollback": "Commit series: (1) capture campActions fixture + failing camp-rules.test.ts, (2) add camp-rules.ts with capFor/boardLine and switch the three cap sites + two board sites, (3) move each intent's effect/preview/options into its row and make resolve, actionPreview and campActions dispatch through it. Each commit is green on the golden oracles; git revert of 3..1 restores the switch exactly.",
+      "gate": "architecture",
+      "runner_up": "Time from Tables only: camp-time.ts defaults to the imported season.json (camp-time.ts:1-5) so spendHours/passSlot/beginListening read the global season (camp-session.ts:105, 194, 221) while timeProblem reads t.season (camp-session.ts:114) - two sources of one clock.",
+      "body": "## Summary\nGive every camp intent one rule row (legality extras, effect, preview, option enumeration, label, presence need, cap) and make resolve, actionPreview, campActions, playerProblem and reconcile dispatch through it.\n\n## Description\nThe camp simulator's knowledge of what an intent does lives in five places: the 273-line resolve switch (camp.ts:520-792), a hand-copied preview (camp-session.ts:537-584), a hand-enumerated option ladder (camp-session.ts:389-416), a hand-listed presence rule (camp-session.ts:177) and a cap rule written three times. Adding an intent, or changing a formula, means editing all of them in step, and the preview already re-derives BEFRIEND/TRAIN math by hand - the next tuning change can make the screen lie with no test noticing. A rulebook module collapses this to one row per intent, with a property test that the preview a row shows is the delta its effect writes.\n\n## Flow\n- Capture campActions output on 6 planted sessions as a fixture at 2d83a1e.\n- Add camp-rules.ts: capFor(), boardLine(), and a Record<Intent, IntentRule> with effect(ctx), preview(t,s,d), options(t,s), needsPresence, label.\n- resolve keeps its ordering, set/add/trace helpers and night settlement; the switch body becomes campRules[item.intent].effect(ctx). Trace rule strings stay byte-identical.\n- actionPreview, campActions and playerProblem read the row; the three cap sites call capFor.\n\n## Expected impact\nOne place to change an intent; previews that cannot drift from resolution; camp.ts drops from 970 lines to roughly 450 and the switch disappears. Unblocks Slot B (odds) and any future intent.\n\n## Evaluation\nClaim: the rulebook is a pure refactor that removes five parallel encodings.\nBefore: 0 of 7 acceptance cases pass (camp-rules.ts absent; cases 6 is already green and must stay so)\nAfter: 7 of 7\nMethod: gate - npm run gate; golden-nights oracle (director.test.ts) and golden-mornings (camp-evidence.test.ts) unchanged; campActions fixture byte-equal\nResult: better\nGate: architecture",
+      "evidence": "camp.ts `switch (item.intent) {` at :520 closes at :792 (273 lines, 13 cases). camp-session.ts:541-546 `let points = p.hunger >= r.daily.hungryAt ? r.TRAIN.hungryPoints : r.TRAIN.points; if (p.fatigue >= r.daily.fatiguedAt) points = Math.floor(points * r.daily.fatigueTrainMultiplier);` mirrors camp.ts:525-528. camp-session.ts:557-564 BEFRIEND gain mirrors camp.ts:540-546. Cap: camp-session.ts:182-184 `d.intent === \"SCHEME\" && calendar(t, s.camp.day).eve ? t.rules.caps.SCHEME_eve : t.rules.caps[d.intent]` == camp.ts:341-344; remainingCaps strips `_eve` at camp-session.ts:149. Board ternary: camp.ts:930-934 == camp-session.ts:359-363."
+    },
+    {
+      "context": "camp-season",
+      "slot": "B",
+      "lens": "ux-elevation",
+      "title": "Contest odds on every camp action and parley card, from the resolver's own DC",
+      "size": "M",
+      "effort": 6,
+      "impact": 8,
+      "risk": 5,
+      "write_set": [
+        "packages/core/src/contest.ts",
+        "packages/core/src/contest.test.ts",
+        "packages/core/src/camp.ts",
+        "packages/core/src/camp-session.ts",
+        "packages/core/src/parley.ts",
+        "packages/core/src/index.ts",
+        "packages/game/src/screens/camp.ts",
+        "packages/game/src/screens/parley.ts",
+        "packages/game/src/screens/camp-subtitle.test.ts"
+      ],
+      "new_files": [
+        "packages/core/src/contest.ts",
+        "packages/core/src/contest.test.ts",
+        "packages/game/src/screens/camp-subtitle.test.ts"
+      ],
+      "shared_surfaces": [
+        "packages/core/src/camp.ts resolve() contest branches (WATCH :595-598, REPORT :615-617, SCHEME :643-658 and caught :720-721, RECRUIT :748-752) - also Slot A's write set",
+        "packages/core/src/camp-session.ts actionPreview (:569-576) - also Slot A's write set"
+      ],
+      "acceptance": [
+        "case 1: contestOdds({bonus:0, dc:10, sides:20}) -> 0.5; {bonus:25, dc:10, sides:20} -> 1; {bonus:0, dc:20, sides:20} -> 0 (success iff bonus + die > dc, die uniform 1..sides)",
+        "case 2: campView(t, s).actions for WATCH on every present target -> each row carries odds.success equal to contestOdds of the resolver's own bonus/dc (guile*guileMultiplier vs baseDc + target guile*guileMultiplier), and over seeds 1..400 the share of actCamp WATCH runs with no noticedTrust trace is within 0.06 of it",
+        "case 3: a SCHEME row -> carries odds.success and odds.caught = (1 - success) * P(vigilBonus + die > guile*guileMultiplier + baseDc), honouring rumourFailsAtOrBelow for rumour; over seeds 1..400 the share of actCamp SCHEME runs that set characters/<player>/stocks is within 0.06 of odds.caught",
+        "case 4: toggling the target's hidden `warned` flag in the planted state -> previewed odds unchanged (no hidden-state leak); the preview text names that a warned target is harder",
+        "case 5: parleyCards(s, target) -> a card whose effect is large carries odds from its stance (intimidate reads nerve, the rest guile, vs parley contestDc); shift_trust_small and refuse cards carry odds null; over seeds 1..400 applyParley's roll.success share matches within 0.06",
+        "case 6: actionSubtitle({hours:2, gains:'discover a fact', odds:{success:0.55, caught:null}}) -> '2 hours · 55% · discover a fact'; odds null -> today's '2 hours · <gains>' string unchanged",
+        "case 7: goldenNights(t) canonical -> equals docs/design/reconciled/fixtures/golden-nights.json unchanged, and packages/tools/src/camp-evidence.test.ts stays green (resolve calls the shared helper but its rolls, outcomes and Roll records are byte-identical)"
+      ],
+      "premise": [
+        "packages/core/src/camp-session.ts:569-576 - WATCH, SCHEME and RECRUIT previews say only 'Guile contest' with no chance, though every input of the DC is in state",
+        "packages/game/src/screens/camp.ts:135 - the action subtitle is `${a.hours} hours · ${a.gains}`, so the player commits hours to a contest blind",
+        "packages/core/src/camp.ts:595-598, :615-617, :656-660, :720-721, :748-752 - five contest formulas, each 'stat*guileMultiplier + die > dc', written inline",
+        "packages/core/src/parley.ts:210-213 - parley's contest is the same shape against parley contestDc 15 (docs/design/reconciled/data/parley.json:8), and parleyCards (parley.ts:104-114) returns no chance",
+        "packages/core/src/season.ts:390 - the Trial rolls the same die again; a shared contest primitive serves all three",
+        "docs/design/reconciled/data/rules.json:130-133 - d20, guileMultiplier 4, baseDc 10, vigilBonus 8: one guile rank moves odds by 20 points, so the number is decision-relevant, not decoration",
+        "packages/core/src/camp.ts:655 - b.warned raises the SCHEME DC but is hidden from the player; the preview must not read it (case 4)"
+      ],
+      "rollback": "Commit series: (1) failing contest.test.ts + camp-subtitle.test.ts, (2) contest.ts with contestOdds/contestDc helpers and resolve/applyParley calling them (golden oracles green), (3) odds on campView actions and parleyCards, (4) screens render the percentage. Revert 4..1 restores today's strings; the odds field is additive in campView, so Director/save payloads are untouched.",
+      "gate": "direction",
+      "runner_up": "Plain-language day receipt: campView.changes is a raw slice(0,8) of trace paths (camp-session.ts:523-532); turn it into grouped 'Bryn trusts you +6 (befriend)' lines from the trace's own rule refs.",
+      "body": "## Summary\nShow the player the real chance of every contest before they spend hours on it: camp WATCH/SCHEME/RECRUIT/REPORT rows and parley cards carry a success percentage (and, for SCHEME, the stocks risk) computed by the same helper the resolver rolls against.\n\n## Description\nCamp time is the scarce resource (a day has fixed waking hours; a contest act costs two). Today the screen labels a 20%-chance scheme and an 80%-chance watch identically, 'Guile contest', although the resolver already knows both sides' guile, the DC and the die. The code has the data; the decision is blind. A pure contest.ts holds 'bonus + d(sides) > dc' once; resolve and applyParley call it for their rolls (byte-identical outcomes), and the previews call its closed-form odds. Hidden state (a PROTECT warning, a REPORT stop) is excluded from the preview by design so odds never leak secrets.\n\n## Flow\n- contest.ts: contestOdds({bonus, dc, sides}) and per-contest bonus/dc builders used by resolve, applyParley and the preview.\n- campView actions gain odds: {success, caught|null}; parleyCards gain odds for large-effect cards.\n- screens/camp.ts subtitle and screens/parley.ts card text render the percentage via a pure actionSubtitle().\n\n## Expected impact\nEvery contest choice in the camp becomes an informed bet; the parley stance choice (nerve vs guile) becomes legible. One contest formula instead of seven inline copies.\n\n## Evaluation\nClaim: previewed odds equal the resolver's empirical success rate and the screen shows them.\nBefore: 0 of 7 acceptance cases pass (no contest module, no odds field; case 7 green and must stay so)\nAfter: 7 of 7\nMethod: gate - npm run gate; 400-seed agreement tests against actCamp/applyParley; golden-nights + golden-mornings unchanged\nResult: better\nGate: direction (shows target-derived odds the player did not see before; hidden-state exclusion is the design rule)",
+      "evidence": "camp-session.ts:569-576: `case \"WATCH\": return \"Guile contest · discover a fact; being noticed costs trust\"; case \"SCHEME\": return \"Guile contest · failure risks the stocks\"; ... case \"RECRUIT\": return \"Guile contest · invite them to your cause\";` screens/camp.ts:135 `subtitle: `${a.hours} ${a.hours === 1 ? \"hour\" : \"hours\"} · ${a.gains}``. camp.ts:595-598 `a.stats.guile * r.contests.guileMultiplier + die(a.id, `WATCH:${b.id}`) > r.contests.baseDc + b.stats.guile * r.contests.guileMultiplier`. parley.ts:212-213 `const score = player.stats[stat] * t.rules.contests.guileMultiplier + value; const success = score > data.contestDc;`. rules.json:130 `\"dieSides\": 20`, :131 guileMultiplier 4, :132 baseDc 10, :133 vigilBonus 8. Shipped tour evidence docs/waves/U6-evidence/tour/browser.json:1469 shows the live string '2 hours ? Guile contest · discover a fact...'. No overlap: grep of tiger/backlog.md and .spark/Spark/ideas for odds/chance/contest in camp returns nothing."
+    }
+  ]
+}

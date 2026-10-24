@@ -1,0 +1,143 @@
+{
+  "context": "combat-lab",
+  "scout": "claude-opus-5-5",
+  "base_sha": "2d83a1e",
+  "read": [
+    "packages/game/src/bout-reader-ui.ts",
+    "packages/game/src/bout-reader.test.ts",
+    "packages/game/src/d2-wiring.test.ts",
+    "packages/game/src/forecast-client.ts",
+    "packages/game/src/forecast-job.ts",
+    "packages/game/src/forecast.test.ts",
+    "packages/game/src/forecast.worker.ts",
+    "packages/game/src/lab-picks.ts",
+    "packages/game/src/lab-setup.test.ts",
+    "packages/game/src/lab-setup.ts",
+    "packages/game/src/lab-ui.ts",
+    "packages/game/src/rival-collar.ts",
+    "packages/game/src/rival-collar.test.ts (first 40 lines)",
+    "packages/game/data/forecast.json",
+    "packages/core/src/arena/forecast.ts (1-80)",
+    "packages/core/src/arena/lab.ts (240-360)",
+    "packages/core/src/arena/tuning.ts (328-340)",
+    ".claude/scan-sweep/config.md",
+    "tiger/backlog.md",
+    ".spark/Spark/ideas/combat-system-depth.md",
+    ".spark/Spark/ideas/future-directions-concepts.md",
+    ".spark/Spark/ideas/w8-fire-air-dual-channel.md"
+  ],
+  "cards": [
+    {
+      "context": "combat-lab",
+      "slot": "A",
+      "lens": "architecture-challenger",
+      "title": "Split lab-ui.ts: Lab mode machine + shared replay transport under a thin canvas",
+      "size": "L",
+      "effort": 7,
+      "impact": 7,
+      "risk": 5,
+      "write_set": [
+        "packages/game/src/lab-ui.ts",
+        "packages/game/src/bout-reader-ui.ts",
+        "packages/core/src/arena/tuning.ts",
+        "packages/game/src/lab-mode.ts",
+        "packages/game/src/replay-transport.ts",
+        "packages/game/src/lab-forecast-view.ts",
+        "packages/game/src/lab-mode.test.ts",
+        "packages/game/src/replay-transport.test.ts",
+        "packages/game/src/lab-forecast-view.test.ts",
+        "packages/core/src/arena/lab.test.ts"
+      ],
+      "new_files": [
+        "packages/game/src/lab-mode.ts",
+        "packages/game/src/replay-transport.ts",
+        "packages/game/src/lab-forecast-view.ts",
+        "packages/game/src/lab-mode.test.ts",
+        "packages/game/src/replay-transport.test.ts",
+        "packages/game/src/lab-forecast-view.test.ts"
+      ],
+      "shared_surfaces": [
+        "packages/game/src/arena-entry.ts reads labUI.replayState (kept as a getter; not in the write set)",
+        "packages/core/src/arena/tuning.ts (adds a pure coupled-field helper beside validateTuning; no simulation path touched)"
+      ],
+      "acceptance": [
+        "case 1: LabMode live, key V with a ring of 1 frame -> mode stays 'live', reducer returns notice 'Play a few moments before replaying.'",
+        "case 2: LabMode live+paused, V (ring >= 2) then V -> mode 'replay' then 'live', and the host pause flag restores to true (today's replayWasPaused rule)",
+        "case 3: LabMode 'number' or 'import', keys R / P / V / T / L -> reducer reports unhandled and emits no action (today's guard at lab-ui.ts:171)",
+        "case 4: ReplayTransport over 120 frames, playing, advance(0.5 s) -> position 30 at combat.simStepHz; advance(10 s) -> clamps at 119 and playing=false",
+        "case 5: ReplayTransport step(-1) at position 10 -> 9 and paused; BoutReader on the shared transport still passes bout-reader.test.ts unchanged (step/play/scrub hashes equal replayBoutTo)",
+        "case 6: forecastLines({status:'running',done:3,total:250}) -> status 'Simulating 3 / 250 fights'; a done result with wave 4 out of band -> that row's median cell flagged danger; error text truncated to 48 chars",
+        "case 7: coupleTuningField(t,'hitStunS', t.hitStunMaxS+0.1) -> hitStunMaxS raised to match and validateTuning(result) passes; coupleTuningField(t,'rollDurationS', 0.1) -> rollIFramesS <= 0.1",
+        "case 8: npm run gate green with replay-golden.test.ts and parity vectors unchanged (no simulator file other than the tuning.ts helper is touched)"
+      ],
+      "premise": [
+        "packages/game/src/lab-ui.ts:1166 - one class of 1,166 lines owns setup (277-492), builds (505-623), numeric entry (667-733), tuning (756-868), forecast rendering (870-944), spell editor (945-1031), import/export (1032-1101) and the replay ring player (1108-1160)",
+        "packages/game/src/lab-ui.ts:77-98 - the Lab's mode is spread over numeric?, importing, replayState?, replayPosition, replayWasPaused, replayPaused, page, tuningSubpage, picksSeeded",
+        "packages/game/src/lab-ui.ts:171 - every hotkey is gated by `if (this.numeric || this.importing || e.repeat)`; screens are re-detected by string compares of u.screen at lab-ui.ts:226, 890, 905, 1144",
+        "packages/game/src/lab-ui.ts:207-213 - the Lab replay can only step forward; bout-reader-ui.ts:63-66 steps both ways",
+        "packages/game/src/lab-ui.ts:1135 - the Lab replay advances at a hard-coded dt * 60 while bout-reader-ui.ts:69 uses combat.simStepHz: two transports for the same job",
+        "packages/game/src/lab-ui.ts:1138-1142 - every rendered replay frame structuredClones a full ArenaState and re-filters the whole live event list",
+        "packages/game/src/lab-ui.ts:742-748 - the hitStun / roll i-frame coupling rule lives in the UI, while packages/core/src/arena/tuning.ts:334-337 enforces the same pair as a validation error",
+        "packages/game/src/arena-entry.ts:4 - the only importer of lab-ui.ts; no *.test.ts covers any Lab UI logic (grep 'lab-ui' in packages: arena-entry.ts, lab-picks.ts comment, lab-ui.ts)",
+        "packages/game/src/arena-entry.ts:768,963,1008,1170 - the host reads labUI.replayState directly to decide stepping and rendering"
+      ],
+      "rollback": "Three commits (core helper + test; replay-transport + BoutReader adoption; lab-mode/forecast-view + lab-ui thinning), each git revert-able in reverse order; arena-entry.ts keeps the replayState getter so no host change rides along.",
+      "gate": "architecture",
+      "runner_up": "Move the forecast's 'Current' baseline and request keying out of ForecastRunner into a ForecastPlan value so worker, client and tests share one key function.",
+      "body": "## Summary\nlab-ui.ts is a 1,166-line class doing eight jobs, its mode is a hidden state machine across six fields, and its replay ring re-implements (forward-only, at a hard-coded 60 Hz) the transport BoutReader already has. Extract three pure modules - a LabMode reducer, a ReplayTransport shared with BoutReader, and a forecast-view formatter - plus a core coupled-tuning helper beside validateTuning, leaving lab-ui.ts a thin canvas layer.\n\n## Description\nThe Lab is the owner's tuning bench, yet none of its behaviour is tested: arena-entry.ts is its only importer. Every new Lab capability (tiger C replay takeover, a compare mode, feel capsules) has to be wired into the same class and its boolean gates, and the host peeks at replayState in four places. The reducer makes modes explicit (live, replay, setup, builds, tuning, number, import), so hotkey gating and pause restoration are data, not scattered ifs. The transport gives the Lab step-back for free and removes the per-frame full-state clone. The forecast formatter moves 57 lines of string/tint logic out of the draw path into a testable function. The tuning coupling rule moves next to the validation that already enforces it.\n\n## Flow\n- Add coupleTuningField to core tuning.ts with a lab.test.ts case; lab-ui setTuning calls it.\n- Add replay-transport.ts (frames or seek callback, position, playing, carry, advance, step, seek); BoutReader delegates to it; Lab replay uses it over labReplay(lab).\n- Add lab-mode.ts reducer (mode, key -> action | notice | unhandled) and lab-forecast-view.ts (ForecastView -> rows/lines/tints).\n- lab-ui.ts draws from these; keeps replayState getter for arena-entry.ts.\n\n## Expected impact\nlab-ui.ts shrinks by ~300 lines; Lab logic goes from 0 to ~25 unit tests; the Lab replay gains step-back and loses a per-frame structuredClone of the full state; tiger C and slot B become additive instead of invasive.\n\n## Evaluation\nClaim: the Lab's mode, transport and forecast-view logic become pure, tested modules with no behaviour or simulation change.\nBefore: 0 of 8 acceptance cases pass (modules do not exist; no test imports Lab UI logic)\nAfter: 8 of 8\nMethod: gate - vitest for the three new test files plus unchanged bout-reader.test.ts, then npm run gate and npm run build:game; replay goldens and parity vectors untouched.\nResult: better\nGate: architecture",
+      "evidence": "wc -l packages/game/src/lab-ui.ts -> 1166. grep -c 'u.screen|this.numeric|this.importing|this.replayState' lab-ui.ts -> 37 sites. lab-ui.ts:1135 `this.replayPosition + (this.replayPaused ? 0 : dt * 60)` vs bout-reader-ui.ts:69 `this.carry += dt * combat.simStepHz`. lab-ui.ts:742-748 `if (key === \"hitStunS\") next.hitStunMaxS = Math.max(...)` vs tuning.ts:334 `if (v.hitStunS > v.hitStunMaxS) throw Error(\"Minimum stun cannot exceed maximum stun.\")`. grep -rln 'lab-ui|LabUI' packages --include=*.ts -> arena-entry.ts, lab-picks.ts, lab-ui.ts (no test)."
+    },
+    {
+      "context": "combat-lab",
+      "slot": "B",
+      "lens": "ux-elevation",
+      "title": "Pin a baseline: Lab forecast compares against your pinned tuning + builds",
+      "size": "M",
+      "effort": 6,
+      "impact": 8,
+      "risk": 5,
+      "write_set": [
+        "packages/game/src/forecast-job.ts",
+        "packages/game/src/forecast-client.ts",
+        "packages/game/src/forecast.worker.ts",
+        "packages/game/src/lab-ui.ts",
+        "packages/game/src/lab-compare.ts",
+        "packages/game/src/lab-compare.test.ts",
+        "packages/game/src/forecast.test.ts"
+      ],
+      "new_files": [
+        "packages/game/src/lab-compare.ts",
+        "packages/game/src/lab-compare.test.ts"
+      ],
+      "shared_surfaces": [
+        "packages/game/data/forecast.json (read only; sample sizes unchanged)",
+        "packages/core/src/arena/forecast.ts (consumed: censusForecast, duelForecast, forecastDeltas; not edited)"
+      ],
+      "acceptance": [
+        "case 1: runForecast with no baseline -> result identical to today (existing forecast.test.ts cases pass unchanged, sameAsCurrent semantics kept)",
+        "case 2: request whose baseline equals the candidate (same tuning and lab) -> sameAsCurrent true, candidate deep-equals current, and a repeat plan has total 0",
+        "case 3: baseline tuning absorbWindowS 0.25 pinned, candidate factory tuning -> every wave's perfectRateDelta equals the negation of the factory-baseline/0.25-candidate run",
+        "case 4: baseline lab = defaultLabConfig, candidate lab = an Air build (withSchool player air) -> result.current.duel equals drain(duelForecast(makeTuning(), default plan)) and duelDelta.winRate = candidate.winRate - current.winRate",
+        "case 5: pinned baseline reused across two different candidates -> second plan.total == seedsPerWave*4 + labDuels (baseline memo hit, not recomputed)",
+        "case 6: ForecastClient want(t, lab, pinA) then want(t, lab, pinB) -> two run posts; want(t, lab, pinA) twice -> one post (baseline is part of the key)",
+        "case 7: lab-compare pin(tuning, draft, 'Brawler v2') -> label 'vs pinned Brawler v2'; unpin -> 'vs Current'; pinning a draft that fails validateLabConfig -> refused with the validator's reason, pin unchanged"
+      ],
+      "premise": [
+        "packages/game/src/forecast-job.ts:417 - the duel baseline is always built with makeTuning(), the factory preset",
+        "packages/game/src/forecast-job.ts:418 - the census baseline is always census(undefined, difficulty), i.e. factory tuning",
+        "packages/game/src/forecast-job.ts:380 - ForecastRequest is {id, tuning, lab}: there is no slot for any other baseline",
+        "packages/game/src/forecast-client.ts:325 - the request key is JSON.stringify([tuning, lab]); a baseline cannot vary it",
+        "packages/game/src/lab-ui.ts:873 - the panel is hard-labelled 'Census forecast vs Current'",
+        "packages/game/src/lab-ui.ts:899 - the builds page shows the duel's absolute win % and TTK only, with no delta against any previous build",
+        "packages/game/src/lab-picks.ts:192-199 - only the last pick per side is stored; there is no named snapshot to compare to",
+        "packages/game/src/lab-ui.ts:1042-1043 - the only comparison workflow is 'Tuning exported. Include the seed and setup in your feel report.' (manual, outside the game)",
+        "packages/core/src/arena/forecast.ts:57-63 - forecastDeltas already takes any two WaveForecast[]; the data for a pinned compare exists"
+      ],
+      "rollback": "Two commits (forecast-job/client/worker baseline plumbing with tests; lab-compare + lab-ui buttons and labels). Reverting the second leaves the plumbing inert (no baseline sent = today's behaviour); reverting both restores base exactly.",
+      "gate": "direction",
+      "runner_up": "Adopt tiger backlog C (Lab replay takeover, tiger/backlog.md:4): fork live play from any frame of the 20 s Lab ring, with a scrub bar and ledger marks reused from bout-reader-ui.ts.",
+      "body": "## Summary\nThe Lab forecast can only ever tell the owner how a change compares to the factory preset. Tuning is iterative: the question is 'is this better than what I had five minutes ago', and the builds page cannot answer 'is this Air build better than the last one' at all. Add a pinned baseline - tuning plus both sides' builds, named - that the forecast compares against, with the delta shown on both the tuning panel and the builds page.\n\n## Description\nForecastRequest gains an optional baseline {tuning, lab}. ForecastRunner memoises baseline waves by (tuning key, difficulty) and baseline duels by (tuning, lab) key, as it already does for Current, so a pinned baseline is computed once and every candidate after it costs only its own fights. ForecastClient folds the baseline into its key. A small pure module lab-compare.ts holds the pin (name, tuning, lab), produces the panel label and the duel delta, and refuses an unplayable pin. lab-ui.ts adds 'Pin as baseline' / 'Unpin' on the tuning and builds pages and renders 'vs pinned <name>' and signed duel deltas. No band, sample size or balance value changes; the census path and its hashes are untouched when no baseline is pinned.\n\n## Flow\n- Owner tunes or picks builds, presses Pin (name defaults to the tuning name or the archetype plan).\n- Further edits forecast against the pin: per-wave median/win/perfect deltas and duel win %/TTK deltas.\n- Unpin returns to 'vs Current'.\n\n## Expected impact\nTurns a five-step manual compare (export JSON, note seed and setup, re-import, re-run, read two numbers) into one press; gives the builds page its first comparative read, which is the WP4 census target's day-to-day instrument.\n\n## Evaluation\nClaim: the Lab forecast compares against a pinned tuning + builds baseline, with no change when nothing is pinned.\nBefore: 0 of 7 acceptance cases pass (no baseline field, no lab-compare module)\nAfter: 7 of 7\nMethod: gate - vitest forecast.test.ts (existing cases unchanged) + lab-compare.test.ts, then npm run gate and npm run build:game.\nResult: better\nGate: direction",
+      "evidence": "forecast-job.ts:417 `if (!duel) this.currentDuels.set(key, (duel = this.duelMemo(makeTuning(), lab)));` forecast-job.ts:418 `this.census(undefined, difficulty)`. forecast-client.ts:325 `key = JSON.stringify([tuning, lab])`. lab-ui.ts:873 `u.text(\"Census forecast vs Current\", ...)`. lab-ui.ts:899 builds line prints `win ${Math.round(duel.winRate * 100)}%   median TTK ...` with no delta. Not in tiger/backlog.md (C/E/K or owner findings) nor in .spark/Spark/ideas/*."
+    }
+  ]
+}
