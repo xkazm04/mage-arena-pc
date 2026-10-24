@@ -23,7 +23,7 @@ void main() {
   vec4 paint=texture(uColor,st);
   if(paint.a<=0.) discard;
   vec3 n=normalize(texture(uNormal,st).rgb*2.-1.);
-  vec3 lit=vec3(uAmbient.x), tint=vec3(0.);
+  float lit=uAmbient.x; vec3 tint=vec3(0.);
   for(int i=0;i<${maxLights};i++){
     if(float(i)>=uAmbient.z) break;
     vec3 d=vec3(uLights[i].xy-vPos, uLights[i].z);
@@ -31,7 +31,7 @@ void main() {
     float lam=max(0.,dot(n,d/dist));
     float fall=max(0.,1.-dist/uLights[i].w);
     float amount=lam*fall*fall;
-    lit+=uLightColors[i].rgb*amount;
+    lit+=amount;
     tint+=uLightColors[i].rgb*amount*uAmbient.y;
   }
   finalColor=vec4(paint.rgb*lit+tint*paint.a, paint.a);

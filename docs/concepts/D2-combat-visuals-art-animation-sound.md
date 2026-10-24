@@ -154,8 +154,32 @@ engines; it is the first build of the chosen look.
 
 Built with no generation spend; none of it is wired into `arena-entry.ts` yet (lane 3's HUD extraction merges first):
 - **Procedural sigils:** filled disc, beam and arc in `sigil-contract.ts` (exact signed-distance witnesses), `sigil-shader.ts` and `SigilPlayer.procedural()`; data in `data/sigils.json`; tests in `sigil.test.ts`.
-- **Normal map and light test:** `packages/tools/art/derive-normal-map.py` derives `public/normal-maps/cassia.png` from the Cassia A10 page (luminance height, blur, Sobel; deterministic, no generation) and a lit proof strip; `packages/game/src/lighting/` holds the shared point-light model, a lit-body shader mesh and `lighting.test.ts`. The shader is written but **not yet run in a GL context**; the proof strip is rendered on the CPU with the same constants, and a test pins the constants together.
+- **Normal map and light test:** `packages/tools/art/derive-normal-map.py` derives `public/normal-maps/cassia.png` from the Cassia A10 page (luminance height, blur, Sobel; deterministic, no generation) and a lit proof strip; `packages/game/src/lighting/` holds the shared point-light model, a lit-body shader mesh and `lighting.test.ts`. The proof strip is rendered on the CPU with the same constants, and a test pins the constants together. Both shaders have since been run in a real WebGL2 context (section 6.2); that run found and fixed three shader defects.
 - **Audio cues:** `audio-events.test.ts` enumerates the sim event kinds (read from core's `ArenaEvent`) against `data/audio.json`. Kinds with no cue, allowlisted for 4.5: `cast`, `down`, `interrupt`, `phase`.
+
+## 6.2 GL proof (2026-10-24)
+
+Method: `node --import tsx packages/tools/art/gl-proof/gl-proof.mts [outDir]` from the repo root (no build needed). A standalone page (`gl-proof/gl-proof.html`, set into headless Chromium by Playwright, no server) compiles the repo's own fragment sources, `litBodyFragment` and `proceduralFragment` (now exported), on a bare quad into an RGBA8 framebuffer and reads the pixels back. It does not go through Pixi, `arena-entry.ts` or `game-shell.ts`. Captures are written to `<tmp>/mage-gl-proof/` and not committed. Exit 0 = pass, 1 = a comparison failed, 2 = WebGL could not start. Errors are in 8-bit levels.
+
+GPU and backend: headless Chromium, ANGLE on Direct3D 11, NVIDIA GeForce RTX 4090 (WebGL 2.0, OpenGL ES 3.0 Chromium).
+
+| Shader pass | Reference | Texels | Max err | Mean err | Result |
+|---|---|---|---|---|---|
+| Lit Cassia body, 4 lights | committed proof strip `cassia-lit-proof.png` (Python, same constants) | 458,184 channel samples | 1 | 0.466 (bias +0.47) | pass (max 1, mean 0.5) |
+| Lit Cassia body, 4 lights | TS `lightAmount` / `litFactor` on the decoded normal map | 458,184 | 1 | 0.041 | pass |
+| Disc, filled to 0.5 | `proceduralDistance` / `proceduralFillCoord` | 495,216 | 1 | 0.350 | pass (max 1, mean 0.5) |
+| Beam, filled to 0.4 | same | 239,200 | 1 | 0.440 | pass |
+| Arc 90 degrees, filled to 0.7 | same | 112,284 | 1 | 0.064 | pass |
+| Disc, no fill pass | same | 502,704 | 1 | 0.238 | pass |
+
+Lit body: the opaque texels of the 868x344 crop the proof strip uses, lights at x = 868 * (0.15 + 0.23 i), y = 120, nearest-filtered, the light moved half a pixel because a GL fragment sits at a texel centre. Partially transparent texels are not compared (the tool's strip leaves the tint unscaled by alpha). The strip's +0.47 bias is Python truncating to uint8 where the GPU rounds. Sigils: every texel of a 100 px/m capture; disc r 2 m, beam 6 x 1 m, arc r 3 m / 0.6 m / 90 degrees, with the feather, rim and opacities of `data/sigils.json`. The expected value is built from the contract's signed-distance witnesses; texels outside the shape must be discarded (0 failures), and texels within 1.5 px of the hard fill edge are skipped. The GPU reads about 0.1-0.4 levels below the float64 reference on sigils (rounding, never more than one level).
+
+What the GPU run found, all fixed and pinned by tests (`sigil.test.ts`, `lighting.test.ts`):
+1. The procedural sigil shader **did not compile**: `half` is a reserved word in GLSL ES 3.00. Renamed `halfArc`.
+2. The arc shader used `degrees * pi/180` as the half-angle, so a 90 degree arc drew 180 degrees (28,300 texels outside the contract shape, max error 217). It is `degrees * pi/360`, as in `proceduralDistance`.
+3. The lit-body shader multiplied the lambert term by the light colour (a coloured, darker body: max error 55, mean 1.4). The CPU model and the proof strip use a colourless `ambient + amount`, with the light colour only in the added tint; the shader now does the same.
+
+Not covered: the Pixi `Shader`/`Mesh` plumbing (uniform groups, the world matrix, premultiplied-alpha textures) and the wired scene; those wait for `arena-entry.ts`. Other GPUs and the software (SwiftShader) path are not run.
 
 ## 7. How success is measured
 

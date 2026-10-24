@@ -14,6 +14,7 @@ import {
   type SigilManifest,
   type ThreatExtent,
 } from "./sigil-contract.ts";
+import { proceduralFragment } from "./sigil-shader.ts";
 import { frameIndex, validateClips } from "./animation-contract.ts";
 import policy from "../data/sigils.json" with { type: "json" };
 const manifest = JSON.parse(
@@ -225,5 +226,13 @@ describe("procedural sigil shapes (D2 4.4)", () => {
     for (const e of ["water", "fire", "earth", "air"] as const)
       expect(policy.procedural.colors[e]).toHaveLength(3);
     expect(new Set(Object.values(proceduralShapeIds)).size).toBe(3);
+  });
+  it("keeps the arc shader on the contract's half-angle and off GLSL reserved words (GL proof, D2 6.2)", () => {
+    // The GPU run found `half` (reserved in GLSL ES 3.00, no compile) and degrees*pi/180 (a doubled arc).
+    const k = /halfArc=uShape\.z\*([\d.]+);/.exec(proceduralFragment)![1]!;
+    expect(Number(k)).toBeCloseTo(Math.PI / 360, 8);
+    expect(proceduralFragment).not.toMatch(
+      /\b(half|fixed|input|output|sampler3D|common|partition|active|filter)\b/,
+    );
   });
 });

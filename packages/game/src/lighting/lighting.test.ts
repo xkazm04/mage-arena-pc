@@ -62,4 +62,12 @@ describe("normal-mapped body lighting test (cassia)", () => {
     expect(litBodyFragment).toContain("fall*fall");
     expect(litBodyFragment).toContain(`uLights[${maxLights}]`);
   });
+  it("applies the light colour only to the tint, never to the lambert term (GL proof, D2 6.2)", () => {
+    // The GPU run found the shader tinting the diffuse term by the light colour; the CPU model and the strip do not.
+    expect(litBodyFragment).toContain("lit+=amount;");
+    expect(litBodyFragment).toContain(
+      "tint+=uLightColors[i].rgb*amount*uAmbient.y;",
+    );
+    expect(litBodyFragment).toContain("paint.rgb*lit+tint*paint.a");
+  });
 });
