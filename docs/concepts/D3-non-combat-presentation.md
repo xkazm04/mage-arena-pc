@@ -1,7 +1,7 @@
 # D3. Non-combat presentation: menu, HUD and campaign, rebuilt for PC
 
 Status: **direction menu**, written 2026-10-23 for future sessions. Section 5 steps 1 and 2 landed 2026-10-24 (see
-"First slice as landed" below); step 3 is open.
+"First slice as landed" below); step 3 landed.
 
 **Decision (owner, 2026-10-24): painted 2.5D, in PixiJS, is the primary direction** ("Im sold to 2.5D [...] master as
 primary choice over 3D").
@@ -134,4 +134,28 @@ settings.
      - Digit5 and wheel or bumper access to the fifth slot (`input.ts`; mouse clicks reach it today);
      - the bolt + 4 composition screen for practice entry (W8 lane P);
      - the rival's phase gems.
-3. **Settings and widescreen (4.4): not started.** At 21:9 the 16:9 stage is still letterboxed.
+3. **Settings and widescreen (4.4)** (`5315373`, `d4b8868`, `c4a5931`, `ed1bee6`).
+   - `packages/game/src/settings/`: one versioned settings object (UI scale 0.75 to 1.5, window mode through the
+     Fullscreen API, graphics tier, reduced motion) in the single `mage-settings` key, with load, validate, migrate and
+     per-field fallback. It keeps `mage-motion` in sync, because `arena-entry.ts` and `arena-scene.ts` read it.
+     The tier maps onto `quality.json` profiles without editing `quality.ts`. Only `desktop` exists, so every tier
+     maps to it today; a tier with another profile reloads once with `?quality=`.
+   - **Settings persist outside the save: Director default 2026-10-24, owner to confirm.** D3 asked for them to travel
+     with the save. The reason for the default: no save-schema change overnight. The cost is that settings are per
+     device and not per save slot.
+   - `viewportLayout(w, h, uiScale)` keeps the 16:9 design stage for content and reports the viewport `edges` in design
+     units. The backdrop covers the viewport, its title and footer bands span the real edges, the collar sigil anchors to
+     the top-right corner, and the arena HUD's corner clusters (vitals, rune meter or Flow, Pause) sit against the
+     screen edges. At 16:9 the offsets are 0, so nothing moves. `anchors.safeEdges` gives edge-based corner anchors.
+   - The settings screen in `screens/pause.ts` has the new controls and a key or pad hint line driven by the last input
+     device.
+   - Measured (`npm run smoke:d3`, `d3-widescreen-browser.ts`): the camp at 1920x1080, 2560x1440 and 3440x1440 has live
+     pixels on both side strips (no letterbox bar), no text or button outside the viewport, and edges of 0..1920 at
+     16:9 and -330..2250 at 21:9. UI scale 115% and reduced motion survive a page reload. Unit tests cover settings
+     load, defaults, migration and corrupt values, and `viewportLayout` at those three sizes.
+   - Not done: the arena stage (`arena-scene.ts`) is still the fitted stage, so the next step is edge-anchoring it. The
+     arena HUD is built once, so a window resize inside a bout keeps the build-time offsets until the next screen.
+   - `smoke:u4` does not pass. `u4-browser.ts` expects a 97.2 px body at 1080p and gets 145.8; this also fails on a clean
+     export of `main` (9fc5e21). The tour (`u4-tour.ts`) stops at the `u3-browser.ts:485` camera assertion (expects
+     40.5, gets 60.75). That is the same 1.5x arena figure scale, but it was not re-run on `main`. Both are arena-side
+     (this step does not touch the arena), and the shell screens before the arena pass.
