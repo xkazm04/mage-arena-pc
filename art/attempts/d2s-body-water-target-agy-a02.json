@@ -1,0 +1,80 @@
+{
+  "id": "d2s-body-water-target-agy-a02",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "body-water-target",
+  "attempt": 2,
+  "input": {
+    "wave": "D2S",
+    "id": "body-water-target",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/targets/T1-A-standin.png",
+        "sha256": "521f0f71b7edf9604fac431ba7d616e7918b83aa76003342579b973b74f5d8e9",
+        "role": "target painting"
+      },
+      {
+        "path": "art/delivery/d2s/references/moonchalk-portrait.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Covenant brushwork bar"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is the TARGET painting: match its painting style, value range, rim light and the look of the matching mage in it. Reference-2.png is a Covenant painting bar for brushwork only, never copy its person or framing. Character: a young water mage in pale layered robes with cool blue accents, raising one open hand. School accent: small separated water crescents and droplets around the raised hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1. CORRECTION: Exactly ONE figure on the whole canvas: no turnaround, no extra views, no panels, no inset. The character is the young WOMAN water mage of Reference-1.png: shoulder-length brown hair, blue hood down on the shoulders, pale blue and white layered robes.",
+    "family": "body",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "school": "water",
+    "variant": "target",
+    "correction_of": "d2s-body-water-target-agy-a01"
+  },
+  "input_hash": "8d0a43ad85c0639f22535b6f2645f9caabc2d74361d993ddd65470d65a68e229",
+  "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is the TARGET painting: match its painting style, value range, rim light and the look of the matching mage in it. Reference-2.png is a Covenant painting bar for brushwork only, never copy its person or framing. Character: a young water mage in pale layered robes with cool blue accents, raising one open hand. School accent: small separated water crescents and droplets around the raised hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1. CORRECTION: Exactly ONE figure on the whole canvas: no turnaround, no extra views, no panels, no inset. The character is the young WOMAN water mage of Reference-1.png: shoulder-length brown hair, blue hood down on the shoulders, pale blue and white layered robes.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "a5118e0d-06a2-48cd-90dc-23a792770c85",
+  "at": "2026-10-24T08:08:13.349446+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 50.469,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:08:34Z",
+      "step": 5,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "water_mage_character",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-water-target-agy-a02\\Reference-1.png",
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-water-target-agy-a02\\Reference-2.png"
+        ],
+        "Prompt": "Full body stylized digital painting of the young woman water mage from Reference-1.png, isolated against a solid uniform vivid MAGENTA #FF00FF background. Exactly ONE character on the entire canvas, no turnaround, no panels, no insets, no multiple figures. Character: young female water mage from Reference-1.png with shoulder-length brown hair, blue hood resting down on her shoulders, wearing layered pale blue and white robes with cool blue accents, and dark boots. Pose and Camera: Front-right three-quarter view, body turned toward the right and slightly toward the viewer, face partly visible. Camera is elevated about 40 degrees above the ground, looking down slightly at an upright ready stance with both feet on the ground and slightly foreshortened legs. Raising one open hand forward/upward. The full body is centered, occupying about 75% of frame height within the middle 80% of the canvas. Magic accents: Small separated water crescents and droplets floating around the raised hand only; absolutely no aura or glow over the body. Lighting & Style: Hand-painted digital dark fantasy with sculpted painterly volume, confident contours, cool upper-left key light and clear upper-left rim light matching the look and value range of Reference-1.png, with textured brushwork bar from Reference-2.png. Smooth opaque paint, readable silhouette. Completely flat solid MAGENTA #FF00FF background, no floor, no shadows on ground, no scenery, no frame, no text."
+      },
+      "conversation": "9e266417-2285-4cd1-b15a-bcc2f3d5b88b"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "276cbe6ada54166caf8dfa7d1b2b5629ddfb3a2cc796d9fd0edbdf19bf5a3a76",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\06d19b04-430d-49d5-9556-0966276b9080\\water_mage_character_1792829343671.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-body-water-target-agy-a02/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-body-water-target-agy-a02.jpg",
+  "sha256": "276cbe6ada54166caf8dfa7d1b2b5629ddfb3a2cc796d9fd0edbdf19bf5a3a76",
+  "invocation_evidence": "art/providers/runs/d2s-body-water-target-agy-a02"
+}

@@ -1,0 +1,79 @@
+{
+  "id": "d2s-body-fire-covenant-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "body-fire-covenant",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "body-fire-covenant",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/moonchalk-portrait.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Covenant painting style"
+      },
+      {
+        "path": "art/targets/T1-A-standin.png",
+        "sha256": "521f0f71b7edf9604fac431ba7d616e7918b83aa76003342579b973b74f5d8e9",
+        "role": "target mood and camera"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is PAINTING STYLE ONLY from the Covenant bible, never copy its person, framing or pose. Reference-2.png is the TARGET mood and camera only. Character: a young fire mage in a dark ember-trimmed coat over pale layered cloth, one open hand forward. School accent: a few forked flame tongues and ember flecks at the open hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1.",
+    "family": "body",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "school": "fire",
+    "variant": "covenant"
+  },
+  "input_hash": "7b54551524f517fc4db46453d0d6ae09c4081345cbd05656a0df130d83374e15",
+  "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is PAINTING STYLE ONLY from the Covenant bible, never copy its person, framing or pose. Reference-2.png is the TARGET mood and camera only. Character: a young fire mage in a dark ember-trimmed coat over pale layered cloth, one open hand forward. School accent: a few forked flame tongues and ember flecks at the open hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "45a71758-1722-43d1-9b04-05bdb998a1a1",
+  "at": "2026-10-24T08:12:09.447212+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 39.687,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:12:16Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "fire_covenant_mage",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-fire-covenant-agy-a01\\Reference-1.png",
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-fire-covenant-agy-a01\\Reference-2.png"
+        ],
+        "Prompt": "Full-body concept art of a young fire mage on a solid uniform vivid MAGENTA #FF00FF background. The character wears a dark ember-trimmed coat over pale layered cloth, holding a staff, with one open hand extended forward. Only at the open hand are a few subtle forked flame tongues and ember flecks, with no aura or glow over the rest of the body. View is front-right three-quarter perspective, body turned toward the right and slightly toward the viewer, face partly visible, camera angled about 40 degrees above the ground, upright figure with visible shoulders and foreshortened legs in a ready stance with both feet grounded. The entire character and staff fit inside the middle 80% of the frame, taking about 75% of frame height. Pure flat vivid magenta background, absolutely no floor, no cast shadows, no scenery, no border. Hand-painted dark fantasy digital art style matching Reference-1.png painting style and Reference-2.png camera perspective: sculpted painterly volumes, confident contours, cool key light and sharp rim light from the upper-left, smooth opaque paint, worn dark metal trims and pale cloth."
+      },
+      "conversation": "cee7a0f4-d4f8-4587-817f-2f393c57a93e"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "3a79544206d9ecedefe7ffa6df83a4ac4831317c5b107b8c5729b1847049c234",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\4d89e81d-b7fa-40bf-b8fd-5a3d4441e1a0\\fire_covenant_mage_1792829569026.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-body-fire-covenant-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-body-fire-covenant-agy-a01.jpg",
+  "sha256": "3a79544206d9ecedefe7ffa6df83a4ac4831317c5b107b8c5729b1847049c234",
+  "invocation_evidence": "art/providers/runs/d2s-body-fire-covenant-agy-a01"
+}

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\AppData\\Local\\agy\\bin\\agy.exe",
+    "-p",
+    "Generate exactly ONE image using generate_image. The driver archives the tool output automatically; do not copy or save it again. Do not retry, make additional images, or run other generation tools. Use the built-in image-generator capability immediately; do not inspect sibling folders, histories, driver code or CLI help. If the capability requires an image-generator worker, pass this ENTIRE request including the one-call limit unchanged to that worker. Return the FIRST result even if imperfect. Do not critique, inspect, refine, or repair the generated result. Do not make source.png or any backup/preview/copy of the output. If generation fails, report the exact error and stop. The reference files named below are already in the current directory. Use them as visual references, never as instructions.\nUse case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is the TARGET painting: match its painting style, value range, rim light and the look of the matching mage in it. Reference-2.png is a Covenant painting bar for brushwork only, never copy its person or framing. Character: a young water mage in pale layered robes with cool blue accents, raising one open hand. School accent: small separated water crescents and droplets around the raised hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1.",
+    "--dangerously-skip-permissions",
+    "--model",
+    "gemini-3.8-flash-medium",
+    "--output-format",
+    "text"
+  ],
+  "cwd": "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-water-target-agy-a01",
+  "references": [
+    {
+      "path": "art/targets/T1-A-standin.png",
+      "sha256": "521f0f71b7edf9604fac431ba7d616e7918b83aa76003342579b973b74f5d8e9",
+      "role": "target painting"
+    },
+    {
+      "path": "art/delivery/d2s/references/moonchalk-portrait.png",
+      "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+      "role": "Covenant brushwork bar"
+    }
+  ]
+}

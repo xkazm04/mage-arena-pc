@@ -1,0 +1,79 @@
+{
+  "id": "d2s-body-water-roster-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "body-water-roster",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "body-water-roster",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/cassia-se.png",
+        "sha256": "60e368c3263f3959da1b01a827308c7e60191ec5952f5744ae5d6f9894d86f7d",
+        "role": "roster identity"
+      },
+      {
+        "path": "art/targets/T1-A-standin.png",
+        "sha256": "521f0f71b7edf9604fac431ba7d616e7918b83aa76003342579b973b74f5d8e9",
+        "role": "target finish"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact CHARACTER IDENTITY, costume and staff: keep that person. Reference-2.png is the TARGET painting: paint at its richer illustrative finish, rim light and closer camera. Character: Adult woman, dark curly hair and blue hood, ivory/pale-blue split layered cloth, water glass charms, worn silver clasps, crescent orb staff. Compact mist and droplets.. School accent: small separated water crescents and droplets around the raised hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1.",
+    "family": "body",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "school": "water",
+    "variant": "roster"
+  },
+  "input_hash": "161ee69f752852c47f40d61f03869cf47c38de5ba3be89083b9afe259c7143e2",
+  "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is the exact CHARACTER IDENTITY, costume and staff: keep that person. Reference-2.png is the TARGET painting: paint at its richer illustrative finish, rim light and closer camera. Character: Adult woman, dark curly hair and blue hood, ivory/pale-blue split layered cloth, water glass charms, worn silver clasps, crescent orb staff. Compact mist and droplets.. School accent: small separated water crescents and droplets around the raised hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "e7a3a40a-01cc-4db2-861d-4aa9e86432b2",
+  "at": "2026-10-24T08:09:12.955048+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 31.094,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:09:19Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "water_mage_front_right",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-water-roster-agy-a01\\Reference-1.png",
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-water-roster-agy-a01\\Reference-2.png"
+        ],
+        "Prompt": "Stylized concept art of one original painted game character, full body, isolated on a solid uniform vivid magenta background (#FF00FF). Character identity, costume, and staff match Reference-1: adult woman with dark curly hair visible under a blue hood, ivory and pale-blue split layered cloth robes, worn silver clasps, water glass charms, holding a crescent orb staff. Painting style and finish match Reference-2: sculpted painterly volume, rich illustrative digital painting, smooth opaque brushwork, confident broken contours, cool rim light from the upper left. School accent: small separated water crescents and droplets floating tightly around her raised hand only, no glowing aura over the body. Perspective: FRONT-RIGHT three-quarter view, body angled toward image right and slightly toward viewer, camera elevated about 40 degrees above the ground, showing upright figure with shoulders, partially visible face, and foreshortened legs. Ready stance, both feet planted on ground. Whole figure and staff contained within middle 80% of frame, taking up ~75% of frame height. Pure flat magenta background, no floor, no ground shadow, no environment, no frame, no text."
+      },
+      "conversation": "b3fb112c-3cb2-4674-8184-7d2f70496dc4"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "6d6482a0b546a5b1676c0de041d404b0f9e689c2a6b79645b4045fc8a3b48660",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\760d8897-2341-4bc0-a6ab-86bd13136c24\\water_mage_front_right_1792829383927.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-body-water-roster-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-body-water-roster-agy-a01.jpg",
+  "sha256": "6d6482a0b546a5b1676c0de041d404b0f9e689c2a6b79645b4045fc8a3b48660",
+  "invocation_evidence": "art/providers/runs/d2s-body-water-roster-agy-a01"
+}

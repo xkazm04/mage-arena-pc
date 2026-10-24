@@ -1,0 +1,62 @@
+{
+  "id": "d2s-target-t2a-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "target-t2a",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "target-t2a",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [],
+    "prompt": "Wide gameplay view of a magical arena duel at dusk, camera at 45 degrees from a moderate distance, four combatants visible: a water mage in pale cloth, an air mage in grey-blue wrapped garments mid-dash leaving streaks of wind, a fire mage calling down a meteor whose large glowing circular shadow grows on the sand, and an armoured arena soldier with a shield. A crackling beam of lightning crosses the arena, casting light on the stone floor. Readable spell shapes: a filled warning circle, a straight beam, a curving projectile arc. Hand-painted 2.5D game art, painted characters with normal-mapped lighting, dynamic light from spells on bodies and floor, verdigris bronze statues around the arena rim, crowd silhouettes in torchlit balconies, atmospheric dust, deep shadows, cohesive palette of dark enamel, aged silver and warm torchlight, 16:9. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands.",
+    "family": "target",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)"
+  },
+  "input_hash": "1fa80273ccb705f2bb8d55076bf245162ad5dc7531599a17698096bd72dc2840",
+  "prompt": "Wide gameplay view of a magical arena duel at dusk, camera at 45 degrees from a moderate distance, four combatants visible: a water mage in pale cloth, an air mage in grey-blue wrapped garments mid-dash leaving streaks of wind, a fire mage calling down a meteor whose large glowing circular shadow grows on the sand, and an armoured arena soldier with a shield. A crackling beam of lightning crosses the arena, casting light on the stone floor. Readable spell shapes: a filled warning circle, a straight beam, a curving projectile arc. Hand-painted 2.5D game art, painted characters with normal-mapped lighting, dynamic light from spells on bodies and floor, verdigris bronze statues around the arena rim, crowd silhouettes in torchlit balconies, atmospheric dust, deep shadows, cohesive palette of dark enamel, aged silver and warm torchlight, 16:9. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "19553764-16fd-4f38-9ff0-26a9839f3143",
+  "at": "2026-10-24T08:06:43.503491+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 23.485,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:06:50Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "tiro_arena_duel",
+        "Prompt": "Wide gameplay view of a magical arena duel at dusk, isometric / high 3/4 camera at 45 degrees from a moderate distance. Four combatants visible across a sunken stone and sand gladiatorial arena: a water mage in layered pale cloth casting flowing crescents of water, an air mage in grey-blue wrapped garments mid-dash leaving branching streaks of wind, a fire mage channeling a descending meteor with a large glowing circular warning zone expanding on the ground, and a heavily armoured arena gladiator soldier raising a shield. A bright crackling beam of lightning traverses the arena floor, casting dynamic reflections on stone pavers and sand. Distinct, readable spell shapes including a glowing warning circle AoE, a straight electric energy beam, and curving elemental arcs. Hand-painted 2.5D isometric action game art style, painted characters with normal-mapped directional lighting, dynamic colored glow cast onto bodies and the arena floor. Aged verdigris bronze statues along the arena rim, silhouette spectators in elevated torchlit balconies, atmospheric haze and dust motes, deep shadows, cohesive color palette of dark enamel, aged silver, restrained verdigris, and warm flickering torchlight contrasted with cool magical energies. Tiro gladiatorial academy aesthetic."
+      },
+      "conversation": "b557db15-ac99-4f9d-8765-1b32e4ea0084"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "d6dde36d569267cd305f78020ff0090723041c7278874cdb1192ad9f4fc5e13a",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\afc2e74b-f05f-4efb-8843-b00221194609\\tiro_arena_duel_1792829226831.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-target-t2a-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-target-t2a-agy-a01.jpg",
+  "sha256": "d6dde36d569267cd305f78020ff0090723041c7278874cdb1192ad9f4fc5e13a",
+  "invocation_evidence": "art/providers/runs/d2s-target-t2a-agy-a01"
+}

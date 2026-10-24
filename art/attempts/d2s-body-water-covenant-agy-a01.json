@@ -1,0 +1,79 @@
+{
+  "id": "d2s-body-water-covenant-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "body-water-covenant",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "body-water-covenant",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/moonchalk-portrait.png",
+        "sha256": "b9945850a1fdc1d05591e60cd96737d0b744b5f2cc500c869fe4a9e02bce95aa",
+        "role": "Covenant painting style"
+      },
+      {
+        "path": "art/targets/T1-A-standin.png",
+        "sha256": "521f0f71b7edf9604fac431ba7d616e7918b83aa76003342579b973b74f5d8e9",
+        "role": "target mood and camera"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is PAINTING STYLE ONLY from the Covenant bible, never copy its person, framing or pose. Reference-2.png is the TARGET mood and camera only. Character: a young water mage in pale layered robes with cool blue accents, raising one open hand. School accent: small separated water crescents and droplets around the raised hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1.",
+    "family": "body",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "school": "water",
+    "variant": "covenant"
+  },
+  "input_hash": "4a0e92b15f6c4a8209bb5349efff9c1b74059363f232c9d457b72bb2bbf0531f",
+  "prompt": "Use case: stylized-concept. ONE original painted game character, full body, on uniform vivid MAGENTA #FF00FF. Reference-1.png is PAINTING STYLE ONLY from the Covenant bible, never copy its person, framing or pose. Reference-2.png is the TARGET mood and camera only. Character: a young water mage in pale layered robes with cool blue accents, raising one open hand. School accent: small separated water crescents and droplets around the raised hand only; no aura over the body. View: FRONT-RIGHT three-quarter, body turned toward image right and slightly toward viewer, face partly visible, camera about 40 degrees above the ground (closer than a top-down view), upright figure with shoulders, some face and foreshortened legs. Ready stance, both feet on the ground, whole body and staff inside the middle 80% of the frame, body about 75% of the frame height. One figure only. No floor, no shadow, no scenery, no text, no frame. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. Strong readable silhouette and a clear rim light from the upper left. Smooth opaque paint so the body can be lit by a normal map. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "11a97ee5-7404-4954-a099-97537d4e61e5",
+  "at": "2026-10-24T08:09:52.441510+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 39.469,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:09:59Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "water_mage_covenant",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-water-covenant-agy-a01\\Reference-1.png",
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-body-water-covenant-agy-a01\\Reference-2.png"
+        ],
+        "Prompt": "Full-body concept art of an original young water mage game character, entirely isolated on a solid uniform vivid flat magenta background (#FF00FF). The mage is in an upright ready stance with both feet grounded, viewed from a front-right three-quarter angle (body turned slightly toward image right and toward viewer) from an elevated camera about 40 degrees above the ground, showing head, shoulders, face partly visible, and foreshortened legs. The mage wears pale layered off-white robes with cool sea-blue accents, worn dark metal fasteners, holding a staff in one hand and raising the other open hand forward. Magical school accent: small separated clear water crescents and droplets floating tightly around the raised open hand only; no aura over the body. Painted in the hand-painted dark fantasy style of Reference-1.png with sculpted painterly volume, confident broken contours, sharp silver highlights, smooth opaque paint, and cool upper-left lighting. Framing: single figure taking about 75% of the frame height, completely inside the middle 80% of the canvas. No floor, no ground shadow, no background scenery, no text, no borders."
+      },
+      "conversation": "400f4b22-66f2-40a6-8604-cbe583ba02ca"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "705726352a97ff7b1fb03602ff179993c3db6ebe918f65c54d2d3e970dee5378",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\538c7dd8-fe0c-4457-b606-ae3febce66a9\\water_mage_covenant_1792829431739.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-body-water-covenant-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-body-water-covenant-agy-a01.jpg",
+  "sha256": "705726352a97ff7b1fb03602ff179993c3db6ebe918f65c54d2d3e970dee5378",
+  "invocation_evidence": "art/providers/runs/d2s-body-water-covenant-agy-a01"
+}
