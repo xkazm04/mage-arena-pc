@@ -8,9 +8,10 @@ import {
   type BoutReading,
   type SeasonBout,
 } from "@mage/core";
-import { combat, seconds, ticks, type LedgerEntry } from "@mage/core/arena";
+import { seconds, ticks, type LedgerEntry } from "@mage/core/arena";
 import policy from "../data/bout-reader.json" with { type: "json" };
 import { answerMark } from "./answers.ts";
+import { ReplayTransport } from "./replay-transport.ts";
 import { colours } from "./ui/kit.ts";
 import type { CanvasUI } from "./ui/ui.ts";
 
@@ -20,22 +21,38 @@ import type { CanvasUI } from "./ui/ui.ts";
  */
 export class BoutReader {
   readonly reading: BoutReading;
-  position: number;
+  readonly transport: ReplayTransport;
   at: SeasonBout;
-  playing = false;
   page = 0;
-  private carry = 0;
   private refresh: () => void = () => {};
   constructor(bout: SeasonBout, tape: readonly BoutCheckpoint[]) {
     this.reading = readBout(bout, policy.checkpointTicks, tape);
     const first = this.wave.entries[0];
-    this.position = first
-      ? positionOfTick(this.wave, first.tick)
-      : this.wave.first;
+    this.transport = new ReplayTransport(
+      this.wave.first,
+      this.wave.last,
+      first ? positionOfTick(this.wave, first.tick) : this.wave.first,
+      (to, from) => {
+        // One entry forward keeps the same state object, so the scene animates instead of re-deriving.
+        if (to === from + 1)
+          applyBoutInput(this.at, this.reading.source.log[from]!);
+        else this.at = seekBout(this.reading, to);
+        this.refresh();
+      },
+    );
     this.at = seekBout(this.reading, this.position);
   }
   get wave() {
     return this.reading.wave;
+  }
+  get position() {
+    return this.transport.position;
+  }
+  get playing() {
+    return this.transport.playing;
+  }
+  set playing(on: boolean) {
+    this.transport.playing = on;
   }
   get tick() {
     return this.at.games!.state.tick;
@@ -48,30 +65,13 @@ export class BoutReader {
     return this.at.games!.phase === "active";
   }
   seek(position: number) {
-    const p = Math.max(
-      this.wave.first,
-      Math.min(this.wave.last, Math.round(position)),
-    );
-    if (p === this.position) return;
-    // One entry forward keeps the same state object, so the scene animates instead of re-deriving.
-    if (p === this.position + 1)
-      applyBoutInput(this.at, this.reading.source.log[this.position]!);
-    else this.at = seekBout(this.reading, p);
-    this.position = p;
-    this.refresh();
+    this.transport.seek(position);
   }
   step(count: number) {
-    this.playing = false;
-    this.seek(this.position + count);
+    this.transport.step(count);
   }
   frame(dt: number) {
-    if (this.playing) {
-      this.carry += dt * combat.simStepHz;
-      for (; this.carry >= 1 && this.position < this.wave.last; this.carry--)
-        this.seek(this.position + 1);
-      if (this.position >= this.wave.last) this.playing = false;
-      if (!this.playing) this.carry = 0;
-    }
+    this.transport.advance(dt);
     this.refresh();
     return this.at.games!;
   }
@@ -196,10 +196,9 @@ export class BoutReader {
       () => this.step(-1),
       { tooltip: "Comma steps back one tick." },
     );
-    const play = u.button("reader-play", "Play", 454, 910, 170, 76, () => {
-      if (this.position >= w.last) this.seek(w.first);
-      this.playing = !this.playing;
-    });
+    const play = u.button("reader-play", "Play", 454, 910, 170, 76, () =>
+      this.transport.toggle(),
+    );
     u.button(
       "reader-next-tick",
       "+1 tick",
