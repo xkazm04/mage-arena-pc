@@ -1,4 +1,4 @@
-import { Rectangle, Texture, type Sprite } from "pixi.js";
+import { Assets, Matrix, Rectangle, Texture, type Sprite } from "pixi.js";
 import {
   paceOf,
   tuningFor,
@@ -26,6 +26,15 @@ import {
   type Direction,
 } from "./animation-contract.ts";
 import policy from "../data/animation.json" with { type: "json" };
+import { litBodyMesh, setLights } from "./lighting/lit-body.ts";
+import {
+  lightInQuad,
+  litBodyChoice,
+  normalMaps,
+  pickLightingTier,
+  type LightingTier,
+  type ScreenLight,
+} from "./lighting/tier.ts";
 interface Motion {
   entity: string;
   state: BodyState;
@@ -57,6 +66,12 @@ export class BodyPlayer {
   private tick = 0;
   private displayed: Record<string, unknown>[] = [];
   private missing = new Set<string>();
+  /** `unlit` keeps every body on the painted sprite (D2 step 3 quality tier). */
+  tier: LightingTier = pickLightingTier();
+  private normals = new Map<string, Texture | "loading" | "failed">();
+  private litMesh?: ReturnType<typeof litBodyMesh>;
+  private litActor?: number;
+  private litFrames = 0;
   /** Actor id to camp character id, for season entrants whose label is a display name. */
   readonly characters = new Map<number, string>();
   /** Settles once the body manifest is validated or has failed. */
@@ -101,6 +116,7 @@ export class BodyPlayer {
     }
     this.tick = state.tick + alpha;
     this.displayed = [];
+    this.litActor = undefined;
     for (const a of state.actors) {
       const entity = this.identity(a);
       if (
@@ -333,7 +349,9 @@ export class BodyPlayer {
           : state === "death"
             ? (motion.deathElapsed ?? 0) * 1000
             : // The run cycle keeps step with the actor's pace (its speeds scale by it).
-              seconds(this.tick - motion.since) * 1000 * (state === "run" ? paceOf(a) : 1);
+              seconds(this.tick - motion.since) *
+              1000 *
+              (state === "run" ? paceOf(a) : 1);
     const index = selected.held
       ? state === "death" && selected.clip === motion.selection?.clip
         ? motion.frame
@@ -384,6 +402,105 @@ export class BodyPlayer {
       page: selected.clip.page,
     });
     return true;
+  }
+  /**
+   * Draws the body with the lit-body material when the tier, its page's normal map and the frame allow; otherwise
+   * leaves the painted sprite. One body a frame. Call after the pose and flash are final, with the scene light in the
+   * sprite parent's space.
+   */
+  light(sprite: Sprite, a: Actor, light: ScreenLight): boolean {
+    const shown = this.displayed.find((d) => d.id === a.id),
+      page = shown?.source === "A10" ? (shown.page as string) : undefined;
+    let normal = page ? this.normals.get(page) : undefined;
+    if (page && this.tier === "lit" && normalMaps[page] && !normal) {
+      this.normals.set(page, "loading");
+      Assets.load<Texture>(normalMaps[page])
+        .then((t) => this.normals.set(page, this.disposed ? "failed" : t))
+        .catch((e) => {
+          this.normals.set(page, "failed");
+          this.diagnostics.push(`Normal map ${page}: ${String(e)}`);
+        });
+      normal = "loading";
+    }
+    const choice = litBodyChoice({
+      tier: this.tier,
+      page,
+      normalReady: normal instanceof Texture,
+      flashing: !!sprite.filters?.length,
+      anotherLit: this.litActor !== undefined && this.litActor !== a.id,
+    });
+    if (shown)
+      Object.assign(shown, { lit: choice === "lit", litChoice: choice });
+    const mesh = this.litMesh;
+    if (choice !== "lit" || !(normal instanceof Texture) || !sprite.parent) {
+      if (!sprite.visible) sprite.visible = true;
+      if (
+        mesh &&
+        !mesh.destroyed &&
+        mesh.parent === sprite.parent &&
+        mesh.visible
+      )
+        mesh.visible = false;
+      return false;
+    }
+    let m = mesh;
+    if (!m || m.destroyed) {
+      m = this.litMesh = litBodyMesh();
+      m.label = "lit-body";
+    }
+    if (m.parent !== sprite.parent)
+      sprite.parent.addChildAt(m, sprite.parent.getChildIndex(sprite) + 1);
+    const tex = sprite.texture,
+      res = m.shader!.resources;
+    if (res.uColor !== tex.source) res.uColor = tex.source;
+    if (res.uNormal !== normal.source) res.uNormal = normal.source;
+    const f = tex.frame,
+      anchor = sprite.anchor,
+      x0 = -anchor.x * tex.orig.width + (tex.trim?.x ?? 0),
+      y0 = -anchor.y * tex.orig.height + (tex.trim?.y ?? 0);
+    sprite.updateLocalTransform();
+    const quad = sprite.localTransform
+      .clone()
+      .append(new Matrix(f.width, 0, 0, f.height, x0, y0));
+    m.setFromMatrix(quad);
+    m.alpha = sprite.alpha;
+    if (!m.visible) m.visible = true;
+    if (sprite.visible) sprite.visible = false;
+    const group = res.litUniforms;
+    group.uniforms.uFrame = new Float32Array([
+      f.x / tex.source.width,
+      f.y / tex.source.height,
+      f.width / tex.source.width,
+      f.height / tex.source.height,
+    ]);
+    // The light is given in the root's parent space; the root only translates.
+    const local = {
+      ...light,
+      x: light.x - sprite.parent.x,
+      y: light.y - sprite.parent.y,
+    };
+    setLights(
+      m,
+      [lightInQuad(quad, [f.width, f.height], local)],
+      [f.width, f.height],
+    );
+    this.litActor = a.id;
+    this.litFrames++;
+    return true;
+  }
+  /** Lit-body state for `__arena.snapshot().animation.lighting`. */
+  lighting() {
+    return {
+      tier: this.tier,
+      litActor: this.litActor,
+      litFrames: this.litFrames,
+      normalMaps: Object.fromEntries(
+        [...this.normals].map(([k, v]) => [
+          k,
+          v instanceof Texture ? "ready" : v,
+        ]),
+      ),
+    };
   }
   deathAge(a: Actor) {
     return this.actors.get(a.id)?.deathElapsed ?? 0;
@@ -441,11 +558,17 @@ export class BodyPlayer {
       displayed: this.displayed,
       fallbacks: [...this.fallbacks],
       diagnostics: [...this.diagnostics],
+      lighting: this.lighting(),
     };
   }
   dispose() {
     this.disposed = true;
     for (const f of this.frames.values()) f.destroy();
+    if (this.litMesh && !this.litMesh.destroyed) {
+      this.litMesh.shader?.destroy();
+      this.litMesh.geometry.destroy();
+      this.litMesh.destroy();
+    }
     this.actors.clear();
     for (const key of this.requests) art.release(key);
   }

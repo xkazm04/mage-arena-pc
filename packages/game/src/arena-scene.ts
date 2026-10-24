@@ -38,6 +38,7 @@ import { ArenaArt, type Palette } from "./arena-art.ts";
 import { BodyPlayer } from "./body-player.ts";
 import { EffectPlayer } from "./effect-player.ts";
 import { SigilPlayer } from "./sigil-player.ts";
+import { keyLightAt } from "./lighting/tier.ts";
 import { RivalCollarView } from "./rival-collar-view.ts";
 import { rivalRune } from "./rival-collar.ts";
 import type { Element } from "./animation-contract.ts";
@@ -828,6 +829,11 @@ export class ArenaScene {
       view.sprite.filters = this.feedback.flash(a)
         ? [this.feedback.white]
         : null;
+      this.bodies.light(
+        view.sprite,
+        a,
+        keyLightAt(q, m.pxPerMetreX, m.pxPerMetreY),
+      );
       this.bodies.recordPose(a, view.sprite);
       const d = view.details;
       d.clear();
