@@ -120,3 +120,76 @@ export function proceduralBox(
   const e = s.radius + s.thickness / 2 + margin;
   return [-e, -e, 2 * e, 2 * e];
 }
+/** Ground widths for the shapes the sim gives no width (a beam and a trail hit along a segment, `widthM` 0). */
+export const proceduralWidthM = { beam: 0.7, trail: 0.5, arcMin: 0.3 } as const;
+export interface ProceduralDraw {
+  at: { x: number; y: number };
+  shape: ProceduralShape;
+  angle: number;
+  progress?: number;
+}
+/**
+ * Where the D2 contract calls for a procedural sigil on a school effect (core `SchoolEffect`): a delayed detonation
+ * (Pyre, Sunfall, Downdraft) is a disc that fills until it lands, a beam (Brand Wrath, Cyclone) and a dash trail
+ * (Cinder Step) are beam strips along their segment. A volley has no ground shape.
+ */
+export function schoolEffectSigil(
+  e: {
+    kind: string;
+    origin: { x: number; y: number };
+    target: { x: number; y: number };
+    startTick: number;
+    endTick: number;
+    radiusM?: number;
+  },
+  tick: number,
+): ProceduralDraw | undefined {
+  if (e.kind === "detonation")
+    return {
+      at: e.target,
+      shape: { shape: "disc", radius: e.radiusM ?? 1 },
+      angle: 0,
+      progress: clampProgress(
+        (tick - e.startTick) / Math.max(1, e.endTick - e.startTick),
+      ),
+    };
+  if (e.kind !== "beam" && e.kind !== "trail") return undefined;
+  const dx = e.target.x - e.origin.x,
+    dy = e.target.y - e.origin.y,
+    length = Math.hypot(dx, dy);
+  if (!(length > 1e-6)) return undefined;
+  return {
+    at: e.origin,
+    shape: {
+      shape: "beam",
+      length,
+      width: e.kind === "beam" ? proceduralWidthM.beam : proceduralWidthM.trail,
+    },
+    angle: Math.atan2(dy, dx),
+  };
+}
+/** The rest of a Veering Bolt's curved flight (core `Projectile.arc`) as an arc band about its centre of curvature. */
+export function veeringArcSigil(p: {
+  radius: number;
+  arc?: {
+    centre: { x: number; y: number };
+    radiusM: number;
+    angle: number;
+    sign: number;
+    leftM: number;
+  };
+}): ProceduralDraw | undefined {
+  const arc = p.arc;
+  if (!arc || !(arc.radiusM > 1e-6) || !(arc.leftM > 1e-6)) return undefined;
+  const sweep = Math.min(arc.leftM / arc.radiusM, Math.PI * 1.99);
+  return {
+    at: arc.centre,
+    shape: {
+      shape: "arc",
+      radius: arc.radiusM,
+      thickness: Math.max(proceduralWidthM.arcMin, p.radius * 2),
+      degrees: (sweep * 180) / Math.PI,
+    },
+    angle: arc.angle + (arc.sign * sweep) / 2,
+  };
+}

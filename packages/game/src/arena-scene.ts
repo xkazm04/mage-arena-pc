@@ -542,6 +542,7 @@ export class ArenaScene {
       );
       this.circle(z.pos, z.radiusM, 0x39818f, 0.65);
     }
+    this.sigils.schoolShapes(state, (a) => this.clips.element(a));
     for (const t of state.telegraphs) {
       const element = this.clips.element(
           state.actors.find((a) => a.id === t.ownerId),

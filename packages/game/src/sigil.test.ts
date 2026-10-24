@@ -10,7 +10,9 @@ import {
   proceduralShapeIds,
   type ProceduralShape,
   rankFill,
+  schoolEffectSigil,
   threatFrame,
+  veeringArcSigil,
   type SigilManifest,
   type ThreatExtent,
 } from "./sigil-contract.ts";
@@ -234,5 +236,57 @@ describe("procedural sigil shapes (D2 4.4)", () => {
     expect(proceduralFragment).not.toMatch(
       /\b(half|fixed|input|output|sampler3D|common|partition|active|filter)\b/,
     );
+  });
+});
+describe("procedural sigils on school effects (D2 step 3, wired)", () => {
+  const effect = (kind: string, extra = {}) => ({
+    kind,
+    origin: { x: 1, y: 2 },
+    target: { x: 4, y: 6 },
+    startTick: 10,
+    endTick: 70,
+    ...extra,
+  });
+  it("draws a detonation as a disc at its landing point that fills until it lands", () => {
+    const d = schoolEffectSigil(effect("detonation", { radiusM: 2.5 }), 40)!;
+    expect(d.at).toEqual({ x: 4, y: 6 });
+    expect(d.shape).toEqual({ shape: "disc", radius: 2.5 });
+    expect(d.progress).toBeCloseTo(0.5);
+    expect(schoolEffectSigil(effect("detonation"), 999)!.progress).toBe(1);
+  });
+  it("draws beams and trails as strips over their simulated segment", () => {
+    for (const kind of ["beam", "trail"]) {
+      const d = schoolEffectSigil(effect(kind), 20)!;
+      expect(d.at).toEqual({ x: 1, y: 2 });
+      expect(d.shape).toMatchObject({ shape: "beam", length: 5 });
+      expect(d.angle).toBeCloseTo(Math.atan2(4, 3));
+      // The segment's far end is the strip's far edge.
+      const s = d.shape;
+      expect(proceduralDistance(s, 5, 0)).toBeCloseTo(0);
+    }
+    expect(schoolEffectSigil(effect("volley"), 20)).toBeUndefined();
+  });
+  it("covers the rest of a Veering Bolt's flight and nothing behind it", () => {
+    const arc = {
+      centre: { x: 0, y: 0 },
+      radiusM: 4,
+      angle: 0,
+      sign: 1,
+      leftM: Math.PI,
+    };
+    const d = veeringArcSigil({ radius: 0.2, arc })!;
+    expect(d.shape).toMatchObject({ shape: "arc", radius: 4, degrees: 45 });
+    // Sample the remaining path in the arc's own frame (rotated by -angle).
+    for (const f of [0.05, 0.5, 0.95]) {
+      const a = (f * Math.PI) / 4 - d.angle;
+      expect(
+        proceduralDistance(d.shape, 4 * Math.cos(a), 4 * Math.sin(a)),
+      ).toBeLessThan(0);
+    }
+    const behind = -0.2 - d.angle;
+    expect(
+      proceduralDistance(d.shape, 4 * Math.cos(behind), 4 * Math.sin(behind)),
+    ).toBeGreaterThan(0);
+    expect(veeringArcSigil({ radius: 0.2 })).toBeUndefined();
   });
 });

@@ -23,7 +23,9 @@ import {
   clampProgress,
   proceduralBox,
   proceduralShapeIds,
+  schoolEffectSigil,
   threatFrame,
+  veeringArcSigil,
   type ProceduralShape,
   type SigilManifest,
   type ThreatExtent,
@@ -72,6 +74,8 @@ export class SigilPlayer {
   ];
   private procedurals: ReturnType<typeof proceduralSigilMesh>[] = [];
   private proceduralUsed = 0;
+  /** Procedural sigils drawn this frame, by shape (`snapshot().procedural`). */
+  private proceduralShapes = { disc: 0, beam: 0, arc: 0 };
   private used = 0;
   private leases = new Map<string, number>();
   private state?: ArenaState;
@@ -122,6 +126,7 @@ export class SigilPlayer {
     this.tick = state.tick + alpha;
     this.used = 0;
     this.proceduralUsed = 0;
+    this.proceduralShapes = { disc: 0, beam: 0, arc: 0 };
     for (const layer of this.layers) layer.used = 0;
     this.serial++;
     if (this.state !== state || state.events.length < this.eventIndex) {
@@ -369,7 +374,20 @@ export class SigilPlayer {
     ]);
     shader.resources.proceduralUniforms.update();
     this.seen.add(`procedural.${shape.shape}`);
+    this.proceduralShapes[shape.shape]++;
     return true;
+  }
+  /** The procedural sigils the D2 contract calls for: school detonations, beams and trails, and Veering Bolt arcs. */
+  schoolShapes(state: ArenaState, elementOf: (a?: Actor) => Element) {
+    const owner = (id: number) => state.actors.find((a) => a.id === id);
+    for (const e of state.schoolEffects ?? []) {
+      const d = schoolEffectSigil(e, this.tick);
+      if (d) this.procedural(elementOf(owner(e.ownerId)), d.at, d.shape, d);
+    }
+    for (const p of state.projectiles) {
+      const d = veeringArcSigil(p);
+      if (d) this.procedural(elementOf(owner(p.ownerId)), d.at, d.shape, d);
+    }
   }
   threat(
     element: Element,
@@ -499,6 +517,7 @@ export class SigilPlayer {
       pages: this.leases.size,
       cpuMs: this.cpuMs,
       clips: [...this.seen],
+      procedural: { ...this.proceduralShapes },
       diagnostics: [...this.diagnostics],
     };
   }
