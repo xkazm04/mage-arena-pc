@@ -1,0 +1,37 @@
+{
+  "version": "skill-book-1",
+  "_about": "PC spell-rank progression (docs/concepts/D1-combat-followup-and-progression.md 4.3; owner ruling 2026-10-24, D1 section 7 question 2). Read by packages/core/src/skill-book.ts and checked strictly at load. enabled: the PC flag, off by default; while off no activity earns a point, no teacher teaches and boutSpellRanks gives nothing, so every bout is today's. award: skill points per finished camp activity, one entry for every activity in season.json activityHours (0 = earns nothing); training pays most. weekScale: one whole multiplier per campaign week (season.json weeks), never falling, on every award that week: the camp's drills deepen as the season goes. A flat award against a rising cost makes the rank curve concave (fast early, slow late); the scale is what lets a steady trainer track the 4.3 target 'about N - 0.5 by week N' (D1 section 6.7, census:skills; [1, 1, 1, 1, 1, 1] is the flat arm). rankCost[tier][rank - 1]: skill points to raise a spell from rank to rank + 1, one row per collar tier (0 = the bolt, 1-4 = tiers I-IV), each row rising with rank and each column rising with tier. A Fire/Air row's tier is its canonical tier. teaching.trustAtLeast: the elder's trust in the player (camp trust, 'elder>player') a lesson needs. teaching.signatures: per school, the signature spell its elder teaches (a spell-rank key of that school; the VR CR-005 granted signatures for Fire and Air). Water has none: a Water player already knows every Water row. Earth has no arena rows yet.",
+  "enabled": false,
+  "award": {
+    "TRAIN": 2,
+    "WORK": 1,
+    "BEFRIEND": 1,
+    "CONFIDE": 1,
+    "PROTECT": 1,
+    "WATCH": 1,
+    "SCHEME": 0,
+    "RECRUIT": 1,
+    "DEFECT": 0,
+    "REPORT": 0,
+    "PLOT": 0,
+    "REST": 0,
+    "OFFER": 1,
+    "PARLEY": 1,
+    "LISTEN": 1
+  },
+  "weekScale": [1, 2, 4, 4, 5, 5],
+  "rankCost": [
+    [20, 22, 24, 26],
+    [22, 24, 26, 28],
+    [24, 26, 28, 30],
+    [26, 28, 30, 32],
+    [28, 30, 32, 34]
+  ],
+  "teaching": {
+    "trustAtLeast": 20,
+    "signatures": {
+      "fire": "fire_sunfall",
+      "air": "air_tempest"
+    }
+  }
+}

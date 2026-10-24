@@ -5,3 +5,4 @@ export * from "./camp.ts";
 export * from "./season.ts";
 export * from "./camp-time.ts";
 export * from "./bout-reader.ts";
+export * from "./skill-book.ts";
