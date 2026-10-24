@@ -287,7 +287,7 @@ export class ArtFixture {
       for (const a of this.state.actors.slice(0, 4))
         this.state.events.push({
           tick: nextTick,
-          kind: "cast",
+          kind: "release",
           actorId: a.id,
           value: 1,
         });

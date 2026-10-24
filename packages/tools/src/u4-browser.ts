@@ -147,8 +147,7 @@ try {
         assert(
           Math.abs(Number(b.fullFramePx) - (145.8 * height) / 1080) < 0.01,
         );
-      // "cast" is not required: EffectPlayer draws it from a "release" event (0d2e5f8, CF2) and art-fixture.ts still emits the old "cast" kind.
-      for (const event of ["hit", "impact"])
+      for (const event of ["cast", "hit", "impact"])
         assert((a.effects.counts[`${element}.${event}`] ?? 0) > 0);
       assert((a.effects.counts["absorb.contact"] ?? 0) > 0);
       assert((a.effects.counts["absorb.perfect"] ?? 0) > 0);
