@@ -408,6 +408,88 @@ is in when the AI casts, which a lower price would not change. A cheaper row wou
 step, if any, is the timing: a Water answer that raises Tide Ward at the beam's cast (the rival's windup is a seen threat)
 instead of during the channel. It should be measured with the bank and A, by the same arms.
 
+### 6.6 Tide Ward at the beam windup (4.2 follow-up), 2026-10-24
+
+**What was built.** 6.5 ended on one lever: the timing. Raise Tide Ward at a rival beam's windup instead of during the channel,
+and measure it with the bank and option A by the same arms. The 6.5 patch was re-applied (`git apply`, clean) and a third PC-only
+overlay key added, `counters.tideWardWindup` (off by default, ignored under canonical balance). While it is on:
+- the cue is the windup. A rival beam's pending cast aimed at the Water mage is a seen threat under its own activation id; a running
+  channel is seen under minus its owner's id. First sight of the windup sets a cue, due once the mage's own reaction delay has run
+  from that sight;
+- at the cue the AI presses a castable Tide Ward at once, off its decision cadence (the same press 6.5 used, ahead of a planned raise);
+- the cue lasts one decision cadence. A ward that cannot go up in that time is not raised later in the channel, and a beam first
+  seen in its channel cues nothing. With the key on, the cadence path casts the ward only at a live cue, never at a channel alone.
+
+The windup itself is short (Brand Wrath and Cyclone: 0.20 s cast) and the reference's reaction delay is longer, so the ward goes up
+just after the channel opens. It goes up on a fixed delay from the windup, though, not on whichever decision follows a beam. The
+rule is deterministic: it reads only the seen threats and the mage's own reaction delay, and it keeps its cue in the mage's
+brain state. Arms: `census:counters -- --tide-ward off|held-bank|windup|windup-held|windup-bank-held`, 200 seeds per cell
+(40000-40199), the same 16 cells and presets as 6.4-6.5. Evidence: `d1-counters-windup-{off,held-bank,windup,windup-held,windup-bank-held}.json`,
+the probe `d1-tide-ward-windup-probe.json` (6.5's probe, extended to the windup arms). The bank + held arm reproduces 6.5 exactly
+(12.9%, 161 casts; Mirror tide air_close 39.5%, air_heavy 38.0%, digests `6d61e93b`, `c0cb46c2`), as a sanity check.
+
+| Arm | Tide Ward slotted | Castable | Answered | Coverage | Casts |
+|---|---|---|---|---|---|
+| off | 783 | 0 | 0 | none castable | 1 |
+| bank + held (6.5) | 1240 | 1237 | 160 | 12.9% | 161 |
+| windup alone | 783 | 0 | 0 | none castable | 1 |
+| windup + held | 774 | 762 | 0 | 0.0% | 1 |
+| **windup + bank + held** | 1204 | **1198** | **308** | **25.7%** | 196 |
+
+windup + bank + held per cell: fire_heavy 239 castable, 25 answered (10.5%), 20 casts; air_heavy 957 castable, 283 answered
+(29.6%), 175 casts; air_close 2 castable, none answered. windup + held per cell: fire_heavy 102, air_close 15, air_heavy 645
+castable, none answered. Other rows under windup + bank + held: Air Form 67.6% (67.9% off), Ring of Cinders 1.6% (unchanged).
+
+Mirror tide win rates (reference wins, median, 200 seeds; band: the 40-65% win target and the wave's duration band):
+
+| Mirror tide vs | off | bank + held | windup alone | windup + held | windup + bank + held |
+|---|---|---|---|---|---|
+| fire_heavy | 26.0%, 46.2 s | 24.0%, 46.4 s | 26.0%, 46.2 s | 26.5%, 46.1 s | **25.0%**, 46.4 s (`e392f881`) |
+| air_close | 49.0%, 54.5 s | **39.5%**, 57.7 s | 49.0%, 54.5 s | 49.0%, 54.5 s | **39.5%**, 57.7 s (`0fe140e7`): below 40% |
+| air_heavy | 50.0%, 73.5 s | **38.0%**, 73.9 s | 50.0%, 73.5 s | 50.0%, 73.4 s | **32.0%**, 75.5 s (`3c0053af`): below 40% |
+| fire_close / fire_light / air_light | 50.5 / 46.5 / 65.0% | same | same | same | same (digests equal) |
+
+- **Default waves 1-4** (Rotation): 100 / 100 / 88.5 / 53.5% and their digests in every arm.
+- **Builds census** (Rotation, the `builds` cells of the same runs; `census:builds` on the final tree gives the same figures):
+  air_close **40.0%**, 50.7 s, digest `ff684a89` in every arm.
+- Under the three windup arms two Rotation digests move with equal figures: fire_heavy (`24f9d691` -> `edb0b407`) and air_heavy
+  (`c210ea17` -> `323943f3`). The Rotation reference does not slot the mend line, but it faces a build, so it writes the cue into
+  its brain state and never acts on it. Under windup alone and windup + held the Mirror tide beam cells move the same way (digests
+  only), apart from fire_heavy 26.0 -> 26.5% and air_heavy 73.5 -> 73.4 s under windup + held, the figures option A alone gave in 6.4.
+
+**What the reading says.**
+- **Windup alone and windup + held do nothing.** Without the bank, Tide Ward is castable only at tier II (alone), or castable
+  but unaffordable (held). The probe finds the reference with both the mana and a free mend line at 0 of 1032 beam starts under
+  windup + held, the same 0 as A alone in 6.4: its median mana at a beam start is 3.3 against air_heavy. The cue fires and finds
+  no ward to press, so it never casts.
+- **With the bank, the timing helps, and it doubles coverage.** windup + bank + held answers 308 beam blows against bank + held's
+  160, with only 35 more casts (196). Each ward now covers about 1.6 blows instead of 1. On the reference, 283 of the 716 beam blows
+  from air_heavy landed while the ward was up, against 150 of 761 under bank + held. Coverage is 25.7%, still about half the
+  proposed N = 50%.
+- **It costs Water more fights than the bank alone.** air_heavy falls 50.0 -> 32.0% (bank + held: 38.0%), air_close stays at
+  39.5%, below the floor, and fire_heavy falls to 25.0%. The bank's damage cost (6.5) is unchanged. The likely extra cost (an
+  inference, not measured): the press clears a planned absorb, so the reference drops a raise against the beam's first tick to
+  cast the ward.
+
+**Verdict: declined, no arm kept.** No arm passes the keep test (coverage up materially, no band broken, air_close not below
+40%, no Mirror tide cell below the 40% floor):
+- windup alone and windup + held do not move coverage;
+- windup + bank + held lifts it (none -> 25.7%) but leaves air_close at 39.5% and puts air_heavy at 32.0%, both below the floor.
+
+The three overlay keys stay out of the tree. The code (`counters.ts` with all three keys, the AI rule, the probe, `report-counters`
+arms, tests `counters.test.ts`) is kept as `docs/change-requests/evidence/d1-tide-ward-windup.patch`. It applies with `git apply`
+on the commit that adds it, and it contains the 6.5 bank code too. No game code, overlay key, canonical number, golden, census
+digest or parity suite (CR-002/CR-007) changes, there is nothing to return to VR, and there is no change request.
+
+**Next.** Every Tide Ward arm that answers beams costs Water its Air beam fights, because the bank is what makes the ward
+affordable. Two levers are left, and neither is an AI timing change:
+- a cheaper or free Tide Ward row on PC (an overlay number, a CR candidate for VR), which would let the windup rule run without
+  the bank;
+- or accept that Tide Ward is not a counter and read beam answers elsewhere.
+
+**Director default 2026-10-24, owner to confirm:** stop Tide Ward AI work at this step. Tide Ward stays outside the counter target,
+and the overlay-price lever waits for an owner ruling on whether a PC price deviation for a Water row is wanted.
+
 ## 7. Open questions for the spark
 
 1. Which close-duel option (A-E) fits the feel the owner wants: trading blows, dancing in and out, or guard breaks?

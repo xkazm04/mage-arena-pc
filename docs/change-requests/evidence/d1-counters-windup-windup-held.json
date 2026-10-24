@@ -1,0 +1,535 @@
+{
+  "label": "simulated",
+  "date": "2026-10-24",
+  "command": "npm --prefix packages/core run census:counters -- --tide-ward windup-held --tag d1-counters-windup-windup-held",
+  "countPerCell": 200,
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "method": "Threat-answer ledger units (graded contacts plus avoided aimed threats) on every mage holding an answer row; a unit counts when its shape class is one the row answers and it is blockable. slotted: the row is in the loadout; reachable: castable by collar tier at that tick (coverage denominator); answered: the row effect was up at the blow, or the row was released between first sight of the blow and its contact. PC overlay on, exchange windows on.",
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation",
+    "supplement": "Mirror tide"
+  },
+  "counterRule": {
+    "tideWardHeld": true,
+    "tideWardBank": false,
+    "tideWardWindup": true
+  },
+  "rows": {
+    "fire_ring": {
+      "name": "Ring of Cinders",
+      "school": "fire",
+      "tier": 2,
+      "slotted": 1996,
+      "reachable": 1397,
+      "answered": 23,
+      "answeredAvoided": 23,
+      "answeredTook": 0,
+      "casts": 324,
+      "holderFights": 800,
+      "byClass": {
+        "close": {
+          "slotted": 1996,
+          "reachable": 1397,
+          "answered": 23
+        }
+      },
+      "coverage": 0.0164638511095204
+    },
+    "air_form": {
+      "name": "Air Form",
+      "school": "air",
+      "tier": 2,
+      "slotted": 86315,
+      "reachable": 64226,
+      "answered": 43600,
+      "answeredAvoided": 15865,
+      "answeredTook": 15775,
+      "casts": 8304,
+      "holderFights": 800,
+      "byClass": {
+        "projectile": {
+          "slotted": 86315,
+          "reachable": 64226,
+          "answered": 43600
+        }
+      },
+      "coverage": 0.6788528010463052
+    },
+    "mend:2:base": {
+      "name": "Tide Ward",
+      "school": "water",
+      "tier": 2,
+      "slotted": 774,
+      "reachable": 762,
+      "answered": 0,
+      "answeredAvoided": 0,
+      "answeredTook": 0,
+      "casts": 1,
+      "holderFights": 1400,
+      "byClass": {
+        "beam": {
+          "slotted": 774,
+          "reachable": 762,
+          "answered": 0
+        }
+      },
+      "coverage": 0
+    }
+  },
+  "cells": [
+    {
+      "cell": "wave 1",
+      "census": "default",
+      "fights": 200,
+      "winRate": 1,
+      "medianS": 35.31666666666667,
+      "targetDurationS": [
+        25,
+        45
+      ],
+      "rows": {},
+      "digest": "5ea5e2d20666842b228ebf15c50c8088b41878229cb3bfeaafb03774180aee20"
+    },
+    {
+      "cell": "wave 2",
+      "census": "default",
+      "fights": 200,
+      "winRate": 1,
+      "medianS": 42.6,
+      "targetDurationS": [
+        35,
+        60
+      ],
+      "rows": {},
+      "digest": "40c5fc7a80d797204ef154518d75961aea1a82ce24c953330d1deb78d8f68eba"
+    },
+    {
+      "cell": "wave 3",
+      "census": "default",
+      "fights": 200,
+      "winRate": 0.885,
+      "medianS": 40.1,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {},
+      "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+    },
+    {
+      "cell": "wave 4",
+      "census": "default",
+      "fights": 200,
+      "winRate": 0.535,
+      "medianS": 49.2,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "rows": {
+        "mend:2:base": {
+          "slotted": 0,
+          "reachable": 0,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 0,
+          "holderFights": 200,
+          "byClass": {},
+          "coverage": null
+        }
+      },
+      "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+    },
+    {
+      "cell": "fire_close",
+      "census": "builds",
+      "fights": 200,
+      "winRate": 0.495,
+      "medianS": 66.95,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {
+        "fire_ring": {
+          "slotted": 1067,
+          "reachable": 678,
+          "answered": 12,
+          "answeredAvoided": 12,
+          "answeredTook": 0,
+          "casts": 133,
+          "holderFights": 200,
+          "byClass": {
+            "close": {
+              "slotted": 1067,
+              "reachable": 678,
+              "answered": 12
+            }
+          },
+          "coverage": 0.017699115044247787
+        }
+      },
+      "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+    },
+    {
+      "cell": "fire_light",
+      "census": "builds",
+      "fights": 200,
+      "winRate": 0.505,
+      "medianS": 53.95,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {},
+      "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+    },
+    {
+      "cell": "fire_heavy",
+      "census": "builds",
+      "fights": 200,
+      "winRate": 0.415,
+      "medianS": 46.55,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {
+        "fire_ring": {
+          "slotted": 12,
+          "reachable": 0,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 13,
+          "holderFights": 200,
+          "byClass": {
+            "close": {
+              "slotted": 12,
+              "reachable": 0,
+              "answered": 0
+            }
+          },
+          "coverage": null
+        }
+      },
+      "digest": "edb0b407737f2fe18e0611c477074efa8356f6db3b6c8fd3cb9d2200a0fb8d53"
+    },
+    {
+      "cell": "air_light",
+      "census": "builds",
+      "fights": 200,
+      "winRate": 0.565,
+      "medianS": 63.516666666666666,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "rows": {},
+      "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+    },
+    {
+      "cell": "air_close",
+      "census": "builds",
+      "fights": 200,
+      "winRate": 0.4,
+      "medianS": 50.733333333333334,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {
+        "air_form": {
+          "slotted": 20076,
+          "reachable": 13629,
+          "answered": 8327,
+          "answeredAvoided": 2201,
+          "answeredTook": 2916,
+          "casts": 1491,
+          "holderFights": 200,
+          "byClass": {
+            "projectile": {
+              "slotted": 20076,
+              "reachable": 13629,
+              "answered": 8327
+            }
+          },
+          "coverage": 0.6109765940274415
+        }
+      },
+      "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+    },
+    {
+      "cell": "air_heavy",
+      "census": "builds",
+      "fights": 200,
+      "winRate": 0.46,
+      "medianS": 75.35,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "rows": {
+        "air_form": {
+          "slotted": 22489,
+          "reachable": 17688,
+          "answered": 12780,
+          "answeredAvoided": 5533,
+          "answeredTook": 4736,
+          "casts": 2632,
+          "holderFights": 200,
+          "byClass": {
+            "projectile": {
+              "slotted": 22489,
+              "reachable": 17688,
+              "answered": 12780
+            }
+          },
+          "coverage": 0.7225237449118046
+        }
+      },
+      "digest": "323943f370cb6ad9d95c09bdd23a90c230f505cbf1ff274671dc6a3b57b5edc8"
+    },
+    {
+      "cell": "fire_close",
+      "census": "builds (Mirror tide)",
+      "fights": 200,
+      "winRate": 0.505,
+      "medianS": 72.45,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {
+        "mend:2:base": {
+          "slotted": 0,
+          "reachable": 0,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 1,
+          "holderFights": 200,
+          "byClass": {},
+          "coverage": null
+        },
+        "fire_ring": {
+          "slotted": 914,
+          "reachable": 716,
+          "answered": 11,
+          "answeredAvoided": 11,
+          "answeredTook": 0,
+          "casts": 161,
+          "holderFights": 200,
+          "byClass": {
+            "close": {
+              "slotted": 914,
+              "reachable": 716,
+              "answered": 11
+            }
+          },
+          "coverage": 0.015363128491620111
+        }
+      },
+      "digest": "8437176ed414e2a86768c1d5032bebdf6b66128b48fffe415c014b72824780ec"
+    },
+    {
+      "cell": "fire_light",
+      "census": "builds (Mirror tide)",
+      "fights": 200,
+      "winRate": 0.465,
+      "medianS": 55.5,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {
+        "mend:2:base": {
+          "slotted": 0,
+          "reachable": 0,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 0,
+          "holderFights": 200,
+          "byClass": {},
+          "coverage": null
+        }
+      },
+      "digest": "274902f52872653d837ef0c4fda0206e91fa99f4a23776582828bc50d7b997c6"
+    },
+    {
+      "cell": "fire_heavy",
+      "census": "builds (Mirror tide)",
+      "fights": 200,
+      "winRate": 0.265,
+      "medianS": 46.15,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {
+        "mend:2:base": {
+          "slotted": 103,
+          "reachable": 102,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 0,
+          "holderFights": 200,
+          "byClass": {
+            "beam": {
+              "slotted": 103,
+              "reachable": 102,
+              "answered": 0
+            }
+          },
+          "coverage": 0
+        },
+        "fire_ring": {
+          "slotted": 3,
+          "reachable": 3,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 17,
+          "holderFights": 200,
+          "byClass": {
+            "close": {
+              "slotted": 3,
+              "reachable": 3,
+              "answered": 0
+            }
+          },
+          "coverage": 0
+        }
+      },
+      "digest": "3e70effdf95afff017b9638eda4edc04e60c0a5289e477b388ba796fa7a00cb1"
+    },
+    {
+      "cell": "air_light",
+      "census": "builds (Mirror tide)",
+      "fights": 200,
+      "winRate": 0.65,
+      "medianS": 66.41666666666667,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "rows": {
+        "mend:2:base": {
+          "slotted": 0,
+          "reachable": 0,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 0,
+          "holderFights": 200,
+          "byClass": {},
+          "coverage": null
+        }
+      },
+      "digest": "2b926ade0d2f1a53e61db4e2760d4c24dfe61a6f9824d1f4a6db484f42d17d18"
+    },
+    {
+      "cell": "air_close",
+      "census": "builds (Mirror tide)",
+      "fights": 200,
+      "winRate": 0.49,
+      "medianS": 54.516666666666666,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "rows": {
+        "mend:2:base": {
+          "slotted": 16,
+          "reachable": 15,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 0,
+          "holderFights": 200,
+          "byClass": {
+            "beam": {
+              "slotted": 16,
+              "reachable": 15,
+              "answered": 0
+            }
+          },
+          "coverage": 0
+        },
+        "air_form": {
+          "slotted": 21564,
+          "reachable": 15278,
+          "answered": 9437,
+          "answeredAvoided": 2557,
+          "answeredTook": 3224,
+          "casts": 1657,
+          "holderFights": 200,
+          "byClass": {
+            "projectile": {
+              "slotted": 21564,
+              "reachable": 15278,
+              "answered": 9437
+            }
+          },
+          "coverage": 0.6176855609372954
+        }
+      },
+      "digest": "25551ece839588043bfddc1f194b2b760f36eaf57df2e9258c949dd76300293b"
+    },
+    {
+      "cell": "air_heavy",
+      "census": "builds (Mirror tide)",
+      "fights": 200,
+      "winRate": 0.5,
+      "medianS": 73.4,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "rows": {
+        "mend:2:base": {
+          "slotted": 655,
+          "reachable": 645,
+          "answered": 0,
+          "answeredAvoided": 0,
+          "answeredTook": 0,
+          "casts": 0,
+          "holderFights": 200,
+          "byClass": {
+            "beam": {
+              "slotted": 655,
+              "reachable": 645,
+              "answered": 0
+            }
+          },
+          "coverage": 0
+        },
+        "air_form": {
+          "slotted": 22186,
+          "reachable": 17631,
+          "answered": 13056,
+          "answeredAvoided": 5574,
+          "answeredTook": 4899,
+          "casts": 2524,
+          "holderFights": 200,
+          "byClass": {
+            "projectile": {
+              "slotted": 22186,
+              "reachable": 17631,
+              "answered": 13056
+            }
+          },
+          "coverage": 0.7405138676195337
+        }
+      },
+      "digest": "140dc55559fb962c1e3401a7f5c181e0d76207ee5db12f96f59b0ac8ef4752a6"
+    }
+  ]
+}

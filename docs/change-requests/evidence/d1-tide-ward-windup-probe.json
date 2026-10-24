@@ -1,0 +1,88 @@
+{
+  "label": "simulated",
+  "date": "2026-10-24",
+  "command": "npx tsx packages/core/scripts/tide-ward-probe.ts windup-held|windup-bank-held (the probe is in d1-tide-ward-windup.patch)",
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "preset": "Mirror tide",
+  "arms": {
+    "windup-held": {
+      "arm": "windup-held",
+      "tideWardMana": 15,
+      "seeds": 200,
+      "fire_heavy": {
+        "beams": 130,
+        "affordable": 64,
+        "mendLineFree": 32,
+        "both": 0,
+        "medianMana": 13.599999999999994,
+        "casts": 0,
+        "castsAtBeam": 0,
+        "beamBlows": 116,
+        "beamBlowsWarded": 0
+      },
+      "air_close": {
+        "beams": 25,
+        "affordable": 0,
+        "mendLineFree": 0,
+        "both": 0,
+        "medianMana": 4.599999999999994,
+        "casts": 0,
+        "castsAtBeam": 0,
+        "beamBlows": 4,
+        "beamBlowsWarded": 0
+      },
+      "air_heavy": {
+        "beams": 877,
+        "affordable": 50,
+        "mendLineFree": 305,
+        "both": 0,
+        "medianMana": 3.25,
+        "casts": 0,
+        "castsAtBeam": 0,
+        "beamBlows": 434,
+        "beamBlowsWarded": 0
+      }
+    },
+    "windup-bank-held": {
+      "arm": "windup-bank-held",
+      "tideWardMana": 15,
+      "seeds": 200,
+      "fire_heavy": {
+        "beams": 281,
+        "affordable": 66,
+        "mendLineFree": 241,
+        "both": 59,
+        "medianMana": 11.049999999999997,
+        "casts": 20,
+        "castsAtBeam": 0,
+        "beamBlows": 180,
+        "beamBlowsWarded": 25
+      },
+      "air_close": {
+        "beams": 4,
+        "affordable": 2,
+        "mendLineFree": 0,
+        "both": 0,
+        "medianMana": 15.599999999999994,
+        "casts": 0,
+        "castsAtBeam": 0,
+        "beamBlows": 1,
+        "beamBlowsWarded": 0
+      },
+      "air_heavy": {
+        "beams": 1248,
+        "affordable": 557,
+        "mendLineFree": 834,
+        "both": 524,
+        "medianMana": 14.375,
+        "casts": 175,
+        "castsAtBeam": 14,
+        "beamBlows": 716,
+        "beamBlowsWarded": 283
+      }
+    }
+  }
+}
