@@ -1,18 +1,19 @@
-// Named-duel census writer (W8 lane B): `npm --prefix packages/core run census:named -- [--count n] [--tag t]`.
+// Named-duel census writer (W8 lane B): `npm --prefix packages/core run census:named -- [--count n] [--tag t] [--out-dir docs/...]`.
 // Runs only the semifinal (Brennic, Fire) and the final (Lio, Air) with schoolRivals 'named' and the PC overlay on, and
 // writes report-w4-shaped evidence (`<tag>-wave-<n>.json` = { label, summary, fights }, plus `<tag>.json`) to
-// docs/waves/W8-evidence/, so `npm run vr:tuning-return -- --evidence <wave file>` reads it.
+// docs/waves/W8-evidence/ (or --out-dir), so `npm run vr:tuning-return -- --evidence <wave file>` reads it.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 import { runtime } from '../src/arena/index.ts';
 import { namedWaves, runNamedFight, summariseNamedWave, winRateTarget } from './named-census.ts';
+import { evidenceDir } from './builds-census.ts';
 
 const args = process.argv.slice(2), countIndex = args.indexOf('--count'), tagIndex = args.indexOf('--tag');
 const count = countIndex >= 0 ? Number(args[countIndex + 1]) : runtime.games.censusFightsPerWave;
-const tag = tagIndex >= 0 ? args[tagIndex + 1]! : 'named';
-if (!/^[a-z0-9-]+$/.test(tag) || !Number.isInteger(count) || count < 1) throw Error('Invalid report arguments');
-const destination = new URL('../../../docs/waves/W8-evidence/', import.meta.url); mkdirSync(destination, { recursive: true });
+const tag = tagIndex >= 0 ? args[tagIndex + 1]! : 'named', outIndex = args.indexOf('--out-dir'), outDir = outIndex >= 0 ? args[outIndex + 1]! : 'docs/waves/W8-evidence';
+if (!/^[a-z0-9-]+$/.test(tag) || !Number.isInteger(count) || count < 1 || !evidenceDir.test(outDir)) throw Error('Invalid report arguments');
+const destination = new URL(`../../../${outDir}/`, import.meta.url); mkdirSync(destination, { recursive: true });
 const start = performance.now(); const waves = []; let allPassed = true;
 for (const wave of namedWaves) {
   const fights = [];
@@ -32,7 +33,7 @@ const report = { label: 'simulated', mode: "createGames(..., { schoolRivals: 'na
   wallSecondsMeasured: (performance.now() - start) / 1000, waves, fullCensus: count === runtime.games.censusFightsPerWave, allPassed,
   supplementalHashes: Object.fromEntries(['packages/core/src/arena/data/school-balance.pc.json', 'packages/core/src/arena/data/rivals.json', 'packages/core/src/arena/data/runtime.json',
     'packages/core/src/arena/data/feel.json', 'packages/core/src/arena/fire.ts', 'packages/core/src/arena/air.ts', 'packages/core/src/arena/mage-ai.ts', 'packages/core/src/arena/mage-ai-fire.ts',
-    'packages/core/src/arena/mage-ai-air.ts', 'packages/core/src/arena/rival-phases.ts', 'packages/core/src/arena/kernel.ts'].map(file => [file, hashOf(file)])),
+    'packages/core/src/arena/mage-ai-air.ts', 'packages/core/src/arena/rival-phases.ts', 'packages/core/src/arena/kernel.ts', 'packages/core/src/arena/exchange.ts', 'packages/core/src/arena/data/rival-builds.json'].map(file => [file, hashOf(file)])),
   sourceHashes: Object.fromEntries(['combat.json', 'spells-water.csv', 'spells-fire.csv', 'spells-air.csv', 'schools-combat.json', 'enemies.json', 'arena-tiers.json'].map(file => [file, hashOf(`docs/design/reconciled/data/arena/${file}`)])) };
 writeFileSync(new URL(`${tag}.json`, destination), JSON.stringify(report, null, 2) + '\n');
 console.log(`W8 named ${tag}: ${count} fights/duel in ${report.wallSecondsMeasured.toFixed(1)} s; gate ${allPassed ? 'PASS' : 'FAIL'}.`);

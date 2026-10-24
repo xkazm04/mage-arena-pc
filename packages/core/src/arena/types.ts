@@ -66,6 +66,8 @@ export interface Actor {
   schoolState?: SchoolState;
   /** Spell ranks (progression.ts); present only when set, so unranked actors serialize exactly as before. */
   spellRanks?: SpellRanks;
+  /** PC exchange window (exchange.ts, D1 4.1 A): opened by a clean close hit from `fromId`; absent until the first one. */
+  exchange?: { fromId: number; guardUntil: number; guardsLeft: number };
   enemy?: EnemyBrain; mageAI?: MageBrain; speedMps?: number;
   /** Time scale of this actor's own actions (tuning.ts pace), fixed at spawn; absent is the authored 1x. */
   pace?: number;

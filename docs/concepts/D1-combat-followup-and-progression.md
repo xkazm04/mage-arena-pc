@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions; nothing here is built. It follows
+Status: **direction menu**, written 2026-10-23 for future sessions. Section 5 slice step 1 (exchange windows) is built (2026-10-24, section 6.1). It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -91,9 +91,62 @@ enemies level once per campaign week; rivals have authored builds.
   train falls below 40% by week 4.
 - Unchanged: goldens, default census digests and CR-002/CR-007 parity, unless a slice re-pins them with a reason.
 
+### 6.1 Slice step 1 as built: exchange windows (4.1 A), 2026-10-24
+
+**Rule** (`packages/core/src/arena/exchange.ts`, numbers in `school-balance.pc.json` `exchange`). A clean hit (damage
+through, no ward) delivered from `closeRangeM` 5 m or closer opens the defender's window against that attacker. For
+`guardS` 8 s the defender's ward re-raises at once against the attacker's next `guardHits` 8 close blows: each lands
+guarded with `guardReduction` 0.95 of it stopped, the way a held ward stops a blow. A blow from beyond 5 m, an unblockable
+blow, or a blow from another attacker is not guarded. The window is rule state on the actor (`Actor.exchange`), read on
+the existing hit path: no new sim event kind, and the guard shows as the `guarded` flag of the `hit` it blocks.
+A window opens only in a contact a Fire or Air actor takes part in, and a `balance: 'canonical'` state ignores the rule.
+So Water-only states and the parity suites never carry the key. With `--exchange off` the census runs the rule switched
+off and nothing else changes.
+
+The other punish the option names, a faster next cast, was built and measured, then left out. At 0.5x or 0.6x cast time
+it moved the reference win rate down by 5-9 points on the close builds (fire_close 46% to 37% at 100 seeds), because the
+rival rows have long casts and the reference's dart has almost none. Two other forms were also measured and dropped:
+- a guard that ends when the defender answers took fire_close to 1-12% reference wins;
+- a guard sized on the opening blow's damage favoured a rival that opens with a dart and follows with a big blow.
+
+**One build change.** Longer close duels amplify a build's small edge: the favourite wins more often over more blows. With
+the rule alone, air_close's reference win rate fell to 32% (median 47.7 s). air_close's Shear rank goes from 2 to 1
+(`rival-builds.json`, PC-authored), which puts it back at 40%. No canonical or overlay spell number changed.
+
+**Census** (`npm --prefix packages/core run census:builds`, 200 seeds per build; evidence in
+`docs/change-requests/evidence/d1-exchange-before.json` (main) and `d1-exchange-after.json`). The median is in seconds.
+"Hits/exch." is the new census column `hitsPerExchange`: one exchange is one side's run of landed blows until the other
+side lands one, and the count is the blows in it that went through unguarded.
+
+| Build | Median s (45-75 / 45-80) | Reference wins (40-65%) | Hits/exch. | Short fights | Tier IV fights |
+|---|---|---|---|---|---|
+| **fire_close** | 15.8 -> **67.0** | 47.0% -> 49.5% | 2.29 -> **0.61** | 200 -> 6 | 0 -> 167 |
+| **air_close** | 31.8 -> **50.7** | 52.5% -> 40.0% | 1.91 -> **1.30** | 75 -> 0 | 4 -> 144 |
+| **air_heavy** (the far build held unchanged) | 73.9 -> 75.8 | 46.0% -> 46.5% | 2.93 -> 2.93 | 0 -> 0 | 187 -> 187 |
+| fire_light | 52.8 -> 54.0 | 45.5% -> 50.5% | 2.49 -> 2.45 | 18 -> 19 | 144 -> 154 |
+| fire_heavy | 46.1 -> 46.5 | 43.5% -> 42.5% | 2.73 -> 2.68 | 1 -> 0 | 115 -> 126 |
+| air_light | 63.5 -> 63.5 | 55.5% -> 56.5% | 2.71 -> 2.66 | 0 -> 0 | 191 -> 192 |
+
+Both close builds are now inside their median band and the win-rate range, and hits per exchange falls on both
+(0.61 and 1.30, from 2.29 and 1.91). air_close sits exactly on the 40% floor; that is the reading, not a margin. The far
+builds hold within the 200-seed noise, but **their digests are not identical**: the reference chases them into 5-8 m, and
+a few contacts per fight land inside 5 m (air_heavy 71e58951 -> 767c6f68). The named census
+(`census:named`, 2000 seeds, `docs/change-requests/evidence/d1-named-after*.json`) moves Brennic's semifinal from a median
+of 16.5 s to **63.0 s** (inside 45-75) at 44.6% reference wins (from 55.2%), and the gate now passes with both duels in
+band. Lio's final holds: 63.6 s -> 64.2 s, 59.3% -> 57.6%.
+
+**Pins.** Golden replays, CR-002/CR-007 parity and the default census are unchanged. `report:w4`'s loop (`runFight`, 2000
+seeds per wave) reproduces all four `w8x.json` wave digests exactly. Two things change because the close duels changed,
+and both are written down here and in the commit:
+- `named-census.test.ts` no longer pins Brennic's semifinal under its band; it now asserts the median is in band;
+- the named and builds census digests differ, and new evidence is filed under `docs/change-requests/evidence/`. The
+  older `docs/waves/W8-evidence/named*.json` files stay as the pre-D1 record.
+
 ## 7. Open questions for the spark
 
 1. Which close-duel option (A-E) fits the feel the owner wants: trading blows, dancing in and out, or guard breaks?
+   **Option A, exchange windows (the doc's recommendation; built and measured in 6.1). Director default 2026-10-24,
+   owner to confirm.**
 2. Spell-rank currency: Games results, camp lessons, or both?
 3. Should a rank-5 ultimate be rare (one per build) or common late in the season?
 4. Do changes to canonical numbers (Ring unlock, Tide Ward) go to VR as change requests, or stay PC overlay deviations?

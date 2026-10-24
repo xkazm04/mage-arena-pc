@@ -21,7 +21,7 @@ describe('builds census (WP2): six authored builds against the reference player'
     }
   });
 
-  it('win share stays playable on the pinned seeds (the 200-seed census lands each build at 45-56 %)', () => {
+  it('win share stays playable on the pinned seeds (the 200-seed census lands each build at 40-57 %)', () => {
     for (const id of rivalBuildIds) {
       expect(summaries[id]!.rivalWinShare, id).toBeGreaterThanOrEqual(0.2);
       expect(summaries[id]!.rivalWinShare, id).toBeLessThanOrEqual(0.8);

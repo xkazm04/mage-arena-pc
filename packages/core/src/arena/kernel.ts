@@ -10,6 +10,7 @@ import { enemySpec } from './enemies.ts';
 import { curvedStep, hasSchoolLoadout, releaseSchoolSpell, resetSchool, schoolBusy, schoolInterrupted, schoolRooted, schoolAfterMove, schoolDeflects, schoolDrainMult, schoolEvades, schoolOnHit, schoolRollStaminaMult, schoolStaminaRegenMult, schoolTick, trySchoolCast } from './schools.ts';
 import { stepSchoolEffects } from './shapes.ts';
 import { agileRecoveryS, agilityDrainMult, agilityPerfectWindowAddS, agilityRecoveryMult } from './progression.ts';
+import { exchangeAfterHit, exchangeGuard } from './exchange.ts';
 
 export { combat, statRules, bolt, runtime };
 export const DT = 1 / combat.simStepHz;
@@ -74,7 +75,7 @@ export function reviveActor(state: ArenaState, actor: Actor): void {
   actor.hp = actor.maxHp; actor.velocity = {x:0,y:0}; actor.previousPos = {...actor.pos};
   actor.staggerUntil = actor.staggerImmuneUntil = state.tick;
   actor.rollUntil = actor.immuneUntil = actor.recoveryUntil = state.tick;
-  actor.absorb = false; actor.pending = undefined;
+  actor.absorb = false; actor.pending = undefined; delete actor.exchange;
 }
 /** Observer seam kept outside the hashed state: every tap sees each contact before resolveHit applies it, including
  * the contacts immunity swallows without an event. Taps read and never write; ledger.ts is the client. */
@@ -102,9 +103,12 @@ export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage
   const spec = target.enemy ? enemySpec(target) : undefined;
   const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && !hit.pierceShields && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
   const incomingDamage = hit.damage * (hit.bolt ? spec?.armourMultVsBolt ?? 1 : 1) * (shielded ? spec?.frontBlockMult ?? 1 : 1);
-  const guarded = target.absorb && inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg);
-  const perfect = guarded && hit.family === 'magic' && !hit.suppressPerfect && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS + agilityPerfectWindowAddS(target, state));
-  const reduction = guarded ? (perfect ? combat.absorb.perfect.reduction : combat.absorb.reduction[hit.family]) : combat.absorb.reduction.outsideArc;
+  const warded = target.absorb && inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg);
+  // An exchange window (exchange.ts) re-raises the ward at once against the attacker that opened it: a plain ward, no perfect.
+  const owner = state.actors.find(a => a.id === hit.ownerId);
+  const windowReduction = warded ? undefined : exchangeGuard(state, target, owner, hit.family), guarded = warded || windowReduction !== undefined;
+  const perfect = warded && hit.family === 'magic' && !hit.suppressPerfect && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS + agilityPerfectWindowAddS(target, state));
+  const reduction = windowReduction ?? (warded ? (perfect ? combat.absorb.perfect.reduction : combat.absorb.reduction[hit.family]) : combat.absorb.reduction.outsideArc);
   const damage = incomingDamage * (1 - reduction);
   if (perfect) {
     target.metrics.perfects++;
@@ -113,11 +117,10 @@ export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage
     target.clockAdvanceTicks += ticks(combat.tierClock.perfectAbsorbAdvanceS);
     emit(state, 'perfect', target, refund, hit.ownerId);
   } else if (reduction > 0) target.metrics.blocks++;
-  if (reduction > 0) waterAbsorbed(state, target, hit, incomingDamage - damage, perfect);
+  if (reduction > 0 && warded) waterAbsorbed(state, target, hit, incomingDamage - damage, perfect);
   const applied = state.lab?.damageEnabled === false ? 0 : damage;
   const hpRemoved = Math.min(target.hp, applied);
   target.hp = Math.max(0, target.hp - applied); target.metrics.damageTaken += hpRemoved;
-  const owner = state.actors.find(a => a.id === hit.ownerId);
   if (owner) owner.metrics.damageDealt += hpRemoved;
   target.metrics.hits++; emit(state, 'hit', target, hpRemoved, hit.ownerId);
   Object.assign(state.events.at(-1)!, { family: hit.family, contactDamage: damage, guarded: guarded && reduction > 0, activationId: hit.activationId, at: {...target.pos} });
@@ -138,6 +141,7 @@ export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage
     if (tune.knockbackM > 0) { const amount = tune.knockbackM * Math.min(2, hpRemoved / 10) / Math.max(1,target.poise); target.pos = constrainToArena({ x: target.pos.x + direction.x * amount, y: target.pos.y + direction.y * amount }, target.radius); }
   }
   schoolOnHit(state, target, owner, hit, { damage, perfect, reduction });
+  exchangeAfterHit(state, target, owner, hpRemoved, guarded && reduction > 0, windowReduction !== undefined);
   if (target.hp === 0) defeatActor(state, target, unit(sub(target.pos, hit.source)));
   return { damage, perfect };
 }
@@ -376,7 +380,7 @@ export function resetWave(state: ArenaState, actor: Actor): void {
   actor.absorb = false; actor.absorbExhausted = false; actor.absorbFreshTick = -1e9; actor.releaseTick = -1e9;
   actor.pending = undefined; actor.cooldownUntil = state.tick; actor.rollUntil = state.tick; actor.immuneUntil = state.tick; actor.recoveryUntil = state.tick;
   actor.velocity = {x:0,y:0}; actor.staggerUntil = state.tick; actor.staggerImmuneUntil = state.tick; actor.rollRecoveryUntil = state.tick;
-  actor.lastInput = idleInput(); state.projectiles = []; state.telegraphs = []; state.zones = []; if (state.schoolEffects) state.schoolEffects = []; resetWater(actor); resetSchool(actor);
+  actor.lastInput = idleInput(); state.projectiles = []; state.telegraphs = []; state.zones = []; if (state.schoolEffects) state.schoolEffects = []; resetWater(actor); resetSchool(actor); delete actor.exchange;
 }
 /** FNV-1a of the complete serializable state, including cooldowns, RNG and pending actions. */
 export function stateHash(state: ArenaState): string {
