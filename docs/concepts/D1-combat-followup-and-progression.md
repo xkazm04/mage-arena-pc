@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). It follows
+Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -70,6 +70,8 @@ results:
 - **Teachers.** Each school's elder teaches that school's signature spell, but only when the relationship check passes:
   the elder's trust in the player, the camp's existing `trust` state (the one befriending, confiding and parley move),
   is at or above a threshold. No second relationship state.
+- Built 2026-10-24 behind an off-by-default PC flag, in memory only (no save schema change), with a per-week award scale
+  so a steady trainer tracks the "N - 0.5" target. See 6.7.
 - The rest of this table still stands.
 
 | Question | Options |
@@ -502,6 +504,70 @@ affordable. Two levers are left, and neither is an AI timing change:
 
 **Director default 2026-10-24, owner to confirm:** stop Tide Ward AI work at this step. Tide Ward stays outside the counter target,
 and the overlay-price lever waits for an owner ruling on whether a PC price deviation for a Water row is wanted.
+
+### 6.7 The skill book (4.3) as built, and its week curve, 2026-10-24
+
+**What was built** (`packages/core/src/skill-book.ts`, numbers in `packages/core/src/arena/data/skill-book.pc.json`, checked
+at load). The 4.3 design, as pure functions over an in-memory book of unspent points, ranks bought and signatures taught:
+- **Earning.** `earnSkillPoints(book, activity, week)`: each finished camp activity earns `award[activity]` times
+  `weekScale[week - 1]`. Training earns 2 per session. Working, befriending, confiding, protecting, watching, recruiting,
+  offering, parley and listening earn 1. Rest, schemes, plots, reports and defection earn nothing.
+- **Ranks.** `buyRank(book, key, school)` buys the next rank of a known spell, at `rankCost[tier][rank - 1]`:
+  - the bolt is tier 0; a Water row's tier is its `line:tier`, a Fire or Air row's its canonical tier;
+  - the table rises by 2 points per rank and per tier, from 20 (bolt, rank 1 to 2) to 34 (tier IV, rank 4 to 5);
+  - a Water player knows every Water row, plus each signature taught.
+- **Teachers.** `learnSignature(t, session, book, elder)`: Sadruba teaches Sunfall and Kesh teaches Tempest Lance, the Fire
+  and Air signatures VR CR-005 grants. A lesson needs the elder present and `trust['elder>player']` at or above
+  `teaching.trustAtLeast`, 20. That is the camp's own trust map, the one befriending, confiding and parley move. No new
+  relationship state was added.
+  - Water has no teachable signature: the player is Water and already knows every Water row. Earth has no arena rows.
+  - A taught Fire or Air signature can be ranked, but a Water entrant cannot slot it yet. Cross-school slots belong to
+    spellbook growth (4.3) and the composition rules.
+- **Into a bout.** `boutSpellRanks(book)` returns the bought ranks for `createGames`' existing `spellRanks` option.
+
+**The flag.** `enabled` in `skill-book.pc.json` is `false`. While it is off, nothing earns, no lesson passes and
+`boutSpellRanks` gives `undefined`. Nothing in `season.ts`, `camp*.ts` or the arena calls the book, so today's bouts,
+goldens, the default census digests and CR-002/CR-007 parity are unchanged. Run on this branch: the parity suites, golden
+replays, the determinism wall and the week sweep test are green, and the full `npm run test` passes. Nothing was re-pinned.
+
+**Not persisted.** The season save does not carry the book. The schema change it needs (points, ranks and taught signatures
+on the save, and `prepareBout` passing the ranks into the entrant) is an open ask, not built.
+
+**The week scale, and why.** The owner's rule makes each rank cost more. With the same award every week, the curve is
+concave: fast in week 1, slow by week 6. The flat arm below runs 0.69-0.88 ahead of the target in weeks 1-2 and falls short
+of rank 5 in week 6. A 4.3 target that climbs one rank per week needs income that climbs too. `weekScale` [1, 2, 4, 4, 5, 5]
+lets the camp's drills pay more as the season goes on. The scale and the cost table were picked together, by fitting the
+census's own season to the target. Both are data. The owner should confirm the week scale: it adds to the ruling and does
+not contradict it.
+
+**The week curve** (`npm --prefix packages/core run census:skills`, 2026-10-24, camp seed 73). The census plays the six-week
+season through the real camp session (`createCampSession`, `actCamp`, `settleCamp`) with the book on:
+- each Games morning (days 7, 14 ... 42), before the bout, it reads the average rank over the week sweep's ranked rows: the
+  bolt and the Rotation preset's three lines at tiers I-IV, 13 rows;
+- the `steady` player trains whenever a ground is open, vigor, focus and nerve in turn. That is 35 sessions in week 1 and 39
+  in each later week, after the Trial and Games hours;
+- the `worker` only works at the Exchange;
+- after each day the player buys the cheapest next rank it can afford, until no rank is affordable;
+- the target is the week sweep's `steady` profile (6.3): N - 0.5, floored at 1 and capped at 5.
+
+| Week | Target | Steady (committed) | Steady, flat award (3x every week) | Worker (committed) |
+|---|---|---|---|---|
+| 1 | 1 | **1.23** (+0.23) | 1.69 (+0.69) | 1.00 |
+| 2 | 1.5 | **1.69** (+0.19) | 2.38 (+0.88) | 1.08 |
+| 3 | 2.5 | **2.62** (+0.12) | 3.08 (+0.58) | 1.31 |
+| 4 | 3.5 | **3.46** (-0.04) | 3.69 (+0.19) | 1.46 |
+| 5 | 4.5 | **4.46** (-0.04) | 4.31 (-0.19) | 1.62 |
+| 6 | 5 | **5.00** (0.00) | 4.85 (-0.15) | 1.85 |
+
+Points earned by each Games morning: steady 70, 218, 514, 826, 1208, 1598. Ranking all 13 rows to 5 costs 1436. A steady
+trainer tracks the target within 0.23 every week (`skill-census.test.ts` holds it within 0.25). A player who only works
+reaches 1.46 by week 4.
+
+What this does not yet show:
+- **Win rates.** The steady curve now matches the profile 6.3 ran, so 6.3's steady rows are the expected reading. That
+  reading still overshoots the duels (66-73% from week 3), because mages and rivals are not levelled. That is the open 4.3
+  lever 6.3 named, and it is not touched here.
+- **Teachers in the curve.** Lessons are not part of the reading: no ranked row is a taught signature.
 
 ## 7. Open questions for the spark
 
