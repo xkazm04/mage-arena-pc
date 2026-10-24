@@ -92,9 +92,9 @@ Camp training for agility (no camp stat earns it yet; saves only accept it), the
 **Measured (200 seeds per build):** every build lands 44-56% reference wins. fire_light wins all 18 of its fights that end before the reference's tier III. fire_heavy wins 55% and air_heavy 51% of the fights that reach tier IV. Close builds hold 4.4-5.5 m and spend 21-28% of their casts on hitters and dashes; light and heavy builds hold 8.2-8.8 m; heavy builds spend 7-15% on payoffs and signatures. Air Form never fires into another shape class: every cast that meets a threat meets a projectile.
 
 **Open (structural):**
-- Close duels end in 16-32 s, because both sides land everything at 5 m.
+- Close duels end in 16-32 s, because both sides land everything at 5 m. *Addressed by D1's exchange windows (D1 6.1, `d1-exchange-after.json`): fire_close 67.0 s, air_close 50.7 s, both inside their bands. Brennic's named semifinal is now 63.0 s at 44.6% reference wins (2000 seeds, `d1-named-after*.json`).*
 - Air's light build never gets a short fight at the final (0.9 darts, competence 1.5).
-- Tide Ward and the beam rows sit on different collar tiers, so the beam answer never fires in play.
+- Tide Ward and the beam rows sit on different collar tiers, so the beam answer never fires in play. *Still open (D1 6.4, `d1-counters.json`): none of the 783 beam blows on a Tide Ward holder is castable. Both D1 4.2 options were measured and declined. Holding Tide Ward past tier II makes 762 beams castable, but the reference never holds its 15 mana with the mend line free.*
 - The reference player's chase keeps light and heavy builds at about 8.5 m instead of their bands.
 - Defensive stats (focus, nerve) swing a duel by 30-45 points per rank, so builds stay within a rank of the reference's 1/1/1.
 
@@ -124,21 +124,26 @@ Nothing is added to a state that has no rank-5 cast, so the goldens, the default
 | Fire close | Flick Flame | Searing Hold | root 0.6 s |
 | Fire light | Ember Dart | Kindling Darts | +2 Heat per connect |
 | Fire heavy | Brand Wrath | Brand Drag | slow x0.5 for 0.4 s per tick |
-| Air close | Shear | Third Blade | +1 blade down the aim line |
+| Air close | Shear | Pinning Edge (was Third Blade; D1 6.2) | root 0.3 s |
 | Air light | Gale Dart | Headwind | slow x0.7 for 0.5 s |
 | Air heavy | Cyclone | Eye-wall | root 0.3 s per tick |
 
 **Judged by the builds census.** Each row was run at rank 4 and rank 5 inside its build, 200 seeds each; the rank override was temporary. The ultimate's own effect on the rival's win rate:
-- Third Blade: +36.5 pp. Close fights go from 68% to 97% rival wins.
+- Third Blade: +36.5 pp. Close fights go from 68% to 97% rival wins. (Replaced by Pinning Edge, D1 6.2.)
 - Headwind: +5.5 pp. Tier IV share +6.8 pp.
 - Searing Hold: +3.2 pp at 1000 seeds.
 - Kindling Darts: short wins go from 20 to 26 at the same win rate.
 - Eye-wall: +1 pp.
 - Brand Drag: neutral, because the heavy plan rarely presses Wrath.
 
-The first Fire heavy draft (Pyre embers) made the heavy win before tier IV: short fights went from 4 to 48 and the tier IV share fell. It read less like a heavy build, so it was moved to the tier IV beam. No rank-5 row is committed to rival-builds.json: rank-4 power alone already takes every build under the 40% reference floor except fire_heavy.
+The first Fire heavy draft (Pyre embers) made the heavy win before tier IV: short fights went from 4 to 48 and the tier IV share fell. It read less like a heavy build, so it was moved to the tier IV beam. No rank-5 row was committed to rival-builds.json in WP3: rank-4 power alone already takes every build under the 40% reference floor except fire_heavy. Since D1 6.2, fire_heavy holds Brand Wrath at rank 5 (41.5% reference wins at 46.5 s), the only committed rank-5 row.
 
-**Open.** Third Blade is overwhelming against a rank-4 reference. Brand Drag needs a heavy plan that presses Wrath before it can matter.
+**Open.** Updated after D1's first slice (`d4676f1`):
+- **Third Blade is gone.** It was overwhelming against a rank-4 reference: at rank 5, 0% reference wins. Shear's rank 5 is now Pinning Edge, a 0.3 s root. Its own effect is -1.5 pp against rank 4, with more short fights and more tier-IV wins, as a close build should get (D1 6.2, `d1-rank-air-close-air-shear-*.json`). `extraProjectiles` stays built and tested, but no row uses it.
+- **The heavy plan now has a payoff sequence.** It spends its tier-IV payoff (Brand Wrath, Cyclone) first. Wrath casts per fight go from 0.40 to 0.45.
+- **Brand Drag is still neutral** (42.0% -> 41.5% reference wins, rank 4 -> 5). Now the cause is measured: Wrath is cast about once per fight that reaches tier IV, because fights end about 10 s after tier IV opens and Wrath's cooldown is 20 s. A useful Brand Drag needs longer heavy fights or a cheaper tier-IV row (D1 6.2, `d1-payoff-sequence.json`).
+- **Close duels trade now** (D1 6.1). An exchange window guards a defender's next close blows after a clean close hit. Hits per exchange fall from 2.29 to 0.61 (fire_close) and from 1.91 to 1.30 (air_close). air_close sits exactly on the 40% floor; D1 6.4 records it unchanged.
+- **Counters** have a measured target (D1 6.4: N = 50% of the blows a row could answer; Director default, owner to confirm). Air Form meets it at 67.9%. Ring of Cinders (1.6%) and Tide Ward (no castable beam) do not.
 
 ### WP4 as built: Lab build pickers
 
