@@ -18,8 +18,9 @@ import shutil
 import numpy as np
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter
-from common import ART, ROOT, read, write, sha, digest, now, relative
+from common import ART, ROOT, read, write, sha, now, relative
 from covenant_battle import key_magenta
+import spend
 
 WAVE = 'D2S'
 BASE = ART / 'waves/D2S'
@@ -151,17 +152,9 @@ def clear_latch(job_id, diagnosis):
     log = (ROOT / job['invocation_evidence'] / 'cli-output.txt').read_text(encoding='utf-8', errors='replace')
     assert job['status'] == 'error-unknown-spend' and job['unique_output_images'] == 0
     assert 'failed to read image file' in log and 'cannot find the file' in log, 'NOT_A_LOCAL_REFERENCE_FAILURE'
-    assert not any(w in log.lower() for w in ('quota', 'rate limit', '429', '402', 'exhausted')), 'QUOTA_OR_RATE_SIGNAL'
-    from providers import ProviderBudget
-    history = read(ART / 'providers/history.json'); stop = history['providers']['agy']['stop']
-    assert stop and stop['job'] == job_id
-    write(BASE / 'latches' / ('agy-' + job_id + '.json'), stop)
-    write(BASE / 'diagnoses' / (job_id + '.json'), {'job': job_id, 'at': now(), 'charged_images': job['charged_images'], 'diagnosis': diagnosis})
-    ProviderBudget().event('agy', 'diagnosis', job_id, diagnosis)
-    history = read(ART / 'providers/history.json'); history['providers']['agy']['stop'] = None
-    history['providers']['agy']['events'].append({'at': now(), 'event': 'latch-cleared-local-failure', 'job': job_id,
-        'reason': 'D2S: local reference-path failure diagnosed; old latch in art/waves/D2S/latches; quota and rate errors still latch'})
-    write(ART / 'providers/history.json', history)
+    # Quota/rate refusal, the latch archive and the clear itself run under providers/.lock in spend.
+    spend.clear_latch(ART, 'agy', job_id, diagnosis, session=WAVE,
+        reason='D2S: local reference-path failure diagnosed; old latch in art/waves/D2S/latches; quota and rate errors still latch')
     print('latch cleared', job_id)
 
 
@@ -169,7 +162,6 @@ def recover(job_id):
     """A local archive failure after exactly one completed image call (WinError 3: art/review/sources
     is absent in a fresh checkout). Keeps the charge and the ledger row; records the verified image and
     clears only the agy latch that this local failure set, with the old latch archived."""
-    from providers import ProviderBudget
     job = next(j for j in read(ART / 'usage.json')['jobs'] if j['id'] == job_id)
     assert job['status'] == 'error-unknown-spend' and job['error'].startswith('[WinError 3]'), 'NOT_A_LOCAL_ARCHIVE_FAILURE'
     assert len(job['tool_calls']) == 1 and job['unique_output_images'] == 1 and job['charged_images'] >= 1
@@ -182,14 +174,10 @@ def recover(job_id):
                            'which a fresh worktree lacks (ignored folder). Not a quota, rate or moderation result. Charge kept; ledger row unchanged.',
               'fix': 'd2_slice.call creates art/review/sources before every call.'}
     write(BASE / 'recovered' / (job_id + '.json'), record)
-    history = read(ART / 'providers/history.json'); stop = history['providers']['agy']['stop']
+    stop = read(ART / 'providers/history.json')['providers']['agy']['stop']
     if stop and stop['job'] == job_id:
-        write(BASE / 'latches' / ('agy-' + job_id + '.json'), stop)
-        ProviderBudget().event('agy', 'diagnosis', job_id, record['diagnosis'])
-        history = read(ART / 'providers/history.json'); history['providers']['agy']['stop'] = None
-        history['providers']['agy']['events'].append({'at': now(), 'event': 'latch-cleared-local-failure', 'job': job_id,
-            'reason': 'D2S: local archive path failure diagnosed; old latch in art/waves/D2S/latches; quota and rate errors still latch'})
-        write(ART / 'providers/history.json', history)
+        spend.clear_latch(ART, 'agy', job_id, record['diagnosis'], session=WAVE,
+            reason='D2S: local archive path failure diagnosed; old latch in art/waves/D2S/latches; quota and rate errors still latch')
     publish({**job, 'status': 'generated', 'archive': record['archive'], 'sha256': record['sha256']})
     print('recovered', job_id)
 
@@ -205,16 +193,11 @@ def kept(scene):
 def prepare():
     if (BASE / 'start.json').exists():
         print('D2S baseline already retained'); return
-    usage = read(ART / 'usage.json')
-    for name in ('usage.json', 'budget.json', 'providers/history.json', 'providers/budget.json'):
-        target = BASE / 'before' / name; target.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(ART / name, target)
-    charged = sum(j['charged_images'] for j in usage['jobs'])
-    write(BASE / 'start.json', {'at': now(), 'jobs': len(usage['jobs']), 'charged': charged, 'jobsDigest': digest(usage['jobs']),
-        'sessionImageCap': SESSION_CAP, 'slotAttemptCap': SLOT_ATTEMPTS,
-        'authorization': 'Operator day standup 2026-10-24: image generation authorized up to the remaining 450 hard cap, providers per PROVIDER-LEDGER (agy). '
-                         'The brief said 86 left; the ledger holds 382 charged, so 68 remain. This wave reserves at most 30.'})
+    charged = spend.open_session(ART, WAVE, SESSION_CAP, SLOT_ATTEMPTS,
+        authorization='Operator day standup 2026-10-24: image generation authorized up to the remaining 450 hard cap, providers per PROVIDER-LEDGER (agy). '
+                      'The brief said 86 left; the ledger holds 382 charged, so 68 remain. This wave reserves at most 30.')['charged']
     policy = read(ART / 'budget.json')
-    policy['target_images'] = 450
+    policy['target_images'] = policy['wave_hard_cap']
     policy.setdefault('wave_image_caps', {})[WAVE] = SESSION_CAP
     policy['d2s_authorization'] = ('Operator 2026-10-24: D2 section 5 mastery slice candidates; target raised 398 to the 450 hard cap; '
                                    f'{charged} inherited; D2S wave cap {SESSION_CAP}; agy only, serial; first quota or rate error latches; no refunds.')
@@ -264,14 +247,19 @@ def spec_for(scene):
     return spec
 
 
+def preflight(scene):
+    """Activate the D2S session so Budget.reserve enforces its caps for every caller, and fail before
+    any brief is written when spend.headroom already blocks. The reservation re-checks under the lock."""
+    spend.activate(ART, WAVE)
+    blocked = spend.headroom(ART, wave=WAVE, provider='agy', scene=scene)
+    if blocked: raise RuntimeError(blocked[0])
+
+
 def call(scene, correction=None):
     from providers import generate
-    start = read(BASE / 'start.json'); usage = read(ART / 'usage.json')
-    if usage['stop']: raise RuntimeError('SPEND_STOP')
-    if sum(j['charged_images'] for j in usage['jobs'][start['jobs']:]) >= SESSION_CAP: raise RuntimeError('D2S_SESSION_CAP')
+    preflight(scene)
     (ART / 'review/sources').mkdir(parents=True, exist_ok=True)
     previous = generated(scene)
-    if len(previous) >= SLOT_ATTEMPTS: raise RuntimeError('D2S_SLOT_ATTEMPT_CAP')
     item = scenes()[scene]
     family = [s for s, v in scenes().items() if v['family'] == item['family']]
     if scene != family[0] and item['family'] != 'target' and not kept(family[0]):
@@ -297,15 +285,12 @@ def normal_scene(body_scene):
 def call_normal(body_scene, correction=None):
     """Provider-painted normal map from a kept body candidate (one call)."""
     from providers import generate
-    start = read(BASE / 'start.json'); usage = read(ART / 'usage.json')
-    if usage['stop']: raise RuntimeError('SPEND_STOP')
-    if sum(j['charged_images'] for j in usage['jobs'][start['jobs']:]) >= SESSION_CAP: raise RuntimeError('D2S_SESSION_CAP')
-    (ART / 'review/sources').mkdir(parents=True, exist_ok=True)
     body = kept(body_scene)
     if not body: raise RuntimeError('KEPT_BODY_REQUIRED')
     scene = normal_scene(body_scene)
+    preflight(scene)
+    (ART / 'review/sources').mkdir(parents=True, exist_ok=True)
     previous = generated(scene)
-    if len(previous) >= SLOT_ATTEMPTS: raise RuntimeError('D2S_SLOT_ATTEMPT_CAP')
     pilot = 'normal-water-target'
     if scene != pilot and not kept(pilot): raise RuntimeError('FAMILY_PROOF_REQUIRED: review ' + pilot + ' first')
     # agy names references Reference-N.<ext> and the prompt says .png: keep every reference a PNG.
@@ -480,9 +465,9 @@ def build():
                    cleanupSteps=['floor resized to 1920x1080', 'wall/rim magenta key (key_magenta 80/150)', 'stacked floor < wall < rim'],
                    files=sorted(relative(p) for p in folder.iterdir()))
         records['plates'].append(rec)
-    charges = sum(j['charged_images'] for j in recent)
-    records['spend'] = {'inherited': start['charged'], 'wave': charges, 'total': start['charged'] + charges, 'hardCap': 450,
-                        'remaining': 450 - start['charged'] - charges, 'calls': [{'id': j['id'], 'scene': j['scene'], 'status': j['status'], 'charged': j['charged_images'],
+    charges = sum(j['charged_images'] for j in recent); hard = read(ART / 'budget.json')['wave_hard_cap']
+    records['spend'] = {'inherited': start['charged'], 'wave': charges, 'total': start['charged'] + charges, 'hardCap': hard,
+                        'remaining': hard - start['charged'] - charges, 'calls': [{'id': j['id'], 'scene': j['scene'], 'status': j['status'], 'charged': j['charged_images'],
                         'seconds': j.get('elapsed_seconds'), 'evidence': j.get('invocation_evidence')} for j in recent]}
     records['ownerPick'] = 'pending'
     write(OUT / 'candidates.json', records)
@@ -523,11 +508,10 @@ def sheet(records):
 
 def check():
     start = read(BASE / 'start.json'); usage = read(ART / 'usage.json')
-    assert digest(usage['jobs'][:start['jobs']]) == start['jobsDigest'], 'INHERITED_LEDGER_CHANGED'
+    codes = spend.verify_session(ART, start)  # inherited digest, session cap, hard cap, unresolved rows
+    assert not codes, codes
     recent = usage['jobs'][start['jobs']:]
     assert all(j['wave'] == WAVE and j.get('provider') == 'agy' for j in recent), 'FOREIGN_JOB'
-    assert sum(j['charged_images'] for j in recent) <= SESSION_CAP, 'D2S_SESSION_CAP'
-    assert start['charged'] + sum(j['charged_images'] for j in recent) <= 450, 'HARD_CAP'
     for j in recent:
         if j['status'] == 'generated': assert sha(ROOT / source(j)) == j['sha256'], 'SOURCE_CHANGED:' + j['id']
     data = read(OUT / 'candidates.json')

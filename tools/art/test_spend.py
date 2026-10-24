@@ -69,6 +69,19 @@ class SpendTests(unittest.TestCase):
         self.charge(job(1))
         self.assertEqual(spend.headroom(self.art), ['SESSION_CAP: D2S'])
 
+    def test_d2_slice_preflight_is_the_shared_authority(self):
+        from unittest.mock import patch
+        import d2_slice
+        with patch('d2_slice.ART', self.art):
+            with self.assertRaisesRegex(RuntimeError, '^SESSION_START_REQUIRED'):
+                d2_slice.preflight('plate-x')
+            write(self.art / 'waves/D2S/start.json', {'at': 'then', 'jobs': 0, 'charged': 0, 'jobsDigest': digest([]),
+                                                      'sessionImageCap': 30, 'slotAttemptCap': 1, 'authorization': 'old'})
+            self.charge(job(1, 'plate-x'))
+            with self.assertRaisesRegex(RuntimeError, '^SESSION_SLOT_ATTEMPT_CAP'):
+                d2_slice.preflight('plate-x')
+            d2_slice.preflight('plate-y')
+
     def test_session_slot_attempt_cap_is_per_scene(self):
         import spend
         self.charge(job(0, 'x'))  # inherited rows do not count against the session slot
