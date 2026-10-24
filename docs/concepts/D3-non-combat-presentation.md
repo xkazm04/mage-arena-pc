@@ -1,6 +1,7 @@
 # D3. Non-combat presentation: menu, HUD and campaign, rebuilt for PC
 
-Status: **direction menu**, written 2026-10-23 for future sessions; nothing here is built.
+Status: **direction menu**, written 2026-10-23 for future sessions. Section 5 steps 1 and 2 landed 2026-10-24 (see
+"First slice as landed" below); step 3 is open.
 
 **Decision (owner, 2026-10-24): painted 2.5D, in PixiJS, is the primary direction** ("Im sold to 2.5D [...] master as
 primary choice over 3D").
@@ -103,7 +104,34 @@ settings.
 
 ## 7. Open questions for the spark
 
-1. Canvas kit or HTML overlay (4.1)? The engine is settled: PixiJS.
+1. Canvas kit or HTML overlay (4.1)? The engine is settled: PixiJS. **Canvas kit (option A), Director default
+   2026-10-24, owner to confirm.**
 2. Which screens matter most for the first visual pass: title, camp map, calendar, or results?
 3. Should weeks 3-6 come before or after the visual pass?
 4. Is the Lab a player feature (polished) or a developer tool (hidden)?
+
+## 8. First slice as landed (2026-10-24)
+
+1. **Screen modules and the layout helper (4.1 A).** `game-shell.ts` is down from 2,417 to 313 lines: it keeps the
+   season session, the arena, the shared state and the router. Every screen is a module under
+   `packages/game/src/screens/`; the largest is `parley.ts` at 245 lines. `ui/anchors.ts` adds `safeArea`, edge
+   `anchor`, equal `columns` and a clamped `uiScale`. The proof of no visual change: a 17-screen tour (menu through
+   saves) at 1920x1080 and 2560x1440 is pixel-identical before and after, with equal UI snapshots.
+   - The broken characters near the old `game-shell.ts:870` were real. Six strings carried a literal `?` from U3b
+     (`8d3888f`), for example "Tent Trial ? 18:00". They now use a middle dot, and an em dash for the dawn line.
+2. **School-aware HUD (4.2).** The arena HUD left `arena-entry.ts` for `packages/game/src/hud/`:
+   - `school-hud.ts` is the model;
+   - `rune-meter.ts` draws the Heat and Momentum meters, marked at 50/80 and 40/80 from the identity;
+   - `arena-hud.ts` draws the HUD itself.
+
+   A Fire or Air player sees the bolt + 4 slots, each dark until its rune, with school cooldowns at the actor's pace,
+   overlay prices and the rune meter in place of Flow. A ranked actor gets rank pips, with a star for a carried rank-5
+   ultimate, plus a BUILD line. The unranked Water HUD has the same buttons and texts as before. There is one test per
+   school. `@mage/core/arena` does not export `slotSpell`, `balancedSpell` or `identityNumber`, so the HUD mirrors
+   them; a test pins the mirror to `arena/schools.ts`.
+   - Not in this slice:
+     - the meter at the opponent's feet (arena scene);
+     - Digit5 and wheel or bumper access to the fifth slot (`input.ts`; mouse clicks reach it today);
+     - the bolt + 4 composition screen for practice entry (W8 lane P);
+     - the rival's phase gems.
+3. **Settings and widescreen (4.4): not started.** At 21:9 the 16:9 stage is still letterboxed.
