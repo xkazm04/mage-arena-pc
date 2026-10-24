@@ -17,15 +17,15 @@ import phrases from '../../../docs/design/reconciled/data/phrases.json' with { t
 import locations from '../../../docs/design/reconciled/data/locations.json' with { type: 'json' };
 import scenarios from '../../../docs/design/reconciled/data/scenarios.json' with { type: 'json' };
 import { presets, runtime } from '../src/arena/index.ts';
+import { compositionRows } from '../src/arena/mage-build.ts';
 import { actCamp, calendar, createCampSession, decision, endHour, moveCamp, passSlot, playerProblem, safeFallback, settleCamp, spendHours, type CampSession, type Tables } from '../src/index.ts';
 import { buyRank, createSkillBook, earnSkillPoints, nextRankCost, rankOf, skillBookRules, type SkillBook, type SkillBookRules } from '../src/skill-book.ts';
 import { weekProfiles } from './week-census.ts';
 
 /** The camp tables, the same list as director/src/data.ts loadTables (core may not import the director). */
 export const tables = { season, 'death-reservation': deathReservation, characters, relationships, facts, schools, rules, intents, goals, phrases, locations, scenarios } as unknown as Tables;
-/** The ranked rows: the bolt and each of the reference preset's lines at tiers I-IV (week-census.ts profileSpellRanks). */
-const reference = presets.find(p => p.name === runtime.games.referencePreset)!;
-export const rankedKeys: readonly string[] = ['bolt:0', ...reference.lines.flatMap(line => [1, 2, 3, 4].map(tier => `${line}:${tier}`))];
+/** The ranked rows: the bolt and each of the reference preset's lines at tiers I-IV (mage-build.ts compositionRows, as the week sweep). */
+export const rankedKeys: readonly string[] = compositionRows(presets.find(p => p.name === runtime.games.referencePreset)!);
 /** The 4.3 target per week: the week sweep's `steady` profile (N - 0.5, floored at rank 1, capped at the top rank). */
 export const targetRanks: readonly number[] = weekProfiles.steady!;
 /** Census arms: `committed` is the file's numbers; `flat` holds every week's award at 3x (the committed costs), the closest

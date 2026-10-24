@@ -5,7 +5,8 @@ import { rivalBuildIds, rivalBuilds } from '../src/arena/archetypes.ts';
 import profileData from '../src/arena/data/progression-weeks.pc.json' with { type: 'json' };
 import { createHash } from 'node:crypto';
 import weeksEvidence from '../../../docs/change-requests/evidence/d1-weeks.json' with { type: 'json' };
-import { levelMages, mageArms, opponentSpellRanks, profileSpellRanks, rivalProfiles, runWeekBuildFight, runWeekFight, weekProfileProblems, weekProfiles, weeks, type MageArm } from './week-census.ts';
+import lagEvidence from '../../../docs/change-requests/evidence/d1-weeks-arm-lag.json' with { type: 'json' };
+import { armOption, levelMages, mageArms, opponentSpellRanks, profileSpellRanks, rivalProfiles, runWeekBuildFight, runWeekFight, weekProfileProblems, weekProfiles, weeks, type MageArm } from './week-census.ts';
 import { runBuildFight } from './builds-census.ts';
 
 // The week sweep (D1 4.4) is a reading: these checks pin that its inputs are what the data says and that week 1 of a profile
@@ -60,6 +61,15 @@ describe('week sweep mage-side arms (D1 6.8): opt-in, week 1 untouched', () => {
     const fights = Array.from({ length: weeksEvidence.countPerCell }, (_, i) => runWeekFight(seed + i, 3, 4, 'steady'));
     expect(createHash('sha256').update(fights.map(f => `${f.seed}:${f.hash}`).join('\n')).digest('hex')).toBe(final.digest);
   }, 120000);
+
+  it('the lag arm rides the createGames opponentMage option and keeps its d1-weeks-arm-lag.json digest (steady week 4, fire_heavy)', () => {
+    expect(armOption(4, 'lag')).toEqual({ averageRank: 2.5 });
+    expect(armOption(3, 'level')).toEqual({ level: 3 });
+    expect(armOption(4, undefined)).toBeUndefined();
+    const cell = lagEvidence.cells.find(c => c.profile === 'steady' && c.week === 4)!, build = cell.builds.find(b => b.id === 'fire_heavy')!;
+    const fights = Array.from({ length: lagEvidence.countPerCell }, (_, i) => runWeekBuildFight(seed + i, 'fire_heavy', 4, 'steady', 'lag'));
+    expect(createHash('sha256').update(fights.map(f => `${f.seed}:${f.hash}`).join('\n')).digest('hex')).toBe(build.digest);
+  }, 240000);
 
   it('rivalProfiles validates like the player profiles; every arm that ranks names one', () => {
     expect(weekProfileProblems({ profiles: {}, rivalProfiles: { short: [1] } })).toEqual(['progression-weeks.pc.json short: needs 6 weeks']);
