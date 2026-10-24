@@ -1,0 +1,72 @@
+{
+  "id": "d2s-normal-water-roster-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "normal-water-roster",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "normal-water-roster",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/d2s-body-water-roster-agy-a01.png",
+        "sha256": "e0b4b144d35e7ddced6487e3af56b28a14ee55dc7dd14c968d537ef7126e3cfd",
+        "role": "colour body to encode (lossless PNG of the kept source)"
+      }
+    ],
+    "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+    "family": "normal",
+    "body": "d2s-body-water-roster-agy-a01",
+    "proofGate": "D2S family proof"
+  },
+  "input_hash": "8b0259af41410d1d61ba9440a61e81ef06d3454a4d7267228f435435989d114c",
+  "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "2c7f9830-3913-4fed-905d-b0f0309fb90f",
+  "at": "2026-10-24T08:24:55.319881+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 28.125,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:25:02Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "water_mage_normal_map",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-water-roster-agy-a01\\Reference-1.png"
+        ],
+        "Prompt": "A tangent-space normal map texture of the exact character shown in Reference-1.png, maintaining the identical silhouette, framing, size, and pose pixel-aligned. Standard OpenGL tangent-space normal map conventions: flat surfaces directly facing the viewer are smooth lavender-blue (#8080FF), surfaces facing right are reddish, surfaces facing up are greenish, surfaces facing left are cyan, and surfaces facing down are purplish. The 3D surface curvature and sculpted volume of the face, hood, cloth folds, staff, and hands are smoothly encoded as normal map vectors. No diffuse texture color, no costume colors, no cast shadows, no ambient occlusion, no specular highlights, no outlines, no text. The entire background outside the character silhouette is completely flat, solid, uniform vivid magenta #FF00FF."
+      },
+      "conversation": "d0c0bfde-460a-4dfe-9a2c-1da1beae1cb7"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "a86aeca3bcff5874492b9b7a7cf121f5217aed5fafd4206ab8e240351c1ca05b",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\c47142cd-ba7e-49ed-bb78-5f47fb8f35fb\\water_mage_normal_map_1792830323256.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-normal-water-roster-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-normal-water-roster-agy-a01.jpg",
+  "sha256": "a86aeca3bcff5874492b9b7a7cf121f5217aed5fafd4206ab8e240351c1ca05b",
+  "invocation_evidence": "art/providers/runs/d2s-normal-water-roster-agy-a01"
+}

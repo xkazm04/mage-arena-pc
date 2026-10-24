@@ -1,0 +1,72 @@
+{
+  "id": "d2s-normal-fire-covenant-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "normal-fire-covenant",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "normal-fire-covenant",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/d2s-body-fire-covenant-agy-a01.png",
+        "sha256": "0e22af53ae14cca2058f2f0b8a7e0095f48f4d9250677df7d80b0a4a5d1bd6c7",
+        "role": "colour body to encode (lossless PNG of the kept source)"
+      }
+    ],
+    "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+    "family": "normal",
+    "body": "d2s-body-fire-covenant-agy-a01",
+    "proofGate": "D2S family proof"
+  },
+  "input_hash": "31803dca336251644dd95c5d4aaf1cdbc68f79ddbf7327ff54b4cf8370a5df4c",
+  "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "b26221e2-074e-440c-9b1e-2ed4dc7e3fe6",
+  "at": "2026-10-24T08:26:51.943511+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 24.141,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:26:58Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "normal_map",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-fire-covenant-agy-a01\\Reference-1.png"
+        ],
+        "Prompt": "A tangent-space normal map of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL tangent-space normal map convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF."
+      },
+      "conversation": "9a0bb779-15ee-4a02-97a7-9f5b3a852842"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "ce8771c809bf7aaaa572421b7f9d23459380cb973d1b204a34a9472335708511",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\219ca21d-662e-4c41-b237-f5965035dba4\\normal_map_1792830436002.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-normal-fire-covenant-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-normal-fire-covenant-agy-a01.jpg",
+  "sha256": "ce8771c809bf7aaaa572421b7f9d23459380cb973d1b204a34a9472335708511",
+  "invocation_evidence": "art/providers/runs/d2s-normal-fire-covenant-agy-a01"
+}

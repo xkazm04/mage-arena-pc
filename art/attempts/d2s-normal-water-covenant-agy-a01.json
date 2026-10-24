@@ -1,0 +1,72 @@
+{
+  "id": "d2s-normal-water-covenant-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "normal-water-covenant",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "normal-water-covenant",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/d2s-body-water-covenant-agy-a01.png",
+        "sha256": "35352858c0428073522d94dc06fd116e8fe91974207dea3690a6bff17a347abb",
+        "role": "colour body to encode (lossless PNG of the kept source)"
+      }
+    ],
+    "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+    "family": "normal",
+    "body": "d2s-body-water-covenant-agy-a01",
+    "proofGate": "D2S family proof"
+  },
+  "input_hash": "4e04655c065a2c1cc1f445d2008ab42d709dbeecc2285469d02d3f874c05b578",
+  "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "0ad46192-ca2a-4f85-8066-3ac2e57fdd26",
+  "at": "2026-10-24T08:25:24.127399+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 28.75,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:25:32Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "normal_map_water_covenant",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-water-covenant-agy-a01\\Reference-1.png"
+        ],
+        "Prompt": "A tangent-space normal map of the exact character in Reference-1.png, pixel-aligned to it with the exact same framing, silhouette, scale, and pose. Standard OpenGL tangent space normal map coloring: flat surfaces facing directly toward the camera/viewer are #8080FF lavender blue, surfaces tilted right are reddish/pink, surfaces tilted left are cyan/green-blue, surfaces tilted upward are greenish, surfaces tilted downward are purple/violet. Smooth, continuous 3D volume normal map rendering capturing the relief, curved geometry, and sculpted forms of the face, cowl/hood, drapery and folds of the robes, wooden staff, and hands. No specular highlights, no diffuse lighting, no shadows, no outlines, no text. The background outside the character's exact silhouette is a flat, solid, uniform pure vivid MAGENTA (#FF00FF) chroma key background."
+      },
+      "conversation": "40113893-2b6d-4ddd-bbc2-3ef97eea1ea9"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "31bd181e7e87807eb6c03db402ce9abc3012942f13e3066f8a154394bc44e7de",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\4b345836-ecff-4fbe-8f36-fbfa4e95a8ad\\normal_map_water_covenant_1792830352374.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-normal-water-covenant-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-normal-water-covenant-agy-a01.jpg",
+  "sha256": "31bd181e7e87807eb6c03db402ce9abc3012942f13e3066f8a154394bc44e7de",
+  "invocation_evidence": "art/providers/runs/d2s-normal-water-covenant-agy-a01"
+}

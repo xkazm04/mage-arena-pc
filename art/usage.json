@@ -26730,6 +26730,439 @@
       "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
       "error": "TIMEOUT_UNKNOWN_SPEND",
       "invocation_evidence": "art/providers/runs/d2s-normal-water-target-agy-a01"
+    },
+    {
+      "id": "d2s-normal-water-target-agy-a02",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "normal-water-target",
+      "attempt": 2,
+      "input": {
+        "wave": "D2S",
+        "id": "normal-water-target",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "1:1",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-body-water-target-agy-a02.png",
+            "sha256": "fca59f58a4708d06968039e8ee0214439b8f8ca9690891c37b904311d93e1e90",
+            "role": "colour body to encode (lossless PNG of the kept source)"
+          }
+        ],
+        "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+        "family": "normal",
+        "body": "d2s-body-water-target-agy-a02",
+        "proofGate": "D2S family proof",
+        "correction_of": "d2s-normal-water-target-agy-a01"
+      },
+      "input_hash": "2ef967756d024ba669e0f9c9b7cf225bfb661e8032b0e258015af31665ea5729",
+      "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "819d9780-ceb1-465a-8272-0223ac494781",
+      "at": "2026-10-24T08:24:00.143014+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 31.016,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:24:08Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "1:1",
+            "ImageName": "normal_map_water_target",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-water-target-agy-a02\\Reference-1.png"
+            ],
+            "Prompt": "A tangent-space normal map texture of the exact character shown in the reference image Reference-1.png. Standard OpenGL tangent-space normal map coloring: flat front-facing surfaces are RGB (128, 128, 255) lavender-blue (#8080FF), surfaces facing right are reddish, surfaces facing up are greenish, surfaces facing left are cyan, surfaces facing down are purplish. The character has the exact same silhouette, pose, framing, scale, and placement as the reference image: hooded water mage holding a staff with cloth robes and folds. Pure 3D surface normal vector encoding showing smooth sculpted volumes of the hood, face, cloth folds, hands, and staff. No lighting, no shadows, no diffuse costume colors, no outlines, no text. The background outside the silhouette is completely flat uniform vivid pure MAGENTA (#FF00FF)."
+          },
+          "conversation": "e927640c-99c6-4e05-9860-bcdd4a73c220"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "b21eb9b32fd85334895d4fdf1b2381e0967475a7b757b61a67343f9ab2fbd0cc",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\e7a859f4-bb12-4fa7-b10a-2d360d5fee05\\normal_map_water_target_1792830270979.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-normal-water-target-agy-a02/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-normal-water-target-agy-a02.jpg",
+      "sha256": "b21eb9b32fd85334895d4fdf1b2381e0967475a7b757b61a67343f9ab2fbd0cc",
+      "invocation_evidence": "art/providers/runs/d2s-normal-water-target-agy-a02"
+    },
+    {
+      "id": "d2s-normal-water-roster-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "normal-water-roster",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "normal-water-roster",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "1:1",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-body-water-roster-agy-a01.png",
+            "sha256": "e0b4b144d35e7ddced6487e3af56b28a14ee55dc7dd14c968d537ef7126e3cfd",
+            "role": "colour body to encode (lossless PNG of the kept source)"
+          }
+        ],
+        "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+        "family": "normal",
+        "body": "d2s-body-water-roster-agy-a01",
+        "proofGate": "D2S family proof"
+      },
+      "input_hash": "8b0259af41410d1d61ba9440a61e81ef06d3454a4d7267228f435435989d114c",
+      "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "2c7f9830-3913-4fed-905d-b0f0309fb90f",
+      "at": "2026-10-24T08:24:55.319881+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 28.125,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:25:02Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "1:1",
+            "ImageName": "water_mage_normal_map",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-water-roster-agy-a01\\Reference-1.png"
+            ],
+            "Prompt": "A tangent-space normal map texture of the exact character shown in Reference-1.png, maintaining the identical silhouette, framing, size, and pose pixel-aligned. Standard OpenGL tangent-space normal map conventions: flat surfaces directly facing the viewer are smooth lavender-blue (#8080FF), surfaces facing right are reddish, surfaces facing up are greenish, surfaces facing left are cyan, and surfaces facing down are purplish. The 3D surface curvature and sculpted volume of the face, hood, cloth folds, staff, and hands are smoothly encoded as normal map vectors. No diffuse texture color, no costume colors, no cast shadows, no ambient occlusion, no specular highlights, no outlines, no text. The entire background outside the character silhouette is completely flat, solid, uniform vivid magenta #FF00FF."
+          },
+          "conversation": "d0c0bfde-460a-4dfe-9a2c-1da1beae1cb7"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "a86aeca3bcff5874492b9b7a7cf121f5217aed5fafd4206ab8e240351c1ca05b",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\c47142cd-ba7e-49ed-bb78-5f47fb8f35fb\\water_mage_normal_map_1792830323256.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-normal-water-roster-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-normal-water-roster-agy-a01.jpg",
+      "sha256": "a86aeca3bcff5874492b9b7a7cf121f5217aed5fafd4206ab8e240351c1ca05b",
+      "invocation_evidence": "art/providers/runs/d2s-normal-water-roster-agy-a01"
+    },
+    {
+      "id": "d2s-normal-water-covenant-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "normal-water-covenant",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "normal-water-covenant",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "1:1",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-body-water-covenant-agy-a01.png",
+            "sha256": "35352858c0428073522d94dc06fd116e8fe91974207dea3690a6bff17a347abb",
+            "role": "colour body to encode (lossless PNG of the kept source)"
+          }
+        ],
+        "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+        "family": "normal",
+        "body": "d2s-body-water-covenant-agy-a01",
+        "proofGate": "D2S family proof"
+      },
+      "input_hash": "4e04655c065a2c1cc1f445d2008ab42d709dbeecc2285469d02d3f874c05b578",
+      "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "0ad46192-ca2a-4f85-8066-3ac2e57fdd26",
+      "at": "2026-10-24T08:25:24.127399+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 28.75,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:25:32Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "1:1",
+            "ImageName": "normal_map_water_covenant",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-water-covenant-agy-a01\\Reference-1.png"
+            ],
+            "Prompt": "A tangent-space normal map of the exact character in Reference-1.png, pixel-aligned to it with the exact same framing, silhouette, scale, and pose. Standard OpenGL tangent space normal map coloring: flat surfaces facing directly toward the camera/viewer are #8080FF lavender blue, surfaces tilted right are reddish/pink, surfaces tilted left are cyan/green-blue, surfaces tilted upward are greenish, surfaces tilted downward are purple/violet. Smooth, continuous 3D volume normal map rendering capturing the relief, curved geometry, and sculpted forms of the face, cowl/hood, drapery and folds of the robes, wooden staff, and hands. No specular highlights, no diffuse lighting, no shadows, no outlines, no text. The background outside the character's exact silhouette is a flat, solid, uniform pure vivid MAGENTA (#FF00FF) chroma key background."
+          },
+          "conversation": "40113893-2b6d-4ddd-bbc2-3ef97eea1ea9"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "31bd181e7e87807eb6c03db402ce9abc3012942f13e3066f8a154394bc44e7de",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\4b345836-ecff-4fbe-8f36-fbfa4e95a8ad\\normal_map_water_covenant_1792830352374.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-normal-water-covenant-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-normal-water-covenant-agy-a01.jpg",
+      "sha256": "31bd181e7e87807eb6c03db402ce9abc3012942f13e3066f8a154394bc44e7de",
+      "invocation_evidence": "art/providers/runs/d2s-normal-water-covenant-agy-a01"
+    },
+    {
+      "id": "d2s-normal-fire-target-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "normal-fire-target",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "normal-fire-target",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "1:1",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-body-fire-target-agy-a01.png",
+            "sha256": "d2a3a955be94b620291c2bc2a40505c9e1f144c97d92ab16f79e11c504ae752a",
+            "role": "colour body to encode (lossless PNG of the kept source)"
+          }
+        ],
+        "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+        "family": "normal",
+        "body": "d2s-body-fire-target-agy-a01",
+        "proofGate": "D2S family proof"
+      },
+      "input_hash": "ee686f4b81d2bfd99e2f81a7a1bee10a2a2822ea3d30c6b4f44e24b69b7797c1",
+      "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "9ef94d97-22d2-45ca-9572-946a43b23f60",
+      "at": "2026-10-24T08:25:54.533309+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 28.75,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:26:01Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "1:1",
+            "ImageName": "normal_map_fire_target",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-fire-target-agy-a01\\Reference-1.png"
+            ],
+            "Prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF."
+          },
+          "conversation": "029d131f-e876-48b1-806f-eff6239a8560"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "31b6f1fca1d4d6f44d91aa790d96f1e1e83ea26bcc7f049eefabd9ad1510ff23",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\7325060b-9769-470d-a9f4-5bd306f35c58\\normal_map_fire_target_1792830383186.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-normal-fire-target-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-normal-fire-target-agy-a01.jpg",
+      "sha256": "31b6f1fca1d4d6f44d91aa790d96f1e1e83ea26bcc7f049eefabd9ad1510ff23",
+      "invocation_evidence": "art/providers/runs/d2s-normal-fire-target-agy-a01"
+    },
+    {
+      "id": "d2s-normal-fire-roster-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "normal-fire-roster",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "normal-fire-roster",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "1:1",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-body-fire-roster-agy-a01.png",
+            "sha256": "fe8cac24f6a61f29eec5b5151186e15172f156eda89a8f5126a815a20521bd71",
+            "role": "colour body to encode (lossless PNG of the kept source)"
+          }
+        ],
+        "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+        "family": "normal",
+        "body": "d2s-body-fire-roster-agy-a01",
+        "proofGate": "D2S family proof"
+      },
+      "input_hash": "dcd27f4d59010a12c7375cef86385b877019588eb9cf2a88caf3c73547cd777a",
+      "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "06c6f67c-9fa9-4011-bf16-00bc27d7f900",
+      "at": "2026-10-24T08:26:24.355506+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 26.813,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:26:31Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "1:1",
+            "ImageName": "normal_map_fire_roster",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-fire-roster-agy-a01\\Reference-1.png"
+            ],
+            "Prompt": "Paint a tangent-space normal map of the exact character shown in Reference-1.png. It must be pixel-aligned to Reference-1.png with the exact same framing, silhouette, scale, and pose. Follow standard tangent-space OpenGL normal map conventions: flat surfaces directly facing the viewer/camera are #8080FF lavender blue (RGB 128, 128, 255), surfaces facing right are redder (+X), surfaces facing up are greener (+Y), surfaces facing left are cyan/less red (-X), and surfaces facing down are purplish/less green (-Y). Smoothly encode the 3D surface volumes and curved contours of the hood, face, cloth folds, robes, staff, and hands as smooth normal map shading. Do not include diffuse texture colors, lighting, highlights, cast shadows, black outlines, or text. The background outside the character's silhouette must be a solid uniform flat vivid MAGENTA (#FF00FF)."
+          },
+          "conversation": "1a16589a-fcd8-4183-872f-6ab207c971c9"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "3512b23abe56d9c025c64d72386b6dd269c56464ede5e641c695acf33493ec51",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\7cbc82cf-1ae3-4459-9190-741a1f0eff02\\normal_map_fire_roster_1792830410950.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-normal-fire-roster-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-normal-fire-roster-agy-a01.jpg",
+      "sha256": "3512b23abe56d9c025c64d72386b6dd269c56464ede5e641c695acf33493ec51",
+      "invocation_evidence": "art/providers/runs/d2s-normal-fire-roster-agy-a01"
+    },
+    {
+      "id": "d2s-normal-fire-covenant-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "normal-fire-covenant",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "normal-fire-covenant",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "1:1",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-body-fire-covenant-agy-a01.png",
+            "sha256": "0e22af53ae14cca2058f2f0b8a7e0095f48f4d9250677df7d80b0a4a5d1bd6c7",
+            "role": "colour body to encode (lossless PNG of the kept source)"
+          }
+        ],
+        "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+        "family": "normal",
+        "body": "d2s-body-fire-covenant-agy-a01",
+        "proofGate": "D2S family proof"
+      },
+      "input_hash": "31803dca336251644dd95c5d4aaf1cdbc68f79ddbf7327ff54b4cf8370a5df4c",
+      "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "b26221e2-074e-440c-9b1e-2ed4dc7e3fe6",
+      "at": "2026-10-24T08:26:51.943511+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 24.141,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:26:58Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "1:1",
+            "ImageName": "normal_map",
+            "ImagePaths": [
+              "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-fire-covenant-agy-a01\\Reference-1.png"
+            ],
+            "Prompt": "A tangent-space normal map of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL tangent-space normal map convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF."
+          },
+          "conversation": "9a0bb779-15ee-4a02-97a7-9f5b3a852842"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "ce8771c809bf7aaaa572421b7f9d23459380cb973d1b204a34a9472335708511",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\219ca21d-662e-4c41-b237-f5965035dba4\\normal_map_1792830436002.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-normal-fire-covenant-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-normal-fire-covenant-agy-a01.jpg",
+      "sha256": "ce8771c809bf7aaaa572421b7f9d23459380cb973d1b204a34a9472335708511",
+      "invocation_evidence": "art/providers/runs/d2s-normal-fire-covenant-agy-a01"
     }
   ],
   "events": [
@@ -32452,6 +32885,96 @@
       "event": "error-unknown-spend",
       "id": "d2s-normal-water-target-agy-a01",
       "at": "2026-10-24T08:23:07.855037+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-normal-water-target-agy-a02",
+      "at": "2026-10-24T08:24:00.143014+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-normal-water-target-agy-a02",
+      "at": "2026-10-24T08:24:00.200792+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-normal-water-target-agy-a02",
+      "at": "2026-10-24T08:24:31.276138+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-normal-water-roster-agy-a01",
+      "at": "2026-10-24T08:24:55.319881+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-normal-water-roster-agy-a01",
+      "at": "2026-10-24T08:24:55.380474+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-normal-water-roster-agy-a01",
+      "at": "2026-10-24T08:25:23.575491+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-normal-water-covenant-agy-a01",
+      "at": "2026-10-24T08:25:24.127399+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-normal-water-covenant-agy-a01",
+      "at": "2026-10-24T08:25:24.183739+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-normal-water-covenant-agy-a01",
+      "at": "2026-10-24T08:25:53.004928+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-normal-fire-target-agy-a01",
+      "at": "2026-10-24T08:25:54.533309+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-normal-fire-target-agy-a01",
+      "at": "2026-10-24T08:25:54.612784+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-normal-fire-target-agy-a01",
+      "at": "2026-10-24T08:26:23.455590+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-normal-fire-roster-agy-a01",
+      "at": "2026-10-24T08:26:24.355506+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-normal-fire-roster-agy-a01",
+      "at": "2026-10-24T08:26:24.411075+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-normal-fire-roster-agy-a01",
+      "at": "2026-10-24T08:26:51.313168+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-normal-fire-covenant-agy-a01",
+      "at": "2026-10-24T08:26:51.943511+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-normal-fire-covenant-agy-a01",
+      "at": "2026-10-24T08:26:52.029761+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-normal-fire-covenant-agy-a01",
+      "at": "2026-10-24T08:27:16.283800+00:00"
     }
   ],
   "stop_cleared": {

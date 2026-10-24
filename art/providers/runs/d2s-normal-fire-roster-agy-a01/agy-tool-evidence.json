@@ -1,0 +1,23 @@
+{
+  "conversations": [
+    "1a16589a-fcd8-4183-872f-6ab207c971c9",
+    "7cbc82cf-1ae3-4459-9190-741a1f0eff02"
+  ],
+  "imageCalls": [
+    {
+      "at": "2026-10-24T08:26:31Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "normal_map_fire_roster",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-fire-roster-agy-a01\\Reference-1.png"
+        ],
+        "Prompt": "Paint a tangent-space normal map of the exact character shown in Reference-1.png. It must be pixel-aligned to Reference-1.png with the exact same framing, silhouette, scale, and pose. Follow standard tangent-space OpenGL normal map conventions: flat surfaces directly facing the viewer/camera are #8080FF lavender blue (RGB 128, 128, 255), surfaces facing right are redder (+X), surfaces facing up are greener (+Y), surfaces facing left are cyan/less red (-X), and surfaces facing down are purplish/less green (-Y). Smoothly encode the 3D surface volumes and curved contours of the hood, face, cloth folds, robes, staff, and hands as smooth normal map shading. Do not include diffuse texture colors, lighting, highlights, cast shadows, black outlines, or text. The background outside the character's silhouette must be a solid uniform flat vivid MAGENTA (#FF00FF)."
+      },
+      "conversation": "1a16589a-fcd8-4183-872f-6ab207c971c9"
+    }
+  ]
+}

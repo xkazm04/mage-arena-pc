@@ -1,0 +1,11 @@
+{
+  "job": "d2s-normal-water-target-agy-a02",
+  "scene": "normal-water-target",
+  "sha256": "b21eb9b32fd85334895d4fdf1b2381e0967475a7b757b61a67343f9ab2fbd0cc",
+  "verdict": "keep",
+  "note": "Painted tangent-space normal map of the kept water-target body. Silhouette aligned to the colour body: mask IoU 0.985, centroid shift under 0.02 px at 1024. Plausible OpenGL convention (up-facing green, right-facing red), folds, hood, face and droplets modelled as smooth relief. Mean inside the body (149, 142, 221) leans slightly warm against the flat 128/128/255; the build renormalizes. Background magenta overlaps pink normal directions, so the build masks with the colour body's alpha, never by keying the normal map.",
+  "rank": null,
+  "at": "2026-10-24T08:24:54.793857+00:00",
+  "method": "direct pixel inspection by the builder, side by side with the target",
+  "owner_accepted": false
+}

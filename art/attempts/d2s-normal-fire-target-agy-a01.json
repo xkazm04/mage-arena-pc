@@ -1,0 +1,72 @@
+{
+  "id": "d2s-normal-fire-target-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "normal-fire-target",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "normal-fire-target",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/d2s-body-fire-target-agy-a01.png",
+        "sha256": "d2a3a955be94b620291c2bc2a40505c9e1f144c97d92ab16f79e11c504ae752a",
+        "role": "colour body to encode (lossless PNG of the kept source)"
+      }
+    ],
+    "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+    "family": "normal",
+    "body": "d2s-body-fire-target-agy-a01",
+    "proofGate": "D2S family proof"
+  },
+  "input_hash": "ee686f4b81d2bfd99e2f81a7a1bee10a2a2822ea3d30c6b4f44e24b69b7797c1",
+  "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "9ef94d97-22d2-45ca-9572-946a43b23f60",
+  "at": "2026-10-24T08:25:54.533309+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 28.75,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:26:01Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "normal_map_fire_target",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-fire-target-agy-a01\\Reference-1.png"
+        ],
+        "Prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF."
+      },
+      "conversation": "029d131f-e876-48b1-806f-eff6239a8560"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "31b6f1fca1d4d6f44d91aa790d96f1e1e83ea26bcc7f049eefabd9ad1510ff23",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\7325060b-9769-470d-a9f4-5bd306f35c58\\normal_map_fire_target_1792830383186.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-normal-fire-target-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-normal-fire-target-agy-a01.jpg",
+  "sha256": "31b6f1fca1d4d6f44d91aa790d96f1e1e83ea26bcc7f049eefabd9ad1510ff23",
+  "invocation_evidence": "art/providers/runs/d2s-normal-fire-target-agy-a01"
+}

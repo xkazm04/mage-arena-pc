@@ -251,7 +251,10 @@ def spec_for(scene):
             palette = path.split('{floor:')[1].rstrip('}')
             floor = kept(f'plate-{palette}-floor')
             if not floor: raise RuntimeError('FLOOR_LAYER_REQUIRED_FIRST')
-            path = source(floor)
+            png = OUT / 'references' / (floor['id'] + '.png')
+            if not png.exists():
+                with Image.open(ROOT / source(floor)) as im: im.convert('RGB').save(png)
+            path = relative(png)
         refs.append(ref(path, role))
     spec = {'wave': WAVE, 'id': scene, 'pilot': True, 'providers': ['agy'], 'aspect_ratio': item['aspect_ratio'],
             'references': refs, 'prompt': item['prompt'], 'family': item['family'],
@@ -373,6 +376,22 @@ def lit(rgba, normal, lx, ly, lz, radius):
     return np.dstack([np.clip(out, 0, 1) * 255, rgba[..., 3]]).astype(np.uint8)
 
 
+def alignment(body_path, normal_path):
+    """Best integer shift between the body's alpha edges and the painted normal map's edges
+    (FFT cross-correlation), and the share of silhouette edge that lands on a normal edge."""
+    with Image.open(body_path) as b, Image.open(normal_path) as n:
+        alpha = key_magenta(b).getchannel('A').filter(ImageFilter.GaussianBlur(2))
+        normal = n.convert('RGB').resize(b.size, Image.Resampling.LANCZOS).filter(ImageFilter.GaussianBlur(2))
+    def edges(a):
+        gy, gx = np.gradient(a.astype(np.float64)); return np.hypot(gx, gy)
+    ea = edges(np.asarray(alpha)); en = sum(edges(np.asarray(normal)[..., c]) for c in range(3))
+    ea /= ea.std() + 1e-9; en /= en.std() + 1e-9
+    c = np.real(np.fft.ifft2(np.fft.fft2(ea) * np.conj(np.fft.fft2(en))))
+    dy, dx = np.unravel_index(np.argmax(c), c.shape)
+    dy = int(dy - c.shape[0]) if dy > c.shape[0] // 2 else int(dy); dx = int(dx - c.shape[1]) if dx > c.shape[1] // 2 else int(dx)
+    return {'shiftPx': [dx, dy], 'edgeAgreement': round(float((en[ea > 2] > 1).mean()), 3)}
+
+
 def cutout(job):
     with Image.open(ROOT / source(job)) as im: keyed = key_magenta(im)
     box = keyed.getchannel('A').point(lambda v: 255 if v > 24 else 0).getbbox()
@@ -420,6 +439,7 @@ def build():
                 Image.fromarray(np.dstack([np.round((pn * 0.5 + 0.5) * 255), rgba[..., 3]]).astype(np.uint8), 'RGBA').save(folder / 'normal-painted.png')
                 normals['painted'] = pn; steps += ['painted normal: resize to body source, crop to body box, renormalize, body alpha']
                 rec['normalReview'] = read(BASE / 'reviews' / (njob['id'] + '.json'))['note']
+                rec['normalAlignment'] = alignment(ROOT / source(body), ROOT / source(njob))
             # Lit proof: unlit, then a warm point light swept left to right, per normal source.
             h, w = cut.height, cut.width; rows = []
             for kind, n in normals.items():

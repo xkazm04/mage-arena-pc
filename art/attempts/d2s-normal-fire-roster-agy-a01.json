@@ -1,0 +1,72 @@
+{
+  "id": "d2s-normal-fire-roster-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "normal-fire-roster",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "normal-fire-roster",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/d2s-body-fire-roster-agy-a01.png",
+        "sha256": "fe8cac24f6a61f29eec5b5151186e15172f156eda89a8f5126a815a20521bd71",
+        "role": "colour body to encode (lossless PNG of the kept source)"
+      }
+    ],
+    "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+    "family": "normal",
+    "body": "d2s-body-fire-roster-agy-a01",
+    "proofGate": "D2S family proof"
+  },
+  "input_hash": "dcd27f4d59010a12c7375cef86385b877019588eb9cf2a88caf3c73547cd777a",
+  "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "06c6f67c-9fa9-4011-bf16-00bc27d7f900",
+  "at": "2026-10-24T08:26:24.355506+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 26.813,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:26:31Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "normal_map_fire_roster",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-fire-roster-agy-a01\\Reference-1.png"
+        ],
+        "Prompt": "Paint a tangent-space normal map of the exact character shown in Reference-1.png. It must be pixel-aligned to Reference-1.png with the exact same framing, silhouette, scale, and pose. Follow standard tangent-space OpenGL normal map conventions: flat surfaces directly facing the viewer/camera are #8080FF lavender blue (RGB 128, 128, 255), surfaces facing right are redder (+X), surfaces facing up are greener (+Y), surfaces facing left are cyan/less red (-X), and surfaces facing down are purplish/less green (-Y). Smoothly encode the 3D surface volumes and curved contours of the hood, face, cloth folds, robes, staff, and hands as smooth normal map shading. Do not include diffuse texture colors, lighting, highlights, cast shadows, black outlines, or text. The background outside the character's silhouette must be a solid uniform flat vivid MAGENTA (#FF00FF)."
+      },
+      "conversation": "1a16589a-fcd8-4183-872f-6ab207c971c9"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "3512b23abe56d9c025c64d72386b6dd269c56464ede5e641c695acf33493ec51",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\7cbc82cf-1ae3-4459-9190-741a1f0eff02\\normal_map_fire_roster_1792830410950.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-normal-fire-roster-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-normal-fire-roster-agy-a01.jpg",
+  "sha256": "3512b23abe56d9c025c64d72386b6dd269c56464ede5e641c695acf33493ec51",
+  "invocation_evidence": "art/providers/runs/d2s-normal-fire-roster-agy-a01"
+}
