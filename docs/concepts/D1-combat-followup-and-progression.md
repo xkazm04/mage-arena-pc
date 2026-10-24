@@ -59,9 +59,22 @@ enemies level once per campaign week; rivals have authored builds.
 
 ### 4.3 Campaign progression curve
 
+**Chosen design (owner ruling 2026-10-24, section 7 question 2).** Spell ranks are earned outside combat, not from Games
+results:
+- **Skill points.** Training at camp, and the other non-combat camp activities, award skill points. Training pays most.
+  The award per activity is data.
+- **Ranks in any spell.** The player spends skill points on the next rank of any spell they know: every row of their own
+  school, plus any signature a teacher has taught them. Ranks keep their meaning (1-4 power, 5 the ultimate form).
+- **Rising cost.** The next rank costs more at each rank and at each collar tier. The cost is a table (rank x tier) in a
+  PC data file, not numbers in code.
+- **Teachers.** Each school's elder teaches that school's signature spell, but only when the relationship check passes:
+  the elder's trust in the player, the camp's existing `trust` state (the one befriending, confiding and parley move),
+  is at or above a threshold. No second relationship state.
+- The rest of this table still stands.
+
 | Question | Options |
 |---|---|
-| How does the player earn **spell ranks**? | (a) points from Games results (renown or a new "insight" currency); (b) camp lessons per school, like focus training at the cistern; (c) both: Games results unlock, camp spends |
+| How does the player earn **spell ranks**? | **Chosen: skill points from training and non-combat activities, spent on ranks (above).** Not chosen: points from Games results; Games results unlock and camp spends |
 | How does the player earn **Agility**? | train at the yard on the shared points curve (as `stats.csv` implies), competing with vigor for yard time |
 | How fast? | target: by week N the average spell rank is about N-0.5 for a player who trains steadily, so they sit just under the enemy level and catch up by building well |
 | Spellbook growth | new rows join the spellbook by mastery or as Games rewards; the bolt + 4 pick stays |
@@ -496,6 +509,9 @@ and the overlay-price lever waits for an owner ruling on whether a PC price devi
    **Option A, exchange windows (the doc's recommendation; built and measured in 6.1). Director default 2026-10-24,
    owner to confirm.**
 2. Spell-rank currency: Games results, camp lessons, or both?
+   **Owner, 2026-10-24:** "non-combat game activities - people in schools can teach you if aligned with you their
+   signature spell, training gains skill points to invest in ranking of any spell, each rank and tier gets more points to
+   level up". The chosen design is in 4.3.
 3. Should a rank-5 ultimate be rare (one per build) or common late in the season?
 4. Do changes to canonical numbers (Ring unlock, Tide Ward) go to VR as change requests, or stay PC overlay deviations?
    **They stay PC overlay deviations, and each is returned to VR as a change-request proposal, never applied to VR.
