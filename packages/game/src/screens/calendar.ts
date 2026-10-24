@@ -32,7 +32,7 @@ export function calendar(s: GameShell) {
   u.panel(1350, 307, 474, 554);
   u.text("THE NEXT SUMMONS", 1382, 347, 26, colours.gold);
   u.text(
-    `Tent Trial ? ${v.day.trialHour}:00`,
+    `Tent Trial · ${v.day.trialHour}:00`,
     1382,
     406,
     40,
@@ -49,7 +49,7 @@ export function calendar(s: GameShell) {
     405,
   );
   u.text(
-    `Games at ${String(v.day.gamesHour).padStart(2, "0")}:00 ? days 7 / 14`,
+    `Games at ${String(v.day.gamesHour).padStart(2, "0")}:00 · days 7 / 14`,
     1382,
     644,
     30,

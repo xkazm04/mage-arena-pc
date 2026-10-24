@@ -114,14 +114,14 @@ export function visit(s: GameShell) {
     actions.push({
       id: "listen",
       label: "Listen at the tent flap",
-      subtitle: `${v.listeningHours} hours ? Follow the voices. Hide from the Vigil.`,
+      subtitle: `${v.listeningHours} hours · Follow the voices. Hide from the Vigil.`,
       run: () => void s.command({ type: "listen" }),
     });
   for (const m of v.parley.moments)
     actions.push({
       id: `parley-${m.target}`,
       label: `Speak with ${m.name}`,
-      subtitle: `${v.parleyHours} hours ? A Knowing gives your words weight.`,
+      subtitle: `${v.parleyHours} hours · A Knowing gives your words weight.`,
       run: () => {
         s.parleyText = "";
         s.parleyApproach = 0;
@@ -132,7 +132,7 @@ export function visit(s: GameShell) {
     actions.push({
       id: `action-${a.id}`,
       label: a.label,
-      subtitle: `${a.hours} ${a.hours === 1 ? "hour" : "hours"} ? ${a.gains}`,
+      subtitle: `${a.hours} ${a.hours === 1 ? "hour" : "hours"} · ${a.gains}`,
       run: () => void s.command({ type: "act", action: a.id }),
     });
   u.text("CHOOSE A MOMENT", 712, 314, 26, colours.gold);

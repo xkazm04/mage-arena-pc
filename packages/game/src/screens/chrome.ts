@@ -153,7 +153,7 @@ export function timeFooter(s: GameShell) {
   );
   u.text(
     v.hoursRemaining === 0
-      ? "The day is spent ? dawn awaits"
+      ? "The day is spent — dawn awaits"
       : v.hoursRemaining <= 2
         ? "Keep watch in the final hours"
         : `${v.hoursRemaining} waking hours remain`,
