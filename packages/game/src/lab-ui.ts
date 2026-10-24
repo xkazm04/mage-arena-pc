@@ -1,6 +1,6 @@
 import {
+  coupleTuningField,
   exportTuning,
-  forecastDeltas,
   importTuning,
   labReplay,
   makeTuning,
@@ -34,7 +34,10 @@ import {
   type LabSetup,
 } from "./lab-setup.ts";
 import { ForecastClient } from "./forecast-client.ts";
-import { forecastLabel, forecastPolicy } from "./forecast-job.ts";
+import { forecastLabel } from "./forecast-job.ts";
+import { buildsForecastLine, forecastHeading, forecastLines, type ForecastCell } from "./lab-forecast-view.ts";
+import { labKey, labModeOf, stopReplay, type LabHost, type LabKeyResult, type LabMode, type LabModeState } from "./lab-mode.ts";
+import { ReplayTransport } from "./replay-transport.ts";
 import {
   labSides,
   loadPicks,
@@ -61,8 +64,10 @@ import {
 } from "./lab-picks.ts";
 
 const title = (s: string) => s[0]!.toUpperCase() + s.slice(1);
-const signed = (n: number | null | undefined, digits: number, unit = "") =>
-  n === null || n === undefined ? "--" : `${Number(n.toFixed(digits)) < 0 ? "-" : "+"}${Math.abs(n).toFixed(digits)}${unit}`;
+const paint = (t: BitmapText, c: ForecastCell) => {
+  t.text = c.text;
+  t.tint = colours[c.tone];
+};
 interface ForecastTexts {
   rows: BitmapText[][];
   ttk: BitmapText;
@@ -74,6 +79,9 @@ export class LabUI {
   private page = "Movement";
   private tuningSubpage = 0;
   private draft!: LabSetup;
+  /** Which mode the Lab is in (lab-mode.ts decides what each hotkey means there). */
+  private state: LabModeState = { mode: "live", replayWasPaused: false };
+  /** The typed number while the mode is "number". */
   private numeric?: {
     text: string;
     label: string;
@@ -82,18 +90,15 @@ export class LabUI {
     apply: (n: number) => void;
     back: () => void;
   };
-  private importing = false;
   private importText = "";
   private text?: BitmapText;
   private metricsText?: BitmapText;
   private answersText?: BitmapText;
   private statusText?: BitmapText;
   private readonly lifetime = new AbortController();
-  private frames: ArenaState[] = [];
-  replayState?: ArenaState;
-  private replayPosition = 0;
-  private replayWasPaused = false;
-  private replayPaused = false;
+  /** The ring read when a replay is asked for, and the replay playing it (its shown state is derived once per move). */
+  private ring: ArenaState[] = [];
+  private replay?: { frames: ArenaState[]; transport: ReplayTransport; shown: ArenaState };
   private spellSlot = 0;
   private spellTier = 1;
   private forecastTexts?: ForecastTexts;
@@ -111,7 +116,7 @@ export class LabUI {
     window.addEventListener(
       "paste",
       (e) => {
-        if (!this.importing) return;
+        if (this.state.mode !== "import") return;
         e.preventDefault();
         this.importText = e.clipboardData?.getData("text/plain") ?? "";
         this.showImportText();
@@ -121,14 +126,14 @@ export class LabUI {
     u.app.canvas.addEventListener(
       "dragover",
       (e) => {
-        if (this.importing) e.preventDefault();
+        if (this.state.mode === "import") e.preventDefault();
       },
       { signal },
     );
     u.app.canvas.addEventListener(
       "drop",
       (e) => {
-        if (!this.importing) return;
+        if (this.state.mode !== "import") return;
         e.preventDefault();
         const file = e.dataTransfer?.files[0];
         if (!file || file.size > 64000) {
@@ -136,13 +141,17 @@ export class LabUI {
           return;
         }
         void file.text().then((text) => {
-          if (!this.importing) return;
+          if (this.state.mode !== "import") return;
           this.importText = text;
           this.showImportText();
         });
       },
       { signal },
     );
+  }
+  /** The replayed state the host renders instead of the live one, while a replay plays. */
+  get replayState(): ArenaState | undefined {
+    return this.replay?.shown;
   }
   private get lab() {
     return this.game.lab!;
@@ -158,7 +167,12 @@ export class LabUI {
     this.forecastTexts = undefined;
     this.buildsForecastText = undefined;
   }
+  /** Enter a mode; a running replay keeps its mode until it is stopped. */
+  private enter(mode: LabMode) {
+    if (!this.replay) this.state = { mode, replayWasPaused: false };
+  }
   private heading(screen: string, name: string, subtitle: string) {
+    this.enter(labModeOf(screen));
     this.clear();
     this.u.begin(screen);
     this.u.panel(72, 40, 1776, 996, "panel.modal");
@@ -167,84 +181,79 @@ export class LabUI {
     this.u.text(subtitle, 106, 165, 24, colours.muted, 1650);
     sigil(this.u, "inscription.wardstone", 1735, 120, 125, 0.7);
   }
-  private keys = (e: KeyboardEvent) => {
-    if (this.numeric || this.importing || e.repeat) return false;
-    switch (e.code) {
-      case "KeyR":
-        this.reset();
-        return true;
-      case "KeyP":
-        this.freeze();
-        this.refreshPanel();
-        return true;
-      case "Period":
-        this.step();
-        this.refreshPanel();
-        return true;
-      case "KeyG":
-        this.refill();
-        return true;
-      case "KeyH":
-        this.damage();
-        return true;
-      case "KeyT":
-        this.openTuning();
-        return true;
-      case "KeyL":
-        this.openSetup();
-        return true;
-      case "KeyV":
-        this.toggleReplay();
-        return true;
-      default:
-        return false;
+  private get host(): LabHost {
+    return {
+      paused: this.game.paused,
+      ringLength: () => (this.ring = labReplay(this.lab)).length,
+    };
+  }
+  private keys = (e: KeyboardEvent) => this.press(e.code, e.repeat);
+  /** A hotkey or its HUD button: lab-mode.ts reads it for the current mode, this carries it out. */
+  private press(code: string, repeat = false) {
+    const r = labKey(this.state, code, repeat, this.host);
+    if (r.kind === "unhandled") return false;
+    if (r.kind === "notice") this.u.notice(r.text);
+    if (r.kind === "action") this.run(r);
+    return true;
+  }
+  private run(r: Extract<LabKeyResult, { kind: "action" }>) {
+    const replay = this.replay;
+    switch (r.action) {
+      case "reset":
+        return this.reset();
+      case "pause-toggle":
+        this.game.pause(!this.game.paused);
+        return this.refreshPanel();
+      case "replay-pause-toggle":
+        if (replay) replay.transport.playing = !replay.transport.playing;
+        return this.refreshPanel();
+      case "live-step":
+        this.game.pause(true);
+        this.game.stepLabOnce();
+        return this.refreshPanel();
+      case "replay-step":
+        replay?.transport.step(1);
+        return this.refreshPanel();
+      case "refill":
+        return replenishLab(this.lab);
+      case "damage":
+        return toggleLabDamage(this.lab);
+      case "tuning":
+        return this.openTuning();
+      case "setup":
+        return this.openSetup();
+      case "builds":
+        return this.drawBuilds();
+      case "replay-start":
+        return this.beginReplay(r.next, r.pause ?? true);
+      case "replay-stop":
+        return this.endReplay(r.next, r.pause ?? false);
     }
-  };
-  private freeze() {
-    if (this.replayState) this.replayPaused = !this.replayPaused;
-    else this.game.pause(!this.game.paused);
-  }
-  private step() {
-    if (this.replayState) {
-      this.replayPaused = true;
-      this.replayPosition = Math.min(
-        this.frames.length - 1,
-        this.replayPosition + 1,
-      );
-    } else {
-      this.game.pause(true);
-      this.game.stepLabOnce();
-    }
-  }
-  private refill() {
-    if (!this.replayState) replenishLab(this.lab);
-  }
-  private damage() {
-    if (!this.replayState) toggleLabDamage(this.lab);
   }
   private refreshPanel() {
-    if (this.u.screen === "lab-tuning") this.drawTuning();
+    if (this.state.mode === "tuning") this.drawTuning();
   }
   installHUD() {
     this.forecast.cancel();
+    this.enter("live");
     this.clear();
     const u = this.u;
     u.panel(96, 168, 1728, 128);
     this.metricsText = u.text("", 132, 184, 22, colours.text, 1650);
     this.answersText = u.text("", 132, 218, 22, colours.muted, 1650);
     this.statusText = u.text("", 132, 252, 22, colours.gold, 1650);
-    const actions: [string, string, () => void][] = [
-      ["setup", "L  Setup", () => this.openSetup()],
-      ["tuning", "T  Tune", () => this.openTuning()],
-      ["reset", "R  Reset", () => this.reset()],
-      ["freeze", "P  Freeze", () => this.freeze()],
-      ["step", ".  Step", () => this.step()],
-      ["refill", "G  Refill", () => this.refill()],
-      ["damage", "H  Damage", () => this.damage()],
-      ["replay", "V  Replay", () => this.toggleReplay()],
+    const actions: [string, string, string][] = [
+      ["setup", "L  Setup", "KeyL"],
+      ["tuning", "T  Tune", "KeyT"],
+      ["reset", "R  Reset", "KeyR"],
+      ["freeze", "P  Freeze", "KeyP"],
+      ["step", ".  Step", "Period"],
+      ["refill", "G  Refill", "KeyG"],
+      ["damage", "H  Damage", "KeyH"],
+      ["replay", "V  Replay", "KeyV"],
     ];
-    actions.forEach(([id, label, action], i) =>
-      u.button(`lab-${id}`, label, 96 + i * 218, 310, 202, 64, action, {
+    actions.forEach(([id, label, code], i) =>
+      u.button(`lab-${id}`, label, 96 + i * 218, 310, 202, 64, () => this.press(code), {
         fontSize: 22,
       }),
     );
@@ -481,13 +490,7 @@ export class LabUI {
       this.start(c),
     );
     u.onBack = () => this.close();
-    u.onKey = (e) => {
-      if (e.code === "KeyB" && !e.repeat && !this.numeric && !this.importing) {
-        this.drawBuilds();
-        return true;
-      }
-      return this.keys(e);
-    };
+    u.onKey = this.keys;
     u.end("lab-config-start");
   }
   /** Start a bout on the draft; an unplayable pick stays on screen with its reason instead of throwing. */
@@ -737,15 +740,8 @@ export class LabUI {
     this.drawTuning();
   }
   private setTuning(key: TuningKey, value: number) {
-    const next = structuredClone(this.tune);
-    next[key] = value;
-    if (key === "hitStunS")
-      next.hitStunMaxS = Math.max(next.hitStunMaxS, value);
-    if (key === "hitStunMaxS") next.hitStunS = Math.min(next.hitStunS, value);
-    if (key === "rollDurationS")
-      next.rollIFramesS = Math.min(next.rollIFramesS, value);
-    if (key === "rollIFramesS")
-      next.rollIFramesS = Math.min(value, next.rollDurationS);
+    // The stun and roll pairs move together under core's rule, the one validateTuning enforces.
+    const next = coupleTuningField(this.tune, key, value);
     try {
       changeLabTuning(this.lab, next, "Custom");
       this.forecast.want(this.tune, this.lab.config);
@@ -870,7 +866,7 @@ export class LabUI {
   private forecastPanel() {
     const u = this.u,
       cols = [1336, 1446, 1534, 1620, 1694];
-    u.text("Census forecast vs Current", 1336, 612, 22, colours.gold, 440);
+    u.text(forecastHeading(), 1336, 612, 22, colours.gold, 440);
     ["Wave", "Median", "Change", "Win", "Perfect"].forEach((h, i) =>
       u.text(h, cols[i]!, 642, 18, colours.muted, 110),
     );
@@ -887,60 +883,14 @@ export class LabUI {
   }
   private showForecast() {
     const b = this.buildsForecastText;
-    if (b && this.u.screen === "lab-builds") {
-      const v = this.forecast.view,
-        duel = v.status === "done" ? v.result?.candidate.duel : undefined;
-      b.text =
-        v.status === "running"
-          ? `Forecast duel: simulating ${v.done} / ${v.total} fights`
-          : v.status === "error"
-            ? `Forecast failed: ${v.error ?? "unknown"}`.slice(0, 120)
-            : duel
-              ? `Forecast duel (you as the competence ${forecastPolicy.duelPlayerCompetence} reference AI vs this rival, ${duel.duels} seeds): win ${Math.round(duel.winRate * 100)}%   median TTK ${duel.ttkMedianS == null ? "--" : duel.ttkMedianS.toFixed(1) + " s"}`
-              : "Forecast duel: change noticed; simulating shortly";
-      b.tint = v.status === "error" ? colours.danger : duel ? colours.text : colours.muted;
-      return;
-    }
+    if (b && this.u.screen === "lab-builds") return paint(b, buildsForecastLine(this.forecast.view));
     const t = this.forecastTexts;
     if (!t || this.u.screen !== "lab-tuning") return;
-    const v = this.forecast.view,
-      r = v.result,
-      fresh = v.status === "done",
-      deltas = r ? forecastDeltas(r.current.waves, r.candidate.waves) : [],
-      ink = fresh ? colours.text : colours.muted;
-    t.rows.forEach((row, i) => {
-      const band = tiro.waves[i]!.targetDurationS,
-        d = deltas[i],
-        values = [
-          `${i + 1}  ${band[0]}-${band[1]}s`,
-          d?.medianDurationS == null ? "--" : `${d.medianDurationS.toFixed(1)}s`,
-          signed(d?.medianDeltaS, 1, "s"),
-          d ? signed(d.winRateDelta * 100, 0, "%") : "--",
-          d ? signed(d.perfectRateDelta * 100, 1, "%") : "--",
-        ];
-      row.forEach((cell, c) => {
-        cell.text = values[c]!;
-        cell.tint = c === 1 && d && !d.inBand && fresh ? colours.danger : c === 0 ? colours.muted : ink;
-      });
-    });
-    const duel = r?.candidate.duel,
-      base = r?.current.duel,
-      ttkDelta = duel?.ttkMedianS != null && base?.ttkMedianS != null ? duel.ttkMedianS - base.ttkMedianS : null,
-      dpmDelta = duel?.damagePerMana != null && base?.damagePerMana != null ? duel.damagePerMana - base.damagePerMana : null;
-    t.ttk.text = `Duel TTK ${duel?.ttkMedianS == null ? "--" : duel.ttkMedianS.toFixed(1) + "s"} (${signed(ttkDelta, 1, "s")})   win ${duel ? Math.round(duel.winRate * 100) + "%" : "--"}`;
-    t.dpm.text = `Damage / mana ${duel?.damagePerMana == null ? "--" : duel.damagePerMana.toFixed(2)} (${signed(dpmDelta, 2)})`;
-    t.ttk.tint = t.dpm.tint = ink;
-    t.status.text =
-      v.status === "waiting"
-        ? "Change noticed; simulating shortly"
-        : v.status === "running"
-          ? `Simulating ${v.done} / ${v.total} fights`
-          : v.status === "error"
-            ? `Forecast failed: ${v.error ?? "unknown"}`.slice(0, 48)
-            : r
-              ? `${r.sameAsCurrent ? "Current baseline" : "Change vs Current"} in ${((v.ms ?? 0) / 1000).toFixed(1)} s`
-              : "";
-    t.status.tint = v.status === "error" ? colours.danger : colours.muted;
+    const v = forecastLines(this.forecast.view);
+    t.rows.forEach((row, i) => row.forEach((cell, c) => paint(cell, v.rows[i]![c]!)));
+    paint(t.ttk, v.ttk);
+    paint(t.dpm, v.dpm);
+    paint(t.status, v.status);
   }
   private spellRows() {
     const u = this.u,
@@ -1045,7 +995,6 @@ export class LabUI {
   }
   private openImport() {
     this.game.pause(true);
-    this.importing = true;
     this.importText = "";
     this.heading(
       "lab-import",
@@ -1064,16 +1013,12 @@ export class LabUI {
       try {
         const set = importTuning(this.importText);
         changeLabTuning(this.lab, set.tuning, set.name);
-        this.importing = false;
         this.drawTuning();
       } catch (e) {
         this.u.notice(String(e));
       }
     };
-    const back = () => {
-      this.importing = false;
-      this.drawTuning();
-    };
+    const back = () => this.drawTuning();
     this.u.button(
       "lab-import-apply",
       "Validate and apply",
@@ -1101,46 +1046,47 @@ export class LabUI {
   }
   close() {
     this.numeric = undefined;
-    this.importing = false;
+    this.enter("live");
     this.game.hud();
     this.game.pause(false);
   }
-  toggleReplay() {
-    if (this.replayState) {
-      this.stopReplay();
-      return;
-    }
-    this.frames = labReplay(this.lab);
-    if (this.frames.length < 2) {
-      this.u.notice("Play a few moments before replaying.");
-      return;
-    }
-    this.replayWasPaused = this.game.paused;
-    this.game.pause(true);
-    this.replayPosition = 0;
-    this.replayPaused = false;
-    this.replayState = structuredClone(this.frames[0]!);
+  /** Replay the Lab's ring from its first frame; the live bout holds still underneath. */
+  private beginReplay(next: LabModeState, pause: boolean) {
+    const frames = this.ring;
+    this.ring = [];
+    this.state = next;
+    this.game.pause(pause);
+    this.replay = {
+      frames,
+      shown: structuredClone(frames[0]!),
+      transport: new ReplayTransport(0, frames.length - 1, 0, (to) => this.show(to)),
+    };
+    this.replay.transport.playing = true;
+    this.show(0);
     this.game.hud();
   }
+  /** The shown state follows the ring frame at `position`, with the live events up to its tick. */
+  private show(position: number) {
+    const r = this.replay!,
+      s = r.frames[position]!,
+      start = r.frames[0]!.tick;
+    Object.assign(r.shown, structuredClone(s));
+    r.shown.events = this.lab.training.state.events.filter(
+      (e) => e.tick >= start && e.tick <= s.tick,
+    );
+  }
+  private endReplay(next: LabModeState, pause: boolean) {
+    this.replay = undefined;
+    this.state = next;
+    this.game.pause(pause);
+  }
   stopReplay() {
-    if (!this.replayState) return;
-    this.replayState = undefined;
-    this.frames = [];
-    this.game.pause(this.replayWasPaused);
+    if (!this.replay) return;
+    const out = stopReplay(this.state);
+    this.endReplay(out.next, out.pause);
   }
   frame(dt: number) {
-    if (this.replayState) {
-      this.replayPosition = Math.min(
-        this.frames.length - 1,
-        this.replayPosition + (this.replayPaused ? 0 : dt * 60),
-      );
-      const s = this.frames[Math.floor(this.replayPosition)]!;
-      Object.assign(this.replayState, structuredClone(s));
-      const start = this.frames[0]!.tick;
-      this.replayState.events = this.lab.training.state.events.filter(
-        (e) => e.tick >= start && e.tick <= s.tick,
-      );
-    }
+    this.replay?.transport.advance(dt);
     if (this.u.screen === "arena" && this.metricsText && this.statusText) {
       const m = this.lab.metrics,
         n = m.incomingMagic;
@@ -1161,6 +1107,6 @@ export class LabUI {
   dispose() {
     this.forecast.dispose();
     this.lifetime.abort();
-    this.frames = [];
+    this.ring = [];
   }
 }
