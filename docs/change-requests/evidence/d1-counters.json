@@ -526,5 +526,486 @@
       },
       "digest": "cfa07c05d3a2ebeb992511641ce6fb9735fd20187753a0735d679d2bfd2cd2a3"
     }
-  ]
+  ],
+  "tideWardOptions": {
+    "built": "docs/change-requests/evidence/d1-tide-ward-options.patch (git apply on the commit that adds it; not kept in code)",
+    "arms": {
+      "off": {
+        "label": "today's rule, with both code paths present: every cell digest equals the reading above",
+        "evidence": "docs/change-requests/evidence/d1-counters-tw-off.json",
+        "counterRule": {
+          "tideWardHeld": false,
+          "tideWardAnswers": [
+            "beam"
+          ]
+        },
+        "tideWard": {
+          "slotted": 783,
+          "castable": 0,
+          "answered": 0,
+          "coverage": null,
+          "casts": 1,
+          "byClass": {
+            "beam": {
+              "slotted": 783,
+              "reachable": 0,
+              "answered": 0
+            }
+          }
+        },
+        "mirrorTideCells": [
+          {
+            "build": "fire_close",
+            "winRate": 0.505,
+            "medianS": 72.45,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "8437176ed414e2a86768c1d5032bebdf6b66128b48fffe415c014b72824780ec"
+          },
+          {
+            "build": "fire_light",
+            "winRate": 0.465,
+            "medianS": 55.5,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "274902f52872653d837ef0c4fda0206e91fa99f4a23776582828bc50d7b997c6"
+          },
+          {
+            "build": "fire_heavy",
+            "winRate": 0.26,
+            "medianS": 46.18333333333333,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "da8bad4f8b9b947612b4bb4798b61dae25f79ed8ccdce15fdbcc29facc5cde5a"
+          },
+          {
+            "build": "air_light",
+            "winRate": 0.65,
+            "medianS": 66.41666666666667,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "2b926ade0d2f1a53e61db4e2760d4c24dfe61a6f9824d1f4a6db484f42d17d18"
+          },
+          {
+            "build": "air_close",
+            "winRate": 0.49,
+            "medianS": 54.516666666666666,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "7b037b7e84e59172c0f8aeb43f4d3c170330e6449b5afe327dd809dd92df43d2"
+          },
+          {
+            "build": "air_heavy",
+            "winRate": 0.5,
+            "medianS": 73.5,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "cfa07c05d3a2ebeb992511641ce6fb9735fd20187753a0735d679d2bfd2cd2a3"
+          }
+        ]
+      },
+      "A": {
+        "label": "option A: from tier III on, while an enemy beam runs, the mend slot plays Tide Ward (its own numbers and line cooldown); the Water AI presses the answer ahead of a planned raise",
+        "evidence": "docs/change-requests/evidence/d1-counters-tw-held.json",
+        "counterRule": {
+          "tideWardHeld": true,
+          "tideWardAnswers": [
+            "beam"
+          ]
+        },
+        "tideWard": {
+          "slotted": 774,
+          "castable": 762,
+          "answered": 0,
+          "coverage": 0,
+          "casts": 1,
+          "byClass": {
+            "beam": {
+              "slotted": 774,
+              "reachable": 762,
+              "answered": 0
+            }
+          }
+        },
+        "mirrorTideCells": [
+          {
+            "build": "fire_close",
+            "winRate": 0.505,
+            "medianS": 72.45,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "8437176ed414e2a86768c1d5032bebdf6b66128b48fffe415c014b72824780ec"
+          },
+          {
+            "build": "fire_light",
+            "winRate": 0.465,
+            "medianS": 55.5,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "274902f52872653d837ef0c4fda0206e91fa99f4a23776582828bc50d7b997c6"
+          },
+          {
+            "build": "fire_heavy",
+            "winRate": 0.265,
+            "medianS": 46.15,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "e8fde73821a065bd472102157220f2319954495234773ea229a8545b0cee0e3b"
+          },
+          {
+            "build": "air_light",
+            "winRate": 0.65,
+            "medianS": 66.41666666666667,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "2b926ade0d2f1a53e61db4e2760d4c24dfe61a6f9824d1f4a6db484f42d17d18"
+          },
+          {
+            "build": "air_close",
+            "winRate": 0.49,
+            "medianS": 54.516666666666666,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "7b037b7e84e59172c0f8aeb43f4d3c170330e6449b5afe327dd809dd92df43d2"
+          },
+          {
+            "build": "air_heavy",
+            "winRate": 0.5,
+            "medianS": 73.4,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "d47a9f3cea4d7717d5b465e79cf7fd8718c35857eade9148e76324b1a41f994e"
+          }
+        ]
+      },
+      "B_projectile": {
+        "label": "option B: Tide Ward also answers projectiles (the second class with the most blows); same answer-first press",
+        "evidence": "docs/change-requests/evidence/d1-counters-tw-projectile.json",
+        "counterRule": {
+          "tideWardHeld": false,
+          "tideWardAnswers": [
+            "beam",
+            "projectile"
+          ]
+        },
+        "tideWard": {
+          "slotted": 92895,
+          "castable": 23169,
+          "answered": 6,
+          "coverage": 0.00025896672277612325,
+          "casts": 2,
+          "byClass": {
+            "projectile": {
+              "slotted": 92118,
+              "reachable": 23169,
+              "answered": 6
+            },
+            "beam": {
+              "slotted": 777,
+              "reachable": 0,
+              "answered": 0
+            }
+          }
+        },
+        "mirrorTideCells": [
+          {
+            "build": "fire_close",
+            "winRate": 0.505,
+            "medianS": 72.45,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "8437176ed414e2a86768c1d5032bebdf6b66128b48fffe415c014b72824780ec"
+          },
+          {
+            "build": "fire_light",
+            "winRate": 0.465,
+            "medianS": 55.5,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "274902f52872653d837ef0c4fda0206e91fa99f4a23776582828bc50d7b997c6"
+          },
+          {
+            "build": "fire_heavy",
+            "winRate": 0.26,
+            "medianS": 46.18333333333333,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "da8bad4f8b9b947612b4bb4798b61dae25f79ed8ccdce15fdbcc29facc5cde5a"
+          },
+          {
+            "build": "air_light",
+            "winRate": 0.65,
+            "medianS": 66.41666666666667,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "2b926ade0d2f1a53e61db4e2760d4c24dfe61a6f9824d1f4a6db484f42d17d18"
+          },
+          {
+            "build": "air_close",
+            "winRate": 0.49,
+            "medianS": 54.516666666666666,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "7b037b7e84e59172c0f8aeb43f4d3c170330e6449b5afe327dd809dd92df43d2"
+          },
+          {
+            "build": "air_heavy",
+            "winRate": 0.495,
+            "medianS": 73.4,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "fb649d768874b10de6ea3d14d51b0397401dd2c63b9fdc289c3439bdad8c03a5"
+          }
+        ]
+      },
+      "B_close": {
+        "label": "option B with close as the second class",
+        "evidence": "docs/change-requests/evidence/d1-counters-tw-close.json",
+        "counterRule": {
+          "tideWardHeld": false,
+          "tideWardAnswers": [
+            "beam",
+            "close"
+          ]
+        },
+        "tideWard": {
+          "slotted": 5318,
+          "castable": 897,
+          "answered": 1,
+          "coverage": 0.0011148272017837235,
+          "casts": 1,
+          "byClass": {
+            "close": {
+              "slotted": 4535,
+              "reachable": 897,
+              "answered": 1
+            },
+            "beam": {
+              "slotted": 783,
+              "reachable": 0,
+              "answered": 0
+            }
+          }
+        },
+        "mirrorTideCells": [
+          {
+            "build": "fire_close",
+            "winRate": 0.505,
+            "medianS": 72.45,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "8437176ed414e2a86768c1d5032bebdf6b66128b48fffe415c014b72824780ec"
+          },
+          {
+            "build": "fire_light",
+            "winRate": 0.465,
+            "medianS": 55.5,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "274902f52872653d837ef0c4fda0206e91fa99f4a23776582828bc50d7b997c6"
+          },
+          {
+            "build": "fire_heavy",
+            "winRate": 0.26,
+            "medianS": 46.18333333333333,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "da8bad4f8b9b947612b4bb4798b61dae25f79ed8ccdce15fdbcc29facc5cde5a"
+          },
+          {
+            "build": "air_light",
+            "winRate": 0.65,
+            "medianS": 66.41666666666667,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "2b926ade0d2f1a53e61db4e2760d4c24dfe61a6f9824d1f4a6db484f42d17d18"
+          },
+          {
+            "build": "air_close",
+            "winRate": 0.49,
+            "medianS": 54.516666666666666,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "7b037b7e84e59172c0f8aeb43f4d3c170330e6449b5afe327dd809dd92df43d2"
+          },
+          {
+            "build": "air_heavy",
+            "winRate": 0.5,
+            "medianS": 73.5,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "cfa07c05d3a2ebeb992511641ce6fb9735fd20187753a0735d679d2bfd2cd2a3"
+          }
+        ]
+      },
+      "B_line": {
+        "label": "option B with line as the second class",
+        "evidence": "docs/change-requests/evidence/d1-counters-tw-line.json",
+        "counterRule": {
+          "tideWardHeld": false,
+          "tideWardAnswers": [
+            "beam",
+            "line"
+          ]
+        },
+        "tideWard": {
+          "slotted": 1476,
+          "castable": 457,
+          "answered": 0,
+          "coverage": 0,
+          "casts": 1,
+          "byClass": {
+            "line": {
+              "slotted": 693,
+              "reachable": 457,
+              "answered": 0
+            },
+            "beam": {
+              "slotted": 783,
+              "reachable": 0,
+              "answered": 0
+            }
+          }
+        },
+        "mirrorTideCells": [
+          {
+            "build": "fire_close",
+            "winRate": 0.505,
+            "medianS": 72.45,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "8437176ed414e2a86768c1d5032bebdf6b66128b48fffe415c014b72824780ec"
+          },
+          {
+            "build": "fire_light",
+            "winRate": 0.465,
+            "medianS": 55.5,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "274902f52872653d837ef0c4fda0206e91fa99f4a23776582828bc50d7b997c6"
+          },
+          {
+            "build": "fire_heavy",
+            "winRate": 0.26,
+            "medianS": 46.18333333333333,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "da8bad4f8b9b947612b4bb4798b61dae25f79ed8ccdce15fdbcc29facc5cde5a"
+          },
+          {
+            "build": "air_light",
+            "winRate": 0.65,
+            "medianS": 66.41666666666667,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "2b926ade0d2f1a53e61db4e2760d4c24dfe61a6f9824d1f4a6db484f42d17d18"
+          },
+          {
+            "build": "air_close",
+            "winRate": 0.49,
+            "medianS": 54.516666666666666,
+            "targetDurationS": [
+              45,
+              75
+            ],
+            "digest": "7b037b7e84e59172c0f8aeb43f4d3c170330e6449b5afe327dd809dd92df43d2"
+          },
+          {
+            "build": "air_heavy",
+            "winRate": 0.5,
+            "medianS": 73.5,
+            "targetDurationS": [
+              45,
+              80
+            ],
+            "digest": "cfa07c05d3a2ebeb992511641ce6fb9735fd20187753a0735d679d2bfd2cd2a3"
+          }
+        ]
+      }
+    },
+    "manaProbe": {
+      "about": "At the start of each aimed beam on the Mirror tide reference (option A planted), 200 seeds: could it afford Tide Ward, and was the mend line off cooldown?",
+      "script": "packages/core/scripts/tide-ward-probe.ts (in the patch)",
+      "tideWardMana": 15,
+      "seeds": 200,
+      "fire_heavy": {
+        "beams": 130,
+        "affordable": 64,
+        "mendLineFree": 32,
+        "both": 0,
+        "medianMana": 13.599999999999994
+      },
+      "air_close": {
+        "beams": 25,
+        "affordable": 0,
+        "mendLineFree": 0,
+        "both": 0,
+        "medianMana": 4.599999999999994
+      },
+      "air_heavy": {
+        "beams": 877,
+        "affordable": 50,
+        "mendLineFree": 305,
+        "both": 0,
+        "medianMana": 3.25
+      }
+    },
+    "verdict": "declined: neither option lifts Tide Ward coverage (A 0.0% of 762 castable beams, B 0.03% of 23169 castable projectiles) against the proposed N = 50%. The reference never holds Tide Ward mana (15) with its mend line free when a beam starts (0 of 1032). Both arms leave every Mirror tide cell where it was (fire_heavy 26.0% -> 26.5% / 26.0%, below the band in every arm). Kept: neither."
+  }
 }

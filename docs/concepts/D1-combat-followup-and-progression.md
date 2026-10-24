@@ -292,6 +292,45 @@ its class it can never cast against (castable 0 while slotted > 0) fails the tar
 
 Today Air Form meets the target. Ring of Cinders and Tide Ward do not.
 
+**Tide Ward: both 4.2 options built and measured, neither kept.** Both were built as PC-only code driven by an overlay
+block (`counters` in `school-balance.pc.json`, read by a new `arena/counters.ts`). Each was measured with the same reader,
+200 seeds per cell; `census:counters -- --tide-ward <arm>` plants an arm for one run. Evidence: the `tideWardOptions` block
+of `d1-counters.json` and `d1-counters-tw-{off,held,projectile,close,line}.json`. The code is kept as
+`docs/change-requests/evidence/d1-tide-ward-options.patch` (it applies with `git apply` on the commit that adds it), not
+in the tree.
+- **A, the answer moves to a row Water has early (`held`).** From tier III on, while an enemy beam runs, the mend slot plays
+  Tide Ward with its own numbers and the line's cooldown.
+- **B, a second answer class.** A Water defender facing a build also casts Tide Ward at the second class: projectiles
+  (the class with the most blows), close or line.
+- In both arms the Water AI presses a castable Tide Ward ahead of a planned raise, as a build's plan answers first.
+  Without this, the raise takes every gap between a beam's ticks.
+- With both code paths in place and the rule off, all 16 cell digests equal the reading above.
+
+| Arm | Tide Ward blows of its classes (slotted) | Castable | Answered | Coverage | Casts | Mirror tide cells that moved |
+|---|---|---|---|---|---|---|
+| today (off) | 783 beam | 0 | 0 | none castable | 1 | none (all 16 digests equal) |
+| **A** held | 774 beam | **762** | 0 | **0.0%** | 1 | fire_heavy 26.0% -> 26.5% (46.2 -> 46.1 s); air_heavy 73.5 -> 73.4 s |
+| **B** + projectile | 92895 (92118 projectile) | 23169 | 6 | **0.03%** | 2 | air_heavy 50.0% -> 49.5% |
+| B + close | 5318 | 897 | 1 | 0.1% | 1 | none |
+| B + line | 1476 | 457 | 0 | 0.0% | 1 | none |
+
+**Why neither lifts coverage.** A fixes the tier gap: 762 of 774 beam blows become castable. But Tide Ward is still
+cast once in all 1400 holder fights. A probe (`tide-ward-probe.ts`, in the patch; 200 seeds per beam build, A planted)
+read the reference at the start of each aimed beam. Over 1032 beam starts, it **never** had both:
+- Tide Ward's 15 mana: it had it at 114 starts, with a median of 3.3 mana against air_heavy and 13.6 against fire_heavy;
+- the mend line off cooldown: it was free at 337 starts. Spring and Font share the line, and Font's cooldown is 30 s.
+
+The reference spends its pool on Rain Needles down to 3-6 mana, so under B it cannot afford Tide Ward at tier II either.
+The beam answer is therefore blocked by mana and by the shared line cooldown, not only by the collar tier. A data move
+cannot unblock it. It needs a Water plan that banks Tide Ward's mana when it faces a beam build, or a cheaper Tide Ward
+row (a canonical number, so a VR change request). Both are 4.2 follow-ups.
+
+**Bands.** Neither arm moves a Mirror tide cell by more than 0.5 points or 0.1 s, so neither breaks a band. One cell is
+outside its band in every arm, today's included: Mirror tide against fire_heavy wins 26.0%. That is the supplement
+preset's own reading, not an effect of either arm. **Verdict: both declined, neither kept.** No game code, overlay key or
+canonical number changes, so there is nothing to return to VR and no CR-009. Goldens, the default census digests and
+CR-002/CR-007 are untouched: this step changes no code.
+
 ## 7. Open questions for the spark
 
 1. Which close-duel option (A-E) fits the feel the owner wants: trading blows, dancing in and out, or guard breaks?
