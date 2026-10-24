@@ -131,9 +131,11 @@ settings.
    them; a test pins the mirror to `arena/schools.ts`.
    - Not in this slice:
      - the meter at the opponent's feet (arena scene);
-     - Digit5 and wheel or bumper access to the fifth slot (`input.ts`; mouse clicks reach it today);
      - the bolt + 4 composition screen for practice entry (W8 lane P);
      - the rival's phase gems.
+   - Landed after the slice (`4635100`, test `packages/game/src/input.test.ts`): Digit5, the wheel and the bumpers reach
+     the fifth slot. `arenaHud` sets `ArenaInput.slotCount` from `slotCount(school)`: 5 for a Fire or Air bolt + 4
+     layout, 4 for Water, whose input is unchanged. Digit5 does nothing with four slots. The settings hint reads 1-5.
 3. **Settings and widescreen (4.4)** (`5315373`, `d4b8868`, `c4a5931`, `ed1bee6`).
    - `packages/game/src/settings/`: one versioned settings object (UI scale 0.75 to 1.5, window mode through the
      Fullscreen API, graphics tier, reduced motion) in the single `mage-settings` key, with load, validate, migrate and
@@ -176,9 +178,9 @@ settings.
      `0d2e5f8`, the procedural cinder hound that now has A10 pages, and the 300 MiB texture budget, measured 387 MiB,
      raised to 400 as a stopgap). `u4-browser.ts` passes.
    - Still open:
-     - `smoke:u3` and the `u4-tour.ts` half of `smoke:u4` stop in the first Tiro bout with a render error ("Cannot read
-       properties of null (reading 'addressModeU')"). Bisected to `139281e` (arena preload gate; `04b48fc` passes, `139281e`
-       fails), so it predates this work and D3. The destroyed source is the 390x390 page of `inscription.collar`, still bound
-       by a sprite. A lease held from `hud/` or from `ui/artwork.ts` `sigil()` did not cure it, so the other owner of that
-       sprite is elsewhere (suspect `rival-collar-view.ts`, which shares the page without a lease).
-     - `art-fixture.ts` still emits the old "cast" event kind.
+     - Nothing from the old list is open. `smoke:u3` and the `u4-tour.ts` half of `smoke:u4` used to stop in the first Tiro
+       bout with "Cannot read properties of null (reading 'addressModeU')". The cause was holders of the
+       `inscription.collar` page without their own lease. Fixed by `742b0bb` (`sigil()` and `RivalCollarView` each lease
+       `inscription.collar`) and `d7e776a` (`art-fixture.ts` emits `release`, and `smoke:u4` checks the cast effect
+       again). The follow-on "Arena checkpoint mismatch" was fixed by `17cb830` (fdlibm, engine-independent trig).
+       After `17cb830`, `smoke:u3` (26 screens) and `u4-tour` (88 screens) PASS on main.
