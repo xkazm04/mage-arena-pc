@@ -28,6 +28,10 @@ Review: `docs/audio/audition/r4/index.html` and `docs/audio/PROOF-REPORT.html`. 
 
 `rounds.json` holds one row per owner-authorized wave: cap ceiling, account floor, minimum reserve, output dir, launcher kind (`brief` for `elevenlabs.mjs`, `composition` for a dedicated launcher), music limits and the report builder/checker that `build-reports.py` and `check-reports.py` dispatch to. `budget()` refuses an unregistered wave and any budget above its row; `rounds.test.mjs` pins every existing row, so raising a ceiling is a reviewed policy change, never a silent edit. `settle.mjs` is the one postflight: settlement-read schedule, observed deltas (reset-aware for composition rounds) and debit = max(estimate, deltas, header), shared by `elevenlabs.mjs` and `run-r4.mjs`. A new round is one reviewed row plus its plan; closed rounds keep their scripts. Offline proof: `node --test tools/audio/*.test.mjs`.
 
+## Owner verdicts
+
+A triage page's **Copy Markdown** export is recorded with `node tools/audio/choices.mjs ingest -` (paste) or `ingest <file>`. Every sample id must exist in that round's ledger rows or plan references, or nothing is written; re-ingesting is a no-op and a changed pick keeps the earlier one in `history`. `docs/audio/choices.json` is the structured record: it starts from the round-1 table in CHOICES.md; round 2 exists only as prose there and is not transcribed. `choices.mjs status` prints pending/picked/kept per round from each audition page's cards, `kept` lists the keep sample ids by round (a list import-kept.py's PICKS can be checked against), and `render <round>` regenerates the CHOICES.md table. Nothing is inferred: only exported owner rows get in.
+
 ## Historical handoff: AU2b / session 3
 
 AU2b is now **closed-owner-review**: 13 new files, 2,325/3,000 conservative credits, 675 unused; final observed shared balance 16,089. The hard floor for this round is **13,000** and reserve **8,000**. AU2's closed 4,995/5,000 budget and state are preserved in `docs/audio/evidence/r2-final`; the combined ledger remains append-only. The previous 14,000 floor below describes historical AU2, not AU2b.

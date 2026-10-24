@@ -66,7 +66,7 @@
     let copied = false;
     try { if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(output.value); copied = true; } } catch {}
     if (!copied) { try { copied = document.execCommand('copy'); } catch {} }
-    message(copied ? 'Markdown copied. Paste into docs/audio/CHOICES.md.' : 'Markdown is selected below. Press Ctrl+C or use your browser copy command.');
+    message(copied ? 'Markdown copied. Record it with: node tools/audio/choices.mjs ingest - (paste, then Ctrl+D/Ctrl+Z).' : 'Markdown is selected below. Press Ctrl+C or use your browser copy command.');
   });
   document.getElementById('refresh-export')?.addEventListener('click', () => { document.getElementById('export').value = exportText(); });
   if (!storageOk) message('Browser storage unavailable. Export your notes before closing.');
