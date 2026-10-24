@@ -117,6 +117,43 @@ async function openCamp(p: Page) {
   await p.mouse.move(8, 8);
   await p.waitForTimeout(400);
 }
+/** The arena from the training route: the bout screen with its HUD built and the art settled. */
+async function openArena(p: Page) {
+  await p.goto(`${base}/training?harness=1`);
+  await screen(p, "training");
+  await click(p, "training-magic", "composition");
+  await click(p, "composition-start", "arena");
+  await p.waitForFunction(
+    () => (window as unknown as Win).__ui.snapshot().art.pending === 0,
+  );
+  await p.mouse.move(8, 8);
+  await p.waitForTimeout(1200);
+}
+/** Text and buttons of the current screen that fall outside the viewport. */
+function outsideViewport(
+  s: Awaited<ReturnType<typeof ui>>,
+  w: number,
+  h: number,
+) {
+  const out: string[] = [];
+  for (const t of s.texts) {
+    if (!t.text) continue;
+    const x = s.layout.x + t.x * s.layout.scale,
+      y = s.layout.y + t.y * s.layout.scale;
+    if (
+      x < 0 ||
+      y < 0 ||
+      x + t.w * s.layout.scale > w + 1 ||
+      y + t.h * s.layout.scale > h + 1
+    )
+      out.push(`text "${t.text}"`);
+  }
+  for (const b of s.buttons)
+    // Snapshot buttons are already in screen pixels.
+    if (b.x < 0 || b.y < 0 || b.x + b.w > w + 1 || b.y + b.h > h + 1)
+      out.push(`button ${b.id}`);
+  return out;
+}
 try {
   for (let i = 0; i < 100; i++) {
     if (server.exitCode !== null) throw Error(serverLog);
@@ -175,6 +212,78 @@ try {
     });
     await context.close();
   }
+  // The arena stage and its HUD: live pixels on both side strips and no HUD element outside the viewport, at each size
+  // and after a window resize inside the bout.
+  const arenaResults: unknown[] = [];
+  for (const [name, width, height] of [
+    ["1080p", 1920, 1080],
+    ["1440p", 2560, 1440],
+    ["21x9", 3440, 1440],
+  ] as const) {
+    const context = await browser.newContext({
+      viewport: { width, height },
+      deviceScaleFactor: 1,
+    });
+    const p = (current = await context.newPage());
+    p.on("pageerror", (e) => errors.push(String(e)));
+    await openArena(p);
+    const s = await ui(p);
+    const png = await p.screenshot({
+      path: join(out, "screens", `${name}-arena.png`),
+    });
+    const left = await stripLive(p, png, "left"),
+      right = await stripLive(p, png, "right");
+    assert(left > 0.9, `${name} arena: left edge is a letterbox bar (${left})`);
+    assert(
+      right > 0.9,
+      `${name} arena: right edge is a letterbox bar (${right})`,
+    );
+    assert.deepEqual(
+      outsideViewport(s, width, height),
+      [],
+      `${name} arena: HUD outside the viewport`,
+    );
+    arenaResults.push({
+      name,
+      width,
+      height,
+      edges: s.layout.edges,
+      leftLive: left,
+      rightLive: right,
+      hud: s.texts.length,
+    });
+    if (name === "1080p") {
+      // Widen the window inside the bout: the HUD must re-anchor to the new edges.
+      await p.setViewportSize({ width: 3440, height: 1440 });
+      await p.waitForTimeout(600);
+      const w = await ui(p);
+      const png2 = await p.screenshot({
+        path: join(out, "screens", "1080p-to-21x9-arena.png"),
+      });
+      assert.deepEqual(
+        outsideViewport(w, 3440, 1440),
+        [],
+        "resized arena: HUD outside the viewport",
+      );
+      assert(
+        w.layout.edges.right > 2200,
+        `resized arena: edges did not follow (${w.layout.edges.right})`,
+      );
+      const pause = w.buttons.find((b) => b.id === "pause")!;
+      assert(
+        Math.abs(pause.x + pause.w - (3440 - 96 * w.layout.scale)) < 2,
+        "resized arena: Pause stays on the right edge",
+      );
+      arenaResults.push({
+        name: "1080p-to-21x9",
+        edges: w.layout.edges,
+        leftLive: await stripLive(p, png2, "left"),
+        rightLive: await stripLive(p, png2, "right"),
+      });
+    }
+    await context.close();
+  }
+  results.push({ arena: arenaResults });
   // A setting survives a restart (a full page reload).
   const context = await browser.newContext({
     viewport: { width: 1920, height: 1080 },

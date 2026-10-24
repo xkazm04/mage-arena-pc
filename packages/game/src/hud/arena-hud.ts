@@ -39,6 +39,7 @@ import {
   slotView,
 } from "./school-hud.ts";
 import { runeMeter } from "./rune-meter.ts";
+import { hudAnchors } from "./hud-anchors.ts";
 
 /** What the HUD reads from (and the few HUD fields it writes back to) the arena game. */
 export interface HudHost {
@@ -72,9 +73,7 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
     school = hudSchool(p);
   u.begin("arena");
   u.onBack = game.settings;
-  // Corner clusters sit against the real screen edges: dl moves a left-edge item out, dr a right-edge item. Both are 0 at 16:9.
-  const dl = u.edges.left,
-    dr = u.edges.right - 1920;
+  const { dl, dr } = hudAnchors(u.edges);
   u.text(
     game.practice
       ? `PRACTICE  /  BOUT ${(game.games?.wave ?? 0) + 1} TAKEN OVER  /  NOTHING IS SENT, SAVED OR PAID`

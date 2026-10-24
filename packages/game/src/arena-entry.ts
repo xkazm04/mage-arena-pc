@@ -1,4 +1,5 @@
 import { arenaHud } from "./hud/arena-hud.ts";
+import { edgeKey } from "./hud/hud-anchors.ts";
 import { ImpactClock } from "./combat-feedback.ts";
 import { LabUI } from "./lab-ui.ts";
 import { createLabSetup, type LabSetup, type LabSession } from "./lab-setup.ts";
@@ -131,6 +132,7 @@ export class ArenaGame {
   private reference = false;
   private hudUpdate: () => void = () => {};
   private lastPhase = "";
+  private hudEdges = "";
   private previousSlot = 0;
   private disposed = false;
   private frames: number[] = [];
@@ -909,6 +911,7 @@ export class ArenaGame {
     this.hud();
   }
   hud() {
+    this.hudEdges = edgeKey(this.ui.edges);
     this.hudUpdate = arenaHud(this.ui, this);
     if (this.lab) this.labUI?.installHUD();
     this.ui.end();
@@ -927,6 +930,9 @@ export class ArenaGame {
         this.camera.centre,
         this.camera.zoom,
       );
+    // The HUD is built against the viewport edges; a window resize or UI scale change re-anchors it.
+    if (this.ui.screen === "arena" && this.hudEdges !== edgeKey(this.ui.edges))
+      this.hud();
     this.prefetchNext();
     const loading = this.gate.loading;
     this.ui.world.visible = !loading;
