@@ -47,8 +47,8 @@ One JSON object per file, extension `.vector.json`. Format id `mage-arena-vector
 | `seed` | uint32 | Arena seed (`createGames(seed, ...)` / `TryCreateGames`). |
 | `wave` | int | Tiro start wave, 0-based (0 soldiers, 1 creatures, 2 and 3 mage duels). |
 | `schoolRivals` | `null` \| `"fire"` \| `"air"` \| `"named"` | The Games school-rivals mode. `null` is the Water proxies. |
-| `difficulty` | `null` \| `"easy"` \| `"normal"` \| `"hard"` | PC pace (feel.json `pace`: the player at 1.5x, opponents by difficulty). `null` is unpaced, every actor at 1x, which is how VR runs: **VR records `null`**. PC applies `null` by lifting the pace right after the Games is created, before tick 1. |
-| `balance` | `"canonical"` \| `"pc"` | `canonical` plays VR's numbers (PC sets `ArenaState.balance = 'canonical'` right after the Games is created, before tick 1; it ignores `school-balance.pc.json`). VR always records `canonical`. |
+| `difficulty` | `null` \| `"easy"` \| `"normal"` \| `"hard"` | PC pace (feel.json `pace`: the player at 1.5x, opponents by difficulty). `null` is unpaced, every actor at 1x, which is how VR runs: **VR records `null`**. PC applies `null` through the `unpaced` createGames option (`harness.mjs` `createBout`): no actor is ever paced. |
+| `balance` | `"canonical"` \| `"pc"` | `canonical` plays VR's numbers (PC passes the `balance: 'canonical'` createGames option; it ignores `school-balance.pc.json`). VR always records `canonical`. |
 | `preset` | string | The player's Water composition by preset name (`presets` / `KernelData().Presets`). |
 | `referencePlayer` | bool | The player runs the reference mage AI (`runtime.games.referenceCompetence`). Recorded inputs then overlay it. |
 | `autoAdvance` | bool, optional | When a step ends in `intermission`, advance to the next wave at once (as the conformance `tiro-sequence` vector does). Default `false`. |

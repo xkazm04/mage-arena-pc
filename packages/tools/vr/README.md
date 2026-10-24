@@ -17,6 +17,10 @@ Files:
   oracle's snapshot export and tolerance copied from `apps/vr/tools/conformance/oracle.mjs`. No VR code is
   imported at run time. One adapter: PC replaced the actor's boolean `down` with the `DEFEATED` tag, and the replay
   reads either form.
+- `harness.mjs`: what both replayers share: `createBout` (a Games bout through createGames options only; difficulty
+  `null` is unpaced, as VR and the pinned kernel run, so VR's games conformance vectors replay unpaced too), `compare`
+  with a field policy per format (`POLICY.conformance`, `POLICY.reverse`), the one first-difference record
+  `{tick, when, path, expected, actual, detail}` and `renderDiff`, its one-line form. A new vector format adapts onto these.
 - `drift.mjs`, `tuning-return.mjs`, `vectors.mjs`: the three commands.
 - `vectors/water-hand.vector.json`: the hand-authored Water reverse vector (inputs and checkpoint ticks by hand,
   values recorded from the PC kernel).

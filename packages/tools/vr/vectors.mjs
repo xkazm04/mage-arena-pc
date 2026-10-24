@@ -3,16 +3,16 @@
 //   npm run vr:vectors [-- <file|dir> ...] [--json]
 //   node packages/tools/vr/vectors.mjs --record <skeleton.json> [--out <file>]
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, URL } from 'node:url';
-import { close, isDown, loadKernel, TOLERANCE } from './conformance.mjs';
+import { isDown, loadKernel } from './conformance.mjs';
+import { cliMain, compare, createBout as harnessBout, makeDiff, POLICY, renderDiff } from './harness.mjs';
 
 const jsonClone = (value) => JSON.parse(JSON.stringify(value));
 
 export const FORMAT = 'mage-arena-vector-1';
 export const DEFAULT_DIR = fileURLToPath(new URL('./vectors/', import.meta.url));
-const POS_ABS = 1e-6;
 const INPUT_KEYS = ['move', 'aim', 'slot', 'cast', 'absorb', 'roll', 'sprint'];
 
 /** Structural checks; a vector that breaks the format is refused before any tick runs. */
@@ -44,20 +44,8 @@ export function vectorProblems(v) {
   return p;
 }
 
-function createBout(k, setup) {
-  const preset = k.presets.find((c) => c.name === setup.preset);
-  if (!preset) throw new Error(`unknown preset ${setup.preset}`);
-  const options = setup.schoolRivals ? { schoolRivals: setup.schoolRivals } : {};
-  const games = k.createGames(setup.seed, preset, setup.wave, setup.referencePlayer, undefined, undefined, setup.difficulty ?? undefined, options);
-  if (setup.difficulty === null) {
-    // Unpaced, as VR runs (VR has no pace): createGames always paces, so the pace is lifted before tick 1. Later
-    // spawns read state.difficulty, which is gone, so they are unpaced too. (Request: an unpaced createGames option.)
-    delete games.state.difficulty;
-    for (const a of games.state.actors) delete a.pace;
-  }
-  if (setup.balance === 'canonical') games.state.balance = 'canonical';
-  return games;
-}
+// A vector setup as a harness bout: `difficulty` null is unpaced (as VR runs), `balance` canonical plays VR's numbers.
+const createBout = (k, setup) => harnessBout(k, { ...setup, startWave: setup.wave });
 
 const round6 = (n) => Math.round(n * 1e6) / 1e6;
 
@@ -95,38 +83,31 @@ function run(k, v, visit) {
   }
 }
 
-function compareNumber(field, expected, actual) {
-  if (typeof expected !== 'number' || typeof actual !== 'number') return expected === actual;
-  if (field === 'x' || field === 'y') return Math.abs(expected - actual) <= POS_ABS;
-  if (Number.isInteger(expected) && Number.isInteger(actual)) return expected === actual;
-  return close(actual, expected, TOLERANCE);
-}
+const CHECKPOINT_KEYS = ['tick', 'phase', 'wave', 'actors', 'events'];
+const ACTOR_KEYS = ['id', 'team', 'hp', 'mana', 'stamina', 'x', 'y', 'school', 'down'];
+const pick = (obj, keys) => Object.fromEntries(keys.filter((key) => obj[key] !== undefined).map((key) => [key, obj[key]]));
 
-/** First mismatch between a vector checkpoint and the PC outcome at that tick, or null. */
+/**
+ * First mismatch between a vector checkpoint and the PC outcome at that tick, or null: harness.compare with the reverse
+ * policy over the fields VECTORS.md defines, in its order (tick, phase, wave, actors, events).
+ */
 export function checkpointMismatch(expected, actual) {
-  const at = (path, e, a) => ({ path, expected: e, actual: a });
-  for (const key of ['tick', 'phase', 'wave']) if (expected[key] !== undefined && expected[key] !== actual[key]) return at(key, expected[key], actual[key]);
-  if (expected.actors) {
-    if (expected.actors.length !== actual.actors.length) return at('actors.length', expected.actors.length, actual.actors.length);
-    for (let i = 0; i < expected.actors.length; i++) {
-      const e = expected.actors[i], a = actual.actors[i];
-      for (const field of ['id', 'team', 'hp', 'mana', 'stamina', 'x', 'y', 'school', 'down']) {
-        if (!(field in e)) continue;
-        const ok = e[field] === null || typeof e[field] === 'boolean' ? e[field] === a[field] : compareNumber(field, e[field], a[field]);
-        if (!ok) return at(`actors[${i}].${field}`, e[field], a[field]);
-      }
-    }
-  }
-  for (const [kind, count] of Object.entries(expected.events ?? {})) {
-    if (actual.events[kind] !== count) return at(`events.${kind}`, count, actual.events[kind]);
-  }
-  return null;
+  const fields = pick(expected, CHECKPOINT_KEYS);
+  if (Array.isArray(fields.actors)) fields.actors = fields.actors.map((e) => pick(e, ACTOR_KEYS));
+  const d = compare(fields, actual, POLICY.reverse);
+  return d && { path: d.path, expected: d.expected, actual: d.actual };
 }
 
-/** Replays one vector. Returns { name, pass, mismatch: { tick, path, expected, actual } | null, problems }. */
+const show = (x) => JSON.stringify(x);
+const toDiff = (m) => makeDiff({ tick: m.tick, when: `(checkpoint ${m.checkpoint})`, path: m.path, expected: m.expected, actual: m.actual, detail: `vector ${show(m.expected)} PC ${show(m.actual)}` });
+
+/**
+ * Replays one vector. Returns { name, pass, mismatch: { tick, checkpoint, path, expected, actual } | null, diff, problems }:
+ * `diff` is the mismatch as the harness Diff record.
+ */
 export function replayVector(k, v) {
   const problems = vectorProblems(v);
-  const result = { name: v?.name ?? '(unnamed)', pass: false, mismatch: null, problems };
+  const result = { name: v?.name ?? '(unnamed)', pass: false, mismatch: null, diff: null, problems };
   if (problems.length) return result;
   try {
     let reached = 0;
@@ -148,6 +129,7 @@ export function replayVector(k, v) {
   } catch (err) {
     result.mismatch = { tick: null, checkpoint: null, path: 'kernel', expected: null, actual: err?.message ?? String(err) };
   }
+  if (result.mismatch) result.diff = toDiff(result.mismatch);
   return result;
 }
 
@@ -169,12 +151,10 @@ export function vectorFiles(paths) {
     : [p]));
 }
 
-const show = (x) => JSON.stringify(x);
 export function renderResult(file, r) {
   if (r.pass) return `pass  ${r.name}  (${file})`;
   if (r.problems.length) return `FAIL  ${r.name}  (${file}): invalid vector: ${r.problems.join('; ')}`;
-  const m = r.mismatch;
-  return `FAIL  ${r.name}  (${file}): first mismatch at tick ${m.tick} (checkpoint ${m.checkpoint}) ${m.path}: vector ${show(m.expected)} PC ${show(m.actual)}`;
+  return `FAIL  ${r.name}  (${file}): first mismatch at ${renderDiff(r.diff)}`;
 }
 
 async function main() {
@@ -207,5 +187,4 @@ async function main() {
   }
 }
 
-const invoked = process.argv[1] ? resolve(process.argv[1]).toLowerCase() : '';
-if (invoked === fileURLToPath(import.meta.url).toLowerCase()) await main();
+await cliMain(import.meta.url, main);
