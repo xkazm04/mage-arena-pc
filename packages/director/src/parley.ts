@@ -13,6 +13,7 @@ import {
 import { hash, type RequestCache } from "./cache.ts";
 import type { CostGuard } from "./budget.ts";
 import { parseOutput } from "./validator.ts";
+import { resolveCall } from "./call.ts";
 import type { ProviderResult, StructuredRequest } from "./providers.ts";
 
 export const parleySystem = `You speak as a character in the guarded camp of Castra Clausa. The player can speak only at a Knowing moment.
@@ -103,6 +104,15 @@ export function validateParley(
   if (replyReplaced) proposal.npcReply = parleyRules.replies[proposal.effect];
   return { proposal, problem: null, replyReplaced };
 }
+const failed: ProviderResult = {
+  raw: null,
+  elapsedMs: 0,
+  inputTokens: null,
+  outputTokens: null,
+  costUsd: null,
+  error: null,
+  metadata: {},
+};
 export interface ParleyTransport {
   model: string;
   options: StructuredRequest["options"];
@@ -166,61 +176,65 @@ export class ParleyDirector {
         transport.options,
       ),
       key = hash(req);
-    let raw = this.options.cache.get(req),
-      source = "cache",
-      transportProblem: string | null = null,
-      replyRepair: string | null = null;
-    if (raw === undefined) {
-      source = "live";
-      if (!this.options.guard.reserve(key))
-        return {
-          proposal: fallback,
-          source: "budget-card",
-          problem: "budget-denied",
-          key,
-          replyReplaced: null,
-        };
-      const controller = new AbortController();
-      this.controllers.add(controller);
-      let timer: ReturnType<typeof setTimeout> | undefined;
-      try {
-        const result = await Promise.race([
-          transport
-            .complete(req, controller.signal)
-            .catch((e: unknown) => ({
-              raw: null,
-              error: e instanceof Error ? e.message : "transport-failed",
-            })),
-          new Promise<{ raw: null; error: string }>((resolve) => {
-            timer = setTimeout(() => {
-              resolve({ raw: null, error: "timeout" });
-              controller.abort();
-            }, parleyRules.timeoutMs);
+    let replyRepair: string | null = null;
+    const controller = new AbortController();
+    this.controllers.add(controller);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    // Bounded, cancellable transport: timeout and close() both abort, and the abort wins.
+    const complete = (request: StructuredRequest, signal?: AbortSignal) =>
+      Promise.race([
+        transport.complete(request, signal).catch(
+          (e: unknown): ProviderResult => ({
+            ...failed,
+            error: e instanceof Error ? e.message : "transport-failed",
           }),
-          new Promise<{ raw: null; error: string }>((resolve) => {
-            controller.signal.addEventListener(
-              "abort",
-              () => resolve({ raw: null, error: "cancelled" }),
-              { once: true },
-            );
-          }),
-        ]);
-        raw = result.raw;
-        transportProblem = result.error;
-        if (!transportProblem && !controller.signal.aborted) {
-          // Cache only after validation. Invalid replies never poison a future conversation.
+        ),
+        new Promise<ProviderResult>((resolve) => {
+          timer = setTimeout(() => {
+            resolve({ ...failed, error: "timeout" });
+            controller.abort();
+          }, parleyRules.timeoutMs);
+        }),
+        new Promise<ProviderResult>((resolve) => {
+          controller.signal.addEventListener(
+            "abort",
+            () => resolve({ ...failed, error: "cancelled" }),
+            { once: true },
+          );
+        }),
+      ]);
+    let call;
+    try {
+      call = await resolveCall({
+        request: req,
+        key,
+        provider: { id: "parley", decide: complete },
+        cache: this.options.cache,
+        guard: this.options.guard,
+        signal: controller.signal,
+        // Cache only after validation. Invalid replies never poison a future conversation.
+        cachePolicy: "validated",
+        validate: (raw) => {
           const checked = validateParley(t, s, input.target, raw);
           replyRepair = checked.replyReplaced;
-          if (checked.proposal) {
-            this.options.cache.put(req, checked.proposal);
-            raw = this.options.cache.get(req) ?? checked.proposal;
-          }
-        }
-      } finally {
-        if (timer) clearTimeout(timer);
-        this.controllers.delete(controller);
-      }
+          return checked.proposal ?? undefined;
+        },
+      });
+    } finally {
+      if (timer) clearTimeout(timer);
+      this.controllers.delete(controller);
     }
+    if (call.source === "budget")
+      return {
+        proposal: fallback,
+        source: "budget-card",
+        problem: "budget-denied",
+        key,
+        replyReplaced: null,
+      };
+    const source = call.source === "cache" ? "cache" : "live",
+      raw = call.result.raw,
+      transportProblem = call.result.error;
     const checked = validateParley(
       t,
       s,

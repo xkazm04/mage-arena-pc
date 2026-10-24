@@ -8,8 +8,15 @@ import { CampNight } from "./camp-night.ts";
 import { CampService } from "./camp-service.ts";
 import { CostGuard } from "./budget.ts";
 import { RequestCache } from "./cache.ts";
+import * as input from "./input.ts";
 import { groups, request } from "./input.ts";
-import type { Provider, ProviderResult } from "./providers.ts";
+import { hash } from "./cache.ts";
+import { plan } from "./planner.ts";
+import { PlannerProvider, type Provider, type ProviderResult } from "./providers.ts";
+vi.mock("./input.ts", async (original) => {
+  const actual = await original<typeof import("./input.ts")>();
+  return { ...actual, request: vi.fn(actual.request) };
+});
 const t = loadTables();
 const state = createCampSession(t).camp;
 const result = (raw: unknown): ProviderResult => ({
@@ -122,7 +129,7 @@ describe("camp night lifecycle", () => {
     expect(p.decide).not.toHaveBeenCalled();
     expect(job.audit.every((a) => a.source === "budget")).toBe(true);
   });
-  it("reuses validated cache records without a new budget reservation", async () => {
+  it("reuses cached raw records (raw cache policy) without a new budget reservation", async () => {
     const p = provider();
     p.decide = vi.fn(p.decide);
     const opts = options(p);
@@ -134,6 +141,28 @@ describe("camp night lifecycle", () => {
     expect(await second.finish(0)).toEqual(await first.finish(0));
     expect(p.decide).toHaveBeenCalledTimes(groups(state).length);
     expect(second.audit.every((a) => a.source === "cache")).toBe(true);
+  });
+  it("plans planner nights with its own tables and state and records planner draws", async () => {
+    const p = new PlannerProvider(t, () => {
+      throw new Error("CampNight must not read the provider's live state");
+    });
+    p.decide = vi.fn(p.decide);
+    const job = new CampNight(t, state, options(p));
+    await job.done;
+    for (const { group, members } of groups(state))
+      expect(hash(job.completed.get(group))).toBe(
+        hash(members.map((id) => plan(t, state, id))),
+      );
+    expect(p.decide).not.toHaveBeenCalled();
+    expect(job.audit.every((a) => a.source === "planner")).toBe(true);
+    expect(groups(state).every(({ group }) => (job.plannerDraws.get(group)?.length ?? 0) > 0)).toBe(true);
+  });
+  it("builds each group's request once per night", async () => {
+    const spy = vi.mocked(input.request);
+    spy.mockClear();
+    const job = new CampNight(t, state, options(provider()));
+    await job.done;
+    expect(spy).toHaveBeenCalledTimes(groups(state).length);
   });
   it("starts only on dusk commit, rejects stale actions and commits dawn once", async () => {
     const p = provider(),

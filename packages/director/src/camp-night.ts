@@ -1,7 +1,8 @@
 import { type CampState, type Decision, type Tables } from "@mage/core";
 import { groups, request, type ProviderRequest } from "./input.ts";
 import { hash } from "./cache.ts";
-import { plan } from "./planner.ts";
+import type { PlannerDraw } from "./planner.ts";
+import { resolveCall } from "./call.ts";
 import { validateGroup } from "./validator.ts";
 import type { HarnessOptions } from "./harness.ts";
 export interface NightCheckpoint {
@@ -24,6 +25,8 @@ export class CampNight {
     rejected: number;
     error: string | null;
   }[] = [];
+  /** Draws behind each planner-sourced group; not part of the checkpoint. */
+  readonly plannerDraws = new Map<string, PlannerDraw[]>();
   readonly done: Promise<void>;
   private closed = false;
   readonly requests: NightCheckpoint['requests'];
@@ -46,52 +49,23 @@ export class CampNight {
     return structuredClone({ state: this.state, caps: this.tables.rules.caps, completed: [...this.completed].map(([group, items]) => ({ group, items })), audit: this.audit, requests: this.requests });
   }
   private async run() {
-    for (const { group, members } of groups(this.state)) {
+    for (const { group, key, request: req } of this.requests) {
       if (this.closed) break;
-      const req = request(
-        this.tables,
-        this.state,
-        group,
-        members,
-        this.options.provider.model,
-        this.options.provider.options,
-      );
-      const key = hash(req);
-      let raw: unknown = this.options.cache.get(req);
-      let source = "cache",
-        error: string | null = null,
-        elapsedMs = 0;
-      if (this.options.provider.id === "planner") {
-        raw = {
-          group,
-          decisions: members.map((id) => plan(this.tables, this.state, id)),
-        };
-        source = "planner";
-      } else if (raw === undefined) {
-        if (!this.options.guard.reserve(key)) {
-          source = "budget";
-          error = "budget-denied";
-        } else {
-          source = "live";
-          try {
-            const result = await this.options.provider.decide(
-              req,
-              this.controller.signal,
-            );
-            raw = result.raw;
-            error = result.error;
-            elapsedMs = result.elapsedMs;
-          } catch (e) {
-            error = e instanceof Error ? e.message : String(e);
-          }
-          if (this.closed) break;
-          if (!error) {
-            this.options.cache.put(req, raw);
-            raw = this.options.cache.get(req) ?? raw;
-          }
-        }
-      }
-      if (this.closed) break;
+      const members = req.input.members.map((m) => m.id);
+      // Raw policy (validation re-runs on read); flipping to "validated" is the owner's call.
+      const call = await resolveCall({
+        request: req,
+        key,
+        provider: this.options.provider,
+        cache: this.options.cache,
+        guard: this.options.guard,
+        signal: this.controller.signal,
+        cachePolicy: "raw",
+        planner: { tables: this.tables, state: this.state, group, members },
+      });
+      if (this.closed || call.source === "aborted") break;
+      const { raw, error, elapsedMs } = call.result;
+      if (call.source === "planner") this.plannerDraws.set(group, call.plannerDraws);
       const result = validateGroup(
         this.tables,
         this.state,
@@ -103,7 +77,7 @@ export class CampNight {
       this.audit.push({
         group,
         key,
-        source,
+        source: call.source,
         error,
         elapsedMs,
         rejected: result.verdicts.filter((v) => v.rejected).length,

@@ -11,7 +11,8 @@ import { RequestCache, hash } from "./cache.ts";
 import { CostGuard } from "./budget.ts";
 import { plan, type PlannerDraw } from "./planner.ts";
 import { validateGroup } from "./validator.ts";
-import type { Provider, ProviderResult } from "./providers.ts";
+import { resolveCall } from "./call.ts";
+import type { Provider } from "./providers.ts";
 
 export interface HarnessOptions {
   provider: Provider;
@@ -41,47 +42,19 @@ export async function night(
         options.provider.options,
       ),
       key = hash(req);
-    let source: "live" | "cache" | "planner" | "budget" = "live";
-    const plannerDraws: PlannerDraw[] = [];
-    let result: ProviderResult = {
-      raw: null,
-      elapsedMs: 0,
-      inputTokens: 0,
-      outputTokens: 0,
-      costUsd: null,
-      error: null,
-      metadata: {},
-    };
-    const cached = options.forceLive ? undefined : options.cache.get(req);
-    if (options.provider.id === "planner") {
-      source = "planner";
-      result = await options.provider.decide(req);
-      plannerDraws.push(
-        ...((result.metadata.plannerDraws as PlannerDraw[]) ?? []),
-      );
-    } else if (cached !== undefined) {
-      source = "cache";
-      result.raw = cached;
-    } else if (!options.guard.reserve(key)) {
-      source = "budget";
-      result.error = "budget-denied";
-    } else {
-      try {
-        result = await options.provider.decide(req);
-      } catch (e) {
-        result.error = e instanceof Error ? e.message : String(e);
-      }
-      if (!result.error && !options.forceLive) {
-        const freshRaw = result.raw;
-        options.cache.put(req, freshRaw);
-        const pinned = options.cache.get(req);
-        if (pinned !== undefined) {
-          result.raw = pinned;
-          if (hash(pinned) !== hash(freshRaw))
-            result.metadata.uncachedRaw = freshRaw;
-        }
-      }
-    }
+    // Raw policy: W1 experiments and tools/cache-replay read back exactly what the provider said.
+    const call = await resolveCall({
+      request: req,
+      key,
+      provider: options.provider,
+      cache: options.cache,
+      guard: options.guard,
+      forceLive: options.forceLive,
+      cachePolicy: "raw",
+    });
+    const source = call.source as "live" | "cache" | "planner" | "budget",
+      plannerDraws = call.plannerDraws,
+      result = call.result;
     const validated = validateGroup(
       t,
       state,
