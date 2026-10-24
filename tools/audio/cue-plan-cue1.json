@@ -1,15 +1,71 @@
 {
   "wave": "CUE1",
-  "note": "Exact prompts and durations the CUE1 guard accepts. Style follows the AU2 hit/impact briefs and docs/audio/AUDIO-BIBLE.md (no voice, music or gunshot).",
+  "note": "Exact prompts and durations the CUE1 guard accepts. Style follows the AU2 hit/impact briefs and docs/audio/AUDIO-BIBLE.md (no voice, music or gunshot). Second pass: cast-start-a and impact-b measured near-silent (-30.6 and -59.1 LUFS-I) so they were replaced by cast-start-c and impact-d; hit-d and impact-e complete the three-variant pools.",
   "cues": [
-    { "id": "cast-start-a", "seconds": 0.8, "prompt": "A short neutral spell-commit cue: a soft rising breath of rune-lit air, a small fabric rustle of a raised sleeve and a quiet resonant tick as power gathers. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass." },
-    { "id": "cast-start-b", "seconds": 0.8, "prompt": "A short neutral spell-commit cue: a low glassy hum swelling quickly, a tight leather glove creak and a faint bright shimmer at the end as the cast locks in. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass." },
-    { "id": "down-a", "seconds": 1.8, "prompt": "A combatant going down: a heavy cloth-and-leather body collapse onto sand with a dull thud, a brief fading metallic rattle of gear and a downward falling tone as magic leaves the body, no human voice. One isolated event at the start, natural short decay within 1.8 seconds, no music, gunshot, repeated strikes or excessive sub bass." },
-    { "id": "interrupt-a", "seconds": 0.7, "prompt": "A spell being cut off mid-cast: a gathering magical tone that snaps and collapses downward with a short crackle and a dull muffled pop, brittle and unfinished, no reward chime. One isolated event at the start, natural short decay within 0.7 seconds, no music, voice, gunshot, repeated hits or excessive sub bass." },
-    { "id": "phase-a", "seconds": 2.5, "prompt": "A rival shifting to a new phase of the fight: a deep rising drone and a slow swell of layered resonant metal, a single deliberate low bronze bell stroke with a long shimmering tail, ominous and clear, no human voice. One isolated event at the start, natural decay within 2.5 seconds, no music, gunshot, repeated strikes or distortion." },
-    { "id": "hit-b", "seconds": 1.5, "prompt": "A compact body hit through padded leather and linen: a dull low thump with a quick cloth slap, slightly higher and tighter than a heavy blow, physical damage, no magical chime, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass." },
-    { "id": "hit-c", "seconds": 1.5, "prompt": "A close muffled body hit on thick wrapped cloth armour: a soft breathless thump, a faint strap creak and a short downward pitch, physical damage, no magical chime, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass." },
-    { "id": "impact-b", "seconds": 1.5, "prompt": "One hard impact on arena stone: a dry crack, a few small chips skittering away and a grounded low knock, slightly sharper than a dull thud. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass." },
-    { "id": "impact-c", "seconds": 1.5, "prompt": "One hard impact on packed sand and worn masonry: a hollow knock into a soft shower of falling grit, short and spatially compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass." }
+    {
+      "id": "cast-start-a",
+      "seconds": 0.8,
+      "prompt": "A short neutral spell-commit cue: a soft rising breath of rune-lit air, a small fabric rustle of a raised sleeve and a quiet resonant tick as power gathers. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass."
+    },
+    {
+      "id": "cast-start-b",
+      "seconds": 0.8,
+      "prompt": "A short neutral spell-commit cue: a low glassy hum swelling quickly, a tight leather glove creak and a faint bright shimmer at the end as the cast locks in. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass."
+    },
+    {
+      "id": "down-a",
+      "seconds": 1.8,
+      "prompt": "A combatant going down: a heavy cloth-and-leather body collapse onto sand with a dull thud, a brief fading metallic rattle of gear and a downward falling tone as magic leaves the body, no human voice. One isolated event at the start, natural short decay within 1.8 seconds, no music, gunshot, repeated strikes or excessive sub bass."
+    },
+    {
+      "id": "interrupt-a",
+      "seconds": 0.7,
+      "prompt": "A spell being cut off mid-cast: a gathering magical tone that snaps and collapses downward with a short crackle and a dull muffled pop, brittle and unfinished, no reward chime. One isolated event at the start, natural short decay within 0.7 seconds, no music, voice, gunshot, repeated hits or excessive sub bass."
+    },
+    {
+      "id": "phase-a",
+      "seconds": 2.5,
+      "prompt": "A rival shifting to a new phase of the fight: a deep rising drone and a slow swell of layered resonant metal, a single deliberate low bronze bell stroke with a long shimmering tail, ominous and clear, no human voice. One isolated event at the start, natural decay within 2.5 seconds, no music, gunshot, repeated strikes or distortion."
+    },
+    {
+      "id": "hit-b",
+      "seconds": 1.5,
+      "prompt": "A compact body hit through padded leather and linen: a dull low thump with a quick cloth slap, slightly higher and tighter than a heavy blow, physical damage, no magical chime, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass."
+    },
+    {
+      "id": "hit-c",
+      "seconds": 1.5,
+      "prompt": "A close muffled body hit on thick wrapped cloth armour: a soft breathless thump, a faint strap creak and a short downward pitch, physical damage, no magical chime, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass."
+    },
+    {
+      "id": "impact-b",
+      "seconds": 1.5,
+      "prompt": "One hard impact on arena stone: a dry crack, a few small chips skittering away and a grounded low knock, slightly sharper than a dull thud. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass."
+    },
+    {
+      "id": "impact-c",
+      "seconds": 1.5,
+      "prompt": "One hard impact on packed sand and worn masonry: a hollow knock into a soft shower of falling grit, short and spatially compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass."
+    },
+    {
+      "id": "cast-start-c",
+      "seconds": 0.8,
+      "prompt": "A clearly audible, full-level neutral spell-commit cue: a quick rising breath of rune-lit air, a crisp sleeve rustle and a bright resonant tick as power gathers. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass."
+    },
+    {
+      "id": "impact-d",
+      "seconds": 1.5,
+      "prompt": "One loud, full-level hard impact on arena stone: a sharp dry crack, a spray of chips and a grounded low knock, close and punchy. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass."
+    },
+    {
+      "id": "impact-e",
+      "seconds": 1.5,
+      "prompt": "One loud, full-level hard impact on worn bronze and masonry: a metallic clank into a short stony thud and falling grit, close and compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass."
+    },
+    {
+      "id": "hit-d",
+      "seconds": 1.5,
+      "prompt": "A loud, full-level body hit through leather and linen: a firm low thump with a quick cloth slap and a faint gasp of air, physical damage, no magical chime, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass."
+    }
   ]
 }
