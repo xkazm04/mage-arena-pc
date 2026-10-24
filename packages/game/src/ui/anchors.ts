@@ -1,4 +1,4 @@
-import { metrics, type Rect } from "./layout.ts";
+import { clampUiScale, metrics, type Edges, type Rect } from "./layout.ts";
 
 /** Where a box sits inside an area: a corner, an edge midpoint or the centre. */
 export type Edge =
@@ -46,6 +46,21 @@ export function anchor(
     y: area.y + (area.h - h) * vertical + dy,
     w,
     h,
+  };
+}
+
+/** The title-safe area of the whole viewport (its `edges`), so corner anchors reach the real screen edges. */
+export function safeEdges(
+  edges: Edges,
+  fraction: number = metrics.safeFraction,
+): Rect {
+  const x = metrics.designWidth * fraction,
+    y = metrics.designHeight * fraction;
+  return {
+    x: edges.left + x,
+    y: edges.top + y,
+    w: edges.right - edges.left - 2 * x,
+    h: edges.bottom - edges.top - 2 * y,
   };
 }
 

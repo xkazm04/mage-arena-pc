@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { nextFocus, viewportLayout } from "./layout.ts";
-import { anchor, columns, safeArea, uiScale } from "./anchors.ts";
+import { anchor, columns, safeArea, safeEdges, uiScale } from "./anchors.ts";
 import { requiredRegions, validateAtlas } from "./kit.ts";
 describe("canvas UI contracts", () => {
   it("preserves a five percent safe rectangle at 1080p and 1440p", () => {
@@ -116,5 +116,37 @@ describe("layout helper", () => {
     expect(uiScale(1, 2)).toBe(1.5);
     expect(uiScale(1, 0.5)).toBe(0.75);
     expect(uiScale(1, Number.NaN)).toBe(1);
+  });
+});
+describe("viewport layout", () => {
+  it("is the design stage at 1920x1080", () => {
+    const l = viewportLayout(1920, 1080);
+    expect(l.scale).toBe(1);
+    expect([l.x, l.y]).toEqual([0, 0]);
+    expect(l.edges).toEqual({ left: 0, top: 0, right: 1920, bottom: 1080 });
+  });
+  it("scales 16:9 with no extra edge at 2560x1440", () => {
+    const l = viewportLayout(2560, 1440);
+    expect(l.scale).toBeCloseTo(4 / 3);
+    expect(l.edges.left).toBeCloseTo(0);
+    expect(l.edges.right).toBeCloseTo(1920);
+  });
+  it("reports wider edges at 21:9 while content keeps the 16:9 stage", () => {
+    const l = viewportLayout(3440, 1440);
+    expect(l.scale).toBeCloseTo(4 / 3);
+    expect(l.x).toBeCloseTo(440);
+    expect(l.edges.left).toBeCloseTo(-330);
+    expect(l.edges.right).toBeCloseTo(2250);
+    expect(l.edges.top).toBeCloseTo(0);
+    expect(l.edges.bottom).toBeCloseTo(1080);
+    expect(safeEdges(l.edges).x).toBeCloseTo(-234);
+    expect(safeEdges(viewportLayout(1920, 1080).edges)).toEqual(safeArea());
+  });
+  it("multiplies the layout scale by the clamped UI scale", () => {
+    const l = viewportLayout(1920, 1080, 1.25);
+    expect(l.scale).toBeCloseTo(1.25);
+    expect(l.edges.left).toBeCloseTo(192);
+    expect(l.edges.right).toBeCloseTo(1728);
+    expect(viewportLayout(1920, 1080, 9).scale).toBe(1.5);
   });
 });

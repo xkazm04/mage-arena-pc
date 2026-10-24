@@ -12,15 +12,41 @@ export interface Target extends Rect {
 }
 export const contains = (r: Rect, x: number, y: number) =>
   x >= r.x && y >= r.y && x <= r.x + r.w && y <= r.y + r.h;
-export function viewportLayout(width: number, height: number) {
-  const scale = Math.min(
-    width / metrics.designWidth,
-    height / metrics.designHeight,
-  );
+/** UI scale bounds for the settings option (1 = the authored design size). */
+export const uiScaleRange = { min: 0.75, max: 1.5 } as const;
+export const clampUiScale = (setting: number) =>
+  Number.isFinite(setting)
+    ? Math.min(uiScaleRange.max, Math.max(uiScaleRange.min, setting))
+    : 1;
+/** The viewport's edges in design units. At 16:9 and UI scale 1 they equal the design stage (0, 0, 1920, 1080). */
+export interface Edges {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+}
+/**
+ * Content stays on the 16:9 design stage, fitted and centred in the viewport and multiplied by the UI scale.
+ * `edges` reports the whole viewport in the same units, so backdrops, bars and corner anchors can reach the real
+ * screen edges instead of the letterboxed stage.
+ */
+export function viewportLayout(width: number, height: number, ui = 1) {
+  const scale =
+    Math.min(width / metrics.designWidth, height / metrics.designHeight) *
+    clampUiScale(ui);
+  const x = (width - metrics.designWidth * scale) / 2,
+    y = (height - metrics.designHeight * scale) / 2;
+  const edges: Edges = {
+    left: -x / scale + 0,
+    top: -y / scale + 0,
+    right: (width - x) / scale,
+    bottom: (height - y) / scale,
+  };
   return {
     scale,
-    x: (width - metrics.designWidth * scale) / 2,
-    y: (height - metrics.designHeight * scale) / 2,
+    x,
+    y,
+    edges,
     safe: {
       x: metrics.designWidth * metrics.safeFraction,
       y: metrics.designHeight * metrics.safeFraction,
