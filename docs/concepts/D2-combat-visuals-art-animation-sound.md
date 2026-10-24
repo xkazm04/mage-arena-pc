@@ -139,6 +139,17 @@ engines; it is the first build of the chosen look.
 5. **Fallback:** only if the bar cannot be met after a fix round, price the native 3D route. That includes how the
    deterministic TS core would move: a port, a bridge, or a transpile.
 
+**Status (2026-10-24): slice asset candidates generated; the owner's pick is pending.** Wave D2S, agy only, 27 calls (project 409/450, 41 left).
+- **Targets:** `art/targets/` holds T1-A and T2-A **stand-ins**, regenerated from the verbatim D4 A prompts, because the owner's Leonardo images are not on disk. The owner can drop the originals in to replace them.
+- **Bodies:** three candidates each for the water and the fire mage of T1-A. Each candidate style matches the T1-A figure, keeps the roster identity (Cassia, Brennic), or follows the Covenant bar. Every body has a provider-painted normal map (aligned within 1 px) and a derived one (no calls).
+- **Plates:** three layered plate sets (floor, back wall, near rim) in the verdigris, rust-sand and moonlit palettes. Only verdigris, after one correction, matches T2-A's 45° view; the other two read at eye level.
+- **Pick sheet:** `art/delivery/d2s/pick-sheet.html` shows each slot next to its target, with the builder's ranks and reasons. Data is in `art/delivery/d2s/candidates.json`.
+- **Authoring cost per body (section 5 measure):**
+  - 2 calls: one colour image plus one painted normal map. One body needed 4: a rejected first try, and a normal-map call lost to a local path bug.
+  - Cleanup is fully scripted, with about a second of compute and no hand-painting: magenta key, crop, normal-map masking by the colour alpha, and resize.
+  - A plate set costs 3 calls, or 5 with a camera correction.
+- **Not yet done:** nothing is wired into the game. The slice scene follows the owner's pick.
+
 ## 6. Recommended first slice
 
 1. Save the chosen A targets in `art/targets/` as the reference set.
