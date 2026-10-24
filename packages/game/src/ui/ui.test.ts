@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { nextFocus, viewportLayout } from "./layout.ts";
+import { anchor, columns, safeArea, uiScale } from "./anchors.ts";
 import { requiredRegions, validateAtlas } from "./kit.ts";
 describe("canvas UI contracts", () => {
   it("preserves a five percent safe rectangle at 1080p and 1440p", () => {
@@ -72,5 +73,48 @@ describe("canvas UI contracts", () => {
     expect(() =>
       validateAtlas({ ...valid, pages: [...valid.pages, ...valid.pages] }),
     ).toThrow("Duplicate UI page");
+  });
+});
+describe("layout helper", () => {
+  it("derives the safe area from the design metrics", () => {
+    expect(safeArea()).toEqual({ x: 96, y: 54, w: 1728, h: 972 });
+    expect(safeArea(2520, 1080)).toEqual({ x: 96, y: 54, w: 2328, h: 972 });
+  });
+  it("anchors boxes to edges, corners and the centre", () => {
+    const area = safeArea();
+    expect(anchor(area, "top-left", 200, 60)).toEqual({
+      x: 96,
+      y: 54,
+      w: 200,
+      h: 60,
+    });
+    expect(anchor(area, "bottom-right", 250, 68)).toEqual({
+      x: 1574,
+      y: 958,
+      w: 250,
+      h: 68,
+    });
+    expect(anchor(area, "center", 100, 100)).toEqual({
+      x: 910,
+      y: 490,
+      w: 100,
+      h: 100,
+    });
+    expect(anchor(area, "bottom-left", 236, 68, 0, -12).y).toBe(946);
+  });
+  it("splits a span into equal columns that keep today's screen grid", () => {
+    const area = safeArea();
+    expect(columns(area, 4, 32)).toEqual(
+      [0, 1, 2, 3].map((i) => ({ x: 96 + i * 440, w: 408 })),
+    );
+    expect(columns(area, 2, 32)).toEqual(
+      [0, 1].map((i) => ({ x: 96 + i * 880, w: 848 })),
+    );
+  });
+  it("clamps the UI scale setting", () => {
+    expect(uiScale(1.5)).toBe(1.5);
+    expect(uiScale(1, 2)).toBe(1.5);
+    expect(uiScale(1, 0.5)).toBe(0.75);
+    expect(uiScale(1, Number.NaN)).toBe(1);
   });
 });
