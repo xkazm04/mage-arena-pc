@@ -237,6 +237,61 @@ No cell timed out. The reading, for the progression design (4.3) to start from:
 - So the progression curve needs a lever on the mage side as well as the enemy-level one: rivals that level by week, or
   authored builds per week. That decision belongs to 4.3 and the owner, not to this reading.
 
+### 6.4 Counter coverage (4.2): the first reading, the target, and Tide Ward, 2026-10-24
+
+**Reading** (`npm --prefix packages/core run census:counters`, new; 200 seeds per cell; evidence
+`docs/change-requests/evidence/d1-counters.json`, 2026-10-24). The model has one shape-class answer row per school:
+Ring of Cinders (close pressure), Air Form (projectiles) and Tide Ward (beams). Water's other defensive rows (Sheen,
+Reflection/Ripple, Mirage, Fog Bank) answer no shape class, so they have no coverage to read. The runner reads the
+threat-answer ledger (`ledger.ts`) of every mage that slots an answer row. A unit is one ledger entry: a graded contact,
+or an aimed threat that the mage avoided. A unit counts for a row when its shape class is one the row answers and the
+blow is blockable. The runner never writes, and every cell's digest equals its census digest (the builds cells equal
+`d1-ultimates-after.json`). Cells:
+- the four default-census waves (reference preset Rotation);
+- the six builds against Rotation (the committed builds census);
+- the six builds against Mirror tide, the supplement that slots Tide Ward. Rotation does not slot the mend line.
+
+- **Slotted**: blows of the row's class that the holder met while it carried the row.
+- **Castable**: blows met while the row could be cast by collar tier. This is the "could answer" of 4.2 and the
+  coverage denominator. A Fire or Air row stays unlocked once its tier opens. A Water line plays one row per tier, so
+  Tide Ward (mend II) is castable only while its holder sits at tier II.
+- **Answered**: the row's effect was up at the blow (Air Form's evade window, Tide Ward's drain cut), or the holder
+  released the row between first seeing the blow and its contact. Ring of Cinders is an instant blast and answers only
+  this second way.
+
+| Row (class) | Cell (holder) | Slotted | Castable | Answered | Coverage | Casts |
+|---|---|---|---|---|---|---|
+| Ring of Cinders (close) | fire_close (rival) | 1067 | 678 | 12 | 1.8% | 133 |
+| | fire_close, Mirror tide | 914 | 716 | 11 | 1.5% | 161 |
+| | fire_heavy, both presets | 15 | 3 | 0 | - | 30 |
+| | **all cells** | **1996** | **1397** | **23** | **1.6%** | 324 |
+| Air Form (projectile) | air_close (rival) | 20076 | 13629 | 8327 | 61.1% | 1491 |
+| | air_close, Mirror tide | 21564 | 15278 | 9437 | 61.8% | 1657 |
+| | air_heavy (rival) | 22489 | 17688 | 12780 | 72.3% | 2632 |
+| | air_heavy, Mirror tide | 22278 | 17723 | 13113 | 74.0% | 2540 |
+| | **all cells** | **86407** | **64318** | **43657** | **67.9%** | 8320 |
+| Tide Ward (beam) | the Mirror tide reference vs fire_heavy / air_close / air_heavy | 104 / 16 / 663 | 0 | 0 | - | 1 |
+| | default wave 4 (the Mirror tide final opponent) | 0 | 0 | 0 | - | 0 |
+| | **all cells** | **783** | **0** | **0** | **none castable** | 1 |
+
+What the reading says:
+- **Air Form is the one answer that works as designed.** It answers 61-74% of the projectiles it could, in every cell.
+  About a third of the blows it answers still land, because the evade is a chance (30% of magic).
+- **Ring of Cinders almost never answers a blow (1.6%).** It is cast 324 times, almost all of them when a body is inside
+  its reach (the plan's "pressed" branch), not in reply to a seen close blow. fire_heavy meets almost no close blows. The
+  fix (4.1 D) is out of scope here; this is the measurement.
+- **Tide Ward never meets a beam it can cast against.** 783 beam blows hit a mage that slots the mend line, and all 783
+  arrive after tier II, when the line plays Spring or Font. This confirms the structural cause section 2 named.
+
+**Proposed target N = 50%** (Director default 2026-10-24, owner to confirm). Each answer row should answer at least
+half of the blows of its class that it could have answered, in every cell where it meets them. A row that meets blows of
+its class it can never cast against (castable 0 while slotted > 0) fails the target outright. Why 50:
+- Air Form, the one counter that works as designed, clears it in every cell by 11 points or more (61.1% lowest);
+- so the bar is reachable and not set at the edge of the 200-seed noise;
+- it still marks Ring (1.6%) and Tide Ward (none castable) as not yet counters.
+
+Today Air Form meets the target. Ring of Cinders and Tide Ward do not.
+
 ## 7. Open questions for the spark
 
 1. Which close-duel option (A-E) fits the feel the owner wants: trading blows, dancing in and out, or guard breaks?
