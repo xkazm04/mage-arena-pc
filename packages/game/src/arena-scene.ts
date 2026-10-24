@@ -39,6 +39,8 @@ import { BodyPlayer } from "./body-player.ts";
 import { EffectPlayer } from "./effect-player.ts";
 import { SigilPlayer } from "./sigil-player.ts";
 import { keyLightAt } from "./lighting/tier.ts";
+import { feetArcPoint, feetMeter } from "./feet-meter.ts";
+import { colours } from "./ui/kit.ts";
 import { RivalCollarView } from "./rival-collar-view.ts";
 import { rivalRune } from "./rival-collar.ts";
 import type { Element } from "./animation-contract.ts";
@@ -784,6 +786,39 @@ export class ArenaScene {
           this.sigils.manifest,
           localStorage.getItem("mage-motion") === "reduced",
         );
+      const feet =
+        a.team !== player.team && !a.tags.includes("DEFEATED")
+          ? feetMeter(a, state)
+          : undefined;
+      if (feet) {
+        // The opposing school meter: an arc under the feet, a steady brighter edge while locked (never pulsing).
+        const rx = h * 0.4,
+          ry = h * 0.12,
+          cy = q.y + h * 0.04,
+          at = (t: number) => feetArcPoint(q.x, cy, rx, ry, t),
+          trace = (to: number) => {
+            for (let i = 0; i <= 16; i++) {
+              const p = at((to * i) / 16);
+              if (i) g.lineTo(p.x, p.y);
+              else g.moveTo(p.x, p.y);
+            }
+          };
+        trace(1);
+        g.stroke({ color: ink, width: m.outlinePx * 3, alpha: 0.5 });
+        if (feet.fill > 0) {
+          trace(feet.fill);
+          g.stroke({
+            color: feet.locked ? 0xfffbdd : colours[feet.school],
+            width: m.outlinePx * (feet.locked ? 3 : 2),
+          });
+        }
+        for (const t of feet.marks) {
+          const p = at(t);
+          g.circle(p.x, p.y, m.outlinePx * 1.5).fill(
+            feet.fill >= t ? 0xfffbdd : colours.muted,
+          );
+        }
+      }
       if (a.absorb && !a.tags.includes("DEFEATED")) {
         const angle = Math.atan2(a.facing.y, a.facing.x),
           radius =
