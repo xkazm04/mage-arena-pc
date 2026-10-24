@@ -222,7 +222,7 @@ export class ArenaGame {
         ...base,
         ...(params.has("harness") && !season
           ? {
-              artFixture: (kind?: Element | "stress" | "fallbacks") => {
+              artFixture: (kind?: ArtFixture["kind"]) => {
                 this.artFixture = kind
                   ? new ArtFixture(kind, this.camera.centre)
                   : undefined;

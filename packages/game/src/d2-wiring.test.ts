@@ -1,4 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { ArtFixture, barScene } from "./art-fixture.ts";
+import { bodyIdentity } from "./body-policy.ts";
+import { schoolEffectSigil, veeringArcSigil } from "./sigil-contract.ts";
 import {
   keyLightAt,
   lightInQuad,
@@ -49,5 +52,51 @@ describe("lit-body quality tier (D2 step 3)", () => {
     const mirrored = lightInQuad({ ...quad, a: -64, tx: 68 + 64 }, size, light);
     expect(mirrored.x).toBeCloseTo(384 - q.x);
     expect(mirrored.y).toBeCloseTo(q.y);
+  });
+});
+
+describe("art fixture 'bar': the D2 section 7 scene without new assets", () => {
+  const centre = { x: 30, y: 20 };
+  const count = (xs: string[]) =>
+    xs.reduce<Record<string, number>>(
+      (n, k) => ({ ...n, [k]: (n[k] ?? 0) + 1 }),
+      {},
+    );
+  it("pins its composition by kind", () => {
+    const f = new ArtFixture("bar", centre);
+    f.update(1 / 60);
+    expect(f.state.actors.map((a) => bodyIdentity(a))).toEqual([
+      ...barScene.bodies,
+    ]);
+    expect(barScene.bodies).toHaveLength(8);
+    expect(barScene.bodies[0]).toBe("cassia");
+    expect(count((f.state.schoolEffects ?? []).map((e) => e.kind))).toEqual({
+      beam: 2,
+      trail: 2,
+      detonation: 2,
+    });
+    expect(f.state.projectiles).toHaveLength(24);
+    expect(f.state.projectiles.filter((p) => p.arc)).toHaveLength(1);
+    expect(new Set(f.elements.values())).toEqual(
+      new Set(["water", "fire", "earth", "air"]),
+    );
+  });
+  it("gives the sigil player two discs, four strips and one arc to draw", () => {
+    const f = new ArtFixture("bar", centre);
+    for (let i = 0; i < 30; i++) f.update(1 / 60);
+    const shapes = [
+      ...(f.state.schoolEffects ?? []).map(
+        (e) => schoolEffectSigil(e, f.state.tick)?.shape.shape,
+      ),
+      ...f.state.projectiles.map((p) => veeringArcSigil(p)?.shape.shape),
+    ].filter((s): s is "disc" | "beam" | "arc" => !!s);
+    expect(count(shapes)).toEqual({ disc: 2, beam: 4, arc: 1 });
+  });
+  it("leaves the stress scene as it was (12 bodies, 100 projectiles, no school effects)", () => {
+    const f = new ArtFixture("stress", centre);
+    f.update(1 / 60);
+    expect(f.state.actors).toHaveLength(12);
+    expect(f.state.projectiles).toHaveLength(100);
+    expect(f.state.schoolEffects ?? []).toHaveLength(0);
   });
 });
