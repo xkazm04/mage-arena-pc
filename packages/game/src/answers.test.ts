@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createLedger, createTraining, observeLedger, stepTraining, ticks, timingBot, type Grade } from "@mage/core/arena";
+import { createGames, createLedger, createTraining, observeLedger, presets, runtime, stepGames, stepTraining, ticks, timingBot, type Grade } from "@mage/core/arena";
 import { answerMark, boutAnswerLines, labAnswerLine } from "./answers.ts";
 
 describe("threat answer lines", () => {
@@ -19,6 +19,16 @@ describe("threat answer lines", () => {
     expect(labAnswerLine(ledger)).toContain(`Magic perfect ${perfect}  held ${held}`);
     expect(labAnswerLine(ledger)).toMatch(/Ward age (\d+f:\d+ ?)+$/);
   });
+  it("prints the exchange-window guards of a fire_close fight and no Unclassified line", () => {
+    const g = createGames(1, presets.find((p) => p.name === runtime.games.referencePreset)!, 2, true, undefined, undefined, undefined, { rivalBuild: "fire_close" });
+    const ledger = createLedger(g.state, g.player.id);
+    while (g.phase === "active" && g.state.tick < ticks(runtime.games.fightTimeoutS)) { stepGames(g); observeLedger(ledger, g.state); }
+    const windows = ledger.counts.magic.window + ledger.counts.physical.window;
+    expect(windows).toBeGreaterThan(0);
+    expect(labAnswerLine(ledger)).toContain(`window ${ledger.counts.magic.window}`);
+    expect(boutAnswerLines(ledger).join(" | ")).toMatch(/window \d+/);
+    expect([labAnswerLine(ledger), ...boutAnswerLines(ledger)].join(" | ")).not.toContain("Unclassified");
+  });
 });
 
 describe("answer marks", () => {
@@ -34,6 +44,9 @@ describe("answer marks", () => {
       [{ ...base, family: "magic", answer: "cast-blocked", wardUp: false, guarded: false, mistake: "cast" }, "MID-CAST", true],
       [{ ...base, family: "physical", answer: "rolled" }, "ROLLED", false],
       [{ ...base, family: "unblockable", answer: "avoided" }, "LEFT", false],
+      [{ ...base, family: "magic", answer: "window", wardUp: false, inArc: false }, "WINDOW", false],
+      [{ ...base, family: "magic", answer: "evaded", wardUp: false, guarded: false }, "EVADED", false],
+      [{ ...base, family: "magic", answer: "held", ageTicks: 0 }, "HELD", false],
     ];
     for (const [grade, label, miss] of cases) expect(answerMark(grade)).toMatchObject({ label, miss });
     expect(answerMark(cases[3]![0]).family).toBe("Steel");

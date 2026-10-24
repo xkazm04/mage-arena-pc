@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { answers, combat, createLedger, createTraining, distance, gradeContact, idleInput, observeLedger, reviveActor, runFight, runTimingBot, runtime, spellFor, stateHash, stepTraining, sub, ticks, timingBot, unit,
+import { exchangeOff } from './exchange.ts';
+import { rivalBuilds } from './archetypes.ts';
+import { answers, createGames, presets, stepGames, combat, createLedger, createTraining, distance, gradeContact, idleInput, observeLedger, reviveActor, runFight, runTimingBot, runtime, spellFor, stateHash, stepTraining, sub, ticks, timingBot, unit,
   type InputFrame, type Training, type TrainingKind } from './index.ts';
 
 const windowTicks = ticks(combat.absorb.perfect.windowS);
@@ -101,5 +103,35 @@ describe('threat-answer ledger', () => {
     expect(fight.hash).toBe(runFight(40000, 2).hash);
     expect(Object.keys(fight.answers.magic)).toEqual([...answers]);
     expect(fight.answers.magic.perfect).toBe(fight.perfects);
+  });
+});
+
+/** The reference player against an authored rival build (PC overlay on), seeds 1-4, one ledger per fight. */
+function buildFights(id: string) {
+  const reference = presets.find(p => p.name === runtime.games.referencePreset)!;
+  return [1, 2, 3, 4].map(seed => {
+    const g = createGames(seed, reference, rivalBuilds[id]!.wave, true, undefined, undefined, undefined, { rivalBuild: id }), ledger = createLedger(g.state, g.player.id);
+    while (g.phase === 'active' && g.state.tick < ticks(runtime.games.fightTimeoutS)) { stepGames(g); observeLedger(ledger, g.state); }
+    return ledger;
+  });
+}
+const graded = (ls: ReturnType<typeof buildFights>) => ls.flatMap(l => l.entries).filter(e => e.answer !== 'avoided');
+const digest = (ls: ReturnType<typeof buildFights>): string => {
+  const s = JSON.stringify(ls.map(l => l.entries.map(e => [e.tick, e.activationId, e.answer, e.lateTicks ?? null, e.mistake ?? null])));
+  let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619) >>> 0;
+  return h.toString(16);
+};
+
+describe('the ledger reads the kernel verdict (arena-kernel challenge 2026-10-25)', () => {
+  it('fire_close: every graded contact of the reference player is classified (202 of 272 were unclassified)', () => {
+    const contacts = graded(buildFights('fire_close'));
+    expect(contacts).toHaveLength(272);
+    expect(contacts.filter(e => e.answer === 'unclassified')).toHaveLength(0);
+    expect(contacts.filter(e => e.answer === 'window').length).toBeGreaterThan(0);
+  });
+  it('guard: inside exchangeOff the fire_close grades are exactly the grades before the verdict seam', () => {
+    const ledgers = exchangeOff(() => buildFights('fire_close')), contacts = graded(ledgers);
+    expect(contacts).toHaveLength(42); expect(contacts.filter(e => e.answer === 'unclassified')).toHaveLength(0);
+    expect(digest(ledgers)).toBe('b0252961');
   });
 });
