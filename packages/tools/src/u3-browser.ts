@@ -482,7 +482,8 @@ try {
     const anchored = await p.evaluate(() =>
       (window as unknown as Win).__arena.snapshot(),
     );
-    assert.equal(anchored.cameraMetrics.figureHeightPx, height * 0.0375);
+    // Figures are 1.5x (60.75 px at 1080p): scale contract v3, a009284 "enlarge combat figures".
+    assert.equal(anchored.cameraMetrics.figureHeightPx, height * 0.05625);
     await p.evaluate(
       (pos) => (window as unknown as Win).__arena.panPlayer(pos),
       { x: anchored.player.pos.x + 40, y: anchored.player.pos.y },
@@ -508,7 +509,12 @@ try {
       const actor = s.depthOrder.findIndex(
           (v) => v.id === `actor:${s.player.id}`,
         ),
-        prop = s.depthOrder.findIndex((v) => v.id === "prop:1");
+        // The fixture stands the actor 0.8 m from props[1]'s foot; prop ids are palette-named now, so take the prop 0.8 m away.
+        prop = s.depthOrder.findIndex(
+          (v) =>
+            v.id.startsWith("prop:") &&
+            Math.abs(Math.abs(v.y - s.depthOrder[actor]!.y) - 0.8) < 0.01,
+        );
       assert(
         front ? actor > prop : actor < prop,
         "Prop and actor sort by feet",
