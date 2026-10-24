@@ -1,0 +1,63 @@
+{
+  "id": "d2s-normal-water-target-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "normal-water-target",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "normal-water-target",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "1:1",
+    "references": [
+      {
+        "path": "art/delivery/d2s/sources/d2s-body-water-target-agy-a02.jpg",
+        "sha256": "276cbe6ada54166caf8dfa7d1b2b5629ddfb3a2cc796d9fd0edbdf19bf5a3a76",
+        "role": "colour body to encode"
+      }
+    ],
+    "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+    "family": "normal",
+    "body": "d2s-body-water-target-agy-a02",
+    "proofGate": "D2S family proof"
+  },
+  "input_hash": "d0c7363095bfccec4f5bf718c7fe9376b9dbb59e08e76e7113ada1727add89b8",
+  "prompt": "Paint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "2e8bdfcb-7756-4a51-b11b-db53b6dd7045",
+  "at": "2026-10-24T08:13:07.652026+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "error-unknown-spend",
+  "elapsed_seconds": 600.094,
+  "returncode": 0,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:13:15Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "1:1",
+        "ImageName": "water_target_normal_map",
+        "ImagePaths": [
+          "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-water-target-agy-a01\\Reference-1.png"
+        ],
+        "Prompt": "Paint a tangent-space normal map of the exact character in Reference-1.png, pixel-aligned to it: identical framing, identical silhouette, identical size, identical pose. Follow standard OpenGL tangent-space normal map conventions: flat surfaces directly facing the viewer are smooth #8080FF lavender blue (RGB 128, 128, 255), surfaces tilted or facing right are reddish, surfaces tilted or facing up are greenish, surfaces tilted or facing left are cyan, and surfaces tilted or facing down are purple. Encode the sculpted 3D volumes of the character's face, hood, flowing cloth folds, staff, and hands as smooth continuous normal map shading. Absolutely no directional scene lighting, no costume albedo color or diffuse textures, no cast shadows, no ambient occlusion, no outlines, no text. The background outside the character silhouette must be solid uniform flat vivid MAGENTA (#FF00FF)."
+      },
+      "conversation": "5aa66c2a-5442-48a6-b2c3-2842231fa454"
+    }
+  ],
+  "output_files": [],
+  "unique_output_images": 0,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": false,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "error": "TIMEOUT_UNKNOWN_SPEND",
+  "invocation_evidence": "art/providers/runs/d2s-normal-water-target-agy-a01"
+}

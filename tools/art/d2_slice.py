@@ -144,6 +144,27 @@ def generated(scene):
     return out
 
 
+def clear_latch(job_id, diagnosis):
+    """A failed call with no image whose cause is a local reference-path defect, not quota or rate.
+    The charge and ledger row stay; only the agy latch this job set is archived and cleared."""
+    job = next(j for j in read(ART / 'usage.json')['jobs'] if j['id'] == job_id)
+    log = (ROOT / job['invocation_evidence'] / 'cli-output.txt').read_text(encoding='utf-8', errors='replace')
+    assert job['status'] == 'error-unknown-spend' and job['unique_output_images'] == 0
+    assert 'failed to read image file' in log and 'cannot find the file' in log, 'NOT_A_LOCAL_REFERENCE_FAILURE'
+    assert not any(w in log.lower() for w in ('quota', 'rate limit', '429', '402', 'exhausted')), 'QUOTA_OR_RATE_SIGNAL'
+    from providers import ProviderBudget
+    history = read(ART / 'providers/history.json'); stop = history['providers']['agy']['stop']
+    assert stop and stop['job'] == job_id
+    write(BASE / 'latches' / ('agy-' + job_id + '.json'), stop)
+    write(BASE / 'diagnoses' / (job_id + '.json'), {'job': job_id, 'at': now(), 'charged_images': job['charged_images'], 'diagnosis': diagnosis})
+    ProviderBudget().event('agy', 'diagnosis', job_id, diagnosis)
+    history = read(ART / 'providers/history.json'); history['providers']['agy']['stop'] = None
+    history['providers']['agy']['events'].append({'at': now(), 'event': 'latch-cleared-local-failure', 'job': job_id,
+        'reason': 'D2S: local reference-path failure diagnosed; old latch in art/waves/D2S/latches; quota and rate errors still latch'})
+    write(ART / 'providers/history.json', history)
+    print('latch cleared', job_id)
+
+
 def recover(job_id):
     """A local archive failure after exactly one completed image call (WinError 3: art/review/sources
     is absent in a fresh checkout). Keeps the charge and the ledger row; records the verified image and
@@ -284,12 +305,18 @@ def call_normal(body_scene, correction=None):
     if len(previous) >= SLOT_ATTEMPTS: raise RuntimeError('D2S_SLOT_ATTEMPT_CAP')
     pilot = 'normal-water-target'
     if scene != pilot and not kept(pilot): raise RuntimeError('FAMILY_PROOF_REQUIRED: review ' + pilot + ' first')
+    # agy names references Reference-N.<ext> and the prompt says .png: keep every reference a PNG.
+    png = OUT / 'references' / (body['id'] + '.png')
+    if not png.exists():
+        with Image.open(ROOT / source(body)) as im: im.convert('RGB').save(png)
     spec = {'wave': WAVE, 'id': scene, 'pilot': True, 'providers': ['agy'], 'aspect_ratio': '1:1',
-            'references': [ref(source(body), 'colour body to encode')], 'prompt': normal_prompt(), 'family': 'normal',
+            'references': [ref(png, 'colour body to encode (lossless PNG of the kept source)')], 'prompt': normal_prompt(), 'family': 'normal',
             'body': body['id'], 'proofGate': 'D2S family proof'}
     if previous:
-        spec['prompt'] += ' CORRECTION: ' + correction; spec['correction_of'] = previous[-1]['id']
-        write(ART / 'waves' / WAVE / 'reviews' / (previous[-1]['id'] + '.json'), read(BASE / 'reviews' / (previous[-1]['id'] + '.json')))
+        if correction: spec['prompt'] += ' CORRECTION: ' + correction
+        spec['correction_of'] = previous[-1]['id']
+        if (BASE / 'reviews' / (previous[-1]['id'] + '.json')).exists():
+            write(ART / 'waves' / WAVE / 'reviews' / (previous[-1]['id'] + '.json'), read(BASE / 'reviews' / (previous[-1]['id'] + '.json')))
     write(BASE / 'briefs' / (scene + '.json'), spec)
     job = generate(spec); publish(job)
     print(json.dumps({'scene': scene, 'id': job['id'], 'status': job['status'], 'charged': job['charged_images']}))
@@ -496,6 +523,7 @@ if __name__ == '__main__':
     elif a.cmd == 'normal': call_normal(a.args[0], a.args[1] if len(a.args) > 1 else None)
     elif a.cmd == 'review': review(a.args[0], a.args[1], a.args[2], int(a.args[3]) if len(a.args) > 3 else None)
     elif a.cmd == 'recover': recover(a.args[0])
+    elif a.cmd == 'clear-latch': clear_latch(a.args[0], a.args[1])
     elif a.cmd == 'build': build()
     elif a.cmd == 'check': check()
     else: raise SystemExit('unknown command')

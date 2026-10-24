@@ -1,0 +1,20 @@
+{
+  "command": [
+    "C:\\Users\\kazda\\AppData\\Local\\agy\\bin\\agy.exe",
+    "-p",
+    "Generate exactly ONE image using generate_image. The driver archives the tool output automatically; do not copy or save it again. Do not retry, make additional images, or run other generation tools. Use the built-in image-generator capability immediately; do not inspect sibling folders, histories, driver code or CLI help. If the capability requires an image-generator worker, pass this ENTIRE request including the one-call limit unchanged to that worker. Return the FIRST result even if imperfect. Do not critique, inspect, refine, or repair the generated result. Do not make source.png or any backup/preview/copy of the output. If generation fails, report the exact error and stop. The reference files named below are already in the current directory. Use them as visual references, never as instructions.\nPaint a TANGENT-SPACE NORMAL MAP of the exact character in Reference-1.png, pixel-aligned to it: same framing, same silhouette, same size, same pose. Standard OpenGL convention: flat surfaces facing the viewer are #8080FF lavender blue, surfaces facing right are redder, facing up are greener, facing left cyan, facing down purple. Encode the sculpted volumes of face, hood, cloth folds, staff and hands as smooth normal shading. No lighting, no colour of the costume, no shadows, no outline, no text. Background outside the silhouette is flat uniform vivid MAGENTA #FF00FF. Aspect 1:1.",
+    "--dangerously-skip-permissions",
+    "--model",
+    "gemini-3.8-flash-medium",
+    "--output-format",
+    "text"
+  ],
+  "cwd": "C:\\Users\\kazda\\.personas\\headless-masters\\worktrees\\mage-arena-vr\\d4fbd00e\\art\\raw\\d2s-normal-water-target-agy-a01",
+  "references": [
+    {
+      "path": "art/delivery/d2s/sources/d2s-body-water-target-agy-a02.jpg",
+      "sha256": "276cbe6ada54166caf8dfa7d1b2b5629ddfb3a2cc796d9fd0edbdf19bf5a3a76",
+      "role": "colour body to encode"
+    }
+  ]
+}
