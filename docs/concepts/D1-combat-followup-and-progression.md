@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). It follows
+Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). A mage-side lever for the week curve is measured as a reading (6.8, 2026-10-24). It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -568,6 +568,121 @@ What this does not yet show:
   reading still overshoots the duels (66-73% from week 3), because mages and rivals are not levelled. That is the open 4.3
   lever 6.3 named, and it is not touched here.
 - **Teachers in the curve.** Lessons are not part of the reading: no ranked row is a taught signature.
+
+### 6.8 Mage-side lever: the reading (4.3), 2026-10-24
+
+6.3 and 6.7 measured a steady trainer overshooting the duels: 66-73% from week 3. Mages and rivals are not levelled, so the
+"untrained below 40% by week 4" target cannot happen either. This reading measures levers on the mage side. **It turns
+nothing on and changes no default.** `census:weeks` takes an opt-in `--arm`. Without one, the sweep is the 6.3 sweep: a
+rerun matched all 120 cell digests of `d1-weeks.json`. `week-census.test.ts` pins week 1 of both profiles to the plain
+census, hash for hash, on every wave and build, and checks one ranked, levelled 6.3 cell against its digest.
+
+**What the core supports today.** `createGames` has no option that levels a mage:
+- `enemyLevel` scales regular enemies only, by design ("named rivals and mage entrants keep theirs", `games.ts`).
+- `spellRanks` ranks the player only.
+- `rivalBuild` spawns the build with its authored `rival-builds.json` ranks.
+
+Both levers below are still reachable without a kernel change. An arm applies the core's exported `enemyHpMult` and
+`setSpellRanks` to the spawned opponent mage (a rival build, or a mage wave's Water proxy) before the first tick, the way
+the Lab applies an opponent build. This works for a census. **For the game, each lever needs a kernel lever**: a
+`createGames` option that levels or ranks the opponent mage, and `season.ts prepareBout` passing it. That is not built
+here, and the arena kernel and `arena/index.ts` are untouched.
+
+The three arms (`week-census.ts mageArms`; rival ranks come from the new `rivalProfiles` key in
+`progression-weeks.pc.json`, never below a build's authored ranks):
+- `level`: the opponent mage gets the regular enemies' HP multiplier for the week, 1.0 to 1.5 (`progression.pc.json`
+  `enemyLevels`).
+- `ranked`: the opponent mage's bolt and rows are ranked on the steady player's own curve, 1, 1.5, 2.5, 3.5, 4.5, 5. At
+  rank 5 a Fire or Air row with an ultimate form plays it.
+- `lag`: the same, one rank behind the steady player: 1, 1, 1.5, 2.5, 3.5, 4.
+  - The brief's third arm was a blend of the first two "if they bracket the target". They do not: both hold the steady
+    player at about 50% or under from week 2 (`ranked` 49.4-50.4% in weeks 2-4, then 44%; `level` 47% and falling). The bracket is 6.3 (no arm, too high) against `ranked` (at the floor). So the
+    third arm is the lighter version of the closer arm.
+
+Same format as 6.3: 200 seeds per cell, seeds 40000-40199, `npm --prefix packages/core run census:weeks -- --count 200
+--arm <arm> --tag d1-weeks-arm-<arm> --out-dir docs/change-requests/evidence`. Builds are listed in the order fire_close,
+fire_light, fire_heavy, air_light, air_close, air_heavy. No cell timed out in any arm.
+
+**Arm 1, `level`** (`docs/change-requests/evidence/d1-weeks-arm-level.json`)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 81% / 44.8 | 39% / 51.5 | 41 41 34 46 24 35 | 37% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 69% / 47.7 | 26% / 53.5 | 31 33 23 37 17 28 | 28% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 56% / 51.8 | 16% / 54.3 | 27 23 15 21 8 23 | 19% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 44% / 53.9 | 9% / 54.6 | 20 14 10 14 4 20 | 14% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 29% / 56.3 | 6% / 54.7 | 17 8 7 7 2 15 | 9% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 90% / 41.3 | 56% / 49.4 | 48 47 41 63 35 47 | 47% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 85% / 41.8 | 56% / 48.8 | 47 47 39 55 34 50 | 45% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 87% / 41.3 | 52% / 47.9 | 47 45 39 57 35 38 | 44% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 80% / 44.2 | 43% / 49.8 | 45 38 31 51 24 33 | 37% |
+| steady | 6 | 5 | 42.7 | 51.4 | 72% / 46.4 | 34% / 51.6 | 37 31 24 36 19 24 | 28% |
+
+**Arm 2, `ranked`** (`docs/change-requests/evidence/d1-weeks-arm-ranked.json`)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 82% / 40.0 | 40% / 47.6 | 36 38 40 45 28 45 | 39% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 67% / 39.1 | 30% / 44.6 | 36 27 32 34 18 31 | 30% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 54% / 37.2 | 17% / 42.0 | 28 18 19 25 12 30 | 22% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 54% / 37.2 | 16% / 42.0 | 30 18 19 19 11 27 | 21% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 54% / 37.2 | 16% / 42.0 | 30 18 19 18 11 27 | 20% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 87% / 37.1 | 55% / 44.5 | 49 47 55 56 39 57 | 50% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 86% / 34.1 | 59% / 41.4 | 52 44 56 55 41 56 | 50% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 86% / 30.8 | 62% / 37.9 | 53 42 48 57 49 49 | 49% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 83% / 29.7 | 61% / 37.0 | 48 38 46 51 40 44 | 44% |
+| steady | 6 | 5 | 42.7 | 51.4 | 83% / 29.7 | 61% / 37.0 | 48 39 46 47 40 44 | 44% |
+
+**Arm 3, `lag`** (`docs/change-requests/evidence/d1-weeks-arm-lag.json`)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 82% / 40.0 | 40% / 47.6 | 36 38 40 45 28 45 | 39% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 67% / 39.1 | 30% / 44.6 | 36 27 32 34 18 31 | 30% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 54% / 37.2 | 17% / 42.0 | 28 18 19 25 12 30 | 22% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 54% / 37.2 | 16% / 42.0 | 27 18 19 25 12 30 | 22% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 93% / 37.3 | 68% / 46.1 | 55 56 56 75 47 52 | 57% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 92% / 35.1 | 68% / 42.4 | 55 52 68 65 48 58 | 58% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 90% / 31.1 | 67% / 38.8 | 52 46 66 66 55 54 | 56% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 84% / 29.9 | 63% / 37.0 | 53 45 48 61 51 57 | 52% |
+| steady | 6 | 5 | 42.7 | 51.4 | 83% / 29.7 | 61% / 37.0 | 54 45 48 53 51 57 | 51% |
+
+**Against the 6 targets.** The targets are read on the builds mean: the six rival duels, the opponents the arms level.
+- **Week 1 cannot move.** Week 1 is rank 1 and level 1 in every reading, so it is the plain census: 47.3%, 2.7 points
+  under the 50% floor. No week lever reaches it. Weeks 2-6 are judged.
+- **`level`**: misses the steady target. Steady falls from 46.8% (week 2) to 28.3% (week 6). The rival's HP grows to 1.5x,
+  while rank power stops at 1.3x (rank 5 adds nothing to Water, 6.3). It hits the untrained target hard: 36.7% already in
+  week 2, 19.4% by week 4. It is the only arm that keeps the steady player's duel medians where they were.
+- **`ranked`**: misses the steady target, narrowly. Steady holds 50.3%, 50.4% and 49.4% in weeks 2-4, then 44.2% and
+  43.8%. The untrained player is at 21.9% by week 4. Ranks on both sides shorten the duels: by week 4, fire_light,
+  fire_heavy and air_close end in 36-40 s, under the 45 s floor.
+- **`lag`**: **hits both.** Steady wins 56.8%, 57.6%, 56.3%, 52.3% and 51.0% in weeks 2-6, all inside 50-65%. The
+  untrained player is at 38.6% in week 3 and 29.5% by week 4. Two costs:
+  - the final (wave 4, the Water proxy) is 67-68% for the steady player in weeks 2-4, over 65%. Single builds over 65%:
+    air_light 74.5% (week 2) and 65.5% (week 4), fire_heavy 68.0% (week 3) and 65.5% (week 4);
+  - the duels get shorter, as in `ranked`. By week 4, fire_heavy (38.5 s), air_close (38.2 s) and fire_light (44.1 s)
+    end under the 45 s floor, and air_close is at 35.2 s by week 5.
+- The semifinal mage wave (Water proxy, competence 1) is 83-93% for the steady player under `ranked` and `lag`, and
+  72-90% under `level`. It is 89% in week 1. It is a weak wave, not a duel, and only `level` brings it down, to 72% by
+  week 6.
+
+**Recommendation: `lag`, rival builds and mage entrants ranked one rank behind the steady player's curve (`rivalProfiles.lag`:
+1, 1, 1.5, 2.5, 3.5, 4). Director default 2026-10-24, owner to confirm.** It is the only arm that meets both targets in
+weeks 2-6. It also matches the 4.3 intent: the player who trains steadily stays a step ahead of the field, and the one who
+does not falls behind. Before it can play in a bout it needs:
+- the kernel lever above (a `createGames` option for the opponent mage's ranks, and `prepareBout` passing the week's
+  profile);
+- the player's own ranks reaching the bout, the save-schema ask 6.7 left open.
+
+Not measured here, and next for this lever: the short duels. A small HP level on top of `lag` would lengthen them. It
+would also lower the steady player's 51-58%, so it needs its own reading with the duration band as a third target.
 
 ## 7. Open questions for the spark
 
