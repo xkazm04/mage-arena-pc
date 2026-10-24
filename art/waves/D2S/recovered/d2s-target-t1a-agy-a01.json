@@ -1,0 +1,9 @@
+{
+  "job": "d2s-target-t1a-agy-a01",
+  "at": "2026-10-24T08:06:30.543048+00:00",
+  "sha256": "790b0ecb4621bd81a398b9bb6f9af1761470a718e224bbe1368c947c0ca6c01e",
+  "archive": "art/review/sources/d2s-target-t1a-agy-a01.jpg",
+  "charged_images": 1,
+  "diagnosis": "One visible generate_image call and one distinct output; the driver then failed to copy it into art/review/sources, which a fresh worktree lacks (ignored folder). Not a quota, rate or moderation result. Charge kept; ledger row unchanged.",
+  "fix": "d2_slice.call creates art/review/sources before every call."
+}

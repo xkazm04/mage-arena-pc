@@ -135,8 +135,42 @@ def publish(job):
 
 
 def generated(scene):
+    """Ledger rows of a scene; a recovered row reads as generated (the ledger row itself is never edited)."""
     jobs = [j for j in read(ART / 'usage.json')['jobs'] if j.get('wave') == WAVE and j['scene'] == scene]
-    return jobs
+    out = []
+    for j in jobs:
+        rec = BASE / 'recovered' / (j['id'] + '.json')
+        out.append({**j, 'status': 'generated', 'sha256': read(rec)['sha256'], 'archive': read(rec)['archive']} if rec.exists() else j)
+    return out
+
+
+def recover(job_id):
+    """A local archive failure after exactly one completed image call (WinError 3: art/review/sources
+    is absent in a fresh checkout). Keeps the charge and the ledger row; records the verified image and
+    clears only the agy latch that this local failure set, with the old latch archived."""
+    from providers import ProviderBudget
+    job = next(j for j in read(ART / 'usage.json')['jobs'] if j['id'] == job_id)
+    assert job['status'] == 'error-unknown-spend' and job['error'].startswith('[WinError 3]'), 'NOT_A_LOCAL_ARCHIVE_FAILURE'
+    assert len(job['tool_calls']) == 1 and job['unique_output_images'] == 1 and job['charged_images'] >= 1
+    raw = ART / 'raw' / job_id / '_driver' / 'source.jpg'
+    assert sha(raw) == job['output_files'][0]['sha256'], 'OUTPUT_HASH'
+    archive = ART / 'review/sources' / (job_id + '.jpg'); archive.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(raw, archive)
+    record = {'job': job_id, 'at': now(), 'sha256': sha(raw), 'archive': relative(archive), 'charged_images': job['charged_images'],
+              'diagnosis': 'One visible generate_image call and one distinct output; the driver then failed to copy it into art/review/sources, '
+                           'which a fresh worktree lacks (ignored folder). Not a quota, rate or moderation result. Charge kept; ledger row unchanged.',
+              'fix': 'd2_slice.call creates art/review/sources before every call.'}
+    write(BASE / 'recovered' / (job_id + '.json'), record)
+    history = read(ART / 'providers/history.json'); stop = history['providers']['agy']['stop']
+    if stop and stop['job'] == job_id:
+        write(BASE / 'latches' / ('agy-' + job_id + '.json'), stop)
+        ProviderBudget().event('agy', 'diagnosis', job_id, record['diagnosis'])
+        history = read(ART / 'providers/history.json'); history['providers']['agy']['stop'] = None
+        history['providers']['agy']['events'].append({'at': now(), 'event': 'latch-cleared-local-failure', 'job': job_id,
+            'reason': 'D2S: local archive path failure diagnosed; old latch in art/waves/D2S/latches; quota and rate errors still latch'})
+        write(ART / 'providers/history.json', history)
+    publish({**job, 'status': 'generated', 'archive': record['archive'], 'sha256': record['sha256']})
+    print('recovered', job_id)
 
 
 def kept(scene):
@@ -211,6 +245,7 @@ def call(scene, correction=None):
     start = read(BASE / 'start.json'); usage = read(ART / 'usage.json')
     if usage['stop']: raise RuntimeError('SPEND_STOP')
     if sum(j['charged_images'] for j in usage['jobs'][start['jobs']:]) >= SESSION_CAP: raise RuntimeError('D2S_SESSION_CAP')
+    (ART / 'review/sources').mkdir(parents=True, exist_ok=True)
     previous = generated(scene)
     if len(previous) >= SLOT_ATTEMPTS: raise RuntimeError('D2S_SLOT_ATTEMPT_CAP')
     item = scenes()[scene]
@@ -241,6 +276,7 @@ def call_normal(body_scene, correction=None):
     start = read(BASE / 'start.json'); usage = read(ART / 'usage.json')
     if usage['stop']: raise RuntimeError('SPEND_STOP')
     if sum(j['charged_images'] for j in usage['jobs'][start['jobs']:]) >= SESSION_CAP: raise RuntimeError('D2S_SESSION_CAP')
+    (ART / 'review/sources').mkdir(parents=True, exist_ok=True)
     body = kept(body_scene)
     if not body: raise RuntimeError('KEPT_BODY_REQUIRED')
     scene = normal_scene(body_scene)
@@ -459,6 +495,7 @@ if __name__ == '__main__':
     elif a.cmd == 'call': call(a.args[0], a.args[1] if len(a.args) > 1 else None)
     elif a.cmd == 'normal': call_normal(a.args[0], a.args[1] if len(a.args) > 1 else None)
     elif a.cmd == 'review': review(a.args[0], a.args[1], a.args[2], int(a.args[3]) if len(a.args) > 3 else None)
+    elif a.cmd == 'recover': recover(a.args[0])
     elif a.cmd == 'build': build()
     elif a.cmd == 'check': check()
     else: raise SystemExit('unknown command')
