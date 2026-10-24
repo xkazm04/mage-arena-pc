@@ -2,9 +2,22 @@ import { gameAudio } from "../audio.ts";
 import type { AudioSettings, Cue } from "../audio-policy.ts";
 import { cycleDifficulty, difficulty, difficultyName } from "../difficulty.ts";
 import { colours } from "../ui/kit.ts";
+import { uiScaleRange } from "../ui/anchors.ts";
+import { applyWindowMode, ensureQualityProfile } from "../settings/apply.ts";
+import {
+  qualityTiers,
+  settings as current,
+  updateSettings,
+} from "../settings/settings.ts";
 import { friendly } from "./chrome.ts";
 import type { GameShell } from "../game-shell.ts";
 
+/** The UI scale steps the settings button cycles through. */
+const uiScaleSteps = [0.75, 0.9, 1, 1.15, 1.3, 1.5].filter(
+  (v) => v >= uiScaleRange.min && v <= uiScaleRange.max,
+);
+const nextUiScale = (now: number) =>
+  uiScaleSteps.find((v) => v > now + 0.001) ?? uiScaleSteps[0]!;
 export function pauseScreen(s: GameShell) {
   s.scene("pause", "The world can wait", "PAUSED");
   const u = s.ui;
@@ -60,30 +73,69 @@ export function settings(s: GameShell) {
     u.text(label!, 132, 273 + i * 94, 24, colours.gold);
     u.text(value!, 132, 307 + i * 94, 32, colours.text, 1000);
   });
-  u.button("sound", "Sound & music", 1240, 242, 584, 98, () =>
+  const now = current();
+  const row = (i: number) => 242 + i * 90;
+  u.button("sound", "Sound & music", 1240, row(0), 584, 80, () =>
     s.audioSettings(),
   );
   u.button(
     "fullscreen",
-    "Toggle fullscreen",
+    `Window: ${now.windowMode === "fullscreen" ? "Fullscreen" : "Windowed"}`,
     1240,
-    366,
+    row(1),
     584,
-    98,
-    () => void u.fullscreen(),
+    80,
+    () =>
+      void s.run(async () => {
+        const mode =
+          now.windowMode === "fullscreen" ? "windowed" : "fullscreen";
+        updateSettings({ windowMode: mode });
+        if (!(await applyWindowMode(mode))) {
+          updateSettings({ windowMode: now.windowMode });
+          u.notice("Fullscreen is unavailable in this window.");
+        }
+        s.settings();
+      }),
+  );
+  u.button(
+    "ui-scale",
+    `UI scale: ${Math.round(now.uiScale * 100)}%`,
+    1240,
+    row(2),
+    584,
+    80,
+    () => {
+      updateSettings({ uiScale: nextUiScale(now.uiScale) });
+      s.settings();
+    },
+  );
+  u.button(
+    "graphics",
+    `Graphics: ${friendly(now.quality)}`,
+    1240,
+    row(3),
+    584,
+    80,
+    () => {
+      const tier =
+        qualityTiers[
+          (qualityTiers.indexOf(now.quality) + 1) % qualityTiers.length
+        ]!;
+      updateSettings({ quality: tier });
+      if (ensureQualityProfile()) return;
+      s.settings();
+      u.notice("Saved. Only the desktop graphics profile ships on PC today.");
+    },
   );
   u.button(
     "motion",
-    `Motion: ${localStorage.getItem("mage-motion") === "reduced" ? "Reduced" : "Full"}`,
+    `Motion: ${now.reducedMotion ? "Reduced" : "Full"}`,
     1240,
-    490,
+    row(4),
     584,
-    98,
+    80,
     () => {
-      localStorage.setItem(
-        "mage-motion",
-        localStorage.getItem("mage-motion") === "reduced" ? "full" : "reduced",
-      );
+      updateSettings({ reducedMotion: !now.reducedMotion });
       s.settings();
     },
   );
@@ -91,24 +143,28 @@ export function settings(s: GameShell) {
     "difficulty",
     `Difficulty: ${difficultyName(difficulty())}`,
     1240,
-    614,
+    row(5),
     584,
-    98,
+    80,
     () => {
       cycleDifficulty();
       s.settings();
     },
   );
   u.text(
-    "Difficulty sets how fast rivals, soldiers and creatures move and attack, from the next bout.\n\nAim at the feet. The camera stays fixed until you approach an edge. Magic can be absorbed; steel and unblockable marks must be escaped.",
+    "Difficulty sets how fast rivals, soldiers and creatures move and attack, from the next bout. Aim at the feet; magic can be absorbed, steel and unblockable marks must be escaped.",
     1256,
-    740,
-    24,
+    792,
+    22,
     colours.muted,
     548,
   );
   s.back(() => s.pauseScreen());
-  s.footer();
+  s.footer(
+    u.modality === "gamepad"
+      ? "D-PAD  Navigate     A  Choose     B  Back"
+      : "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+  );
   u.end();
 }
 export function audioSettings(s: GameShell) {
