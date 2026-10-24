@@ -331,6 +331,12 @@ preset's own reading, not an effect of either arm. **Verdict: both declined, nei
 canonical number changes, so there is nothing to return to VR and no CR-009. Goldens, the default census digests and
 CR-002/CR-007 are untouched: this step changes no code.
 
+**Margin note: air_close on the 40% floor (6.2).** No counter change moved it. In the committed builds census,
+air_close holds **40.0%** reference wins at a 50.7 s median (200 seeds; digest `ff684a89`, equal to
+`d1-ultimates-after.json`). Every Tide Ward arm gives the same figures and the same digest: the Rotation reference does not
+slot the mend line, and Air Form's 61.1% coverage is unchanged. Against the Mirror tide supplement air_close gives 49.0% at
+54.5 s in every arm. It still sits exactly on the floor, and it was not tuned here.
+
 ## 7. Open questions for the spark
 
 1. Which close-duel option (A-E) fits the feel the owner wants: trading blows, dancing in and out, or guard breaks?
