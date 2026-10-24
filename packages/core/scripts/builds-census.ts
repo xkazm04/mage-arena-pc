@@ -3,7 +3,7 @@
 // named-census.ts, so report-builds.ts and builds-census.test.ts share one runner.
 // The curve signature (owner target, spark wave 5): the rival's win share among fights that end before the reference player's
 // tier III unlock, against its win share among fights that reach the reference player's tier IV.
-import { combat, createGames, presets, runtime, seconds, spells, stateHash, stepGames, threats, ticks, tiro } from '../src/arena/index.ts';
+import { combat, createGames, presets, runtime, seconds, spells, stateHash, stepGames, threats, ticks, tiro, type SpellRanks } from '../src/arena/index.ts';
 import { answersShape, rivalBuilds, roleOf } from '../src/arena/archetypes.ts';
 import { schoolSpellById } from '../src/arena/schools.ts';
 import type { ShapeClass } from '../src/arena/mage-ai.ts';
@@ -19,11 +19,12 @@ export type AnswerReading = 'answered' | 'other' | 'none';
 const tideWard = spells.find(s => s.effect === 'ward')!;
 const answerReading = (aimed: (ShapeClass | undefined)[], shape: ShapeClass): AnswerReading => aimed.includes(shape) ? 'answered' : aimed.length ? 'other' : 'none';
 
-/** `compositionName` swaps the reference preset (a supplement: 'Mirror tide' slots Tide Ward, which Rotation does not). */
-export function runBuildFight(seed: number, buildId: string, maxSeconds = runtime.games.fightTimeoutS, compositionName = runtime.games.referencePreset) {
+/** `compositionName` swaps the reference preset (a supplement: 'Mirror tide' slots Tide Ward, which Rotation does not);
+ * `week` adds the week sweep's enemy level and reference spell ranks (week-census.ts). */
+export function runBuildFight(seed: number, buildId: string, maxSeconds = runtime.games.fightTimeoutS, compositionName = runtime.games.referencePreset, week: { enemyLevel?: number; spellRanks?: SpellRanks } = {}) {
   const build = rivalBuilds[buildId]; if (!build) throw Error(`Unknown build ${buildId}`);
   const composition = presets.find(p => p.name === compositionName)!;
-  const g = createGames(seed, composition, build.wave, true, undefined, undefined, undefined, { rivalBuild: buildId });
+  const g = createGames(seed, composition, build.wave, true, undefined, undefined, undefined, { ...week, rivalBuild: buildId });
   const rival = g.state.actors.find(a => a.schoolState !== undefined && a.team !== g.player.team)!;
   const casts: Record<string, number> = {}, answers: Record<string, Record<AnswerReading, number>> = {};
   const distanceSum: number[] = [], distanceSteps: number[] = []; let distanceTotal = 0, steps = 0;

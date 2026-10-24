@@ -1,0 +1,1719 @@
+{
+  "label": "simulated",
+  "reading": "D1 4.4 week sweep; a reading only, nothing tuned from it",
+  "command": "npm --prefix packages/core run census:weeks -- --count 200 --tag d1-weeks --out-dir docs/change-requests/evidence",
+  "countPerCell": 200,
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation",
+    "ranks": {
+      "vigor": 1,
+      "focus": 1,
+      "nerve": 1
+    }
+  },
+  "profiles": {
+    "untrained": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "steady": [
+      1,
+      1.5,
+      2.5,
+      3.5,
+      4.5,
+      5
+    ]
+  },
+  "cells": [
+    {
+      "profile": "untrained",
+      "week": 1,
+      "averageSpellRank": 1,
+      "enemyLevel": 1,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 35.31666666666667,
+          "digest": "5ea5e2d20666842b228ebf15c50c8088b41878229cb3bfeaafb03774180aee20"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 42.6,
+          "digest": "40c5fc7a80d797204ef154518d75961aea1a82ce24c953330d1deb78d8f68eba"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.885,
+          "timeouts": 0,
+          "medianS": 40.1,
+          "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.535,
+          "timeouts": 0,
+          "medianS": 49.2,
+          "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.495,
+          "timeouts": 0,
+          "medianS": 66.95,
+          "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.505,
+          "timeouts": 0,
+          "medianS": 53.95,
+          "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.415,
+          "timeouts": 0,
+          "medianS": 46.55,
+          "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 63.516666666666666,
+          "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.4,
+          "timeouts": 0,
+          "medianS": 50.733333333333334,
+          "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.46,
+          "timeouts": 0,
+          "medianS": 75.35,
+          "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+        }
+      ]
+    },
+    {
+      "profile": "untrained",
+      "week": 2,
+      "averageSpellRank": 1,
+      "enemyLevel": 2,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 41.18333333333333,
+          "digest": "abdef130aff79175b2e15a3f026ccc5aa80a5e7a1e394c249481064f43d145cd"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 47.56666666666667,
+          "digest": "4c1a086f0a9f7a9bf5a4e71f89a86c66abeaa506ec2db8450dc0140d93001821"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.885,
+          "timeouts": 0,
+          "medianS": 40.1,
+          "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.535,
+          "timeouts": 0,
+          "medianS": 49.2,
+          "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.495,
+          "timeouts": 0,
+          "medianS": 66.95,
+          "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.505,
+          "timeouts": 0,
+          "medianS": 53.95,
+          "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.415,
+          "timeouts": 0,
+          "medianS": 46.55,
+          "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 63.516666666666666,
+          "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.4,
+          "timeouts": 0,
+          "medianS": 50.733333333333334,
+          "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.46,
+          "timeouts": 0,
+          "medianS": 75.35,
+          "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+        }
+      ]
+    },
+    {
+      "profile": "untrained",
+      "week": 3,
+      "averageSpellRank": 1,
+      "enemyLevel": 3,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 44.88333333333333,
+          "digest": "2e76e61130cdbb3b79d9e2264c873662bc15094e08debe68552b4fd79e143208"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 52.166666666666664,
+          "digest": "114f13e89286a98e0817c08b99e983eb0c4c6b41c185bd0ce650019f0f99ab21"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.885,
+          "timeouts": 0,
+          "medianS": 40.1,
+          "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.535,
+          "timeouts": 0,
+          "medianS": 49.2,
+          "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.495,
+          "timeouts": 0,
+          "medianS": 66.95,
+          "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.505,
+          "timeouts": 0,
+          "medianS": 53.95,
+          "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.415,
+          "timeouts": 0,
+          "medianS": 46.55,
+          "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 63.516666666666666,
+          "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.4,
+          "timeouts": 0,
+          "medianS": 50.733333333333334,
+          "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.46,
+          "timeouts": 0,
+          "medianS": 75.35,
+          "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+        }
+      ]
+    },
+    {
+      "profile": "untrained",
+      "week": 4,
+      "averageSpellRank": 1,
+      "enemyLevel": 4,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 49.68333333333333,
+          "digest": "3426986959d2ff140e118719c61982ac79efecb28811729ea32a1ade4d199d7b"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 56.21666666666667,
+          "digest": "c14d3cae962901002ce9fb4ffedb672b4e9af6b2161da762673dd6b7da5a7d08"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.885,
+          "timeouts": 0,
+          "medianS": 40.1,
+          "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.535,
+          "timeouts": 0,
+          "medianS": 49.2,
+          "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.495,
+          "timeouts": 0,
+          "medianS": 66.95,
+          "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.505,
+          "timeouts": 0,
+          "medianS": 53.95,
+          "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.415,
+          "timeouts": 0,
+          "medianS": 46.55,
+          "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 63.516666666666666,
+          "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.4,
+          "timeouts": 0,
+          "medianS": 50.733333333333334,
+          "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.46,
+          "timeouts": 0,
+          "medianS": 75.35,
+          "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+        }
+      ]
+    },
+    {
+      "profile": "untrained",
+      "week": 5,
+      "averageSpellRank": 1,
+      "enemyLevel": 5,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 54.93333333333333,
+          "digest": "46f956cbdd0fd4791346b40f21ce28fa7b621e2e19913ac5861edc3c3ca20f94"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 60.9,
+          "digest": "f69fe7baae13f7a24959f11e946e2aa536f2debd549ecdf62288bcaa9802c4e3"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.885,
+          "timeouts": 0,
+          "medianS": 40.1,
+          "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.535,
+          "timeouts": 0,
+          "medianS": 49.2,
+          "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.495,
+          "timeouts": 0,
+          "medianS": 66.95,
+          "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.505,
+          "timeouts": 0,
+          "medianS": 53.95,
+          "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.415,
+          "timeouts": 0,
+          "medianS": 46.55,
+          "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 63.516666666666666,
+          "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.4,
+          "timeouts": 0,
+          "medianS": 50.733333333333334,
+          "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.46,
+          "timeouts": 0,
+          "medianS": 75.35,
+          "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+        }
+      ]
+    },
+    {
+      "profile": "untrained",
+      "week": 6,
+      "averageSpellRank": 1,
+      "enemyLevel": 6,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 59.266666666666666,
+          "digest": "cfdbf0ae6dff0cb9d40ad965031afac902204ade3e4184555d1856df68ba22c8"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 65.28333333333333,
+          "digest": "bfc46cb0b8ffab7442e230ef589a239710eba15e3d254b3733dcdc8aaca72fe5"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.885,
+          "timeouts": 0,
+          "medianS": 40.1,
+          "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.535,
+          "timeouts": 0,
+          "medianS": 49.2,
+          "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.495,
+          "timeouts": 0,
+          "medianS": 66.95,
+          "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.505,
+          "timeouts": 0,
+          "medianS": 53.95,
+          "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.415,
+          "timeouts": 0,
+          "medianS": 46.55,
+          "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 63.516666666666666,
+          "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.4,
+          "timeouts": 0,
+          "medianS": 50.733333333333334,
+          "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.46,
+          "timeouts": 0,
+          "medianS": 75.35,
+          "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+        }
+      ]
+    },
+    {
+      "profile": "steady",
+      "week": 1,
+      "averageSpellRank": 1,
+      "enemyLevel": 1,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 35.31666666666667,
+          "digest": "5ea5e2d20666842b228ebf15c50c8088b41878229cb3bfeaafb03774180aee20"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 42.6,
+          "digest": "40c5fc7a80d797204ef154518d75961aea1a82ce24c953330d1deb78d8f68eba"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.885,
+          "timeouts": 0,
+          "medianS": 40.1,
+          "digest": "600b2d4e76dd67e4576fc5a8f9c2a07c3a98a687ed7bf35c9efbb7d9647676b8"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.535,
+          "timeouts": 0,
+          "medianS": 49.2,
+          "digest": "6f7af454fb032b0d561e85f13fc290b142d2c35372522898089e032231203f64"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.495,
+          "timeouts": 0,
+          "medianS": 66.95,
+          "digest": "dd746f4edfbdd0cf3b1aac262615690a2b7d9e199e2feb770afe829f3990b05a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.505,
+          "timeouts": 0,
+          "medianS": 53.95,
+          "digest": "e53a9a00c192b1d691ae3f406eaadcb4f45bb52ec4a1f8ad634c5654501661a0"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.415,
+          "timeouts": 0,
+          "medianS": 46.55,
+          "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 63.516666666666666,
+          "digest": "44fbb5a4b7540ca2797695fca5a8b403e6c96a2bd304d9f4a0916bf98978c474"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.4,
+          "timeouts": 0,
+          "medianS": 50.733333333333334,
+          "digest": "ff684a89912084749bdc37cb75b0c04c88d62e0ce8accc898d7c3870bbcaa0b4"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.46,
+          "timeouts": 0,
+          "medianS": 75.35,
+          "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+        }
+      ]
+    },
+    {
+      "profile": "steady",
+      "week": 2,
+      "averageSpellRank": 1.5,
+      "enemyLevel": 2,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 36.81666666666667,
+          "digest": "40675d61e4913e22c3e71ba6abc2f2cc6b556fec5df3750a21c605c2b2652edb"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 44.016666666666666,
+          "digest": "e693d49374e50fa4c707ea3c4be16d7b388645dd811cbef296e656b12a1a3aa3"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.93,
+          "timeouts": 0,
+          "medianS": 37.3,
+          "digest": "2580bd5e120932ffd516475d3cb4cb1d9d5ea4cb76fca759d694b47ccde850e2"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.68,
+          "timeouts": 0,
+          "medianS": 46.083333333333336,
+          "digest": "9c7f3e6d19f3a88432e4103b67893b916b753ddad6f055a9aaa9c376db1f2d07"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.545,
+          "timeouts": 0,
+          "medianS": 61.35,
+          "digest": "fa5d682ef7c1a8538ac4d7e9bfddcc040058697efed51025987cf513bba4f25a"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.565,
+          "timeouts": 0,
+          "medianS": 51.25,
+          "digest": "0b0cb6806235a32c17a3849c242c5565aaa13600a40917066392c269228b5981"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.56,
+          "timeouts": 0,
+          "medianS": 44.483333333333334,
+          "digest": "47fffbb18e76ec57a306d98217e7bb44e5844903a72789638e1cdaade2215736"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.745,
+          "timeouts": 0,
+          "medianS": 59.916666666666664,
+          "digest": "575af4c853f46c18a9b4ef629c3bbc0145e2c6aa4d674b29137dac4787125977"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.47,
+          "timeouts": 0,
+          "medianS": 47.733333333333334,
+          "digest": "0183ae8697f46c293cb292cce9ecedcb6004a703ddcb671accc6c1766048a2ae"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.52,
+          "timeouts": 0,
+          "medianS": 72.16666666666667,
+          "digest": "58d91a98f700bbfed8daefc9adea24d03cd33765f68e8bfd1c5d3f1b3cb562ed"
+        }
+      ]
+    },
+    {
+      "profile": "steady",
+      "week": 3,
+      "averageSpellRank": 2.5,
+      "enemyLevel": 3,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 36.416666666666664,
+          "digest": "2447195fc8c20a29662ce78afacaf1b18c7aa954203c8ab9e11f30b772a0efb0"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 44.56666666666667,
+          "digest": "79a2341e3c8066cbfb88daa07afa2662f0887bcc27f7a071d452488ecb1e3190"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.98,
+          "timeouts": 0,
+          "medianS": 34.56666666666667,
+          "digest": "2b0fb91072bfb8aa6acd4cc7af4b352adb42a88fbe9e83d20745ad5ebd88ec5e"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.82,
+          "timeouts": 0,
+          "medianS": 43.35,
+          "digest": "02603bb5310725e1ff457c80400a75fa73cdc1485e87735d1bf7892b157fa261"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.665,
+          "timeouts": 0,
+          "medianS": 58.11666666666667,
+          "digest": "39ae198a7ea6838eb38512ed59676fbf502c570ecf41f7edf9f10d78669b2f22"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.645,
+          "timeouts": 0,
+          "medianS": 50.86666666666667,
+          "digest": "212253eb3af4f803db1018412efbd127ae426c59e50315ee4f59230ee9d2a7b6"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.635,
+          "timeouts": 0,
+          "medianS": 40.95,
+          "digest": "e3c1a2665657ee8cdada38a0bcf9d055da476a94b6963719743e166a916ab4a3"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.75,
+          "timeouts": 0,
+          "medianS": 54.96666666666667,
+          "digest": "531b28fdcd20712c7967134b936c92d9f8da5db01744ba71b820abcf17e6c37d"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.61,
+          "timeouts": 0,
+          "medianS": 44.516666666666666,
+          "digest": "bc39788812ff840e832cbf9d9ab0f89004882ca7b93a9d24b627b2f203188f53"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.655,
+          "timeouts": 0,
+          "medianS": 68.98333333333333,
+          "digest": "b38c46deed50c53e3a4d5bae27a6a5bed4223b0a962a1a247ba0aaa3b3cb8b63"
+        }
+      ]
+    },
+    {
+      "profile": "steady",
+      "week": 4,
+      "averageSpellRank": 3.5,
+      "enemyLevel": 4,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 36.916666666666664,
+          "digest": "913acfe0b16fa4ee5f69f3cadab705dbe0ed4222047162626b129ec50ac9f1d5"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 43.266666666666666,
+          "digest": "fceaff7830c149790fb63715d437e1ec2e0cad5f922d67ab6267687f9e6417bb"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.99,
+          "timeouts": 0,
+          "medianS": 31.3,
+          "digest": "025e390536c3a8c3d23bad38e8e5b557836b4ba2588689910c4cb13a33aed42c"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.92,
+          "timeouts": 0,
+          "medianS": 40.45,
+          "digest": "4dc151ef0cad7b7409bf2c97463ef6da7f9a8609bb3a9cafd1c3495dd0e61440"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.74,
+          "timeouts": 0,
+          "medianS": 56.75,
+          "digest": "b171a3e22fa9562824dc17f540c98b5446324827e480a96bff6419563fd86970"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.635,
+          "timeouts": 0,
+          "medianS": 47.25,
+          "digest": "1159be9bf96d112a50ebd63963792f58e224d01d1301213d697a04c0fbbc3f68"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.75,
+          "timeouts": 0,
+          "medianS": 38.95,
+          "digest": "c75b5946090ac54746a2a5925f880d7b3af3ef23f41d17bfee5a92e7b0e77ba5"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.85,
+          "timeouts": 0,
+          "medianS": 52.21666666666667,
+          "digest": "8af1da1a394b80cb080103392bdbafd15137234618f38f544ca88cbe526c11f5"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.725,
+          "timeouts": 0,
+          "medianS": 42.266666666666666,
+          "digest": "18210859792f4a9453233e02aaf72526111db3afa59ad69997549511c9ef76e9"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.635,
+          "timeouts": 0,
+          "medianS": 63.05,
+          "digest": "0b76f6b72b7de5de6a896d04ccab276393e42066e578885ba2baddbc049677f3"
+        }
+      ]
+    },
+    {
+      "profile": "steady",
+      "week": 5,
+      "averageSpellRank": 4.5,
+      "enemyLevel": 5,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 39,
+          "digest": "658353885ce4ec99a558e7bdf285fa55890894625e782ee2a9b36705831abbbb"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 46.416666666666664,
+          "digest": "f88a2179be475ee00f4c879d756840096a675a1869e571d935503dd982dd2e5e"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.99,
+          "timeouts": 0,
+          "medianS": 31.066666666666666,
+          "digest": "fb0a79105a495e0e78e5c814d966b0cc179a5b76fd47cee0bd8d45a4c735f24d"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.925,
+          "timeouts": 0,
+          "medianS": 39.833333333333336,
+          "digest": "67e1160a20dc68f60c6e335d7fed96bf738082ffe85335610f8d99b4b55e9748"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.72,
+          "timeouts": 0,
+          "medianS": 55.31666666666667,
+          "digest": "80905a5db19a57ea4ed105ffac4f03db75f75ce82c97f02189fb669a03d6b79b"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.66,
+          "timeouts": 0,
+          "medianS": 47.65,
+          "digest": "9d3ae4f8aea8ee42b3ee9d5b96e2cd58466633a055d3d5113a47f09af160d95f"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.765,
+          "timeouts": 0,
+          "medianS": 38.983333333333334,
+          "digest": "02d9d842019f022bc60cb3aa20865f33d7dc4854e6746af138b680d6722c8c23"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.865,
+          "timeouts": 0,
+          "medianS": 51.11666666666667,
+          "digest": "10d16386c6f3155f4489e1f7a78e84f543b0bed50142369c7457a1021a6311db"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.77,
+          "timeouts": 0,
+          "medianS": 42.016666666666666,
+          "digest": "20d6a6aa4df0fd32dd0f86a0e7062c54f9e5beea96b11a86b78b73875e9d6c0b"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.59,
+          "timeouts": 0,
+          "medianS": 61.85,
+          "digest": "2923d963361bbf1a6abbe03c11bd3d43463f2cfef9e7fc575393595d0949770a"
+        }
+      ]
+    },
+    {
+      "profile": "steady",
+      "week": 6,
+      "averageSpellRank": 5,
+      "enemyLevel": 6,
+      "waves": [
+        {
+          "id": "wave 1",
+          "kind": "soldiers",
+          "targetDurationS": [
+            25,
+            45
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 42.733333333333334,
+          "digest": "25bc651f8a1a8f9431bb3d06d4317b7886b2d4f2539b97ea2bb39ffae288b46c"
+        },
+        {
+          "id": "wave 2",
+          "kind": "creatures",
+          "targetDurationS": [
+            35,
+            60
+          ],
+          "fights": 200,
+          "winRate": 1,
+          "timeouts": 0,
+          "medianS": 51.4,
+          "digest": "1161dce6ae07becee67de3cd9cf2c6ab7140a5a39356c5c77cfec8d06e6c165e"
+        },
+        {
+          "id": "wave 3",
+          "kind": "semifinal",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.99,
+          "timeouts": 0,
+          "medianS": 31.066666666666666,
+          "digest": "a81e84945784455f540444c7b2a49c9cd700e1bfe6aea75b6b950d3dd2cd272b"
+        },
+        {
+          "id": "wave 4",
+          "kind": "final",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.925,
+          "timeouts": 0,
+          "medianS": 39.833333333333336,
+          "digest": "4094a19df7a3094a5f28f30fc0bc9b34284e76fa9b4620d87bd991d1c6b221c4"
+        }
+      ],
+      "builds": [
+        {
+          "id": "fire_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.72,
+          "timeouts": 0,
+          "medianS": 55.31666666666667,
+          "digest": "5f59675f1f409c1de0cda43c9d6203f504a825876f558b6e7bcd279521635be4"
+        },
+        {
+          "id": "fire_light",
+          "kind": "light (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.66,
+          "timeouts": 0,
+          "medianS": 47.65,
+          "digest": "fdc3a1fa5b65bb50e8a8e152f5ef4aa076b58089d6d610a7fe00fff68757ff9a"
+        },
+        {
+          "id": "fire_heavy",
+          "kind": "heavy (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.765,
+          "timeouts": 0,
+          "medianS": 38.983333333333334,
+          "digest": "8dbf784f2f9a9c0a85d61377a0e6e1a8cb014ce77f81ea3fc834fe8f2ee0993b"
+        },
+        {
+          "id": "air_light",
+          "kind": "light (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.865,
+          "timeouts": 0,
+          "medianS": 51.11666666666667,
+          "digest": "503715671226ea95801ed7f6693e894dad806e235241749103d6fdb677b2a927"
+        },
+        {
+          "id": "air_close",
+          "kind": "close (wave 3)",
+          "targetDurationS": [
+            45,
+            75
+          ],
+          "fights": 200,
+          "winRate": 0.77,
+          "timeouts": 0,
+          "medianS": 42.016666666666666,
+          "digest": "28859a80d7f1f5e24ec3e08e7ad2fb0c9d827802bf40715e7809c45c38102460"
+        },
+        {
+          "id": "air_heavy",
+          "kind": "heavy (wave 4)",
+          "targetDurationS": [
+            45,
+            80
+          ],
+          "fights": 200,
+          "winRate": 0.59,
+          "timeouts": 0,
+          "medianS": 61.85,
+          "digest": "a3d5f85004292edb85e12fb220a9998c82be0c2764597af8439273196a9d5c31"
+        }
+      ]
+    }
+  ]
+}

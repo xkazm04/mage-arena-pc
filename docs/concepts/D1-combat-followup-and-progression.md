@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions. Section 5 slice steps 1-2 (exchange windows; Third Blade rework and the heavy payoff sequence) are built (2026-10-24, sections 6.1-6.2). It follows
+Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -193,6 +193,50 @@ only committed rank-5 row, and it stays inside the band.
 Evidence: `docs/change-requests/evidence/d1-ultimates-after.json`. Nothing in this step touches Water, parity or the
 default census.
 
+### 6.3 Slice step 3: the week sweep (4.4), a reading only, 2026-10-24
+
+`npm --prefix packages/core run census:weeks` (new) runs every campaign week at `enemyLevel = week`. It covers the four
+default-census Tiro waves (report-w4's reference player) and the six rival builds, 200 seeds per cell, with the slice's
+steps 1-2 in place. The reference player's spell ranks come from a progression profile, which is data:
+`packages/core/src/arena/data/progression-weeks.pc.json`. Each week holds an average rank over the bolt and every line
+row; a .5 alternates the two ranks around it.
+- `untrained` stays at rank 1.
+- `steady` follows the 4.3 target "about N - 0.5 by week N": 1, 1.5, 2.5, 3.5, 4.5, then 5 (capped).
+- Stats and agility stay at 1/1/1: no camp earns agility yet.
+
+Week 1 of either profile is the plain census fight, hash for hash (`week-census.test.ts`). Evidence:
+`docs/change-requests/evidence/d1-weeks.json`. **Nothing was tuned from this table.**
+
+Waves 1-2 show the reference's median in seconds (it wins all of them). Waves 3-4 show reference wins / median. The
+builds column lists reference wins in the order fire_close, fire_light, fire_heavy, air_light, air_close, air_heavy.
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 93% / 37.3 | 68% / 46.1 | 55 56 56 75 47 52 | 57% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 98% / 34.6 | 82% / 43.4 | 67 65 64 75 61 66 | 66% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 99% / 31.3 | 92% / 40.5 | 74 64 75 85 73 64 | 72% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 99% / 31.1 | 93% / 39.8 | 72 66 77 87 77 59 | 73% |
+| steady | 6 | 5 | 42.7 | 51.4 | 99% / 31.1 | 93% / 39.8 | 72 66 77 87 77 59 | 73% |
+
+No cell timed out. The reading, for the progression design (4.3) to start from:
+- **Only regular enemies feel the week.** An untrained player's mage waves and rival duels are the same every week,
+  because mages and rivals are not levelled. So the "falls below 40% by week 4" target cannot happen. What the untrained
+  player loses is time: wave 1 goes from 35.3 s to 59.3 s, and wave 2 from 42.6 s to 65.3 s, past its band by week 6.
+- **Steady ranks overshoot the duels.** With nothing levelling the mages, a steady player passes the 50-65% target from
+  week 3 (66% across the builds), and reaches 72-73% from week 4. The final goes from 54% to 93%.
+- **Steady ranks hold the regular waves level.** Wave 1 stays at 35-39 s through week 5, as WP1 measured.
+- **Rank 5 adds nothing to Water.** Weeks 5 and 6 are identical in the mage cells, because Water rows have no ultimate
+  forms and rank 5 power equals rank 4. A Water player's rank 5 buys only power on the regular waves.
+- So the progression curve needs a lever on the mage side as well as the enemy-level one: rivals that level by week, or
+  authored builds per week. That decision belongs to 4.3 and the owner, not to this reading.
+
 ## 7. Open questions for the spark
 
 1. Which close-duel option (A-E) fits the feel the owner wants: trading blows, dancing in and out, or guard breaks?
@@ -201,6 +245,9 @@ default census.
 2. Spell-rank currency: Games results, camp lessons, or both?
 3. Should a rank-5 ultimate be rare (one per build) or common late in the season?
 4. Do changes to canonical numbers (Ring unlock, Tide Ward) go to VR as change requests, or stay PC overlay deviations?
+   **They stay PC overlay deviations, and each is returned to VR as a change-request proposal, never applied to VR.
+   For this slice: the exchange-window rule and its four numbers, in `docs/change-requests/CR-008.md`. Director default
+   2026-10-24, owner to confirm.**
 
 ## 8. Tools to use
 
