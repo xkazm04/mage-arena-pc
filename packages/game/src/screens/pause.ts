@@ -66,7 +66,7 @@ export function settings(s: GameShell) {
     ["AIM & CAST", "Mouse + left button  /  Right stick + RT"],
     ["ABSORB", "Right button held  /  LT held"],
     ["ROLL & SPRINT", "Space + Shift  /  A + left stick press"],
-    ["SPELL SLOTS", "1–4 or wheel  /  LB and RB"],
+    ["SPELL SLOTS", "1–5 or wheel  /  LB and RB"],
     ["MENUS", "Arrows + Enter  /  D-pad + A, B back"],
   ];
   lines.forEach(([label, value], i) => {

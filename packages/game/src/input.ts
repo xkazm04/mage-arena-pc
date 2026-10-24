@@ -9,6 +9,8 @@ export class ArenaInput {
   cast = false;
   absorb = false;
   slot = 0;
+  /** Slots the current HUD offers (the HUD sets it when built); the wheel and bumpers cycle across them. */
+  slotCount = 4;
   private pointer?: Vec;
   private rollQueued = false;
   private castQueued = false;
@@ -44,7 +46,10 @@ export class ArenaInput {
         e.preventDefault();
       this.keys.add(e.code);
       if (e.code === "Space" && !e.repeat) this.rollQueued = true;
-      if (/^Digit[1-4]$/.test(e.code)) this.slot = Number(e.code.slice(-1)) - 1;
+      if (/^Digit[1-5]$/.test(e.code)) {
+        const slot = Number(e.code.slice(-1)) - 1;
+        if (slot < this.slotCount) this.slot = slot;
+      }
     });
     listen("keyup", (e) => this.keys.delete(e.code));
     canvas.addEventListener("pointermove", (e) => this.point(e), { signal });
@@ -77,7 +82,7 @@ export class ArenaInput {
       (e) => {
         if (!this.enabled()) return;
         e.preventDefault();
-        this.slot = (this.slot + Math.sign(e.deltaY) + 4) % 4;
+        this.slot = (this.slot + Math.sign(e.deltaY) + this.slotCount) % this.slotCount;
       },
       { passive: false, signal },
     );
@@ -141,8 +146,8 @@ export class ArenaInput {
       this.padAbsorb = !!buttons[6];
       this.padSprint = !!buttons[10];
       if (buttons[0] && !this.padPrevious[0]) this.rollQueued = true;
-      if (buttons[4] && !this.padPrevious[4]) this.slot = (this.slot + 3) % 4;
-      if (buttons[5] && !this.padPrevious[5]) this.slot = (this.slot + 1) % 4;
+      if (buttons[4] && !this.padPrevious[4]) this.slot = (this.slot + this.slotCount - 1) % this.slotCount;
+      if (buttons[5] && !this.padPrevious[5]) this.slot = (this.slot + 1) % this.slotCount;
       const aim = stick(pad, 2);
       if (aim.x || aim.y) {
         const m = cameraMetrics(this.camera()),

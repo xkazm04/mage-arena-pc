@@ -48,7 +48,7 @@ export interface HudHost {
   readonly lab?: LabSession;
   readonly games?: Games;
   readonly practice?: unknown;
-  readonly input: { slot: number };
+  readonly input: { slot: number; slotCount?: number };
   readonly settings: () => void;
   endPractice(): void;
   lastPerfect: number;
@@ -73,6 +73,7 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
     school = hudSchool(p);
   u.begin("arena");
   u.onBack = game.settings;
+  game.input.slotCount = slotCount(school);
   const { dl, dr } = hudAnchors(u.edges);
   u.text(
     game.practice
