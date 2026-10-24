@@ -115,7 +115,7 @@ async function generate(kind, a) {
   if (fs.existsSync(stopPath)) throw Error('Generation stopped: persistent STOP.json exists');
   const b = budget(), row = roundOf(b.wave);
   if (row.launcher !== 'brief') throw Error(`${b.wave} requires the dedicated structured composition launcher`);
-  if (!['proofs', 'audition'].includes(b.status)) throw Error('Generation closed in budget.json');
+  if (!['proofs', 'audition', 'cues'].includes(b.status)) throw Error('Generation closed in budget.json');
   const previous = fs.existsSync(statePath) ? json(statePath) : { pending: null };
   if (previous.pending) throw Error('Unresolved billable reservation: reconcile before more generation');
   const need = k => { if (typeof a[k] !== 'string' || !a[k]) throw Error(`--${k} required`); return a[k]; };
@@ -125,9 +125,15 @@ async function generate(kind, a) {
   if (kind === 'sfx' && (!Number.isFinite(seconds) || seconds < 0.5 || seconds > 30)) throw Error('SFX duration must be 0.5–30 s');
   if (kind === 'music' && (!Number.isFinite(seconds) || seconds < 10 || seconds > row.musicMaxSeconds)) throw Error('Music duration outside authorized audition range');
   const out = path.resolve(root, need('out'));
-  const round = row.dir;
-  const relative = path.relative(path.join(root, 'docs/audio/audition', round), out);
-  if (relative.startsWith('..') || path.isAbsolute(relative) || !out.endsWith('.mp3')) throw Error(`Outputs must be MP3s inside audition/${round}`);
+  const outDir = row.outDir ? path.join(root, row.outDir) : path.join(root, 'docs/audio/audition', row.dir);
+  const relative = path.relative(outDir, out);
+  if (relative.startsWith('..') || path.isAbsolute(relative) || !out.endsWith('.mp3')) throw Error(`Outputs must be MP3s inside ${path.relative(root, outDir).replaceAll('\\', '/')}`);
+  if (row.cuePlan) {
+    if (kind !== 'sfx') throw Error(`${b.wave} is sound effects only`);
+    const plan = json(path.join(here, row.cuePlan));
+    const cue = plan.cues.find(c => `${c.id}.mp3` === relative);
+    if (!cue || cue.prompt !== text || cue.seconds !== seconds || !!a.loop) throw Error(`Request does not match the ${b.wave} plan`);
+  }
   if (row.briefPlan) {
     const plan = json(path.join(here, row.briefPlan));
     const sample = plan.samples.find(s => `${s.id}.mp3` === relative);
