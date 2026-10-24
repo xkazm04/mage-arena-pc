@@ -42,25 +42,26 @@ class ProviderBudget:
             write(self.art / 'providers/history.json', state)
 
 
-def validate_spec(spec):
-    if spec.get('style_hash') and spec['style_hash'] != sha(ART / 'style-covenant.json'):
+def validate_spec(spec, art=None, root=None):
+    art = ART if art is None else Path(art); root = ROOT if root is None else Path(root)
+    if spec.get('style_hash') and spec['style_hash'] != sha(art / 'style-covenant.json'):
         raise RuntimeError('STYLE_CHANGED_BEFORE_SPEND')
     for ref in spec.get('references', []):
-        p = ROOT / ref['path']
+        p = root / ref['path']
         if not p.is_file() or sha(p) != ref['sha256']:
             raise RuntimeError('REFERENCE_HASH_MISMATCH_BEFORE_SPEND')
     if not spec.get('pilot'):
-        proof = read(ART / 'proofs' / (spec['wave'].lower() + '-covenant.json'))
-        if proof.get('style_hash') != sha(ART / 'style-covenant.json'):
+        proof = read(art / 'proofs' / (spec['wave'].lower() + '-covenant.json'))
+        if proof.get('style_hash') != sha(art / 'style-covenant.json'):
             raise RuntimeError('PROOF_STYLE_CHANGED')
         if proof['verdict'] != 'exploration-sibling-ready' or proof['owner_accepted']:
             raise RuntimeError('ONE_IMAGE_PROOF_REQUIRED')
-        if sha(ROOT / proof['source']) != proof['sha256']:
+        if sha(root / proof['source']) != proof['sha256']:
             raise RuntimeError('PROOF_SOURCE_CHANGED')
-        review = read(ROOT / proof['review'])
+        review = read(root / proof['review'])
         if review['verdict'] == 'reject' or review['sha256'] != proof['sha256']:
             raise RuntimeError('PROOF_REJECTED_OR_STALE')
-        grade = read(ROOT / proof['grade'])
+        grade = read(root / proof['grade'])
         if grade['status'] != 'graded' or grade['verdict'] == 'reject' or grade['image_sha256'] != proof['sha256']:
             raise RuntimeError('LOCAL_PROOF_REVIEW_REQUIRED')
 
@@ -93,7 +94,7 @@ def invoke(provider, spec, folder, record):
         target = folder / ('reference-' + str(i + 1) + Path(ref['path']).suffix)
         shutil.copy2(ROOT / ref['path'], target); refs.append(target)
     if provider == 'agy':
-        exe = r'C:\Users\kazda\AppData\Local\agy\bin\agy.exe'
+        exe = AGY_EXE
         request = ('Generate exactly ONE image using generate_image. The driver archives the tool output automatically; do not copy or save it again. '
                    'Do not retry, make additional images, or run other generation tools. '
                    'Use the built-in image-generator capability immediately; do not inspect sibling folders, histories, driver code or CLI help. '
@@ -200,34 +201,91 @@ def invoke(provider, spec, folder, record):
                 'tool_calls': calls, 'elapsed_seconds': round(time.monotonic()-started, 3)}
 
 
+AGY_EXE = r'C:\Users\kazda\AppData\Local\agy\bin\agy.exe'
+
+
+def provider_cli(provider):
+    """The provider's CLI path, or None when it is not installed. Read-only."""
+    exe = Path(AGY_EXE) if provider == 'agy' else shutil.which('grok')
+    return exe if exe and Path(exe).exists() else None
+
+
+def wave_reviews(art, wave):
+    """Hash-bound direct reviews of one wave: job id -> review record or None."""
+    folder = Path(art) / 'waves' / wave / 'reviews'
+    return lambda job_id: read(folder / (job_id + '.json')) if (folder / (job_id + '.json')).exists() else None
+
+
+def skip_reason(provider, spec, old, correcting, provider_state):
+    """Why this provider cannot take the slot now, or None. provider_state(p) -> blocking code or None."""
+    code = provider_state(provider)
+    if code:
+        return code
+    if any(j.get('provider') == provider for j in old) and not correcting and not spec.get('rewrite_of'):
+        return 'PROVIDER_ALREADY_TRIED: ' + provider  # never repeat an uncertain/refused attempt with the same brief
+    return None
+
+
+def decide(spec, old, reviews, provider_state, root=None):
+    """The pre-reservation decision of generate, side-effect free so a read-only plan can ask it.
+
+    old: this slot's ledger rows; reviews(job_id) -> review or None; provider_state(p) -> code or None.
+    state: resume (job) | needs-review | needs-correction | reviewed | blocked (code) | ready (provider).
+    The caps themselves are spend.headroom's, checked again by Budget.reserve under its lock.
+    """
+    root = ROOT if root is None else Path(root)
+    out = {'state': None, 'code': None, 'job': None, 'provider': None, 'candidates': [], 'skipped': [], 'correcting': False}
+    refused = [j for j in old if j['status'] == 'moderation-refused']
+    if refused:
+        if len(refused) > 1 or spec.get('rewrite_of') != refused[0]['id'] or spec['prompt'] == refused[0]['prompt']:
+            return {**out, 'state': 'blocked', 'code': 'ONE_EXPLICIT_MODERATION_REWRITE_REQUIRED', 'job': refused[-1]['id']}
+    for j in old:
+        if j['status'] == 'generated' and j['input_hash'] == digest(spec):
+            if sha(root / j['archive']) != j['sha256']:
+                return {**out, 'state': 'blocked', 'code': 'ARCHIVE_CHANGED', 'job': j['id']}
+            return {**out, 'state': 'resume', 'job': j['id']}
+    correcting = bool(old and spec.get('correction_of') == old[-1]['id'])
+    if old and old[-1]['status'] == 'generated':
+        review = reviews(old[-1]['id'])
+        bound = bool(review) and review.get('sha256') == old[-1]['sha256']
+        rejected = bound and review['verdict'] == 'reject'
+        if not correcting or not rejected:
+            state = 'needs-correction' if rejected else ('reviewed' if bound else 'needs-review')
+            return {**out, 'state': state, 'code': 'HASH_BOUND_REJECTION_REQUIRED', 'job': old[-1]['id']}
+    for provider in spec.get('providers', ['agy', 'grok']):
+        reason = skip_reason(provider, spec, old, correcting, provider_state)
+        if reason:
+            out['skipped'].append({provider: reason})
+        else:
+            out['candidates'].append(provider)
+    if not out['candidates']:
+        return {**out, 'state': 'blocked', 'code': 'NO_AVAILABLE_PROVIDER: backlog required', 'correcting': correcting}
+    return {**out, 'state': 'ready', 'provider': out['candidates'][0], 'correcting': correcting}
+
+
 def generate(spec):
     validate_spec(spec)
     with lock(ART / '.run.lock'):
         # Wave, provider and session caps are enforced again inside Budget.reserve (spend.headroom).
-        budget = Budget(); pb = ProviderBudget(); usage = budget.load()
+        budget = Budget(ART); pb = ProviderBudget(ART); usage = budget.load()
         old = [j for j in usage['jobs'] if j.get('wave') == spec['wave'] and j['scene'] == spec['id']]
-        refused = [j for j in old if j['status'] == 'moderation-refused']
-        if refused:
-            if len(refused) > 1 or spec.get('rewrite_of') != refused[0]['id'] or spec['prompt'] == refused[0]['prompt']:
-                raise RuntimeError('ONE_EXPLICIT_MODERATION_REWRITE_REQUIRED')
-        for j in old:
-            if j['status'] == 'generated' and j['input_hash'] == digest(spec):
-                if sha(ROOT / j['archive']) != j['sha256']: raise RuntimeError('ARCHIVE_CHANGED')
-                print(json.dumps({'resume': j['id'], 'new_calls': 0}), flush=True); return j
-        correcting = bool(old and spec.get('correction_of') == old[-1]['id'])
-        if old and old[-1]['status'] == 'generated':
-            rp = ART / 'waves' / spec['wave'] / 'reviews' / (old[-1]['id'] + '.json')
-            if not correcting or not rp.exists() or read(rp)['verdict'] != 'reject' or read(rp)['sha256'] != old[-1]['sha256']:
-                raise RuntimeError('HASH_BOUND_REJECTION_REQUIRED')
-        order = spec.get('providers', ['agy', 'grok'])
-        for provider in order:
+
+        def provider_state(provider):
             ok, reason = pb.available(provider)
-            if not ok:
+            return None if ok else reason
+        decision = decide(spec, old, wave_reviews(ART, spec['wave']), provider_state)
+        if decision['state'] == 'resume':
+            print(json.dumps({'resume': decision['job'], 'new_calls': 0}), flush=True)
+            return next(j for j in old if j['id'] == decision['job'])
+        if decision['state'] != 'ready':
+            raise RuntimeError(decision['code'])
+        correcting = decision['correcting']
+        for provider in spec.get('providers', ['agy', 'grok']):
+            # Re-asked per provider: a failed call in this loop may have latched the previous one.
+            reason = skip_reason(provider, spec, old, correcting, provider_state)
+            if reason:
                 print(json.dumps({'skip_provider': provider, 'reason': reason}), flush=True); continue
-            if any(j.get('provider') == provider for j in old) and not correcting and not spec.get('rewrite_of'):
-                continue  # never repeat an uncertain/refused attempt with the same brief
-            exe = Path(r'C:\Users\kazda\AppData\Local\agy\bin\agy.exe') if provider == 'agy' else shutil.which('grok')
-            if not exe or not Path(exe).exists():
+            if not provider_cli(provider):
                 pb.event(provider, 'unavailable', spec['id'], 'CLI missing'); continue
             job_id = f"{spec['wave'].lower()}-{spec['id']}-{provider}-a{len(old)+1:02}"
             folder = ART / 'raw' / job_id
