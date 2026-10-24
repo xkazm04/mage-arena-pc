@@ -134,3 +134,16 @@ poses that crossed the requested panel divider. `figures.json` stores source
 hashes, bounds, master body scale and ground anchors for every export.
 Effects are authored geometry; rotate world points before ground projection,
 not already-projected raster strips. Preview durations are not gameplay numbers.
+
+## D2S: 2.5D mastery-slice candidates (D2 section 5)
+
+`d2_slice.py` drives the slice's assets through `providers.generate` (agy, serial,
+reservation first, no refunds). A wave cap of 30 and two attempts per slot apply,
+and the first image of each family (body, normal, plate) is reviewed directly
+before its siblings, because the local grader has no model loaded. `review` records
+keep or reject with a hash and the builder's rank; it never picks for the owner.
+`build` is offline: magenta key, derived and painted normal maps (masked by the
+colour alpha), lit proofs, 170 px and 61 px previews, plate stacks and a panned
+parallax proof, then `art/delivery/d2s/pick-sheet.html` and `candidates.json`.
+`check` verifies the inherited ledger prefix, the caps and the committed source
+hashes. Tests: `python -m unittest test_d2_slice` from `tools/art`.
