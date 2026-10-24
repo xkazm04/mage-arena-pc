@@ -4,8 +4,10 @@
  * the per-phase CPU log of `packages/game/src/frame-probe.ts`. No assets are generated or loaded beyond the repo's.
  *
  * Needs a built game: npm run build:game
- * Run: node --import tsx packages/tools/art/frame-probe-1440.mts [height=1440] [seconds=12]
- * Prints one JSON object. A run that could not start prints {"evaluated": false, "reason": ...} and exits 1.
+ * Run: node --import tsx packages/tools/art/frame-probe-1440.mts [height=1440] [seconds=12] [fixture=stress] [query]
+ * `fixture` is an art-fixture kind ("bar" is the D2 section 7 scene: eight bodies with the lit cassia, two beams,
+ * trails, procedural sigils); `query` is appended to the page URL (e.g. "lighting=unlit"). With MAGE_PROBE_SHOT=<png>
+ * a screenshot of the last frame is saved there. Prints one JSON object. A run that could not start prints {"evaluated": false, "reason": ...} and exits 1.
  */
 import { chromium } from "playwright";
 import { spawn } from "node:child_process";
@@ -38,12 +40,24 @@ type Win = Window & {
     snapshot(): {
       visibleProjectiles: number;
       effects: { allocated: number; active: number };
+      sigils: { active: number; procedural: Record<string, number> };
+      animation: {
+        lighting: Record<string, unknown>;
+        displayed: {
+          entity: string;
+          source: string;
+          lit?: boolean;
+          litChoice?: string;
+        }[];
+      };
     };
-    artFixture(k?: "stress"): void;
+    artFixture(k?: string): void;
   };
 };
 const height = Number(process.argv[2] ?? 1440),
   seconds = Number(process.argv[3] ?? 12),
+  fixture = process.argv[4] ?? "stress",
+  query = process.argv[5] ? `&${process.argv[5]}` : "",
   port = 4197;
 const stats = (a: number[]) => {
   const s = a.toSorted((x, y) => x - y),
@@ -109,7 +123,7 @@ try {
   const p = await context.newPage();
   const errors: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
-  await p.goto(`http://127.0.0.1:${port}/training?harness=1`);
+  await p.goto(`http://127.0.0.1:${port}/training?harness=1${query}`);
   const screen = (id: string) =>
     p.waitForFunction(
       (id) => {
@@ -140,8 +154,9 @@ try {
     { timeout: 60000 },
   );
   await p.waitForTimeout(600);
-  await p.evaluate(() =>
-    (window as unknown as Win).__arena.artFixture("stress"),
+  await p.evaluate(
+    (k) => (window as unknown as Win).__arena.artFixture(k),
+    fixture,
   );
   await p.waitForTimeout(2000);
   await p.evaluate(() => (window as unknown as Win).__ui.resetPerformance());
@@ -152,6 +167,8 @@ try {
   const scene = await p.evaluate(() =>
     (window as unknown as Win).__arena.snapshot(),
   );
+  if (process.env.MAGE_PROBE_SHOT)
+    await p.screenshot({ path: process.env.MAGE_PROBE_SHOT });
   const renderer = await p.evaluate(() => {
     const gl = document.createElement("canvas").getContext("webgl2");
     const ext = gl?.getExtension("WEBGL_debug_renderer_info");
@@ -168,9 +185,20 @@ try {
         viewport: [(height * 16) / 9, height],
         renderer,
         seconds,
+        fixture,
+        query,
         scene: {
           visibleProjectiles: scene.visibleProjectiles,
           effects: scene.effects,
+          sigilsActive: scene.sigils.active,
+          procedural: scene.sigils.procedural,
+          lighting: scene.animation.lighting,
+          bodies: scene.animation.displayed.map((d) => ({
+            entity: d.entity,
+            source: d.source,
+            lit: d.lit,
+            litChoice: d.litChoice,
+          })),
         },
         frameMs: frame,
         fps: 1000 / frame.mean,
