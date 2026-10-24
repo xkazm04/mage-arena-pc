@@ -262,6 +262,17 @@ export class ArenaScene {
       { centre, widthM, heightM } = arenaGeometry;
     const rx = widthM / 2,
       ry = heightM / 2;
+    // Widescreen: beyond the painted plate the viewport shows the arena's surround (worn stone with the same quiet
+    // pigment marks), not the renderer's clear colour, so a 21:9 window has no bar at its sides.
+    g.rect(centre.x - 160, centre.y - 120, 320, 240).fill(0x1d2724);
+    for (let i = 0; i < 700; i++) {
+      const x = centre.x + (((i * 37) % 311) / 311 - 0.5) * 220,
+        y = centre.y + (((i * 53) % 233) / 233 - 0.5) * 120;
+      g.ellipse(x, y, 0.8 + (i % 5) * 0.3, 0.3 + (i % 3) * 0.15).fill({
+        color: i % 2 ? 0x2a332e : 0x39433a,
+        alpha: 0.2,
+      });
+    }
     g.ellipse(centre.x, centre.y, rx + 6, ry + 6).fill(0x09141d);
     g.ellipse(centre.x, centre.y, rx + 3, ry + 3)
       .fill(0x203338)
