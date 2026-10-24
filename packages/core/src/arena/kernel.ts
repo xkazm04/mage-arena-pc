@@ -33,15 +33,19 @@ export function random(state: ArenaState, purpose: string): number {
   const value = ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   state.randomLog.push({ tick: state.tick, purpose, value }); return value;
 }
-export function addMage(state: ArenaState, team: number, pos: Vec, label = 'Water mage', ranks: Ranks = runtime.training.defaultRanks): Actor {
-  // Three stats, or four with the optional agility (progression.ts); every present rank is an integer on the shared mapping.
+/** A mage's vitals for its ranks: HP and stamina from vigor, mana from focus (the shared stat mapping). Three stats, or four with
+ * the optional agility (progression.ts); every present rank is an integer on the shared mapping, else it throws. addMage and an
+ * applied build (mage-build.ts) size an actor through this one rule. */
+export function mageVitals(ranks: Ranks): { maxHp: number; maxMana: number; maxStamina: number } {
   const keys = Object.keys(ranks);
   if (!(keys.length === 3 || (keys.length === 4 && keys.includes('agility'))) || ['vigor', 'focus', 'nerve', ...(keys.length === 4 ? ['agility'] : [])].some(key => { const r = ranks[key as keyof Ranks]; return !Number.isInteger(r) || r! < rankRange.min || r! > rankRange.max; })) throw Error('Arena ranks are outside the shared mapping');
+  return { maxHp: maximum(statRules.hp, ranks.vigor), maxMana: maximum(statRules.mana, ranks.focus), maxStamina: maximum(statRules.stamina, ranks.vigor) };
+}
+export function addMage(state: ArenaState, team: number, pos: Vec, label = 'Water mage', ranks: Ranks = runtime.training.defaultRanks): Actor {
+  const { maxHp, maxMana, maxStamina } = mageVitals(ranks);
   const actor: Actor = {
     id: state.nextId++, team, label, pos: { ...pos }, previousPos: { ...pos }, facing: { x: 1, y: 0 }, radius: runtime.geometry.mageRadiusM,
-    ranks: { ...ranks }, hp: maximum(statRules.hp, ranks.vigor), maxHp: maximum(statRules.hp, ranks.vigor),
-    mana: maximum(statRules.mana, ranks.focus), maxMana: maximum(statRules.mana, ranks.focus),
-    stamina: maximum(statRules.stamina, ranks.vigor), maxStamina: maximum(statRules.stamina, ranks.vigor),
+    ranks: { ...ranks }, hp: maxHp, maxHp, mana: maxMana, maxMana, stamina: maxStamina, maxStamina,
     tags: [], poise: feelPolicy.poise.mage, dummy: false, absorb: false, absorbFreshTick: -1e9, releaseTick: -1e9, absorbExhausted: false, water: newWaterState(),
     lastInput: idleInput(), rollUntil: 0, immuneUntil: 0, recoveryUntil: 0, rollDirection: { x: 1, y: 0 },
     staminaUsedTick: -1e9, cooldownUntil: 0, waveStartTick: state.tick, tier: 1, lastUnlockTick: state.tick,

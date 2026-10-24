@@ -12,11 +12,12 @@ import { applyRivalHp, beginRivalWave, bindRival, enableRivalPhases, rivals } fr
 import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks, type SpellRanks } from './types.ts';
 import { enemyHpMult, setSpellRanks, validEnemyLevel } from './progression.ts';
 import { defaultDifficulty, validateTuning, type CombatTuning } from './tuning.ts';
+import { applyOpponentMage, opponentMageProblems, type OpponentMage } from './mage-build.ts';
 export const tiro = arenaTiers.tiers[0];
 /** Anonymous Tiro mage entrants; presentation matches this label, so it lives here once. */
 export const tiroEntrantLabel = 'Tiro entrant · Water proxy';
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
-export interface Games { schoolRivals?: SchoolRivals; /** The authored rival build on its wave (archetypes.ts); present only when set. */ rivalBuild?: string; /** Regular enemies' level (progression.ts); present only when set. */ enemyLevel?: number; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
+export interface Games { schoolRivals?: SchoolRivals; /** The authored rival build on its wave (archetypes.ts); present only when set. */ rivalBuild?: string; /** Regular enemies' level (progression.ts); present only when set. */ enemyLevel?: number; /** The opponent-mage lever (mage-build.ts); present only when set. */ opponentMage?: OpponentMage; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
 export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
 /** `tuning` is a Lab what-if: omitted, the state carries no tuning. `difficulty` paces the opponents for the whole Games (the player's pace is fixed).
  * `options.schoolRivals` turns the mage duelists into Fire/Air rivals (school-rivals.ts); omitted, the Water proxies.
@@ -25,13 +26,19 @@ export interface GamesPlayer { id: string; name: string; school: 'water'; ranks:
  * `spellRanks` ranks the player's spells for this Games (a what-if like `tuning`; the save carries none yet). Both omitted:
  * level 1 and rank 1, exactly today's Games.
  * `rivalBuild` (a rival-builds.json id) spawns that authored build in place of the rival on the build's wave; in 'named' mode
- * Brennic and Lio play the builds rivals.json names, and the named phases bind a build of the named rival's school and wave. */
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false; enemyLevel?: number; spellRanks?: SpellRanks; rivalBuild?: string } = {}): Games {
+ * Brennic and Lio play the builds rivals.json names, and the named phases bind a build of the named rival's school and wave.
+ * `opponentMage` (D1 4.3/6.8 lever, mage-build.ts) levels every opponent mage at spawn: `level` its HP as enemyLevel does a regular
+ * enemy's, `averageRank` its rows' spell ranks, never below its own. Omitted, opponent mages spawn exactly as today. */
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false; enemyLevel?: number; spellRanks?: SpellRanks; rivalBuild?: string; opponentMage?: OpponentMage } = {}): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
   if (validateComposition(composition).length) throw Error('Invalid composition');
   if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
   if (options.enemyLevel !== undefined && !validEnemyLevel(options.enemyLevel)) throw Error('Invalid enemy level');
   if (options.rivalBuild !== undefined && !rivalBuilds[options.rivalBuild]) throw Error('Invalid rival build');
+  if (options.opponentMage !== undefined) {
+    if (options.opponentMage.level !== undefined && !validEnemyLevel(options.opponentMage.level)) throw Error('Invalid enemy level');
+    if (opponentMageProblems(options.opponentMage).length) throw Error('Invalid opponent mage');
+  }
   const state = createArena(seed, options.unpaced ? undefined : difficulty), player = addMage(state, 0, runtime.games.playerSpawn, snapshot?.name ?? 'Cassia', snapshot?.ranks); player.water = newWaterState(composition);
   if (options.balance) state.balance = options.balance;
   setSpellRanks(player, options.spellRanks);
@@ -42,6 +49,7 @@ export function createGames(seed: number, composition: Composition = presets[0]!
   if (options.schoolRivals) games.schoolRivals = options.schoolRivals;
   if (options.enemyLevel !== undefined) games.enemyLevel = options.enemyLevel;
   if (options.rivalBuild !== undefined) games.rivalBuild = options.rivalBuild;
+  if (options.opponentMage !== undefined) games.opponentMage = { ...options.opponentMage };
   if (options.schoolRivals === 'named' && options.rivalPhases !== false) enableRivalPhases(state);
   spawnWave(games); return games;
 }
@@ -72,6 +80,7 @@ function spawnWave(g: Games): void {
         if (runtime.games.rivalPlans) attachRivalPlan(actor);
         if (build) { kind = `${makeBuildRival(actor, build, buildRivalLabel(build, g.schoolRivals === 'named' && rivals.some(r => r.wave === g.wave && r.build === build.id)))} ${spawn.competence}`; if (g.schoolRivals === 'named') applyRivalHp(actor, g.wave); bindRival(g.state, actor, g.wave); }
         else if (g.schoolRivals) { kind = `${makeSchoolRival(actor, g.schoolRivals, g.wave)} ${spawn.competence}`; if (g.schoolRivals === 'named') applyRivalHp(actor, g.wave); bindRival(g.state, actor, g.wave); }
+        if (g.opponentMage) applyOpponentMage(actor, g.opponentMage, g.state);
       }
       if (g.state.tuning) actor.poise *= g.state.tuning.opponentPoise;
       g.spawnLog.push({ wave: g.wave + 1, id: actor.id, kind, ...pos }); index++;
