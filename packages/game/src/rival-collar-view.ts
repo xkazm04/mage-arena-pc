@@ -19,6 +19,8 @@ export class RivalCollarView {
   private used = 0;
   private runes?: Texture[];
   private source?: Texture["source"];
+  /** The page this view holds a lease on; released with the view. */
+  private lease?: string;
   begin() {
     this.used = 0;
   }
@@ -27,12 +29,17 @@ export class RivalCollarView {
     for (let i = this.used; i < this.sprites.length; i++)
       this.sprites[i]!.visible = false;
   }
-  /** Shares the page the HUD clock inscription already decodes; no lease, so it never unloads under the HUD. */
+  /** Shares the page the HUD clock inscription decodes, under its own lease: another holder's release never destroys it here. */
   private textures(manifest?: SigilManifest) {
     const clip = manifest?.clips["inscription.collar"];
     if (!clip) return;
-    const key = `a13.page.${clip.page}`,
-      page = art.get(key);
+    const key = `a13.page.${clip.page}`;
+    if (this.lease !== key) {
+      art.retain(key);
+      if (this.lease) art.release(this.lease);
+      this.lease = key;
+    }
+    const page = art.get(key);
     if (!page) {
       void art.load(key);
       return;
@@ -137,6 +144,8 @@ export class RivalCollarView {
   }
   dispose() {
     for (const t of this.runes ?? []) t.destroy(false);
+    if (this.lease) art.release(this.lease);
+    this.lease = undefined;
     this.layer.destroy({ children: true });
   }
 }

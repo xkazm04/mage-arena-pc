@@ -5,9 +5,21 @@ import type { CanvasUI } from "./ui.ts";
 import { colours } from "./kit.ts";
 
 let sigilManifest: Promise<SigilManifest> | undefined;
+let sigilResolved: SigilManifest | undefined;
 const sigilFrames = new Map<string, Texture>();
 const sigils = () =>
-  (sigilManifest ??= art.json("a13.manifest") as Promise<SigilManifest>);
+  (sigilManifest ??= (art.json("a13.manifest") as Promise<SigilManifest>).then(
+    (m) => (sigilResolved = m),
+  ));
+/**
+ * Holds the inscription's page for as long as `root` lives: a scene that pins the same page
+ * (the arena does) must never destroy it under a live menu or HUD. The release waits a task, so
+ * a screen rebuilt in place re-takes its lease before the old one drops and the page never churns.
+ */
+function lease(root: Container, key: string) {
+  art.retain(key);
+  root.once("destroyed", () => setTimeout(() => art.release(key)));
+}
 /** Settles once the inscriptions' pages are resident, so a first paint draws them. */
 export async function preloadSigils(ids: string[]) {
   const m = await sigils().catch(() => undefined);
@@ -31,11 +43,15 @@ export function sigil(
   root.position.set(x, y);
   root.alpha = opacity;
   ui.content.addChild(root);
+  const known = sigilResolved?.clips[id];
+  if (known) lease(root, `a13.page.${known.page}`);
   void sigils()
     .then(async (m) => {
       const clip = m.clips[id];
-      if (!clip) return;
-      const page = await art.load(`a13.page.${clip.page}`);
+      if (!clip || root.destroyed) return;
+      const key = `a13.page.${clip.page}`;
+      if (!known) lease(root, key);
+      const page = await art.load(key);
       if (!page || root.destroyed) return;
       let texture = sigilFrames.get(id);
       // A reloaded page is a new source; a frame cut from the old one would bind a destroyed texture.
