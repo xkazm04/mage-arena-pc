@@ -1,3 +1,4 @@
+import { cos, sin, tan } from './fdlibm.ts';
 export interface Vec { x: number; y: number }
 export const length = (v: Vec): number => Math.hypot(v.x, v.y);
 export const sub = (a: Vec, b: Vec): Vec => ({ x: a.x - b.x, y: a.y - b.y });
@@ -9,7 +10,7 @@ export const clamp = (n: number, lo: number, hi: number): number => Math.max(lo,
 export function inArc(facing: Vec, toward: Vec, arcDeg: number): boolean {
   if (length(toward) === 0 || arcDeg >= 360) return true;
   const a = unit(facing), b = unit(toward);
-  return a.x * b.x + a.y * b.y >= Math.cos(arcDeg * Math.PI / 360) - 1e-12;
+  return a.x * b.x + a.y * b.y >= cos(arcDeg * Math.PI / 360) - 1e-12;
 }
 export function segmentHit(from: Vec, to: Vec, centre: Vec, radius: number): number | undefined {
   const d = sub(to, from), f = sub(from, centre);
@@ -23,7 +24,7 @@ export function segmentHit(from: Vec, to: Vec, centre: Vec, radius: number): num
   return t >= 0 && t <= 1 ? t : undefined;
 }
 export function rotate(v: Vec, radians: number): Vec {
-  return { x: v.x * Math.cos(radians) - v.y * Math.sin(radians), y: v.x * Math.sin(radians) + v.y * Math.cos(radians) };
+  return { x: v.x * cos(radians) - v.y * sin(radians), y: v.x * sin(radians) + v.y * cos(radians) };
 }
 /**
  * segmentHit's companion for a weapon carried by a moving body: a sector of `radius` and `arcDeg`, centred on `dir`,
@@ -33,7 +34,7 @@ export function sectorSweep(from: Vec, to: Vec, dir: Vec, centre: Vec, radius: n
   const d = unit(dir), q = sub(centre, from), len = Math.max(0, d.x * (to.x - from.x) + d.y * (to.y - from.y));
   const u = q.x * d.x + q.y * d.y, v = Math.abs(q.x * d.y - q.y * d.x);
   if (v > radius) return undefined;
-  const half = Math.sqrt(radius * radius - v * v), hi = arcDeg >= 360 ? u + half : Math.min(u + half, u - v / Math.tan(arcDeg * Math.PI / 360));
+  const half = Math.sqrt(radius * radius - v * v), hi = arcDeg >= 360 ? u + half : Math.min(u + half, u - v / tan(arcDeg * Math.PI / 360));
   const s = Math.max(0, u - half);
   if (s > Math.min(len, hi) + 1e-12) return undefined;
   return len > 0 ? Math.min(1, s / len) : 0;

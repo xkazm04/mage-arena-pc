@@ -7,6 +7,7 @@ import { combat, DT, emit, interrupt, random, spawnProjectile, ticks } from './k
 import { airRows, schoolIdentity } from './data.generated.ts';
 import { pacedWarning, paceOf, paced, warningFloor } from './tuning.ts';
 import { clamp, distance, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
+import { atan2, cos, sin } from './fdlibm.ts';
 import { cancelOwnedBeams, dash, queueDetonation, queueEmbers, resolveLine, startBeam, ultimateContact, ultimateHit } from './shapes.ts';
 import { identityNumber, schoolSpellById, balancedSpell, rankedSpell, slotSpell, type SchoolRules, type SchoolSpell } from './schools.ts';
 import { actorUltimate, agileCastS, agileWarningS, type UltimateForm } from './progression.ts';
@@ -190,12 +191,12 @@ export function veerArc(from: Vec, to: Vec, entryDeg: number, side: number): Air
   if (!(chord > 1e-6) || !(entryDeg > 0)) return arc;
   const entry = entryDeg * Math.PI / 180;
   arc.straight = false;
-  arc.radiusM = chord / (2 * Math.sin(entry));
+  arc.radiusM = chord / (2 * sin(entry));
   arc.lengthM = 2 * entry * arc.radiusM;
   arc.launchDir = rotate(along, side * entry);
   const toCentre = rotate(arc.launchDir, -side * Math.PI / 2);
   arc.centre = { x: from.x + toCentre.x * arc.radiusM, y: from.y + toCentre.y * arc.radiusM };
-  arc.startAngle = Math.atan2(from.y - arc.centre.y, from.x - arc.centre.x);
+  arc.startAngle = atan2(from.y - arc.centre.y, from.x - arc.centre.x);
   arc.turnSign = -side;
   return arc;
 }
@@ -203,9 +204,9 @@ export function veerArc(from: Vec, to: Vec, entryDeg: number, side: number): Air
 export function arcPoint(arc: AirArc, distanceM: number): Vec {
   if (arc.straight) return { x: arc.from.x + arc.launchDir.x * distanceM, y: arc.from.y + arc.launchDir.y * distanceM };
   const s = clamp(distanceM, 0, arc.lengthM), angle = arc.startAngle + arc.turnSign * s / arc.radiusM;
-  const point = { x: arc.centre.x + arc.radiusM * Math.cos(angle), y: arc.centre.y + arc.radiusM * Math.sin(angle) };
+  const point = { x: arc.centre.x + arc.radiusM * cos(angle), y: arc.centre.y + arc.radiusM * sin(angle) };
   if (distanceM <= arc.lengthM) return point;
-  const tangent = { x: -arc.turnSign * Math.sin(angle), y: arc.turnSign * Math.cos(angle) };
+  const tangent = { x: -arc.turnSign * sin(angle), y: arc.turnSign * cos(angle) };
   return { x: point.x + tangent.x * (distanceM - arc.lengthM), y: point.y + tangent.y * (distanceM - arc.lengthM) };
 }
 /** This tick's end of a curved flight, plus the arc state to commit when the projectile moves on (kernel updateProjectiles). */
@@ -216,8 +217,8 @@ export function curvedStep(p: AirProjectile, travel: number): { end: Vec; arc?: 
     return { end: { x: p.pos.x + d.x * travel, y: p.pos.y + d.y * travel }, velocity: { ...p.velocity }, ...(arc ? { arc: { ...arc } } : {}) };
   }
   const onArc = Math.min(travel, arc.leftM), angle = arc.angle + arc.sign * onArc / arc.radiusM;
-  let end = { x: arc.centre.x + arc.radiusM * Math.cos(angle), y: arc.centre.y + arc.radiusM * Math.sin(angle) };
-  const tangent = { x: -arc.sign * Math.sin(angle), y: arc.sign * Math.cos(angle) };
+  let end = { x: arc.centre.x + arc.radiusM * cos(angle), y: arc.centre.y + arc.radiusM * sin(angle) };
+  const tangent = { x: -arc.sign * sin(angle), y: arc.sign * cos(angle) };
   if (travel > onArc) end = { x: end.x + tangent.x * (travel - onArc), y: end.y + tangent.y * (travel - onArc) };
   return { end, velocity: { x: tangent.x * speed, y: tangent.y * speed }, arc: { ...arc, angle, leftM: arc.leftM - onArc } };
 }
