@@ -152,7 +152,7 @@ engines; it is the first build of the chosen look.
 
 ## 6.1 Step 3 groundwork status (2026-10-24)
 
-Built with no generation spend; none of it is wired into `arena-entry.ts` yet (lane 3's HUD extraction merges first):
+Built with no generation spend. Wired into the live arena on 2026-10-24 (section 6.3); the probe numbers are in 7.2:
 - **Procedural sigils:** filled disc, beam and arc in `sigil-contract.ts` (exact signed-distance witnesses), `sigil-shader.ts` and `SigilPlayer.procedural()`; data in `data/sigils.json`; tests in `sigil.test.ts`.
 - **Normal map and light test:** `packages/tools/art/derive-normal-map.py` derives `public/normal-maps/cassia.png` from the Cassia A10 page (luminance height, blur, Sobel; deterministic, no generation) and a lit proof strip; `packages/game/src/lighting/` holds the shared point-light model, a lit-body shader mesh and `lighting.test.ts`. The proof strip is rendered on the CPU with the same constants, and a test pins the constants together. Both shaders have since been run in a real WebGL2 context (section 6.2); that run found and fixed three shader defects.
 - **Audio cues:** `audio-events.test.ts` enumerates the sim event kinds (read from core's `ArenaEvent`) against `data/audio.json`. Kinds with no cue, allowlisted for 4.5: `cast`, `down`, `interrupt`, `phase`.
@@ -179,7 +179,17 @@ What the GPU run found, all fixed and pinned by tests (`sigil.test.ts`, `lightin
 2. The arc shader used `degrees * pi/180` as the half-angle, so a 90 degree arc drew 180 degrees (28,300 texels outside the contract shape, max error 217). It is `degrees * pi/360`, as in `proceduralDistance`.
 3. The lit-body shader multiplied the lambert term by the light colour (a coloured, darker body: max error 55, mean 1.4). The CPU model and the proof strip use a colourless `ambient + amount`, with the light colour only in the added tint; the shader now does the same.
 
-Not covered: the Pixi `Shader`/`Mesh` plumbing (uniform groups, the world matrix, premultiplied-alpha textures) and the wired scene; those wait for `arena-entry.ts`. Other GPUs and the software (SwiftShader) path are not run.
+Not covered by this proof: the Pixi `Shader`/`Mesh` plumbing (uniform groups, the world matrix, premultiplied-alpha textures) and the wired scene; section 6.3 covers those in the running game. Other GPUs and the software (SwiftShader) path are not run.
+
+Re-run after the wiring (2026-10-24, same method, same host): `pass`, every row as in the table above (lit body vs strip max 1 / mean 0.466, vs TS model max 1 / mean 0.041; disc 0.350, beam 0.440, arc 0.064, disc no-fill 0.238). Nothing regressed.
+
+## 6.3 Step 3 wired into the arena (2026-10-24)
+
+- **Procedural sigils where the contract calls for them.** `SigilPlayer.schoolShapes()` (called once per frame from `arena-scene.ts`) maps the sim's school effects through `schoolEffectSigil()` in `sigil-contract.ts`: a delayed detonation (Pyre, Sunfall, Downdraft) is a disc that fills until it lands, a channelled beam (Brand Wrath, Cyclone) and a dash trail (Cinder Step) are strips over their simulated segment; `veeringArcSigil()` draws the rest of a Veering Bolt's curved flight as an arc band about its centre of curvature. A volley has no ground shape. The sim gives beams and trails no width (they hit along a segment), so the strip widths are presentation constants, `proceduralWidthM` (beam 0.7 m, trail 0.5 m). `__arena.snapshot().sigils.procedural` counts the shapes drawn this frame.
+- **Lit body.** `BodyPlayer.light()` draws the one body whose A10 page has a derived normal map (cassia, `public/normal-maps/cassia.png`, as in e8ea1aa) with `litBodyMesh`, from the sprite's own transform, trim and mirror. One scene point light, a key light placed from that body's foot (`keyLight` in `lighting/tier.ts`: 0.6 m to the screen left, 1.1 m up, 0.7 m out, 4 m falloff, the shared warm colour). The light is mapped into the quad's page pixels, so a mirrored body mirrors the light with it.
+- **Quality tier.** `?lighting=unlit` keeps every body on the painted sprite. The lit body also falls back to the sprite while its normal map loads, during a hit flash, and for a second cassia body in the same frame (one lit body). `__arena.snapshot().animation.lighting` gives the tier, the lit actor and the normal-map state; each displayed body carries `lit` and `litChoice`. The tier lives in `lighting/tier.ts` for now; moving it into `data/quality.json` is outside this lane.
+- **Bar fixture.** `__arena.artFixture("bar")` (`barScene` in `art-fixture.ts`): eight painted bodies with the lit cassia among them, two beams that follow their owners' facing, two dash trails, two detonation discs refilling every 1.5 s, a Veering Bolt arc, and 24 projectiles. a8 has no trail clip, so the projectiles' travel clips stand in for spell trails. `d2-wiring.test.ts` pins the composition (by kind and by procedural shape) and the tier fallback. The `stress` fixture is unchanged, but its cassia body is now lit.
+- **Look.** In the bar frame the lit cassia reads warmer and darker than the painted sprite. With the model's ambient of 0.35, a body outside the key light's falloff is darker than unlit. The light placement is a presentation default for the owner's eye, not a judged look.
 
 ## 7. How success is measured
 
@@ -203,6 +213,27 @@ What this does and does not show:
 - It holds 60 fps at 1440p on the **current look** with the existing stress fixture. The frame time is pinned to the display's refresh, so GPU headroom is **not measured**; CPU time is the usable number.
 - **Not evaluated:** the section 7 bar scene (two beams, trails, eight bodies in the new camera with lit bodies and layered plates), the 4K case, and any GPU below an RTX 4090. The fixture has no beams or trails, and the new lighting and procedural sigils are not wired in, so the bar itself is still open.
 - Re-run the probe, with the procedural sigils and the lit bodies added to the fixture, once `arena-entry.ts` is free.
+
+### 7.2 Frame probe after the step 3 wiring (2026-10-24)
+
+Method: as in 7.1, `node --import tsx packages/tools/art/frame-probe-1440.mts <height> 12 <fixture> [query]` after `npm run build:game`, on the tree of commit ab0731c. The probe now takes a fixture kind, a URL query and a screenshot path. Host KAZIHO: AMD Ryzen 7 7800X3D, NVIDIA GeForce RTX 4090; headless Chromium (Playwright 1.63) on ANGLE/D3D11; Node 24.14; deviceScaleFactor 1. 4K is a 3840x2160 viewport. Each row is the last 360 frames, with sigil and effect counts from `__arena.snapshot()`.
+
+| Run | Scene | Frame ms (mean / p95 / max), fps | Frame CPU ms (mean / p95 / p99 / max) | Phase CPU mean ms |
+|---|---|---|---|---|
+| 7.1 baseline, 1440p | `stress`, unlit, no procedural sigils | 16.67 / 16.80 / 16.80, 60.0 | 1.35 / 1.80 / 2.00 / 2.40 | scene 0.62, render 0.52, hud 0.06 |
+| `stress` 1440p | 12 bodies (cassia lit), 100 projectiles, 104 effect clips, 13 sigils | 16.67 / 16.70 / 16.80, 60.0 | 1.11 / 1.50 / 1.70 / 1.80 | scene 0.56, render 0.45, hud 0.05 |
+| `bar` 1440p | 8 bodies (cassia lit), 2 beams, 2 trails, 2 discs, 1 arc, 24 projectiles, 28 effect clips, 16 sigils | 16.67 / 16.70 / 16.80, 60.0 | 0.63 / 0.90 / 1.10 / 1.30 | scene 0.29, render 0.28, hud 0.04 |
+| `bar` 1440p, `lighting=unlit` | same, no lit body | 16.67 / 16.70 / 16.80, 60.0 | 0.67 / 0.90 / 1.30 / 1.50 | scene 0.31, render 0.30, hud 0.05 |
+| `bar` 4K | as `bar` 1440p | 16.67 / 16.70 / 16.80, 60.0 | 0.76 / 1.10 / 1.40 / 2.30 | scene 0.30, render 0.33, hud 0.04 |
+| `stress` 4K | as `stress` 1440p | 16.67 / 16.80 / 16.80, 60.0 | 1.05 / 1.40 / 1.70 / 1.90 | scene 0.55, render 0.46, hud 0.05 |
+
+Per-phase log (mean ms, `bar` 1440p, lit): input 0.010, arena.pre 0.008, step 0.001, events 0.012, scene 0.290, hud 0.041, onFrame 0.001, ui 0.013, render 0.281. Phase p95: scene 0.4, render 0.4. Effects budget in every run: 0 dropped, 0.0-0.2 ms of 2 ms. Page errors: none. Every `bar` run reported `procedural {disc 2, beam 4, arc 1}` and `lighting.tier lit, litActor 1, cassia ready` (unlit run: `tier unlit`, cassia `litChoice tier-unlit`).
+
+What this shows:
+- The bar scene that exists without new assets holds **60 fps at 1440p and at 4K** with the procedural sigils and the lit body on. Frame CPU stays near half the baseline's, because the bar scene has a quarter of the stress scene's projectiles and effect clips.
+- The lit body and the procedural sigils cost nothing measurable on the CPU: lit and unlit `bar` differ by less than run-to-run noise (0.63 against 0.67 ms). The `stress` rerun reads about 0.2 ms below the 7.1 baseline with more drawn (a lit body), so read about ±0.2 ms as noise.
+- As in 7.1, frame time is pinned to the display refresh, so **GPU headroom is still not measured**. The 4K case shows no frame-time cost on an RTX 4090; slower GPUs are not run.
+- **Still open for the section 7 bar:** the new closer camera, the 140-200 px bodies, layered plates and spell-driven lights. They need assets or the slice, so they are not in this scene. The bar is met for the current camera and assets only.
 
 ## 8. Open questions for the spark
 
