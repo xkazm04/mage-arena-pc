@@ -1,0 +1,608 @@
+{
+  "bodies": [
+    {
+      "slot": "water mage",
+      "scene": "body-water-target",
+      "variant": "target",
+      "calls": 2,
+      "attempts": [
+        "d2s-body-water-target-agy-a01",
+        "d2s-body-water-target-agy-a02"
+      ],
+      "normalCalls": 2,
+      "normalReview": "Painted tangent-space normal map of the kept water-target body. Silhouette aligned to the colour body: mask IoU 0.985, centroid shift under 0.02 px at 1024. Plausible OpenGL convention (up-facing green, right-facing red), folds, hood, face and droplets modelled as smooth relief. Mean inside the body (149, 142, 221) leans slightly warm against the flat 128/128/255; the build renormalizes. Background magenta overlaps pink normal directions, so the build masks with the colour body's alpha, never by keying the normal map.",
+      "normalAlignment": {
+        "shiftPx": [
+          0,
+          0
+        ],
+        "edgeAgreement": 1.0
+      },
+      "status": "candidate",
+      "job": "d2s-body-water-target-agy-a02",
+      "source": "art/delivery/d2s/sources/d2s-body-water-target-agy-a02.jpg",
+      "sha256": "276cbe6ada54166caf8dfa7d1b2b5629ddfb3a2cc796d9fd0edbdf19bf5a3a76",
+      "rank": 1,
+      "review": "Single figure, clean magenta. Matches the target's water mage closely: young woman, brown bob, blue hood down, pale blue-white layered robes, crescent droplets at the raised hand. Front-right three-quarter at a raised camera, feet grounded. Inked contour and cel-like shading follow the stand-in target rather than Covenant brushwork; flat values give the derived normal map little relief. Rank 1: closest to the T1-A water mage (person, robe, raised casting hand) and the cleanest silhouette.",
+      "size": [
+        671,
+        915
+      ],
+      "normals": [
+        "derived",
+        "painted"
+      ],
+      "cleanupSteps": [
+        "magenta key (key_magenta 80/150)",
+        "alpha bbox crop + 8 px pad",
+        "derived normal (luminance/blur/Sobel)",
+        "painted normal: resize to body source, crop to body box, renormalize, body alpha"
+      ],
+      "files": [
+        "art/delivery/d2s/bodies/body-water-target/at-170px.png",
+        "art/delivery/d2s/bodies/body-water-target/at-61px.png",
+        "art/delivery/d2s/bodies/body-water-target/color.png",
+        "art/delivery/d2s/bodies/body-water-target/lit-proof.jpg",
+        "art/delivery/d2s/bodies/body-water-target/normal-derived.png",
+        "art/delivery/d2s/bodies/body-water-target/normal-painted.png"
+      ]
+    },
+    {
+      "slot": "water mage",
+      "scene": "body-water-roster",
+      "variant": "roster",
+      "calls": 1,
+      "attempts": [
+        "d2s-body-water-roster-agy-a01"
+      ],
+      "normalCalls": 1,
+      "normalReview": "Aligned to the colour body (best edge shift 1 px, 85% of silhouette edge on normal edges). Relief of hood, cloak folds, staff and droplets reads well. Background painted as flat-normal blue with stray panels instead of magenta; harmless because the build masks with the colour body's alpha.",
+      "normalAlignment": {
+        "shiftPx": [
+          -1,
+          -1
+        ],
+        "edgeAgreement": 0.854
+      },
+      "status": "candidate",
+      "job": "d2s-body-water-roster-agy-a01",
+      "source": "art/delivery/d2s/sources/d2s-body-water-roster-agy-a01.jpg",
+      "sha256": "6d6482a0b546a5b1676c0de041d404b0f9e689c2a6b79645b4045fc8a3b48660",
+      "rank": 2,
+      "review": "Single figure, clean magenta. Cassia's identity carried over: dark curly hair, blue hood and cloak, ivory and pale-blue split cloth, silver clasps, crescent orb staff, droplets beside the staff head. Painted Covenant brushwork with sculpted cloth volumes and a light blue rim; reads richer and more modelled than the target variant. Departure from T1-A: calmer ready pose, no raised casting hand. Rank 2: richest painting and keeps Cassia, but the pose is calmer than T1-A's casting moment.",
+      "size": [
+        565,
+        810
+      ],
+      "normals": [
+        "derived",
+        "painted"
+      ],
+      "cleanupSteps": [
+        "magenta key (key_magenta 80/150)",
+        "alpha bbox crop + 8 px pad",
+        "derived normal (luminance/blur/Sobel)",
+        "painted normal: resize to body source, crop to body box, renormalize, body alpha"
+      ],
+      "files": [
+        "art/delivery/d2s/bodies/body-water-roster/at-170px.png",
+        "art/delivery/d2s/bodies/body-water-roster/at-61px.png",
+        "art/delivery/d2s/bodies/body-water-roster/color.png",
+        "art/delivery/d2s/bodies/body-water-roster/lit-proof.jpg",
+        "art/delivery/d2s/bodies/body-water-roster/normal-derived.png",
+        "art/delivery/d2s/bodies/body-water-roster/normal-painted.png"
+      ]
+    },
+    {
+      "slot": "water mage",
+      "scene": "body-water-covenant",
+      "variant": "covenant",
+      "calls": 1,
+      "attempts": [
+        "d2s-body-water-covenant-agy-a01"
+      ],
+      "normalCalls": 1,
+      "normalReview": "Aligned (shift 0 px, 93% edge agreement). Good fold and staff relief; the torn hems are modelled. Background flat-normal blue with lighter panels at the top; masked out by the colour alpha.",
+      "normalAlignment": {
+        "shiftPx": [
+          0,
+          0
+        ],
+        "edgeAgreement": 0.928
+      },
+      "status": "candidate",
+      "job": "d2s-body-water-covenant-agy-a01",
+      "source": "art/delivery/d2s/sources/d2s-body-water-covenant-agy-a01.jpg",
+      "sha256": "705726352a97ff7b1fb03602ff179993c3db6ebe918f65c54d2d3e970dee5378",
+      "rank": 3,
+      "review": "Single figure, clean magenta. A new design between the two: young woman, brown hair, pale teal-trimmed layered coat with torn hems, belt charms, twisted dark staff, droplet crescents around the raised hand. Inked line work like the target; the droplets carry a lilac cast that may be magenta spill and will lose some edge to the key. Ragged hems add edge noise at small scale. Rank 3: ragged hems add noise at 170 px and the droplets carry lilac spill.",
+      "size": [
+        704,
+        906
+      ],
+      "normals": [
+        "derived",
+        "painted"
+      ],
+      "cleanupSteps": [
+        "magenta key (key_magenta 80/150)",
+        "alpha bbox crop + 8 px pad",
+        "derived normal (luminance/blur/Sobel)",
+        "painted normal: resize to body source, crop to body box, renormalize, body alpha"
+      ],
+      "files": [
+        "art/delivery/d2s/bodies/body-water-covenant/at-170px.png",
+        "art/delivery/d2s/bodies/body-water-covenant/at-61px.png",
+        "art/delivery/d2s/bodies/body-water-covenant/color.png",
+        "art/delivery/d2s/bodies/body-water-covenant/lit-proof.jpg",
+        "art/delivery/d2s/bodies/body-water-covenant/normal-derived.png",
+        "art/delivery/d2s/bodies/body-water-covenant/normal-painted.png"
+      ]
+    },
+    {
+      "slot": "fire mage",
+      "scene": "body-fire-target",
+      "variant": "target",
+      "calls": 1,
+      "attempts": [
+        "d2s-body-fire-target-agy-a01"
+      ],
+      "normalCalls": 1,
+      "normalReview": "Aligned (shift 0 px, 100% edge agreement; mask IoU 0.982). Coat, pauldrons, staff and the flame modelled; magenta background kept. The flame gets relief it should not have (it is emissive); the slice should leave flames unlit.",
+      "normalAlignment": {
+        "shiftPx": [
+          0,
+          0
+        ],
+        "edgeAgreement": 0.999
+      },
+      "status": "candidate",
+      "job": "d2s-body-fire-target-agy-a01",
+      "source": "art/delivery/d2s/sources/d2s-body-fire-target-agy-a01.jpg",
+      "sha256": "ed4d0a23f40722146ece2b0915513c6e204783c4ee4658dd03b51a2d77eb6ff3",
+      "rank": 2,
+      "review": "Single figure, clean magenta. Close to the target's fire mage: young man, dark ember-trimmed coat over pale cloth, ornate pauldrons, forked flame and embers in the open hand. Added a staff the target does not have. Inked line work like the target; the coat is dark and busy, so at 170 px the silhouette relies on the pale skirt and the flame. Rank 2: close to T1-A, but the busy dark coat loses the silhouette at small scale.",
+      "size": [
+        738,
+        970
+      ],
+      "normals": [
+        "derived",
+        "painted"
+      ],
+      "cleanupSteps": [
+        "magenta key (key_magenta 80/150)",
+        "alpha bbox crop + 8 px pad",
+        "derived normal (luminance/blur/Sobel)",
+        "painted normal: resize to body source, crop to body box, renormalize, body alpha"
+      ],
+      "files": [
+        "art/delivery/d2s/bodies/body-fire-target/at-170px.png",
+        "art/delivery/d2s/bodies/body-fire-target/at-61px.png",
+        "art/delivery/d2s/bodies/body-fire-target/color.png",
+        "art/delivery/d2s/bodies/body-fire-target/lit-proof.jpg",
+        "art/delivery/d2s/bodies/body-fire-target/normal-derived.png",
+        "art/delivery/d2s/bodies/body-fire-target/normal-painted.png"
+      ]
+    },
+    {
+      "slot": "fire mage",
+      "scene": "body-fire-roster",
+      "variant": "roster",
+      "calls": 1,
+      "attempts": [
+        "d2s-body-fire-roster-agy-a01"
+      ],
+      "normalCalls": 1,
+      "normalReview": "Aligned (shift 0 px, 84% edge agreement). Mantle, sash and staff relief good; the hand flame, staff ember and jar glow are dropped (flat), which suits emissive parts. Face reads older than the colour body. Background flat-normal blue; masked by colour alpha.",
+      "normalAlignment": {
+        "shiftPx": [
+          0,
+          0
+        ],
+        "edgeAgreement": 0.84
+      },
+      "status": "candidate",
+      "job": "d2s-body-fire-roster-agy-a01",
+      "source": "art/delivery/d2s/sources/d2s-body-fire-roster-agy-a01.jpg",
+      "sha256": "c702105f243eff703860207352c4ae1e6104c708527c5d7a104d6a2fbc01ac9f",
+      "rank": 3,
+      "review": "Single figure, clean magenta. Brennic's identity carried over: shaved head, copper beard, ivory cloth with a burnt-orange sash panel, dark short mantle, ember jars on the belt, forked charred staff with an ember, a small flame in the open hand. Inked like the target. Departures: the body faces the viewer nearly frontally instead of front-right, and the flame tips pick up a pink fringe from the matte. Strongest silhouette of the fire set at small scale (pale robe, dark mantle). Rank 3: keeps Brennic and has the best small-scale silhouette, but it faces the camera and drifts furthest from T1-A.",
+      "size": [
+        666,
+        916
+      ],
+      "normals": [
+        "derived",
+        "painted"
+      ],
+      "cleanupSteps": [
+        "magenta key (key_magenta 80/150)",
+        "alpha bbox crop + 8 px pad",
+        "derived normal (luminance/blur/Sobel)",
+        "painted normal: resize to body source, crop to body box, renormalize, body alpha"
+      ],
+      "files": [
+        "art/delivery/d2s/bodies/body-fire-roster/at-170px.png",
+        "art/delivery/d2s/bodies/body-fire-roster/at-61px.png",
+        "art/delivery/d2s/bodies/body-fire-roster/color.png",
+        "art/delivery/d2s/bodies/body-fire-roster/lit-proof.jpg",
+        "art/delivery/d2s/bodies/body-fire-roster/normal-derived.png",
+        "art/delivery/d2s/bodies/body-fire-roster/normal-painted.png"
+      ]
+    },
+    {
+      "slot": "fire mage",
+      "scene": "body-fire-covenant",
+      "variant": "covenant",
+      "calls": 1,
+      "attempts": [
+        "d2s-body-fire-covenant-agy-a01"
+      ],
+      "normalCalls": 1,
+      "normalReview": "Aligned (shift 0 px, 81% edge agreement). Coat folds and hem pattern modelled; the flame is left out, which suits an emissive part. Background flat-normal blue with a border; masked by colour alpha.",
+      "normalAlignment": {
+        "shiftPx": [
+          0,
+          0
+        ],
+        "edgeAgreement": 0.814
+      },
+      "status": "candidate",
+      "job": "d2s-body-fire-covenant-agy-a01",
+      "source": "art/delivery/d2s/sources/d2s-body-fire-covenant-agy-a01.jpg",
+      "sha256": "3a79544206d9ecedefe7ffa6df83a4ac4831317c5b107b8c5729b1847049c234",
+      "rank": 1,
+      "review": "Single figure, clean magenta. Young fire mage in a long dark coat with forked-flame embroidered hems over pale wrapped cloth, twisted dark staff, forked flame with embers over the open hand. Front-right three-quarter as asked. Closest of the three to the target's coat; the flame-pattern hem repeats the element shape well. Inked like the target; the staff runs nearly horizontal across the body and widens the bounding box. Rank 1: closest to the T1-A fire mage's long dark ember-trimmed coat; front-right as asked; the flame-pattern hems carry the element.",
+      "size": [
+        793,
+        888
+      ],
+      "normals": [
+        "derived",
+        "painted"
+      ],
+      "cleanupSteps": [
+        "magenta key (key_magenta 80/150)",
+        "alpha bbox crop + 8 px pad",
+        "derived normal (luminance/blur/Sobel)",
+        "painted normal: resize to body source, crop to body box, renormalize, body alpha"
+      ],
+      "files": [
+        "art/delivery/d2s/bodies/body-fire-covenant/at-170px.png",
+        "art/delivery/d2s/bodies/body-fire-covenant/at-61px.png",
+        "art/delivery/d2s/bodies/body-fire-covenant/color.png",
+        "art/delivery/d2s/bodies/body-fire-covenant/lit-proof.jpg",
+        "art/delivery/d2s/bodies/body-fire-covenant/normal-derived.png",
+        "art/delivery/d2s/bodies/body-fire-covenant/normal-painted.png"
+      ]
+    }
+  ],
+  "plates": [
+    {
+      "slot": "arena plate set",
+      "palette": "verdigris",
+      "calls": 5,
+      "layers": {
+        "floor": "d2s-plate-verdigris-floor-agy-a01",
+        "wall": "d2s-plate-verdigris-wall-agy-a02",
+        "rim": "d2s-plate-verdigris-rim-agy-a02"
+      },
+      "status": "candidate",
+      "rank": 1,
+      "review": {
+        "floor": "Painted floor layer, no figures, no text. Sand duel oval inside a ring of large dark verdigris slabs, camera roughly 40 degrees, quiet broad sand for gameplay, soft brushwork closer to Covenant than the inked targets. Departures: the slabs are large relative to a 170 px body (about 2 m each at 100 px per metre), and the oval reads small against T2-A's full ring; the wall layer covers the top band.",
+        "wall": "Correction: seen from about 45 degrees above, as in T2-A. A curved arcade ring with torchlit crowd boxes and verdigris statues on the parapet wraps the floor. Composited, the sand oval stays open in the middle and the set reads as a sunken arena. Clean key. The wall still fills about half the frame height, not the 25% asked, and it overlaps the floor's own slab ring, which hides the floor's outer slabs.",
+        "rim": "Correction: a near parapet seen from above, a carved verdigris rail with two legionary statues on plinths and a brazier, about 30% of the frame at the corners and 15% at the centre. Clean key. Composited, it frames the floor without hiding the duel space; the brazier flame has a slight pink cast at its tips."
+      },
+      "cleanupSteps": [
+        "floor resized to 1920x1080",
+        "wall/rim magenta key (key_magenta 80/150)",
+        "stacked floor < wall < rim"
+      ],
+      "files": [
+        "art/delivery/d2s/plates/verdigris/composite-panned.jpg",
+        "art/delivery/d2s/plates/verdigris/composite.jpg",
+        "art/delivery/d2s/plates/verdigris/floor.jpg",
+        "art/delivery/d2s/plates/verdigris/rim.png",
+        "art/delivery/d2s/plates/verdigris/wall.png"
+      ]
+    },
+    {
+      "slot": "arena plate set",
+      "palette": "rust",
+      "calls": 3,
+      "layers": {
+        "floor": "d2s-plate-rust-floor-agy-a01",
+        "wall": "d2s-plate-rust-wall-agy-a01",
+        "rim": "d2s-plate-rust-rim-agy-a01"
+      },
+      "status": "candidate",
+      "rank": 2,
+      "review": {
+        "floor": "Floor layer, late-sun rust and sand: a sand oval inside a ring of warm slabs. Broken slabs are scattered across the sand, so the gameplay area is busier than in the other two floors. The warm, painterly look is not in either target.",
+        "wall": "Back wall layer with a clean magenta lower band. Warm torchlit two-tier arcade with crowd silhouettes, banners and a dusk sky; strong depth. The layer fills about 67% of the height, not the 45% asked, so it covers more of the floor.",
+        "rim": "Rim layer on magenta: a curved balustrade, a brazier and two large bronze legionary statues seen from behind at the left and right edges. The statues are about 70% of the frame height and would hide bodies near the edges; they need scaling or cropping in the slice. Clean key."
+      },
+      "cleanupSteps": [
+        "floor resized to 1920x1080",
+        "wall/rim magenta key (key_magenta 80/150)",
+        "stacked floor < wall < rim"
+      ],
+      "files": [
+        "art/delivery/d2s/plates/rust/composite-panned.jpg",
+        "art/delivery/d2s/plates/rust/composite.jpg",
+        "art/delivery/d2s/plates/rust/floor.jpg",
+        "art/delivery/d2s/plates/rust/rim.png",
+        "art/delivery/d2s/plates/rust/wall.png"
+      ]
+    },
+    {
+      "slot": "arena plate set",
+      "palette": "moonlit",
+      "calls": 3,
+      "layers": {
+        "floor": "d2s-plate-moonlit-floor-agy-a01",
+        "wall": "d2s-plate-moonlit-wall-agy-a01",
+        "rim": "d2s-plate-moonlit-rim-agy-a01"
+      },
+      "status": "candidate",
+      "rank": 3,
+      "review": {
+        "floor": "Floor layer, night: a dark packed-earth oval inside two concentric rings of blue-grey stone. Clean, quiet and readable, with crisp stone edges and the most 'sunken' read of the three. Value range is very dark, so it needs the spell lights the slice adds.",
+        "wall": "Back wall layer, night, with a clean magenta lower band. Moonlit sky and torchlit arcades. Defect: the perspective breaks. The right side shows a Colosseum-like exterior curving away while the left is an inner parapet, so it does not read as one ring around the floor. Needs a correction before slice use.",
+        "rim": "Rim layer on magenta: a dark blue stone parapet, a brazier and two seated verdigris statues. Clean key and low occlusion. Defect: both statues copy a famous seated 'thinker' pose; this breaks the 'original designs only' rule, so they should be replaced before production."
+      },
+      "cleanupSteps": [
+        "floor resized to 1920x1080",
+        "wall/rim magenta key (key_magenta 80/150)",
+        "stacked floor < wall < rim"
+      ],
+      "files": [
+        "art/delivery/d2s/plates/moonlit/composite-panned.jpg",
+        "art/delivery/d2s/plates/moonlit/composite.jpg",
+        "art/delivery/d2s/plates/moonlit/floor.jpg",
+        "art/delivery/d2s/plates/moonlit/rim.png",
+        "art/delivery/d2s/plates/moonlit/wall.png"
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "name": "T1-A-standin",
+      "path": "art/targets/T1-A-standin.png",
+      "sha256": "521f0f71b7edf9604fac431ba7d616e7918b83aa76003342579b973b74f5d8e9"
+    },
+    {
+      "name": "T2-A-standin",
+      "path": "art/targets/T2-A-standin.png",
+      "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408"
+    }
+  ],
+  "spend": {
+    "inherited": 382,
+    "wave": 27,
+    "total": 409,
+    "hardCap": 450,
+    "remaining": 41,
+    "calls": [
+      {
+        "id": "d2s-target-t1a-agy-a01",
+        "scene": "target-t1a",
+        "status": "error-unknown-spend",
+        "charged": 1,
+        "seconds": 27.25,
+        "evidence": "art/providers/runs/d2s-target-t1a-agy-a01"
+      },
+      {
+        "id": "d2s-target-t2a-agy-a01",
+        "scene": "target-t2a",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 23.485,
+        "evidence": "art/providers/runs/d2s-target-t2a-agy-a01"
+      },
+      {
+        "id": "d2s-body-water-target-agy-a01",
+        "scene": "body-water-target",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 37.844,
+        "evidence": "art/providers/runs/d2s-body-water-target-agy-a01"
+      },
+      {
+        "id": "d2s-body-water-target-agy-a02",
+        "scene": "body-water-target",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 50.469,
+        "evidence": "art/providers/runs/d2s-body-water-target-agy-a02"
+      },
+      {
+        "id": "d2s-body-water-roster-agy-a01",
+        "scene": "body-water-roster",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 31.094,
+        "evidence": "art/providers/runs/d2s-body-water-roster-agy-a01"
+      },
+      {
+        "id": "d2s-body-water-covenant-agy-a01",
+        "scene": "body-water-covenant",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 39.469,
+        "evidence": "art/providers/runs/d2s-body-water-covenant-agy-a01"
+      },
+      {
+        "id": "d2s-body-fire-target-agy-a01",
+        "scene": "body-fire-target",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 34.985,
+        "evidence": "art/providers/runs/d2s-body-fire-target-agy-a01"
+      },
+      {
+        "id": "d2s-body-fire-roster-agy-a01",
+        "scene": "body-fire-roster",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 33.39,
+        "evidence": "art/providers/runs/d2s-body-fire-roster-agy-a01"
+      },
+      {
+        "id": "d2s-body-fire-covenant-agy-a01",
+        "scene": "body-fire-covenant",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 39.687,
+        "evidence": "art/providers/runs/d2s-body-fire-covenant-agy-a01"
+      },
+      {
+        "id": "d2s-normal-water-target-agy-a01",
+        "scene": "normal-water-target",
+        "status": "error-unknown-spend",
+        "charged": 1,
+        "seconds": 600.094,
+        "evidence": "art/providers/runs/d2s-normal-water-target-agy-a01"
+      },
+      {
+        "id": "d2s-normal-water-target-agy-a02",
+        "scene": "normal-water-target",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 31.016,
+        "evidence": "art/providers/runs/d2s-normal-water-target-agy-a02"
+      },
+      {
+        "id": "d2s-normal-water-roster-agy-a01",
+        "scene": "normal-water-roster",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 28.125,
+        "evidence": "art/providers/runs/d2s-normal-water-roster-agy-a01"
+      },
+      {
+        "id": "d2s-normal-water-covenant-agy-a01",
+        "scene": "normal-water-covenant",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 28.75,
+        "evidence": "art/providers/runs/d2s-normal-water-covenant-agy-a01"
+      },
+      {
+        "id": "d2s-normal-fire-target-agy-a01",
+        "scene": "normal-fire-target",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 28.75,
+        "evidence": "art/providers/runs/d2s-normal-fire-target-agy-a01"
+      },
+      {
+        "id": "d2s-normal-fire-roster-agy-a01",
+        "scene": "normal-fire-roster",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 26.813,
+        "evidence": "art/providers/runs/d2s-normal-fire-roster-agy-a01"
+      },
+      {
+        "id": "d2s-normal-fire-covenant-agy-a01",
+        "scene": "normal-fire-covenant",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 24.141,
+        "evidence": "art/providers/runs/d2s-normal-fire-covenant-agy-a01"
+      },
+      {
+        "id": "d2s-plate-verdigris-floor-agy-a01",
+        "scene": "plate-verdigris-floor",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 27.671,
+        "evidence": "art/providers/runs/d2s-plate-verdigris-floor-agy-a01"
+      },
+      {
+        "id": "d2s-plate-verdigris-wall-agy-a01",
+        "scene": "plate-verdigris-wall",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 34.844,
+        "evidence": "art/providers/runs/d2s-plate-verdigris-wall-agy-a01"
+      },
+      {
+        "id": "d2s-plate-verdigris-rim-agy-a01",
+        "scene": "plate-verdigris-rim",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 29.14,
+        "evidence": "art/providers/runs/d2s-plate-verdigris-rim-agy-a01"
+      },
+      {
+        "id": "d2s-plate-rust-floor-agy-a01",
+        "scene": "plate-rust-floor",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 36.344,
+        "evidence": "art/providers/runs/d2s-plate-rust-floor-agy-a01"
+      },
+      {
+        "id": "d2s-plate-moonlit-floor-agy-a01",
+        "scene": "plate-moonlit-floor",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 30.875,
+        "evidence": "art/providers/runs/d2s-plate-moonlit-floor-agy-a01"
+      },
+      {
+        "id": "d2s-plate-rust-wall-agy-a01",
+        "scene": "plate-rust-wall",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 28.093,
+        "evidence": "art/providers/runs/d2s-plate-rust-wall-agy-a01"
+      },
+      {
+        "id": "d2s-plate-rust-rim-agy-a01",
+        "scene": "plate-rust-rim",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 29.875,
+        "evidence": "art/providers/runs/d2s-plate-rust-rim-agy-a01"
+      },
+      {
+        "id": "d2s-plate-moonlit-wall-agy-a01",
+        "scene": "plate-moonlit-wall",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 32.109,
+        "evidence": "art/providers/runs/d2s-plate-moonlit-wall-agy-a01"
+      },
+      {
+        "id": "d2s-plate-moonlit-rim-agy-a01",
+        "scene": "plate-moonlit-rim",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 29.047,
+        "evidence": "art/providers/runs/d2s-plate-moonlit-rim-agy-a01"
+      },
+      {
+        "id": "d2s-plate-verdigris-wall-agy-a02",
+        "scene": "plate-verdigris-wall",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 35.75,
+        "evidence": "art/providers/runs/d2s-plate-verdigris-wall-agy-a02"
+      },
+      {
+        "id": "d2s-plate-verdigris-rim-agy-a02",
+        "scene": "plate-verdigris-rim",
+        "status": "generated",
+        "charged": 1,
+        "seconds": 31.375,
+        "evidence": "art/providers/runs/d2s-plate-verdigris-rim-agy-a02"
+      }
+    ]
+  },
+  "ownerPick": "pending"
+}

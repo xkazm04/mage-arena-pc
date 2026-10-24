@@ -1,0 +1,70 @@
+{
+  "id": "d2s-plate-moonlit-floor-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "plate-moonlit-floor",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "plate-moonlit-floor",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/targets/T2-A-standin.png",
+        "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+        "role": "target camera and finish"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+    "family": "plate",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "palette": "moonlit",
+    "layer": "floor"
+  },
+  "input_hash": "1d71a2d04924122edd0e01f6de18d1ea359a22ac3842909d20a8406cfebe9293",
+  "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "2f037eab-1aec-4437-9074-28107425bf81",
+  "at": "2026-10-24T08:41:30.333132+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 30.875,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:41:38Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "d2s_plate_moonlit_floor",
+        "Prompt": "Original hand-painted digital dark fantasy 2.5D game arena floor layer plate only. A sunken circular arena floor composed of central packed dark sand surrounded by concentric rings of worn, ancient Roman masonry stone slabs and flagstones, viewed from a high 40-degree overhead camera angle, completely filling the entire 16:9 frame from edge to edge. No walls, no horizon, no sky, no characters, no statues, no props, no glowing runes. Quiet broad ground plane with subtle faint old scorch marks, combat scuffs, and material wear only along physical stone edges. Lighting: cool moonlit night atmosphere with deep blue-black shadows and crisp pale silver highlights raking across stone edges from the upper left, with subtle hints of ambient warm torchlight warmth reflected softly on periphery stones. Painterly sculpted volumes, clean opaque digital brushwork, sharp confident contours, no canvas texture, no grain, no photorealism, no 3D render."
+      },
+      "conversation": "16bf61b2-1f4f-4f3a-a978-50eae61718d3"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "b139c06b36da2c405458d2e5139d3fceffc8480c10062dcf1185bf056a639a58",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\b783326e-0cbc-4104-86db-a25c30e1a171\\d2s_plate_moonlit_floor_1792831321096.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-plate-moonlit-floor-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-plate-moonlit-floor-agy-a01.jpg",
+  "sha256": "b139c06b36da2c405458d2e5139d3fceffc8480c10062dcf1185bf056a639a58",
+  "invocation_evidence": "art/providers/runs/d2s-plate-moonlit-floor-agy-a01"
+}

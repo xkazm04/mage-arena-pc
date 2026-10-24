@@ -1,0 +1,76 @@
+{
+  "id": "d2s-plate-verdigris-rim-agy-a02",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "plate-verdigris-rim",
+  "attempt": 2,
+  "input": {
+    "wave": "D2S",
+    "id": "plate-verdigris-rim",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/d2s-plate-verdigris-floor-agy-a01.png",
+        "sha256": "43218227339315e7b51ca9bd4db5cb1ad0361c9b25f78cc16c6e2a8157c36e3c",
+        "role": "same arena floor, palette continuity"
+      },
+      {
+        "path": "art/targets/T2-A-standin.png",
+        "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+        "role": "target camera and finish"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9. CORRECTION: Camera looks DOWN at 45 degrees from high above, as in Reference-2. The near parapet is a THIN foreshortened stone strip along the very bottom 10% of the frame, seen from above (its top surface visible). Two small verdigris statues and a brazier stand on it, each no taller than 18% of the frame height and viewed from above. Everything above is flat magenta.",
+    "family": "plate",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "palette": "verdigris",
+    "layer": "rim",
+    "correction_of": "d2s-plate-verdigris-rim-agy-a01"
+  },
+  "input_hash": "db831361788092cd66ad24d6dc01f9b88a3e543574cffab02f3c4cc58d80f1f0",
+  "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9. CORRECTION: Camera looks DOWN at 45 degrees from high above, as in Reference-2. The near parapet is a THIN foreshortened stone strip along the very bottom 10% of the frame, seen from above (its top surface visible). Two small verdigris statues and a brazier stand on it, each no taller than 18% of the frame height and viewed from above. Everything above is flat magenta.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "18b32f2e-49f7-495b-ba22-8ccfead0abf1",
+  "at": "2026-10-24T08:47:07.139006+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 31.375,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:47:15Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "foreground_rim_plate",
+        "Prompt": "Stylized concept art, 2.5D layered game arena foreground rim plate layer. High angle camera looking DOWN at a 45-degree angle from high above. Along the very bottom edge of the frame (occupying only the bottom 10-18% of the height), a thin foreshortened arena parapet stone ledge seen from above, showing its top masonry surface in dark verdigris stone. Resting on this bottom parapet are two small weathered verdigris bronze statues at the far lower-left and lower-right corners, viewed from above at 45 degrees, and a small iron brazier with lit warm forked flames and embers along the ledge, all seen close up and slightly soft. Everything else in the entire frame above this bottom ledge—the entire middle and upper 85-90% of the 16:9 canvas—is a solid, uniform, flat vivid MAGENTA (#FF00FF) background for transparency isolation. Absolutely no floor, no arena walls, no fighters, no sky, only flat pure magenta filling everything above the parapet. Painterly dark fantasy style, sculpted opaque digital paint, sharp silver edge highlights, dark bronze with oxidized teal-green verdigris patina, warm fire glow cast locally on the masonry ledge, Roman classical masonry details, cool directional lighting from top-left, clean graphic cutout silhouette against solid magenta."
+      },
+      "conversation": "e85145c4-85d2-4378-a4a2-5298f3930d9c"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "7c34e9898d0b7fae4ef6b979a0b6022fe51fc572e5757e558bf7c08e92b275bf",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\ecf0082c-2a99-4ee2-9436-2dead71acdb3\\foreground_rim_plate_1792831658350.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-plate-verdigris-rim-agy-a02/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-plate-verdigris-rim-agy-a02.jpg",
+  "sha256": "7c34e9898d0b7fae4ef6b979a0b6022fe51fc572e5757e558bf7c08e92b275bf",
+  "invocation_evidence": "art/providers/runs/d2s-plate-verdigris-rim-agy-a02"
+}

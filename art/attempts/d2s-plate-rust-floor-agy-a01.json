@@ -1,0 +1,70 @@
+{
+  "id": "d2s-plate-rust-floor-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "plate-rust-floor",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "plate-rust-floor",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/targets/T2-A-standin.png",
+        "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+        "role": "target camera and finish"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+    "family": "plate",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "palette": "rust",
+    "layer": "floor"
+  },
+  "input_hash": "e77a73ea74eabd16b32e94ccf1e4753880382039183305738430ec0b7ca66321",
+  "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "a6237086-6a3f-4ae0-a6c2-492a11883b37",
+  "at": "2026-10-24T08:40:53.291020+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 36.344,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:41:01Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "d2s_plate_rust_floor",
+        "Prompt": "Stylized hand-painted 2.5D game art arena floor layer only. Sunken circular dueling arena ground viewed from a 40-degree high-angle downward perspective, filling the entire frame edge-to-edge. Composed of worn Roman-inspired stone masonry slabs, ancient weathered flagstones, and packed warm ochre sand. Broad, clean, quiet ground surfaces optimized for gameplay readability, accented only by faint old scorch marks, fine dust, and subtle scuffs along the stone seams and borders. Sculpted painterly volume, broken confident contours, smooth opaque digital paint with worn textures focused strictly at physical stone edges. Warm ochre, rust-tinted masonry, muted sandstone, dark slate crevices, lit by a cool upper-left directional light casting subtle contact shadows. Completely empty arena ground plane: strictly no walls, no sky, no horizon, no characters, no statues, no glowing runes, no UI elements. Hand-painted dark fantasy concept art style, no 3D render, no photographic texture or noise."
+      },
+      "conversation": "20484123-81a2-4bfd-880a-66095b332f4e"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "22ce4c4bd50394b9de02721bdf895fa36aa8129f9e1d33d342e8296cb9341570",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\2cad032e-89a6-47dd-9b81-69f933963d90\\d2s_plate_rust_floor_1792831289500.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-plate-rust-floor-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-plate-rust-floor-agy-a01.jpg",
+  "sha256": "22ce4c4bd50394b9de02721bdf895fa36aa8129f9e1d33d342e8296cb9341570",
+  "invocation_evidence": "art/providers/runs/d2s-plate-rust-floor-agy-a01"
+}

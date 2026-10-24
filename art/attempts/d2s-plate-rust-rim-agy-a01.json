@@ -1,0 +1,75 @@
+{
+  "id": "d2s-plate-rust-rim-agy-a01",
+  "wave": "D2S",
+  "style_id": "covenant",
+  "scene": "plate-rust-rim",
+  "attempt": 1,
+  "input": {
+    "wave": "D2S",
+    "id": "plate-rust-rim",
+    "pilot": true,
+    "providers": [
+      "agy"
+    ],
+    "aspect_ratio": "16:9",
+    "references": [
+      {
+        "path": "art/delivery/d2s/references/d2s-plate-rust-floor-agy-a01.png",
+        "sha256": "9d9c2c35ef1b8379e9c26b00ac10b715aecd120d3b60b319ed919c248f025e9f",
+        "role": "same arena floor, palette continuity"
+      },
+      {
+        "path": "art/targets/T2-A-standin.png",
+        "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+        "role": "target camera and finish"
+      }
+    ],
+    "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+    "family": "plate",
+    "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+    "palette": "rust",
+    "layer": "rim"
+  },
+  "input_hash": "05d37b1a653b7d3368c2fbf103d2525156d0e53bc56e6fc65c721a617b0da6be",
+  "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+  "provider": "agy",
+  "origin": "agy-cli",
+  "session_id": "bc9af35f-d797-46be-a637-604a93e0b9fa",
+  "at": "2026-10-24T08:42:57.351526+00:00",
+  "week": "2026-W43",
+  "charged_images": 1,
+  "status": "generated",
+  "elapsed_seconds": 29.875,
+  "returncode": 1,
+  "tool_calls": [
+    {
+      "at": "2026-10-24T08:43:05Z",
+      "step": 1,
+      "callIndex": 0,
+      "name": "generate_image",
+      "arguments": {
+        "AspectRatio": "16:9",
+        "ImageName": "foreground_rim_plate",
+        "Prompt": "Original hand-painted digital dark fantasy illustration, foreground rim layer asset for a 2.5D layered arena game plate. Foreground rim layer only, along the very bottom edge of the frame: a weathered Roman gladiatorial arena stone parapet balustrade and railing made of rust and sand-colored masonry with dark slate shadows. Anchoring the bottom-left and bottom-right corners are two sculpted verdigris bronze statues, weathered dark metal with restrained greenish-cyan patina, seen close-up and slightly soft in focus. A warm ornate bronze brazier with glowing embers and forked golden flames sits on the parapet edge casting warm rim light. Crucially, the entire middle and upper portion of the frame (the top 80% of the image) is completely flat, solid, uniform pure vivid MAGENTA (#FF00FF) background for chroma key compositing. No arena floor, no background walls, no fighters, no sky, no dust particles in the air, only flat solid magenta above the bottom rim. Sculpted painterly volume, broken confident contours, smooth opaque brushwork, cool upper-left ambient light, authentic Roman arena masonry."
+      },
+      "conversation": "9a64d138-ca39-4856-a7e1-f4a405b8daca"
+    }
+  ],
+  "output_files": [
+    {
+      "sha256": "ebdab4d0c11e38c1e8990f58b0651a018260a61888b4a0713af1776fd47a1912",
+      "paths": [
+        "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\9ed62752-3df8-4589-9344-0fcaa20a55a2\\foreground_rim_plate_1792831407019.jpg"
+      ]
+    }
+  ],
+  "unique_output_images": 1,
+  "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+  "driver_stopped_after_first_completed_image": true,
+  "prompt_verbatim_verified": false,
+  "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+  "source": "art/raw/d2s-plate-rust-rim-agy-a01/_driver/source.jpg",
+  "archive": "art/review/sources/d2s-plate-rust-rim-agy-a01.jpg",
+  "sha256": "ebdab4d0c11e38c1e8990f58b0651a018260a61888b4a0713af1776fd47a1912",
+  "invocation_evidence": "art/providers/runs/d2s-plate-rust-rim-agy-a01"
+}

@@ -27163,6 +27163,818 @@
       "archive": "art/review/sources/d2s-normal-fire-covenant-agy-a01.jpg",
       "sha256": "ce8771c809bf7aaaa572421b7f9d23459380cb973d1b204a34a9472335708511",
       "invocation_evidence": "art/providers/runs/d2s-normal-fire-covenant-agy-a01"
+    },
+    {
+      "id": "d2s-plate-verdigris-floor-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-verdigris-floor",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-verdigris-floor",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "verdigris",
+        "layer": "floor"
+      },
+      "input_hash": "759827c38ce9f200fc8f90817e58935c3cfd75fb9de84703899da4452d1cc3fa",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "2676ac57-926b-4062-8a39-cec468c19a9b",
+      "at": "2026-10-24T08:28:35.601718+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 27.671,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:28:42Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "d2s_plate_verdigris_floor",
+            "Prompt": "Stylized hand-painted digital concept art of an arena floor layer only for a 2.5D dark fantasy mage dueling arena plate set. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera angled about 40 degrees above the ground, filling the whole frame edge to edge. Quiet broad ground surfaces for gameplay with faint old scorch marks and subtle scuffs. No walls, no sky, no people, no statues, no glowing runes. Mood and palette of dusk: dark verdigris stone, green-bronze undertones, and warm cast light against cool teal-grey ambient tones. Roman masonry slab paving and weathered flagstones surrounding packed earth. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark stone seams. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. Shared cool upper-left light, no grain, no canvas texture, no noise overlay, no 3D render, no UI clutter."
+          },
+          "conversation": "8448aa23-449f-4812-b8b1-3b9afc3c4e43"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "e31871e62b99536c0e509d04a2845df8e6bc5f3ad084f3b3c7a0901140680abe",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\1427e51c-0562-415b-a485-dfa2aa28da13\\d2s_plate_verdigris_floor_1792830543113.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-verdigris-floor-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-verdigris-floor-agy-a01.jpg",
+      "sha256": "e31871e62b99536c0e509d04a2845df8e6bc5f3ad084f3b3c7a0901140680abe",
+      "invocation_evidence": "art/providers/runs/d2s-plate-verdigris-floor-agy-a01"
+    },
+    {
+      "id": "d2s-plate-verdigris-wall-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-verdigris-wall",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-verdigris-wall",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-verdigris-floor-agy-a01.png",
+            "sha256": "43218227339315e7b51ca9bd4db5cb1ad0361c9b25f78cc16c6e2a8157c36e3c",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "verdigris",
+        "layer": "wall"
+      },
+      "input_hash": "16c1a91cb367852067169273f6429427b8545d77996321b609401bb4be782f8f",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "2c37a26e-9959-4369-8d2d-d7b12cb6d835",
+      "at": "2026-10-24T08:39:48.113058+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 34.844,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:40:02Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "back_wall_layer",
+            "Prompt": "A 2.5D game art background asset plate, back wall layer only. Camera perspective angled about 40 degrees looking slightly down at a sunken arena. The far curved colosseum arena wall fills strictly the TOP 45% of the vertical frame, featuring Roman masonry, weathered dark verdigris stone blocks, green-bronze alcove statues, arched loggias, balconies lit by warm flaming braziers and torchlight, with silhouetted spectators and crowd figures in the stands, set against a cool twilight teal-grey dusk sky at the very top. Directly along the base/foot of the stone wall, the entire bottom 55% of the frame is completely solid flat uniform vivid pure MAGENTA (#FF00FF) chroma key color, creating a sharp, clean horizontal cut-off boundary line right at the foot of the wall. Absolutely no ground floor, no arena sand, no characters or fighters below the wall. Stylized hand-painted dark fantasy digital concept art. Sculpted painterly volume, confident contours, dark enamel and aged silver accents, weathered verdigris patina on bronze statues, warm torch flames casting orange glow against cool teal dusk atmosphere. Clean opaque digital brushwork, no noise, no grain, no canvas texture, no 3D render look."
+          },
+          "conversation": "2c94485a-de9c-4d66-af28-0a96367cca47"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "038055a7591f6cc7ea777620cc8e0f5fe530907bf7ecc949cdf497e9328463ab",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\68e2504d-4da0-4b96-80ee-c4f5546f0116\\back_wall_layer_1792831222864.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-verdigris-wall-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-verdigris-wall-agy-a01.jpg",
+      "sha256": "038055a7591f6cc7ea777620cc8e0f5fe530907bf7ecc949cdf497e9328463ab",
+      "invocation_evidence": "art/providers/runs/d2s-plate-verdigris-wall-agy-a01"
+    },
+    {
+      "id": "d2s-plate-verdigris-rim-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-verdigris-rim",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-verdigris-rim",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-verdigris-floor-agy-a01.png",
+            "sha256": "43218227339315e7b51ca9bd4db5cb1ad0361c9b25f78cc16c6e2a8157c36e3c",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "verdigris",
+        "layer": "rim"
+      },
+      "input_hash": "7a5b51b88c2624266ad040de22f1054218617ecf070654e8a6a6a0981039816b",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "3c7665f4-5c9d-4ab6-b218-00976decd2f2",
+      "at": "2026-10-24T08:40:23.538502+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 29.14,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:40:31Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "d2s_plate_verdigris_rim",
+            "Prompt": "Foreground rim layer cutout for a layered 2.5D parallax arena plate set in a dark fantasy mage academy arena. Along the very bottom edge of the frame only: a low stone parapet wall, with two weathered green-bronze verdigris statues stationed at the lower left and lower right corners, and an ornate Roman bronze brazier with warm glowing fire and embers. The elements along the bottom edge are viewed extremely close up in the immediate foreground, slightly out of focus. The rest of the entire frame (all of the middle, center, and upper canvas) is a solid, flat, seamless, completely empty pure vivid MAGENTA #FF00FF chroma key background. No floor, no arena ground, no mages, no fighters, no arena walls in the distance, no sky. Clean foreground silhouette cutout against solid magenta. Original hand-painted dark fantasy, sculpted painterly volume, confident contours, dark verdigris stone and aged green-bronze metal with warm torchlight highlights."
+          },
+          "conversation": "2fc629bb-ee75-4a3e-ae5b-70e30f5ab975"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "d958d20d9efd326e6b2172a9c40ea52e87951f8d166328c905ad77e4f18fab15",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\25d2a8b3-37ad-4579-be4b-2a11ca31ed61\\d2s_plate_verdigris_rim_1792831252541.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-verdigris-rim-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-verdigris-rim-agy-a01.jpg",
+      "sha256": "d958d20d9efd326e6b2172a9c40ea52e87951f8d166328c905ad77e4f18fab15",
+      "invocation_evidence": "art/providers/runs/d2s-plate-verdigris-rim-agy-a01"
+    },
+    {
+      "id": "d2s-plate-rust-floor-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-rust-floor",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-rust-floor",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "rust",
+        "layer": "floor"
+      },
+      "input_hash": "e77a73ea74eabd16b32e94ccf1e4753880382039183305738430ec0b7ca66321",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "a6237086-6a3f-4ae0-a6c2-492a11883b37",
+      "at": "2026-10-24T08:40:53.291020+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 36.344,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:41:01Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "d2s_plate_rust_floor",
+            "Prompt": "Stylized hand-painted 2.5D game art arena floor layer only. Sunken circular dueling arena ground viewed from a 40-degree high-angle downward perspective, filling the entire frame edge-to-edge. Composed of worn Roman-inspired stone masonry slabs, ancient weathered flagstones, and packed warm ochre sand. Broad, clean, quiet ground surfaces optimized for gameplay readability, accented only by faint old scorch marks, fine dust, and subtle scuffs along the stone seams and borders. Sculpted painterly volume, broken confident contours, smooth opaque digital paint with worn textures focused strictly at physical stone edges. Warm ochre, rust-tinted masonry, muted sandstone, dark slate crevices, lit by a cool upper-left directional light casting subtle contact shadows. Completely empty arena ground plane: strictly no walls, no sky, no horizon, no characters, no statues, no glowing runes, no UI elements. Hand-painted dark fantasy concept art style, no 3D render, no photographic texture or noise."
+          },
+          "conversation": "20484123-81a2-4bfd-880a-66095b332f4e"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "22ce4c4bd50394b9de02721bdf895fa36aa8129f9e1d33d342e8296cb9341570",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\2cad032e-89a6-47dd-9b81-69f933963d90\\d2s_plate_rust_floor_1792831289500.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-rust-floor-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-rust-floor-agy-a01.jpg",
+      "sha256": "22ce4c4bd50394b9de02721bdf895fa36aa8129f9e1d33d342e8296cb9341570",
+      "invocation_evidence": "art/providers/runs/d2s-plate-rust-floor-agy-a01"
+    },
+    {
+      "id": "d2s-plate-moonlit-floor-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-moonlit-floor",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-moonlit-floor",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "moonlit",
+        "layer": "floor"
+      },
+      "input_hash": "1d71a2d04924122edd0e01f6de18d1ea359a22ac3842909d20a8406cfebe9293",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FLOOR LAYER ONLY. A painted sunken circular arena floor of packed sand and worn stone slabs seen from a camera about 40 degrees above the ground, filling the whole frame edge to edge. Faint old scorch marks and scuffs, quiet broad surfaces for gameplay. No walls, no sky, no people, no statues, no glowing runes. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "2f037eab-1aec-4437-9074-28107425bf81",
+      "at": "2026-10-24T08:41:30.333132+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 30.875,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:41:38Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "d2s_plate_moonlit_floor",
+            "Prompt": "Original hand-painted digital dark fantasy 2.5D game arena floor layer plate only. A sunken circular arena floor composed of central packed dark sand surrounded by concentric rings of worn, ancient Roman masonry stone slabs and flagstones, viewed from a high 40-degree overhead camera angle, completely filling the entire 16:9 frame from edge to edge. No walls, no horizon, no sky, no characters, no statues, no props, no glowing runes. Quiet broad ground plane with subtle faint old scorch marks, combat scuffs, and material wear only along physical stone edges. Lighting: cool moonlit night atmosphere with deep blue-black shadows and crisp pale silver highlights raking across stone edges from the upper left, with subtle hints of ambient warm torchlight warmth reflected softly on periphery stones. Painterly sculpted volumes, clean opaque digital brushwork, sharp confident contours, no canvas texture, no grain, no photorealism, no 3D render."
+          },
+          "conversation": "16bf61b2-1f4f-4f3a-a978-50eae61718d3"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "b139c06b36da2c405458d2e5139d3fceffc8480c10062dcf1185bf056a639a58",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\b783326e-0cbc-4104-86db-a25c30e1a171\\d2s_plate_moonlit_floor_1792831321096.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-moonlit-floor-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-moonlit-floor-agy-a01.jpg",
+      "sha256": "b139c06b36da2c405458d2e5139d3fceffc8480c10062dcf1185bf056a639a58",
+      "invocation_evidence": "art/providers/runs/d2s-plate-moonlit-floor-agy-a01"
+    },
+    {
+      "id": "d2s-plate-rust-wall-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-rust-wall",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-rust-wall",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-rust-floor-agy-a01.png",
+            "sha256": "9d9c2c35ef1b8379e9c26b00ac10b715aecd120d3b60b319ed919c248f025e9f",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "rust",
+        "layer": "wall"
+      },
+      "input_hash": "c566ca18b06daac473512d09cee345f7d64cef73e08fb30adb05ad14f125d9ce",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "6c53d87d-ac4f-468a-bd79-d8dde39c555c",
+      "at": "2026-10-24T08:42:28.523813+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 28.093,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:42:34Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "d2s_plate_rust_wall",
+            "Prompt": "Stylized 2.5D painted concept art layer for a mage dueling game: BACK WALL LAYER ONLY. Camera angle approximately 40 degrees above the ground. The far curved Roman-inspired gladiatorial arena wall with torchlit spectator balconies, bronze braziers casting warm amber light, dark crowd silhouettes, and a late sun dusky sky fills the TOP 45% of the frame. Masonry made of rust and sand stone with dark slate shadows and restrained verdigris. Everything below the foot of the wall (the bottom 55% of the canvas) is completely filled with flat, solid, uniform vivid MAGENTA #FF00FF, forming a clean straight horizontal boundary along the base of the wall. No floor, no fighters, no characters in foreground. Original hand-painted dark fantasy illustration, sculpted painterly volume, broken confident contours, smooth opaque paint, no noise, no paper or canvas texture, no 3D render."
+          },
+          "conversation": "4592368e-0ee6-4fc8-85d1-fd2d6cc016f5"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "e2868436a0a082e08f75189ba4d3274726ee0ba6d4c24d2cd9baee182f89d62c",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\3e5dad06-6b72-455b-8947-3b962d8d70d6\\d2s_plate_rust_wall_1792831376465.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-rust-wall-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-rust-wall-agy-a01.jpg",
+      "sha256": "e2868436a0a082e08f75189ba4d3274726ee0ba6d4c24d2cd9baee182f89d62c",
+      "invocation_evidence": "art/providers/runs/d2s-plate-rust-wall-agy-a01"
+    },
+    {
+      "id": "d2s-plate-rust-rim-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-rust-rim",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-rust-rim",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-rust-floor-agy-a01.png",
+            "sha256": "9d9c2c35ef1b8379e9c26b00ac10b715aecd120d3b60b319ed919c248f025e9f",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "rust",
+        "layer": "rim"
+      },
+      "input_hash": "05d37b1a653b7d3368c2fbf103d2525156d0e53bc56e6fc65c721a617b0da6be",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: late sun, rust and sand masonry, warm ochre floor, dark slate shadows, bronze braziers. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "bc9af35f-d797-46be-a637-604a93e0b9fa",
+      "at": "2026-10-24T08:42:57.351526+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 29.875,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:43:05Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "foreground_rim_plate",
+            "Prompt": "Original hand-painted digital dark fantasy illustration, foreground rim layer asset for a 2.5D layered arena game plate. Foreground rim layer only, along the very bottom edge of the frame: a weathered Roman gladiatorial arena stone parapet balustrade and railing made of rust and sand-colored masonry with dark slate shadows. Anchoring the bottom-left and bottom-right corners are two sculpted verdigris bronze statues, weathered dark metal with restrained greenish-cyan patina, seen close-up and slightly soft in focus. A warm ornate bronze brazier with glowing embers and forked golden flames sits on the parapet edge casting warm rim light. Crucially, the entire middle and upper portion of the frame (the top 80% of the image) is completely flat, solid, uniform pure vivid MAGENTA (#FF00FF) background for chroma key compositing. No arena floor, no background walls, no fighters, no sky, no dust particles in the air, only flat solid magenta above the bottom rim. Sculpted painterly volume, broken confident contours, smooth opaque brushwork, cool upper-left ambient light, authentic Roman arena masonry."
+          },
+          "conversation": "9a64d138-ca39-4856-a7e1-f4a405b8daca"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "ebdab4d0c11e38c1e8990f58b0651a018260a61888b4a0713af1776fd47a1912",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\9ed62752-3df8-4589-9344-0fcaa20a55a2\\foreground_rim_plate_1792831407019.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-rust-rim-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-rust-rim-agy-a01.jpg",
+      "sha256": "ebdab4d0c11e38c1e8990f58b0651a018260a61888b4a0713af1776fd47a1912",
+      "invocation_evidence": "art/providers/runs/d2s-plate-rust-rim-agy-a01"
+    },
+    {
+      "id": "d2s-plate-moonlit-wall-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-moonlit-wall",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-moonlit-wall",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-moonlit-floor-agy-a01.png",
+            "sha256": "9e4db84a93e82c8a118000c70525c45e35f797cc93e60fa839159531dd5fa015",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "moonlit",
+        "layer": "wall"
+      },
+      "input_hash": "b0448b2365baee3d9a68d774bddf7e0d397fd94221e534eed6ddbfce71c498fe",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "0a66b411-ff44-4f36-a748-96708ba337b7",
+      "at": "2026-10-24T08:43:28.093645+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 32.109,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:43:36Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "d2s_plate_moonlit_wall",
+            "Prompt": "A stylized 2.5D video game environment layered background plate of an ancient Roman dark fantasy gladiatorial arena wall at night. Composition: The top 45% of the 16:9 frame depicts the distant curved stone arena wall, tiered balcony arcades with silhouetted crowd spectators, warm flickering torchlight and braziers along the ramparts, under a dark moonlit night sky. The bottom 55% of the frame below the base of the arena wall is entirely flat, uniform, solid vivid MAGENTA (#FF00FF) color, meeting the bottom edge of the stone wall in a clean, sharp horizontal boundary for sprite layer masking. Absolutely no arena floor, no ground surface, no fighters or characters in the lower half. Art style: Hand-painted dark fantasy illustration, sculpted painterly forms, opaque brushstrokes, moonlit blue-black Roman masonry, silver rim highlights from cool upper-left moonlight, warm torchlight accents. No photorealism, no 3D render, no grain, no canvas texture, no watermark, no text."
+          },
+          "conversation": "7841ab38-0777-43b8-989f-20afd69864db"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "b359313fd2bc882d5da7cad1c9baa1ee94762400570de5516f34341753bbb3fb",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\2dae8804-f70c-4009-8aad-3c247009322e\\d2s_plate_moonlit_wall_1792831440057.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-moonlit-wall-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-moonlit-wall-agy-a01.jpg",
+      "sha256": "b359313fd2bc882d5da7cad1c9baa1ee94762400570de5516f34341753bbb3fb",
+      "invocation_evidence": "art/providers/runs/d2s-plate-moonlit-wall-agy-a01"
+    },
+    {
+      "id": "d2s-plate-moonlit-rim-agy-a01",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-moonlit-rim",
+      "attempt": 1,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-moonlit-rim",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-moonlit-floor-agy-a01.png",
+            "sha256": "9e4db84a93e82c8a118000c70525c45e35f797cc93e60fa839159531dd5fa015",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "moonlit",
+        "layer": "rim"
+      },
+      "input_hash": "a187c4aab35e9370acc77276ec9e011cea9b48b89bdd670b9ae6e83998285f18",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: night, moonlit blue-black stone, silver highlights, a few warm torches in the balconies. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "6af2a2a2-568d-4d04-aa6c-d971f3a1193c",
+      "at": "2026-10-24T08:44:00.911753+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 29.047,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:44:07Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "foreground_rim_plate",
+            "Prompt": "A 2.5D game foreground rim plate cutout layer against a solid flat pure vivid magenta #FF00FF background. Along only the bottom edge of the frame: a near arena parapet of moonlit dark blue-black stone masonry, seen very close to camera and slightly out of focus. At the lower left and lower right corners are two weathered verdigris bronze statues with dark enamel, green patina, and crisp silver edge highlights. A lit ancient Roman style bronze brazier with warm glowing coals and forked flames sits along the parapet. The entire upper and middle frame is completely flat, solid, uniform pure vivid magenta (#FF00FF) cutout background with nothing in it, no floor, no fighters, no walls, no arena, only pure magenta. Dark fantasy hand-painted digital art style, cool moonlit silver highlights from the upper-left, warm torchlight and ember glow on the dark aged stone and worn metal, sculpted painterly forms, clean opaque edges."
+          },
+          "conversation": "778fab9c-79c2-4375-8208-85cc5ab257f8"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "59ede204f9f53b531f0864f9665c5d999144800d022d234c43723d06b613b9ca",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\c3d52b58-1a7e-4dc7-bba8-c2f29222c5c5\\foreground_rim_plate_1792831469867.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-moonlit-rim-agy-a01/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-moonlit-rim-agy-a01.jpg",
+      "sha256": "59ede204f9f53b531f0864f9665c5d999144800d022d234c43723d06b613b9ca",
+      "invocation_evidence": "art/providers/runs/d2s-plate-moonlit-rim-agy-a01"
+    },
+    {
+      "id": "d2s-plate-verdigris-wall-agy-a02",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-verdigris-wall",
+      "attempt": 2,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-verdigris-wall",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-verdigris-floor-agy-a01.png",
+            "sha256": "43218227339315e7b51ca9bd4db5cb1ad0361c9b25f78cc16c6e2a8157c36e3c",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9. CORRECTION: Camera looks DOWN at 45 degrees from high above the arena, as in Reference-2. Seen from this height the far wall is short and foreshortened: the wall top, a shallow strip of balcony crowd and a sliver of sky fill ONLY THE TOP 25% of the frame. The wall foot is a gentle curve at about 25% height, and everything below it is flat magenta. No arcade seen face-on at eye level.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "verdigris",
+        "layer": "wall",
+        "correction_of": "d2s-plate-verdigris-wall-agy-a01"
+      },
+      "input_hash": "86d27501d6895af04f079613687cbdaeda9dd84868bf5b5e29bc789c46277fe4",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. BACK WALL LAYER ONLY, same camera about 40 degrees above the ground. The far curved arena wall with torchlit crowd balconies and dark crowd silhouettes and the sky above it fill the TOP 45% of the frame. Everything below the foot of the wall is flat uniform vivid MAGENTA #FF00FF, a clean straight-ish horizontal boundary along the base of the wall. No floor, no fighters. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9. CORRECTION: Camera looks DOWN at 45 degrees from high above the arena, as in Reference-2. Seen from this height the far wall is short and foreshortened: the wall top, a shallow strip of balcony crowd and a sliver of sky fill ONLY THE TOP 25% of the frame. The wall foot is a gentle curve at about 25% height, and everything below it is flat magenta. No arcade seen face-on at eye level.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "bf5b4d28-dee0-478e-85e7-b6e0fa3a8c8b",
+      "at": "2026-10-24T08:46:30.746655+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 35.75,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:46:37Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "d2s_plate_verdigris_wall",
+            "Prompt": "A stylized 2.5D video game background layer showing only the far back arena wall of a dark fantasy gladiatorial mage academy ('Tiro'). High-angle perspective looking down at a 45-degree angle from high above the sunken arena. Extremely foreshortened composition: the far curved arena wall with torchlit crowd balconies, dark crowd silhouettes, weathered verdigris stone parapets, small green-bronze statues, and a narrow sliver of cool teal-grey dusk sky fills ONLY the top 25% of the vertical frame. The base and foot of the arena wall forms a clean gentle curved horizontal boundary at roughly 25% from the top of the image. The entire lower 75% of the frame below the wall base is completely solid, flat, uniform vivid magenta (#FF00FF) background for 2.5D plate layering. Hand-painted digital dark fantasy concept art style, sculpted painterly forms, smooth opaque paint, dark aged masonry, warm flickering torchlight accents against cool dusk ambient light from the upper-left, sharp silver highlights on worn edges. No arena floor, no fighters, no canvas or noise texture, no 3D render look."
+          },
+          "conversation": "05e59e4d-9c1e-4e84-affa-02cbb230feaf"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "71d7dbb76a6399f3ed3e48c3db2336717475ba6d9506563a731357fc03b3dda3",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\267618b5-8604-45eb-acf0-69663613f6a0\\d2s_plate_verdigris_wall_1792831626317.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-verdigris-wall-agy-a02/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-verdigris-wall-agy-a02.jpg",
+      "sha256": "71d7dbb76a6399f3ed3e48c3db2336717475ba6d9506563a731357fc03b3dda3",
+      "invocation_evidence": "art/providers/runs/d2s-plate-verdigris-wall-agy-a02"
+    },
+    {
+      "id": "d2s-plate-verdigris-rim-agy-a02",
+      "wave": "D2S",
+      "style_id": "covenant",
+      "scene": "plate-verdigris-rim",
+      "attempt": 2,
+      "input": {
+        "wave": "D2S",
+        "id": "plate-verdigris-rim",
+        "pilot": true,
+        "providers": [
+          "agy"
+        ],
+        "aspect_ratio": "16:9",
+        "references": [
+          {
+            "path": "art/delivery/d2s/references/d2s-plate-verdigris-floor-agy-a01.png",
+            "sha256": "43218227339315e7b51ca9bd4db5cb1ad0361c9b25f78cc16c6e2a8157c36e3c",
+            "role": "same arena floor, palette continuity"
+          },
+          {
+            "path": "art/targets/T2-A-standin.png",
+            "sha256": "af14a5d7e299e4fd0eb7a91a5fc3daa16af74362ad935cd915c653d90b16c408",
+            "role": "target camera and finish"
+          }
+        ],
+        "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9. CORRECTION: Camera looks DOWN at 45 degrees from high above, as in Reference-2. The near parapet is a THIN foreshortened stone strip along the very bottom 10% of the frame, seen from above (its top surface visible). Two small verdigris statues and a brazier stand on it, each no taller than 18% of the frame height and viewed from above. Everything above is flat magenta.",
+        "family": "plate",
+        "proofGate": "D2S family proof: first image of each family directly reviewed before siblings (local grader has no model loaded)",
+        "palette": "verdigris",
+        "layer": "rim",
+        "correction_of": "d2s-plate-verdigris-rim-agy-a01"
+      },
+      "input_hash": "db831361788092cd66ad24d6dc01f9b88a3e543574cffab02f3c4cc58d80f1f0",
+      "prompt": "Use case: stylized-concept. One layer of a layered 2.5D painted arena plate set for a mage dueling game. FOREGROUND RIM LAYER ONLY, same camera. Along the BOTTOM edge of the frame: the near arena parapet, two verdigris bronze statues at the lower left and lower right corners and a lit brazier, seen close and slightly out of focus. Everything else, the whole middle and upper frame, is flat uniform vivid MAGENTA #FF00FF. No floor, no fighters, no wall. Mood and palette: dusk, dark verdigris stone and green-bronze statues, warm torchlight against a cool teal-grey sky. Reference images are for camera, finish and palette only; never copy figures or effects. Tiro, a walled gladiatorial academy where young mages duel in a sunken stone arena; dark enamel and aged silver, restrained verdigris, pale layered cloth, worn metal, warm torchlight against cool magic; each element has its own shape language: fire as forked flames and embers, water as crescents and droplets, air as branching wind and lightning, earth as angular stone and dust. Original hand-painted digital dark fantasy. Sculpted painterly volume, broken confident contours, sharply selected silver highlights, worn dark metal and pale layered cloth. Material wear only at physical edges, broad quiet ground planes and smooth opaque paint. No grain, paper, canvas texture, noise overlay, stippling, photorealism or 3D render. Roman culture supplies arena masonry and ordinary legion equipment; magical figures and creatures are raw original fantastical designs. Shared cool upper-left light and small contact shadows. No text, watermark, logo, signature, UI mockup clutter, lens dirt, noisy film grain, paper texture, canvas texture, stippling, oversaturated neon, full-body glow, chibi, cartoon mascot, photorealistic modern clothing, guns, sci-fi armour, blurry faces, extra limbs, deformed hands. Aspect 16:9. CORRECTION: Camera looks DOWN at 45 degrees from high above, as in Reference-2. The near parapet is a THIN foreshortened stone strip along the very bottom 10% of the frame, seen from above (its top surface visible). Two small verdigris statues and a brazier stand on it, each no taller than 18% of the frame height and viewed from above. Everything above is flat magenta.",
+      "provider": "agy",
+      "origin": "agy-cli",
+      "session_id": "18b32f2e-49f7-495b-ba22-8ccfead0abf1",
+      "at": "2026-10-24T08:47:07.139006+00:00",
+      "week": "2026-W43",
+      "charged_images": 1,
+      "status": "generated",
+      "elapsed_seconds": 31.375,
+      "returncode": 1,
+      "tool_calls": [
+        {
+          "at": "2026-10-24T08:47:15Z",
+          "step": 1,
+          "callIndex": 0,
+          "name": "generate_image",
+          "arguments": {
+            "AspectRatio": "16:9",
+            "ImageName": "foreground_rim_plate",
+            "Prompt": "Stylized concept art, 2.5D layered game arena foreground rim plate layer. High angle camera looking DOWN at a 45-degree angle from high above. Along the very bottom edge of the frame (occupying only the bottom 10-18% of the height), a thin foreshortened arena parapet stone ledge seen from above, showing its top masonry surface in dark verdigris stone. Resting on this bottom parapet are two small weathered verdigris bronze statues at the far lower-left and lower-right corners, viewed from above at 45 degrees, and a small iron brazier with lit warm forked flames and embers along the ledge, all seen close up and slightly soft. Everything else in the entire frame above this bottom ledge—the entire middle and upper 85-90% of the 16:9 canvas—is a solid, uniform, flat vivid MAGENTA (#FF00FF) background for transparency isolation. Absolutely no floor, no arena walls, no fighters, no sky, only flat pure magenta filling everything above the parapet. Painterly dark fantasy style, sculpted opaque digital paint, sharp silver edge highlights, dark bronze with oxidized teal-green verdigris patina, warm fire glow cast locally on the masonry ledge, Roman classical masonry details, cool directional lighting from top-left, clean graphic cutout silhouette against solid magenta."
+          },
+          "conversation": "e85145c4-85d2-4378-a4a2-5298f3930d9c"
+        }
+      ],
+      "output_files": [
+        {
+          "sha256": "7c34e9898d0b7fae4ef6b979a0b6022fe51fc572e5757e558bf7c08e92b275bf",
+          "paths": [
+            "C:\\Users\\kazda\\.gemini\\antigravity-cli\\brain\\ecf0082c-2a99-4ee2-9436-2dead71acdb3\\foreground_rim_plate_1792831658350.jpg"
+          ]
+        }
+      ],
+      "unique_output_images": 1,
+      "charge_basis": "max(reservation, visible calls, distinct output bytes); aliases archived without refunds to historical rows",
+      "driver_stopped_after_first_completed_image": true,
+      "prompt_verbatim_verified": false,
+      "tool_input_visibility": "exact-request-linked agy parent/worker transcripts; image call arguments archived",
+      "source": "art/raw/d2s-plate-verdigris-rim-agy-a02/_driver/source.jpg",
+      "archive": "art/review/sources/d2s-plate-verdigris-rim-agy-a02.jpg",
+      "sha256": "7c34e9898d0b7fae4ef6b979a0b6022fe51fc572e5757e558bf7c08e92b275bf",
+      "invocation_evidence": "art/providers/runs/d2s-plate-verdigris-rim-agy-a02"
     }
   ],
   "events": [
@@ -32975,6 +33787,171 @@
       "event": "generated",
       "id": "d2s-normal-fire-covenant-agy-a01",
       "at": "2026-10-24T08:27:16.283800+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-verdigris-floor-agy-a01",
+      "at": "2026-10-24T08:28:35.601718+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-verdigris-floor-agy-a01",
+      "at": "2026-10-24T08:28:35.658815+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-verdigris-floor-agy-a01",
+      "at": "2026-10-24T08:29:03.404499+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-verdigris-wall-agy-a01",
+      "at": "2026-10-24T08:39:48.113058+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-verdigris-wall-agy-a01",
+      "at": "2026-10-24T08:39:48.167999+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-verdigris-wall-agy-a01",
+      "at": "2026-10-24T08:40:23.083061+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-verdigris-rim-agy-a01",
+      "at": "2026-10-24T08:40:23.538502+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-verdigris-rim-agy-a01",
+      "at": "2026-10-24T08:40:23.603982+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-verdigris-rim-agy-a01",
+      "at": "2026-10-24T08:40:52.825762+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-rust-floor-agy-a01",
+      "at": "2026-10-24T08:40:53.291020+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-rust-floor-agy-a01",
+      "at": "2026-10-24T08:40:53.351336+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-rust-floor-agy-a01",
+      "at": "2026-10-24T08:41:29.795852+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-moonlit-floor-agy-a01",
+      "at": "2026-10-24T08:41:30.333132+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-moonlit-floor-agy-a01",
+      "at": "2026-10-24T08:41:30.405936+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-moonlit-floor-agy-a01",
+      "at": "2026-10-24T08:42:01.366993+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-rust-wall-agy-a01",
+      "at": "2026-10-24T08:42:28.523813+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-rust-wall-agy-a01",
+      "at": "2026-10-24T08:42:28.596081+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-rust-wall-agy-a01",
+      "at": "2026-10-24T08:42:56.780345+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-rust-rim-agy-a01",
+      "at": "2026-10-24T08:42:57.351526+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-rust-rim-agy-a01",
+      "at": "2026-10-24T08:42:57.419274+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-rust-rim-agy-a01",
+      "at": "2026-10-24T08:43:27.397422+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-moonlit-wall-agy-a01",
+      "at": "2026-10-24T08:43:28.093645+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-moonlit-wall-agy-a01",
+      "at": "2026-10-24T08:43:28.170049+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-moonlit-wall-agy-a01",
+      "at": "2026-10-24T08:44:00.377709+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-moonlit-rim-agy-a01",
+      "at": "2026-10-24T08:44:00.911753+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-moonlit-rim-agy-a01",
+      "at": "2026-10-24T08:44:00.986941+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-moonlit-rim-agy-a01",
+      "at": "2026-10-24T08:44:30.129918+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-verdigris-wall-agy-a02",
+      "at": "2026-10-24T08:46:30.746655+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-verdigris-wall-agy-a02",
+      "at": "2026-10-24T08:46:30.804310+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-verdigris-wall-agy-a02",
+      "at": "2026-10-24T08:47:06.631943+00:00"
+    },
+    {
+      "event": "reserved",
+      "id": "d2s-plate-verdigris-rim-agy-a02",
+      "at": "2026-10-24T08:47:07.139006+00:00"
+    },
+    {
+      "event": "running",
+      "id": "d2s-plate-verdigris-rim-agy-a02",
+      "at": "2026-10-24T08:47:07.204390+00:00"
+    },
+    {
+      "event": "generated",
+      "id": "d2s-plate-verdigris-rim-agy-a02",
+      "at": "2026-10-24T08:47:38.664292+00:00"
     }
   ],
   "stop_cleared": {

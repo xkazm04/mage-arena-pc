@@ -443,10 +443,10 @@ def build():
             # Lit proof: unlit, then a warm point light swept left to right, per normal source.
             h, w = cut.height, cut.width; rows = []
             for kind, n in normals.items():
-                tiles = [np.asarray(cut)] + [lit(rgba, n, w * f, h * 0.35, 0.35 * h, 1.4 * h) for f in (0.1, 0.5, 0.9)]
+                tiles = [np.asarray(cut)] + [lit(rgba, n, w * f, h * 0.3, 0.12 * h, 0.8 * h) for f in (0.05, 0.5, 0.95)]
                 rows.append(np.hstack(tiles))
             proof = Image.fromarray(np.vstack(rows), 'RGBA'); bg = checker(proof.size); bg.paste(proof, mask=proof.getchannel('A'))
-            bg.save(folder / 'lit-proof.png')
+            bg.save(folder / 'lit-proof.jpg', quality=90)
             # New scale: 140-200 px at 1080p (D2 4.1); preview at 170 px and at the old 60.75 px.
             for px in (170, 61):
                 cut.resize((max(1, round(w * px / h)), px), Image.Resampling.LANCZOS).save(folder / f'at-{px}px.png')
@@ -463,18 +463,18 @@ def build():
         folder = OUT / 'plates' / palette; folder.mkdir(parents=True, exist_ok=True)
         size = (1920, 1080)
         with Image.open(ROOT / source(layers['floor'])) as im: floor = im.convert('RGBA').resize(size, Image.Resampling.LANCZOS)
-        floor.save(folder / 'floor.png'); comp = floor.copy(); parallax = []
+        floor.convert('RGB').save(folder / 'floor.jpg', quality=90); comp = floor.copy(); parallax = []
         for name, shift in (('wall', -24), ('rim', 36)):
             if not layers[name]: continue
             with Image.open(ROOT / source(layers[name])) as im: keyed = key_magenta(im).resize(size, Image.Resampling.LANCZOS)
             keyed.save(folder / f'{name}.png'); comp.alpha_composite(keyed); parallax.append(name)
-        comp.convert('RGB').save(folder / 'composite.png')
+        comp.convert('RGB').save(folder / 'composite.jpg', quality=90)
         # A parallax proof: the same set with the camera panned right; layers move by depth.
         pan = floor.copy().crop((16, 0, size[0], size[1])).resize(size)
         for name, shift in (('wall', 8), ('rim', 48)):
             if (folder / f'{name}.png').exists():
                 layer = Image.open(folder / f'{name}.png'); pan.alpha_composite(layer.crop((shift, 0, size[0], size[1])).resize(size))
-        pan.convert('RGB').save(folder / 'composite-panned.png')
+        pan.convert('RGB').save(folder / 'composite-panned.jpg', quality=90)
         rec.update(status='candidate', rank=max([read(BASE / 'reviews' / (j['id'] + '.json')).get('rank') or 0 for j in layers.values() if j]) or None,
                    review={l: read(BASE / 'reviews' / (j['id'] + '.json'))['note'] for l, j in layers.items() if j},
                    cleanupSteps=['floor resized to 1920x1080', 'wall/rim magenta key (key_magenta 80/150)', 'stacked floor < wall < rim'],
@@ -500,13 +500,13 @@ def sheet(records):
     for slot, target in (('water mage', 'T1-A-standin'), ('fire mage', 'T1-A-standin')):
         cands = sorted([b for b in records['bodies'] if b['slot'] == slot and b.get('status') == 'candidate'], key=lambda b: b.get('rank') or 9)
         cells = ''.join(f'<div class="c"><h3>#{b.get("rank")} {b["variant"]}</h3>{img(b["files"][[f.endswith("color.png") for f in b["files"]].index(True)], 260)}'
-                        f'{img([f for f in b["files"] if f.endswith("lit-proof.png")][0], 520)}<p>{html.escape(b["review"])}</p>'
+                        f'{img([f for f in b["files"] if f.endswith("lit-proof.jpg")][0], 520)}<p>{html.escape(b["review"])}</p>'
                         f'<p class="m">{b["calls"]} body call(s), {b.get("normalCalls", 0)} normal-map call(s); cleanup: {html.escape("; ".join(b["cleanupSteps"]))}</p>'
                         f'<p>at 170 px {img([f for f in b["files"] if f.endswith("at-170px.png")][0])} at today\'s 61 px {img([f for f in b["files"] if f.endswith("at-61px.png")][0])}</p></div>' for b in cands)
         rows.append(f'<section><h2>{slot}</h2><div class="row"><div class="c t"><h3>target</h3>{img(t[target], 520) if target in t else "missing"}</div>{cells}</div></section>')
     cands = sorted([p for p in records['plates'] if p.get('status') == 'candidate'], key=lambda p: p.get('rank') or 9)
-    cells = ''.join(f'<div class="c"><h3>#{p.get("rank")} {p["palette"]}</h3>{img([f for f in p["files"] if f.endswith("/composite.png")][0], 520)}'
-                    f'<p>layers: {" ".join(img(f, 160) for f in p["files"] if f.split("/")[-1] in ("floor.png", "wall.png", "rim.png"))}</p>'
+    cells = ''.join(f'<div class="c"><h3>#{p.get("rank")} {p["palette"]}</h3>{img([f for f in p["files"] if f.endswith("/composite.jpg")][0], 520)}'
+                    f'<p>layers: {" ".join(img(f, 160) for f in p["files"] if f.split("/")[-1] in ("floor.jpg", "wall.png", "rim.png"))}</p>'
                     f'<p>{html.escape(" | ".join(f"{k}: {v}" for k, v in p["review"].items()))}</p><p class="m">{p["calls"]} call(s)</p></div>' for p in cands)
     rows.append(f'<section><h2>arena plate set</h2><div class="row"><div class="c t"><h3>target</h3>{img(t["T2-A-standin"], 520) if "T2-A-standin" in t else "missing"}</div>{cells}</div></section>')
     s = records['spend']
@@ -514,6 +514,7 @@ def sheet(records):
             '.row{display:flex;gap:16px;overflow-x:auto}.c{background:#22252b;padding:10px;border-radius:6px;min-width:280px}.t{outline:2px solid #c9a86a}'
             'img{display:block;margin:4px 0;max-width:100%}p img{display:inline;vertical-align:bottom}.m{color:#9aa}</style>'
             '<h1>D2 section 5 mastery slice: owner pick sheet</h1>'
+            '<p class="m">Body lit proofs: column 1 unlit, columns 2-4 a warm point light at left, centre, right. Row 1 uses the derived normal map (0 calls), row 2 the provider-painted one (1 call).</p>'
             '<p>Pick one candidate per slot. Ranks are the builder\'s side-by-side reading against the target; the owner decides. '
             'The targets are agy stand-ins regenerated from the verbatim D4 A prompts, because the owner\'s Leonardo picks are not on disk; replace them in art/targets/ if you have them.</p>'
             f'<p class="m">Spend: {s["wave"]} calls this wave, project {s["total"]}/{s["hardCap"]}, {s["remaining"]} left.</p>' + ''.join(rows))
