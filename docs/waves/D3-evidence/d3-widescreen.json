@@ -1,0 +1,119 @@
+{
+  "results": [
+    {
+      "name": "1080p",
+      "width": 1920,
+      "height": 1080,
+      "scale": 1,
+      "edges": {
+        "left": 0,
+        "top": 0,
+        "right": 1920,
+        "bottom": 1080
+      },
+      "leftLive": 1,
+      "rightLive": 1,
+      "texts": 31
+    },
+    {
+      "name": "1440p",
+      "width": 2560,
+      "height": 1440,
+      "scale": 1.3333333333333333,
+      "edges": {
+        "left": 0,
+        "top": 0,
+        "right": 1920,
+        "bottom": 1080
+      },
+      "leftLive": 1,
+      "rightLive": 1,
+      "texts": 31
+    },
+    {
+      "name": "21x9",
+      "width": 3440,
+      "height": 1440,
+      "scale": 1.3333333333333333,
+      "edges": {
+        "left": -330,
+        "top": 0,
+        "right": 2250,
+        "bottom": 1080
+      },
+      "leftLive": 1,
+      "rightLive": 1,
+      "texts": 31
+    },
+    {
+      "arena": [
+        {
+          "name": "1080p",
+          "width": 1920,
+          "height": 1080,
+          "edges": {
+            "left": 0,
+            "top": 0,
+            "right": 1920,
+            "bottom": 1080
+          },
+          "leftLive": 1,
+          "rightLive": 1,
+          "hud": 34
+        },
+        {
+          "name": "1080p-to-21x9",
+          "edges": {
+            "left": -330,
+            "top": 0,
+            "right": 2250,
+            "bottom": 1080
+          },
+          "leftLive": 1,
+          "rightLive": 1
+        },
+        {
+          "name": "1440p",
+          "width": 2560,
+          "height": 1440,
+          "edges": {
+            "left": 0,
+            "top": 0,
+            "right": 1920,
+            "bottom": 1080
+          },
+          "leftLive": 1,
+          "rightLive": 1,
+          "hud": 34
+        },
+        {
+          "name": "21x9",
+          "width": 3440,
+          "height": 1440,
+          "edges": {
+            "left": -330,
+            "top": 0,
+            "right": 2250,
+            "bottom": 1080
+          },
+          "leftLive": 1,
+          "rightLive": 1,
+          "hud": 34
+        }
+      ]
+    },
+    {
+      "persisted": {
+        "settings": {
+          "version": 1,
+          "uiScale": 1.15,
+          "windowMode": "windowed",
+          "quality": "high",
+          "reducedMotion": true
+        },
+        "motion": "reduced"
+      },
+      "reloadedScale": 1.15
+    }
+  ]
+}
