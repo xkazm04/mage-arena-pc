@@ -5,17 +5,13 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { guarded as g, checkFunds } from './elevenlabs.mjs';
+import { measuredDelta, settle, settlementReads } from './settle.mjs';
+export { measuredDelta };
 const statePath = path.join(g.here, 'state.json');
 export function epochFunds(previous, before, spent) {
   const reset = previous.epoch && previous.epoch.resetsAt !== before.resetsAt;
   const epoch = !previous.epoch || reset ? { ...before, spentAtStart: spent } : previous.epoch;
   return { epoch, reset: !!reset, remaining: Math.min(before.remaining, epoch.remaining - (spent - epoch.spentAtStart)) };
-}
-export function measuredDelta(before, after) {
-  if (!after) return null;
-  // If the billing period changes, old-period final usage is unknowable. The
-  // full reservation remains charged; new-period usage is a conservative proxy.
-  return before.resetsAt === after.resetsAt ? Math.max(0, before.remaining - after.remaining) : Math.max(0, after.used);
 }
 export function validateTrack(track) {
   if (!['arena-C-reed-oath','arena-D-lyre-under-iron','arena-A-hide-and-iron'].includes(track?.id)) throw Error('Track outside D39');
@@ -59,19 +55,15 @@ async function run(id) {
   let after = null;
   try { after = await g.credits(); } catch { g.latch('postflight_balance_unavailable'); }
   entry.accountAfter=after; entry.accountDelta=measuredDelta(before,after); entry.settlementReads=[];
-  if (after && !fs.existsSync(g.stopPath)) for(let attempt=0;attempt<3;attempt++) {
-    await g.sleep(b.musicSettlementMs);
-    try { const settled=await g.credits(); entry.settlementReads.push(settled); entry.accountSettled=settled; }
-    catch { g.latch('settlement_balance_unavailable'); break; }
-    if (measuredDelta(before,entry.accountSettled)>=estimate || fs.existsSync(g.stopPath)) break;
+  if (after && !fs.existsSync(g.stopPath)) {
+    const settlement=await settlementReads({before,estimate,waitMs:b.musicSettlementMs,sleep:g.sleep,read:g.credits,stopped:()=>fs.existsSync(g.stopPath),resetAware:true});
+    entry.settlementReads=settlement.reads; if(settlement.reads.length) entry.accountSettled=settlement.reads.at(-1);
+    if(settlement.failed) g.latch('settlement_balance_unavailable');
   }
-  entry.settledDelta=entry.settlementReads.length ? Math.max(...entry.settlementReads.map(s=>measuredDelta(before,s))) : null;
   const header = headers['character-cost'] ?? headers['x-character-cost'];
-  entry.measuredCredits=header!==undefined && /^\d+(\.\d+)?$/.test(header) ? Number(header) : null;
-  entry.chargedCredits=Math.max(estimate,entry.accountDelta??0,entry.settledDelta??0,entry.measuredCredits??0);
-  if ([after,...entry.settlementReads].some(s=>s && s.resetsAt!==before.resetsAt)) entry.flags.push('account_reset_during_call_estimate_retained');
-  if (!after) entry.flags.push('balance_unavailable');
-  if (entry.accountDelta===0 && entry.settledDelta>0) entry.flags.push('charge_visible_after_settlement');
+  const measured=header!==undefined && /^\d+(\.\d+)?$/.test(header) ? Number(header) : null;
+  const settled=settle({estimate,header:measured,before,after,settlementReads:entry.settlementReads,resetAware:true});
+  entry.settledDelta=settled.settledDelta; entry.measuredCredits=measured; entry.chargedCredits=settled.chargedCredits; entry.flags=settled.flags;
   entry.deltaBasis='Shared-account upper-bound proxy; may include garden-vr or delayed usage, not exclusive invoice attribution.';
   g.write(out+'.json',entry); g.append('ledger.jsonl',entry);
   g.append('requests.jsonl',{event:'completed',id:entry.id,wave:'AU3',chargedCredits:entry.chargedCredits});

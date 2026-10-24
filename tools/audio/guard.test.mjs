@@ -25,7 +25,7 @@ function fixture(t, scenario) {
     fs.rmSync(dir, { recursive: true, force: true });
   });
   fs.mkdirSync(path.join(dir, 'tools/audio'), { recursive: true });
-  fs.copyFileSync(new URL('./elevenlabs.mjs', import.meta.url), path.join(dir, 'tools/audio/elevenlabs.mjs'));
+  for (const name of ['elevenlabs.mjs', 'settle.mjs', 'rounds.json']) fs.copyFileSync(new URL(`./${name}`, import.meta.url), path.join(dir, 'tools/audio', name));
   fs.writeFileSync(path.join(dir, 'tools/audio/budget.json'), JSON.stringify({ ...b, status: 'proofs' }));
   // Every HTTP request is intercepted. A real key is never read; no network calls.
   const mock = `import fs from 'node:fs';

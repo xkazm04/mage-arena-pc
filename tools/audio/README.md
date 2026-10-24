@@ -24,6 +24,10 @@ The DSP uses numpy/scipy and ffmpeg; it does not depend on librosa/numba. `proce
 
 Review: `docs/audio/audition/r4/index.html` and `docs/audio/PROOF-REPORT.html`. Engine: `docs/audio/manifest-au3.json`, [handoff](../../docs/audio/AU3-ENGINE-HANDOFF.md). The manifest supplies exact cell times and tier vocabulary but sets adaptive/loop approval false: numerical attacks near cell boundaries do not certify true downbeats, six-bar phrases or harmonic compatibility. Exact kept melody, no vocals, development and real release require listening. Full linear files are available; no accepted owner verdict or finished adaptive implementation is claimed.
 
+## Round registry
+
+`rounds.json` holds one row per owner-authorized wave: cap ceiling, account floor, minimum reserve, output dir, launcher kind (`brief` for `elevenlabs.mjs`, `composition` for a dedicated launcher), music limits and the report builder/checker that `build-reports.py` and `check-reports.py` dispatch to. `budget()` refuses an unregistered wave and any budget above its row; `rounds.test.mjs` pins every existing row, so raising a ceiling is a reviewed policy change, never a silent edit. `settle.mjs` is the one postflight: settlement-read schedule, observed deltas (reset-aware for composition rounds) and debit = max(estimate, deltas, header), shared by `elevenlabs.mjs` and `run-r4.mjs`. A new round is one reviewed row plus its plan; closed rounds keep their scripts. Offline proof: `node --test tools/audio/*.test.mjs`.
+
 ## Historical handoff: AU2b / session 3
 
 AU2b is now **closed-owner-review**: 13 new files, 2,325/3,000 conservative credits, 675 unused; final observed shared balance 16,089. The hard floor for this round is **13,000** and reserve **8,000**. AU2's closed 4,995/5,000 budget and state are preserved in `docs/audio/evidence/r2-final`; the combined ledger remains append-only. The previous 14,000 floor below describes historical AU2, not AU2b.

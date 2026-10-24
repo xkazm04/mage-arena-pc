@@ -5,6 +5,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { accountCost, settle, settlementReads } from './settle.mjs';
+export { accountCost };
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
 const API = 'https://api.elevenlabs.io';
@@ -13,13 +15,24 @@ const write = (f, v) => { const tmp = f + '.tmp'; fs.writeFileSync(tmp, JSON.str
 const append = (name, v) => fs.appendFileSync(path.join(here, name), JSON.stringify({ ts: new Date().toISOString(), ...v }) + '\n');
 const rows = name => fs.existsSync(path.join(here, name)) ? fs.readFileSync(path.join(here, name), 'utf8').trim().split(/\r?\n/).filter(Boolean).map(JSON.parse) : [];
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+// Per-round ceilings, output dir and launcher live in rounds.json, never inline.
+export function roundOf(wave) {
+  const { rounds } = json(path.join(here, 'rounds.json'));
+  const row = typeof wave === 'string' && Object.hasOwn(rounds, wave) ? rounds[wave] : null;
+  if (!row) throw Error(`Unregistered audio round: ${wave}`);
+  return row;
+}
+export function dispatchTarget(wave, kind) {
+  const { rounds } = json(path.join(here, 'rounds.json'));
+  return typeof wave === 'string' && Object.hasOwn(rounds, wave) ? rounds[wave][kind] ?? null : null;
+}
 const stopPath = path.join(here, 'STOP.json');
 const statePath = path.join(here, 'state.json');
 const budget = () => {
   const b = json(path.join(here, 'budget.json'));
-  const limits = { AU2: { cap: 5000, floor: 14000 }, AU2b: { cap: 3000, floor: 13000 }, AU3: { cap: 10000, floor: 1000 } }[b.wave];
-  if (!limits || !Number.isFinite(b.capCredits) || b.capCredits > limits.cap || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < (b.wave === 'AU3' ? 1000 : 8000) || b.stopBelowCredits !== limits.floor || !Number.isFinite(b.minRequestGapMs) || b.minRequestGapMs < 8000 || !Number.isFinite(b.musicSettlementMs) || b.musicSettlementMs < 30000) throw Error('Invalid audition cap/reserve/floor/pacing');
-  if (b.wave === 'AU3' && (!Number.isFinite(b.bounds.musicPerSecond) || b.bounds.musicPerSecond < 30)) throw Error('AU3 music bound must be at least 30/s');
+  const limits = roundOf(b.wave);
+  if (!Number.isFinite(b.capCredits) || b.capCredits > limits.cap || b.capCredits <= 0 || !Number.isFinite(b.reserveCredits) || b.reserveCredits < limits.minReserve || b.stopBelowCredits !== limits.floor || !Number.isFinite(b.minRequestGapMs) || b.minRequestGapMs < 8000 || !Number.isFinite(b.musicSettlementMs) || b.musicSettlementMs < 30000) throw Error('Invalid audition cap/reserve/floor/pacing');
+  if (limits.minMusicPerSecond && (!Number.isFinite(b.bounds.musicPerSecond) || b.bounds.musicPerSecond < limits.minMusicPerSecond)) throw Error(`${b.wave} music bound must be at least ${limits.minMusicPerSecond}/s`);
   return b;
 };
 function latch(reason, extra = {}) {
@@ -39,11 +52,11 @@ const safeHeaders = r => Object.fromEntries([...r.headers].filter(([k]) => /^(da
 // Only selected diagnostic body fields and headers are stored; never credentials.
 async function request(endpoint, body) {
   for (let attempt = 0; attempt < 2; attempt++) {
-    const b = budget();
+    const b = budget(), composition = roundOf(b.wave).launcher === 'composition';
     const pace = fs.existsSync(pacingPath) ? json(pacingPath) : {};
     await sleep(Math.max(0, (pace.completedAtMs || 0) + Math.max(b.minRequestGapMs, pace.gapMs || 0) - Date.now()));
     const startedAt = new Date().toISOString();
-    const r = await fetch(API + endpoint, { method: body ? 'POST' : 'GET', headers: { 'xi-api-key': apiKey(), ...(body ? { 'content-type': 'application/json', accept: 'audio/mpeg' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(b.wave === 'AU3' && body ? 1200000 : 240000) });
+    const r = await fetch(API + endpoint, { method: body ? 'POST' : 'GET', headers: { 'xi-api-key': apiKey(), ...(body ? { 'content-type': 'application/json', accept: 'audio/mpeg' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}), signal: AbortSignal.timeout(composition && body ? 1200000 : 240000) });
     const bytes = await r.arrayBuffer(); // Hold the process lock until the whole response finishes.
     const completedAtMs = Date.now();
     write(pacingPath, { ...pace, completedAtMs });
@@ -65,7 +78,7 @@ async function request(endpoint, body) {
       write(pacingPath, { completedAtMs, rateLimitCount: count, gapMs: Math.max(15000, pace.gapMs || 0), nextRetryWaitMs: waitMs });
       // One read-only recovery after at least 60 s; a second 429 latches.
       // Never repeat a paid POST whose billing outcome might be ambiguous.
-      if (b.wave !== 'AU3' && !body && count === 1 && attempt === 0) { await sleep(waitMs); continue; }
+      if (!composition && !body && count === 1 && attempt === 0) { await sleep(waitMs); continue; }
       latch('provider_quota_or_rate_limit', { ...event, rateLimitCount: count });
     } else if (r.status === 402 || /quota|rate_limit|credit|payment/.test(code)) latch('provider_quota_or_rate_limit', event);
     throw Error(`Provider request failed: HTTP ${r.status}, ${code}; no generation retry`);
@@ -84,14 +97,6 @@ export function estimate(kind, seconds, chars, b) {
   if (!Number.isFinite(n) || n <= 0) throw Error('Invalid cost bound');
   return n;
 }
-export function accountCost(delta, estimated, header = null) {
-  const flags = [];
-  if (delta === null) flags.push('balance_unavailable');
-  else if (delta < 0) flags.push('negative_balance_delta');
-  else if (delta > estimated * 2) flags.push('shared_delta_implausibly_large');
-  if (delta === 0) flags.push('balance_may_lag');
-  return { chargedCredits: Math.max(delta ?? 0, estimated, header ?? 0), flags };
-}
 export function checkFunds(b, spent, reserved, remaining, upper) {
   if (![spent, reserved, remaining, upper].every(Number.isFinite) || spent < 0 || reserved < 0 || upper <= 0) throw Error('Invalid guard inputs');
   if (spent + reserved + upper > b.capCredits) throw Error(`Project cap refusal: ${spent}+${reserved}+${upper} > ${b.capCredits}`);
@@ -108,8 +113,8 @@ function args(argv) {
 }
 async function generate(kind, a) {
   if (fs.existsSync(stopPath)) throw Error('Generation stopped: persistent STOP.json exists');
-  const b = budget();
-  if (b.wave === 'AU3') throw Error('AU3 requires the dedicated structured composition launcher');
+  const b = budget(), row = roundOf(b.wave);
+  if (row.launcher !== 'brief') throw Error(`${b.wave} requires the dedicated structured composition launcher`);
   if (!['proofs', 'audition'].includes(b.status)) throw Error('Generation closed in budget.json');
   const previous = fs.existsSync(statePath) ? json(statePath) : { pending: null };
   if (previous.pending) throw Error('Unresolved billable reservation: reconcile before more generation');
@@ -118,16 +123,16 @@ async function generate(kind, a) {
   if (kind === 'sfx' && text.length > 450) throw Error('SFX prompt exceeds provider 450-character limit; no call made');
   const seconds = kind === 'tts' ? null : Number(need('seconds'));
   if (kind === 'sfx' && (!Number.isFinite(seconds) || seconds < 0.5 || seconds > 30)) throw Error('SFX duration must be 0.5–30 s');
-  if (kind === 'music' && (!Number.isFinite(seconds) || seconds < 10 || seconds > (b.wave === 'AU2b' ? 30 : 20))) throw Error('Music duration outside authorized audition range');
+  if (kind === 'music' && (!Number.isFinite(seconds) || seconds < 10 || seconds > row.musicMaxSeconds)) throw Error('Music duration outside authorized audition range');
   const out = path.resolve(root, need('out'));
-  const round = b.wave === 'AU2b' ? 'r3' : 'r2';
+  const round = row.dir;
   const relative = path.relative(path.join(root, 'docs/audio/audition', round), out);
   if (relative.startsWith('..') || path.isAbsolute(relative) || !out.endsWith('.mp3')) throw Error(`Outputs must be MP3s inside audition/${round}`);
-  if (b.wave === 'AU2b') {
-    const plan = json(path.join(here, 'audition-plan-r3.json'));
+  if (row.briefPlan) {
+    const plan = json(path.join(here, row.briefPlan));
     const sample = plan.samples.find(s => `${s.id}.mp3` === relative);
-    if (!sample || sample.kind !== kind || sample.prompt !== text || sample.seconds !== seconds || !!sample.loop !== !!a.loop || !!sample.vocals !== !!a.vocals) throw Error('Request does not match authorized AU2b brief');
-    if (sample.optional && plan.samples.filter(s => !s.optional).some(s => !rows('ledger.jsonl').some(e => e.wave === b.wave && e.out === `docs/audio/audition/r3/${s.id}.mp3`))) throw Error('Optional collar must follow all required samples');
+    if (!sample || sample.kind !== kind || sample.prompt !== text || sample.seconds !== seconds || !!sample.loop !== !!a.loop || !!sample.vocals !== !!a.vocals) throw Error(`Request does not match authorized ${b.wave} brief`);
+    if (sample.optional && plan.samples.filter(s => !s.optional).some(s => !rows('ledger.jsonl').some(e => e.wave === b.wave && e.out === `docs/audio/audition/${round}/${s.id}.mp3`))) throw Error('Optional collar must follow all required samples');
   }
   if (fs.existsSync(out) || fs.existsSync(out + '.json')) throw Error('Output already exists; no paid overwrite');
   const model = kind === 'sfx' ? 'eleven_text_to_sound_v2' : kind === 'music' ? 'music_v1' : 'eleven_multilingual_v2';
@@ -174,19 +179,14 @@ async function generate(kind, a) {
   if (kind === 'music' && after && !fs.existsSync(stopPath)) {
     // No other local call is allowed in this window. Preserve the immediate read
     // separately from a settling read; neither attributes sister-project usage.
-    entry.settlementReads = [];
-    for (let attempt = 0; attempt < 3 && !fs.existsSync(stopPath); attempt++) {
-      await sleep(b.musicSettlementMs);
-      try { entry.accountSettled = await credits(); } catch { entry.accountSettled = null; break; }
-      entry.settlementReads.push(entry.accountSettled);
-      entry.settledDelta = Math.max(...entry.settlementReads.map(s => before.remaining - s.remaining));
-      if (entry.settledDelta >= upper) break;
-    }
+    const settlement = await settlementReads({ before, estimate: upper, waitMs: b.musicSettlementMs, sleep, read: credits, stopped: () => fs.existsSync(stopPath) });
+    entry.settlementReads = settlement.reads;
+    if (settlement.failed || settlement.reads.length) entry.accountSettled = settlement.failed ? null : settlement.reads.at(-1);
   }
   entry.measuredCredits = measured;
-  const observedDelta = entry.settledDelta != null ? Math.max(entry.accountDelta ?? entry.settledDelta, entry.settledDelta) : entry.accountDelta;
-  Object.assign(entry, accountCost(observedDelta, upper, measured));
-  if (entry.accountDelta === 0 && entry.settledDelta > 0) entry.flags.push('charge_visible_only_after_settlement_wait');
+  const settled = settle({ estimate: upper, header: measured, before, after, settlementReads: entry.settlementReads });
+  if (settled.settledDelta != null) entry.settledDelta = settled.settledDelta;
+  Object.assign(entry, { chargedCredits: settled.chargedCredits, flags: settled.flags });
   if (!after) { if (!entry.flags.includes('balance_unavailable')) entry.flags.push('balance_unavailable'); latch('postflight_balance_unavailable'); }
   entry.deltaBasis = 'shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges';
   write(out + '.json', entry);

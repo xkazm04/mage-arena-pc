@@ -28,7 +28,7 @@ function fixture(t,scenario){
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'mage-au3-'));
  t.after(()=>{assert.equal(path.dirname(path.resolve(dir)),path.resolve(os.tmpdir()));assert.ok(path.basename(dir).startsWith('mage-au3-'));fs.rmSync(dir,{recursive:true,force:true});});
  const base=path.join(dir,'tools/audio');fs.mkdirSync(base,{recursive:true});
- for(const name of ['elevenlabs.mjs','run-r4.mjs','composition-plan-r4.json'])fs.copyFileSync(new URL(name,import.meta.url),path.join(base,name));
+ for(const name of ['elevenlabs.mjs','run-r4.mjs','composition-plan-r4.json','settle.mjs','rounds.json'])fs.copyFileSync(new URL(name,import.meta.url),path.join(base,name));
  fs.writeFileSync(path.join(base,'budget.json'),JSON.stringify(b));
  const mock=`import fs from 'node:fs';
  const timer=globalThis.setTimeout;globalThis.setTimeout=(f,ms,...a)=>timer(f,ms>=2000?0:ms,...a);
