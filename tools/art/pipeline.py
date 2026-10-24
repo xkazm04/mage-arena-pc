@@ -10,6 +10,9 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='command', required=True)
     sub.add_parser('status')
+    pl = sub.add_parser('plan', help='per-slot next legal action and blocker for a wave; zero spend, zero writes')
+    pl.add_argument('wave')
+    pl.add_argument('--json', action='store_true')
     sub.add_parser('compile')
     sub.add_parser('build')
     sub.add_parser('validate')
@@ -32,6 +35,9 @@ def main():
     a = p.parse_args()
     if a.command == 'status':
         print(json.dumps(Budget().summary(), indent=2))
+    elif a.command == 'plan':
+        from plan import main as plan_main
+        plan_main([a.wave] + (['--json'] if a.json else []))
     elif a.command == 'provider-generate':
         from providers import generate as provider_generate
         if provider_generate(read(a.brief))['status'] != 'generated':

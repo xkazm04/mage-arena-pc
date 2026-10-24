@@ -10,6 +10,7 @@ directly before its siblings. Nothing here picks a winner; the owner does.
   python tools/art/d2_slice.py review <scene> <keep|reject> '<direct observation>' [rank]
   python tools/art/d2_slice.py build
   python tools/art/d2_slice.py check
+  python tools/art/d2_slice.py plan [--json]   (read-only: next legal action per slot)
 """
 import argparse
 import html
@@ -323,6 +324,68 @@ def review(scene, verdict, note, rank=None):
     print(verdict, j['id'])
 
 
+def plan_blocker(scene, body, previous, rejected, usage, provider_state):
+    """(code, provider): what call()/call_normal() would raise first, or (None, provider) for a legal call."""
+    import plan
+    from providers import decide, wave_reviews
+    if body and not kept(body): return 'KEPT_BODY_REQUIRED', None
+    try:
+        with plan.would_activate(ART, WAVE):
+            codes = spend.headroom(ART, wave=WAVE, provider='agy', scene=scene, usage=usage)
+            if codes: return codes[0], None
+            if body:
+                if scene != 'normal-water-target' and not kept('normal-water-target'):
+                    return 'FAMILY_PROOF_REQUIRED: review normal-water-target first', None
+            else:
+                item = scenes()[scene]
+                family = [s for s, v in scenes().items() if v['family'] == item['family']]
+                if scene != family[0] and item['family'] != 'target' and not kept(family[0]):
+                    return 'FAMILY_PROOF_REQUIRED: review ' + family[0] + ' first', None
+                for path, _ in item['references']:
+                    if '{floor:' in path:
+                        if not kept('plate-' + path.split('{floor:')[1].rstrip('}') + '-floor'): return 'FLOOR_LAYER_REQUIRED_FIRST', None
+                    elif not (ROOT / path).is_file(): return 'REFERENCE_MISSING: ' + path, None
+                if previous and not rejected: return 'REJECTION_AND_CORRECTION_REQUIRED', None
+            # The spec's prompt only matters for resume/rewrite matching, which a D2S call never reaches.
+            spec = {'wave': WAVE, 'id': scene, 'pilot': True, 'providers': ['agy'], 'prompt': '<plan>'}
+            if previous: spec['correction_of'] = previous[-1]['id']
+            old = [j for j in usage['jobs'] if j.get('wave') == WAVE and j['scene'] == scene]
+            d = decide(spec, old, wave_reviews(ART, WAVE), provider_state)
+            if d['state'] != 'ready': return d['code'], None
+            return plan.reserve_code(ART, WAVE, scene, d['provider'], len(old) + 1, usage), d['provider']
+    except RuntimeError as exc:
+        return str(exc), None
+
+
+def plan_rows(cli=None):
+    """Read-only twin of call()/call_normal() for `plan D2S`: per slot the next legal action, in their
+    check order. Takes no lock, writes nothing and never activates the session."""
+    import plan
+    from providers import provider_cli
+    usage = spend.load_usage(ART); state = plan.provider_state(ART, usage, cli or provider_cli)
+    cmd = 'python tools/art/d2_slice.py '; items = scenes(); rows = []
+    for scene, body in [(s, None) for s in items] + [(normal_scene(s), s) for s, v in items.items() if v['family'] == 'body']:
+        previous = generated(scene); last = previous[-1] if previous else None
+        rp = BASE / 'reviews' / (last['id'] + '.json') if last else None
+        bound = bool(last) and last['status'] == 'generated' and rp.exists() and read(rp)['sha256'] == last['sha256']
+        done = kept(scene)
+        if done:
+            rows.append(plan.row(scene, state='kept', job=done['id'], action='kept by direct review; no call')); continue
+        if last and last['status'] == 'generated' and not bound:
+            rows.append(plan.row(scene, state='needs-review', code='REJECTION_AND_CORRECTION_REQUIRED', job=last['id'],
+                                 next_command=cmd + f"review {scene} <keep|reject> '<direct observation>'",
+                                 action='review ' + last['id'] + ' side by side with the target')); continue
+        rejected = bound and read(rp)['verdict'] == 'reject'
+        code, provider = plan_blocker(scene, body, previous, rejected, usage, state)
+        call = cmd + ('normal ' + body if body else 'call ' + scene) + (" '<correction>'" if previous else '')
+        if code:
+            rows.append(plan.row(scene, state='blocked', code=code, provider=provider, job=last['id'] if last else None))
+        else:
+            rows.append(plan.row(scene, state='needs-correction' if previous else 'ready', provider=provider, new_calls=1,
+                                 job=last['id'] if last else None, next_command=call, action='one ' + provider + ' call'))
+    return rows
+
+
 # ---------- offline build: keys, normal maps, lit proofs, plates, pick sheet ----------
 
 STRENGTH, BLUR, AMBIENT, LIGHT_COLOR = 2.5, 2, 0.35, (1.0, 0.62, 0.3)
@@ -522,7 +585,7 @@ def check():
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('cmd'); ap.add_argument('args', nargs='*'); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument('cmd'); ap.add_argument('args', nargs='*'); ap.add_argument('--json', action='store_true'); a = ap.parse_args()
     if a.cmd == 'prepare': prepare()
     elif a.cmd == 'call': call(a.args[0], a.args[1] if len(a.args) > 1 else None)
     elif a.cmd == 'normal': call_normal(a.args[0], a.args[1] if len(a.args) > 1 else None)
@@ -531,4 +594,7 @@ if __name__ == '__main__':
     elif a.cmd == 'clear-latch': clear_latch(a.args[0], a.args[1])
     elif a.cmd == 'build': build()
     elif a.cmd == 'check': check()
+    elif a.cmd == 'plan':
+        from plan import main as plan_main
+        plan_main([WAVE] + (['--json'] if a.json else []))
     else: raise SystemExit('unknown command')

@@ -9,6 +9,8 @@ python -m pip install -r tools/art/requirements.txt
 python -m unittest discover -s tools/art -p 'test_*.py'
 python tools/art/pipeline.py compile
 python tools/art/pipeline.py status
+# Read-only, zero spend: each slot's state, blocker code and the one next command (--json too):
+python tools/art/pipeline.py plan D2S
 python tools/art/pipeline.py generate --style 02-salt-ink --scene arena
 # Inspect the actual generated image, then record a truthful note:
 python tools/art/pipeline.py review-proof --job 02-salt-ink-arena-a02 --note '<direct pixel observation>'
@@ -32,6 +34,11 @@ wave ceilings, working target and per-scene ceilings have one authority:
 The first actual quota/rate-limit result durably stops spending. There is no reset
 command, retry loop, provider switch or refund. Unknown outcomes and unexpected
 tool calls also stop spending. No video tool is permitted.
+
+`plan <wave>` asks every brief (or a wave adapter's slots: D2S) through `providers.decide`,
+the decision `providers.generate` takes before reserving, and `spend.headroom`, the caps
+`Budget.reserve` raises; it takes no lock and writes nothing, so a blocker is named before
+any reservation instead of by a charged RuntimeError.
 
 Every CLI call receives an explicit session UUID and a verbatim prompt file. Only
 that UUID's history and images are read. The actual image tool call, exact prompt,
