@@ -1,0 +1,74 @@
+{
+  "label": "simulated",
+  "date": "2026-10-24",
+  "command": "npx tsx packages/core/scripts/tide-ward-probe.ts held|held-bank (the probe is in d1-tide-ward-bank.patch; the held arm was read before the cast and blow counters were added)",
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "preset": "Mirror tide",
+  "held": {
+    "arm": "held",
+    "tideWardMana": 15,
+    "seeds": 200,
+    "fire_heavy": {
+      "beams": 130,
+      "affordable": 64,
+      "mendLineFree": 32,
+      "both": 0,
+      "medianMana": 13.599999999999994
+    },
+    "air_close": {
+      "beams": 25,
+      "affordable": 0,
+      "mendLineFree": 0,
+      "both": 0,
+      "medianMana": 4.599999999999994
+    },
+    "air_heavy": {
+      "beams": 877,
+      "affordable": 50,
+      "mendLineFree": 305,
+      "both": 0,
+      "medianMana": 3.25
+    }
+  },
+  "heldBank": {
+    "arm": "held-bank",
+    "tideWardMana": 15,
+    "seeds": 200,
+    "fire_heavy": {
+      "beams": 275,
+      "affordable": 77,
+      "mendLineFree": 255,
+      "both": 71,
+      "medianMana": 12,
+      "casts": 9,
+      "castsAtBeam": 4,
+      "beamBlows": 179,
+      "beamBlowsWarded": 10
+    },
+    "air_close": {
+      "beams": 4,
+      "affordable": 2,
+      "mendLineFree": 0,
+      "both": 0,
+      "medianMana": 15.599999999999994,
+      "casts": 0,
+      "castsAtBeam": 0,
+      "beamBlows": 1,
+      "beamBlowsWarded": 0
+    },
+    "air_heavy": {
+      "beams": 1196,
+      "affordable": 685,
+      "mendLineFree": 1006,
+      "both": 651,
+      "medianMana": 15.625,
+      "casts": 151,
+      "castsAtBeam": 67,
+      "beamBlows": 761,
+      "beamBlowsWarded": 150
+    }
+  }
+}

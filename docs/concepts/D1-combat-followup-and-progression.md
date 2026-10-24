@@ -337,6 +337,77 @@ air_close holds **40.0%** reference wins at a 50.7 s median (200 seeds; digest `
 slot the mend line, and Air Form's 61.1% coverage is unchanged. Against the Mirror tide supplement air_close gives 49.0% at
 54.5 s in every arm. It still sits exactly on the floor, and it was not tuned here.
 
+### 6.5 Tide Ward: a Water plan that banks the answer (4.2 follow-up), 2026-10-24
+
+**What was built.** 6.4 named the blocker: at a beam start, the Mirror tide reference never had Tide Ward's 15 mana and a
+free mend line at the same time. This step builds the follow-up 6.4 named, as PC AI only: **the bank**. While Tide Ward can
+answer a beam, the Water AI keeps its mana and its line. That holds when the reference slots the mend line and sits at
+tier II (or past it, if option A holds the ward). The rule needs a beam build whose collar has opened its beam row (Brand
+Wrath, Cyclone: tier IV). While it holds:
+- no row may spend below Tide Ward's 15 mana. This covers Rain Needle (3 mana), the row that drained the pool in 6.4;
+- the mend line plays only Tide Ward, and only at a seen aimed beam. Spring and Font would hold the line's cooldown
+  (Font's is 30 s).
+
+The AI reads the opponent the way it already does (`facesBuild`). It sees the rival's build and the rival's collar, never
+the rival's cooldowns. The rule is gated by a new overlay key, `counters.tideWardBank` in `school-balance.pc.json`, off by
+default and ignored under canonical balance (parity). Option A comes back from the 6.4 patch as `counters.tideWardHeld`.
+6.4's option B was declined, so it is not carried. Arms: `census:counters -- --tide-ward off|bank|held-bank`. 200 seeds
+per cell (40000-40199), the same 16 cells and presets as 6.4. Evidence: `d1-counters-bank-{off,bank,held-bank}.json` and
+the probe `d1-tide-ward-bank-probe.json`. The code is kept as `docs/change-requests/evidence/d1-tide-ward-bank.patch`
+(it applies with `git apply` on the commit that adds it, with its tests `counters.test.ts`), not in the tree.
+
+| Arm | Tide Ward slotted | Castable | Answered | Coverage | Casts | Mirror tide cells that moved |
+|---|---|---|---|---|---|---|
+| today (off) | 783 | 0 | 0 | none castable | 1 | none (all 16 digests equal `d1-counters.json`) |
+| bank alone | 783 | 0 | 0 | none castable | 1 | air_heavy digest only (`cfa07c05` -> `3d64e31f`), 50.0% at 73.5 s, unchanged |
+| **bank + A (held)** | 1240 | **1237** | **160** | **12.9%** | 161 | fire_heavy, air_close, air_heavy (below) |
+
+bank + A per cell: fire_heavy 238 castable, 10 answered (4.2%), 9 casts; air_heavy 997 castable, 150 answered (15.0%),
+151 casts; air_close 2 castable, none answered. Other rows under bank + A: Air Form 67.7% (67.9% today), Ring of Cinders 1.6%
+(unchanged).
+
+Water's win rates (reference wins, median, 200 seeds; band: the 40-65% win target and the wave's duration band):
+
+| Cell | today | bank alone | bank + A |
+|---|---|---|---|
+| Mirror tide vs fire_heavy | 26.0%, 46.2 s (`da8bad4f`) | same | **24.0%**, 46.4 s (`2af5a3f8`) |
+| Mirror tide vs air_close | 49.0%, 54.5 s (`7b037b7e`) | same | **39.5%**, 57.7 s (`6d61e93b`): below 40% |
+| Mirror tide vs air_heavy | 50.0%, 73.5 s (`cfa07c05`) | 50.0%, 73.5 s (`3d64e31f`) | **38.0%**, 73.9 s (`c0cb46c2`): below 40% |
+| Mirror tide vs fire_close / fire_light / air_light | 50.5% / 46.5% / 65.0% | same | same (digests equal) |
+| default waves 1-4 (Rotation; wave 4 is the Mirror tide opponent, not a build) | 100 / 100 / 88.5 / 53.5% | same | same (digests equal) |
+| builds census (Rotation, `census:builds`): air_close | 40.0%, 50.7 s (`ff684a89`) | same | same |
+
+The builds census runs the Rotation reference, which does not slot the mend line, so no arm can move it. Its six cells hold
+their `d1-ultimates-after.json` digests in every arm. air_close stays exactly on its 40.0% floor there.
+
+**What the reading says.**
+- **Banking alone does nothing.** Without A, Tide Ward is castable only at tier II. A beam row opens at the rival's tier
+  IV, by which time the reference's own collar has moved past tier II. The two conditions almost never meet, so the bank
+  almost never runs. Its one trace is the moved air_heavy digest, with equal figures.
+- **Bank + A unblocks the cost.** The probe (A planted, 200 seeds per beam build) read the reference at each aimed beam
+  start. With both mana and a free line it found 722 of 1475 starts, against 0 of 1032 under A alone (6.4). The median mana
+  at a beam start rose from 3.3 to 15.6 against air_heavy.
+- **Even then, Tide Ward answers little.** Of those 722 starts, the reference released the ward 160 times, and each cast
+  covered about one beam blow. Under A and the bank, 150 of the 761 beam blows on it landed while the ward was up (air_heavy).
+  Mana and the line are no longer the limit. What is left is the cast: of the 160 releases, only 71 came while an aimed beam
+  was in view. The ward goes up on the decision cadence after a beam is seen, and the probe points to that timing.
+  Coverage, at 12.9%, is still far below the proposed N = 50%.
+- **The bank costs Water fights.** Holding 15 mana stops Rain Needle below 18 mana, so the likely cause is the damage the
+  reference no longer deals. Against the two Air beam
+  builds the reference loses about 10 points: air_close 49.0% -> 39.5% and air_heavy 50.0% -> 38.0%. Both fall below the
+  40% floor. Against fire_heavy, already outside its band at 26.0%, it falls to 24.0%.
+
+**Verdict: declined.** Coverage rises (none -> 12.9%), but two Mirror tide cells break the 40% floor, so the rule fails
+the keep test (coverage up materially, no band broken, air_close not below 40%). Both overlay keys stay out of the tree,
+with the code in the patch. No game code, overlay key or canonical number changes. Goldens, the default and builds census
+digests, and CR-002/CR-007 are untouched, and there is nothing to return to VR.
+
+**No change request.** A cheaper Tide Ward row (a canonical number) is not the only fix left, so it is not proposed. The
+bank already makes Tide Ward affordable with its line free at half the beam starts, and coverage stays at 12.9%. The gap
+is in when the AI casts, which a lower price would not change. A cheaper row would only shrink the bank's damage cost. The next
+step, if any, is the timing: a Water answer that raises Tide Ward at the beam's cast (the rival's windup is a seen threat)
+instead of during the channel. It should be measured with the bank and A, by the same arms.
+
 ## 7. Open questions for the spark
 
 1. Which close-duel option (A-E) fits the feel the owner wants: trading blows, dancing in and out, or guard breaks?

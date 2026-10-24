@@ -94,7 +94,7 @@ Camp training for agility (no camp stat earns it yet; saves only accept it), the
 **Open (structural):**
 - Close duels end in 16-32 s, because both sides land everything at 5 m. *Addressed by D1's exchange windows (D1 6.1, `d1-exchange-after.json`): fire_close 67.0 s, air_close 50.7 s, both inside their bands. Brennic's named semifinal is now 63.0 s at 44.6% reference wins (2000 seeds, `d1-named-after*.json`).*
 - Air's light build never gets a short fight at the final (0.9 darts, competence 1.5).
-- Tide Ward and the beam rows sit on different collar tiers, so the beam answer never fires in play. *Still open (D1 6.4, `d1-counters.json`): none of the 783 beam blows on a Tide Ward holder is castable. Both D1 4.2 options were measured and declined. Holding Tide Ward past tier II makes 762 beams castable, but the reference never holds its 15 mana with the mend line free.*
+- Tide Ward and the beam rows sit on different collar tiers, so the beam answer never fires in play. *Still open (D1 6.4, `d1-counters.json`): none of the 783 beam blows on a Tide Ward holder is castable. Both D1 4.2 options were measured and declined. Holding Tide Ward past tier II makes 762 beams castable, but the reference never holds its 15 mana with the mend line free. D1 6.5 adds a Water plan that banks the mana and the line against a beam build. With the hold, it lifts coverage to 12.9%, but it drops two Mirror tide cells below the 40% floor (air_close 39.5%, air_heavy 38.0%), so it was declined. The limit left is when the AI casts the ward, not its price.*
 - The reference player's chase keeps light and heavy builds at about 8.5 m instead of their bands.
 - Defensive stats (focus, nerve) swing a duel by 30-45 points per rank, so builds stay within a rank of the reference's 1/1/1.
 
@@ -143,7 +143,7 @@ The first Fire heavy draft (Pyre embers) made the heavy win before tier IV: shor
 - **The heavy plan now has a payoff sequence.** It spends its tier-IV payoff (Brand Wrath, Cyclone) first. Wrath casts per fight go from 0.40 to 0.45.
 - **Brand Drag is still neutral** (42.0% -> 41.5% reference wins, rank 4 -> 5). Now the cause is measured: Wrath is cast about once per fight that reaches tier IV, because fights end about 10 s after tier IV opens and Wrath's cooldown is 20 s. A useful Brand Drag needs longer heavy fights or a cheaper tier-IV row (D1 6.2, `d1-payoff-sequence.json`).
 - **Close duels trade now** (D1 6.1). An exchange window guards a defender's next close blows after a clean close hit. Hits per exchange fall from 2.29 to 0.61 (fire_close) and from 1.91 to 1.30 (air_close). air_close sits exactly on the 40% floor; D1 6.4 records it unchanged.
-- **Counters** have a measured target (D1 6.4: N = 50% of the blows a row could answer; Director default, owner to confirm). Air Form meets it at 67.9%. Ring of Cinders (1.6%) and Tide Ward (no castable beam) do not.
+- **Counters** have a measured target (D1 6.4: N = 50% of the blows a row could answer; Director default, owner to confirm). Air Form meets it at 67.9%. Ring of Cinders (1.6%) and Tide Ward (no castable beam) do not. The Tide Ward bank (6.5) reaches 12.9% and breaks the floor, so it was declined.
 
 ### WP4 as built: Lab build pickers
 

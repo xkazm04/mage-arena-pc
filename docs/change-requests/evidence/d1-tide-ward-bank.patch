@@ -1,0 +1,409 @@
+diff --git a/packages/core/scripts/counter-coverage.ts b/packages/core/scripts/counter-coverage.ts
+index 2d44d06..4b40945 100644
+--- a/packages/core/scripts/counter-coverage.ts
++++ b/packages/core/scripts/counter-coverage.ts
+@@ -10,10 +10,11 @@
+ // - answered: the row's effect was up at the blow (Air Form's evade window, Tide Ward's drain cut), or the holder released
+ //   the row between first seeing the blow and its contact (how Ring of Cinders, an instant blast, answers).
+ // The reader taps contacts and reads threats beside the state; it never writes, so every fight hashes as its census fight.
+-import { createGames, presets, runtime, seconds, spellFor, spells, stateHash, stepGames, threats, ticks, tapContacts, type Actor, type ArenaState, type ShapeClass, type WaterLine } from '../src/arena/index.ts';
++import { createGames, presets, runtime, seconds, spells, stateHash, stepGames, threats, ticks, tapContacts, type Actor, type ArenaState, type ShapeClass, type WaterLine } from '../src/arena/index.ts';
+ import { createLedger, detachLedger, observeLedger, type ThreatLedger } from '../src/arena/ledger.ts';
+ import { answersShape, rivalBuilds } from '../src/arena/archetypes.ts';
+ import { canonicalSpells } from '../src/arena/schools.ts';
++import { waterSlotSpell } from '../src/arena/counters.ts';
+ 
+ export interface DefensiveRow { id: string; name: string; school: 'water' | 'fire' | 'air'; tier: number; line?: WaterLine }
+ /** The shape-class answer rows, one per school: the Fire and Air rows whose plan role is `answer`, and Water's Tide Ward. */
+@@ -29,11 +30,11 @@ export function rowClasses(row: DefensiveRow, _state: ArenaState): ShapeClass[]
+ const holds = (a: Actor, row: DefensiveRow): boolean => row.school === 'water'
+   ? !a.schoolState && a.water.composition.lines.includes(row.line!)
+   : a.schoolState?.school === row.school && a.schoolState.loadout.slots.includes(row.id);
+-/** Castable by tier now: Fire/Air once the collar reaches the row's tier; Water while the line's slot plays this row. */
++/** Castable by tier now: Fire/Air once the collar reaches the row's tier; Water while the line's slot plays this row (counters.ts may hold Tide Ward past tier II). */
+ function reachable(state: ArenaState, a: Actor, row: DefensiveRow): boolean {
+   if (row.school !== 'water') return a.tier >= row.tier;
+   const slot = 1 + a.water.composition.lines.indexOf(row.line!);
+-  return spellFor(a, slot, state)?.id === row.id;
++  return waterSlotSpell(a, slot, state)?.id === row.id;
+ }
+ function effectUp(state: ArenaState, a: Actor, row: DefensiveRow): boolean {
+   if (row.school === 'water') return state.tick < a.water.wardUntil;
+diff --git a/packages/core/scripts/report-counters.ts b/packages/core/scripts/report-counters.ts
+index 8d58102..10e4b97 100644
+--- a/packages/core/scripts/report-counters.ts
++++ b/packages/core/scripts/report-counters.ts
+@@ -1,5 +1,7 @@
+ // Counter coverage writer (D1 4.2, section 6.4): `npm --prefix packages/core run census:counters -- [--count n] [--tag t]
+-// [--out-dir docs/...]`. Runs the default census waves (the reference preset) and every rival build twice: against the
++// [--out-dir docs/...] [--tide-ward overlay|off|held|bank|held-bank]`. `--tide-ward` plants a variant of the Water beam-answer rule
++// (counters.ts) for this run: off = today's rule, held = 6.4 option A, bank = the 6.5 mana bank alone, held-bank = both.
++// Runs the default census waves (the reference preset) and every rival build twice: against the
+ // reference preset (the committed builds census) and against 'Mirror tide' (the supplement that slots Tide Ward, which the
+ // reference preset does not). Prints one line per cell and row: blows of the row's class met while slotted, while castable,
+ // answered, and the coverage (answered / castable). With --tag it writes `<tag>.json` to --out-dir (default the change-request
+@@ -10,11 +12,17 @@ import { performance } from 'node:perf_hooks';
+ import { runtime, tiro } from '../src/arena/index.ts';
+ import { rivalBuildIds, rivalBuilds } from '../src/arena/archetypes.ts';
+ import { evidenceDir } from './builds-census.ts';
++import { counterRule, withCounterRule, type CounterRule } from '../src/arena/counters.ts';
+ import { addTally, coverage, coverageBuildFight, coverageDefaultFight, defensiveRows, emptyTally, type RowTally } from './counter-coverage.ts';
+ 
+ const args = process.argv.slice(2), arg = (name: string): string | undefined => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
+ const count = Number(arg('--count') ?? 200), tag = arg('--tag'), outDir = arg('--out-dir') ?? 'docs/change-requests/evidence';
+-if (!Number.isInteger(count) || count < 1 || (tag !== undefined && !/^[a-z0-9-]+$/.test(tag)) || !evidenceDir.test(outDir)) throw Error('Invalid report arguments');
++const tideWard = arg('--tide-ward') ?? 'overlay';
++if (!Number.isInteger(count) || count < 1 || (tag !== undefined && !/^[a-z0-9-]+$/.test(tag)) || !evidenceDir.test(outDir)
++  || !['overlay', 'off', 'held', 'bank', 'held-bank'].includes(tideWard)) throw Error('Invalid report arguments');
++const variant: Partial<CounterRule> | undefined = tideWard === 'overlay' ? undefined
++  : { tideWardHeld: tideWard === 'held' || tideWard === 'held-bank', tideWardBank: tideWard === 'bank' || tideWard === 'held-bank' };
++const run = <T>(body: () => T): T => variant ? withCounterRule(variant, body) : body();
+ const supplement = 'Mirror tide', start = performance.now(), seeds = Array.from({ length: count }, (_, i) => runtime.games.censusSeedStart + i);
+ const pct = (x: number | null): string => x === null ? '   -' : `${(x * 100).toFixed(1)}%`.padStart(6);
+ type Fight = { seed: number; tallies: Record<string, RowTally>; hash: string; outcome: string; durationS: number };
+@@ -30,11 +38,11 @@ function cell(name: string, census: string, fights: Fight[], band: readonly numb
+   return { cell: name, census, fights: fights.length, winRate, medianS, targetDurationS: band, rows,
+     digest: createHash('sha256').update(fights.map(f => `${f.seed}:${f.hash}`).join('\n')).digest('hex') };
+ }
+-const cells = [
++const cells = run(() => [
+   ...tiro.waves.map((w, wave) => cell(`wave ${wave + 1}`, 'default', seeds.map(seed => coverageDefaultFight(seed, wave)), w.targetDurationS)),
+   ...rivalBuildIds.map(id => cell(id, 'builds', seeds.map(seed => coverageBuildFight(seed, id)), tiro.waves[rivalBuilds[id]!.wave]!.targetDurationS)),
+   ...rivalBuildIds.map(id => cell(id, `builds (${supplement})`, seeds.map(seed => coverageBuildFight(seed, id, supplement)), tiro.waves[rivalBuilds[id]!.wave]!.targetDurationS)),
+-];
++]);
+ // Per row over every cell: the reading 6.4 sets its target from.
+ const rows = Object.fromEntries(defensiveRows.map(row => {
+   const total = emptyTally();
+@@ -48,5 +56,5 @@ if (tag) {
+   writeFileSync(new URL(`${tag}.json`, destination), JSON.stringify({ label: 'simulated', date: new Date().toISOString().slice(0, 10),
+     command: `npm --prefix packages/core run census:counters -- ${args.join(' ')}`, countPerCell: count, seedRange: [seeds[0], seeds.at(-1)],
+     method: 'Threat-answer ledger units (graded contacts plus avoided aimed threats) on every mage holding an answer row; a unit counts when its shape class is one the row answers and it is blockable. slotted: the row is in the loadout; reachable: castable by collar tier at that tick (coverage denominator); answered: the row effect was up at the blow, or the row was released between first sight of the blow and its contact. PC overlay on, exchange windows on.',
+-    reference: { competence: runtime.games.referenceCompetence, preset: runtime.games.referencePreset, supplement }, rows, cells }, null, 2) + '\n');
++    reference: { competence: runtime.games.referenceCompetence, preset: runtime.games.referencePreset, supplement }, counterRule: { ...counterRule, ...variant }, rows, cells }, null, 2) + '\n');
+ }
+diff --git a/packages/core/scripts/tide-ward-probe.ts b/packages/core/scripts/tide-ward-probe.ts
+new file mode 100644
+index 0000000..c52285d
+--- /dev/null
++++ b/packages/core/scripts/tide-ward-probe.ts
+@@ -0,0 +1,37 @@
++// D1 6.4-6.5 Tide Ward probe: at the start of every aimed beam on the Mirror tide reference, can it afford Tide Ward (mana)
++// and is its mend line off cooldown? `npx tsx scripts/tide-ward-probe.ts [held|held-bank]` plants option A (default), or A
++// with the 6.5 bank. It also counts the Tide Ward releases, those made inside a beam start's window (both in hand), and the
++// beam blows that landed on the reference in all and while the ward was up.
++import { createGames, presets, runtime, stepGames, tapContacts, threats, ticks } from '../src/arena/index.ts';
++import { rivalBuilds } from '../src/arena/archetypes.ts';
++import { tideWard, withCounterRule } from '../src/arena/counters.ts';
++const arm = process.argv[2] ?? 'held'; if (!['held', 'held-bank'].includes(arm)) throw Error('arm: held | held-bank');
++const out: Record<string, unknown> = {};
++withCounterRule({ tideWardHeld: true, tideWardBank: arm === 'held-bank' }, () => {
++  for (const id of ['fire_heavy', 'air_close', 'air_heavy']) {
++    let beams = 0, mana = 0, free = 0, both = 0, casts = 0, castsAtBeam = 0, beamBlows = 0, beamBlowsWarded = 0; const manas: number[] = [];
++    for (let i = 0; i < 200; i++) {
++      const g = createGames(runtime.games.censusSeedStart + i, presets.find(p => p.name === 'Mirror tide')!, rivalBuilds[id]!.wave, true, undefined, undefined, undefined, { rivalBuild: id });
++      let inBeam = false;
++      const untap = tapContacts(g.state, (s, target, hit) => {
++        if (target !== g.player || !(s.schoolEffects ?? []).some(e => e.kind === 'beam' && e.ownerId === hit.ownerId)) return;
++        beamBlows++; beamBlowsWarded += +(s.tick < g.player.water.wardUntil);
++      });
++      while (g.phase === 'active' && g.state.tick < ticks(runtime.games.fightTimeoutS)) {
++        const before = g.state.events.length; stepGames(g);
++        for (const e of g.state.events.slice(before)) if (e.kind === 'release' && e.actorId === g.player.id && e.spellId === tideWard.id) { casts++; castsAtBeam += +inBeam; }
++        const beam = threats(g.state, g.player).some(t => t.shape === 'beam' && t.aimedAtUs);
++        if (beam && !inBeam) {
++          beams++; manas.push(g.player.mana);
++          const ok = g.player.mana >= tideWard.mana, off = (g.player.water.cooldowns[tideWard.line] ?? 0) <= g.state.tick;
++          mana += +ok; free += +off; both += +(ok && off);
++        }
++        inBeam = beam;
++      }
++      untap();
++    }
++    manas.sort((a, b) => a - b);
++    out[id] = { beams, affordable: mana, mendLineFree: free, both, medianMana: manas[Math.floor(manas.length / 2)] ?? null, casts, castsAtBeam, beamBlows, beamBlowsWarded };
++  }
++});
++console.log(JSON.stringify({ arm, tideWardMana: tideWard.mana, seeds: 200, ...out }, null, 2));
+diff --git a/packages/core/src/arena/archetypes.ts b/packages/core/src/arena/archetypes.ts
+index 9f5e802..40eacd1 100644
+--- a/packages/core/src/arena/archetypes.ts
++++ b/packages/core/src/arena/archetypes.ts
+@@ -236,5 +236,11 @@ export function holdsPress(a: Actor, slot: number): boolean {
+ }
+ /** True when any living opponent of `a` plays a build (the shape-class answer rule for a Water defender, mage-ai.ts). */
+ export const facesBuild = (state: ArenaState, a: Actor): boolean => state.actors.some(o => o.team !== a.team && !o.tags.includes('DEFEATED') && rivalBuildOf(o) !== undefined);
++/** True when a living opponent of `a` plays a build whose collar has opened one of its beam rows (Brand Wrath, Cyclone): what a
++ * Water defender reads off the build and the collar it can see, never the rival's cooldowns (the Tide Ward bank, counters.ts). */
++export const facesOpenBeam = (state: ArenaState, a: Actor): boolean => state.actors.some(o => {
++  const build = o.team !== a.team && !o.tags.includes('DEFEATED') ? rivalBuildOf(o) : undefined;
++  return !!build && build.loadout.slots.some(id => (fireShape(id)?.kind ?? airRow(id)?.kind) === 'beam' && schoolSpellById(id)!.tier <= o.tier);
++});
+ /** Every build id, for runners and pickers. */
+ export const rivalBuildIds: readonly string[] = Object.keys(rivalBuilds);
+diff --git a/packages/core/src/arena/counters.test.ts b/packages/core/src/arena/counters.test.ts
+new file mode 100644
+index 0000000..7e30d40
+--- /dev/null
++++ b/packages/core/src/arena/counters.test.ts
+@@ -0,0 +1,81 @@
++// The Water beam-answer rule (counters.ts, D1 6.4-6.5): the overlay block is checked at load, the held Tide Ward takes the
++// mend slot only past tier II while an enemy beam runs, and the bank keeps Tide Ward's mana and line while a beam build's
++// beam row is open. Parity (balance canonical) reads neither.
++import { describe, expect, it } from 'vitest';
++import { presets } from './catalog.ts';
++import { createGames } from './games.ts';
++import { combat } from './kernel.ts';
++import { mageInput } from './mage-ai.ts';
++import { facesOpenBeam, rivalBuilds } from './archetypes.ts';
++import { counterProblems, counterRule, tideWard, tideWardBankable, waterSlotSpell, withCounterRule } from './counters.ts';
++import type { Actor } from './types.ts';
++
++const mirror = presets.find(p => p.name === 'Mirror tide')!, mendSlot = 1 + mirror.lines.indexOf('mend');
++const buildGames = (id: string) => {
++  const g = createGames(41000, mirror, rivalBuilds[id]!.wave, true, undefined, undefined, undefined, { rivalBuild: id });
++  return { g, rival: g.state.actors.find(a => a.team !== g.player.team)! };
++};
++const place = (a: Actor, x: number, y: number) => { a.pos = { x, y }; a.previousPos = { x, y }; };
++
++describe('counters overlay block', () => {
++  it('ships both rules off and rejects unknown, missing or non-boolean keys', () => {
++    expect(counterRule).toEqual({ tideWardHeld: false, tideWardBank: false });
++    expect(counterProblems(undefined)).toEqual([]);
++    expect(counterProblems({ tideWardHeld: true, tideWardBank: false })).toEqual([]);
++    expect(counterProblems({ tideWardHeld: true })).toEqual(['school-balance.pc.json counters: missing tideWardBank']);
++    expect(counterProblems({ tideWardHeld: 1, tideWardBank: false, extra: true })).toHaveLength(2);
++    expect(counterProblems([])).toHaveLength(1);
++  });
++});
++
++describe('held Tide Ward (6.4 option A)', () => {
++  it('plays the mend slot past tier II only while an enemy beam runs, and never under canonical balance', () => {
++    const { g, rival } = buildGames('fire_heavy'), s = g.state;
++    g.player.tier = 4;
++    s.schoolEffects = [{ kind: 'beam', ownerId: rival.id, endTick: s.tick + 10 } as never];
++    expect(waterSlotSpell(g.player, mendSlot, s)!.effect).toBe('font');
++    withCounterRule({ tideWardHeld: true }, () => {
++      expect(waterSlotSpell(g.player, mendSlot, s)!.id).toBe(tideWard.id);
++      s.balance = 'canonical'; expect(waterSlotSpell(g.player, mendSlot, s)!.effect).toBe('font'); s.balance = undefined;
++      s.schoolEffects = []; expect(waterSlotSpell(g.player, mendSlot, s)!.effect).toBe('font');
++    });
++  });
++});
++
++describe('Tide Ward bank (6.5)', () => {
++  it('reads an open beam row off the build and its collar', () => {
++    const { g, rival } = buildGames('fire_heavy');
++    rival.tier = 3; expect(facesOpenBeam(g.state, g.player)).toBe(false);
++    rival.tier = 4; expect(facesOpenBeam(g.state, g.player)).toBe(true);
++    const close = buildGames('fire_close'); close.rival.tier = 4;
++    expect(facesOpenBeam(close.g.state, close.g.player)).toBe(false);
++  });
++
++  it('is bankable at tier II, past it only with the held rule, and off without the key', () => {
++    const { g } = buildGames('fire_heavy');
++    g.player.tier = 2; expect(tideWardBankable(g.player, g.state)).toBe(false);
++    withCounterRule({ tideWardBank: true }, () => {
++      expect(tideWardBankable(g.player, g.state)).toBe(true);
++      g.player.tier = 4; expect(tideWardBankable(g.player, g.state)).toBe(false);
++      withCounterRule({ tideWardHeld: true }, () => expect(tideWardBankable(g.player, g.state)).toBe(true));
++    });
++  });
++
++  it('spends nothing below Tide Ward\'s mana and keeps the mend line, then casts the ward at a seen beam', () => {
++    const { g, rival } = buildGames('fire_heavy'), s = g.state;
++    place(g.player, 10, 10); place(rival, 16, 10); g.player.tier = 2; rival.tier = 4;
++    g.player.mana = tideWard.mana + 1; g.player.hp = g.player.maxHp / 2;
++    const decide = () => { g.player.mageAI!.nextDecisionTick = s.tick; return mageInput(s, g.player); };
++    const before = decide();
++    expect(before.cast).toBe(true);
++    withCounterRule({ tideWardBank: true }, () => {
++      const banked = decide(), pick = waterSlotSpell(g.player, banked.slot, s)!;
++      if (banked.cast) {
++        expect(pick.line).not.toBe(tideWard.line);
++        expect(g.player.mana - (g.player.water.flow >= combat.flow.max ? combat.flow.crest.manaCost : pick.mana)).toBeGreaterThanOrEqual(tideWard.mana);
++      }
++      rival.pending = { kind: 'spell', startTick: s.tick, releaseTick: s.tick + 20, aim: { ...g.player.pos }, activationId: s.nextId++, spellId: 'fire_wrath' };
++      expect(decide()).toMatchObject({ slot: mendSlot, cast: true });
++    });
++  });
++});
+diff --git a/packages/core/src/arena/counters.ts b/packages/core/src/arena/counters.ts
+new file mode 100644
+index 0000000..d8dba24
+--- /dev/null
++++ b/packages/core/src/arena/counters.ts
+@@ -0,0 +1,56 @@
++// Water's beam answer (D1 4.2, docs/concepts/D1-combat-followup-and-progression.md sections 6.4-6.5). Tide Ward (mend II) is
++// the shape-class answer to a beam (mage-ai.ts), but a Water line plays one row per collar tier, so Tide Ward is gone by the
++// time the beams (Brand Wrath, Cyclone: tier IV) come, and the reference spends the mana and the mend line it would need.
++// Two PC-only rules, driven by the PC overlay (school-balance.pc.json `counters`):
++// - `tideWardHeld` (6.4 option A, the answer moves to a row Water has early): from tier III on, while an enemy beam runs, the
++//   mend line's slot plays Tide Ward, the row the line had at tier II (its own numbers, its own line cooldown).
++// - `tideWardBank` (6.5, the Water plan banks the answer): while Tide Ward can answer a beam build whose collar has opened its
++//   beam row, the Water AI keeps Tide Ward's mana and leaves the mend line's other rows alone (mage-ai.ts).
++// Gate: a state that runs balance 'canonical' (CR-002/CR-007 parity) reads neither, and both need an enemy build or beam,
++// so Water-only states (goldens, the default census) step exactly as before.
++// Imports stay leaf-ward (data, catalog, tuning, types) so water.ts and mage-ai.ts can read it.
++import balance from './data/school-balance.pc.json' with { type: 'json' };
++import { spellFor, spells, type Spell } from './catalog.ts';
++import { adjustedSpell } from './tuning.ts';
++import type { Actor, ArenaState, WaterLine } from './types.ts';
++
++export interface CounterRule { tideWardHeld: boolean; tideWardBank: boolean }
++const ruleKeys = ['tideWardHeld', 'tideWardBank'] as const;
++/** Problems with a `counters` block: exactly the rule's keys, each true or false. Absent is valid (both off). */
++export function counterProblems(candidate: unknown): string[] {
++  if (candidate === undefined) return [];
++  if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) return ['school-balance.pc.json counters: not an object'];
++  const have = Object.keys(candidate), value = candidate as Record<string, unknown>;
++  return [...have.filter(k => !(ruleKeys as readonly string[]).includes(k)).map(k => `school-balance.pc.json counters: unknown key ${k}`),
++    ...ruleKeys.filter(k => !have.includes(k)).map(k => `school-balance.pc.json counters: missing ${k}`),
++    ...ruleKeys.filter(k => have.includes(k) && typeof value[k] !== 'boolean').map(k => `school-balance.pc.json counters.${k} must be true or false`)];
++}
++const loaded = (balance as { counters?: unknown }).counters;
++const loadErrors = counterProblems(loaded);
++if (loadErrors.length) throw Error(loadErrors.join(' '));
++/** The overlay's rule, one shared object (tests and the census plant variants on it). */
++export const counterRule: CounterRule = loaded ? { ...(loaded as CounterRule) } : { tideWardHeld: false, tideWardBank: false };
++/** Run `body` with `variant` planted on the rule (a census arm; nothing else changes). */
++export function withCounterRule<T>(variant: Partial<CounterRule>, body: () => T): T {
++  const saved = { ...counterRule };
++  Object.assign(counterRule, variant);
++  try { return body(); } finally { Object.assign(counterRule, saved); }
++}
++
++/** Tide Ward, the Water row that answers beams. */
++export const tideWard: Spell = spells.find(s => s.effect === 'ward')!;
++const enemyBeam = (state: ArenaState, a: Actor): boolean => (state.schoolEffects ?? []).some(e => e.kind === 'beam' && e.endTick >= state.tick
++  && state.actors.find(o => o.id === e.ownerId)?.team !== a.team);
++/** The row a Water actor's slot plays now: spellFor's tier row, except that the held Tide Ward (option A) takes the mend
++ * line's slot past tier II while an enemy beam runs. */
++export function waterSlotSpell(a: Actor, slot: number, state?: ArenaState): Spell | undefined {
++  if (state && counterRule.tideWardHeld && state.balance !== 'canonical' && !a.schoolState && slot > 0
++    && a.water.composition.lines[slot - 1] === tideWard.line && a.tier > tideWard.tier && enemyBeam(state, a)) return adjustedSpell(tideWard, a, state);
++  return spellFor(a, slot, state);
++}
++/** True while the bank rule is on for this state and Tide Ward can answer a beam for `a` at its tier: it slots the mend line
++ * and sits at tier II, or past it under the held rule. Whether a beam is coming is the AI's read (mage-ai.ts). */
++export function tideWardBankable(a: Actor, state: ArenaState): boolean {
++  return counterRule.tideWardBank && state.balance !== 'canonical' && !a.schoolState && a.water.composition.lines.includes(tideWard.line as WaterLine)
++    && (a.tier === tideWard.tier || (counterRule.tideWardHeld && a.tier > tideWard.tier));
++}
+diff --git a/packages/core/src/arena/data/school-balance.pc.json b/packages/core/src/arena/data/school-balance.pc.json
+index 88681f7..3f3c2ef 100644
+--- a/packages/core/src/arena/data/school-balance.pc.json
++++ b/packages/core/src/arena/data/school-balance.pc.json
+@@ -1,6 +1,6 @@
+ {
+   "version": "school-balance-1",
+-  "_about": "PC-only deviations from the canonical Fire/Air numbers (docs/design/reconciled/data/arena/spells-*.csv and schools-combat.json, which carry VR's numbers). Keys: '<spellId>.<column>' (castS, cooldownS, mana, damage, telegraphS, rangeM) or '<school>.identity.<dotted key>'. Unknown keys fail at load. Parity suites run with ArenaState.balance = 'canonical', which ignores this file. Every key is a deviation and a CR candidate for VR (docs/concepts/W8-fire-air-dual-channel.md section 8). W8 lane B (2026-10-23): darts cut to the damage a VR seated dome lets through (PC has no dome) and halved in mana so the rivals can afford their kit; Air Form made free and quick, the one defensive row either rival plays (its reaction wards cover only the few threats seen longer than its reaction delay). W8 lane X (2026-10-23): AI reaction now runs at pace, so the rivals ward again; every key re-checked against the reacting AI and Lio's dart re-cut 1.1 -> 0.9 to bring the final's win rate back into range. Spark combat-system-depth WP2 (2026-10-23): Brennic and Lio now play authored builds (rival-builds.json) whose plans press the dart deliberately, so fire_bolt.damage 2.1 -> 1 (the 2.1 was tuned for the catalogue Brennic's random picks; at 2.1 the fire light build streams darts to 97 % rival wins). Evidence: docs/waves/W8-evidence/named.json; builds census: npm --prefix packages/core run census:builds. D1 exchange windows (2026-10-24): `exchange` is the PC-only close-duel rule (packages/core/src/arena/exchange.ts): a clean hit at closeRangeM or less opens the defender's window, which for guardS stops guardReduction of the attacker's next guardHits close blows; parity (balance canonical) and Water-only states ignore it. Numbers from the builds census, before/after in docs/concepts/D1-combat-followup-and-progression.md section 6.",
++  "_about": "PC-only deviations from the canonical Fire/Air numbers (docs/design/reconciled/data/arena/spells-*.csv and schools-combat.json, which carry VR's numbers). Keys: '<spellId>.<column>' (castS, cooldownS, mana, damage, telegraphS, rangeM) or '<school>.identity.<dotted key>'. Unknown keys fail at load. Parity suites run with ArenaState.balance = 'canonical', which ignores this file. Every key is a deviation and a CR candidate for VR (docs/concepts/W8-fire-air-dual-channel.md section 8). W8 lane B (2026-10-23): darts cut to the damage a VR seated dome lets through (PC has no dome) and halved in mana so the rivals can afford their kit; Air Form made free and quick, the one defensive row either rival plays (its reaction wards cover only the few threats seen longer than its reaction delay). W8 lane X (2026-10-23): AI reaction now runs at pace, so the rivals ward again; every key re-checked against the reacting AI and Lio's dart re-cut 1.1 -> 0.9 to bring the final's win rate back into range. Spark combat-system-depth WP2 (2026-10-23): Brennic and Lio now play authored builds (rival-builds.json) whose plans press the dart deliberately, so fire_bolt.damage 2.1 -> 1 (the 2.1 was tuned for the catalogue Brennic's random picks; at 2.1 the fire light build streams darts to 97 % rival wins). Evidence: docs/waves/W8-evidence/named.json; builds census: npm --prefix packages/core run census:builds. D1 exchange windows (2026-10-24): `exchange` is the PC-only close-duel rule (packages/core/src/arena/exchange.ts): a clean hit at closeRangeM or less opens the defender's window, which for guardS stops guardReduction of the attacker's next guardHits close blows; parity (balance canonical) and Water-only states ignore it. Numbers from the builds census, before/after in docs/concepts/D1-combat-followup-and-progression.md section 6. D1 Tide Ward (2026-10-24): `counters` is the PC-only Water beam-answer rule (packages/core/src/arena/counters.ts): tideWardHeld lets the mend slot play Tide Ward past tier II while an enemy beam runs (6.4 option A), tideWardBank makes the Water AI keep Tide Ward's mana and the mend line while a beam build's collar has its beam row open (6.5); both off until a census keeps them.",
+   "overrides": {
+     "fire_bolt.damage": 1,
+     "fire_bolt.mana": 2,
+@@ -10,5 +10,6 @@
+     "air_form.cooldownS": 3,
+     "air_form.mana": 0
+   },
+-  "exchange": { "closeRangeM": 5, "guardS": 8, "guardHits": 8, "guardReduction": 0.95 }
++  "exchange": { "closeRangeM": 5, "guardS": 8, "guardHits": 8, "guardReduction": 0.95 },
++  "counters": { "tideWardHeld": false, "tideWardBank": false }
+ }
+diff --git a/packages/core/src/arena/mage-ai.ts b/packages/core/src/arena/mage-ai.ts
+index de40741..01ad0d4 100644
+--- a/packages/core/src/arena/mage-ai.ts
++++ b/packages/core/src/arena/mage-ai.ts
+@@ -1,7 +1,7 @@
+ import { paceOf, paced, tuningFor, feelPolicy } from './tuning.ts';
+ import { arenaContains, arenaGeometry } from './geometry.ts';
+ import { enemyData } from './data.generated.ts';
+-import { spellFor, spells, type Spell } from './catalog.ts';
++import { spells, type Spell } from './catalog.ts';
+ import { bodyContact, bolt, combat, committedBody, random, runtime, ticks, travelLine } from './kernel.ts';
+ import { clamp, distance, inArc, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
+ import { hasLineOfSight } from './water.ts';
+@@ -10,7 +10,8 @@ import { idleInput, type Actor, type ArenaState, type InputFrame } from './types
+ import { chooseSchoolSpell, schoolBoltSpeedMps, schoolThreats } from './mage-ai-schools.ts';
+ import { slotSpell } from './schools.ts';
+ import { agilityPerfectWindowAddS, agilityRecoveryMult } from './progression.ts';
+-import { archetypeBand, facesBuild, holdsPress } from './archetypes.ts';
++import { archetypeBand, facesBuild, facesOpenBeam, holdsPress } from './archetypes.ts';
++import { tideWard, tideWardBankable, waterSlotSpell } from './counters.ts';
+ export function competence(level: number) {
+   const rows = enemyData.mages.competence, bounded = clamp(level, rows[0].level, rows.at(-1)!.level);
+   const lo = rows[Math.floor(bounded) - 1]!, hi = rows[Math.ceil(bounded) - 1]!, fraction = bounded - Math.floor(bounded);
+@@ -152,6 +153,7 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
+     brain.plannedRaiseTick = 1e9; brain.plannedReleaseTick = state.tick; brain.plan = undefined;
+   }
+   if (brain.rival) rivalTick(state, a, target, seen, window, ticks(profile.reactionDelayS), reRaiseGap);
++  let answerPress: number | undefined;
+   // Curve rows never spend a cadence inside a roll hold; the next decision waits for the hold to end.
+   if (state.tick >= brain.nextDecisionTick && (!profile.curve || state.tick >= brain.defendUntil)) {
+     brain.nextDecisionTick = state.tick + ticks(profile.decisionCadenceS); brain.decisionTicks.push(state.tick);
+@@ -177,9 +179,13 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
+         // A curve row queues a spell that comes off cooldown by the time its planned ward drops.
+         const ready = profile.curve && brain.plannedRaiseTick <= brain.plannedReleaseTick ? Math.max(state.tick, brain.plannedReleaseTick) + 1 : state.tick + 1;
+         // Facing a build rival, Tide Ward is the beam answer (shape-class answers, archetypes.ts): useful only while an aimed beam is seen, and then the cast.
+-        const beamWard = !a.schoolState && facesBuild(state, a);
+-        const available = a.schoolState ? [] : Array.from({ length: combat.lines.slots + 1 }, (_, slot) => ({ slot, s: spellFor(a, slot, state)! })).filter(({ s }) => s.kind !== 'passive' && (a.water.cooldowns[s.line] ?? 0) <= ready && (a.water.flow >= combat.flow.max || s.mana <= a.mana) && (!s.rangeM || d <= s.rangeM));
+-        const useful = available.filter(({ s }) => s.damage > 0 || (['heal','hot'].includes(s.effect) && a.hp < a.maxHp) || (s.effect === 'font' && a.mana < a.maxMana) || (s.effect === 'ward' && (beamWard ? seen.some(t => t.aimedAtUs && t.shape === 'beam') : seen.some(t => t.family === 'magic'))) || s.kind === 'zone' || s.effect === 'decoy' || s.effect === 'sheen' || s.effect === 'encase');
++        const beamWard = !a.schoolState && facesBuild(state, a), wardWanted = beamWard && seen.some(t => t.aimedAtUs && t.shape === 'beam');
++        // The bank (counters.ts tideWardBank): while Tide Ward can answer a build whose collar has opened its beam row, no other row
++        // spends below Tide Ward's mana, and the mend line plays only Tide Ward and only at a seen beam (Spring and Font would hold its cooldown).
++        const bank = beamWard && tideWardBankable(a, state) && facesOpenBeam(state, a), cost = (s: Spell): number => a.water.flow >= combat.flow.max ? combat.flow.crest.manaCost : s.mana;
++        const banked = (s: Spell): boolean => !bank || (s.effect === 'ward' ? wardWanted : s.line !== tideWard.line && a.mana - cost(s) >= tideWard.mana);
++        const available = a.schoolState ? [] : Array.from({ length: combat.lines.slots + 1 }, (_, slot) => ({ slot, s: waterSlotSpell(a, slot, state)! })).filter(({ s }) => s.kind !== 'passive' && (a.water.cooldowns[s.line] ?? 0) <= ready && (a.water.flow >= combat.flow.max || s.mana <= a.mana) && (!s.rangeM || d <= s.rangeM) && banked(s));
++        const useful = available.filter(({ s }) => s.damage > 0 || (['heal','hot'].includes(s.effect) && a.hp < a.maxHp) || (s.effect === 'font' && a.mana < a.maxMana) || (s.effect === 'ward' && (beamWard ? wardWanted : seen.some(t => t.family === 'magic'))) || s.kind === 'zone' || s.effect === 'decoy' || s.effect === 'sheen' || s.effect === 'encase');
+         const candidates = useful.length ? useful : available, fitting = candidates.filter(({ s }) => fitsBeforeRaise(state, brain.plannedRaiseTick, s));
+         // Curve rows keep choosing while a raise is pending: a spell that cannot finish first waits for the ward to drop.
+         const pool = profile.curve && !fitting.length ? candidates : fitting;
+@@ -188,8 +194,11 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
+         const variety = new Map(choices.map(c => [c.slot, random(state, `mage ${a.id} variety ${c.slot}`) * feelPolicy.ai.spellVarietyWeight]));
+         const bait = target.absorb || state.tick - target.absorbFreshTick <= ticks(profile.decisionCadenceS);
+         const prefers = (s: Spell): boolean => profile.curve ? bait === (s.family === 'unblockable') : profile.level >= 3 && target.absorb && s.family === 'unblockable';
++        // The answer goes first, as a build's plan answers first (archetypes.ts): a Tide Ward that is castable now and not up is
++        // pressed ahead of a planned raise (the raise would take every gap a beam's ticks leave).
++        answerPress = wardWanted && state.tick >= a.water.wardUntil ? available.find(c => c.s.effect === 'ward' && (a.water.cooldowns[c.s.line] ?? 0) <= state.tick)?.slot : undefined;
+         if (choices.length) {
+-          const answer = beamWard && seen.some(t => t.aimedAtUs && t.shape === 'beam') ? choices.find(c => c.s.effect === 'ward') : undefined;
++          const answer = wardWanted ? choices.find(c => c.s.effect === 'ward') : undefined;
+           const choice = answer ?? (profile.level < 2 ? choices[Math.floor(random(state, `mage ${a.id} spell`) * choices.length)]!
+             : choices.sort((x, y) => {
+               const sustainX = ['heal','hot'].includes(x.s.effect) && a.hp < a.maxHp / 2, sustainY = ['heal','hot'].includes(y.s.effect) && a.hp < a.maxHp / 2;
+@@ -205,10 +214,11 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
+   }
+   const result: InputFrame = { ...brain.input, move: { ...brain.input.move }, aim: { ...brain.input.aim } };
+   result.absorb = state.tick + 1 >= brain.plannedRaiseTick && state.tick + 1 <= brain.plannedReleaseTick;
+-  if (profile.curve) { const s = a.schoolState ? slotSpell(a, result.slot, state) : spellFor(a, result.slot, state); if (s && !fitsBeforeRaise(state, brain.plannedRaiseTick, s)) result.cast = false; }
++  if (profile.curve) { const s = a.schoolState ? slotSpell(a, result.slot, state) : waterSlotSpell(a, result.slot, state); if (s && !fitsBeforeRaise(state, brain.plannedRaiseTick, s)) result.cast = false; }
+   else if (brain.plannedRaiseTick > state.tick && brain.plannedRaiseTick <= state.tick + ticks(profile.decisionCadenceS + feelPolicy.ai.reactionCastSafetyS)) result.cast = false;
+   if (brain.rival) rivalGate(state, a, target, result, seen, window, profile.curve);
+   if (result.absorb) { result.cast = false; result.aim = { ...brain.targetPoint }; }
++  if (answerPress !== undefined && !a.pending) { result.slot = answerPress; result.cast = true; result.absorb = false; }
+   if (!target) { result.cast = false; result.move = { x: 0, y: 0 }; }
+   brain.input.roll = false; return result;
+ }
+diff --git a/packages/core/src/arena/water.ts b/packages/core/src/arena/water.ts
+index 9f77955..b3756c6 100644
+--- a/packages/core/src/arena/water.ts
++++ b/packages/core/src/arena/water.ts
+@@ -1,7 +1,8 @@
+ import { adjustedSpell, paceOf, tuningFor, warningFloor } from './tuning.ts';
+ import { agileCastS, agileRecoveryS, agileWarningS, rankedWaterSpell } from './progression.ts';
+ import { combat } from './data.generated.ts';
+-import { newWaterState, spellFor, spells, type Spell } from './catalog.ts';
++import { newWaterState, spells, type Spell } from './catalog.ts';
++import { waterSlotSpell } from './counters.ts';
+ import { constrainToArena } from './geometry.ts';
+ import { distance, inArc, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
+ import { emit, interrupt, resolveHit, runtime, spawnProjectile, ticks } from './kernel.ts';
+@@ -35,7 +36,7 @@ export function flowShift(before: FlowMark, after: FlowMark): FlowShift | undefi
+ export function trySpellCast(state: ArenaState, a: Actor, input: InputFrame): boolean {
+   if (activationBlocked(a)) return false;
+   // The row as this actor plays it: paced (adjustedSpell) and ranked (progression.ts; identity at rank 1).
+-  const found = spellFor(a, input.slot, state), s = found && rankedWaterSpell(found, a, state); if (!s || s.kind === 'passive' || state.tick < (a.water.cooldowns[s.line] ?? 0)) return false;
++  const found = waterSlotSpell(a, input.slot, state), s = found && rankedWaterSpell(found, a, state); if (!s || s.kind === 'passive' || state.tick < (a.water.cooldowns[s.line] ?? 0)) return false;
+   const cost = a.water.flow >= combat.flow.max ? combat.flow.crest.manaCost : s.mana;
+   if (a.mana < cost) return false;
+   let targetId: number | undefined;
