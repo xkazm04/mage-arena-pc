@@ -81,7 +81,7 @@ export function saves(s: GameShell, message = "") {
     message ? colours.water : colours.muted,
     1600,
   );
-  s.back(() => (s.returnScreen === "menu" ? s.menu() : s.pauseScreen()));
+  s.back(() => void s.nav.back());
   u.button(
     "resume-loaded",
     "Resume",
@@ -96,10 +96,10 @@ export function saves(s: GameShell, message = "") {
 }
 export async function openSaves(s: GameShell, from: string) {
   gameAudio.pauseWorld(true);
-  s.returnScreen = from;
+  s.nav.open(from);
   await s.run(async () => {
     await request("pause", { paused: true });
-    s.saves();
+    s.nav.go("saves");
   });
 }
 export async function load(s: GameShell, previous: boolean) {
@@ -110,7 +110,10 @@ export async function load(s: GameShell, previous: boolean) {
     s.arena?.dispose();
     s.arena = undefined;
     await s.continue(true);
-    s.returnScreen = s.arena ? "arena" : "camp";
+    // The loaded world is paused beneath the pause menu, and saves sits on top of both.
+    s.nav.open(s.arena ? "arena" : s.ui.screen);
+    s.nav.push("pause");
+    s.nav.push("saves");
     gameAudio.pauseWorld(true);
     s.saves("Save loaded. Resume when ready.");
   });

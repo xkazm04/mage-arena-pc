@@ -120,13 +120,8 @@ export function campHeader(s: GameShell, id: string, title: string) {
       205,
       280,
       68,
-      () => {
-        s.cardPage = 0;
-        s.cardSelected = 0;
-        if (key === "camp") s.camp();
-        else if (key === "calendar") s.calendar();
-        else s.cards(key as "board" | "journal");
-      },
+      () =>
+        s.nav.switchTab(key as "camp" | "calendar" | "board" | "journal"),
       { kind: "tab", selected: key === id },
     ),
   );

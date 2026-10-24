@@ -68,7 +68,7 @@ export function camp(s: GameShell) {
     350,
     68,
     () => {
-      s.visitPage = 0;
+      s.nav.reset("visit");
       if (p.id === v.location) s.visit();
       else void s.command({ type: "travel", place: p.id });
     },
@@ -144,7 +144,8 @@ export function visit(s: GameShell) {
     colours.muted,
     1000,
   );
-  actions.slice(s.visitPage * 4, s.visitPage * 4 + 4).forEach((a, i) =>
+  const paged = s.nav.state("visit");
+  actions.slice(paged.page * 4, paged.page * 4 + 4).forEach((a, i) =>
     u.button(a.id, a.label, 704, 419 + i * 110, 1120, 94, a.run, {
       subtitle: a.subtitle,
       disabled: v.settling || v.parley.pending || v.nightFinished,
@@ -168,10 +169,10 @@ export function visit(s: GameShell) {
       242,
       68,
       () => {
-        s.visitPage--;
+        paged.page--;
         s.visit();
       },
-      { disabled: s.visitPage === 0 },
+      { disabled: paged.page === 0 },
     );
     u.button(
       "actions-next",
@@ -181,10 +182,10 @@ export function visit(s: GameShell) {
       320,
       68,
       () => {
-        s.visitPage++;
+        paged.page++;
         s.visit();
       },
-      { disabled: (s.visitPage + 1) * 4 >= actions.length },
+      { disabled: (paged.page + 1) * 4 >= actions.length },
     );
   }
   s.timeFooter();
@@ -201,8 +202,7 @@ export async function command(s: GameShell, command: CampCommand) {
       s.visit();
     } else if (command.type === "listen") s.listen();
     else if (command.type === "dawn") {
-      s.cardPage = 0;
-      s.cardSelected = 0;
+      s.nav.reset("board");
       s.cards("board");
     } else s.camp();
   });

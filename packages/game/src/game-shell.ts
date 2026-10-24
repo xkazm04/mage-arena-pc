@@ -31,6 +31,7 @@ import { readBout, results } from "./screens/results.ts";
 import { audioSettings, pauseScreen, settings } from "./screens/pause.ts";
 import { load, openSaves, saves } from "./screens/saves.ts";
 import { chapter } from "./screens/chapter.ts";
+import { ScreenRouter, screenSpecs } from "./screens/router.ts";
 
 /**
  * The shell owns the season session, the arena and the state shared between screens. Each screen
@@ -45,12 +46,9 @@ export class GameShell {
   private pollBusy = false;
   private poll?: number;
   private readonly lifetime = new AbortController();
+  /** The screen registry and navigation stack: live and overlay screens, back, resume. */
+  readonly nav: ScreenRouter = new ScreenRouter(screenSpecs, this);
   selected = "tent";
-  cardPage = 0;
-  cardSelected = 0;
-  castPage = 0;
-  visitPage = 0;
-  returnScreen = "camp";
   held = false;
   lane = 0;
   updateListening?: () => void;
@@ -194,15 +192,8 @@ export class GameShell {
         next.settling !== this.view.settling ||
         next.nightFinished !== this.view.nightFinished;
       this.view = next;
-      if (changed) {
-        if (this.ui.screen === "listen") this.updateListening?.();
-        else if (
-          ["camp", "visit", "calendar", "board", "journal", "trial"].includes(
-            this.ui.screen,
-          )
-        )
-          this.redraw();
-      }
+      if (changed && this.nav.isLive(this.ui.screen))
+        this.nav.refresh(this.ui.screen);
     } catch {
       /* Keep the last scene during a transient disconnection. */
     } finally {
@@ -262,11 +253,16 @@ export class GameShell {
     history.replaceState(null, "", `/camp${location.search}`);
   }
   async pause() {
-    if (
-      ["pause", "settings", "audio-settings", "saves"].includes(this.ui.screen)
-    )
-      return;
-    this.returnScreen = this.ui.screen;
+    if (this.nav.isOverlay(this.ui.screen)) return;
+    // A screen the registry cannot redraw (a lab panel, a parley mid-sentence) resumes where it
+    // always has: the arena HUD when an arena is open, otherwise the camp map.
+    this.nav.open(
+      this.nav.has(this.ui.screen)
+        ? this.ui.screen
+        : this.arena
+          ? "arena"
+          : "camp",
+    );
     gameAudio.pauseWorld(true);
     this.arena?.pause(true);
     this.held = false;
@@ -274,34 +270,15 @@ export class GameShell {
     await this.run(async () => {
       await this.arena?.flush();
       this.view = await request<SeasonView>("pause", { paused: true });
-      this.pauseScreen();
+      this.nav.go("pause");
     });
   }
   async resume() {
     gameAudio.pauseWorld(false);
     await request("pause", { paused: false });
     this.view = await request<SeasonView>("session");
-    if (this.arena) {
-      if (this.arena.games && this.arena.games.phase !== "active")
-        this.results();
-      else {
-        this.arena.pause(false);
-        this.arena.hud();
-      }
-    } else if (this.returnScreen === "menu") this.menu();
-    else this.redraw(this.returnScreen);
-  }
-  redraw(screen = this.ui.screen) {
-    if (screen === "cast") {
-      this.castJournal();
-      return;
-    }
-    if (screen === "visit") this.visit();
-    else if (screen === "calendar") this.calendar();
-    else if (screen === "board" || screen === "journal") this.cards(screen);
-    else if (screen === "trial") this.trial();
-    else if (screen === "listen") this.listen();
-    else this.camp();
+    // Back to the screen the player paused from: a finished practice bout's results stay results.
+    this.nav.resume();
   }
   dispose() {
     this.disposed = true;

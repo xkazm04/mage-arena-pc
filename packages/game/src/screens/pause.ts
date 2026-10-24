@@ -33,9 +33,11 @@ export function pauseScreen(s: GameShell) {
     { icon: "water" },
   );
   u.button("open-settings", "Settings & controls", 580, 412, 760, 90, () =>
-    s.settings(),
+    s.nav.go("settings"),
   );
-  u.button("open-saves", "Save & load", 580, 530, 760, 90, () => s.saves());
+  u.button("open-saves", "Save & load", 580, 530, 760, 90, () =>
+    s.nav.go("saves"),
+  );
   u.button(
     "main-menu",
     "Main menu",
@@ -76,7 +78,7 @@ export function settings(s: GameShell) {
   const now = current();
   const row = (i: number) => 242 + i * 90;
   u.button("sound", "Sound & music", 1240, row(0), 584, 80, () =>
-    s.audioSettings(),
+    s.nav.go("audio-settings"),
   );
   u.button(
     "fullscreen",
@@ -159,7 +161,7 @@ export function settings(s: GameShell) {
     colours.muted,
     548,
   );
-  s.back(() => s.pauseScreen());
+  s.back(() => void s.nav.back());
   s.footer(
     u.modality === "gamepad"
       ? "D-PAD  Navigate     A  Choose     B  Back"
@@ -239,7 +241,7 @@ export function audioSettings(s: GameShell) {
     void gameAudio.play("voice.preview");
     u.notice("The collar loosens. Stand ready.");
   });
-  s.back(() => s.settings());
+  s.back(() => void s.nav.back());
   s.footer("Volume changes are saved on this device.");
   u.end();
 }

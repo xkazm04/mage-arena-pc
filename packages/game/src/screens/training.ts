@@ -4,6 +4,7 @@ import { columns, safeArea } from "../ui/anchors.ts";
 import type { GameShell } from "../game-shell.ts";
 
 export function training(s: GameShell, page = 0) {
+  s.nav.state("training").page = page;
   s.scene(
     "training",
     "The proving ground",

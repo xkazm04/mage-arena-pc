@@ -8,7 +8,8 @@ import type { GameShell } from "../game-shell.ts";
 export function cards(s: GameShell, kind: "board" | "journal") {
   s.campHeader(kind, kind === "board" ? "The Hollow Board" : "What you carry");
   const u = s.ui,
-    v = s.view;
+    v = s.view,
+    st = s.nav.state(kind);
   const cards =
     kind === "board"
       ? v.board.map((b) => ({
@@ -18,7 +19,7 @@ export function cards(s: GameShell, kind: "board" | "journal") {
           visibility: "public",
         }))
       : v.journal;
-  const page = cards.slice(s.cardPage * 4, s.cardPage * 4 + 4);
+  const page = cards.slice(st.page * 4, st.page * 4 + 4);
   u.text(
     kind === "board" ? "DEEDS, WHISPERS AND WITNESSES" : "PRIVATE KNOWINGS",
     96,
@@ -27,7 +28,7 @@ export function cards(s: GameShell, kind: "board" | "journal") {
     colours.gold,
   );
   page.forEach((c, i) => {
-    const index = s.cardPage * 4 + i;
+    const index = st.page * 4 + i;
     u.button(
       `card-${index}`,
       c.text.length > 88 ? c.text.slice(0, 85) + "…" : c.text,
@@ -36,11 +37,11 @@ export function cards(s: GameShell, kind: "board" | "journal") {
       766,
       112,
       () => {
-        s.cardSelected = index;
+        st.selected = index;
         s.cards(kind);
       },
       {
-        selected: s.cardSelected === index,
+        selected: st.selected === index,
         fontSize: 28,
         kind: c.rumour ? "card.warning" : "card.normal",
         tooltip: c.rumour
@@ -49,7 +50,7 @@ export function cards(s: GameShell, kind: "board" | "journal") {
       },
     );
   });
-  const card = cards[s.cardSelected];
+  const card = cards[st.selected];
   u.panel(900, 307, 924, 554, "panel.story");
   const subject = castData.characters.find(
     (c) =>
@@ -95,10 +96,10 @@ export function cards(s: GameShell, kind: "board" | "journal") {
     236,
     68,
     () => {
-      s.cardPage--;
+      st.page--;
       s.cards(kind);
     },
-    { disabled: s.cardPage === 0 },
+    { disabled: st.page === 0 },
   );
   u.button(
     "cards-next",
@@ -108,13 +109,13 @@ export function cards(s: GameShell, kind: "board" | "journal") {
     236,
     68,
     () => {
-      s.cardPage++;
+      st.page++;
       s.cards(kind);
     },
-    { disabled: (s.cardPage + 1) * 4 >= cards.length },
+    { disabled: (st.page + 1) * 4 >= cards.length },
   );
   u.text(
-    `${s.cardPage + 1} / ${Math.max(1, Math.ceil(cards.length / 4))}`,
+    `${st.page + 1} / ${Math.max(1, Math.ceil(cards.length / 4))}`,
     630,
     887,
     26,
@@ -130,15 +131,16 @@ export function cards(s: GameShell, kind: "board" | "journal") {
       ? "A rumour remains a rumour. Choose a card to read it."
       : "Private knowledge stays with you across the season.",
   );
-  u.end(`card-${s.cardSelected}`);
+  u.end(`card-${st.selected}`);
 }
 export function castJournal(s: GameShell) {
   s.campHeader("cast", "Those beneath the collar");
   const u = s.ui,
-    cast = castData.characters;
+    cast = castData.characters,
+    st = s.nav.state("cast");
   u.text("FACES IN YOUR JOURNAL", 96, 300, 24, colours.gold);
   const quarters = columns(safeArea(), 4, 32);
-  cast.slice(s.castPage * 8, s.castPage * 8 + 8).forEach((c, i) => {
+  cast.slice(st.page * 8, st.page * 8 + 8).forEach((c, i) => {
     const { x, w } = quarters[i % 4]!,
       y = 354 + Math.floor(i / 4) * 238;
     u.button(`cast-${c.id}`, "", x, y, w, 214, () => s.castDetails(c.id), {
@@ -157,10 +159,10 @@ export function castJournal(s: GameShell) {
     236,
     68,
     () => {
-      s.castPage--;
+      st.page--;
       s.castJournal();
     },
-    { disabled: s.castPage === 0 },
+    { disabled: st.page === 0 },
   );
   u.button(
     "cast-next",
@@ -170,10 +172,10 @@ export function castJournal(s: GameShell) {
     280,
     68,
     () => {
-      s.castPage++;
+      st.page++;
       s.castJournal();
     },
-    { disabled: (s.castPage + 1) * 8 >= cast.length },
+    { disabled: (st.page + 1) * 8 >= cast.length },
   );
   s.back(() => s.cards("journal"), "Journal");
   s.footer();
