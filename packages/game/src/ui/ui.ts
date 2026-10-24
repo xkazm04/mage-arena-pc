@@ -14,6 +14,7 @@ import { art } from "../art.ts";
 import { PadNavigation } from "./gamepad.ts";
 import { quality } from "../quality.ts";
 import { phase, phaseStart, phases, resetPhases } from "../frame-probe.ts";
+import { settings } from "../settings/settings.ts";
 import {
   contains,
   metrics,
@@ -95,6 +96,9 @@ export class CanvasUI {
   private frameTimes: number[] = [];
   private cpuTimes: number[] = [];
   layout = viewportLayout(1920, 1080);
+  private uiScaleSetting = settings().uiScale;
+  /** Decor that follows the real screen edges; rerun on every resize and dropped with the screen. */
+  private edgeFits: (() => void)[] = [];
   async init(host: HTMLElement) {
     gameAudio.init();
     await Promise.all([
@@ -361,6 +365,7 @@ export class CanvasUI {
     this.tooltip = undefined;
     this.hover = "";
     this.hoverSince = performance.now();
+    this.edgeFits = [];
   }
   end(preferred?: string) {
     this.focus =
@@ -817,11 +822,26 @@ export class CanvasUI {
       );
     }
   }
+  /** The viewport edges in design units: wider than the 1920x1080 stage on a widescreen window. */
+  get edges() {
+    return this.layout.edges;
+  }
+  /** Runs `fit` now and after every resize or UI scale change, so decor can reach the real screen edges. */
+  fitEdges(fit: () => void) {
+    fit();
+    this.edgeFits.push(fit);
+  }
+  setUiScale(value: number) {
+    if (value === this.uiScaleSetting) return;
+    this.uiScaleSetting = value;
+    this.resize();
+  }
   private resize() {
     this.app.renderer.resize(innerWidth, innerHeight);
-    this.layout = viewportLayout(innerWidth, innerHeight);
+    this.layout = viewportLayout(innerWidth, innerHeight, this.uiScaleSetting);
     this.root.scale.set(this.layout.scale);
     this.root.position.set(this.layout.x, this.layout.y);
+    for (const fit of this.edgeFits) fit();
   }
   private pollPad(now: number) {
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(

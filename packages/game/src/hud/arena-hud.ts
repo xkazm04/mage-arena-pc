@@ -72,6 +72,9 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
     school = hudSchool(p);
   u.begin("arena");
   u.onBack = game.settings;
+  // Corner clusters sit against the real screen edges: dl moves a left-edge item out, dr a right-edge item. Both are 0 at 16:9.
+  const dl = u.edges.left,
+    dr = u.edges.right - 1920;
   u.text(
     game.practice
       ? `PRACTICE  /  BOUT ${(game.games?.wave ?? 0) + 1} TAKEN OVER  /  NOTHING IS SENT, SAVED OR PAID`
@@ -80,29 +83,29 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
         : game.lab
           ? "COMBAT FEEL LAB"
           : "THE PROVING GROUND",
-    96,
+    96 + dl,
     58,
     24,
     colours.gold,
   );
   const heading = u.text(
     game.mode === "tiro" ? "The collar opens" : heroName[school],
-    96,
+    96 + dl,
     94,
     36,
     colours.text,
     700,
     true,
   );
-  const build = u.text("", 96, 142, 24, colours.muted, 900);
-  u.button("pause", "Pause", 1644, 54, 180, 68, game.settings, {
+  const build = u.text("", 96 + dl, 142, 24, colours.muted, 900);
+  u.button("pause", "Pause", 1644 + dr, 54, 180, 68, game.settings, {
     tooltip: "Escape / Start opens pause and settings.",
   });
   if (game.practice)
     u.button(
       "end-practice",
       "End practice",
-      1524,
+      1524 + dr,
       140,
       300,
       68,
@@ -112,12 +115,20 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
           "Back to the results. The settled bout and its receipt are unchanged.",
       },
     );
-  u.panel(96, 806, 400, 220);
-  const hp = u.bar("VITALITY", 132, 834, 328, p.hp, p.maxHp, colours.danger),
-    mana = u.bar("MANA", 132, 892, 328, p.mana, p.maxMana, colours.water),
+  u.panel(96 + dl, 806, 400, 220);
+  const hp = u.bar(
+      "VITALITY",
+      132 + dl,
+      834,
+      328,
+      p.hp,
+      p.maxHp,
+      colours.danger,
+    ),
+    mana = u.bar("MANA", 132 + dl, 892, 328, p.mana, p.maxMana, colours.water),
     stamina = u.bar(
       "STAMINA",
-      132,
+      132 + dl,
       950,
       328,
       p.stamina,
@@ -186,15 +197,22 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
     u.content.addChild(pip);
     pips.push(pip);
   }
-  u.panel(1584, 866, 240, 160);
+  u.panel(1584 + dr, 866, 240, 160);
   const meter = resourceMeter(p, game.training.state),
-    drawMeter = meter ? runeMeter(u, meter, 1584, 866) : undefined;
+    drawMeter = meter ? runeMeter(u, meter, 1584 + dr, 866) : undefined;
   const flow = meter
       ? undefined
-      : u.text("", 1618, 897, 27, colours.water, 180),
+      : u.text("", 1618 + dr, 897, 27, colours.water, 180),
     tip = meter
       ? undefined
-      : u.text(feedbackData.flowTip.idle, 1618, 943, 24, colours.muted, 180);
+      : u.text(
+          feedbackData.flowTip.idle,
+          1618 + dr,
+          943,
+          24,
+          colours.muted,
+          180,
+        );
   const clock = frameGraphics();
   u.content.addChild(clock);
   const artClock = u.kit.source !== "procedural";

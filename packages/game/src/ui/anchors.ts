@@ -12,8 +12,7 @@ export type Edge =
   | "bottom"
   | "bottom-right";
 
-/** UI scale bounds for the settings option (1 = the authored design size). */
-export const uiScaleRange = { min: 0.75, max: 1.5 } as const;
+export { uiScaleRange } from "./layout.ts";
 
 /** The title-safe area of a stage, in design units (5% inset by default, `data/ui.json`). */
 export function safeArea(
@@ -79,6 +78,5 @@ export function columns(
 
 /** The pixel scale of the UI: the stage fit times the player's UI scale, clamped to its range. */
 export function uiScale(fit: number, setting = 1): number {
-  const s = Number.isFinite(setting) ? setting : 1;
-  return fit * Math.min(uiScaleRange.max, Math.max(uiScaleRange.min, s));
+  return fit * clampUiScale(setting);
 }

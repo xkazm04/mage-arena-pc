@@ -20,8 +20,13 @@ export function scene(
   s.ui.text(kicker, 96, 57, 24, colours.gold);
   s.ui.text(title, 96, 99, 58, colours.text, 1550, true);
   s.ui.line(96, 183, 1728);
-  if (!kind.startsWith("camp-") && !kind.startsWith("place-"))
-    sigil(s.ui, "inscription.collar", 1718, 118, 150, 0.7);
+  if (!kind.startsWith("camp-") && !kind.startsWith("place-")) {
+    // Anchored to the top-right corner of the screen, 202 design units in from the edge (1718 on a 16:9 stage).
+    const collar = sigil(s.ui, "inscription.collar", 1718, 118, 150, 0.7);
+    s.ui.fitEdges(() => {
+      if (!collar.destroyed) collar.x = s.ui.edges.right - 202;
+    });
+  }
 }
 export function back(s: GameShell, action: () => void, label = "Back") {
   s.ui.button(

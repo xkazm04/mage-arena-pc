@@ -228,22 +228,37 @@ export function backdrop(ui: CanvasUI, kind = "gate") {
         : "arena-moonlit-2560";
   const loaded = art.get(key);
   const s = new Sprite(loaded ?? Texture.EMPTY);
+  // The painting covers the whole viewport (cropped, never stretched); the shade bands span the real edges.
+  const shade = new Graphics();
+  const fit = () => {
+    if (s.destroyed) return;
+    const e = ui.edges,
+      w = e.right - e.left,
+      h = e.bottom - e.top,
+      k = Math.max(w / 1920, h / 1080);
+    s.width = 1920 * k;
+    s.height = 1080 * k;
+    s.position.set(e.left + (w - s.width) / 2, e.top + (h - s.height) / 2);
+    shade.clear();
+    // Calm bands preserve text contrast while the centre remains an unobscured scene.
+    shade
+      .rect(e.left, e.top, w, 192 - e.top)
+      .fill({ color: colours.ink, alpha: 0.72 });
+    shade
+      .rect(e.left, 928, w, e.bottom - 928)
+      .fill({ color: colours.ink, alpha: 0.75 });
+    if (!kind.startsWith("camp-"))
+      shade.rect(e.left, 192, w, 736).fill({ color: colours.ink, alpha: 0.52 });
+  };
   const apply = (t?: Texture) => {
     if (s.destroyed) return;
     s.texture = t ?? texture(kind);
-    s.width = 1920;
-    s.height = 1080;
+    fit();
   };
   if (loaded) apply(loaded);
   else void art.load(key).then(apply);
-  ui.content.addChild(s);
-  const shade = new Graphics();
-  // Calm bands preserve text contrast while the centre remains an unobscured scene.
-  shade.rect(0, 0, 1920, 192).fill({ color: colours.ink, alpha: 0.72 });
-  shade.rect(0, 928, 1920, 152).fill({ color: colours.ink, alpha: 0.75 });
-  if (!kind.startsWith("camp-"))
-    shade.rect(0, 192, 1920, 736).fill({ color: colours.ink, alpha: 0.52 });
-  ui.content.addChild(shade);
+  ui.content.addChild(s, shade);
+  ui.fitEdges(fit);
   return s;
 }
 
