@@ -7,6 +7,7 @@ import subprocess
 import time
 import uuid
 from pathlib import Path
+import spend
 from common import ART, ROOT, config, digest, get_style, input_matches_current, input_record, lock, now, read, relative, sha, source_path, week, write
 
 # Match errors, not bare token counts, prompt text or image dimensions.
@@ -67,23 +68,11 @@ class Budget:
     def reserve(self, job):
         with lock(self.art / '.budget.lock'):
             value = self.load()
-            if value['stop']:
-                raise RuntimeError('SPEND_STOP: ' + value['stop']['reason'])
-            if any(j['status'] in ('reserved', 'running') for j in value['jobs']):
-                raise RuntimeError('UNRESOLVED_RESERVATION: inspect prior session; no automatic retry')
-            count = sum(j['charged_images'] for j in value['jobs'])
-            weekly = sum(j['charged_images'] for j in value['jobs'] if j['week'] == self.week_fn())
-            if count >= self.policy['wave_hard_cap'] or weekly >= self.policy['weekly_image_cap']:
-                raise RuntimeError('HARD_BUDGET_CAP')
-            if count >= self.policy['target_images']:
-                raise RuntimeError('TARGET_BUDGET_STOP: preserve shared subscription')
-            same = [j for j in value['jobs'] if j['style_id'] == job['style_id'] and j['scene'] == job['scene']]
-            scene_key = job['style_id'] + ':' + job['scene']
-            attempt_cap = self.policy.get('scene_attempt_caps', {}).get(scene_key, self.policy['max_attempts_per_scene'])
-            if len(same) >= attempt_cap:
-                raise RuntimeError('SCENE_ATTEMPT_CAP')
-            if any(j['id'] == job['id'] for j in value['jobs']):
-                raise RuntimeError('DUPLICATE_JOB')
+            # Every cap (project, scene, wave, provider, session) lives in spend.headroom.
+            codes = spend.headroom(self.art, wave=job.get('wave'), provider=job.get('provider'), scene=job['scene'],
+                                   style_id=job['style_id'], job_id=job['id'], usage=value, policy=self.policy, week_fn=self.week_fn)
+            if codes:
+                raise RuntimeError(codes[0])
             record = {**job, 'at': now(), 'week': self.week_fn(), 'charged_images': 1, 'status': 'reserved'}
             value['jobs'].append(record)
             value['events'].append({'event': 'reserved', 'id': record['id'], 'at': record['at']})

@@ -15,10 +15,7 @@ from PIL import Image
 from common import ART, ROOT, config, digest, lock, now, read, relative, sha, week, write
 from generate import Budget, kill_tree, moderation_evidence, output_quota, session_evidence
 from agy_evidence import AgyEvidence
-
-
-def provider_of(job):
-    return job.get('provider') or ('grok' if job.get('origin') == 'grok-cli' else 'historical-other')
+from spend import provider_of, provider_codes
 
 
 class ProviderBudget:
@@ -30,16 +27,8 @@ class ProviderBudget:
         return read(self.art / 'providers/history.json')
 
     def available(self, provider, usage=None):
-        usage = usage or Budget(self.art).load()
-        state = self.state()['providers'][provider]
-        policy = self.policy['providers'][provider]
-        if state['stop']:
-            return False, 'PROVIDER_STOP: ' + state['stop']['reason']
-        spent = sum(j['charged_images'] for j in usage['jobs'] if provider_of(j) == provider and j['week'] == week())
-        prior = policy.get('external_known_charges', {}).get(week(), 0)
-        if spent + prior >= policy['weekly_image_cap']:
-            return False, 'PROVIDER_BUDGET_CAP'
-        return True, None
+        codes = provider_codes(self.art, provider, usage or Budget(self.art).load(), week)
+        return (False, codes[0]) if codes else (True, None)
 
     def event(self, provider, event, job_id, reason=None):
         with lock(self.art / 'providers/.lock'):
@@ -214,10 +203,8 @@ def invoke(provider, spec, folder, record):
 def generate(spec):
     validate_spec(spec)
     with lock(ART / '.run.lock'):
+        # Wave, provider and session caps are enforced again inside Budget.reserve (spend.headroom).
         budget = Budget(); pb = ProviderBudget(); usage = budget.load()
-        wave_cap=budget.policy.get('wave_image_caps',{}).get(spec['wave'])
-        if wave_cap is not None and sum(j['charged_images'] for j in usage['jobs'] if j.get('wave')==spec['wave'])>=wave_cap:
-            raise RuntimeError('WAVE_IMAGE_CAP')
         old = [j for j in usage['jobs'] if j.get('wave') == spec['wave'] and j['scene'] == spec['id']]
         refused = [j for j in old if j['status'] == 'moderation-refused']
         if refused:
