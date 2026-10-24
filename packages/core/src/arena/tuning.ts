@@ -312,6 +312,17 @@ export function adjustedSpell(s: Spell, a: Actor, state?: ArenaState): Spell {
     durationS: s.durationS * p.control,
   };
 }
+/** Sets one knob and moves its coupled partner so the pair validateTuning enforces stays legal: minimum stun
+ * never above maximum stun, roll i-frames never longer than the roll. Returns a copy; `t` is not written. */
+export function coupleTuningField(t: CombatTuning, key: TuningKey, value: number): CombatTuning {
+  const next = structuredClone(t);
+  next[key] = value;
+  if (key === "hitStunS") next.hitStunMaxS = Math.max(next.hitStunMaxS, value);
+  if (key === "hitStunMaxS") next.hitStunS = Math.min(next.hitStunS, value);
+  if (key === "rollDurationS") next.rollIFramesS = Math.min(next.rollIFramesS, value);
+  if (key === "rollIFramesS") next.rollIFramesS = Math.min(value, next.rollDurationS);
+  return next;
+}
 const spellIdPattern = new RegExp(`^(bolt:0:base|(?:${waterLines.join("|")}):[1-4]:(?:base|A|B))$`);
 export function validateTuning(value: unknown): CombatTuning {
   if (!value || typeof value !== "object" || Array.isArray(value))

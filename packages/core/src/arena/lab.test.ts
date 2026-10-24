@@ -7,7 +7,7 @@ import {
   toggleLabDamage,
   changeLabTuning,
 } from "./lab.ts";
-import { makeTuning, exportTuning, importTuning, paceOf, schools } from "./tuning.ts";
+import { coupleTuningField, makeTuning, exportTuning, importTuning, paceOf, schools, validateTuning } from "./tuning.ts";
 import { idleInput } from "./types.ts";
 import { stateHash, stepArena, resolveHit, ticks } from "./kernel.ts";
 import { spellFor } from "./catalog.ts";
@@ -147,5 +147,32 @@ describe("Combat Feel Lab", () => {
       expect(stateHash(b.training.state)).toBe(stateHash(a.training.state));
     }
     expect(() => createLab({ ...defaultLabConfig, targetMotion: "run" as never })).toThrow();
+  });
+});
+
+describe("Lab tuning coupling (coupleTuningField)", () => {
+  it("raises maximum stun to a minimum set above it, and the result validates", () => {
+    // The factory maximum sits above the minimum's own range, so the case starts from a lower maximum.
+    const t = { ...makeTuning(), hitStunS: 0.05, hitStunMaxS: 0.1 }, raised = t.hitStunMaxS + 0.1, next = coupleTuningField(t, "hitStunS", raised);
+    expect(next.hitStunS).toBe(raised);
+    expect(next.hitStunMaxS).toBe(raised);
+    expect(() => validateTuning(next)).not.toThrow();
+    expect(t.hitStunS).toBe(0.05);
+  });
+  it("lowers minimum stun under a maximum set below it", () => {
+    const t = { ...makeTuning(), hitStunS: 0.2, hitStunMaxS: 0.3 }, next = coupleTuningField(t, "hitStunMaxS", 0.1);
+    expect([next.hitStunS, next.hitStunMaxS]).toEqual([0.1, 0.1]);
+  });
+  it("keeps roll i-frames inside the roll, whichever side moves", () => {
+    const t = makeTuning();
+    expect(coupleTuningField(t, "rollDurationS", 0.1).rollIFramesS).toBeLessThanOrEqual(0.1);
+    const next = coupleTuningField(t, "rollIFramesS", t.rollDurationS + 0.2);
+    expect(next.rollIFramesS).toBe(t.rollDurationS);
+    expect(() => validateTuning(next)).not.toThrow();
+  });
+  it("sets any other knob alone", () => {
+    const t = makeTuning(), next = coupleTuningField(t, "castTimeScale", 1.2);
+    expect(next).toEqual({ ...t, castTimeScale: 1.2 });
+    expect(next).not.toBe(t);
   });
 });
