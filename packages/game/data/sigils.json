@@ -13,5 +13,17 @@
     "line": [1.3, 1.8]
   },
   "coverageToleranceTexels": 2,
-  "coverageToleranceFraction": 0.03
+  "coverageToleranceFraction": 0.03,
+  "procedural": {
+    "edgeFeatherM": 0.06,
+    "baseOpacity": 0.3,
+    "rimOpacity": 0.95,
+    "rimWidthM": 0.08,
+    "colors": {
+      "water": [0.35, 0.7, 1],
+      "fire": [1, 0.45, 0.15],
+      "earth": [0.75, 0.6, 0.35],
+      "air": [0.7, 0.95, 0.9]
+    }
+  }
 }

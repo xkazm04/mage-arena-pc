@@ -18,10 +18,13 @@ import {
   contract,
   type Camera,
 } from "./camera.ts";
-import { sigilMesh } from "./sigil-shader.ts";
+import { proceduralSigilMesh, sigilMesh } from "./sigil-shader.ts";
 import {
   clampProgress,
+  proceduralBox,
+  proceduralShapeIds,
   threatFrame,
+  type ProceduralShape,
   type SigilManifest,
   type ThreatExtent,
 } from "./sigil-contract.ts";
@@ -67,6 +70,8 @@ export class SigilPlayer {
       used: 0,
     },
   ];
+  private procedurals: ReturnType<typeof proceduralSigilMesh>[] = [];
+  private proceduralUsed = 0;
   private used = 0;
   private leases = new Map<string, number>();
   private state?: ArenaState;
@@ -116,6 +121,7 @@ export class SigilPlayer {
     this.c = c;
     this.tick = state.tick + alpha;
     this.used = 0;
+    this.proceduralUsed = 0;
     for (const layer of this.layers) layer.used = 0;
     this.serial++;
     if (this.state !== state || state.events.length < this.eventIndex) {
@@ -298,6 +304,73 @@ export class SigilPlayer {
     this.cpuMs += performance.now() - start;
     return true;
   }
+  /** Draws a procedural telegraph (filled disc, beam, arc) on the ground behind the bodies. No page, no manifest. */
+  procedural(
+    element: Element,
+    at: Vec,
+    shape: ProceduralShape,
+    options: { angle?: number; progress?: number; opacity?: number } = {},
+  ) {
+    if (this.used >= policy.maxDecals) return true;
+    this.used++;
+    const p = policy.procedural;
+    let mesh = this.procedurals[this.proceduralUsed++];
+    if (!mesh) {
+      mesh = proceduralSigilMesh();
+      this.procedurals.push(mesh);
+      this.behind.addChild(mesh);
+    }
+    mesh.visible = true;
+    mesh.alpha = options.opacity ?? 1;
+    const m = cameraMetrics(this.c),
+      q = groundToScreen(at, this.c),
+      angle = options.angle ?? 0,
+      cs = Math.cos(angle),
+      sn = Math.sin(angle),
+      squash = m.pxPerMetreY / m.pxPerMetreX,
+      box = proceduralBox(shape, p.edgeFeatherM),
+      px = m.pxPerMetreX;
+    mesh.setFromMatrix(
+      new Matrix(
+        cs * box[2] * px,
+        sn * squash * box[2] * px,
+        -sn * box[3] * px,
+        cs * squash * box[3] * px,
+        q.x + px * (cs * box[0] - sn * box[1]),
+        q.y + squash * px * (sn * box[0] + cs * box[1]),
+      ),
+    );
+    const shader = mesh.shader!,
+      uniforms = shader.resources.proceduralUniforms.uniforms,
+      c = p.colors[element];
+    mesh.tint = ((c[0] * 255) << 16) | ((c[1] * 255) << 8) | (c[2] * 255);
+    uniforms.uBox = new Float32Array(box);
+    uniforms.uShape = new Float32Array(
+      shape.shape === "disc"
+        ? [proceduralShapeIds.disc, shape.radius, 0, 0]
+        : shape.shape === "beam"
+          ? [proceduralShapeIds.beam, shape.length, shape.width, 0]
+          : [
+              proceduralShapeIds.arc,
+              shape.radius,
+              shape.degrees,
+              shape.thickness,
+            ],
+    );
+    uniforms.uStyle = new Float32Array([
+      p.edgeFeatherM,
+      p.baseOpacity,
+      p.rimOpacity,
+      p.rimWidthM,
+    ]);
+    uniforms.uProgress = new Float32Array([
+      options.progress === undefined ? -1 : clampProgress(options.progress),
+      0,
+    ]);
+    shader.resources.proceduralUniforms.update();
+    this.seen.add(`procedural.${shape.shape}`);
+    return true;
+  }
   threat(
     element: Element,
     at: Vec,
@@ -395,6 +468,8 @@ export class SigilPlayer {
   end() {
     for (const { meshes, used } of this.layers)
       for (let i = used; i < meshes.length; i++) meshes[i]!.visible = false;
+    for (let i = this.proceduralUsed; i < this.procedurals.length; i++)
+      this.procedurals[i]!.visible = false;
   }
   finish() {
     for (const s of this.shots) {
@@ -429,7 +504,7 @@ export class SigilPlayer {
   }
   dispose() {
     this.disposed = true;
-    for (const mesh of this.pool) {
+    for (const mesh of [...this.pool, ...this.procedurals]) {
       mesh.shader?.destroy();
       mesh.geometry.destroy();
       mesh.destroy();

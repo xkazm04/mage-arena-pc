@@ -4,6 +4,11 @@ import { describe, it, expect } from "vitest";
 import { spells, runtime } from "@mage/core/arena";
 import {
   coneUV,
+  proceduralBox,
+  proceduralDistance,
+  proceduralFillCoord,
+  proceduralShapeIds,
+  type ProceduralShape,
   rankFill,
   threatFrame,
   type SigilManifest,
@@ -145,5 +150,80 @@ describe("A13 painted geometry", () => {
         }
       }
     }
+  });
+});
+
+describe("procedural sigil shapes (D2 4.4)", () => {
+  const disc: ProceduralShape = { shape: "disc", radius: 3 },
+    beam: ProceduralShape = { shape: "beam", length: 8, width: 1 },
+    arc: ProceduralShape = {
+      shape: "arc",
+      radius: 4,
+      thickness: 0.6,
+      degrees: 60,
+    };
+  it("draws a filled circle of exactly the authored radius", () => {
+    expect(proceduralDistance(disc, 0, 0)).toBeCloseTo(-3);
+    expect(proceduralDistance(disc, 3, 0)).toBeCloseTo(0);
+    expect(proceduralDistance(disc, 0, -3)).toBeCloseTo(0);
+    expect(proceduralDistance(disc, 2.9, 0)).toBeLessThan(0);
+    expect(proceduralDistance(disc, 2, 2.5)).toBeGreaterThan(0);
+  });
+  it("covers a beam from the caster out to its length and no further", () => {
+    expect(proceduralDistance(beam, 4, 0)).toBeLessThan(0);
+    expect(proceduralDistance(beam, 4, 0.49)).toBeLessThan(0);
+    expect(proceduralDistance(beam, 4, 0.51)).toBeGreaterThan(0);
+    expect(proceduralDistance(beam, -0.1, 0)).toBeGreaterThan(0);
+    expect(proceduralDistance(beam, 8.1, 0)).toBeGreaterThan(0);
+  });
+  it("covers an arc band only inside its sweep", () => {
+    const at = (deg: number, r: number) =>
+      proceduralDistance(
+        arc,
+        r * Math.cos((deg * Math.PI) / 180),
+        r * Math.sin((deg * Math.PI) / 180),
+      );
+    expect(at(0, 4)).toBeLessThan(0);
+    expect(at(29, 4)).toBeLessThan(0);
+    expect(at(-29, 4)).toBeLessThan(0);
+    expect(at(31, 4)).toBeGreaterThan(0);
+    expect(at(0, 3.6)).toBeGreaterThan(0);
+    expect(at(0, 4.4)).toBeGreaterThan(0);
+    expect(at(180, 4)).toBeGreaterThan(0);
+  });
+  it("keeps every covered point inside the quad the player draws", () => {
+    const margin = policy.procedural.edgeFeatherM;
+    for (const s of [disc, beam, arc]) {
+      const [x0, y0, w, h] = proceduralBox(s, margin);
+      for (let i = 0; i <= 120; i++)
+        for (let j = 0; j <= 120; j++) {
+          const x = x0 - 1 + ((w + 2) * i) / 120,
+            y = y0 - 1 + ((h + 2) * j) / 120;
+          if (proceduralDistance(s, x, y) <= 0) {
+            expect(x).toBeGreaterThanOrEqual(x0);
+            expect(x).toBeLessThanOrEqual(x0 + w);
+            expect(y).toBeGreaterThanOrEqual(y0);
+            expect(y).toBeLessThanOrEqual(y0 + h);
+          }
+        }
+    }
+  });
+  it("fills monotonically from 0 to 1 along each shape", () => {
+    expect(proceduralFillCoord(disc, 0, 0)).toBe(0);
+    expect(proceduralFillCoord(disc, 3, 0)).toBeCloseTo(1);
+    expect(proceduralFillCoord(beam, 0, 0)).toBe(0);
+    expect(proceduralFillCoord(beam, 8, 0)).toBeCloseTo(1);
+    expect(
+      proceduralFillCoord(arc, 4 * Math.cos(-Math.PI / 6), -2),
+    ).toBeCloseTo(0);
+    expect(proceduralFillCoord(arc, 4, 0)).toBeCloseTo(0.5);
+    expect(proceduralFillCoord(arc, 4 * Math.cos(Math.PI / 6), 2)).toBeCloseTo(
+      1,
+    );
+  });
+  it("has a colour for every element and distinct shader shape ids", () => {
+    for (const e of ["water", "fire", "earth", "air"] as const)
+      expect(policy.procedural.colors[e]).toHaveLength(3);
+    expect(new Set(Object.values(proceduralShapeIds)).size).toBe(3);
   });
 });

@@ -55,3 +55,52 @@ export function sigilMesh() {
   });
   return new Mesh({ geometry, shader });
 }
+const proceduralFragment = `
+in vec2 vUV; in vec4 vColor; out vec4 finalColor;
+uniform vec4 uBox; // local min x, min y, width, height (metres)
+uniform vec4 uShape; // shape id, a, b, c
+uniform vec4 uStyle; // feather, base opacity, rim opacity, rim width
+uniform vec2 uProgress; // progress (negative: no fill pass), unused
+void main() {
+  vec2 p=uBox.xy+vUV*uBox.zw; float id=uShape.x, r=length(p), d, t;
+  if(id<.5){ d=r-uShape.y; t=r/uShape.y; }
+  else if(id<1.5){ d=max(max(-p.x,p.x-uShape.y),abs(p.y)-uShape.z*.5); t=p.x/uShape.y; }
+  else {
+    float half=uShape.z*.01745329;
+    d=max(abs(r-uShape.y)-uShape.w*.5, (abs(atan(p.y,p.x))-half)*r);
+    t=(atan(p.y,p.x)+half)/(2.*half);
+  }
+  float inside=clamp(-d/uStyle.x,0.,1.);
+  if(inside<=0.) discard;
+  float rim=1.-clamp(-d/uStyle.w,0.,1.);
+  float filled=uProgress.x<0.?0.:step(t,uProgress.x);
+  float a=max(mix(uStyle.y,.85,filled),rim*uStyle.z);
+  finalColor=vec4(vColor.rgb,1.)*a*inside*vColor.a;
+}`;
+/** Unit quad mesh for one procedural sigil; the player sets the matrix and uniforms per draw. */
+export function proceduralSigilMesh() {
+  const shader = new Shader({
+    glProgram: GlProgram.from({
+      name: "procedural-sigil",
+      vertex,
+      fragment: proceduralFragment,
+    }),
+    resources: {
+      proceduralUniforms: {
+        uBox: { value: new Float32Array([0, 0, 1, 1]), type: "vec4<f32>" },
+        uShape: { value: new Float32Array([0, 1, 0, 0]), type: "vec4<f32>" },
+        uStyle: {
+          value: new Float32Array([0.06, 0.3, 0.95, 0.08]),
+          type: "vec4<f32>",
+        },
+        uProgress: { value: new Float32Array([-1, 0]), type: "vec2<f32>" },
+      },
+    },
+  });
+  const geometry = new MeshGeometry({
+    positions: new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]),
+    uvs: new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]),
+    indices: new Uint32Array([0, 1, 2, 0, 2, 3]),
+  });
+  return new Mesh({ geometry, shader });
+}

@@ -63,3 +63,60 @@ export function rankFill(progress: number, rank: number) {
       ? 1
       : clampProgress((progress - rank) * 255 + 1);
 }
+
+/**
+ * Procedural telegraph shapes for the closer D2 camera: no painted page, an exact signed-distance field.
+ * Local frame in metres: origin at the caster (disc: at the centre), +x along the facing.
+ * `sigil-shader.ts` evaluates the same field; these are its CPU witnesses.
+ */
+export type ProceduralShape =
+  | { shape: "disc"; radius: number }
+  | { shape: "beam"; length: number; width: number }
+  | { shape: "arc"; radius: number; thickness: number; degrees: number };
+export const proceduralShapeIds = { disc: 0, beam: 1, arc: 2 } as const;
+/** Negative inside, positive outside. */
+export function proceduralDistance(
+  s: ProceduralShape,
+  x: number,
+  y: number,
+): number {
+  if (s.shape === "disc") return Math.hypot(x, y) - s.radius;
+  if (s.shape === "beam")
+    return Math.max(-x, x - s.length, Math.abs(y) - s.width / 2);
+  const r = Math.hypot(x, y),
+    half = (s.degrees * Math.PI) / 360;
+  return Math.max(
+    Math.abs(r - s.radius) - s.thickness / 2,
+    (Math.abs(Math.atan2(y, x)) - half) * r,
+  );
+}
+/** 0..1 along the shape's fill direction: disc by radius, beam by length, arc by sweep from one end. */
+export function proceduralFillCoord(
+  s: ProceduralShape,
+  x: number,
+  y: number,
+): number {
+  if (s.shape === "disc") return Math.hypot(x, y) / s.radius;
+  if (s.shape === "beam") return x / s.length;
+  const half = (s.degrees * Math.PI) / 360;
+  return (Math.atan2(y, x) + half) / (2 * half);
+}
+/** Local-frame bounding box [minX, minY, width, height] in metres, with the feather margin. */
+export function proceduralBox(
+  s: ProceduralShape,
+  margin: number,
+): [number, number, number, number] {
+  if (s.shape === "disc") {
+    const e = s.radius + margin;
+    return [-e, -e, 2 * e, 2 * e];
+  }
+  if (s.shape === "beam")
+    return [
+      -margin,
+      -s.width / 2 - margin,
+      s.length + 2 * margin,
+      s.width + 2 * margin,
+    ];
+  const e = s.radius + s.thickness / 2 + margin;
+  return [-e, -e, 2 * e, 2 * e];
+}
