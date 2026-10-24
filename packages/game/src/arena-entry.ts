@@ -1,4 +1,4 @@
-import { sigil } from "./ui/artwork.ts";
+import { arenaHud } from "./hud/arena-hud.ts";
 import { ImpactClock } from "./combat-feedback.ts";
 import { LabUI } from "./lab-ui.ts";
 import { createLabSetup, type LabSetup, type LabSession } from "./lab-setup.ts";
@@ -7,7 +7,6 @@ import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
 import { audioData } from "./audio-policy.ts";
 import { BitmapText, Container, Graphics } from "pixi.js";
-import { frameGraphics } from "./pixi-fixes.ts";
 import {
   applyBoutInput,
   boutCheckpoint,
@@ -29,7 +28,6 @@ import {
   createTraining,
   FixedStepper,
   runtime,
-  seconds,
   ticks,
   stepTraining,
   timingBot,
@@ -59,7 +57,6 @@ import {
   type InputFrame,
   type ArenaState,
   type FlowMark,
-  flowMark,
 } from "@mage/core/arena";
 import { ArenaInput } from "./input.ts";
 import {
@@ -72,18 +69,12 @@ import {
   type Camera,
 } from "./camera.ts";
 import { ArenaScene } from "./arena-scene.ts";
-import { collarClock } from "./rival-collar.ts";
 import {
   FlowBeforeContact,
-  flowTipText,
-  hexColour,
   idleTip,
-  nextFlowTip,
   perfectGain,
-  slotPrice,
   type PerfectGain,
 } from "./combat-readout.ts";
-import feedbackData from "../data/combat-feedback.json" with { type: "json" };
 import { paletteForGames, type Palette } from "./arena-art.ts";
 import { colours } from "./ui/kit.ts";
 import { preloadPolicy, ReadyGate } from "./arena-preload.ts";
@@ -128,13 +119,13 @@ export class ArenaGame {
   private queued: BoutInput[] = [];
   private pending: Promise<void> | null = null;
   private bot?: BotKind;
-  private lastPerfect = -1e9;
-  private lastGain?: PerfectGain;
+  lastPerfect = -1e9;
+  lastGain?: PerfectGain;
   /** Training and roster ledger for the ward words (a drill); Tiro uses `ledger`, the Lab its own. */
   private drill?: { state: ArenaState; ledger: ThreatLedger };
   private flowBefore = new FlowBeforeContact();
-  private flowTip = idleTip();
-  private flowSeen?: { player: object; mark: FlowMark };
+  flowTip = idleTip();
+  flowSeen?: { player: object; mark: FlowMark };
   private impactClock = new ImpactClock();
   private lastEvents = 0;
   private reference = false;
@@ -918,321 +909,9 @@ export class ArenaGame {
     this.hud();
   }
   hud() {
-    const u = this.ui,
-      p = this.training.player;
-    u.begin("arena");
-    u.onBack = this.settings;
-    u.text(
-      this.practice
-        ? `PRACTICE  /  BOUT ${(this.games?.wave ?? 0) + 1} TAKEN OVER  /  NOTHING IS SENT, SAVED OR PAID`
-        : this.mode === "tiro"
-          ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
-          : this.lab
-            ? "COMBAT FEEL LAB"
-            : "THE PROVING GROUND",
-      96,
-      58,
-      24,
-      colours.gold,
-    );
-    const heading = u.text(
-      this.mode === "tiro" ? "The collar opens" : "Cassia of the Tide",
-      96,
-      94,
-      36,
-      colours.text,
-      700,
-      true,
-    );
-    u.button("pause", "Pause", 1644, 54, 180, 68, this.settings, {
-      tooltip: "Escape / Start opens pause and settings.",
-    });
-    if (this.practice)
-      u.button(
-        "end-practice",
-        "End practice",
-        1524,
-        140,
-        300,
-        68,
-        () => this.endPractice(),
-        {
-          tooltip:
-            "Back to the results. The settled bout and its receipt are unchanged.",
-        },
-      );
-    u.panel(96, 806, 400, 220);
-    const hp = u.bar("VITALITY", 132, 834, 328, p.hp, p.maxHp, colours.danger),
-      mana = u.bar("MANA", 132, 892, 328, p.mana, p.maxMana, colours.water),
-      stamina = u.bar(
-        "STAMINA",
-        132,
-        950,
-        328,
-        p.stamina,
-        p.maxStamina,
-        colours.gold,
-      );
-    const labels: BitmapText[] = [],
-      detail: BitmapText[] = [],
-      repeats: BitmapText[] = [],
-      masks: Graphics[] = [],
-      slotFrames: Graphics[] = [],
-      cooldownBars: ((value: number | null) => void)[] = [];
-    for (let i = 0; i < 4; i++) {
-      const x = 524 + i * 260,
-        y = 854;
-      u.button(
-        `slot-${i}`,
-        "",
-        x,
-        y,
-        244,
-        172,
-        () => {
-          this.input.slot = i;
-        },
-        { kind: "slot", fontSize: 24 },
-      );
-      u.icon(
-        i === 0 ? "water" : this.composition.lines[i - 1]!,
-        x + 42,
-        y + 41,
-        24,
-      );
-      labels.push(u.text("", x + 70, y + 24, 26, colours.text, 150));
-      u.text(String(i + 1), x + 31, y + 92, 24, colours.gold, 34);
-      cooldownBars.push(u.progress("cooldown", x + 76, y + 96, 146, 20));
-      detail.push(u.text("", x + 28, y + 122, 23, colours.muted, 210));
-      repeats.push(
-        u.text(
-          feedbackData.slotPrice.repeat,
-          x + 76,
-          y + 94,
-          20,
-          hexColour(feedbackData.slotPrice.repeatFill),
-          160,
-        ),
-      );
-      const mask = frameGraphics();
-      u.content.addChild(mask);
-      masks.push(mask);
-      const frame = frameGraphics();
-      u.content.addChild(frame);
-      slotFrames.push(frame);
-    }
-    u.panel(1584, 866, 240, 160);
-    const flow = u.text("", 1618, 897, 27, colours.water, 180),
-      tip = u.text(
-        feedbackData.flowTip.idle,
-        1618,
-        943,
-        24,
-        colours.muted,
-        180,
-      );
-    const clock = frameGraphics();
-    u.content.addChild(clock);
-    const artClock = u.kit.source !== "procedural";
-    const clockFace = artClock ? u.kit.sprite("clock.face") : undefined,
-      clockRim = artClock ? u.kit.sprite("clock.rim") : undefined,
-      clockHand = artClock ? u.kit.sprite("clock.hand") : undefined;
-    for (const part of [clockFace, clockRim, clockHand])
-      if (part) {
-        part.anchor.set(0.5);
-        part.position.set(993, 109);
-        part.width = 96;
-        part.height = 96;
-        u.content.addChild(part);
-      }
-    const pips = Array.from({ length: 4 }, (_, i) => {
-      const a = -Math.PI / 2 + (i * Math.PI) / 2;
-      const pair = [
-        artClock ? u.kit.sprite("clock.pip.off") : undefined,
-        artClock ? u.kit.sprite("clock.pip.on") : undefined,
-      ];
-      for (const part of pair)
-        if (part) {
-          part.anchor.set(0.5);
-          part.position.set(993 + Math.cos(a) * 43, 109 + Math.sin(a) * 43);
-          part.width = 16;
-          part.height = 16;
-          u.content.addChild(part);
-        }
-      return pair;
-    });
-    clock.visible = !artClock;
-    sigil(u, "inscription.collar", 993, 109, 122, 0.8);
-    const rune = u.text("", 1064, 64, 34, colours.gold, 400, true),
-      next = u.text("", 1064, 109, 26, colours.muted, 420);
-    const feedback = u.text(
-      "",
-      650,
-      this.lab ? 390 : 220,
-      32,
-      colours.water,
-      1000,
-      true,
-    );
-    const hint = u.text(
-      "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
-      524,
-      824,
-      24,
-      colours.text,
-      1000,
-    );
-    const castBar = u.progress("cast", 524, 785, 1020, 22);
-    const castLabel = u.text("", 524, 750, 24, colours.water, 1020);
-    this.hudUpdate = () => {
-      if (u.screen !== "arena") return;
-      const { state, player } = this.training;
-      hp(player.hp);
-      mana(player.mana);
-      stamina(player.stamina);
-      const pending = player.pending;
-      castBar(
-        pending
-          ? (state.tick - pending.startTick) /
-              Math.max(1, pending.releaseTick - pending.startTick)
-          : null,
-      );
-      castLabel.text = pending
-        ? pending.kind === "staff"
-          ? "Staff strike"
-          : state.tick <
-              pending.startTick +
-                Math.ceil(
-                  (pending.releaseTick - pending.startTick) *
-                    tuningFor(state).castCommitFraction,
-                )
-            ? "Shaping / roll cancels"
-            : "Committed / releasing"
-        : "";
-      heading.text =
-        this.mode === "tiro"
-          ? `${state.actors.filter((a) => a.team !== player.team && !a.tags.includes("DEFEATED")).length} opponents remain`
-          : this.lab
-            ? `${this.lab.config.playerSchool.toUpperCase()} / practice mage`
-            : "Cassia of the Tide";
-      for (let i = 0; i < 4; i++) {
-        const s = spellFor(player, i, state)!;
-        const slot = u.buttons.find((b) => b.id === `slot-${i}`)!;
-        slot.selected = this.input.slot === i;
-        slot.tooltip =
-          player.tier < 4
-            ? `${s.name}. Next tier awakens with collar rune ${["", "I", "II", "III", "IV"][player.tier + 1]}.`
-            : `${s.name}. All tiers unlocked.`;
-        labels[i]!.text = s.name;
-        const remaining = Math.max(
-          0,
-          seconds((player.water.cooldowns[s.line] ?? 0) - state.tick),
-        );
-        slot.state = remaining > 0 ? "cooldown" : undefined;
-        cooldownBars[i]!(
-          remaining > 0 ? 1 - Math.min(1, remaining / s.cooldownS) : null,
-        );
-        const price = slotPrice(player, s),
-          crest = price.crest && s.kind !== "passive";
-        detail[i]!.text =
-          remaining > 0
-            ? `${remaining.toFixed(1)}s recovering`
-            : s.kind === "passive"
-              ? "Perfect counter"
-              : price.text;
-        detail[i]!.style.fill = crest
-          ? hexColour(feedbackData.slotPrice.crestFill)
-          : colours.muted;
-        repeats[i]!.visible = price.repeat && remaining <= 0;
-        const x = 524 + i * 260;
-        slotFrames[i]!.clear();
-        if (this.input.slot === i && u.kit.source === "procedural")
-          slotFrames[i]!.rect(x + 5, 879, 234, 142).stroke({
-            color: colours.water,
-            width: 3,
-          });
-        if (crest)
-          slotFrames[i]!.rect(x + 2, 856, 240, 168).stroke({
-            color: hexColour(feedbackData.slotPrice.crestFill),
-            width: 3,
-          });
-        masks[i]!.clear();
-        if (remaining > 0)
-          masks[i]!.moveTo(x + 42, 915)
-            .arc(
-              x + 42,
-              915,
-              29,
-              -Math.PI / 2,
-              -Math.PI / 2 + Math.PI * 2 * Math.min(1, remaining / s.cooldownS),
-            )
-            .lineTo(x + 42, 915)
-            .fill({ color: 0x030a13, alpha: 0.7 });
-      }
-      flow.text = `FLOW  ${player.water.flow} / ${combat.flow.max}`;
-      const nowS = performance.now() / 1000,
-        mark = flowMark(player.water);
-      if (this.flowSeen?.player === player)
-        this.flowTip = nextFlowTip(
-          this.flowTip,
-          this.flowSeen.mark,
-          mark,
-          nowS,
-        );
-      this.flowSeen = { player, mark };
-      tip.text = flowTipText(this.flowTip, player.water.flow, nowS);
-      const { tier, untilS: until, progress } = collarClock(state, player);
-      rune.text = `COLLAR  ${["", "I", "II", "III", "IV"][tier]}`;
-      next.text =
-        tier < 4 ? `Next rune in ${until.toFixed(1)}s` : "All four runes awake";
-      clock
-        .clear()
-        .circle(993, 109, 43)
-        .stroke({ color: colours.edge, width: 3 })
-        .circle(993, 109, 36)
-        .stroke({ color: colours.gold, width: 1 });
-      for (let i = 0; i < 4; i++) {
-        const a = -Math.PI / 2 + (i * Math.PI) / 2;
-        clock
-          .poly([
-            993 + Math.cos(a) * 43,
-            109 + Math.sin(a) * 43 - 5,
-            998 + Math.cos(a) * 43,
-            109 + Math.sin(a) * 43,
-            993 + Math.cos(a) * 43,
-            114 + Math.sin(a) * 43,
-            988 + Math.cos(a) * 43,
-            109 + Math.sin(a) * 43,
-          ])
-          .fill(i < tier ? colours.water : colours.edge);
-      }
-      const a = -Math.PI / 2 + Math.PI * 2 * progress;
-      if (clockHand) clockHand.rotation = a + Math.PI / 2;
-      pips.forEach(([off, on], i) => {
-        if (off) off.visible = i >= tier;
-        if (on) on.visible = i < tier;
-      });
-      clock
-        .moveTo(993, 109)
-        .lineTo(993 + Math.cos(a) * 27, 109 + Math.sin(a) * 27)
-        .stroke({ color: colours.water, width: 3 });
-      feedback.text =
-        seconds(state.tick - this.lastPerfect) <
-        Math.max(
-          runtime.presentation.perfectFlashS,
-          feedbackData.perfectGain.holdS,
-        )
-          ? (this.lastGain?.text ?? "PERFECT ABSORB")
-          : player.absorb
-            ? "WARD RAISED"
-            : "";
-      hint.text =
-        u.modality === "gamepad"
-          ? "Left stick move  /  Right stick aim  /  RT cast  /  LT absorb  /  A roll  /  LB RB spells"
-          : "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells";
-    };
+    this.hudUpdate = arenaHud(this.ui, this);
     if (this.lab) this.labUI?.installHUD();
-    u.end();
+    this.ui.end();
     this.hudUpdate();
   }
   frame(dt: number) {
