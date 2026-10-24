@@ -1,0 +1,76 @@
+{
+  "label": "simulated",
+  "mode": "createGames(..., { rivalBuild }), PC overlay on, exchange windows on, no named phases, spell ranks overridden: air_close:air_shear=5",
+  "command": "npm --prefix packages/core run census:builds -- --only air_close --ranks air_close:air_shear=5 --tag d1-rank-air-close-air-shear-5 --out-dir docs/change-requests/evidence",
+  "countPerBuild": 200,
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation"
+  },
+  "winRateTarget": [
+    0.4,
+    0.65
+  ],
+  "summaries": [
+    {
+      "build": "air_close",
+      "school": "air",
+      "archetype": "close",
+      "wave": 3,
+      "rival": "Gale mage · close",
+      "fights": 200,
+      "winRate": 0.16,
+      "rivalWinShare": 0.84,
+      "timeouts": 0,
+      "medianS": 41.75,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "medianInBand": false,
+      "winRateInRange": false,
+      "curve": {
+        "shortFights": 20,
+        "rivalShareShort": 1,
+        "tier4Fights": 75,
+        "rivalShareTier4": 0.7333333333333333
+      },
+      "hitsPerExchange": 1.2901455767077268,
+      "histogram": {
+        "air_bolt": 0.6667451996701614,
+        "air_shear": 0.23501001295794557,
+        "air_form": 0.06779361526681588,
+        "air_slipstream": 0.028743079279067028,
+        "staff": 0.0017080928260101308
+      },
+      "roles": {
+        "dash": 0.028743079279067028,
+        "hit": 0.23501001295794557,
+        "bolt": 0.6667451996701614,
+        "answer": 0.06779361526681588,
+        "staff": 0.0017080928260101308
+      },
+      "meanDistanceM": 5.499833647325048,
+      "distanceOverTime": [
+        5.571858539748349,
+        5.4679401927186495,
+        5.421584432091709,
+        5.405711078719318,
+        5.407521105177775,
+        6.556337926848281
+      ],
+      "answers": {
+        "air_form": {
+          "answered": 1014,
+          "other": 0,
+          "none": 137
+        }
+      },
+      "digest": "16cf8503fbc9bf67e90ba7a4a04a470d981c272133a8e611d79704b9dd4400ce"
+    }
+  ]
+}

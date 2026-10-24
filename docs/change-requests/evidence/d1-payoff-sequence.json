@@ -1,0 +1,131 @@
+{
+  "label": "simulated",
+  "mode": "createGames(..., { rivalBuild }), PC overlay on, exchange windows on, no named phases, spell ranks overridden: fire_heavy:fire_wrath=2",
+  "command": "npm --prefix packages/core run census:builds -- --only fire_heavy,air_heavy --ranks fire_heavy:fire_wrath=2 --tag d1-payoff-sequence --out-dir docs/change-requests/evidence",
+  "countPerBuild": 200,
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation"
+  },
+  "winRateTarget": [
+    0.4,
+    0.65
+  ],
+  "summaries": [
+    {
+      "build": "fire_heavy",
+      "school": "fire",
+      "archetype": "heavy",
+      "wave": 3,
+      "rival": "Ember mage · heavy",
+      "fights": 200,
+      "winRate": 0.43,
+      "rivalWinShare": 0.57,
+      "timeouts": 0,
+      "medianS": 46.55,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "medianInBand": true,
+      "winRateInRange": true,
+      "curve": {
+        "shortFights": 0,
+        "rivalShareShort": null,
+        "tier4Fights": 127,
+        "rivalShareTier4": 0.5118110236220472
+      },
+      "hitsPerExchange": 2.675564681724846,
+      "histogram": {
+        "fire_bolt": 0.9334719334719335,
+        "fire_pyre": 0.039990216460804695,
+        "fire_wrath": 0.015286779992662345,
+        "fire_sunfall": 0.009661244955362603,
+        "fire_ring": 0.001589825119236884
+      },
+      "roles": {
+        "bolt": 0.9334719334719335,
+        "payoff": 0.05527699645346704,
+        "signature": 0.009661244955362603,
+        "answer": 0.001589825119236884
+      },
+      "meanDistanceM": 8.184057917957274,
+      "distanceOverTime": [
+        8.56446754019723,
+        8.244225964198193,
+        7.728726378652664,
+        7.90025539636605,
+        7.82852877379995
+      ],
+      "answers": {
+        "fire_ring": {
+          "answered": 1,
+          "other": 6,
+          "none": 6
+        }
+      },
+      "digest": "068db32d9c4aef3874ccd65e03234aaa1834490a2cba705bd6a7f308534f5841"
+    },
+    {
+      "build": "air_heavy",
+      "school": "air",
+      "archetype": "heavy",
+      "wave": 4,
+      "rival": "Gale mage · heavy",
+      "fights": 200,
+      "winRate": 0.46,
+      "rivalWinShare": 0.54,
+      "timeouts": 0,
+      "medianS": 75.35,
+      "targetDurationS": [
+        45,
+        80
+      ],
+      "medianInBand": true,
+      "winRateInRange": true,
+      "curve": {
+        "shortFights": 0,
+        "rivalShareShort": null,
+        "tier4Fights": 185,
+        "rivalShareTier4": 0.5027027027027027
+      },
+      "hitsPerExchange": 2.9190366972477064,
+      "histogram": {
+        "air_bolt": 0.6276150627615062,
+        "air_form": 0.21593239806382805,
+        "air_squall": 0.09475756829928624,
+        "air_cyclone": 0.040118139305931576,
+        "air_tempest": 0.02157683156944786
+      },
+      "roles": {
+        "bolt": 0.6276150627615062,
+        "answer": 0.21593239806382805,
+        "payoff": 0.1348757076052178,
+        "signature": 0.02157683156944786
+      },
+      "meanDistanceM": 8.334948665600695,
+      "distanceOverTime": [
+        8.950848931790116,
+        8.764904337577514,
+        8.126588995388259,
+        7.855005021489025,
+        7.914788116197445,
+        7.8074408615155715,
+        7.857924690303501,
+        8.144195087850898
+      ],
+      "answers": {
+        "air_form": {
+          "answered": 2422,
+          "other": 0,
+          "none": 210
+        }
+      },
+      "digest": "c210ea17c329fc361d6d05e295b93e2b36db0f371b1856e1f550575e1522af5b"
+    }
+  ]
+}

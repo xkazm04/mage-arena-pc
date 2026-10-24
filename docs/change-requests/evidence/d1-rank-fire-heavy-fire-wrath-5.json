@@ -1,0 +1,74 @@
+{
+  "label": "simulated",
+  "mode": "createGames(..., { rivalBuild }), PC overlay on, exchange windows on, no named phases, spell ranks overridden: fire_heavy:fire_wrath=5",
+  "command": "npm --prefix packages/core run census:builds -- --only fire_heavy --ranks fire_heavy:fire_wrath=5 --tag d1-rank-fire-heavy-fire-wrath-5 --out-dir docs/change-requests/evidence",
+  "countPerBuild": 200,
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation"
+  },
+  "winRateTarget": [
+    0.4,
+    0.65
+  ],
+  "summaries": [
+    {
+      "build": "fire_heavy",
+      "school": "fire",
+      "archetype": "heavy",
+      "wave": 3,
+      "rival": "Ember mage · heavy",
+      "fights": 200,
+      "winRate": 0.415,
+      "rivalWinShare": 0.585,
+      "timeouts": 0,
+      "medianS": 46.55,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "medianInBand": true,
+      "winRateInRange": true,
+      "curve": {
+        "shortFights": 0,
+        "rivalShareShort": null,
+        "tier4Fights": 127,
+        "rivalShareTier4": 0.5354330708661418
+      },
+      "hitsPerExchange": 2.6727365991279814,
+      "histogram": {
+        "fire_bolt": 0.9332599926659333,
+        "fire_pyre": 0.04009289817870676,
+        "fire_wrath": 0.015401540154015401,
+        "fire_sunfall": 0.009656521207676324,
+        "fire_ring": 0.0015890477936682558
+      },
+      "roles": {
+        "bolt": 0.9332599926659333,
+        "payoff": 0.05549443833272216,
+        "signature": 0.009656521207676324,
+        "answer": 0.0015890477936682558
+      },
+      "meanDistanceM": 8.184818346411424,
+      "distanceOverTime": [
+        8.56446754019723,
+        8.244225964198193,
+        7.728701921186741,
+        7.906950542490734,
+        7.943801547251597
+      ],
+      "answers": {
+        "fire_ring": {
+          "answered": 1,
+          "other": 6,
+          "none": 6
+        }
+      },
+      "digest": "24f9d6913ffb85743b305a078904ecdcb5451c7cfe18d3535abf4fdc625a7d4a"
+    }
+  ]
+}

@@ -212,10 +212,11 @@ export function archetypeChoose(state: ArenaState, a: Actor, target: Actor, dist
     if (pick) return { slot: pick.slot, cast: true };
   } else {
     // Long-range controller: hold far; until its collar reaches tier III it survives (hands free for the ward while anything is seen
-    // coming), then it casts the strongest payoff unlocked and keeps the mana its next payoff needs.
+    // coming), then it plays its payoff sequence (D1 4.2): the newest tier's payoff first (Brand Wrath, Cyclone at tier IV), the
+    // strongest of a tier before the rest, and keeps the mana its next payoff needs.
     if (dash && distanceM < band[0] / 2) return { slot: dash.slot, cast: true, aim: dashAim(a, away, dash.spell.rangeM) };
     const waiting = a.tier < heavyPayoffTier && seen.length > 0;
-    const payoff = best(of('payoff'));
+    const payoff = [...of('payoff')].sort((x, y) => y.spell.tier - x.spell.tier || weight(y.spell) - weight(x.spell) || x.slot - y.slot)[0];
     if (payoff && !waiting) return { slot: payoff.slot, cast: true };
     const builder = of('build')[0];
     if (builder && resource < first) return { slot: builder.slot, cast: true };

@@ -116,10 +116,24 @@ describe('ultimates: six signature rows, rank 5 only', () => {
     expect(r5.state.schoolEffects ?? []).toHaveLength(0);
   });
 
-  it('air_shear Third Blade: rank 5 throws count more blades over the same spread, one down the aim line', () => {
-    const f = form('air_shear', 'extraProjectiles');
-    let lines: number[] = [];
-    const r4 = cast('air_shear', 4, 8), r5 = cast('air_shear', 5, 8, { each: run => { if (run.state.tick === run.releaseTick) lines = run.state.projectiles.map(p => p.velocity.y / Math.hypot(p.velocity.x, p.velocity.y)); } });
+  it('air_shear Pinning Edge: a blade that reaches its target roots it for rootS at rank 5, not at rank 4', () => {
+    const f = form('air_shear', 'root');
+    // The blades diverge at +-12 deg (CR-007), so a body straight down the aim line meets them only close in.
+    const r4 = cast('air_shear', 4, 1.2), r5 = cast('air_shear', 5, 1.2);
+    expect(r4.spawned).toBe(2); expect(r5.spawned).toBe(2);
+    expect(r5.hits).toHaveLength(r4.hits.length); expect(r5.hits.length).toBeGreaterThan(0);
+    expect(r4.target.water.rootUntil).toBe(0);
+    expect(r5.target.water.rootUntil).toBe(r5.hits.at(-1)!.tick + ticks(f.rootS));
+    expect(r5.hits[0]!.contactDamage).toBeCloseTo(r4.hits[0]!.contactDamage, 12);
+  });
+
+  it('extraProjectiles (Third Blade, retired by D1 6.2, kept for fan rows): rank 5 throws count more blades over the same spread', () => {
+    // Put the retired Air close form back on Shear for this test only.
+    const f = { name: 'Third Blade', summary: 'test', effect: 'extraProjectiles', count: 1 } as const;
+    const registry = progression.spellRanks.ultimates, saved = registry.air_shear!;
+    registry.air_shear = f;
+    let lines: number[] = [], r4: Run, r5: Run;
+    try { r4 = cast('air_shear', 4, 8); r5 = cast('air_shear', 5, 8, { each: run => { if (run.state.tick === run.releaseTick) lines = run.state.projectiles.map(p => p.velocity.y / Math.hypot(p.velocity.x, p.velocity.y)); } }); } finally { registry.air_shear = saved; }
     expect(r4.spawned).toBe(2);
     expect(r5.spawned).toBe(2 + f.count);
     expect(lines).toHaveLength(2 + f.count);

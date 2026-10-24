@@ -1,0 +1,75 @@
+{
+  "label": "simulated",
+  "mode": "createGames(..., { rivalBuild }), PC overlay on, exchange windows on, no named phases, spell ranks overridden: air_close:air_shear=4",
+  "command": "npm --prefix packages/core run census:builds -- --only air_close --ranks air_close:air_shear=4 --tag d1-rank-air-close-air-shear-4 --out-dir docs/change-requests/evidence",
+  "countPerBuild": 200,
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation"
+  },
+  "winRateTarget": [
+    0.4,
+    0.65
+  ],
+  "summaries": [
+    {
+      "build": "air_close",
+      "school": "air",
+      "archetype": "close",
+      "wave": 3,
+      "rival": "Gale mage · close",
+      "fights": 200,
+      "winRate": 0.175,
+      "rivalWinShare": 0.825,
+      "timeouts": 0,
+      "medianS": 42.25,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "medianInBand": false,
+      "winRateInRange": false,
+      "curve": {
+        "shortFights": 16,
+        "rivalShareShort": 1,
+        "tier4Fights": 77,
+        "rivalShareTier4": 0.6753246753246753
+      },
+      "hitsPerExchange": 1.2882417582417582,
+      "histogram": {
+        "air_bolt": 0.6631794272355348,
+        "air_shear": 0.23436586791350086,
+        "air_form": 0.06931618936294565,
+        "air_slipstream": 0.031151373465809467,
+        "staff": 0.0019871420222092344
+      },
+      "roles": {
+        "dash": 0.031151373465809467,
+        "hit": 0.23436586791350086,
+        "bolt": 0.6631794272355348,
+        "answer": 0.06931618936294565,
+        "staff": 0.0019871420222092344
+      },
+      "meanDistanceM": 5.508613782333581,
+      "distanceOverTime": [
+        5.60138257986868,
+        5.475965792446335,
+        5.408271535145691,
+        5.506979493623453,
+        5.428258449589413
+      ],
+      "answers": {
+        "air_form": {
+          "answered": 1057,
+          "other": 1,
+          "none": 128
+        }
+      },
+      "digest": "ae06f377c1be4be01af51f581b6ba89f9c6b7ebffa7bcc060ad0e02d8cf21c83"
+    }
+  ]
+}

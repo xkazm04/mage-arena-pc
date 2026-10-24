@@ -314,7 +314,7 @@ function release(state: ArenaState, a: Actor): void {
     case 'twin': {
       // The Twin Tides fan: Count bolts spread evenly over the full spread, one activation (Shear diverges; CR-007).
       const hit = makeHit(a, spell, row, pending.activationId, damage, ultimate);
-      // Rank 5 (Third Blade): more blades over the same spread, so one flies down the aim line.
+      // Rank 5 extraProjectiles: more blades over the same spread, so one flies down the aim line (no form registers it since D1 retired Third Blade).
       const count = row.count + (ultimate?.effect === 'extraProjectiles' ? ultimate.count : 0);
       for (let i = 0; i < count; i++) spawnAir(state, a, row, hit, rotate(direction, (-row.spreadDeg / 2 + i * row.spreadDeg / (count - 1)) * Math.PI / 180), range, pierce);
       break;

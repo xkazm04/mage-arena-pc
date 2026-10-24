@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions. Section 5 slice step 1 (exchange windows) is built (2026-10-24, section 6.1). It follows
+Status: **direction menu**, written 2026-10-23 for future sessions. Section 5 slice steps 1-2 (exchange windows; Third Blade rework and the heavy payoff sequence) are built (2026-10-24, sections 6.1-6.2). It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -141,6 +141,57 @@ and both are written down here and in the commit:
 - `named-census.test.ts` no longer pins Brennic's semifinal under its band; it now asserts the median is in band;
 - the named and builds census digests differ, and new evidence is filed under `docs/change-requests/evidence/`. The
   older `docs/waves/W8-evidence/named*.json` files stay as the pre-D1 record.
+
+### 6.2 Slice step 2 as built: Third Blade rework and the heavy payoff sequence (4.2), 2026-10-24
+
+Each ultimate is judged inside its own build, as WP3 judged them. The row runs at rank 4 and at rank 5 with every
+other number held (`census:builds -- --only <build> --ranks <build>:<spell>=<rank>`, 200 seeds, exchange windows on).
+Evidence: `docs/change-requests/evidence/d1-rank-*.json`. The Third Blade variants were run through the same census
+runner with the form planted for that run only.
+
+**Third Blade (air_close, Shear).** Reference wins at Shear rank 4 are 17.5% (median 42.3 s). Rank-4 power alone takes
+the build out of the band, as WP3 found for most rows.
+
+| Shear rank 5 form | Reference wins | Median s | Ultimate's own effect (vs rank 4) |
+|---|---|---|---|
+| Third Blade (+1 blade), as shipped by WP3 | 0.0% | 26.3 | -17.5 pp: overwhelming |
+| Third Blade, blade damage cut so 3 blades = 2 rank-4 blades (x0.867) | 6% | 38.3 | -11.5 pp: the third blade still lands more often than it costs |
+| Third Blade, blade damage x0.65 (3 blades ~ 2 rank-1 blades) | 24% | 47.2 | +6.5 pp: the rank buys less than rank 1 |
+| slow x0.6 for 0.6 s | 15% | 41.3 | -2.5 pp |
+| **root 0.3 s (kept: "Pinning Edge")** | **16.0%** | **41.8** | **-1.5 pp**; short fights 16 -> 20, rival share at tier IV 68% -> 73% |
+
+To keep the blade, its power would have to fall to rank-1 level before rank 5 stopped dominating, so the blade cannot be
+tuned into the band. The root keeps the doc's control option. Like Searing Hold, its own effect is small, and it pushes
+the close build the way a close build should go: more short fights, more tier-IV wins. `progression.pc.json` now
+registers `air_shear` as Pinning Edge (root 0.3 s). The `extraProjectiles` effect kind stays built and tested (with a
+planted form), but no row uses it.
+
+**Heavy payoff sequence.** The heavy plan now orders its ready payoffs by collar tier first, then by weight. At tier IV it
+spends Brand Wrath or Cyclone before Pyre or Squall, and it keeps the mana its next payoff needs, as before. Wrath casts
+per fire_heavy fight go from 0.40 to 0.45 (a 40-seed reading). With Wrath still at rank 2 the builds hold: fire_heavy
+42.5% -> 43.0% at 46.5 s, air_heavy 46.5% -> 46.0% at 75.3 s (`d1-payoff-sequence.json`). A stronger sequence was also
+built and measured: the newest-tier payoff before the signature. It starved Sunfall (0.30 -> 0.17 casts per fight) and
+took fire_heavy to 34% reference wins, out of the band, so it was not kept.
+
+**Brand Drag re-judged.** At Wrath rank 4 the reference wins 42.0%; at rank 5, 41.5%. The rival's tier-IV share moves
+from 52.8% to 53.5%. That is still neutral, but now the cause is measured. Wrath is cast about once in each fight that
+reaches tier IV: fights end about 10 s after tier IV opens, and Wrath's cooldown is 20 s. So no plan change can press it
+more often. A useful Brand Drag needs longer heavy fights or a cheaper tier-IV row, which is a 4.2 follow-up.
+
+**Committed rank-5 builds.** fire_heavy now holds Brand Wrath at rank 5 (`rival-builds.json`; it was rank 2). It is the
+only committed rank-5 row, and it stays inside the band.
+
+| Build (committed, 200 seeds) | Median s | Reference wins | Tier IV fights (rival share) |
+|---|---|---|---|
+| fire_close | 67.0 | 49.5% | 167 (44%) |
+| fire_light | 54.0 | 50.5% | 154 (36%) |
+| fire_heavy (Brand Wrath rank 5) | 46.5 | 41.5% | 127 (54%) |
+| air_light | 63.5 | 56.5% | 192 (42%) |
+| air_close | 50.7 | 40.0% | 144 (57%) |
+| air_heavy (payoff sequence) | 75.3 | 46.0% | 185 (50%) |
+
+Evidence: `docs/change-requests/evidence/d1-ultimates-after.json`. Nothing in this step touches Water, parity or the
+default census.
 
 ## 7. Open questions for the spark
 
