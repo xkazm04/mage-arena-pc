@@ -6,11 +6,11 @@ import { distance, inArc, length, sectorSweep, segmentHit, sub, unit, type Vec }
 import { activationBlocked, idleInput, type Actor, type ArenaState, type Difficulty, type Hit, type InputFrame, type Projectile, type Ranks, type Telegraph } from './types.ts';
 import { newWaterState } from './catalog.ts';
 import { reflectProjectile, refundMult, releaseSpell, resetWater, trySpellCast, updateWater, wardDrainMult, waterAbsorbed } from './water.ts';
-import { enemySpec } from './enemies.ts';
 import { curvedStep, hasSchoolLoadout, releaseSchoolSpell, resetSchool, schoolBusy, schoolInterrupted, schoolRooted, schoolAfterMove, schoolDeflects, schoolDrainMult, schoolEvades, schoolOnHit, schoolRollStaminaMult, schoolStaminaRegenMult, schoolTick, trySchoolCast } from './schools.ts';
 import { stepSchoolEffects } from './shapes.ts';
-import { agileRecoveryS, agilityDrainMult, agilityPerfectWindowAddS, agilityRecoveryMult } from './progression.ts';
-import { exchangeAfterHit, exchangeGuard } from './exchange.ts';
+import { agileRecoveryS, agilityDrainMult, agilityRecoveryMult } from './progression.ts';
+import { exchangeAfterHit } from './exchange.ts';
+import { contactVerdict, type ContactOutcome, type ContactVerdict } from './contact.ts';
 
 export { combat, statRules, bolt, runtime };
 export const DT = 1 / combat.simStepHz;
@@ -85,6 +85,17 @@ export function tapContacts(state: ArenaState, tap: ContactTap): () => void {
   const list = contactTaps.get(state) ?? []; list.push(tap); contactTaps.set(state, list);
   return () => { const i = list.indexOf(tap); if (i >= 0) list.splice(i, 1); };
 }
+/** Second observer seam, same rules as tapContacts: once per contact, after resolveHit's gates and before it applies the
+ * blow, the gate that ended it or the kernel's own verdict (contact.ts). The ledger grades from it. */
+export type VerdictTap = (state: ArenaState, target: Actor, hit: Hit, outcome: ContactOutcome, verdict?: ContactVerdict) => void;
+const verdictTaps = new WeakMap<ArenaState, VerdictTap[]>();
+export function tapVerdicts(state: ArenaState, tap: VerdictTap): () => void {
+  const list = verdictTaps.get(state) ?? []; list.push(tap); verdictTaps.set(state, list);
+  return () => { const i = list.indexOf(tap); if (i >= 0) list.splice(i, 1); };
+}
+function hearVerdict(state: ArenaState, target: Actor, hit: Hit, outcome: ContactOutcome, verdict?: ContactVerdict): void {
+  for (const tap of verdictTaps.get(state) ?? []) tap(state, target, hit, outcome, verdict);
+}
 /** Rule seam kept outside the hashed state (like tapContacts), so a state without hooks steps exactly as before.
  * `beforeCast` runs in the actor's step after its release and before its own cast press (true: a cast was started and
  * releases now if due); `afterHits` runs once per tick after every hit has landed and before the tier clocks.
@@ -97,19 +108,14 @@ export function hookArena(state: ArenaState, hooks: ArenaHooks): () => void {
 }
 export function resolveHit(state: ArenaState, target: Actor, hit: Hit): { damage: number; perfect: boolean; evaded?: true } {
   for (const tap of contactTaps.get(state) ?? []) tap(state, target, hit);
-  if (target.tags.includes("DEFEATED") || state.tick < target.immuneUntil || state.tick < target.water.encasedUntil) return { damage: 0, perfect: false };
-  if (schoolEvades(state, target, hit)) return { damage: 0, perfect: false, evaded: true };
+  const gate: ContactOutcome | undefined = target.tags.includes("DEFEATED") ? 'defeated' : state.tick < target.immuneUntil ? 'roll' : state.tick < target.water.encasedUntil ? 'encase' : undefined;
+  if (gate) { hearVerdict(state, target, hit, gate); return { damage: 0, perfect: false }; }
+  if (schoolEvades(state, target, hit)) { hearVerdict(state, target, hit, 'evaded'); return { damage: 0, perfect: false, evaded: true }; }
   const tune = tuningFor(state);
-  const spec = target.enemy ? enemySpec(target) : undefined;
-  const shielded = spec?.frontBlockDeg && hit.delivery !== 'area' && !hit.pierceShields && hit.family !== 'unblockable' && inArc(target.facing, sub(hit.source, target.pos), spec.frontBlockDeg);
-  const incomingDamage = hit.damage * (hit.bolt ? spec?.armourMultVsBolt ?? 1 : 1) * (shielded ? spec?.frontBlockMult ?? 1 : 1);
-  const warded = target.absorb && inArc(target.facing, sub(hit.source, target.pos), tune.absorbArcDeg);
-  // An exchange window (exchange.ts) re-raises the ward at once against the attacker that opened it: a plain ward, no perfect.
   const owner = state.actors.find(a => a.id === hit.ownerId);
-  const windowReduction = warded ? undefined : exchangeGuard(state, target, owner, hit.family), guarded = warded || windowReduction !== undefined;
-  const perfect = warded && hit.family === 'magic' && !hit.suppressPerfect && state.tick - target.absorbFreshTick <= ticks(tune.absorbWindowS + agilityPerfectWindowAddS(target, state));
-  const reduction = windowReduction ?? (warded ? (perfect ? combat.absorb.perfect.reduction : combat.absorb.reduction[hit.family]) : combat.absorb.reduction.outsideArc);
-  const damage = incomingDamage * (1 - reduction);
+  const verdict = contactVerdict(state, target, owner, hit);
+  hearVerdict(state, target, hit, 'resolved', verdict);
+  const { incomingDamage, warded, perfect, reduction, damage } = verdict, windowReduction = verdict.guard === 'window' ? reduction : undefined, guarded = verdict.guard !== undefined;
   if (perfect) {
     target.metrics.perfects++;
     const refund = Math.min(target.maxMana - target.mana, perfectReturn(hit.tier, target.ranks.nerve) * refundMult(state, target) * tune.perfectRefundScale);

@@ -17,3 +17,4 @@ export * from './ledger.ts';
 export * from './forecast.ts';
 export * from './progression.ts';
 export * from './archetypes.ts';
+export * from './contact.ts';
