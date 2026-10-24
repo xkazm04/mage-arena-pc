@@ -2,14 +2,11 @@
 import runpy
 from pathlib import Path
 import json
-if json.loads((Path(__file__).parent/'budget.json').read_text())['wave']=='AU3':
-    runpy.run_path(str(Path(__file__).with_name('build-r4-reports.py')),run_name='__main__')
-    raise SystemExit(0)
-if json.loads((Path(__file__).parent/'budget.json').read_text())['wave']=='AU2b':
-    runpy.run_path(str(Path(__file__).with_name('build-r3-reports.py')),run_name='__main__')
-    raise SystemExit(0)
-if json.loads((Path(__file__).parent/'budget.json').read_text())['wave']=='AU2':
-    runpy.run_path(str(Path(__file__).with_name('build-r2-reports.py')),run_name='__main__')
+# The current budget wave's rounds.json row names its builder; null or an
+# unregistered wave (AU1) keeps the legacy in-file r1 builder below.
+_round = json.loads((Path(__file__).parent/'rounds.json').read_text())['rounds'].get(json.loads((Path(__file__).parent/'budget.json').read_text())['wave'], {})
+if _round.get('build'):
+    runpy.run_path(str(Path(__file__).with_name(_round['build'])),run_name='__main__')
     raise SystemExit(0)
 import html, json, re
 from collections import defaultdict

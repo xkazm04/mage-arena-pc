@@ -7,11 +7,11 @@ from urllib.parse import unquote, urlsplit
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[2]
-if json.loads((ROOT/'tools/audio/budget.json').read_text())['wave']=='AU3':
-    runpy.run_path(str(Path(__file__).with_name('check-r4-reports.py')),run_name='__main__')
-    raise SystemExit(0)
-if json.loads((ROOT/'tools/audio/budget.json').read_text())['wave']=='AU2b':
-    runpy.run_path(str(Path(__file__).with_name('check-r3-reports.py')),run_name='__main__')
+# The current budget wave's rounds.json row names its checker; null keeps the
+# in-file AU2 checker below.
+_round = json.loads((ROOT/'tools/audio/rounds.json').read_text())['rounds'].get(json.loads((ROOT/'tools/audio/budget.json').read_text())['wave'], {})
+if _round.get('check'):
+    runpy.run_path(str(Path(__file__).with_name(_round['check'])),run_name='__main__')
     raise SystemExit(0)
 OUT = ROOT / 'docs/audio/evidence/r2'
 pages = [ROOT/'docs/audio/audition/r1/index.html', ROOT/'docs/audio/audition/r2/index.html', ROOT/'docs/audio/PROOF-REPORT.html']

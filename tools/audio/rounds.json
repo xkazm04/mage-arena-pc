@@ -1,0 +1,8 @@
+{
+  "note": "One row per owner-authorized paid audio round. cap/floor/minReserve are hard ceilings read by elevenlabs.mjs budget(); a row may never raise one (rounds.test.mjs pins them). launcher: brief = elevenlabs.mjs sfx/music/tts, composition = a dedicated launcher (run-r4.mjs). build/check name the report modules build-reports.py and check-reports.py dispatch to; null keeps that dispatcher's in-file path. Unregistered waves (AU1) cannot spend.",
+  "rounds": {
+    "AU2": { "cap": 5000, "floor": 14000, "minReserve": 8000, "dir": "r2", "launcher": "brief", "briefPlan": null, "musicMaxSeconds": 20, "build": "build-r2-reports.py", "check": null },
+    "AU2b": { "cap": 3000, "floor": 13000, "minReserve": 8000, "dir": "r3", "launcher": "brief", "briefPlan": "audition-plan-r3.json", "musicMaxSeconds": 30, "build": "build-r3-reports.py", "check": "check-r3-reports.py" },
+    "AU3": { "cap": 10000, "floor": 1000, "minReserve": 1000, "dir": "r4", "launcher": "composition", "plan": "composition-plan-r4.json", "minMusicPerSecond": 30, "build": "build-r4-reports.py", "check": "check-r4-reports.py" }
+  }
+}
