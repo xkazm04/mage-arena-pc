@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
 // index.ts first: it loads kernel.ts before fire.ts/air.ts (the schools.ts import-order trap).
-import { presets, runFight, runtime } from '../src/arena/index.ts';
+import { createGames, presets, runFight, runtime, tiro } from '../src/arena/index.ts';
+import { rivalBuildIds, rivalBuilds } from '../src/arena/archetypes.ts';
 import profileData from '../src/arena/data/progression-weeks.pc.json' with { type: 'json' };
-import { profileSpellRanks, runWeekBuildFight, runWeekFight, weekProfileProblems, weeks } from './week-census.ts';
+import { createHash } from 'node:crypto';
+import weeksEvidence from '../../../docs/change-requests/evidence/d1-weeks.json' with { type: 'json' };
+import { levelMages, mageArms, opponentSpellRanks, profileSpellRanks, rivalProfiles, runWeekBuildFight, runWeekFight, weekProfileProblems, weekProfiles, weeks, type MageArm } from './week-census.ts';
 import { runBuildFight } from './builds-census.ts';
 
 // The week sweep (D1 4.4) is a reading: these checks pin that its inputs are what the data says and that week 1 of a profile
@@ -38,4 +41,47 @@ describe('week sweep (D1 4.4): enemy level = week, profile ranks from data', () 
   it('a rival build fight in week 1 at rank 1 is the plain builds-census fight', () => {
     expect(runWeekBuildFight(runtime.games.censusSeedStart, 'fire_close', 1, 'untrained').hash).toBe(runBuildFight(runtime.games.censusSeedStart, 'fire_close').hash);
   }, 60000);
+});
+
+// The mage-side arms (D1 6.8) are a reading: opt-in, and with none the sweep is exactly the 6.3 sweep.
+describe('week sweep mage-side arms (D1 6.8): opt-in, week 1 untouched', () => {
+  const seed = runtime.games.censusSeedStart, arms = Object.keys(mageArms) as MageArm[];
+
+  it('with no arm, week 1 of either profile is the plain census fight on every wave and build, hash for hash', () => {
+    expect(weekProfiles).toEqual({ untrained: [1, 1, 1, 1, 1, 1], steady: [1, 1.5, 2.5, 3.5, 4.5, 5] });
+    for (const profile of Object.keys(weekProfiles)) {
+      tiro.waves.forEach((_, wave) => expect(runWeekFight(seed, wave, 1, profile).hash).toBe(runFight(seed, wave).hash));
+      for (const id of rivalBuildIds) expect(runWeekBuildFight(seed, id, 1, profile).hash).toBe(runBuildFight(seed, id).hash);
+    }
+  }, 120000);
+
+  it('with no arm, a ranked and levelled 6.3 cell still has its d1-weeks.json digest (steady week 4, the final)', () => {
+    const cell = weeksEvidence.cells.find(c => c.profile === 'steady' && c.week === 4)!, final = cell.waves[3]!;
+    const fights = Array.from({ length: weeksEvidence.countPerCell }, (_, i) => runWeekFight(seed + i, 3, 4, 'steady'));
+    expect(createHash('sha256').update(fights.map(f => `${f.seed}:${f.hash}`).join('\n')).digest('hex')).toBe(final.digest);
+  }, 120000);
+
+  it('rivalProfiles validates like the player profiles; every arm that ranks names one', () => {
+    expect(weekProfileProblems({ profiles: {}, rivalProfiles: { short: [1] } })).toEqual(['progression-weeks.pc.json short: needs 6 weeks']);
+    for (const arm of Object.values(mageArms)) if ('ranks' in arm) expect(rivalProfiles[arm.ranks]![0]).toBe(1);
+  });
+
+  it('every arm leaves week 1 alone, authored build ranks included', () => {
+    for (const arm of arms) {
+      expect(runWeekFight(seed, 3, 1, 'steady', runtime.games.fightTimeoutS, arm).hash).toBe(runFight(seed, 3).hash);
+      expect(runWeekBuildFight(seed, 'fire_heavy', 1, 'steady', arm).hash).toBe(runBuildFight(seed, 'fire_heavy').hash);
+    }
+  }, 120000);
+
+  it('an arm levels the opponent mage only: its HP by the week, its ranks never below the authored ones', () => {
+    const fresh = (week: number, arm: MageArm) => { const g = createGames(seed, presets[0], rivalBuilds.fire_heavy!.wave, true, undefined, undefined, undefined, { rivalBuild: 'fire_heavy' }); levelMages(g, week, arm); return g.state.actors.find(a => a.team !== g.player.team)!; };
+    const plain = createGames(seed, presets[0], rivalBuilds.fire_heavy!.wave, true, undefined, undefined, undefined, { rivalBuild: 'fire_heavy' }).state.actors.find(a => a.team !== 0)!;
+    expect(fresh(3, 'level').maxHp).toBeCloseTo(plain.maxHp * 1.2);
+    expect(fresh(3, 'level').spellRanks).toEqual(plain.spellRanks);
+    expect(fresh(3, 'ranked').maxHp).toBe(plain.maxHp);
+    expect(fresh(6, 'ranked').spellRanks).toEqual({ fire_bolt: 5, fire_ring: 5, fire_pyre: 5, fire_sunfall: 5, fire_wrath: 5 });
+    expect(opponentSpellRanks(plain, 2.5).fire_wrath).toBe(5);
+    // Regular-enemy waves carry no mage: an armed week-3 wave 1 is the unarmed one.
+    for (const arm of arms) expect(runWeekFight(seed, 0, 3, 'steady', runtime.games.fightTimeoutS, arm).hash).toBe(runWeekFight(seed, 0, 3, 'steady').hash);
+  }, 120000);
 });
