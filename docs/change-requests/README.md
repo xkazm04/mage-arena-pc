@@ -33,6 +33,7 @@ Statuses: `received`, `accepted` (with scope), `declined`, `ported`, `re-pinned`
 | [CR-004](CR-004.md) | Cinder hounds spit embers | `CR-004-hound-ember-spit.md` | declined | Declined for PC | - |
 | [CR-005](CR-005.md) | Named rivals: HP-gated phases, collar surge, granted signature | `CR-005-rival-phases.md` | ported | Accepted: the rule, not VR's numbers | W8 lane R |
 | [CR-007](CR-007.md) | Air school and Momentum (AIR.md, VR T23) | not filed by VR; PC writes it | ported | Accepted 2026-10-23; text drafted by W8 lane A | W8 lane A |
+| [CR-008](CR-008.md) | Exchange windows for close duels (PC to VR) | PC proposal; VR has no text | proposed | Director default 2026-10-24 (D1 Q4): stays a PC overlay deviation, returned to VR as a proposal; owner to confirm | D1 slice |
 
 VR texts live under `mage-arena-vr/docs/change-requests/` (default checkout `C:/Users/kazda/kiro/mage-arena-vr`).
 CR-006 is not a VR CR known to PC at the time of writing.
