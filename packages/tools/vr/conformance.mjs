@@ -5,6 +5,9 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL, URL } from 'node:url';
+import { close, compare, createBout, makeDiff, POLICY, TOLERANCE } from './harness.mjs';
+
+export { close, TOLERANCE };
 
 export const repoRoot = new URL('../../../', import.meta.url);
 export const kernelEntry = new URL('packages/core/src/arena/index.ts', repoRoot);
@@ -22,53 +25,9 @@ export async function loadKernel(entry = kernelEntry) {
   }
 }
 
-// Copied from mage-arena-vr apps/vr/Game/Source/MageArenaVR/Tests/KernelConformanceTests.cpp FCheck::Close
-// (the oracle's TOLERANCE in apps/vr/tools/conformance/oracle.mjs: 1e-6 relative / 1e-9 absolute).
-export const TOLERANCE = { relative: 1e-6, absolute: 1e-9 };
-export function close(actual, expected, tol = TOLERANCE) {
-  if (actual === expected) return true;
-  const diff = Math.abs(actual - expected);
-  const scale = Math.max(Math.abs(actual), Math.abs(expected));
-  return diff <= tol.absolute || diff <= tol.relative * scale;
-}
-
-/**
- * Expected-driven comparison: every key the vector carries must match; keys the vector omits are not read.
- * Integers on both sides compare exactly (the C++ WantInt / WantUInt rule: rng is a uint32, where a relative
- * tolerance would hide a wrong draw); any other number uses close(). `stateHash` is skipped: the C++ replay does not
- * compare it, and PC's HEAD hash moves with every new optional key. Returns the first difference or null.
- */
-export function firstDiff(expected, actual, path, tol = TOLERANCE, skip = new Set(['stateHash'])) {
-  if (expected === null) return actual === null || actual === undefined ? null : { path, detail: `expected null got ${show(actual)}` };
-  if (typeof expected === 'number') {
-    if (typeof actual !== 'number') return { path, detail: `expected ${expected} got ${show(actual)}` };
-    const exact = Number.isInteger(expected) && Number.isInteger(actual);
-    if (exact ? expected === actual : close(actual, expected, tol)) return null;
-    const diff = Math.abs(actual - expected), scale = Math.max(Math.abs(actual), Math.abs(expected));
-    return { path, detail: `expected ${expected} got ${actual} (abs ${diff.toPrecision(3)}, rel ${(scale > 0 ? diff / scale : diff).toPrecision(3)})` };
-  }
-  if (typeof expected === 'string' || typeof expected === 'boolean') {
-    return expected === actual ? null : { path, detail: `expected ${show(expected)} got ${show(actual)}` };
-  }
-  if (Array.isArray(expected)) {
-    if (!Array.isArray(actual)) return { path, detail: `expected an array got ${show(actual)}` };
-    if (expected.length !== actual.length) return { path, detail: `count expected ${expected.length} got ${actual.length}` };
-    for (let i = 0; i < expected.length; i++) {
-      const d = firstDiff(expected[i], actual[i], `${path}[${i}]`, tol, skip);
-      if (d) return d;
-    }
-    return null;
-  }
-  if (typeof expected === 'object') {
-    if (actual === null || typeof actual !== 'object') return { path, detail: `expected an object got ${show(actual)}` };
-    for (const key of Object.keys(expected)) {
-      if (skip.has(key)) continue;
-      const d = firstDiff(expected[key], actual[key], path ? `${path}.${key}` : key, tol, skip);
-      if (d) return d;
-    }
-    return null;
-  }
-  return { path, detail: `unsupported expected value ${show(expected)}` };
+/** The conformance comparison (harness.compare with POLICY.conformance): the first difference or null. */
+export function firstDiff(expected, actual, path, tol = TOLERANCE, skip = POLICY.conformance.skip) {
+  return compare(expected, actual, { ...POLICY.conformance, tol, skip }, path);
 }
 const show = (value) => (value === undefined ? 'undefined' : JSON.stringify(value));
 
@@ -154,9 +113,11 @@ function exportGames(games) {
 
 // The replay below follows KernelConformanceTests.cpp: ApplySetup, Drive, ApplyOp and Replay (checkpoint cursor,
 // pre-ops / post-ops rows, event prefix at each checkpoint, full event list at the end).
+// A Mismatch carries the harness Diff; `diff` keeps the report's { tick, when, field, detail } view of it.
 class Mismatch extends Error {
-  constructor(tick, when, field, detail) {
+  constructor(tick, when, field, detail, values = {}) {
     super(`tick ${tick} ${when} ${field}: ${detail}`);
+    this.record = makeDiff({ tick, when, path: field, expected: values.expected, actual: values.actual, detail });
     this.diff = { tick, when, field, detail };
   }
 }
@@ -246,16 +207,16 @@ function applyOp(k, ctx, op, tick) {
   else throw new Mismatch(tick, 'post-ops', 'op', `${op.op} is unknown`);
 }
 
-function createContext(k, v) {
+/** The replay context of one vector. A games vector is a harness bout, unpaced: the pinned kernel had no pace. */
+export function createContext(k, v) {
   if (v.driver === 'training') {
     const training = k.createTraining(v.trainingKind, v.seed);
     return { training, get state() { return training.state; } };
   }
   if (v.driver === 'games') {
     const g = v.games;
-    const preset = g.preset == null ? undefined : k.presets.find((p) => p.name === g.preset);
-    if (g.preset != null && !preset) throw new Mismatch(0, 'setup', 'games.preset', `unknown preset ${g.preset}`);
-    const games = k.createGames(v.seed, preset, g.startWave ?? 0, !!g.referencePlayer);
+    if (g.preset != null && !k.presets.some((p) => p.name === g.preset)) throw new Mismatch(0, 'setup', 'games.preset', `unknown preset ${g.preset}`);
+    const games = createBout(k, { seed: v.seed, preset: g.preset, startWave: g.startWave, referencePlayer: g.referencePlayer, difficulty: null });
     if (g.playerHp !== undefined) games.player.hp = g.playerHp;
     if (g.playerMana !== undefined) games.player.mana = g.playerMana;
     return { games, get state() { return games.state; } };
@@ -282,9 +243,12 @@ function eventDetail(diff, expected, actualEvents) {
   return `${diff.detail}; vector ${show(expected[i])} PC ${show(pc)}`;
 }
 
-/** Replays one VR conformance vector. Returns { name, pass, diff, checkpoints } with diff = the first mismatch. */
+/**
+ * Replays one VR conformance vector. Returns { name, pass, diff, record, checkpoints }: `record` is the first mismatch as
+ * the harness Diff, `diff` its { tick, when, field, detail } view.
+ */
 export function replayConformance(k, v) {
-  const result = { name: v.name, pass: false, diff: null, checkpoints: v.checkpoints?.length ?? 0 };
+  const result = { name: v.name, pass: false, diff: null, record: null, checkpoints: v.checkpoints?.length ?? 0 };
   let tick = 0, when = 'setup';
   try {
     const tol = v.tolerance ?? TOLERANCE;
@@ -308,14 +272,14 @@ export function replayConformance(k, v) {
       // The event prefix is read before the row (the C++ reads eventCount first): the same verdict, but a diff names
       // the first event that differs instead of only the count.
       const prefix = firstDiff(vectorEvents.slice(0, row.eventCount), exportEvents(state.events.slice(0, row.eventCount)), 'events', tol);
-      if (prefix) throw new Mismatch(atTick, atWhen, prefix.path, eventDetail(prefix, vectorEvents, state.events));
+      if (prefix) throw new Mismatch(atTick, atWhen, prefix.path, eventDetail(prefix, vectorEvents, state.events), prefix);
       const expectedRow = { ...row };
       delete expectedRow.when;
       const d = firstDiff(expectedRow, actual, '', tol);
       if (d && d.path === 'eventCount' && state.events.length > row.eventCount) {
-        throw new Mismatch(atTick, atWhen, d.path, `${d.detail}; first extra PC event ${show(exportEvents([state.events[row.eventCount]])[0])}`);
+        throw new Mismatch(atTick, atWhen, d.path, `${d.detail}; first extra PC event ${show(exportEvents([state.events[row.eventCount]])[0])}`, d);
       }
-      if (d) throw new Mismatch(atTick, atWhen, d.path, d.detail);
+      if (d) throw new Mismatch(atTick, atWhen, d.path, d.detail, d);
       cursor++;
     };
     consume(0, 'pre-ops');
@@ -336,10 +300,12 @@ export function replayConformance(k, v) {
     tick = v.ticks;
     if (cursor !== v.checkpoints.length) throw new Mismatch(tick, 'end', 'checkpoints', `unconsumed: ${cursor} of ${v.checkpoints.length}`);
     const events = firstDiff(vectorEvents, exportEvents(ctx.state.events), 'events', tol);
-    if (events) throw new Mismatch(tick, 'events', events.path, eventDetail(events, vectorEvents, ctx.state.events));
+    if (events) throw new Mismatch(tick, 'events', events.path, eventDetail(events, vectorEvents, ctx.state.events), events);
     result.pass = true;
   } catch (err) {
-    result.diff = err instanceof Mismatch ? err.diff : { tick, when, field: 'kernel', detail: err?.message ?? String(err) };
+    const m = err instanceof Mismatch ? err : new Mismatch(tick, when, 'kernel', err?.message ?? String(err));
+    result.diff = m.diff;
+    result.record = m.record;
   }
   return result;
 }

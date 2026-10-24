@@ -4,9 +4,10 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, URL } from 'node:url';
+import { cliMain, renderDiff } from './harness.mjs';
 
 export const DEFAULT_VR = 'C:/Users/kazda/kiro/mage-arena-vr';
 export const WATCHED = ['packages/core/src/arena', 'packages/core/scripts', 'docs/design/reconciled/data'];
@@ -98,7 +99,7 @@ export function renderText(report) {
     lines.push('');
     lines.push(`Conformance vectors against PC HEAD: ${v.passed}/${v.total} pass`);
     for (const r of v.results) {
-      lines.push(r.pass ? `  pass  ${r.name}` : `  diff  ${r.name}: tick ${r.diff.tick} ${r.diff.when} ${r.diff.field}: ${r.diff.detail}`);
+      lines.push(r.pass ? `  pass  ${r.name}` : `  diff  ${r.name}: ${renderDiff(r.record)}`);
     }
   }
   return lines.join('\n');
@@ -132,5 +133,4 @@ async function main() {
   }
 }
 
-const invoked = process.argv[1] ? resolve(process.argv[1]).toLowerCase() : '';
-if (invoked === fileURLToPath(import.meta.url).toLowerCase()) await main();
+await cliMain(import.meta.url, main);
