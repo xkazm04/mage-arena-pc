@@ -1,0 +1,51 @@
+{
+  "id": "cc6da228-8f35-45f3-ad46-361feb9f54f9",
+  "wave": "CUE1",
+  "ts": "2026-10-24T07:55:00.829Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A short neutral spell-commit cue: a low glassy hum swelling quickly, a tight leather glove creak and a faint bright shimmer at the end as the cast locks in. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass.",
+  "seconds": 0.8,
+  "chars": null,
+  "out": "packages/game/public/audio/cast-start-b.mp3",
+  "request": {
+    "text": "A short neutral spell-commit cue: a low glassy hum swelling quickly, a tight leather glove creak and a faint bright shimmer at the end as the cast locks in. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass.",
+    "duration_seconds": 0.8,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "9"
+  },
+  "bytes": 13835,
+  "sha256": "d621ff00578dee5bacde68d83815ce4a26e39dbba0b8a8bc4ab7b76cff7b6be1",
+  "accountBefore": {
+    "observedAt": "2026-10-24T07:55:00.828Z",
+    "tier": "creator",
+    "used": 22487,
+    "limit": 143292,
+    "remaining": 120805,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "reservedCredits": 16,
+  "estimatedCredits": 16,
+  "documentedEstimateCredits": 16,
+  "chargedCredits": 16,
+  "measuredCredits": 9,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-24T07:55:20.660Z",
+    "tier": "creator",
+    "used": 22487,
+    "limit": 143292,
+    "remaining": 120805,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

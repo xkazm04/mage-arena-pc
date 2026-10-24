@@ -1,0 +1,51 @@
+{
+  "id": "c322af2f-535a-421a-88a4-a32982ed5703",
+  "wave": "CUE1",
+  "ts": "2026-10-24T07:54:31.619Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A short neutral spell-commit cue: a soft rising breath of rune-lit air, a small fabric rustle of a raised sleeve and a quiet resonant tick as power gathers. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass.",
+  "seconds": 0.8,
+  "chars": null,
+  "out": "packages/game/public/audio/cast-start-a.mp3",
+  "request": {
+    "text": "A short neutral spell-commit cue: a soft rising breath of rune-lit air, a small fabric rustle of a raised sleeve and a quiet resonant tick as power gathers. One isolated event at the start, natural short decay within 0.8 seconds, no music, voice, gunshot, repeated hits or excessive sub bass.",
+    "duration_seconds": 0.8,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "9"
+  },
+  "bytes": 13835,
+  "sha256": "21addcc18825938dcbefad2b5fbd9f58db577f29ae45da0a11ebb11434e1a19a",
+  "accountBefore": {
+    "observedAt": "2026-10-24T07:54:31.618Z",
+    "tier": "creator",
+    "used": 22487,
+    "limit": 143292,
+    "remaining": 120805,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "reservedCredits": 16,
+  "estimatedCredits": 16,
+  "documentedEstimateCredits": 16,
+  "chargedCredits": 16,
+  "measuredCredits": 9,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-24T07:54:51.361Z",
+    "tier": "creator",
+    "used": 22487,
+    "limit": 143292,
+    "remaining": 120805,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

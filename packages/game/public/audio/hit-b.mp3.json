@@ -1,0 +1,49 @@
+{
+  "id": "073cfeac-1eb8-4958-bf91-7be6ec72dee9",
+  "wave": "CUE1",
+  "ts": "2026-10-24T07:56:57.826Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A compact body hit through padded leather and linen: a dull low thump with a quick cloth slap, slightly higher and tighter than a heavy blow, physical damage, no magical chime, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.5,
+  "chars": null,
+  "out": "packages/game/public/audio/hit-b.mp3",
+  "request": {
+    "text": "A compact body hit through padded leather and linen: a dull low thump with a quick cloth slap, slightly higher and tighter than a heavy blow, physical damage, no magical chime, no human voice. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "17"
+  },
+  "bytes": 24702,
+  "sha256": "e15d6c9ac7471a70fe68a5a940802ffac31d57b1e249c228bc720d394c8e72bb",
+  "accountBefore": {
+    "observedAt": "2026-10-24T07:56:57.826Z",
+    "tier": "creator",
+    "used": 22533,
+    "limit": 143292,
+    "remaining": 120759,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "reservedCredits": 30,
+  "estimatedCredits": 30,
+  "documentedEstimateCredits": 30,
+  "chargedCredits": 45,
+  "measuredCredits": 17,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-24T07:57:17.203Z",
+    "tier": "creator",
+    "used": 22578,
+    "limit": 143292,
+    "remaining": 120714,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 45,
+  "flags": [],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

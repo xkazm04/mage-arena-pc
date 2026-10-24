@@ -1,0 +1,51 @@
+{
+  "id": "5db179bf-a5af-4e46-ae06-16e679213e17",
+  "wave": "CUE1",
+  "ts": "2026-10-24T08:00:31.438Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One loud, full-level hard impact on worn bronze and masonry: a metallic clank into a short stony thud and falling grit, close and compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.5,
+  "chars": null,
+  "out": "packages/game/public/audio/impact-e.mp3",
+  "request": {
+    "text": "One loud, full-level hard impact on worn bronze and masonry: a metallic clank into a short stony thud and falling grit, close and compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "17"
+  },
+  "bytes": 24702,
+  "sha256": "a1e72ae8d3851a4249bcaf25c6ee14709f688a4a90553236c50e4861df86ce5b",
+  "accountBefore": {
+    "observedAt": "2026-10-24T08:00:31.437Z",
+    "tier": "creator",
+    "used": 22629,
+    "limit": 143292,
+    "remaining": 120663,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "reservedCredits": 30,
+  "estimatedCredits": 30,
+  "documentedEstimateCredits": 30,
+  "chargedCredits": 30,
+  "measuredCredits": 17,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-24T08:00:51.379Z",
+    "tier": "creator",
+    "used": 22629,
+    "limit": 143292,
+    "remaining": 120663,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

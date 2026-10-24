@@ -1,0 +1,51 @@
+{
+  "id": "c27b927f-74ed-466c-8ad7-c28a217a7a17",
+  "wave": "CUE1",
+  "ts": "2026-10-24T07:55:30.308Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A combatant going down: a heavy cloth-and-leather body collapse onto sand with a dull thud, a brief fading metallic rattle of gear and a downward falling tone as magic leaves the body, no human voice. One isolated event at the start, natural short decay within 1.8 seconds, no music, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.8,
+  "chars": null,
+  "out": "packages/game/public/audio/down-a.mp3",
+  "request": {
+    "text": "A combatant going down: a heavy cloth-and-leather body collapse onto sand with a dull thud, a brief fading metallic rattle of gear and a downward falling tone as magic leaves the body, no human voice. One isolated event at the start, natural short decay within 1.8 seconds, no music, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.8,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "20"
+  },
+  "bytes": 29300,
+  "sha256": "9d3b195b3b30564a5317d1f15b2d09174f43fc12e825ae27563f4dd603b07ebe",
+  "accountBefore": {
+    "observedAt": "2026-10-24T07:55:30.308Z",
+    "tier": "creator",
+    "used": 22505,
+    "limit": 143292,
+    "remaining": 120787,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "reservedCredits": 36,
+  "estimatedCredits": 36,
+  "documentedEstimateCredits": 36,
+  "chargedCredits": 36,
+  "measuredCredits": 20,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-24T07:55:49.897Z",
+    "tier": "creator",
+    "used": 22505,
+    "limit": 143292,
+    "remaining": 120787,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

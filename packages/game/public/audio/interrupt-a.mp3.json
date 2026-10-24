@@ -1,0 +1,49 @@
+{
+  "id": "586f04c3-a6db-455e-ae85-87b75142c78c",
+  "wave": "CUE1",
+  "ts": "2026-10-24T07:55:59.341Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "A spell being cut off mid-cast: a gathering magical tone that snaps and collapses downward with a short crackle and a dull muffled pop, brittle and unfinished, no reward chime. One isolated event at the start, natural short decay within 0.7 seconds, no music, voice, gunshot, repeated hits or excessive sub bass.",
+  "seconds": 0.7,
+  "chars": null,
+  "out": "packages/game/public/audio/interrupt-a.mp3",
+  "request": {
+    "text": "A spell being cut off mid-cast: a gathering magical tone that snaps and collapses downward with a short crackle and a dull muffled pop, brittle and unfinished, no reward chime. One isolated event at the start, natural short decay within 0.7 seconds, no music, voice, gunshot, repeated hits or excessive sub bass.",
+    "duration_seconds": 0.7,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "8"
+  },
+  "bytes": 12163,
+  "sha256": "bda42293b7ae3398c9ec79105073908335a4d2a52acabbecacd800222203345f",
+  "accountBefore": {
+    "observedAt": "2026-10-24T07:55:59.340Z",
+    "tier": "creator",
+    "used": 22505,
+    "limit": 143292,
+    "remaining": 120787,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "reservedCredits": 14,
+  "estimatedCredits": 14,
+  "documentedEstimateCredits": 14,
+  "chargedCredits": 28,
+  "measuredCredits": 8,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-24T07:56:19.318Z",
+    "tier": "creator",
+    "used": 22533,
+    "limit": 143292,
+    "remaining": 120759,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 28,
+  "flags": [],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

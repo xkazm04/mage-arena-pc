@@ -1,0 +1,51 @@
+{
+  "id": "e1f8b4cf-3755-4736-ba37-c0c6eff1ba0b",
+  "wave": "CUE1",
+  "ts": "2026-10-24T07:58:24.639Z",
+  "kind": "sfx",
+  "model": "eleven_text_to_sound_v2",
+  "voice": null,
+  "text": "One hard impact on packed sand and worn masonry: a hollow knock into a soft shower of falling grit, short and spatially compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+  "seconds": 1.5,
+  "chars": null,
+  "out": "packages/game/public/audio/impact-c.mp3",
+  "request": {
+    "text": "One hard impact on packed sand and worn masonry: a hollow knock into a soft shower of falling grit, short and spatially compact. One isolated event at the start, natural short decay within 1.5 seconds, no music, voice, gunshot, repeated strikes or excessive sub bass.",
+    "duration_seconds": 1.5,
+    "prompt_influence": 0.5,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "billingHeaders": {
+    "character-cost": "17"
+  },
+  "bytes": 24702,
+  "sha256": "d1fdc69ad4ac9e8352bef3db012a9e06460ed6ee790a70ae0d6f186dc9b75381",
+  "accountBefore": {
+    "observedAt": "2026-10-24T07:58:24.639Z",
+    "tier": "creator",
+    "used": 22612,
+    "limit": 143292,
+    "remaining": 120680,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "reservedCredits": 30,
+  "estimatedCredits": 30,
+  "documentedEstimateCredits": 30,
+  "chargedCredits": 30,
+  "measuredCredits": 17,
+  "costBasis": "max-shared-delta-estimate-header",
+  "accountAfter": {
+    "observedAt": "2026-10-24T07:58:44.222Z",
+    "tier": "creator",
+    "used": 22612,
+    "limit": 143292,
+    "remaining": 120680,
+    "resetsAt": "2026-11-13T10:08:44.000Z"
+  },
+  "accountDelta": 0,
+  "flags": [
+    "balance_may_lag"
+  ],
+  "deltaBasis": "shared-account upper-bound proxy, not attributed billing; may include concurrent or delayed charges"
+}

@@ -164,7 +164,7 @@
     },
     "hit": {
       "bus": "effects",
-      "assets": ["hit-a"],
+      "assets": ["hit-b", "hit-c", "hit-d"],
       "priority": 1,
       "concurrency": 2,
       "cooldownMs": 120,
@@ -175,7 +175,7 @@
     },
     "impact": {
       "bus": "effects",
-      "assets": ["impact-a"],
+      "assets": ["impact-d", "impact-e"],
       "priority": 2,
       "concurrency": 3,
       "cooldownMs": 100,
@@ -304,6 +304,50 @@
       "pitch": [0.88, 0.94],
       "volumeVariationDb": 1,
       "spatial": true
+    },
+    "cast.start": {
+      "bus": "effects",
+      "assets": ["cast-start-b", "cast-start-c"],
+      "priority": 2,
+      "concurrency": 3,
+      "cooldownMs": 80,
+      "gainDb": -2,
+      "pitch": [0.95, 1.05],
+      "volumeVariationDb": 1.5,
+      "spatial": true
+    },
+    "down": {
+      "bus": "effects",
+      "assets": ["down-a"],
+      "priority": 1,
+      "concurrency": 2,
+      "cooldownMs": 300,
+      "gainDb": -2,
+      "pitch": [0.94, 1.04],
+      "volumeVariationDb": 1,
+      "spatial": true
+    },
+    "interrupt": {
+      "bus": "effects",
+      "assets": ["interrupt-a"],
+      "priority": 1,
+      "concurrency": 2,
+      "cooldownMs": 150,
+      "gainDb": -2,
+      "pitch": [0.95, 1.05],
+      "volumeVariationDb": 1,
+      "spatial": true
+    },
+    "phase": {
+      "bus": "effects",
+      "assets": ["phase-a"],
+      "priority": 1,
+      "concurrency": 1,
+      "cooldownMs": 2000,
+      "gainDb": -1,
+      "pitch": [1, 1],
+      "volumeVariationDb": 0,
+      "spatial": false
     }
   }
 }
