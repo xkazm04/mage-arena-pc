@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). A mage-side lever for the week curve is measured as a reading (6.8, 2026-10-24). A small rival HP level on top of the recommended lag arm is measured and ruled out as the duel-duration lever (6.9, 2026-10-25). It follows
+Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). A mage-side lever for the week curve is measured as a reading (6.8, 2026-10-24). A small rival HP level on top of the recommended lag arm is measured and ruled out as the duel-duration lever (6.9, 2026-10-25). The two levers 6.9 named are measured on top of lag as a reading (6.10, 2026-10-25): rank-scaled exchange reach is ruled out; rank defence lengthens every short duel but does not close the gap alone, and 4.1 E is the next candidate. It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -823,6 +823,195 @@ next reading should look for a lever that adds time without adding the rival's w
 
 That choice belongs to the owner. Nothing here is turned on. Before `lag` can play in a bout, `prepareBout` must pass the
 week's `opponentMage` (the lever exists; the player's own ranks already reach the bout, 6.7 "On the season").
+
+### 6.10 Duration levers after the HP level: the reading (4.1 A, 4.3), 2026-10-25
+
+6.9 ruled out the HP level: it buys the rival wins, not time. Under `lag`, 12 steady rival-duel cells in weeks 2-6 still have
+medians under 45 s (fire_light, fire_heavy, air_close). It named two levers that might add time without adding the rival's win
+share. This reading measures both on top of `lag`. **It turns nothing on and changes no default.** `prepareBout`, the season and
+the director are untouched, and nothing outside the census sets either option.
+
+**Where the short duels' damage lands.** A new read-only reading, `report-reach.ts`, sorts the damage each side puts through by
+the distance at contact. Steady week 4 under `lag`, 200 seeds (`npm --prefix packages/core run data && npx tsx
+packages/core/scripts/report-reach.ts --count 200 --week 4 --arm lag`):
+
+| Build (lag, steady, week 4) | Player's damage: <=5 m / 5-8 m / >8 m | Rival's damage: <=5 m / 5-8 m / >8 m | Clean close blows a fight, why no window |
+|---|---|---|---|
+| fire_light (46.0%, 44.1 s) | 3 / 43 / 54% | 3 / 45 / 52% | none open 1.09, expired 0.33 |
+| fire_heavy (65.5%, 38.5 s) | 4 / 47 / 49% | 6 / 58 / 36% | none open 1.26, expired 0.48 |
+| air_close (55.0%, 38.2 s) | 19 / 80 / 1% | 23 / 77 / 0% | none open 2.10, expired 6.25, spent 0.06 |
+
+So 77-97% of the damage in the three short duels lands from beyond the window's 5 m. The window's other numbers barely bind:
+`guardHits` almost never runs out (spent 0.06 a fight), and `guardS` runs out about 6 times a fight in air_close only.
+
+**The levers.** Both are optional `createGames` options. Their default is today's behaviour exactly. Both read the same quantity:
+the rank steps a mage **gained** above its authored build (`progression.ts rankSteps`: the mean, over its rows, of its power rank
+above 1, with rank 5 counted as 4; `games.ts gainedRanks`). The player's ranks all count. An opponent mage counts only what the
+`opponentMage` lever added. So week 1, and fire_heavy's authored Brand Wrath 5, move nothing.
+- `exchangeReach { perRankStepM }` (exchange.ts). The window's reach is `closeRangeM` + `perRankStepM` x the defender's gained
+  steps, both for opening the window and for guarding. This is the smallest shape that fits the 6.1 rule: one existing number,
+  scaled by rank. It is also the only number of the rule that touches where the short duels' damage lands. Growing `guardHits`
+  or `guardS`, or tightening the stack cap, would reach only air_close's ~6 expired close blows a fight, and nothing in
+  fire_light or fire_heavy. The per-state reach is kept outside the hashed state, like the arena hooks.
+- `rankDefence { hpPerRankStep }` (games.ts). Every mage's HP is x(1 + `hpPerRankStep` x its gained steps): the player at
+  creation, each opponent mage at spawn. 0.1 mirrors the rank power table's +0.1 a rank, so two mages that gained the same ranks
+  take as long to fell each other as at rank 1. It is an HP step, not an incoming-damage cut, because an HP step is set at spawn
+  and leaves the shared hit path (`contact.ts`, `kernel.ts`) untouched. Over a fight the two are the same budget, except for stagger
+  length and heals.
+
+**The arms** (`week-census.ts mageArms`). Each keeps `rivalProfiles.lag` (1, 1, 1.5, 2.5, 3.5, 4) and adds one lever with the same
+strength every week. Each lever was tried at two strengths, the brief's limit:
+- `lag-xw1` / `lag-xw2`: reach +0.5 / +1 m per gained step. At week 4 the steady player defends at about 6.3 / 7.5 m and the
+  rival at about 5.4 / 5.8 m (fire_heavy: 0.8 gained steps).
+- `lag-def1` / `lag-def2`: HP +0.05 / +0.1 per gained step.
+
+Same format as 6.8 and 6.9: 200 seeds per cell, seeds 40000-40199, `npm --prefix packages/core run census:weeks -- --count 200
+--arm <arm> --tag d1-610-weeks-arm-<arm> --out-dir docs/change-requests/evidence`. The writer now ends with the targets read off
+the cells: the builds mean per week, and the duels under their band's floor in weeks 2-6. The `lag` control column was re-run on
+this branch and matches all 120 cell digests of `d1-weeks-arm-lag.json`. The evidence files `d1-610-weeks-arm-<arm>.json` are not
+committed with this section: `docs/change-requests/evidence/` is outside this lane's paths, and the files are held for filing.
+Builds are listed in the order fire_close, fire_light, fire_heavy, air_light, air_close, air_heavy. No cell timed out, except
+under `lag-xw2` (below).
+
+**Arm 1, `lag-xw1`** (reach +0.5 m a step)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 82% / 40.0 | 40% / 47.6 | 23 36 43 43 9 44 | 33% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 67% / 39.1 | 30% / 44.6 | 4 26 28 32 0 28 | 20% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 54% / 37.2 | 17% / 42.0 | 1 14 18 21 0 26 | 13% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 54% / 37.2 | 16% / 42.0 | 1 12 17 16 0 23 | 11% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 93% / 37.3 | 68% / 46.1 | 64 56 56 76 61 52 | 61% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 92% / 35.1 | 68% / 42.4 | 55 53 66 71 76 60 | 63% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 90% / 31.1 | 67% / 38.8 | 36 48 68 66 74 57 | 58% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 84% / 29.9 | 63% / 37.0 | 24 41 48 57 45 48 | 44% |
+| steady | 6 | 5 | 42.7 | 51.4 | 83% / 29.7 | 61% / 37.0 | 21 40 45 51 30 44 | 38% |
+
+**Arm 2, `lag-xw2`** (reach +1 m a step)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 82% / 40.0 | 40% / 47.6 | 10 37 43 44 1 44 | 30% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 67% / 39.1 | 30% / 44.6 | 0 15 25 24 0 28 | 15% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 54% / 37.2 | 17% / 42.0 | 0 7 8 4 0 11 | 5% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 54% / 37.2 | 16% / 42.0 | 0 2 6 4 0 9 | 3% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 93% / 37.3 | 68% / 46.1 | 69 56 57 76 84 53 | 65% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 92% / 35.1 | 68% / 42.4 | 48 56 70 72 97 56 | 66% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 90% / 31.1 | 67% / 38.8 | 28 57 76 74 79 64 | 63% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 84% / 29.9 | 63% / 37.0 | 22 57 56 53 11 58 | 43% |
+| steady | 6 | 5 | 42.7 | 51.4 | 83% / 29.7 | 61% / 37.0 | 24 49 52 46 3 54 | 38% |
+
+**Arm 3, `lag-def1`** (HP +0.05 a step)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 80% / 41.0 | 35% / 48.1 | 34 36 40 43 24 44 | 37% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 55% / 41.4 | 20% / 45.3 | 30 23 30 26 10 27 | 24% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 36% / 39.9 | 7% / 42.9 | 19 11 16 13 5 22 | 14% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 32% / 40.6 | 7% / 42.3 | 20 10 14 11 3 21 | 13% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 95% / 37.4 | 75% / 46.3 | 56 57 56 76 53 55 | 59% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 95% / 35.8 | 75% / 44.0 | 56 59 69 71 50 60 | 61% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 94% / 34.1 | 76% / 42.4 | 54 52 70 69 59 61 | 61% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 84% / 34.6 | 65% / 42.5 | 56 48 60 64 48 52 | 54% |
+| steady | 6 | 5 | 42.7 | 51.4 | 80% / 35.1 | 61% / 43.1 | 55 47 58 56 46 51 | 52% |
+
+**Arm 4, `lag-def2`** (HP +0.1 a step)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 77% / 42.3 | 33% / 48.5 | 33 33 38 41 19 43 | 34% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 44% / 42.3 | 9% / 46.1 | 23 16 25 19 6 24 | 19% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 21% / 41.8 | 4% / 43.4 | 16 7 12 5 2 18 | 10% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 16% / 42.0 | 2% / 42.8 | 13 5 10 6 2 17 | 9% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 50 51 42 56 40 46 | 47% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 96% / 37.4 | 76% / 46.6 | 57 59 56 79 56 57 | 61% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 97% / 36.9 | 81% / 45.0 | 60 61 69 80 58 65 | 65% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 95% / 37.2 | 78% / 44.9 | 57 57 66 75 61 66 | 63% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 87% / 39.6 | 67% / 47.0 | 57 48 57 68 46 58 | 56% |
+| steady | 6 | 5 | 42.7 | 51.4 | 85% / 40.8 | 58% / 48.1 | 53 46 55 60 42 55 | 52% |
+
+**Against the three targets** (builds mean, weeks 2-6; `lag` is the control, re-run here). The last column is not one of the three
+targets. It counts the steady rival duels whose median runs past their band's ceiling (75 s on wave 3, 80 s on wave 4).
+
+| Arm | Steady, weeks 2-6 | Untrained, week 4 | Rival duels under 45 s (steady) | Over the ceiling (steady) |
+|---|---|---|---|---|
+| `lag` (control) | 56.8, 57.6, 56.3, 52.3, 51.0: **hit** | 29.5%: **hit** | 12 cells: **miss** | 0 |
+| `lag-xw1` | 60.8, 63.2, 58.0, 43.8, 38.3: **miss** (weeks 5-6) | 19.7%: **hit** | 8 cells: **miss** | 6 |
+| `lag-xw2` | 65.5, 66.3, 62.7, 42.7, 37.6: **miss** (weeks 2, 3, 5, 6) | 15.2%: **hit** | 4 cells: **miss** | 9, and 131 timeouts |
+| `lag-def1` | 59.0, 60.8, 60.6, 54.4, 52.0: **hit** | 24.1%: **hit** | 8 cells: **miss** | 0 |
+| `lag-def2` | 60.8, 65.4, 63.5, 55.7, 51.8: **miss** (week 3, 0.4 over) | 18.7%: **hit** | 4 cells: **miss** | 0 |
+
+The three short duels, steady medians in seconds for weeks 2, 3, 4, 5, 6:
+
+| Arm | fire_light, weeks 2-6 | fire_heavy, weeks 2-6 | air_close, weeks 2-6 |
+|---|---|---|---|
+| `lag` | 51.3, 46.7, 44.1, 40.3, 40.3 | 44.5, 41.5, 38.5, 37.0, 37.0 | 47.7, 42.5, 38.2, 35.2, 35.2 |
+| `lag-xw1` | 51.8, 47.9, 44.0, 41.9, 41.9 | 44.9, 42.2, 38.6, 38.3, 38.5 | 50.0, 57.4, 75.0, 97.5, 107.3 |
+| `lag-xw2` | 51.8, 50.6, 47.5, 60.0, 65.7 | 44.9, 42.2, 40.5, 43.5, 45.1 | 52.9, 75.1, 129.0, 149.2, 149.7 |
+| `lag-def1` | 51.5, 49.3, 48.8, 47.0, 47.5 | 44.5, 41.5, 39.5, 41.0, 42.1 | 49.2, 45.0, 43.1, 41.7, 42.1 |
+| `lag-def2` | 52.3, 51.9, 53.5, 53.8, 55.3 | 44.8, 42.5, 41.0, 44.6, 45.4 | 50.0, 47.0, 48.0, 49.8, 50.3 |
+
+- **Rival duels under 45 s**, weeks 2-6, as the writer lists them:
+  - `lag-xw1` steady: w2 fire_heavy 44.9; w3 fire_heavy 42.2; w4 fire_light 44.0, fire_heavy 38.6; w5 and w6 fire_light 41.9,
+    fire_heavy 38.3 and 38.5.
+  - `lag-xw2` steady: fire_heavy only, w2 44.9, w3 42.2, w4 40.5, w5 43.5.
+  - `lag-def1` steady: w2 fire_heavy 44.5; w3 fire_heavy 41.5; w4 fire_heavy 39.5, air_close 43.1; w5 fire_heavy 41.0, air_close
+    41.7; w6 fire_heavy 42.1, air_close 42.1.
+  - `lag-def2` steady: fire_heavy only, w2 44.8, w3 42.5, w4 41.0, w5 44.6.
+  - Untrained: 6 cells in every arm, `lag` included, mostly fire_heavy and air_close in weeks 4-6 (38.5-44.8 s). They are the
+    ranked rival beating a rank-1 player fast, which is the untrained target working, not a duel to lengthen.
+- **Over the ceiling**: `lag-xw1` steady w4-6 fire_close 77.6-84.7 s, air_close 75.0-107.3 s. `lag-xw2` steady w3-6 fire_close
+  83.6-92.6 s, air_close 75.1-149.7 s, w6 air_heavy 85.5 s. air_close times out in 5, 59 and 67 of 200 fights in weeks 4-6.
+- **The final and the semifinal** (the Water proxy) see no Fire/Air contact, so the reach arms leave them exactly at `lag`'s
+  values: final 68.0, 67.5, 67.0, 62.5, 60.5% in weeks 2-6. Rank defence lifts both, because the steady player gains a rank more
+  than the lag-ranked proxy. Final: 74.5, 75.0, 75.5, 64.5, 61.0% (`lag-def1`) and 76.0, 80.5, 78.0, 66.5, 58.0% (`lag-def2`).
+  Semifinal: 80-95% and 84.5-97%, against `lag`'s 82.5-93%.
+- **Single builds over 65%**, steady weeks 2-6:
+  - `lag`: w2 air_light 74.5; w3 fire_heavy 68.0; w4 fire_heavy 65.5, air_light 65.5.
+  - `lag-xw1`: w2 air_light 75.5; w3 fire_heavy 65.5, air_light 71.0, air_close 75.5; w4 fire_heavy 68.0, air_light 65.5,
+    air_close 74.0.
+  - `lag-xw2`: w2 fire_close 68.5, air_light 75.5, air_close 84.0; w3 fire_heavy 70.0, air_light 71.5, air_close 96.5; w4
+    fire_heavy 75.5, air_light 74.0, air_close 78.5.
+  - `lag-def1`: w2 air_light 76.0; w3 fire_heavy 69.0, air_light 71.0; w4 fire_heavy 69.5, air_light 69.0.
+  - `lag-def2`: w2 air_light 79.0; w3 fire_heavy 68.5, air_light 80.0; w4 fire_heavy 65.5, air_light 75.0, air_heavy 65.5; w5
+    air_light 67.5.
+
+**The reading, plainly: neither lever closes the gap.**
+- **Exchange reach is the wrong shape.** It lengthens only the duels already fought near 5 m, the close builds, and it overshoots
+  them past their bands. fire_close and air_close go long, and with +1 m air_close times out. fire_light and fire_heavy stay short,
+  because 36-54% of their damage lands beyond 8 m. It also bends the curve: the steady player wins more in weeks 2-4 (up to 66.3%),
+  then falls to 37.6-43.8% in weeks 5-6, because a long close duel goes to the rival close builds (fire_close 21-24%, air_close
+  3-45%). It is ruled out.
+- **Rank defence adds time without overshooting.** No cell passes its ceiling, there are no timeouts, and every short duel gets
+  longer: air_close goes from 35.2 to 41.7 s (+0.05) and to 49.8 s (+0.1) in week 5. At +0.05 it is the only measured arm that meets
+  both win targets in weeks 2-6, and it cuts the short cells from 12 to 8. At +0.1 only fire_heavy is still short (41.0-44.8 s, 4
+  cells), but steady week 3 reads 65.4%, 0.4 over the ceiling. That is inside the 200-seed noise of a six-build mean, but it is a
+  miss as read.
+- Its cost is the one 6.9 found in reverse: the steady player gains a rank more than a lag rival, so defence by own rank gives the
+  steady player more. Steady rises 0.8-7.8 points over `lag`, and the final climbs to 74.5-80.5% in weeks 2-4. The untrained player falls
+  further behind, 18.7-24.1% in week 4, which still meets the target.
+- **fire_heavy is short under every arm**: 37.0-45.4 s in weeks 2-6. It is a far build: 94% of the rival's damage and 96% of the player's
+  lands beyond 5 m. In the census, much of it lands in the 5-8 m band the reference player chases to.
+
+**Recommendation: keep `lag` as the week curve (6.8). Take rank defence forward as the duration lever at `hpPerRankStep` 0.05
+(`lag-def1`), and drop the reach lever. Director default 2026-10-25, owner to confirm.** At 0.05, rank defence is the only measured
+lever that keeps both win targets while it lengthens every short duel. A strength between 0.05 and 0.1 was not run (two per lever).
+It would trade the week-3 ceiling against the remaining short cells, and it needs its own reading before anyone picks it. Rank
+defence does not close the duration gap by itself. **The next candidate is 4.1 E, the reference player range**, not built here. The
+census reference chases every build to its own 5-8 m band, so fire_heavy, a far build, is measured in the reference's band instead
+of its own. 4.1 E changes every census baseline and is a re-pin with a reason. Nothing here is turned on. Before rank defence can
+play in a bout, `prepareBout` must pass the week's `rankDefence` beside its `opponentMage`, and the final's 74.5-75.5% (weeks 2-4) needs a look of its own.
 
 ## 7. Open questions for the spark
 
