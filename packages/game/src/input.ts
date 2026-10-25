@@ -1,6 +1,15 @@
 import { idleInput, type InputFrame, type Vec } from "@mage/core/arena";
 import { cameraMetrics, clientToGround, type Camera } from "./camera.ts";
 import { pressed, stick, type Pad } from "./ui/gamepad.ts";
+import {
+  actionFor,
+  blocksDefault,
+  matches,
+  slotActions,
+  type Action,
+  type Bindings,
+} from "./settings/bindings.ts";
+import { settings } from "./settings/settings.ts";
 export class ArenaInput {
   private readonly lifetime = new AbortController();
   private readonly captures = new Set<number>();
@@ -27,6 +36,8 @@ export class ArenaInput {
     private enabled: () => boolean = () => true,
     private blocked: () => boolean = () => false,
     private origin: () => Vec = () => this.camera().centre,
+    /** The live binding table (Settings > Controls); read on every key and frame. */
+    private bindings: () => Bindings = () => settings().bindings,
   ) {
     const signal = this.lifetime.signal;
     const initialPad = Array.from(navigator.getGamepads?.() ?? []).find(
@@ -42,12 +53,13 @@ export class ArenaInput {
     ) => window.addEventListener(type, handler, { signal });
     listen("keydown", (e) => {
       if (e.defaultPrevented || !this.enabled()) return;
-      if (["Space", "ArrowUp", "ArrowDown"].includes(e.code))
-        e.preventDefault();
+      const table = this.bindings();
+      if (blocksDefault(table, e.code)) e.preventDefault();
       this.keys.add(e.code);
-      if (e.code === "Space" && !e.repeat) this.rollQueued = true;
-      if (/^Digit[1-5]$/.test(e.code)) {
-        const slot = Number(e.code.slice(-1)) - 1;
+      if (matches(table.roll, e.code) && !e.repeat) this.rollQueued = true;
+      const slotAction = actionFor(table, e.code, slotActions);
+      if (slotAction) {
+        const slot = slotActions.indexOf(slotAction);
         if (slot < this.slotCount) this.slot = slot;
       }
     });
@@ -160,12 +172,19 @@ export class ArenaInput {
     }
     this.padPrevious = buttons;
   }
+  /** Whether the key bound to `action` is down (either side of a modifier counts). */
+  private held(table: Bindings, action: Action): boolean {
+    for (const code of this.keys) if (matches(table[action], code)) return true;
+    return false;
+  }
   frame(): InputFrame {
     if (!this.enabled()) {
       this.clear();
       return idleInput(this.aim);
     }
     this.refreshAim();
+    const table = this.bindings(),
+      down = (action: Action) => Number(this.held(table, action));
     const frame = {
       ...idleInput(this.aim),
       slot: this.slot,
@@ -176,8 +195,8 @@ export class ArenaInput {
           -1,
           Math.min(
             1,
-            Number(this.keys.has("KeyD")) -
-              Number(this.keys.has("KeyA")) +
+            down("moveRight") -
+              down("moveLeft") +
               this.padMove.x,
           ),
         ),
@@ -185,17 +204,14 @@ export class ArenaInput {
           -1,
           Math.min(
             1,
-            Number(this.keys.has("KeyS")) -
-              Number(this.keys.has("KeyW")) +
+            down("moveDown") -
+              down("moveUp") +
               this.padMove.y,
           ),
         ),
       },
-      roll: this.keys.has("Space") || this.rollQueued,
-      sprint:
-        this.keys.has("ShiftLeft") ||
-        this.keys.has("ShiftRight") ||
-        this.padSprint,
+      roll: this.held(table, "roll") || this.rollQueued,
+      sprint: this.held(table, "sprint") || this.padSprint,
     };
     this.rollQueued = false;
     this.castQueued = false;

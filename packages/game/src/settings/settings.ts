@@ -1,5 +1,6 @@
 import quality from "../../data/quality.json" with { type: "json" };
 import { clampUiScale } from "../ui/layout.ts";
+import { defaultBindings, validBindings, type Bindings } from "./bindings.ts";
 
 /** Graphics tiers the player picks; each maps onto a profile of `data/quality.json` (see `qualityProfile`). */
 export const qualityTiers = ["high", "balanced", "low"] as const;
@@ -13,6 +14,8 @@ export interface Settings {
   windowMode: WindowMode;
   quality: QualityTier;
   reducedMotion: boolean;
+  /** The keyboard binding table (bindings.ts). Additive: a record without it loads the defaults. */
+  bindings: Bindings;
 }
 
 export const settingsKey = "mage-settings";
@@ -25,6 +28,7 @@ export const defaultSettings: Settings = {
   windowMode: "windowed",
   quality: "high",
   reducedMotion: false,
+  bindings: defaultBindings,
 };
 
 type Store = Pick<Storage, "getItem" | "setItem">;
@@ -66,6 +70,7 @@ export function validateSettings(raw: unknown): Settings {
       : d.quality,
     reducedMotion:
       typeof v.reducedMotion === "boolean" ? v.reducedMotion : d.reducedMotion,
+    bindings: validBindings(v.bindings),
   };
 }
 
