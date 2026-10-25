@@ -85,6 +85,38 @@
     "maxPan": 0.75,
     "minGain": 0.15
   },
+  "routes": {
+    "perfect": [{ "who": "player", "cue": "perfect" }],
+    "unlock": [
+      { "who": "player", "cue": "collar" },
+      { "who": "player", "cue": "voice.collar", "value": 2 }
+    ],
+    "release": [
+      { "who": "enemy", "cue": "impact", "spatial": true },
+      {
+        "who": "allies",
+        "cue": "cast.{school}",
+        "fallback": { "school": "water" },
+        "spatial": true
+      }
+    ],
+    "hit": [
+      {
+        "who": "player",
+        "cue": "hit",
+        "spatial": true,
+        "damage": { "base": 0.45, "per": 25 }
+      },
+      {
+        "who": "others",
+        "cue": "impact",
+        "spatial": true,
+        "damage": { "base": 0.45, "per": 25 }
+      }
+    ],
+    "stagger": [{ "who": "any", "cue": "stagger", "spatial": true }],
+    "roll": [{ "who": "any", "cue": "roll", "spatial": true }]
+  },
   "cues": {
     "cast.fire": {
       "bus": "effects",

@@ -1,4 +1,5 @@
 import data from "../data/audio.json" with { type: "json" };
+import { routeProblems } from "./audio-routing.ts";
 export const audioData = data;
 export type Cue = keyof typeof data.cues;
 export type Bus = "music" | "effects" | "ui" | "voice";
@@ -68,9 +69,12 @@ export function validateAudioManifest(value: unknown): AudioManifest {
   }
   return m;
 }
-export function audioDataProblems(manifest: AudioManifest): string[] {
+export function audioDataProblems(
+  manifest: AudioManifest,
+  audio: typeof data = data,
+): string[] {
   const errors: string[] = [];
-  for (const [id, c] of Object.entries(data.cues)) {
+  for (const [id, c] of Object.entries(audio.cues)) {
     if (
       !["effects", "ui", "voice"].includes(c.bus) ||
       !Number.isInteger(c.priority) ||
@@ -95,8 +99,8 @@ export function audioDataProblems(manifest: AudioManifest): string[] {
       errors.push(`assets:${id}`);
   }
   for (const playlist of [
-    ...Object.values(data.music.arena),
-    ...Object.values(data.music.camp),
+    ...Object.values(audio.music.arena),
+    ...Object.values(audio.music.camp),
   ])
     if (
       !playlist.length ||
@@ -106,6 +110,7 @@ export function audioDataProblems(manifest: AudioManifest): string[] {
       )
     )
       errors.push("playlist");
+  errors.push(...routeProblems(audio.routes, audio.cues));
   return errors;
 }
 /** Cooldown and class limits drop; a bus/global limit may steal lower-priority work. */
