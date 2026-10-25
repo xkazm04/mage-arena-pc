@@ -72,6 +72,6 @@ The harness exercises a season of guarded main acts, shelter and bond progressio
 
 Text checks are lexical guardrails, not proof of narrative truth. The fuzz claim concerns the enforced schema and domain rules. Model prompts, voice quality, implied knowledge and invented natural-language details remain fallible and are assessed diagnostically and by the owner.
 
-Fable's six W0 fixes and lower-severity followups are closed in the preceding W0 commit. Owner blind reading remains pending. Nothing is labelled felt.
+Fable's six W0 fixes and lower-severity followups are closed in the preceding W0 commit. Owner blind read: pending. Nothing is labelled felt.
 
 W1 engineering decision: PASS — required sample, character diagnostic, deterministic audit and rejection gate complete. Proceed to W5; owner blind read remains pending.

@@ -14,6 +14,8 @@ import {
   hasEvidence,
   summarize,
 } from "./evidence.ts";
+import { ownerReadLine } from "./blind-pair.ts";
+import { readOwnerResult } from "./blind-score.ts";
 
 const root = pathResolve("docs/waves/W1-evidence");
 mkdirSync(root, { recursive: true });
@@ -333,6 +335,7 @@ writeFileSync(
 
 const fmt = (x: number | null | undefined) =>
   x === null || x === undefined ? "not measured" : x.toFixed(2);
+const owner = readOwnerResult(root);
 const lines = [
   "# W1 Director harness report",
   "",
@@ -421,9 +424,9 @@ const lines = [
   "",
   "Text checks are lexical guardrails, not proof of narrative truth. The fuzz claim concerns the enforced schema and domain rules. Model prompts, voice quality, implied knowledge and invented natural-language details remain fallible and are assessed diagnostically and by the owner.",
   "",
-  "Fable's six W0 fixes and lower-severity followups are closed in the preceding W0 commit. Owner blind reading remains pending. Nothing is labelled felt.",
+  `Fable's six W0 fixes and lower-severity followups are closed in the preceding W0 commit. ${ownerReadLine(owner)}${owner ? "" : " Nothing is labelled felt."}`,
   "",
-  `W1 engineering decision: ${complete && judgeComplete && calibration?.passed && !kill ? "PASS — required sample, character diagnostic, deterministic audit and rejection gate complete. Proceed to W5; owner blind read remains pending." : kill ? "STOP — rejection kill rule exceeded; do not begin W5." : "INCOMPLETE — do not begin W5 until all required measurements finish."}`,
+  `W1 engineering decision: ${complete && judgeComplete && calibration?.passed && !kill ? `PASS — required sample, character diagnostic, deterministic audit and rejection gate complete. Proceed to W5; ${owner ? "owner blind read recorded" : "owner blind read remains pending"}.` : kill ? "STOP — rejection kill rule exceeded; do not begin W5." : "INCOMPLETE — do not begin W5 until all required measurements finish."}`,
   "",
 ];
 writeFileSync(pathResolve("docs/waves/W1-report.md"), lines.join("\n"));
