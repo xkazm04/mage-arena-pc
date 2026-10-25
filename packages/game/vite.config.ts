@@ -6,6 +6,7 @@ import { campApi } from "./server/api.ts";
 const root = fileURLToPath(new URL(".", import.meta.url));
 const assets = resolve(root, "../../assets");
 const uiKit = resolve(assets, "accepted/covenant/ui");
+const pkgs = resolve(root, "..");
 function campServer(): Plugin {
   return {
     name: "camp-sidecar",
@@ -96,6 +97,14 @@ export default defineConfig({
   root,
   publicDir: "public",
   plugins: [campServer()],
+  // @mage/* come from this checkout, not node_modules links (longer subpaths first).
+  resolve: {
+    alias: [
+      { find: /^@mage\/core\/arena$/, replacement: resolve(pkgs, "core/src/arena/index.ts") },
+      { find: /^@mage\/core$/, replacement: resolve(pkgs, "core/src/index.ts") },
+      { find: /^@mage\/director$/, replacement: resolve(pkgs, "director/src/index.ts") },
+    ],
+  },
   server: { host: "127.0.0.1", port: 5173, strictPort: true },
   build: { outDir: "../../dist/game", emptyOutDir: true },
 });

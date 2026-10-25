@@ -16,6 +16,11 @@
     "types": [
       "vite/client"
     ],
+    "paths": {
+      "@mage/core": ["../../packages/core/src/index.ts"],
+      "@mage/core/arena": ["../../packages/core/src/arena/index.ts"],
+      "@mage/director": ["../../packages/director/src/index.ts"]
+    },
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
     "noEmit": true
