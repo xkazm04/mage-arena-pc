@@ -1,6 +1,7 @@
 import { Graphics } from "pixi.js";
 import { request } from "../season-api.ts";
 import { colours } from "../ui/kit.ts";
+import { nightStatus } from "../night-status.ts";
 import type { GameShell } from "../game-shell.ts";
 
 export function listen(s: GameShell) {
@@ -103,19 +104,20 @@ export function listen(s: GameShell) {
         ? "A Knowing is yours. It waits in your journal."
         : "The camp has gone quiet. No new Knowing tonight."
       : `${n.clues} / ${s.view.listeningRules.requiredClues} fragments heard`;
-    progress.text = `${n.alerts} moments exposed to the Vigil${n.done ? "  /  The night is complete" : ""}`;
+    const night = n.done ? nightStatus({ nightFinished: true, night: s.view.night }) : null;
+    progress.text = `${n.alerts} moments exposed to the Vigil${night ? `  /  ${night.hint ?? "The night is complete"}` : ""}`;
     if (n.done) {
       s.held = false;
       const b = u.buttons.find((b) => b.id === "listen-hold");
       if (b) {
         b.hold = undefined;
         b.activate = () => void s.command({ type: "dawn" });
-        b.label = "Meet the morning";
+        b.label = night!.label;
         b.root.destroy({ children: true });
         u.buttons = u.buttons.filter((x) => x !== b);
         u.button(
           "dawn",
-          "Meet the morning",
+          night!.label,
           1360,
           946,
           464,

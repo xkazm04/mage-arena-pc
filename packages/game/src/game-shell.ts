@@ -23,6 +23,7 @@ import { camp, command, visit } from "./screens/camp.ts";
 import { calendar } from "./screens/calendar.ts";
 import { cards, castDetails, castJournal } from "./screens/journal.ts";
 import { control, listen } from "./screens/listen.ts";
+import { isNightChanged } from "./night-status.ts";
 import { letterBoard, parley, speak, type Moment } from "./screens/parley.ts";
 import { seasonAction, trial } from "./screens/trial.ts";
 import { compose } from "./screens/compose.ts";
@@ -190,7 +191,8 @@ export class GameShell {
       const changed =
         next.revision !== this.view.revision ||
         next.settling !== this.view.settling ||
-        next.nightFinished !== this.view.nightFinished;
+        next.nightFinished !== this.view.nightFinished ||
+        isNightChanged(this.view.night, next.night);
       this.view = next;
       if (changed && this.nav.isLive(this.ui.screen))
         this.nav.refresh(this.ui.screen);

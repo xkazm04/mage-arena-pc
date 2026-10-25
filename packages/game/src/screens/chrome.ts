@@ -3,6 +3,7 @@ import { DailyClock } from "../ui/daily-clock.ts";
 import { backdrop } from "../ui/backdrop.ts";
 import { sigil } from "../ui/artwork.ts";
 import { colours } from "../ui/kit.ts";
+import { nightStatus } from "../night-status.ts";
 import type { GameShell } from "../game-shell.ts";
 
 export const friendly = (text: string) =>
@@ -175,7 +176,14 @@ export function timeFooter(s: GameShell) {
     colours.gold,
     480,
   );
-  u.text("Travel freely between places", 946, 963, 24, colours.muted, 480);
+  u.text(
+    (v.slot === "night" && nightStatus(v).hint) || "Travel freely between places",
+    946,
+    963,
+    24,
+    colours.muted,
+    480,
+  );
   if (v.season.due === "trial")
     u.button(
       "trial-summons",
@@ -209,20 +217,20 @@ export function timeFooter(s: GameShell) {
       () => s.listen(),
       { subtitle: "Return to the tent flap" },
     );
-  else
+  else {
+    const dawn = v.nightFinished ? nightStatus(v) : null;
     u.button(
-      v.nightFinished ? "dawn" : "wait",
-      v.nightFinished ? "Meet the morning" : `Let ${v.slot} pass`,
+      dawn ? "dawn" : "wait",
+      dawn ? dawn.label : `Let ${v.slot} pass`,
       1500,
       892,
       324,
       134,
-      () => void s.command({ type: v.nightFinished ? "dawn" : "wait" }),
+      () => void s.command({ type: dawn ? "dawn" : "wait" }),
       {
-        subtitle: v.nightFinished
-          ? "Read the Hollow Board"
-          : "Wait until the next phase",
-        disabled: v.settling || v.parley.pending,
+        subtitle: dawn ? dawn.subtitle : "Wait until the next phase",
+        disabled: v.settling || v.parley.pending || (dawn !== null && !dawn.enabled),
       },
     );
+  }
 }
