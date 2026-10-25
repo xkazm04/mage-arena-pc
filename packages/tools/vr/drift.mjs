@@ -1,6 +1,8 @@
 // Pin drift report: what this PC repo changed since the commit VR pinned (mage-arena-vr apps/vr/data/PINNED.json).
-// Node built-ins only; git via execFileSync. `--vectors` also replays VR's conformance vectors against PC HEAD.
-//   npm run vr:drift [-- --vr <path>] [--vectors] [--json]
+// Node built-ins only; git via execFileSync. `--vectors` also replays VR's conformance vectors against PC HEAD (the
+// raw report); `--triage` replays them again with the PC-only event kinds masked and groups the failures by cause
+// (triage.mjs); `--fail-on-unexplained` (implies --triage) exits 1 while any group is unexplained.
+//   npm run vr:drift [-- --vr <path>] [--vectors] [--triage] [--fail-on-unexplained] [--json]
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -8,6 +10,7 @@ import { join } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, URL } from 'node:url';
 import { cliMain, renderDiff } from './harness.mjs';
+import { loadDivergences, renderTriage, triage } from './triage.mjs';
 
 export const DEFAULT_VR = 'C:/Users/kazda/kiro/mage-arena-vr';
 export const WATCHED = ['packages/core/src/arena', 'packages/core/scripts', 'docs/design/reconciled/data'];
@@ -72,12 +75,23 @@ export function driftReport({ pcRoot = defaultPc, vrRoot = DEFAULT_VR, head = 'H
   };
 }
 
-/** Replays VR's conformance vectors against this repo's kernel (the working tree, which is HEAD when clean). */
-export async function vectorsReport(vrRoot = DEFAULT_VR) {
+/**
+ * Replays VR's conformance vectors against this repo's kernel (the working tree, which is HEAD when clean). `results`
+ * are always the raw replay; with `triage`, `triage` adds the masked replay's grouped report beside it.
+ */
+export async function vectorsReport(vrRoot = DEFAULT_VR, { triage: withTriage = false } = {}) {
   const { loadKernel, readConformanceVectors, replayConformance } = await import('./conformance.mjs');
   const kernel = await loadKernel();
-  const results = readConformanceVectors(vrRoot).map((v) => replayConformance(kernel, v));
-  return { total: results.length, passed: results.filter((r) => r.pass).length, results };
+  const vectors = readConformanceVectors(vrRoot);
+  const results = vectors.map((v) => replayConformance(kernel, v));
+  const report = { total: results.length, passed: results.filter((r) => r.pass).length, results };
+  if (withTriage) {
+    const divergences = loadDivergences();
+    const drivers = (rs) => rs.map((r, i) => ({ ...r, driver: vectors[i].driver }));
+    const masked = vectors.map((v) => replayConformance(kernel, v, { maskEventKinds: divergences.mask }));
+    report.triage = triage(drivers(results), drivers(masked), divergences);
+  }
+  return report;
 }
 
 export function renderText(report) {
@@ -97,19 +111,24 @@ export function renderText(report) {
   if (report.vectors) {
     const v = report.vectors;
     lines.push('');
-    lines.push(`Conformance vectors against PC HEAD: ${v.passed}/${v.total} pass`);
-    for (const r of v.results) {
-      lines.push(r.pass ? `  pass  ${r.name}` : `  diff  ${r.name}: ${renderDiff(r.record)}`);
+    if (v.triage) lines.push(...renderTriage(v.triage));
+    else {
+      lines.push(`Conformance vectors against PC HEAD: ${v.passed}/${v.total} pass`);
+      for (const r of v.results) {
+        lines.push(r.pass ? `  pass  ${r.name}` : `  diff  ${r.name}: ${renderDiff(r.record)}`);
+      }
     }
   }
   return lines.join('\n');
 }
 
 export function parseArgs(argv) {
-  const opts = { vr: DEFAULT_VR, vectors: false, json: false };
+  const opts = { vr: DEFAULT_VR, vectors: false, json: false, triage: false, failOnUnexplained: false };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--vectors') opts.vectors = true;
+    else if (arg === '--triage') opts.vectors = opts.triage = true;
+    else if (arg === '--fail-on-unexplained') opts.vectors = opts.triage = opts.failOnUnexplained = true;
     else if (arg === '--json') opts.json = true;
     else if (arg === '--vr') {
       opts.vr = argv[++i];
@@ -120,13 +139,17 @@ export function parseArgs(argv) {
   return opts;
 }
 
+/** 1 when --fail-on-unexplained is set and the triage left an unexplained group, else 0. */
+export const exitCodeFor = (report, opts) => (opts.failOnUnexplained && report.vectors?.triage?.unexplained.length ? 1 : 0);
+
 async function main() {
   let opts;
   try {
     opts = parseArgs(process.argv.slice(2));
     const report = driftReport({ vrRoot: opts.vr });
-    if (opts.vectors) report.vectors = await vectorsReport(opts.vr);
+    if (opts.vectors) report.vectors = await vectorsReport(opts.vr, { triage: opts.triage });
     process.stdout.write(`${opts.json ? JSON.stringify(report, null, 2) : renderText(report)}\n`);
+    process.exitCode = exitCodeFor(report, opts);
   } catch (err) {
     process.stderr.write(`vr:drift: ${err.message}\n`);
     process.exitCode = 2;

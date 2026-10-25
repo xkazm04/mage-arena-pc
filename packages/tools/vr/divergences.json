@@ -1,0 +1,5 @@
+{
+  "note": "vr:drift --triage only (the default --vectors report is raw). mask: PC ArenaEvent kinds (packages/core/src/arena/types.ts) that VR's pinned kernel never records - absent from every VR conformance vector's events, which the replay re-checks per vector. causes: known PC-vs-VR differences, each {id, cr, note, match: {driver?, field, tick?}} with field index-normalised (actors[].x); add one only when its cause is verified.",
+  "mask": ["release", "stagger", "phase"],
+  "causes": []
+}

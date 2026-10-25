@@ -15,7 +15,8 @@ exchange: one file per VR CR, recording what PC decided and what it did.
    becomes `ported`.
 5. **Re-pinned (VR).** VR moves `apps/vr/data/PINNED.json` to a PC commit that carries the port (or that it has read
    and accepted). Status becomes `re-pinned`, with the new pin commit. `npm run vr:drift` shows what PC changed since
-   the current pin.
+   the current pin. Before a re-pin, `npm run vr:drift -- --triage` groups the conformance-vector diffs by cause
+   (raw and masked pass counts side by side); its unexplained groups are what to read before VR moves the pin.
 6. **Addenda (PC to VR).** Where PC plays a number differently from VR's canonical value, PC answers with an addendum:
    `npm run vr:tuning-return -- --evidence <census json> --out <file>` writes the overlay deviations
    (`packages/core/src/arena/data/school-balance.pc.json`) next to VR's canonical values, with census evidence. The
