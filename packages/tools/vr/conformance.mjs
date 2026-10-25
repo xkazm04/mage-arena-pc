@@ -246,14 +246,21 @@ function eventDetail(diff, expected, actualEvents) {
 /**
  * Replays one VR conformance vector. Returns { name, pass, diff, record, checkpoints }: `record` is the first mismatch as
  * the harness Diff, `diff` its { tick, when, field, detail } view.
+ * `maskEventKinds` (vr:drift --triage only; the default replay masks nothing): PC event kinds left out of the exported
+ * view (the event list, its prefix and eventCount), as kinds VR's kernel never records. Kernel state is never filtered.
+ * A mask that names a kind the vector itself carries is a mismatch: it may only hide what VR cannot have recorded.
  */
-export function replayConformance(k, v) {
+export function replayConformance(k, v, { maskEventKinds = [] } = {}) {
   const result = { name: v.name, pass: false, diff: null, record: null, checkpoints: v.checkpoints?.length ?? 0 };
   let tick = 0, when = 'setup';
   try {
     const tol = v.tolerance ?? TOLERANCE;
     if (!(tol.relative <= 1e-6) || !(tol.absolute <= 1e-9)) throw new Mismatch(0, 'setup', 'tolerance', 'looser than 1e-6 / 1e-9');
+    const mask = new Set(maskEventKinds);
+    const carried = maskEventKinds.find((kind) => v.events.some((e) => e.kind === kind));
+    if (carried) throw new Mismatch(0, 'setup', 'mask', `mask hides kind ${carried} that the vector carries`);
     const ctx = createContext(k, v);
+    const events = () => (mask.size ? ctx.state.events.filter((e) => !mask.has(e.kind)) : ctx.state.events);
     const vectorEvents = v.events;
     let cursor = 0;
     const consume = (atTick, atWhen) => {
@@ -262,22 +269,24 @@ export function replayConformance(k, v) {
       if (row.tick > atTick) return;
       if (row.tick !== atTick || row.when !== atWhen) throw new Mismatch(atTick, atWhen, 'checkpoint', `next vector row is tick ${row.tick} ${row.when}`);
       const state = ctx.state;
+      const seen = events();
       let actual;
       try {
         actual = snapshot(state);
       } catch (err) {
         throw new Mismatch(atTick, atWhen, 'export', `PC state has no field the vector reads: ${err.message}`);
       }
+      actual.eventCount = seen.length;
       if (ctx.games) actual.games = exportGames(ctx.games);
       // The event prefix is read before the row (the C++ reads eventCount first): the same verdict, but a diff names
       // the first event that differs instead of only the count.
-      const prefix = firstDiff(vectorEvents.slice(0, row.eventCount), exportEvents(state.events.slice(0, row.eventCount)), 'events', tol);
-      if (prefix) throw new Mismatch(atTick, atWhen, prefix.path, eventDetail(prefix, vectorEvents, state.events), prefix);
+      const prefix = firstDiff(vectorEvents.slice(0, row.eventCount), exportEvents(seen.slice(0, row.eventCount)), 'events', tol);
+      if (prefix) throw new Mismatch(atTick, atWhen, prefix.path, eventDetail(prefix, vectorEvents, seen), prefix);
       const expectedRow = { ...row };
       delete expectedRow.when;
       const d = firstDiff(expectedRow, actual, '', tol);
-      if (d && d.path === 'eventCount' && state.events.length > row.eventCount) {
-        throw new Mismatch(atTick, atWhen, d.path, `${d.detail}; first extra PC event ${show(exportEvents([state.events[row.eventCount]])[0])}`, d);
+      if (d && d.path === 'eventCount' && seen.length > row.eventCount) {
+        throw new Mismatch(atTick, atWhen, d.path, `${d.detail}; first extra PC event ${show(exportEvents([seen[row.eventCount]])[0])}`, d);
       }
       if (d) throw new Mismatch(atTick, atWhen, d.path, d.detail, d);
       cursor++;
@@ -299,8 +308,9 @@ export function replayConformance(k, v) {
     }
     tick = v.ticks;
     if (cursor !== v.checkpoints.length) throw new Mismatch(tick, 'end', 'checkpoints', `unconsumed: ${cursor} of ${v.checkpoints.length}`);
-    const events = firstDiff(vectorEvents, exportEvents(ctx.state.events), 'events', tol);
-    if (events) throw new Mismatch(tick, 'events', events.path, eventDetail(events, vectorEvents, ctx.state.events), events);
+    const all = events();
+    const last = firstDiff(vectorEvents, exportEvents(all), 'events', tol);
+    if (last) throw new Mismatch(tick, 'events', last.path, eventDetail(last, vectorEvents, all), last);
     result.pass = true;
   } catch (err) {
     const m = err instanceof Mismatch ? err : new Mismatch(tick, when, 'kernel', err?.message ?? String(err));
