@@ -171,6 +171,15 @@ export function rankPower(rank: number): number {
   const power = progression.spellRanks.power;
   return power[Math.min(Math.max(1, rank), power.length) - 1]!;
 }
+/** An actor's rank steps (D1 6.10): the mean, over its ranked rows, of its power rank above 1 (rank 5 counts as rank 4, its extra
+ * is the ultimate form), so with power rising 0.1 a rank it is the mean power gain in tenths. The rows are mage-build.ts buildRows
+ * (a Fire/Air actor's bolt and four slots, else its Water composition's bolt and line rows), re-listed here because this module
+ * stays leaf-ward. 0 for an unranked actor and under canonical balance. Read only by the off-by-default D1 6.10 levers. */
+export function rankSteps(a: Actor, state?: ArenaState): number {
+  if (!live(state) || !a.spellRanks) return 0;
+  const rows = a.schoolState ? [a.schoolState.loadout.bolt, ...a.schoolState.loadout.slots] : ['bolt:0', ...a.water.composition.lines.flatMap(line => [1, 2, 3, 4].map(tier => `${line}:${tier}`))];
+  return rows.reduce((sum, key) => sum + Math.min(spellRank(a, key, state), maxSpellRank - 1) - 1, 0) / rows.length;
+}
 /** The rank-5 ultimate form of a Fire/Air row, when one is registered (six in WP3: one signature row per archetype per school). */
 export function ultimateFor(spellId: string, rank: number): UltimateForm | undefined {
   return rank >= maxSpellRank && Object.hasOwn(progression.spellRanks.ultimates, spellId) ? progression.spellRanks.ultimates[spellId] : undefined;

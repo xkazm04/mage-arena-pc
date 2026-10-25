@@ -10,14 +10,15 @@ import { buildRivalLabel, makeBuildRival, makeSchoolRival, type SchoolRivals } f
 import { rivalBuilds, type RivalBuild } from './archetypes.ts';
 import { applyRivalHp, beginRivalWave, bindRival, enableRivalPhases, rivals } from './rival-phases.ts';
 import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks, type SpellRanks } from './types.ts';
-import { enemyHpMult, setSpellRanks, validEnemyLevel } from './progression.ts';
+import { enemyHpMult, rankSteps, setSpellRanks, validEnemyLevel } from './progression.ts';
+import { exchangeReachProblems, setExchangeReach, setReachSteps, type ExchangeReach } from './exchange.ts';
 import { defaultDifficulty, validateTuning, type CombatTuning } from './tuning.ts';
 import { applyOpponentMage, opponentMageProblems, type OpponentMage } from './mage-build.ts';
 export const tiro = arenaTiers.tiers[0];
 /** Anonymous Tiro mage entrants; presentation matches this label, so it lives here once. */
 export const tiroEntrantLabel = 'Tiro entrant · Water proxy';
 export interface GamesResult { kind: 'missio' | 'champion'; wavesCleared: number; gold: number; renown: number; finalReached: boolean; finalWon: boolean }
-export interface Games { schoolRivals?: SchoolRivals; /** The authored rival build on its wave (archetypes.ts); present only when set. */ rivalBuild?: string; /** Regular enemies' level (progression.ts); present only when set. */ enemyLevel?: number; /** The opponent-mage lever (mage-build.ts); present only when set. */ opponentMage?: OpponentMage; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
+export interface Games { schoolRivals?: SchoolRivals; /** The authored rival build on its wave (archetypes.ts); present only when set. */ rivalBuild?: string; /** Regular enemies' level (progression.ts); present only when set. */ enemyLevel?: number; /** The opponent-mage lever (mage-build.ts); present only when set. */ opponentMage?: OpponentMage; /** The D1 6.10 rank-defence lever; present only when set. */ rankDefence?: RankDefence; state: ArenaState; player: Actor; wave: number; phase: 'active' | 'intermission' | 'lost' | 'complete'; wavesCleared: number; waveStartTick: number; result?: GamesResult; spawnLog: { wave: number; id: number; kind: string; x: number; y: number }[] }
 export interface GamesPlayer { id: string; name: string; school: 'water'; ranks: Ranks; mastery: number; hpPenalty: number; staminaPenalty: number }
 /** `tuning` is a Lab what-if: omitted, the state carries no tuning. `difficulty` paces the opponents for the whole Games (the player's pace is fixed).
  * `options.schoolRivals` turns the mage duelists into Fire/Air rivals (school-rivals.ts); omitted, the Water proxies.
@@ -28,8 +29,11 @@ export interface GamesPlayer { id: string; name: string; school: 'water'; ranks:
  * `rivalBuild` (a rival-builds.json id) spawns that authored build in place of the rival on the build's wave; in 'named' mode
  * Brennic and Lio play the builds rivals.json names, and the named phases bind a build of the named rival's school and wave.
  * `opponentMage` (D1 4.3/6.8 lever, mage-build.ts) levels every opponent mage at spawn: `level` its HP as enemyLevel does a regular
- * enemy's, `averageRank` its rows' spell ranks, never below its own. Omitted, opponent mages spawn exactly as today. */
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false; enemyLevel?: number; spellRanks?: SpellRanks; rivalBuild?: string; opponentMage?: OpponentMage } = {}): Games {
+ * enemy's, `averageRank` its rows' spell ranks, never below its own. Omitted, opponent mages spawn exactly as today.
+ * Two D1 6.10 levers (a reading: only the week census sets them; omitted, the Games plays exactly as today), each read off the rank
+ * steps a mage gained above its authored build (gainedRanks): `exchangeReach` grows the exchange window's reach with the defender's
+ * steps (exchange.ts), `rankDefence` grows every mage's HP with its own steps (rankDefenceHpMult). */
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false; enemyLevel?: number; spellRanks?: SpellRanks; rivalBuild?: string; opponentMage?: OpponentMage; exchangeReach?: ExchangeReach; rankDefence?: RankDefence } = {}): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
   if (validateComposition(composition).length) throw Error('Invalid composition');
   if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
@@ -39,9 +43,13 @@ export function createGames(seed: number, composition: Composition = presets[0]!
     if (options.opponentMage.level !== undefined && !validEnemyLevel(options.opponentMage.level)) throw Error('Invalid enemy level');
     if (opponentMageProblems(options.opponentMage).length) throw Error('Invalid opponent mage');
   }
+  if (options.exchangeReach !== undefined && exchangeReachProblems(options.exchangeReach).length) throw Error('Invalid exchange reach');
+  if (options.rankDefence !== undefined && rankDefenceProblems(options.rankDefence).length) throw Error('Invalid rank defence');
   const state = createArena(seed, options.unpaced ? undefined : difficulty), player = addMage(state, 0, runtime.games.playerSpawn, snapshot?.name ?? 'Cassia', snapshot?.ranks); player.water = newWaterState(composition);
   if (options.balance) state.balance = options.balance;
+  if (options.exchangeReach) setExchangeReach(state, options.exchangeReach);
   setSpellRanks(player, options.spellRanks);
+  gainedRanks(state, player, 0, options.rankDefence);
   if (tuning) { state.tuning = validateTuning(tuning); player.poise *= state.tuning.playerPoise; }
   if (snapshot) { player.hp = Math.max(1, player.hp - snapshot.hpPenalty); player.maxStamina = Math.max(1, player.maxStamina - snapshot.staminaPenalty); player.stamina = player.maxStamina; }
   if (referencePlayer) attachMageAI(player, runtime.games.referenceCompetence);
@@ -50,6 +58,7 @@ export function createGames(seed: number, composition: Composition = presets[0]!
   if (options.enemyLevel !== undefined) games.enemyLevel = options.enemyLevel;
   if (options.rivalBuild !== undefined) games.rivalBuild = options.rivalBuild;
   if (options.opponentMage !== undefined) games.opponentMage = { ...options.opponentMage };
+  if (options.rankDefence !== undefined) games.rankDefence = { ...options.rankDefence };
   if (options.schoolRivals === 'named' && options.rivalPhases !== false) enableRivalPhases(state);
   spawnWave(games); return games;
 }
@@ -80,12 +89,37 @@ function spawnWave(g: Games): void {
         if (runtime.games.rivalPlans) attachRivalPlan(actor);
         if (build) { kind = `${makeBuildRival(actor, build, buildRivalLabel(build, g.schoolRivals === 'named' && rivals.some(r => r.wave === g.wave && r.build === build.id)))} ${spawn.competence}`; if (g.schoolRivals === 'named') applyRivalHp(actor, g.wave); bindRival(g.state, actor, g.wave); }
         else if (g.schoolRivals) { kind = `${makeSchoolRival(actor, g.schoolRivals, g.wave)} ${spawn.competence}`; if (g.schoolRivals === 'named') applyRivalHp(actor, g.wave); bindRival(g.state, actor, g.wave); }
+        const authoredSteps = rankSteps(actor, g.state);
         if (g.opponentMage) applyOpponentMage(actor, g.opponentMage, g.state);
+        gainedRanks(g.state, actor, authoredSteps, g.rankDefence);
       }
       if (g.state.tuning) actor.poise *= g.state.tuning.opponentPoise;
       g.spawnLog.push({ wave: g.wave + 1, id: actor.id, kind, ...pos }); index++;
     }
   }
+}
+/** The rank-defence lever (D1 6.10, a reading only): rank power grows a mage's defence as well as its damage. Each rank step it
+ * gained (gainedRanks) adds `hpPerRankStep` to its HP, so 0.1 mirrors the rank power table's +0.1 a rank: two mages that gained the
+ * same ranks then take as long to fell each other as at rank 1. An HP step, not an incoming-damage cut: it is set at spawn and
+ * leaves the shared hit path (contact.ts, kernel.ts) untouched. */
+export interface RankDefence { hpPerRankStep: number }
+export function rankDefenceProblems(candidate: unknown): string[] {
+  if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) return ['Rank defence is not an object.'];
+  const c = candidate as Record<string, unknown>;
+  return [...Object.keys(c).filter(k => k !== 'hpPerRankStep').map(k => `Rank defence: unknown key ${k}.`),
+    ...(typeof c.hpPerRankStep === 'number' && c.hpPerRankStep > 0 && c.hpPerRankStep <= 1 ? [] : [`Rank defence: hpPerRankStep ${String(c.hpPerRankStep)} is not in (0, 1].`])];
+}
+/** The HP multiplier the lever gives a mage that gained `steps` rank steps: 1 + hpPerRankStep x steps. */
+export const rankDefenceHpMult = (steps: number, spec: RankDefence): number => 1 + spec.hpPerRankStep * steps;
+/** A mage's gained rank steps: its rankSteps (progression.ts) above `authoredSteps`, the steps its authored build carried at spawn
+ * (0 for the player, whose ranks are all earned; an opponent mage's gain is the opponentMage lever's). They feed both D1 6.10 levers:
+ * the exchange reach records them (only in a state that has one) and the rank defence scales HP by them. No lever, or no gain,
+ * leaves the actor exactly as spawned. */
+function gainedRanks(state: ArenaState, a: Actor, authoredSteps: number, defence: RankDefence | undefined): void {
+  const steps = rankSteps(a, state) - authoredSteps;
+  setReachSteps(state, a, steps);
+  const mult = defence ? rankDefenceHpMult(steps, defence) : 1;
+  if (mult !== 1) a.hp = a.maxHp = a.maxHp * mult;
 }
 /** The build that replaces this wave's rival: the `rivalBuild` option on its own wave, else (named mode) the named rival's build. */
 function waveBuild(g: Games): RivalBuild | undefined {

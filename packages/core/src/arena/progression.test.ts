@@ -14,7 +14,7 @@ import { adjustedSpell, defaultTuning, paceFor, warningFloor } from './tuning.ts
 import { difficulties, idleInput, type Actor, type ArenaState, type Ranks, type SlotSchool } from './types.ts';
 import {
   agileRecoveryS, agilityCastMult, agilityDrainMult, agilityPerfectWindowAddS, agilityRecoveryMult, enemyHpMult, maxEnemyLevel, progression,
-  rankPower, rankedWaterSpell, setSpellRanks, spellRankKeys, spellRanksProblems, ultimateFor, waterRankKey,
+  rankPower, rankSteps, rankedWaterSpell, setSpellRanks, spellRankKeys, spellRanksProblems, ultimateFor, waterRankKey,
 } from './progression.ts';
 
 const ranksAt = (agility?: number): Ranks => ({ vigor: 1, focus: 1, nerve: 1, ...(agility === undefined ? {} : { agility }) });
@@ -193,6 +193,21 @@ describe('spell ranks: ranks 1-4 power only, rank 5 = rank 4 power plus an ultim
     const a = mage(createArena(1)); setSpellRanks(a, {}); expect('spellRanks' in a).toBe(false);
     expect(() => setSpellRanks(a, { fire_lance: 0 })).toThrow(/not an integer/);
     expect(spellRankKeys).toContain('mirror:4');
+  });
+});
+
+describe("rank steps (D1 6.10): the mean power rank above 1 over the actor's rows", () => {
+  it('0 unranked; a Fire actor averages its bolt and four slots; rank 5 counts as 4; canonical reads 0', () => {
+    const state = createArena(1), fire = schoolMage(state, 'fire'), { bolt, slots } = fire.schoolState!.loadout;
+    expect(rankSteps(fire, state)).toBe(0);
+    setSpellRanks(fire, { [bolt]: 3, [slots[0]!]: 5 });
+    expect(rankSteps(fire, state)).toBeCloseTo((2 + 3) / 5, 12);
+    state.balance = 'canonical'; expect(rankSteps(fire, state)).toBe(0);
+  });
+  it('a Water actor averages the bolt and every line row of its composition', () => {
+    const state = createArena(1), water = mage(state), rows = 1 + water.water.composition.lines.length * 4;
+    setSpellRanks(water, { 'bolt:0': 2, [`${water.water.composition.lines[0]}:1`]: 4 });
+    expect(rankSteps(water, state)).toBeCloseTo((1 + 3) / rows, 12);
   });
 });
 

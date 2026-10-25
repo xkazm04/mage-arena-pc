@@ -4,7 +4,7 @@
 import { describe, expect, it } from 'vitest';
 import { addMage, createArena, resolveHit, resetWave, stateHash, ticks } from './kernel.ts';
 import { newSchoolState, schoolPresets } from './schools.ts';
-import { exchangeOff, exchangeProblems, exchangeRule, type ExchangeRule } from './exchange.ts';
+import { exchangeOff, exchangeProblems, exchangeReachM, exchangeReachProblems, exchangeRule, setExchangeReach, setReachSteps, type ExchangeRule } from './exchange.ts';
 import balance from './data/school-balance.pc.json' with { type: 'json' };
 import type { Actor, ArenaState, Hit } from './types.ts';
 
@@ -92,5 +92,31 @@ describe('exchange windows (D1 4.1 A)', () => {
     expect(canonical.contacts).toEqual([10, 10, 10, 10]);
     expect(off.contacts).toEqual([10, 10, 10, 10]);
     expect(exchangeRule).toEqual(balance.exchange);
+  });
+});
+
+describe('rank-scaled reach (D1 6.10 lever, off by default)', () => {
+  it("a state without a reach plays closeRangeM; with one, a defender's recorded rank steps widen its window both ways", () => {
+    const plain = duel({ distanceM: rule.closeRangeM + 0.5 });
+    expect(exchangeReachM(plain.state, rule, plain.defender)).toBe(rule.closeRangeM);
+    setReachSteps(plain.state, plain.defender, 2);
+    expect(exchangeReachM(plain.state, rule, plain.defender), 'no reach on the state: steps are not even recorded').toBe(rule.closeRangeM);
+
+    const ranked = duel({ distanceM: rule.closeRangeM + 0.5 });
+    setExchangeReach(ranked.state, { perRankStepM: 0.5 }); setReachSteps(ranked.state, ranked.defender, 2);
+    expect(exchangeReachM(ranked.state, rule, ranked.defender)).toBe(rule.closeRangeM + 1);
+    expect(exchangeReachM(ranked.state, rule, ranked.attacker), 'an unrecorded actor keeps closeRangeM').toBe(rule.closeRangeM);
+    expect(blow(ranked.state, ranked.attacker, ranked.defender).guarded).toBe(false);
+    expect(ranked.defender.exchange, "the 5.5 m hit opens the ranked defender's window").toBeDefined();
+    expect(blow(ranked.state, ranked.attacker, ranked.defender).guarded).toBe(true);
+    ranked.attacker.pos.x -= 1;
+    expect(blow(ranked.state, ranked.attacker, ranked.defender).guarded, '6.5 m is beyond its 6 m reach').toBe(false);
+  });
+  it('refuses a malformed reach', () => {
+    expect(exchangeReachProblems({ perRankStepM: 1 })).toEqual([]);
+    expect(exchangeReachProblems({ perRankStepM: 0 })).toHaveLength(1);
+    expect(exchangeReachProblems({ perRankStepM: 6 })).toHaveLength(1);
+    expect(exchangeReachProblems({ perRankStepM: 1, extra: 1 })).toEqual(['Exchange reach: unknown key extra.']);
+    expect(() => setExchangeReach(createArena(1), { perRankStepM: -1 })).toThrow(/perRankStepM/);
   });
 });

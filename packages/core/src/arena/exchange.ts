@@ -7,6 +7,8 @@
 // Gate: the numbers live in the PC overlay (school-balance.pc.json `exchange`); a state that runs balance 'canonical'
 // (CR-002/CR-007 parity) ignores them, and a window opens only in a contact a Fire/Air actor takes part in, so Water-only
 // states (goldens, the default census digests) never carry the key and step exactly as before.
+// D1 6.10 (a reading, off by default): `setExchangeReach` lets the window's reach grow with the defender's gained spell ranks; a
+// state without one plays closeRangeM exactly as before.
 // Imports stay leaf-ward (data, types) so kernel.ts can read it.
 import balance from './data/school-balance.pc.json' with { type: 'json' };
 import { combat } from './data.generated.ts';
@@ -48,13 +50,43 @@ export function exchangeOff<T>(body: () => T): T {
   try { return body(); } finally { Object.assign(exchangeRule, saved); }
 }
 
+/** The rank-scaled reach (D1 6.10 lever, a reading only): per state, the metres the window's reach grows per rank step a defender
+ * has gained (games.ts records each mage's steps at spawn: progression.ts rankSteps above its authored build), so a ranked
+ * defender's window opens on and guards blows from further out. Kept outside the hashed state like the arena hooks; set only by
+ * the createGames `exchangeReach` option. */
+export interface ExchangeReach { perRankStepM: number }
+const reachByState = new WeakMap<ArenaState, { perRankStepM: number; steps: Map<number, number> }>();
+/** Problems with an `exchangeReach` option: exactly `perRankStepM`, a finite number in (0, 5] m. */
+export function exchangeReachProblems(candidate: unknown): string[] {
+  if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) return ['Exchange reach is not an object.'];
+  const c = candidate as Record<string, unknown>;
+  return [...Object.keys(c).filter(k => k !== 'perRankStepM').map(k => `Exchange reach: unknown key ${k}.`),
+    ...(typeof c.perRankStepM === 'number' && c.perRankStepM > 0 && c.perRankStepM <= 5 ? [] : [`Exchange reach: perRankStepM ${String(c.perRankStepM)} is not in (0, 5] m.`])];
+}
+export function setExchangeReach(state: ArenaState, reach: ExchangeReach): void {
+  const problems = exchangeReachProblems(reach);
+  if (problems.length) throw Error(problems.join(' '));
+  reachByState.set(state, { perRankStepM: reach.perRankStepM, steps: new Map() });
+}
+/** Record the rank steps `a` defends with under the state's reach (no reach set: nothing to record). */
+export function setReachSteps(state: ArenaState, a: Actor, steps: number): void {
+  reachByState.get(state)?.steps.set(a.id, steps);
+}
+/** The defender's window reach in this state: closeRangeM, plus perRankStepM per recorded rank step when the state has a reach. */
+export function exchangeReachM(state: ArenaState, r: ExchangeRule, defender: Actor): number {
+  const reach = reachByState.get(state);
+  return reach === undefined ? r.closeRangeM : r.closeRangeM + reach.perRankStepM * (reach.steps.get(defender.id) ?? 0);
+}
+
 const ticksOf = (seconds: number): number => Math.ceil(seconds * combat.simStepHz - 1e-9);
-const close = (r: ExchangeRule, a: Actor, b: Actor): boolean => Math.hypot(a.pos.x - b.pos.x, a.pos.y - b.pos.y) <= r.closeRangeM;
+/** Is the attacker inside the defender's window reach: closeRangeM, plus the rank-scaled reach when the state carries one. */
+const close = (state: ArenaState, r: ExchangeRule, attacker: Actor, defender: Actor): boolean =>
+  Math.hypot(attacker.pos.x - defender.pos.x, attacker.pos.y - defender.pos.y) <= exchangeReachM(state, r, defender);
 /** The share of `owner`'s blow that `target`'s window stops (undefined when no window guards it: another attacker, a blow
  * from beyond close range, an unblockable blow, the window over or its blows spent). */
 export function exchangeGuard(state: ArenaState, target: Actor, owner: Actor | undefined, family: Family): number | undefined {
   const w = target.exchange, r = rule(state);
-  return r && w && owner && family !== 'unblockable' && w.fromId === owner.id && state.tick < w.guardUntil && w.guardsLeft > 0 && close(r, owner, target) ? r.guardReduction : undefined;
+  return r && w && owner && family !== 'unblockable' && w.fromId === owner.id && state.tick < w.guardUntil && w.guardsLeft > 0 && close(state, r, owner, target) ? r.guardReduction : undefined;
 }
 /** After a contact resolved: a blow the window guarded spends one of its blows, and a clean close hit (damage through, not
  * guarded) in a contact a Fire/Air actor takes part in opens the target's window against the owner. */
@@ -62,6 +94,6 @@ export function exchangeAfterHit(state: ArenaState, target: Actor, owner: Actor 
   if (windowGuard && target.exchange) target.exchange.guardsLeft--;
   const r = rule(state);
   if (!r || !owner || owner === target || hpRemoved <= 0 || guarded || target.tags.includes('DEFEATED')) return;
-  if ((!target.schoolState && !owner.schoolState) || !close(r, owner, target)) return;
+  if ((!target.schoolState && !owner.schoolState) || !close(state, r, owner, target)) return;
   target.exchange = { fromId: owner.id, guardUntil: state.tick + ticksOf(r.guardS), guardsLeft: r.guardHits };
 }

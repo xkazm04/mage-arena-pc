@@ -1,6 +1,9 @@
 import { defaultTuning } from './tuning.ts';
 import { describe, expect, it } from 'vitest';
-import { addEnemy, addMage, advanceGames, attachMageAI, arenaGeometry, constrainToArena, competence, createArena, createGames, enemyInputs, enemyRoster, gamesResult, idleInput, mageInput, presets, queueDeathEffects, resolveHit, runFight, spawnProjectile, stepArena, stepGames, ticks, tiro } from './index.ts';
+import { addEnemy, addMage, advanceGames, attachMageAI, arenaGeometry, constrainToArena, competence, createArena, createGames, enemyInputs, enemyRoster, gamesResult, idleInput, mageInput, presets, queueDeathEffects, resolveHit, runFight, spawnProjectile, stateHash, stepArena, stepGames, ticks, tiro } from './index.ts';
+import { rivalBuilds } from './archetypes.ts';
+import { exchangeReachM, exchangeRule, type ExchangeRule } from './exchange.ts';
+import { rankDefenceHpMult, rankDefenceProblems } from './games.ts';
 const simulateEnemies = (state: ReturnType<typeof createArena>, count: number) => { for (let i = 0; i < count; i++) { stepArena(state, enemyInputs(state)); queueDeathEffects(state); } };
 describe('the full roster on common damage and movement rules', () => {
   it('spawns all eight distinct data-defined enemies and attacks', () => {
@@ -123,5 +126,37 @@ describe('Tiro lifecycle and replay', () => {
   it('seeded input policies replay exactly and stay finite', () => {
     const a = runFight(40000, 2), b = runFight(40000, 2); expect(a).toEqual(b); expect(a.finite).toBe(true);
     expect(runFight(40001, 2).hash).not.toBe(a.hash);
+  });
+});
+
+// D1 6.10 levers (a reading: only the week census sets them). Both read the rank steps a mage gained above its authored build.
+describe('createGames rankDefence and exchangeReach (D1 6.10, off by default)', () => {
+  const heavyGames = (options: Parameters<typeof createGames>[7] = {}) => createGames(40000, presets[0], rivalBuilds.fire_heavy!.wave, true, undefined, undefined, undefined, { rivalBuild: 'fire_heavy', ...options });
+  const rivalOf = (g: ReturnType<typeof createGames>) => g.state.actors.find(a => a.team !== g.player.team)!;
+  const spellRanks = { 'bolt:0': 3, [`${presets[0]!.lines[0]}:1`]: 5 };
+
+  it('rankDefence scales each mage\'s HP by its gained steps: the player by its own ranks, the rival by the opponentMage gain only', () => {
+    const plain = heavyGames({ spellRanks, opponentMage: { averageRank: 2.5 } }), defended = heavyGames({ spellRanks, opponentMage: { averageRank: 2.5 }, rankDefence: { hpPerRankStep: 0.1 } });
+    const rows = 1 + presets[0]!.lines.length * 4, playerSteps = (2 + 3) / rows;
+    expect(defended.player.maxHp).toBeCloseTo(plain.player.maxHp * (1 + 0.1 * playerSteps), 9);
+    expect(defended.player.hp).toBe(defended.player.maxHp);
+    // fire_heavy's authored ranks (Pyre 2, Sunfall 2, Brand Wrath 5 counted as 4) are not a gain; rank 2.5 lifts Pyre and the bolt to 3, Ring to 2.
+    const authored = (1 + 1 + 3) / 5, gained = (2 + 1 + 3 + 2 + 1) / 5 - authored;
+    expect(rivalOf(defended).maxHp).toBeCloseTo(rivalOf(plain).maxHp * (1 + 0.1 * gained), 9);
+    expect(rankDefenceHpMult(gained, { hpPerRankStep: 0.1 })).toBeCloseTo(1 + 0.1 * gained, 12);
+    // No gain, no change: the authored build alone, and an unranked player, spawn as today.
+    expect(stateHash(heavyGames({ rankDefence: { hpPerRankStep: 0.1 } }).state)).toBe(stateHash(heavyGames().state));
+  });
+
+  it('exchangeReach widens a gained defender\'s window and leaves a Games without gains as today; bad levers are refused', () => {
+    const g = heavyGames({ spellRanks, opponentMage: { averageRank: 2.5 }, exchangeReach: { perRankStepM: 1 } }), rule = exchangeRule as ExchangeRule;
+    expect(exchangeReachM(g.state, rule, g.player)).toBeCloseTo(rule.closeRangeM + (2 + 3) / (1 + presets[0]!.lines.length * 4), 12);
+    expect(exchangeReachM(g.state, rule, rivalOf(g))).toBeCloseTo(rule.closeRangeM + (2 + 1 + 3 + 2 + 1) / 5 - (1 + 1 + 3) / 5, 12);
+    expect(exchangeReachM(heavyGames({ spellRanks }).state, rule, g.player), 'no reach option: closeRangeM').toBe(rule.closeRangeM);
+    const run = (options: Parameters<typeof createGames>[7]) => { const r = heavyGames(options); for (let i = 0; i < 600; i++) stepGames(r); return stateHash(r.state); };
+    expect(run({ exchangeReach: { perRankStepM: 1 }, rankDefence: { hpPerRankStep: 0.1 } })).toBe(run({}));
+    expect(() => heavyGames({ exchangeReach: { perRankStepM: 0 } })).toThrow('Invalid exchange reach');
+    expect(() => heavyGames({ rankDefence: { hpPerRankStep: 2 } })).toThrow('Invalid rank defence');
+    expect(rankDefenceProblems({ hpPerRankStep: 0.05, extra: 1 })).toEqual(['Rank defence: unknown key extra.']);
   });
 });
