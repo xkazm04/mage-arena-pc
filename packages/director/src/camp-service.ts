@@ -82,6 +82,7 @@ export class CampService {
     return {
       ...campView(this.tables, this.session),
       settling: this.dawn !== null,
+      night: this.job && this.session.slot === "night" ? this.job.progress() : null,
       parley: {
         pending: this.conversation !== null,
         maxTextChars: parleyRules.maxTextChars,

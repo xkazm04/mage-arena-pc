@@ -198,3 +198,103 @@ describe("camp night lifecycle", () => {
     service.close();
   });
 });
+describe("night ledger", () => {
+  it("case 1: reports every group deciding before any group finishes", async () => {
+    const p = provider();
+    let calls = 0;
+    p.decide = (_req, abort) => {
+      calls++;
+      return new Promise((_, reject) => abort?.addEventListener("abort", () => reject(new Error("aborted"))));
+    };
+    const job = new CampNight(t, state, options(p));
+    await vi.waitFor(() => expect(calls).toBe(1));
+    const progress = job.progress();
+    expect(progress.total).toBe(groups(state).length);
+    expect(progress.decided).toBe(0);
+    expect(progress.pending).toBe(true);
+    expect(progress.plannerMode).toBe(false);
+    expect(progress.groups.map((g) => g.group)).toEqual(groups(state).map((g) => g.group));
+    expect(progress.groups.every((g) => g.state === "deciding" && g.rejected === 0)).toBe(true);
+    job.close();
+  });
+  it("case 2: one live group decided with its rejected count, the rest deciding", async () => {
+    const p = provider();
+    let calls = 0;
+    p.decide = async (req, abort) => {
+      calls++;
+      if (calls === 1)
+        return result({
+          group: req.input.group,
+          decisions: req.input.members.map((m, i) => (i ? decision(t, state, m.id, "REST") : { ...decision(t, state, m.id), intent: "KILL" })),
+        });
+      return new Promise((_, reject) => abort?.addEventListener("abort", () => reject(new Error("aborted"))));
+    };
+    const job = new CampNight(t, state, options(p));
+    await vi.waitFor(() => expect(calls).toBe(2));
+    const progress = job.progress();
+    expect(progress.decided).toBe(1);
+    expect(progress.pending).toBe(true);
+    expect(progress.groups[0]).toEqual({ group: groups(state)[0].group, state: "live", rejected: 1 });
+    expect(progress.groups.slice(1).every((g) => g.state === "deciding")).toBe(true);
+    job.close();
+  });
+  it("case 3: a spent budget marks every group budget (habit) and the night settled", async () => {
+    const job = new CampNight(t, state, options(provider(), 0));
+    await job.done;
+    const progress = job.progress();
+    expect(progress.decided).toBe(progress.total);
+    expect(progress.pending).toBe(false);
+    expect(progress.groups.every((g) => g.state === "budget")).toBe(true);
+  });
+  it("case 3b: a planner night reports planner groups in planner mode", async () => {
+    const job = new CampNight(t, state, options(new PlannerProvider(t, () => state)));
+    await job.done;
+    const progress = job.progress();
+    expect(progress.plannerMode).toBe(true);
+    expect(progress.pending).toBe(false);
+    expect(progress.groups.every((g) => g.state === "planner")).toBe(true);
+  });
+  it("case 3c: a failed live call reports error", async () => {
+    const p = provider();
+    p.decide = async () => ({ ...result(null), error: "transport-down" });
+    const job = new CampNight(t, state, options(p));
+    await job.done;
+    expect(job.progress().groups.every((g) => g.state === "error")).toBe(true);
+  });
+  it("case 4: view.night exists only during the night slot", async () => {
+    const p = provider(),
+      service = new CampService(t, options(p));
+    expect(service.view().night).toBeNull();
+    await service.command({ type: "wait" }, 0);
+    await service.command({ type: "wait" }, service.session.revision);
+    expect(service.session.slot).toBe("night");
+    await service.job!.done;
+    expect(service.view().night).toEqual(service.job!.progress());
+    expect(service.view().night?.decided).toBe(groups(state).length);
+    await service.command({ type: "wait" }, service.session.revision);
+    await service.command({ type: "dawn" }, service.session.revision);
+    expect(service.session.slot).not.toBe("night");
+    expect(service.view().night).toBeNull();
+    service.close();
+  });
+  it("case 8: a closed night reports missing groups as planner (habit), never deciding", async () => {
+    const p = provider();
+    let calls = 0;
+    p.decide = async (req, abort) => {
+      calls++;
+      if (calls === 1)
+        return result({ group: req.input.group, decisions: req.input.members.map((m) => decision(t, state, m.id, "REST")) });
+      return new Promise((_, reject) => abort?.addEventListener("abort", () => reject(new Error("aborted"))));
+    };
+    const job = new CampNight(t, state, options(p));
+    await vi.waitFor(() => expect(calls).toBe(2));
+    const checkpoint = job.checkpoint();
+    for (const night of [job, new CampNight(t, state, options(p), checkpoint)]) {
+      const progress = night.progress();
+      expect(progress.pending).toBe(false);
+      expect(progress.decided).toBe(1);
+      expect(progress.groups[0].state).toBe("live");
+      expect(progress.groups.slice(1).every((g) => g.state === "planner")).toBe(true);
+    }
+  });
+});

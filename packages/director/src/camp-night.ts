@@ -13,6 +13,18 @@ export interface NightCheckpoint {
   requests: { group: string; key: string; request: ProviderRequest }[];
 }
 
+/** Where a group's next acts stand: still being decided, or the source that answered. */
+export type NightGroupState = "deciding" | "live" | "cache" | "planner" | "budget" | "error";
+export interface NightProgress {
+  total: number;
+  decided: number;
+  /** The Director is still working; false once the night is done or sealed. */
+  pending: boolean;
+  /** Offline planner play: habit is the intended source, not a fallback. */
+  plannerMode: boolean;
+  groups: { group: string; state: NightGroupState; rejected: number }[];
+}
+
 /** Partial results survive slow groups. Closing a job seals both results and cache. */
 export class CampNight {
   readonly controller = new AbortController();
@@ -83,6 +95,25 @@ export class CampNight {
         rejected: result.verdicts.filter((v) => v.rejected).length,
       });
     }
+  }
+  /** The night ledger, derived from requests, completed and audit. A sealed night's missing
+   * groups follow habit (the planner fallback at settle), so they read 'planner'. */
+  progress(): NightProgress {
+    const audit = new Map(this.audit.map((a) => [a.group, a]));
+    const groups = this.requests.map(({ group }) => {
+      const row = this.completed.has(group) ? audit.get(group) : undefined;
+      if (!row) return { group, state: this.closed ? "planner" as const : "deciding" as const, rejected: 0 };
+      const state: NightGroupState = row.error && row.source !== "budget" ? "error" : (row.source as NightGroupState);
+      return { group, state, rejected: row.rejected };
+    });
+    const decided = groups.filter((g) => this.completed.has(g.group)).length;
+    return {
+      total: groups.length,
+      decided,
+      pending: !this.closed && decided < groups.length,
+      plannerMode: this.options.provider.id === "planner",
+      groups,
+    };
   }
   /** An act can end before inference. Grace is bounded even if transport ignores abort. */
   async finish(graceMs: number): Promise<Decision[]> {
