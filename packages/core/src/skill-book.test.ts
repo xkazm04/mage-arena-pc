@@ -2,10 +2,11 @@ import { describe, expect, it } from "vitest";
 // index.ts first: it loads kernel.ts before fire.ts/air.ts (the schools.ts import-order trap).
 import { createGames, presets, stateHash, stepGames } from "./arena/index.ts";
 import data from "./arena/data/skill-book.pc.json" with { type: "json" };
-import { actCamp, createCampSession, decision, moveCamp, passSlot } from "./index.ts";
+import { actCamp, buySeasonRank, createCampSession, createSeason, decision, moveCamp, passSlot, prepareBout, takeSeasonLesson } from "./index.ts";
 import {
-  boutSpellRanks, buyRank, buyRankProblem, createSkillBook, earnSkillPoints, knownSpells, learnSignature, lessonProblem,
-  nextRankCost, rankTier, schoolRankKeys, skillBookOn, skillBookProblems, teacherOf, type SkillBook,
+  boutSpellRanks, buyRank, buyRankProblem, createSkillBook, dayActivities, earnCampDay, earnSkillPoints, knownSpells, learnSignature,
+  lessonProblem, maxSeasonPoints, nextRankCost, rankTier, schoolRankKeys, skillBookOn, skillBookProblems, skillBookStateProblems,
+  spentPoints, teacherOf, type SkillBook,
 } from "./skill-book.ts";
 import { tables as t } from "../scripts/skill-census.ts";
 
@@ -107,5 +108,47 @@ describe("skill book (D1 4.3, owner ruling 2026-10-24)", () => {
     expect(knownSpells(taught, "water")).toContain("air_tempest");
     expect(lessonProblem(t, atDusk, taught, "kesh", true)).toBe("You already know their signature.");
   });
+
+  it("a settled camp day banks each finished activity through earnSkillPoints, in that day's week", () => {
+    let s = moveCamp(t, createCampSession(t, 73), "yard");
+    s = actCamp(t, s, decision(t, s.camp, "cassia", "TRAIN", { stat: "vigor" }));
+    s = moveCamp(t, s, "exchange");
+    s = actCamp(t, s, decision(t, s.camp, "cassia", "WORK", {}));
+    expect(dayActivities(s)).toEqual(["TRAIN", "WORK"]);
+    expect(earnCampDay(t, s, createSkillBook(), true)).toEqual(earnSkillPoints(earnSkillPoints(createSkillBook(), "TRAIN", 1, true), "WORK", 1, true));
+    const week3 = { ...s, camp: { ...s.camp, day: 15 } };
+    expect(earnCampDay(t, week3, createSkillBook(), true).points).toBe((data.award.TRAIN + data.award.WORK) * data.weekScale[2]!);
+    // Off (the file's flag), the same day earns nothing and returns the same book.
+    const book = createSkillBook();
+    expect(earnCampDay(t, s, book)).toBe(book);
+  });
+
+  it("a saved book is consistent only when its ranks are known, bought and paid for", () => {
+    const bought = buyRank(buyRank(rich(100), "bolt:0", "water"), "bolt:0", "water");
+    expect(spentPoints(bought)).toBe(d0(0) + d0(1));
+    expect(skillBookStateProblems(bought, "water")).toEqual([]);
+    expect(skillBookStateProblems({ ...bought, points: bought.points + 1 }, "water")).toEqual(["points spent differ from the ranks bought"]);
+    expect(skillBookStateProblems({ ...bought, points: 200 }, "water")).toEqual(["more points unspent than earned"]);
+    expect(skillBookStateProblems({ ...bought, ranks: { "fire_sunfall": 2 } }, "water")).toEqual(["rank in fire_sunfall, a spell the player does not know"]);
+    expect(skillBookStateProblems({ ...bought, ranks: { "bolt:0": 1 } }, "water")).toEqual(["rank bolt:0=1 is not a bought rank 2..5"]);
+    expect(skillBookStateProblems({ ...bought, taught: ["fire_sunfall", "fire_sunfall"] }, "water")).toEqual(["taught signatures are not lessons this player could take"]);
+    expect(maxSeasonPoints).toBeGreaterThan(1598);
+  });
+
+  it("the season carries a book only when started with the flag on, and its doors close while a bout is open", () => {
+    expect("skills" in createSeason()).toBe(false);
+    const s = createCampSession(t, 73), off = createSeason();
+    expect(() => buySeasonRank(s, off, "bolt:0")).toThrow("No one teaches spells yet.");
+    const p = createSeason(true);
+    expect(p.skills).toEqual(createSkillBook());
+    const funded = { ...p, skills: rich(50) };
+    const next = buySeasonRank(s, funded, "bolt:0");
+    expect(next.skills!.ranks).toEqual({ "bolt:0": 2 });
+    expect(funded.skills.ranks).toEqual({});
+    expect(() => buySeasonRank(s, { ...funded, bout: prepareBoutStub() }, "bolt:0")).toThrow("Ranks are fixed while the Trial or a bout is open.");
+    expect(() => takeSeasonLesson(t, s, funded, "kesh")).toThrow("They are not here.");
+  });
 });
+// A bout stands in for any open bout: the doors read only that one is open.
+const prepareBoutStub = (): NonNullable<Parameters<typeof prepareBout>[2]["bout"]> => ({}) as NonNullable<Parameters<typeof prepareBout>[2]["bout"]>;
 const d0 = (i: number): number => data.rankCost[0]![i]!;
