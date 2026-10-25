@@ -1,7 +1,8 @@
 // Builds census writer (spark combat-system-depth WP2): `npm --prefix packages/core run census:builds -- [--count n] [--only id,id] [--tag t]
 // [--exchange on|off] [--ranks build:spell=rank,...] [--out-dir docs/...]`. `--exchange off` is the before arm of D1's exchange windows (exchange.ts), nothing else changed.
 // Runs every authored rival build (arena/data/rival-builds.json) against the reference player on the build's wave and prints one
-// summary line per build: reference win rate, rival win share, median, the curve signature, mean distance, cast roles. With --tag it
+// summary line per build: reference win rate, rival win share, median, the curve signature, mean distance, cast roles (what), the plan's
+// top branches and withhold share (why, plan-trace.ts). With --tag it
 // also writes `<tag>.json` (summaries with a per-build digest, no per-fight rows) to docs/waves/W8-evidence/ or --out-dir.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -10,7 +11,7 @@ import { runtime } from '../src/arena/index.ts';
 import { rivalBuildIds, rivalBuilds } from '../src/arena/archetypes.ts';
 import { ultimateFor } from '../src/arena/progression.ts';
 import { exchangeOff } from '../src/arena/exchange.ts';
-import { buildWinRateTarget, evidenceDir, runBuildFight, summariseBuild } from './builds-census.ts';
+import { buildWinRateTarget, evidenceDir, runBuildFight, summariseBuild, whyLine } from './builds-census.ts';
 
 const args = process.argv.slice(2), arg = (name: string): string | undefined => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 const count = Number(arg('--count') ?? 200), tag = arg('--tag'), only = arg('--only')?.split(','), exchange = arg('--exchange') ?? 'on', outDir = arg('--out-dir') ?? 'docs/waves/W8-evidence';
@@ -27,7 +28,8 @@ const summaries = (only ?? rivalBuildIds).map(id => {
   const s = { ...summariseBuild(fights), digest: createHash('sha256').update(fights.map(f => `${f.seed}:${f.hash}`).join('\n')).digest('hex') };
   console.log(`${id.padEnd(11)} ${s.rival.padEnd(18)} wave ${s.wave} ref win ${pct(s.winRate)} rival ${pct(s.rivalWinShare)} median ${s.medianS.toFixed(1).padStart(5)} s [${s.targetDurationS.join('-')}]`
     + ` | short ${String(s.curve.shortFights).padStart(3)} rival ${pct(s.curve.rivalShareShort)} | tier IV ${String(s.curve.tier4Fights).padStart(3)} rival ${pct(s.curve.rivalShareTier4)} | ${s.meanDistanceM.toFixed(1)} m | hits/exch ${s.hitsPerExchange.toFixed(2)}`
-    + ` | ${Object.entries(s.roles).sort((x, y) => y[1] - x[1]).map(([r, v]) => `${r} ${Math.round(v * 100)}`).join(' ')}`);
+    + ` | ${Object.entries(s.roles).sort((x, y) => y[1] - x[1]).map(([r, v]) => `${r} ${Math.round(v * 100)}`).join(' ')}`
+    + ` | ${whyLine(s.branches)} | withheld ${pct(s.withheldShare)}`);
   return s;
 });
 console.log(`builds census: ${count} fights/build in ${((performance.now() - start) / 1000).toFixed(1)} s (reference win target ${buildWinRateTarget.join('-')}).`);
