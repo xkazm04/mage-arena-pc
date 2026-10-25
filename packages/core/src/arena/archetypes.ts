@@ -140,6 +140,25 @@ export function archetypeBand(state: ArenaState, a: Actor, distanceM = 0): { ban
   return { band, sprint: build.archetype === 'close' ? distanceM > band[1] * 2 : distanceM < band[0] };
 }
 
+/** The reference player's range (D1 6.11, 4.1 E, a reading only): per state, the actor that holds the band of the build it faces
+ * instead of the authored spacing (runtime magePreferredDistanceM, 5-8 m), so the census measures each build at its own range
+ * rather than chasing a far build into the reference's band. Kept outside the hashed state like the arena hooks; set only by the
+ * createGames `referenceRange` option. */
+export type ReferenceRange = 'build';
+const referenceRangeByState = new WeakMap<ArenaState, number>();
+/** Problems with a `referenceRange` option: exactly 'build' (the faced build's own band). */
+export const referenceRangeProblems = (candidate: unknown): string[] => candidate === 'build' ? [] : [`Reference range ${String(candidate)} is not 'build'.`];
+export function setReferenceRange(state: ArenaState, a: Actor, range: ReferenceRange): void {
+  const problems = referenceRangeProblems(range);
+  if (problems.length) throw Error(problems.join(' '));
+  referenceRangeByState.set(state, a.id);
+}
+/** The band `a` holds against `target` under the state's reference range: the target build's archetypeBand (its rows' reach, its
+ * archetype's fractions, its collar's tier). Undefined without the option, for any other actor, or when the target is no build. */
+export function referenceBand(state: ArenaState, a: Actor, target: Actor, distanceM: number): [number, number] | undefined {
+  return referenceRangeByState.get(state) === a.id ? archetypeBand(state, target, distanceM)?.band : undefined;
+}
+
 export interface PlanSlot { slot: number; spell: SchoolSpell; can: boolean }
 export interface PlanPick { slot: number; cast: true; aim?: Vec }
 /** A dash end along `direction`, kept inside the arena (reversed, then toward the centre, when the wall is in the way). */

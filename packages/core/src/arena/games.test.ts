@@ -1,7 +1,7 @@
 import { defaultTuning } from './tuning.ts';
 import { describe, expect, it } from 'vitest';
 import { addEnemy, addMage, advanceGames, attachMageAI, arenaGeometry, constrainToArena, competence, createArena, createGames, enemyInputs, enemyRoster, gamesResult, idleInput, mageInput, presets, queueDeathEffects, resolveHit, runFight, spawnProjectile, stateHash, stepArena, stepGames, ticks, tiro } from './index.ts';
-import { rivalBuilds } from './archetypes.ts';
+import { archetypeBand, referenceBand, referenceRangeProblems, rivalBuilds } from './archetypes.ts';
 import { exchangeReachM, exchangeRule, type ExchangeRule } from './exchange.ts';
 import { rankDefenceHpMult, rankDefenceProblems } from './games.ts';
 const simulateEnemies = (state: ReturnType<typeof createArena>, count: number) => { for (let i = 0; i < count; i++) { stepArena(state, enemyInputs(state)); queueDeathEffects(state); } };
@@ -158,5 +158,33 @@ describe('createGames rankDefence and exchangeReach (D1 6.10, off by default)', 
     expect(() => heavyGames({ exchangeReach: { perRankStepM: 0 } })).toThrow('Invalid exchange reach');
     expect(() => heavyGames({ rankDefence: { hpPerRankStep: 2 } })).toThrow('Invalid rank defence');
     expect(rankDefenceProblems({ hpPerRankStep: 0.05, extra: 1 })).toEqual(['Rank defence: unknown key extra.']);
+  });
+});
+
+// D1 6.11 (4.1 E, a reading: only the week census sets it). The reference player holds the band of the build it faces.
+describe('createGames referenceRange (D1 6.11, off by default)', () => {
+  const buildGames = (id: string, options: Parameters<typeof createGames>[7] = {}) => createGames(40000, presets[0], rivalBuilds[id]!.wave, true, undefined, undefined, undefined, { rivalBuild: id, ...options });
+  const rivalOf = (g: ReturnType<typeof createGames>) => g.state.actors.find(a => a.team !== g.player.team)!;
+  const run = (g: ReturnType<typeof createGames>) => { for (let i = 0; i < 900; i++) stepGames(g); return stateHash(g.state); };
+
+  it('on, the reference holds the faced build\'s own band (archetypeBand, from its rows); off, nobody does', () => {
+    for (const id of Object.keys(rivalBuilds)) {
+      const on = buildGames(id, { referenceRange: 'build' }), rival = rivalOf(on);
+      expect(referenceBand(on.state, on.player, rival, 6), id).toEqual(archetypeBand(on.state, rival, 6)!.band);
+      expect(referenceBand(on.state, rival, on.player, 6), 'the rival keeps its own plan').toBeUndefined();
+      const off = buildGames(id);
+      expect(referenceBand(off.state, off.player, rivalOf(off), 6)).toBeUndefined();
+    }
+    // fire_heavy holds far (its bolt's reach until its payoff rows unlock), past the authored 5-8 m.
+    const heavy = buildGames('fire_heavy', { referenceRange: 'build' });
+    expect(referenceBand(heavy.state, heavy.player, rivalOf(heavy), 6)![0]).toBeGreaterThan(8);
+  });
+
+  it('it moves a build fight, never a fight without a build, and a bad range is refused', () => {
+    expect(run(buildGames('fire_heavy', { referenceRange: 'build' }))).not.toBe(run(buildGames('fire_heavy')));
+    // The Water proxy semifinal and final carry no build: the option plays them exactly as today.
+    for (const wave of [2, 3]) expect(run(createGames(40000, presets[0], wave, true, undefined, undefined, undefined, { referenceRange: 'build' }))).toBe(run(createGames(40000, presets[0], wave, true)));
+    expect(() => buildGames('fire_heavy', { referenceRange: 'self' as 'build' })).toThrow('Invalid reference range');
+    expect(referenceRangeProblems('build')).toEqual([]);
   });
 });

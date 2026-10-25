@@ -7,7 +7,7 @@ import { attachMageAI, mageInput } from './mage-ai.ts';
 import { attachRivalPlan } from './rival-plan.ts';
 import { createLedger, observeLedger } from './ledger.ts';
 import { buildRivalLabel, makeBuildRival, makeSchoolRival, type SchoolRivals } from './school-rivals.ts';
-import { rivalBuilds, type RivalBuild } from './archetypes.ts';
+import { referenceRangeProblems, rivalBuilds, setReferenceRange, type ReferenceRange, type RivalBuild } from './archetypes.ts';
 import { applyRivalHp, beginRivalWave, bindRival, enableRivalPhases, rivals } from './rival-phases.ts';
 import { type Actor, type ArenaState, type Composition, type Difficulty, type InputFrame, type Ranks, type SpellRanks } from './types.ts';
 import { enemyHpMult, rankSteps, setSpellRanks, validEnemyLevel } from './progression.ts';
@@ -32,8 +32,10 @@ export interface GamesPlayer { id: string; name: string; school: 'water'; ranks:
  * enemy's, `averageRank` its rows' spell ranks, never below its own. Omitted, opponent mages spawn exactly as today.
  * Two D1 6.10 levers (a reading: only the week census sets them; omitted, the Games plays exactly as today), each read off the rank
  * steps a mage gained above its authored build (gainedRanks): `exchangeReach` grows the exchange window's reach with the defender's
- * steps (exchange.ts), `rankDefence` grows every mage's HP with its own steps (rankDefenceHpMult). */
-export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false; enemyLevel?: number; spellRanks?: SpellRanks; rivalBuild?: string; opponentMage?: OpponentMage; exchangeReach?: ExchangeReach; rankDefence?: RankDefence } = {}): Games {
+ * steps (exchange.ts), `rankDefence` grows every mage's HP with its own steps (rankDefenceHpMult).
+ * `referenceRange` (D1 6.11, 4.1 E, a reading: only the week census sets it) has the reference player hold the band of the build it
+ * faces (archetypes.ts referenceBand) instead of the authored 5-8 m. Omitted, the Games plays exactly as today. */
+export function createGames(seed: number, composition: Composition = presets[0]!, startWave = 0, referencePlayer = false, snapshot?: GamesPlayer, tuning?: CombatTuning, difficulty: Difficulty = defaultDifficulty, options: { schoolRivals?: SchoolRivals; balance?: 'canonical'; unpaced?: true; rivalPhases?: false; enemyLevel?: number; spellRanks?: SpellRanks; rivalBuild?: string; opponentMage?: OpponentMage; exchangeReach?: ExchangeReach; rankDefence?: RankDefence; referenceRange?: ReferenceRange } = {}): Games {
   if (!Number.isInteger(startWave) || startWave < 0 || startWave >= tiro.waves.length) throw Error('Invalid Tiro wave');
   if (validateComposition(composition).length) throw Error('Invalid composition');
   if (snapshot && (snapshot.school !== 'water' || !snapshot.id || !snapshot.name || !Number.isInteger(snapshot.mastery) || snapshot.mastery < tiro.requiresMastery || ![snapshot.hpPenalty, snapshot.staminaPenalty].every(n => Number.isFinite(n) && n >= 0))) throw Error('Invalid Games player');
@@ -45,6 +47,7 @@ export function createGames(seed: number, composition: Composition = presets[0]!
   }
   if (options.exchangeReach !== undefined && exchangeReachProblems(options.exchangeReach).length) throw Error('Invalid exchange reach');
   if (options.rankDefence !== undefined && rankDefenceProblems(options.rankDefence).length) throw Error('Invalid rank defence');
+  if (options.referenceRange !== undefined && referenceRangeProblems(options.referenceRange).length) throw Error('Invalid reference range');
   const state = createArena(seed, options.unpaced ? undefined : difficulty), player = addMage(state, 0, runtime.games.playerSpawn, snapshot?.name ?? 'Cassia', snapshot?.ranks); player.water = newWaterState(composition);
   if (options.balance) state.balance = options.balance;
   if (options.exchangeReach) setExchangeReach(state, options.exchangeReach);
@@ -53,6 +56,7 @@ export function createGames(seed: number, composition: Composition = presets[0]!
   if (tuning) { state.tuning = validateTuning(tuning); player.poise *= state.tuning.playerPoise; }
   if (snapshot) { player.hp = Math.max(1, player.hp - snapshot.hpPenalty); player.maxStamina = Math.max(1, player.maxStamina - snapshot.staminaPenalty); player.stamina = player.maxStamina; }
   if (referencePlayer) attachMageAI(player, runtime.games.referenceCompetence);
+  if (options.referenceRange) setReferenceRange(state, player, options.referenceRange);
   const games: Games = { state, player, wave: startWave, phase: 'active', wavesCleared: 0, waveStartTick: state.tick, spawnLog: [] };
   if (options.schoolRivals) games.schoolRivals = options.schoolRivals;
   if (options.enemyLevel !== undefined) games.enemyLevel = options.enemyLevel;

@@ -10,7 +10,7 @@ import { idleInput, type Actor, type ArenaState, type InputFrame } from './types
 import { chooseSchoolSpell, schoolBoltSpeedMps, schoolThreats } from './mage-ai-schools.ts';
 import { slotSpell } from './schools.ts';
 import { agilityPerfectWindowAddS, agilityRecoveryMult } from './progression.ts';
-import { archetypeBand, facesBuild, holdsPress } from './archetypes.ts';
+import { archetypeBand, facesBuild, holdsPress, referenceBand } from './archetypes.ts';
 export function competence(level: number) {
   const rows = enemyData.mages.competence, bounded = clamp(level, rows[0].level, rows.at(-1)!.level);
   const lo = rows[Math.floor(bounded) - 1]!, hi = rows[Math.ceil(bounded) - 1]!, fraction = bounded - Math.floor(bounded);
@@ -161,10 +161,11 @@ export function mageInput(state: ArenaState, a: Actor): InputFrame {
         const d = distance(a.pos, target.pos), direction = unit(sub(target.pos, a.pos));
         const strafe = Math.floor((state.tick + (state.seed + a.id * 17) % ticks(feelPolicy.ai.strafePhaseS)) / ticks(runtime.games.mageStrafePeriodS)) % 2 ? 1 : -1;
         const aggression = brain.aggression ?? 1, steer = brain.rival && rivalSteer(state, a, target, d, ticks(profile.reactionDelayS));
-        // A build rival holds its archetype's band (archetypes.ts); every other mage keeps the authored spacing.
-        const plan = steer ? undefined : archetypeBand(state, a, d);
+        // A build rival holds its archetype's band (archetypes.ts); every other mage keeps the authored spacing, except a reference
+        // player under the reference-range option (D1 6.11, a reading), which holds the band of the build it faces.
+        const plan = steer ? undefined : archetypeBand(state, a, d), matched = steer || plan ? undefined : referenceBand(state, a, target, d);
         if (plan?.sprint) input.sprint = true;
-        const preferred = steer && steer.band ? steer.band : plan ? plan.band : runtime.games.magePreferredDistanceM.map(v => v * (1.3 - .3 * aggression) + ((state.seed + a.id * 31) % 101 / 100 - .5) * feelPolicy.ai.spacingVariationM);
+        const preferred = steer && steer.band ? steer.band : plan ? plan.band : matched ?? runtime.games.magePreferredDistanceM.map(v => v * (1.3 - .3 * aggression) + ((state.seed + a.id * 31) % 101 / 100 - .5) * feelPolicy.ai.spacingVariationM);
         input.move = steer && steer.move ? steer.move : d > preferred[1]! ? direction : d < preferred[0]! ? { x: -direction.x, y: -direction.y } : { x: -direction.y * strafe, y: direction.x * strafe };
         if (steer && steer.sprint) input.sprint = true;
         // Turn inward at the arena edge instead of getting pinned by the clamp (a plan chasing its target already heads inward).
