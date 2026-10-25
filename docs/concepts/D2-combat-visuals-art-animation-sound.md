@@ -149,6 +149,9 @@ engines; it is the first build of the chosen look.
   - Cleanup is fully scripted, with about a second of compute and no hand-painting: magenta key, crop, normal-map masking by the colour alpha, and resize.
   - A plate set costs 3 calls, or 5 with a camera correction.
 - **Not yet done:** nothing is wired into the game. The slice scene follows the owner's pick.
+- **Update 2026-10-25:** the slice scene is built on a **provisional** pick (the builder's rank-1 candidates, verdigris
+  plates), off by default and swappable through data, so the owner can judge the look in the running game and pick in
+  context. What to judge and how to swap are in section 6.4; the frame numbers are in 7.3.
 
 ## 6. Recommended first slice
 
@@ -202,6 +205,102 @@ Re-run after the wiring (2026-10-24, same method, same host): `pass`, every row 
 - **Bar fixture.** `__arena.artFixture("bar")` (`barScene` in `art-fixture.ts`): eight painted bodies with the lit cassia among them, two beams that follow their owners' facing, two dash trails, two detonation discs refilling every 1.5 s, a Veering Bolt arc, and 24 projectiles. a8 has no trail clip, so the projectiles' travel clips stand in for spell trails. `d2-wiring.test.ts` pins the composition (by kind and by procedural shape) and the tier fallback. The `stress` fixture is unchanged, but its cassia body is now lit.
 - **Look.** In the bar frame the lit cassia reads warmer and darker than the painted sprite. With the model's ambient of 0.35, a body outside the key light's falloff is darker than unlit. The light placement is a presentation default for the owner's eye, not a judged look.
 
+## 6.4 Slice scene (provisional pick) (2026-10-25)
+
+**Status: provisional, Director default 2026-10-25, owner pick pending.** The scene is built from the builder's rank-1
+candidates so the owner has a frame to judge. `candidates.json` `ownerPick` is still `pending`: it is the owner's
+field, and no code writes it. No generation calls were made (0 spend).
+
+**How to open it** (nothing changes without one of these):
+- `npm run camp`, open `http://127.0.0.1:5173/training?slice=d2s`, choose Training, then Start. The slice replaces the
+  arena scene. The bout does not step while the slice is up, and the HUD stays on.
+- In the harness (`?harness=1`): `__arena.artFixture("slice")`; `__arena.artFixture()` puts the arena back.
+- Comparison switches on the same URL:
+  - `&sliceNormals=derived`: derived normal maps (0 calls) instead of the painted ones;
+  - `&lighting=unlit`: plain painted sprites;
+  - `&sliceGrade=off`: no grade and no vignette;
+  - `&sliceAt=2.2`: holds one moment of the 4 s loop (0.9 s shows the cone telegraph and the meteor disc; 2.2 s shows
+    the flame on the ward; 3.5 s shows the meteor impact).
+
+**What is in the frame** (`packages/game/src/slice/`; `d2-slice.test.ts` pins the composition):
+- **Pick as data:** `packages/game/data/slice-d2s.json` holds `water: body-water-target`, `fire: body-fire-covenant` and
+  `plates: verdigris`. Only those files are served, byte for byte, from `packages/game/public/slice/d2s/`: per body the
+  colour image plus the painted and derived normal maps, and the floor, wall and rim plates. That is 6.1 MB in all,
+  pinned under 6.5 MB, with sha256 values in `manifest.json`.
+- **Camera and size (presentation constants, `slicePresentation`):**
+  - 40 degrees, T1-A's angle. Today's arena camera stays at 55.
+  - Bodies are drawn **190 px tall at 1440p** (142.5 px at 1080p), so they are inside the 140-200 px band whether it
+    is read at 1440p or at 1080p.
+  - Bodies are at true scale: 1.8 m = 190 px, which puts the ground at 105.6 px/m at 1440p.
+  - The duelists stand 5.2 m apart, where the floor plate paints its sand oval, 60% down the frame.
+- **Bodies:**
+  - Both are lit through `litBodyMesh` with their provider-painted normal maps. If the painted map fails to load, the
+    derived one is used.
+  - Each body has up to four lights: a key light (`keyLight`, as in the arena), the flame, the meteor, and the
+    lightning. The lightning beam lights each body from the beam's nearest point to it.
+  - The fire mage is mirrored to face the water mage, and his light is mirrored with him (`lightInQuad`).
+  - Each body has a contact shadow, plus one projected silhouette shadow cast away from the strongest spell light.
+- **Spells:**
+  - The flame cone: its telegraph is the a13 painted cone (`SigilPlayer.threat`), filling over 1.2 s. The flame itself
+    is nine a8 `fire.travel` clips fanned through the cone, with `fire.impact` on the water ward.
+  - The meteor: a procedural filled disc that fills over 3.4 s (`SigilPlayer.schoolShapes`, `schoolEffectSigil`),
+    while a procedural meteor falls onto it, then an a8 impact and a light flash.
+  - The lightning beam: the procedural beam strip on the ground, plus a procedural jagged bolt 1.1 m above it. It is
+    cast from off frame by an air caster with no body, because the slice has two bodies.
+  - The water mage holds her ward: the a13 ward sigil at 1.1 m, plus the a8 membrane.
+- **Floor light:** additive light pools in each light's colour, an ellipse of its reach (17 along the beam). This is
+  **not** normal-mapped floor lighting.
+- **Plates, grade and atmosphere:**
+  - The verdigris floor, back wall and near rim are drawn screen-fitted, with the sand oval's centre on the duel.
+  - A slow camera sway moves them at parallax 1, 0.8 and 1.25.
+  - On top: one colour-matrix grade (contrast, warmer highlights, cooler shadows), a vignette, 70 dust motes and 40
+    embers. No new art.
+
+**What the owner judges next.** The side-by-side sheets are `docs/waves/D2-evidence/side-by-side-T1-A.png` and
+`side-by-side-T2-A.png`, made by `packages/tools/art/slice-side-by-side.py`. The PNGs are git-ignored and regenerate
+from the commands in 7.3.
+1. **Is this "the A look" (section 5 bar)?** Judge the frame as a whole against T1-A and T2-A.
+2. **The water mage pick:** body-water-target (rank 1) against roster (Cassia's identity) and covenant, at 190 px.
+3. **The fire mage pick:** body-fire-covenant (rank 1) against target and roster (Brennic). His staff runs across his
+   body.
+4. **The plate set:** verdigris, the only set at T2-A's view.
+5. **Camera and body size:** 40 degrees and 190 px at 1440p.
+   - The 140-200 px band gives a body about 13% of the frame height.
+   - T1-A frames its duelists at about 70%.
+   - The owner decides whether the band or T1-A's closeness is the target. Either is one constant
+     (`slicePresentation.bodyPxAt1440`, `elevationDeg`).
+6. **Lighting:**
+   - painted against derived normal maps (`&sliceNormals=derived`);
+   - lit against unlit (`&lighting=unlit`);
+   - the grade (`&sliceGrade=off`).
+
+**How to swap a candidate:**
+1. Put the candidate's id in `packages/game/data/slice-d2s.json`: a body's `scene` from `candidates.json` (for
+   example `body-water-roster`), or a plate set's `palette` (`rust`, `moonlit`).
+2. Run `node --import tsx packages/tools/art/slice-assets.mts` from the repo root. It copies the picked files and
+   removes the unpicked ones; `--check` reports drift.
+3. Run `npm run build:game`.
+4. `d2-slice.test.ts` pins the provisional ids. When the owner picks, update its first test in the same commit.
+
+Recording the owner's pick in `candidates.json` stays the owner's act.
+
+**Gaps (stated, not hidden):**
+- **Floor lighting:** the floor has no normal map, so spells light it with additive pools, not with the lit-body
+  model. The deferred-style light buffer of 4.1 is not built.
+- **Shadows:**
+  - One projected silhouette per body, from the strongest spell light.
+  - Bodies cast no shadows onto each other or onto the plates' walls.
+- **Clips and poses:**
+  - The a8 clips are painted for the far TV camera, so at the slice's scale they read soft.
+  - The flame, meteor and bolt are procedural or a8 stand-ins; no slice-specific effect art exists.
+  - Each body is one static pose: no clips, no windup or reaction.
+- **Plate fit:**
+  - The plate's sand oval is painted flatter than a 40-degree ground. A 2 m disc reads rounder than the oval around
+    it.
+  - `plateDuel` (`slice-scene.ts`) is measured on verdigris. A rust or moonlit swap may need it moved.
+- **Frame contents:** the HUD stays on. The beam's caster has no body.
+
+
 ## 7. How success is measured
 
 - The owner judges the slice frame against the target images (side by side).
@@ -246,9 +345,55 @@ What this shows:
 - As in 7.1, frame time is pinned to the display refresh, so **GPU headroom is still not measured**. The 4K case shows no frame-time cost on an RTX 4090; slower GPUs are not run.
 - **Still open for the section 7 bar:** the new closer camera, the 140-200 px bodies, layered plates and spell-driven lights. They need assets or the slice, so they are not in this scene. The bar is met for the current camera and assets only.
 
+### 7.3 Frame probe of the slice scene (2026-10-25)
+
+Method: as in 7.2, `node --import tsx packages/tools/art/frame-probe-1440.mts <height> 12 slice [query]` after
+`npm run build:game`, on the tree of commit bfe684e. The probe change after that commit only adds the `-` fixture. The
+fixture plays its 4 s loop. Screenshots used `MAGE_PROBE_SHOT=<png>` with `sliceAt=0.9`, `2.2`, `3.5`.
+- Host KAZIHO: AMD Ryzen 7 7800X3D, NVIDIA GeForce RTX 4090.
+- Headless Chromium (Playwright 1.63) on ANGLE/D3D11, Node 24.14, deviceScaleFactor 1.
+- Each row is the last 360 frames.
+- The JSON of every run is committed in `docs/waves/D2-evidence/` (`slice-1440.json`, `slice-2160.json`,
+  `slice-1440-unlit.json`, `slice-1440-nograde.json`, `bar-1440-control.json`).
+
+The `bar` row is a control run in the same session. It reads about 0.6 ms of frame CPU above its 7.2 figure (1.20
+against 0.63), so this session's host was busier: compare the slice rows with that control, not with 7.2.
+
+| Run | Scene | Frame ms (mean / p95 / max), fps | Frame CPU ms (mean / p95 / p99 / max) | Phase CPU mean ms |
+|---|---|---|---|---|
+| `slice` 1440p | 2 lit bodies (painted normals, 4 lights each), 3 plates, cone telegraph or flame stream, meteor disc, beam, 17 light pools, 11 a8 clips, grade | 16.67 / 16.70 / 16.80, 60.0 | 1.29 / 1.60 / 1.80 / 2.70 | scene 0.32, render 0.89, hud 0.07 |
+| `slice` 4K | as `slice` 1440p | 16.67 / 16.70 / 16.80, 60.0 | 1.60 / 2.10 / 2.40 / 2.70 | scene 0.35, render 1.00, hud 0.09 |
+| `slice` 1440p, `lighting=unlit` | same, painted sprites | 16.67 / 16.70 / 16.80, 60.0 | 1.58 / 1.90 / 2.70 / 6.60 | scene 0.39, render 1.01, hud 0.09 |
+| `slice` 1440p, `sliceGrade=off` | same, no grade or vignette | 16.67 / 16.70 / 16.80, 60.0 | 1.50 / 2.00 / 2.50 / 5.00 | scene 0.37, render 0.94, hud 0.08 |
+| `bar` 1440p (control, same session) | as 7.2 | 16.67 / 16.80 / 16.80, 60.0 | 1.20 / 1.60 / 2.70 / 4.60 | scene 0.46, render 0.54, hud 0.10 |
+
+- Per-phase log (mean ms, `slice` 1440p): input 0.021, arena.pre 0.021, step 0.002, events 0.015, scene 0.32, hud
+  0.07, onFrame 0.002, ui 0.025, render 0.89. Phase p95: scene 0.5, render 1.2.
+- Page errors: none. Slice diagnostics: none. Effects: 0 dropped.
+- Every slice run reported both bodies loaded with `normals painted` and 4 lights, all three plates, and `grade true`
+  (except the no-grade run).
+- The procedural count in each JSON is the moment of the snapshot: the beam is always drawn, and the disc only while
+  the meteor falls.
+
+What this shows:
+- The slice holds **60 fps at 1440p and at 4K** on this host. Frame CPU is 1.3 ms at 1440p and 1.6 ms at 4K, within
+  about 0.1-0.4 ms of the same-session `bar` control.
+- The slice's cost moves to **render**: 0.9-1.0 ms against `bar`'s 0.5 ms. That is the full-screen plates, the grade
+  pass, the additive pools and the lit meshes. Its scene phase is lighter than `bar`'s (0.32 against 0.46 ms): two
+  bodies against eight.
+- Lit against unlit, and grade against none, differ by less than this session's noise. The unlit and no-grade runs
+  read slightly *higher* than the lit, graded one, with higher maxima from host spikes. So the lit material and the
+  grade cost nothing measurable on the CPU here.
+- As in 7.1 and 7.2, frame time is pinned to the refresh, so **GPU headroom is not measured**. The grade is a
+  full-screen pass at 4K, and slower GPUs are not run.
+- The section 5 bar's "holds 60 fps at 1440p" is met for this scene on an RTX 4090. The bar's other half, "the A look",
+  is the owner's to judge (6.4).
+
+
 ## 8. Open questions for the spark
 
 1. The exact camera angle and body size inside the chosen range (35-45°, 140-200 px)? The slice settles it.
+   **Slice value, provisional (2026-10-25), for the owner's judgement:** 40° and 190 px at 1440p (6.4, item 5).
 2. How much new generation budget, and from which providers? Painted normal maps double the cost per body.
 3. Skeletal cut-out animation or more painted frames?
 4. Does PC keep VR's element-identity rules exactly, or diverge in look (W8 decision A3 says PC keeps its own direction)?

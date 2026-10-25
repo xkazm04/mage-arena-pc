@@ -1,0 +1,181 @@
+{
+ "evaluated": true,
+ "height": 1440,
+ "viewport": [
+  2560,
+  1440
+ ],
+ "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4090 (0x00002684) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "seconds": 12,
+ "fixture": "bar",
+ "query": "",
+ "scene": {
+  "visibleProjectiles": 24,
+  "effects": {
+   "active": 28,
+   "allocated": 28,
+   "oneShots": 0,
+   "dropped": 0,
+   "cpuMs": 0.09999996423721313,
+   "budgetMs": 2,
+   "counts": {},
+   "diagnostics": []
+  },
+  "sigilsActive": 16,
+  "procedural": {
+   "disc": 2,
+   "beam": 4,
+   "arc": 1
+  },
+  "lighting": {
+   "tier": "lit",
+   "litActor": 1,
+   "litFrames": 866,
+   "normalMaps": {
+    "cassia": "ready"
+   }
+  },
+  "bodies": [
+   {
+    "entity": "garran",
+    "source": "A10",
+    "lit": false,
+    "litChoice": "no-normal-map"
+   },
+   {
+    "entity": "iskar",
+    "source": "A10",
+    "lit": false,
+    "litChoice": "no-normal-map"
+   },
+   {
+    "entity": "brennic",
+    "source": "A10",
+    "lit": false,
+    "litChoice": "no-normal-map"
+   },
+   {
+    "entity": "cassia",
+    "source": "A10",
+    "lit": true,
+    "litChoice": "lit"
+   },
+   {
+    "entity": "slinger",
+    "source": "A10",
+    "lit": false,
+    "litChoice": "no-normal-map"
+   },
+   {
+    "entity": "netter",
+    "source": "A10",
+    "lit": false,
+    "litChoice": "no-normal-map"
+   },
+   {
+    "entity": "shieldman",
+    "source": "A10",
+    "lit": false,
+    "litChoice": "no-normal-map"
+   },
+   {
+    "entity": "conscript",
+    "source": "A10",
+    "lit": false,
+    "litChoice": "no-normal-map"
+   }
+  ]
+ },
+ "frameMs": {
+  "n": 360,
+  "mean": 16.666111111111114,
+  "p50": 16.69999999999891,
+  "p95": 16.799999999999272,
+  "p99": 16.80000000000109,
+  "max": 16.80000000000109
+ },
+ "fps": 60.00200006666888,
+ "cpuMs": {
+  "n": 360,
+  "mean": 1.2049999985429976,
+  "p50": 1.199999988079071,
+  "p95": 1.600000023841858,
+  "p99": 2.699999988079071,
+  "max": 4.600000023841858
+ },
+ "phasesMs": {
+  "input": {
+   "n": 600,
+   "mean": 0.03566666791836421,
+   "p50": 0,
+   "p95": 0.10000002384185791,
+   "p99": 0.19999998807907104,
+   "max": 0.20000004768371582
+  },
+  "arena.pre": {
+   "n": 600,
+   "mean": 0.025666665931542713,
+   "p50": 0,
+   "p95": 0.10000002384185791,
+   "p99": 0.10000002384185791,
+   "max": 0.19999998807907104
+  },
+  "step": {
+   "n": 600,
+   "mean": 0.0031666666269302367,
+   "p50": 0,
+   "p95": 0,
+   "p99": 0.10000002384185791,
+   "max": 0.10000002384185791
+  },
+  "events": {
+   "n": 600,
+   "mean": 0.03216666638851166,
+   "p50": 0,
+   "p95": 0.10000002384185791,
+   "p99": 0.10000002384185791,
+   "max": 0.20000004768371582
+  },
+  "scene": {
+   "n": 600,
+   "mean": 0.4644999997814496,
+   "p50": 0.5,
+   "p95": 0.6000000238418579,
+   "p99": 0.9000000357627869,
+   "max": 2.100000023841858
+  },
+  "hud": {
+   "n": 600,
+   "mean": 0.09883333295583725,
+   "p50": 0.10000002384185791,
+   "p95": 0.19999998807907104,
+   "p99": 0.2999999523162842,
+   "max": 1
+  },
+  "onFrame": {
+   "n": 600,
+   "mean": 0.002166666587193807,
+   "p50": 0,
+   "p95": 0,
+   "p99": 0.10000002384185791,
+   "max": 0.10000002384185791
+  },
+  "ui": {
+   "n": 600,
+   "mean": 0.025666666428248087,
+   "p50": 0,
+   "p95": 0.10000002384185791,
+   "p99": 0.10000002384185791,
+   "max": 0.19999998807907104
+  },
+  "render": {
+   "n": 600,
+   "mean": 0.5439999986688296,
+   "p50": 0.5,
+   "p95": 0.7999999523162842,
+   "p99": 1,
+   "max": 3.199999988079071
+  }
+ },
+ "errors": []
+}
