@@ -323,6 +323,31 @@ export function coupleTuningField(t: CombatTuning, key: TuningKey, value: number
   if (key === "rollIFramesS") next.rollIFramesS = Math.min(value, next.rollDurationS);
   return next;
 }
+/** One knob that differs between two tunings; a spell override is keyed `spells.<id>` and is null where it is absent. */
+export interface TuningChange {
+  key: string;
+  label: string;
+  unit: string;
+  group: string;
+  from: number | SpellOverride | null;
+  to: number | SpellOverride | null;
+}
+const sameOverride = (a?: SpellOverride, b?: SpellOverride) =>
+  a === b || (!!a && !!b && a.castS === b.castS && a.cooldownS === b.cooldownS && a.speedMps === b.speedMps);
+/** What `candidate` changes against `base`: knobs in tuningFields order (with their label, unit and group), then spell
+ * overrides by id. Pure; reads the field table, no new data. */
+export function tuningDiff(base: CombatTuning, candidate: CombatTuning): TuningChange[] {
+  const knobs: TuningChange[] = tuningFields
+    .filter((f) => base[f.key] !== candidate[f.key])
+    .map(({ key, label, unit, group }) => ({ key, label, unit, group, from: base[key], to: candidate[key] }));
+  const ids = [...new Set([...Object.keys(base.spells), ...Object.keys(candidate.spells)])].sort();
+  for (const id of ids) {
+    const a = base.spells[id], b = candidate.spells[id];
+    if (!sameOverride(a, b))
+      knobs.push({ key: `spells.${id}`, label: id, unit: "", group: "Spells", from: a ? { ...a } : null, to: b ? { ...b } : null });
+  }
+  return knobs;
+}
 const spellIdPattern = new RegExp(`^(bolt:0:base|(?:${waterLines.join("|")}):[1-4]:(?:base|A|B))$`);
 export function validateTuning(value: unknown): CombatTuning {
   if (!value || typeof value !== "object" || Array.isArray(value))

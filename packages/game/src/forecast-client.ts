@@ -1,5 +1,5 @@
 import type { CombatTuning, LabConfig } from "@mage/core/arena";
-import { forecastPolicy, labConfigOf, type ForecastResult } from "./forecast-job.ts";
+import { forecastPolicy, labConfigOf, type ForecastBaseline, type ForecastResult } from "./forecast-job.ts";
 import type { ForecastCommand, ForecastMessage } from "./forecast.worker.ts";
 
 export interface ForecastView {
@@ -22,8 +22,11 @@ export class ForecastClient {
     this.view = view;
     this.changed(view);
   }
-  want(tuning: CombatTuning, setup: LabConfig) {
-    const lab = labConfigOf(setup), key = JSON.stringify([tuning, lab]);
+  /** The pin (`pinned`) is part of the request key: a new pin re-runs, the same pin again does not. Absent = vs Current. */
+  want(tuning: CombatTuning, setup: LabConfig, pinned?: ForecastBaseline) {
+    const lab = labConfigOf(setup),
+      baseline = pinned && { tuning: structuredClone(pinned.tuning), lab: labConfigOf(pinned.lab) },
+      key = JSON.stringify([tuning, lab, baseline ?? null]);
     if (key === this.key) return;
     this.key = key;
     const id = ++this.id;
@@ -32,7 +35,7 @@ export class ForecastClient {
     this.set({ status: "waiting", done: 0, total: 0, result: this.view.result });
     this.timer = setTimeout(() => {
       this.worker ??= this.spawn();
-      this.worker.postMessage({ kind: "run", request: { id, tuning: structuredClone(tuning), lab } } satisfies ForecastCommand);
+      this.worker.postMessage({ kind: "run", request: { id, tuning: structuredClone(tuning), lab, ...(baseline ? { baseline } : {}) } } satisfies ForecastCommand);
     }, forecastPolicy.debounceMs);
   }
   private spawn() {
