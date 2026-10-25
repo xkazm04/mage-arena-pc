@@ -59,7 +59,12 @@ const drift = [
 ];
 const manifestPath = join(dir, "manifest.json"),
   text = `${JSON.stringify(manifest, null, 2)}\n`;
-if (!existsSync(manifestPath) || readFileSync(manifestPath, "utf8") !== text)
+// A checkout with core.autocrlf reads the manifest back with CRLF; compare the text, not the line endings.
+if (
+  !existsSync(manifestPath) ||
+  readFileSync(manifestPath, "utf8").replaceAll(String.fromCharCode(13), "") !==
+    text
+)
   drift.push("manifest");
 if (check) {
   console.log(JSON.stringify({ drift, totalBytes: manifest.totalBytes }));
