@@ -51,3 +51,5 @@ Repo law a builder will trip:
 
 ## Skill improvement log
 
+- 2026-10-25 (challenge, all 15 contexts): builders sharing one checkout saw the whole-tree gate red on siblings' in-flight files in 9 of 29 hand-offs; all 6 integration gates were green with no fix, so "red on a sibling path" was always that. The one real integration break (smoke kit polling an unrouted `/api/health`) was visible only to a browser run - run `smoke:d3` + `smoke:u3` at the end of any run that touches `packages/tools/src/smoke/` or `arena-entry.ts`.
+- 2026-10-25: committed browser evidence (U3) can be weeks stale; before reading a resident-texture or memory delta as a regression, run the same suite at the base sha in a worktree (needs `npm ci` + `npm --prefix packages/core run data` there).
