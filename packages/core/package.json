@@ -18,6 +18,7 @@
     "census:builds": "npm run data && tsx scripts/report-builds.ts",
     "census:weeks": "npm run data && tsx scripts/report-weeks.ts",
     "census:counters": "npm run data && tsx scripts/report-counters.ts",
-    "census:skills": "npm run data && tsx scripts/report-skills.ts"
+    "census:skills": "npm run data && tsx scripts/report-skills.ts",
+    "census:compare": "tsx scripts/report-compare.ts"
   }
 }
