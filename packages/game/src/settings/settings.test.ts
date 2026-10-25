@@ -8,6 +8,7 @@ import {
   settingsKey,
   validateSettings,
 } from "./settings.ts";
+import { defaultBindings } from "./bindings.ts";
 
 const memory = () => {
   const m = new Map<string, string>();
@@ -74,6 +75,17 @@ describe("settings", () => {
   it("survives unparsable storage", () => {
     store.m.set(settingsKey, "{not json");
     expect(loadSettings(store)).toEqual(defaultSettings);
+  });
+  it("case 6: persists a bindings table additively, falling back to the defaults", () => {
+    expect(validateSettings({ bindings: { roll: "KeyF" } }).bindings.roll).toBe("KeyF");
+    expect(validateSettings({ bindings: { roll: "KeyW" } }).bindings).toEqual(defaultBindings);
+    expect(validateSettings({ bindings: { jump: "KeyF" } }).bindings).toEqual(defaultBindings);
+    expect(validateSettings({ bindings: { roll: 3 } }).bindings).toEqual(defaultBindings);
+    expect(validateSettings({ uiScale: 1.1 }).bindings).toEqual(defaultBindings);
+    expect(validateSettings({ bindings: { roll: "KeyF" } }).version).toBe(1);
+    const s = { ...defaultSettings, bindings: { ...defaultBindings, roll: "KeyF" } };
+    saveSettings(s, store);
+    expect(loadSettings(store)).toEqual(s);
   });
   it("maps every tier onto an existing quality profile", () => {
     for (const tier of ["high", "balanced", "low"] as const)
