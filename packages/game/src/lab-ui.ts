@@ -36,6 +36,7 @@ import {
 import { ForecastClient } from "./forecast-client.ts";
 import { forecastLabel } from "./forecast-job.ts";
 import { buildsForecastLine, forecastHeading, forecastLines, type ForecastCell } from "./lab-forecast-view.ts";
+import { changedKnobs, duelDeltaText, LabCompare } from "./lab-compare.ts";
 import { labKey, labModeOf, stopReplay, type LabHost, type LabKeyResult, type LabMode, type LabModeState } from "./lab-mode.ts";
 import { ReplayTransport } from "./replay-transport.ts";
 import {
@@ -73,6 +74,7 @@ interface ForecastTexts {
   ttk: BitmapText;
   dpm: BitmapText;
   status: BitmapText;
+  knobs: BitmapText;
 }
 /** All interaction is drawn by the canvas kit. Clipboard/drop is data transport only. */
 export class LabUI {
@@ -107,6 +109,8 @@ export class LabUI {
   private picksSeeded = false;
   /** Census forecast runs in a worker; the panel only reads its summaries and never writes a band. */
   private readonly forecast = new ForecastClient(() => this.showForecast());
+  /** The forecast's comparison point: Current, or a pinned tuning + builds (kept for the Lab session). */
+  private readonly compare = new LabCompare();
   constructor(
     private u: CanvasUI,
     private game: ArenaGame,
@@ -540,10 +544,11 @@ export class LabUI {
       this.buildsForecastText.text = "Forecast waits for playable picks on both sides.";
       this.buildsForecastText.tint = colours.muted;
     } else {
-      this.forecast.want(this.tune, this.draft);
+      this.forecast.want(this.tune, this.draft, this.compare.baseline);
       this.showForecast();
     }
     u.button("lab-builds-back", "Back to setup", 106, 940, 360, 64, () => this.drawSetup());
+    this.pinButton("lab-builds-pin", 500, 940, 420, this.draft, sideBuild(this.draft, "player").plan ?? this.lab.tuningName, () => this.drawBuilds());
     u.button("lab-builds-start", "Start / reset bout", 1340, 940, 420, 64, () => this.start(this.draft));
     u.onBack = () => this.drawSetup();
     u.onKey = this.keys;
@@ -744,7 +749,7 @@ export class LabUI {
     const next = coupleTuningField(this.tune, key, value);
     try {
       changeLabTuning(this.lab, next, "Custom");
-      this.forecast.want(this.tune, this.lab.config);
+      this.forecast.want(this.tune, this.lab.config, this.compare.baseline);
     } catch (e) {
       this.u.notice(String(e));
     }
@@ -827,12 +832,13 @@ export class LabUI {
         { selected: this.lab.tuningName === p, fontSize: 24 },
       ),
     );
-    u.button("lab-export", "Export JSON", 1320, 536, 214, 64, () => this.export(), {
+    u.button("lab-export", "Export", 1320, 536, 140, 64, () => this.export(), {
       fontSize: 22,
     });
-    u.button("lab-import", "Import JSON", 1546, 536, 214, 64, () => this.openImport(), {
+    u.button("lab-import", "Import", 1470, 536, 140, 64, () => this.openImport(), {
       fontSize: 22,
     });
+    this.pinButton("lab-pin", 1620, 536, 140, this.lab.config, this.lab.tuningName, () => this.drawTuning());
     this.forecastPanel();
     u.button("lab-tuning-close", "Return to combat", 106, 940, 390, 64, () =>
       this.close(),
@@ -862,11 +868,34 @@ export class LabUI {
     u.onKey = this.keys;
     u.end();
   }
-  /** Compact census forecast: per-wave median vs band and changes vs Current, plus Lab duel TTK and damage per mana. */
+  /** Pins the tuning and this setup (both sides' builds) as the forecast's baseline, or unpins back to Current. */
+  private pinButton(id: string, x: number, y: number, w: number, setup: LabSetup, name: string, redraw: () => void) {
+    const pinned = this.compare.name !== undefined;
+    this.u.button(
+      id,
+      pinned ? "Unpin" : w < 200 ? "Pin" : "Pin as baseline",
+      x,
+      y,
+      w,
+      64,
+      () => {
+        if (pinned) this.compare.unpin();
+        else {
+          const refused = this.compare.pin(this.tune, setup, name);
+          if (refused) return this.u.notice(refused);
+          this.u.notice(`Pinned ${name}: the forecast now compares against it.`);
+        }
+        redraw();
+      },
+      { fontSize: 22, selected: pinned },
+    );
+  }
+  /** Compact census forecast: per-wave median vs band and changes vs the baseline (Current or the pin), plus Lab duel TTK
+   * and damage per mana, and the knobs changed against that baseline. */
   private forecastPanel() {
     const u = this.u,
       cols = [1336, 1446, 1534, 1620, 1694];
-    u.text(forecastHeading(), 1336, 612, 22, colours.gold, 440);
+    u.text(forecastHeading(this.compare.baselineName), 1336, 612, 22, colours.gold, 440);
     ["Wave", "Median", "Change", "Win", "Perfect"].forEach((h, i) =>
       u.text(h, cols[i]!, 642, 18, colours.muted, 110),
     );
@@ -876,21 +905,26 @@ export class LabUI {
       ttk: cell(1336, 780),
       dpm: cell(1336, 806),
       status: cell(1336, 840, 18),
+      knobs: cell(1336, 890, 16),
     };
     u.text(forecastLabel, 1336, 866, 18, colours.muted, 440);
-    this.forecast.want(this.tune, this.lab.config);
+    this.forecast.want(this.tune, this.lab.config, this.compare.baseline);
     this.showForecast();
   }
   private showForecast() {
     const b = this.buildsForecastText;
-    if (b && this.u.screen === "lab-builds") return paint(b, buildsForecastLine(this.forecast.view));
+    if (b && this.u.screen === "lab-builds") {
+      const line = buildsForecastLine(this.forecast.view), r = this.forecast.view.result;
+      return paint(b, this.compare.name !== undefined && r && this.forecast.view.status === "done" ? { ...line, text: `${line.text}   ${duelDeltaText(r, this.compare.baselineName)}` } : line);
+    }
     const t = this.forecastTexts;
     if (!t || this.u.screen !== "lab-tuning") return;
-    const v = forecastLines(this.forecast.view);
+    const v = forecastLines(this.forecast.view, this.compare.baselineName);
     t.rows.forEach((row, i) => row.forEach((cell, c) => paint(cell, v.rows[i]![c]!)));
     paint(t.ttk, v.ttk);
     paint(t.dpm, v.dpm);
     paint(t.status, v.status);
+    paint(t.knobs, { text: changedKnobs(this.compare.tuning ?? makeTuning(), this.tune, 1), tone: "muted" });
   }
   private spellRows() {
     const u = this.u,
@@ -962,7 +996,7 @@ export class LabUI {
           next.spells[s.id] = { ...spec, ...next.spells[s.id], [key]: n };
           try {
             changeLabTuning(this.lab, next, "Custom");
-            this.forecast.want(this.tune, this.lab.config);
+            this.forecast.want(this.tune, this.lab.config, this.compare.baseline);
           } catch (e) {
             u.notice(String(e));
           }
