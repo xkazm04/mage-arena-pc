@@ -3,6 +3,7 @@ import { request, type SeasonView } from "../season-api.ts";
 import { portrait } from "../ui/artwork.ts";
 import { colours } from "../ui/kit.ts";
 import type { GameShell } from "../game-shell.ts";
+import { oddsLine } from "./camp.ts";
 
 export type Moment = SeasonView["parley"]["moments"][number];
 export function parley(s: GameShell, moment: Moment) {
@@ -28,7 +29,7 @@ export function parley(s: GameShell, moment: Moment) {
       132,
       () => void s.speak({ target: moment.target, cardId: card.id }),
       {
-        subtitle: card.text,
+        subtitle: [oddsLine(card.odds), card.text].filter(Boolean).join(" · "),
         fontSize: 30,
         selected: i === s.parleyApproach,
       },

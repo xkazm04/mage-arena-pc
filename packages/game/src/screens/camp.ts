@@ -6,6 +6,18 @@ import { art } from "../art.ts";
 import { colours } from "../ui/kit.ts";
 import type { GameShell } from "../game-shell.ts";
 
+type Odds = { success: number; caught: number | null } | null;
+const percent = (p: number) => `${Math.round(p * 100)}%`;
+/** A contest's chance, and for a scheme its stocks risk, as the subtitle shows it; empty for an uncontested act. */
+export function oddsLine(odds: Odds): string {
+  if (!odds) return "";
+  return odds.caught === null ? percent(odds.success) : `${percent(odds.success)} · ${percent(odds.caught)} stocks`;
+}
+/** What a camp action costs, its chance when contested, then what it gains. */
+export function actionSubtitle(a: { hours: number; gains: string; odds: Odds }): string {
+  return [`${a.hours} ${a.hours === 1 ? "hour" : "hours"}`, oddsLine(a.odds), a.gains].filter(Boolean).join(" · ");
+}
+
 export function camp(s: GameShell) {
   if (s.view.season.complete) {
     s.chapter();
@@ -132,7 +144,7 @@ export function visit(s: GameShell) {
     actions.push({
       id: `action-${a.id}`,
       label: a.label,
-      subtitle: `${a.hours} ${a.hours === 1 ? "hour" : "hours"} · ${a.gains}`,
+      subtitle: actionSubtitle(a),
       run: () => void s.command({ type: "act", action: a.id }),
     });
   u.text("CHOOSE A MOMENT", 712, 314, 26, colours.gold);
