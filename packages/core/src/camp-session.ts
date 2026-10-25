@@ -10,6 +10,7 @@ import {
   reconcile,
   resolve,
 } from "./camp.ts";
+import { boardLine, campRules, capFor } from "./camp-rules.ts";
 import type {
   CampState,
   DayCarry,
@@ -173,15 +174,9 @@ export function playerProblem(
     return "That activity belongs elsewhere.";
   const timing = timeProblem(t, s, activityHours(d, t.season));
   if (timing) return timing;
-  if (
-    ["BEFRIEND", "PROTECT", "CONFIDE", "WATCH", "RECRUIT"].includes(d.intent) &&
-    !present(s).includes(d.args.target)
-  )
+  if (campRules[d.intent].needsPresence && !present(s).includes(d.args.target))
     return "They are not here at this hour.";
-  const cap =
-    d.intent === "SCHEME" && calendar(t, s.camp.day).eve
-      ? t.rules.caps.SCHEME_eve
-      : t.rules.caps[d.intent];
+  const cap = capFor(t, s.camp.day, d.intent);
   if (
     cap !== undefined &&
     s.dayActs.filter((a) => a.intent === d.intent).length >= cap
@@ -353,15 +348,7 @@ export function settleCamp(
       f.visibility === "public" ||
       result.state.characters[result.state.player].knowledge.includes(f.id),
   );
-  result.state.board = visible.map((f) => ({
-    factId: f.id,
-    text:
-      f.visibility === "secret"
-        ? `Journal: ${f.text}`
-        : f.visibility === "witnessed"
-          ? `Someone saw: ${f.text}`
-          : f.text,
-  }));
+  result.state.board = visible.map((f) => ({ factId: f.id, text: boardLine(f) }));
   return {
     ...before,
     camp: result.state,
@@ -390,29 +377,7 @@ export function campActions(t: Tables, s: CampSession) {
     ?.activities ?? []) {
     const [verb, stat] = token.split(":");
     const intent = verb as Intent;
-    if (intent === "TRAIN") put(intent, { stat });
-    else if (["REST", "WORK", "PLOT"].includes(intent)) put(intent);
-    else if (intent === "DEFECT")
-      for (const school of t.schools) put(intent, { toTent: school.tent });
-    else
-      for (const c of Object.values(s.camp.characters).filter(
-        (c) => c.id !== s.camp.player && c.life === "Alive",
-      )) {
-        const target = c.id;
-        if (intent === "CONFIDE")
-          for (const factId of s.camp.characters[s.camp.player].knowledge)
-            put(intent, { target, factId });
-        else if (intent === "SCHEME")
-          for (const kind of Object.keys(t.rules.schemes)) {
-            if (kind === "rumour")
-              for (const topic of Object.keys(t.rules.schemes.rumour.reactions))
-                put(intent, { target, kind, topic });
-            else put(intent, { target, kind });
-          }
-        else if (intent === "OFFER")
-          put(intent, { target, terms: "back_entrant" });
-        else put(intent, { target });
-      }
+    for (const args of campRules[intent].options(t, s, stat)) put(intent, args);
   }
   return candidates
     .filter((d) => !playerProblem(t, s, d))
@@ -420,9 +385,7 @@ export function campActions(t: Tables, s: CampSession) {
       id: JSON.stringify([d.intent, d.args]),
       decision: d,
       label: [
-        d.intent === "PLOT"
-          ? "Plan the bond"
-          : d.intent.toLowerCase().replaceAll("_", " "),
+        campRules[d.intent].label ?? d.intent.toLowerCase().replaceAll("_", " "),
         d.args.stat,
         s.camp.characters[d.args.target]?.name,
         d.args.kind,
@@ -481,7 +444,7 @@ export function campView(t: Tables, s: CampSession) {
             id,
             label,
             intent: d.intent,
-            gains: actionPreview(t, s, d),
+            gains: campRules[d.intent].preview(t, s, d),
             hours: activityHours(d, t.season),
           })),
     parleyHours: t.season.activityHours.PARLEY,
@@ -533,52 +496,3 @@ export function campView(t: Tables, s: CampSession) {
   };
 }
 export type CampView = ReturnType<typeof campView>;
-
-function actionPreview(t: Tables, s: CampSession, d: Decision): string {
-  const r = t.rules.effects,
-    p = s.camp.characters[s.camp.player];
-  switch (d.intent) {
-    case "TRAIN": {
-      let points =
-        p.hunger >= r.daily.hungryAt ? r.TRAIN.hungryPoints : r.TRAIN.points;
-      if (p.fatigue >= r.daily.fatiguedAt)
-        points = Math.floor(points * r.daily.fatigueTrainMultiplier);
-      return `+${points} ${d.args.stat} practice`;
-    }
-    case "WORK":
-      return `+${r.WORK.gold} gold · +${r.WORK.stores} tent stores · +${r.WORK.fatigue} fatigue`;
-    case "REST":
-      return `${r.REST.fatigue} fatigue`;
-    case "CONFIDE":
-      return `Share a known fact · +${r.CONFIDE.trust} mutual trust`;
-    case "BEFRIEND": {
-      const b = s.camp.characters[d.args.target],
-        e = r.BEFRIEND;
-      const gain = Math.floor(
-        e.trust *
-          (p.tent !== b.tent && p.rank === b.rank ? e.peerMultiplier : 1) *
-          (Math.abs(p.traits.aggression - b.traits.aggression) >=
-          e.aggressionGap
-            ? e.gapMultiplier
-            : 1),
-      );
-      return `+${gain} mutual trust`;
-    }
-    case "PROTECT":
-      return `Costs ${r.PROTECT.costGold} gold · feed and warn them; hungry friends gain trust`;
-    case "WATCH":
-      return "Guile contest · discover a fact; being noticed costs trust";
-    case "SCHEME":
-      return "Guile contest · failure risks the stocks";
-    case "REPORT":
-      return "Ask the Vigil to investigate · a contested outcome";
-    case "RECRUIT":
-      return "Guile contest · invite them to your cause";
-    case "DEFECT":
-      return "Change tents and loyalties";
-    case "PLOT":
-      return `+${r.PLOT.progress} bond progress`;
-    case "OFFER":
-      return "Offer a private favour";
-  }
-}

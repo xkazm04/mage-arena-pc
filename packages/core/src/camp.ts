@@ -1,5 +1,6 @@
 import { activityFitsDay } from "./camp-time.ts";
 import { member } from "./arena/doors.ts";
+import { boardLine, campRules, capFor, type Contest } from "./camp-rules.ts";
 // Pure season reference extracted from W0. No IO, clock, model, or unseeded RNG.
 import type {
   Tables,
@@ -338,10 +339,7 @@ export function reconcile(
   for (const intent of Object.keys(t.rules.caps).filter(
     (x) => !x.endsWith("_eve"),
   )) {
-    const cap =
-      intent === "SCHEME" && calendar(t, state.day).eve
-        ? t.rules.caps.SCHEME_eve
-        : t.rules.caps[intent];
+    const cap = capFor(t, state.day, intent)!;
     const candidates = items
       .filter((x) => x.intent === intent)
       .sort(
@@ -501,6 +499,7 @@ export function resolve(
     working = new Set<string>(options.carry?.working),
     stopped = new Set<string>(options.carry?.stopped),
     freshStocks = new Set<string>(options.carry?.freshStocks);
+  const base = { t, r, state, dayAct: options.settleNight === false, carry: { helped, working, stopped, freshStocks }, set, add, change, trust, train, fact };
   for (const c of Object.values(state.characters)) {
     if (options.settleNight !== false && !helped.has(c.id))
       set(`characters/${c.id}/warned`, false, "rules/effects/PROTECT/warningDc");
@@ -517,279 +516,11 @@ export function resolve(
     const ref = `rules/effects/${item.intent}`;
     set(`characters/${a.id}/mood`, item.mood, "characters/moods");
     set(`characters/${a.id}/goal/id`, item.goal, "goals");
-    switch (item.intent) {
-      case "REST":
-        change(a.id, "fatigue", e.fatigue, `${ref}/fatigue`);
-        break;
-      case "TRAIN": {
-        let p =
-          a.hunger >= r.effects.daily.hungryAt ? e.hungryPoints : e.points;
-        if (a.fatigue >= r.effects.daily.fatiguedAt)
-          p = Math.floor(p * r.effects.daily.fatigueTrainMultiplier);
-        train(a.id, item.args.stat, p, ref);
-        break;
-      }
-      case "WORK":
-        change(a.id, "gold", e.gold, `${ref}/gold`);
-        change(a.id, "fatigue", e.fatigue, `${ref}/fatigue`);
-        working.add(a.id);
-        if (Object.hasOwn(state.stores, a.tent))
-          add(`stores/${a.tent}`, e.stores, `${ref}/stores`, r.ranges.stores);
-        break;
-      case "BEFRIEND": {
-        let gain = e.trust;
-        if (a.tent !== b.tent && a.rank === b.rank) gain *= e.peerMultiplier;
-        if (
-          Math.abs(a.traits.aggression - b.traits.aggression) >= e.aggressionGap
-        )
-          gain *= e.gapMultiplier;
-        gain = Math.floor(gain);
-        trust(a.id, b.id, gain, ref);
-        trust(b.id, a.id, gain, ref);
-        fact(
-          "befriended",
-          a.id,
-          b.id,
-          "public",
-          `${a.name} shared a quiet moment with ${b.name}.`,
-        );
-        break;
-      }
-      case "PROTECT": {
-        const socialGain = !r.reviewPolicy?.protectNeedsHungerForSocialGain || b.hunger > r.ranges.hunger[0];
-        change(a.id, "gold", -e.costGold, `${ref}/costGold`);
-        change(b.id, "hunger", e.hunger, `${ref}/hunger`);
-        if (socialGain) {
-          trust(b.id, a.id, e.trust, `${ref}/trust`);
-          add(`debt/${b.id}>${a.id}`, e.debt, `${ref}/debt`, r.ranges.debt);
-        }
-        set(`characters/${b.id}/warned`, true, `${ref}/warningDc`);
-        helped.add(b.id);
-        fact(
-          "protected",
-          a.id,
-          b.id,
-          "witnessed",
-          `${a.name} brought bread to ${b.name}.`,
-        );
-        break;
-      }
-      case "CONFIDE":
-        trust(a.id, b.id, e.trust, `${ref}/trust`);
-        trust(b.id, a.id, e.trust, `${ref}/trust`);
-        if (!b.knowledge.includes(item.args.factId))
-          set(
-            `characters/${b.id}/knowledge`,
-            [...b.knowledge, item.args.factId],
-            "intents/CONFIDE",
-          );
-        fact(
-          "confided",
-          a.id,
-          b.id,
-          "secret",
-          `${a.name} confided in ${b.name}.`,
-        );
-        break;
-      case "WATCH": {
-        const success =
-          a.stats.guile * r.contests.guileMultiplier +
-            die(a.id, `WATCH:${b.id}`) >
-          r.contests.baseDc + b.stats.guile * r.contests.guileMultiplier;
-        const known = state.facts.find(
-          (f) =>
-            b.knowledge.includes(f.id) &&
-            f.visibility !== "secret" &&
-            !a.knowledge.includes(f.id),
-        );
-        if (success && known)
-          set(
-            `characters/${a.id}/knowledge`,
-            [...a.knowledge, known.id],
-            "intents/WATCH",
-          );
-        if (!success) trust(b.id, a.id, e.noticedTrust, `${ref}/noticedTrust`);
-        break;
-      }
-      case "REPORT": {
-        const success =
-          die(a.id, `REPORT:${b.id}`) + r.contests.vigilBonus >
-          r.contests.baseDc + b.stats.guile * r.contests.guileMultiplier;
-        if (success) stopped.add(b.id);
-        set(
-          "investigations",
-          [
-            ...state.investigations,
-            {
-              actor: a.id,
-              target: b.id,
-              day: state.day,
-              substantiated: success,
-            },
-          ],
-          "intents/REPORT",
-        );
-        if (a.role === "main" && b.role === "main")
-          set("bond", "fractured", "rules/arcs/bondFractureTrust");
-        break;
-      }
-      case "SCHEME": {
-        set(
-          `characters/${a.id}/lastScheme`,
-          { day: state.day, target: b.id },
-          "intents/SCHEME",
-        );
-        const kind = item.args.kind;
-        let dc =
-          r.contests.baseDc +
-          b.stats.guile * r.contests.guileMultiplier +
-          r.contests.patrol;
-        if (kind === "persuade")
-          dc =
-            r.contests.baseDc +
-            Math.floor(b.loyalty / r.contests.loyaltyDivisor);
-        if (kind === "rumour")
-          dc =
-            r.contests.rumourBaseDc +
-            Math.floor(b.renown / r.contests.renownDivisor);
-        if (b.warned) dc += r.effects.PROTECT.warningDc;
-        const score =
-          a.stats.guile * r.contests.guileMultiplier +
-          die(a.id, `SCHEME:${kind}:${b.id}`);
-        const success = !stopped.has(a.id) && score > dc &&
-          !(kind === "rumour" && rolls.at(-1)!.value <= (r.reviewPolicy?.rumourFailsAtOrBelow ?? 0));
-        rolls.at(-1)!.score = score;
-        rolls.at(-1)!.dc = dc;
-        rolls.at(-1)!.success = success;
-        if (success) {
-          if (kind === "poison")
-            set(`characters/${b.id}/sick`, true, `rules/schemes/${kind}`);
-          if (kind === "steal")
-            add(
-              `stores/${b.tent}`,
-              r.schemes.steal.stores,
-              `rules/schemes/${kind}/stores`,
-              r.ranges.stores,
-            );
-          if (kind === "persuade")
-            change(
-              b.id,
-              "loyalty",
-              r.schemes.persuade.loyalty,
-              `rules/schemes/${kind}/loyalty`,
-            );
-          if (kind === "rumour") {
-            change(
-              b.id,
-              "renown",
-              r.schemes.rumour.renown,
-              `rules/schemes/${kind}/renown`,
-            );
-            const reactions: Record<
-              string,
-              { values: string[]; trust: number }
-            > = r.schemes.rumour.reactions;
-            const reaction = reactions[item.args.topic];
-            for (const listener of Object.values(state.characters))
-              if (
-                listener.id !== b.id &&
-                (!r.reviewPolicy?.rumourExcludesAuthor || listener.id !== a.id) &&
-                ([a.tent, b.tent].includes(listener.tent) ||
-                  (b.role === "main" && listener.role === "main")) &&
-                state.trust[`${listener.id}>${b.id}`] <
-                  r.schemes.rumour.disbeliefTrust &&
-                listener.values.some((v) => reaction.values.includes(v))
-              ) {
-                trust(
-                  listener.id,
-                  b.id,
-                  reaction.trust,
-                  `rules/schemes/rumour/reactions/${item.args.topic}/trust`,
-                );
-              }
-            fact(
-              "rumour",
-              a.id,
-              b.id,
-              "public",
-              `A rumour questions ${b.name}'s conduct.`,
-              false,
-            );
-          }
-        } else if (
-          die(a.id, `CAUGHT:${kind}:${b.id}`) + r.contests.vigilBonus >
-          a.stats.guile * r.contests.guileMultiplier + r.contests.baseDc
-        ) {
-          set(`characters/${a.id}/stocks`, true, "rules/effects/caught");
-          if (options.settleNight === false) freshStocks.add(a.id);
-          change(
-            a.id,
-            "renown",
-            r.effects.caught.renown,
-            "rules/effects/caught/renown",
-          );
-          trust(
-            b.id,
-            a.id,
-            r.effects.caught.trust,
-            "rules/effects/caught/trust",
-          );
-          fact(
-            "caught",
-            a.id,
-            b.id,
-            "public",
-            `The Vigil stopped ${a.name} meddling with ${b.name}.`,
-          );
-        }
-        break;
-      }
-      case "RECRUIT": {
-        const success =
-          a.stats.guile * r.contests.guileMultiplier +
-            Math.floor(a.renown / r.contests.renownDivisor) +
-            die(a.id, `RECRUIT:${b.id}`) >
-          r.contests.baseDc + b.loyalty;
-        if (success) {
-          change(b.id, "loyalty", e.loyalty, `${ref}/loyalty`);
-          trust(b.id, a.id, e.trust, `${ref}/trust`);
-          if (b.tent === "strays" && !state.fifth.includes(b.id))
-            set("fifth", [...state.fifth, b.id], "intents/RECRUIT");
-          fact(
-            "recruited",
-            a.id,
-            b.id,
-            "witnessed",
-            `${b.name} listened to ${a.name}'s invitation.`,
-          );
-        }
-        break;
-      }
-      case "DEFECT":
-        set(`characters/${a.id}/tent`, item.args.toTent, "intents/DEFECT");
-        set(`characters/${a.id}/loyalty`, e.newLoyalty, `${ref}/newLoyalty`);
-        fact(
-          "joined",
-          a.id,
-          a.id,
-          "public",
-          `${a.name} now sleeps in the ${item.args.toTent} tent.`,
-        );
-        break;
-      case "PLOT":
-        add("bondProgress", e.progress, `${ref}/progress`);
-        set("bond", "plotting", "intents/PLOT");
-        break;
-      case "OFFER":
-        fact(
-          "offered",
-          a.id,
-          b.id,
-          "secret",
-          `${a.name} offered ${b.name} a favour.`,
-        );
-        break;
-    }
+    const roll = (c: Contest) => {
+      const score = c.bonus + die(a.id, c.action);
+      return { score, success: score > c.dc, record: rolls.at(-1)! };
+    };
+    campRules[item.intent].effect({ ...base, item, a, b, e, ref, roll });
   }
   if (options.settleNight === false) {
     set("facts", [...state.facts, ...events], "rules/factVisibility");
@@ -924,15 +655,7 @@ export function resolve(
           f.visibility === "public" ||
           state.characters[state.player].knowledge.includes(f.id),
       )
-      .map((f) => ({
-        factId: f.id,
-        text:
-          f.visibility === "secret"
-            ? `Journal: ${f.text}`
-            : f.visibility === "witnessed"
-              ? `Someone saw: ${f.text}`
-              : f.text,
-      })),
+      .map((f) => ({ factId: f.id, text: boardLine(f) })),
     "rules/factVisibility",
   );
   if (state.day >= t.season.weeks * t.season.daysPerWeek)

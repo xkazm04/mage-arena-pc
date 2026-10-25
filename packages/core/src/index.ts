@@ -6,3 +6,4 @@ export * from "./season.ts";
 export * from "./camp-time.ts";
 export * from "./bout-reader.ts";
 export * from "./skill-book.ts";
+export * from "./camp-rules.ts";
