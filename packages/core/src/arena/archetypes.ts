@@ -13,6 +13,7 @@ import { rankRange, schoolIdentity } from './data.generated.ts';
 import buildData from './data/rival-builds.json' with { type: 'json' };
 import { balancedSpell, identityNumber, schoolSpellById, validateLoadout, type SchoolSpell } from './schools.ts';
 import { schoolKit } from './school-kit.ts';
+import { notePlan, type PlanBranch } from './plan-trace.ts';
 import { maxSpellRank, spellRanksProblems, ultimateFor } from './progression.ts';
 import { paced } from './tuning.ts';
 import { arenaContains } from './geometry.ts';
@@ -158,9 +159,11 @@ const heavyPayoffTier = 3;
 const answerHorizonS = 0.6;
 
 /** The archetype's pick for this decision, or undefined to withhold. `slots` are the build's slots this tick with legality
- * (`can`: tier, cooldown by the ready tick, mana, reach) as the school brain reads it. Draws no random. */
+ * (`can`: tier, cooldown by the ready tick, mana, reach) as the school brain reads it. Draws no random. Each return names its
+ * branch to the plan trace (plan-trace.ts; a no-op unless a census enabled it), so the census reads why, not only what. */
 export function archetypeChoose(state: ArenaState, a: Actor, target: Actor, distanceM: number, seen: Threat[], slots: PlanSlot[]): PlanPick | undefined {
   const build = rivalBuildOf(a); if (!build) return undefined;
+  const as = (branch: PlanBranch, pick?: PlanPick): PlanPick | undefined => { notePlan(state, a.id, branch); return pick; };
   const ready = slots.filter(c => c.can), of = (role: Role): PlanSlot[] => ready.filter(c => roleOf(c.spell) === role);
   const best = (list: PlanSlot[]): PlanSlot | undefined => [...list].sort((x, y) => weight(y.spell) - weight(x.spell) || x.slot - y.slot)[0];
   const toward = unit(sub(target.pos, a.pos), a.facing), away = { x: -toward.x, y: -toward.y };
@@ -171,52 +174,53 @@ export function archetypeChoose(state: ArenaState, a: Actor, target: Actor, dist
     const shape = answersShape(c.spell)!, soon = state.tick + ticks(answerHorizonS);
     const incoming = seen.some(t => t.aimedAtUs && t.family !== 'unblockable' && t.shape === shape && t.impactTick <= soon);
     const pressed = shape === 'close' && distanceM <= c.spell.rangeM + target.radius;
-    if ((incoming || pressed) && !schoolKit(c.spell.school).answerUp(state, a)) return { slot: c.slot, cast: true, ...(shape === 'close' ? { aim: { ...target.pos } } : {}) };
+    if ((incoming || pressed) && !schoolKit(c.spell.school).answerUp(state, a)) return as(incoming ? 'answer:incoming' : 'answer:pressed', { slot: c.slot, cast: true, ...(shape === 'close' ? { aim: { ...target.pos } } : {}) });
   }
   // 2. The signature (unblockable, tier IV) whenever legal and the target is not mid-roll.
   const signature = of('signature').find(() => state.tick >= target.rollUntil);
-  if (signature && build.archetype !== 'light') return { slot: signature.slot, cast: true };
+  if (signature && build.archetype !== 'light') return as('signature', { slot: signature.slot, cast: true });
   const dash = of('dash')[0];
   if (build.archetype === 'close') {
     // Brawler cycle: dash in, build the resource to its peak with the short rows, cash it with the strongest payoff.
-    if (dash && distanceM > band[1] + dash.spell.rangeM / 2) return { slot: dash.slot, cast: true, aim: dashAim(a, toward, dash.spell.rangeM) };
+    if (dash && distanceM > band[1] + dash.spell.rangeM / 2) return as('close:dash-in', { slot: dash.slot, cast: true, aim: dashAim(a, toward, dash.spell.rangeM) });
     const payoff = best(of('payoff'));
-    if (payoff && resource >= peak) return { slot: payoff.slot, cast: true };
+    if (payoff && resource >= peak) return as('close:payoff', { slot: payoff.slot, cast: true });
     const hit = best(of('hit'));
-    if (hit) return { slot: hit.slot, cast: true };
+    if (hit) return as('close:hit', { slot: hit.slot, cast: true });
     // A school that builds its resource by moving (Air Momentum): a dash toward the target is both the gap closer and the builder.
-    if (dash && schoolKit(build.school).movesForResource && resource < first) return { slot: dash.slot, cast: true, aim: dashAim(a, toward, dash.spell.rangeM) };
+    if (dash && schoolKit(build.school).movesForResource && resource < first) return as('close:dash-build', { slot: dash.slot, cast: true, aim: dashAim(a, toward, dash.spell.rangeM) });
     const builder = of('build')[0];
-    if (builder && resource < peak) return { slot: builder.slot, cast: true };
-    if (payoff) return { slot: payoff.slot, cast: true };
+    if (builder && resource < peak) return as('close:build', { slot: builder.slot, cast: true });
+    if (payoff) return as('close:spend', { slot: payoff.slot, cast: true });
   } else if (build.archetype === 'light') {
     // Skirmisher kite: hold the bolt's reach, dash out when pressed (Air: also to keep Momentum high), alternate the damaging rows
     // so a slow one (Veering Bolt) and a fast one (Shear) arrive together, spend freely (the light build peaks early).
-    if (dash && distanceM < band[0] * 0.75) return { slot: dash.slot, cast: true, aim: dashAim(a, away, dash.spell.rangeM) };
-    if (dash && schoolKit(build.school).movesForResource && resource < peak) return { slot: dash.slot, cast: true, aim: dashAim(a, rotate(toward, Math.PI / 2), dash.spell.rangeM) };
+    if (dash && distanceM < band[0] * 0.75) return as('light:dash-out', { slot: dash.slot, cast: true, aim: dashAim(a, away, dash.spell.rangeM) });
+    if (dash && schoolKit(build.school).movesForResource && resource < peak) return as('light:dash-build', { slot: dash.slot, cast: true, aim: dashAim(a, rotate(toward, Math.PI / 2), dash.spell.rangeM) });
     const builder = of('build')[0];
-    if (builder && resource < first) return { slot: builder.slot, cast: true };
+    if (builder && resource < first) return as('light:build', { slot: builder.slot, cast: true });
     const damaging = [...of('hit'), ...of('payoff'), ...of('signature')];
     const newest = Math.max(-Infinity, ...damaging.map(c => lastPress(a, c.spell)));
     const pick = [...damaging].sort((x, y) => Number(lastPress(a, x.spell) === newest) - Number(lastPress(a, y.spell) === newest) || weight(y.spell) - weight(x.spell) || x.slot - y.slot)[0];
-    if (pick) return { slot: pick.slot, cast: true };
+    if (pick) return as('light:alternate', { slot: pick.slot, cast: true });
   } else {
     // Long-range controller: hold far; until its collar reaches tier III it survives (hands free for the ward while anything is seen
     // coming), then it plays its payoff sequence (D1 4.2): the newest tier's payoff first (Brand Wrath, Cyclone at tier IV), the
     // strongest of a tier before the rest, and keeps the mana its next payoff needs.
-    if (dash && distanceM < band[0] / 2) return { slot: dash.slot, cast: true, aim: dashAim(a, away, dash.spell.rangeM) };
+    if (dash && distanceM < band[0] / 2) return as('heavy:dash-out', { slot: dash.slot, cast: true, aim: dashAim(a, away, dash.spell.rangeM) });
     const waiting = a.tier < heavyPayoffTier && seen.length > 0;
     const payoff = [...of('payoff')].sort((x, y) => y.spell.tier - x.spell.tier || weight(y.spell) - weight(x.spell) || x.slot - y.slot)[0];
-    if (payoff && !waiting) return { slot: payoff.slot, cast: true };
+    if (payoff && !waiting) return as('heavy:payoff', { slot: payoff.slot, cast: true });
     const builder = of('build')[0];
-    if (builder && resource < first) return { slot: builder.slot, cast: true };
+    if (builder && resource < first) return as('heavy:build', { slot: builder.slot, cast: true });
     const reserve = Math.max(0, ...ownRows(build, state).filter(s => (roleOf(s) === 'payoff' || roleOf(s) === 'signature') && s.tier <= a.tier + 1).map(s => s.mana));
     const bolt = of('bolt')[0];
-    if (bolt && !waiting && a.mana - bolt.spell.mana >= reserve) return { slot: bolt.slot, cast: true };
-    return undefined;
+    if (bolt && !waiting && a.mana - bolt.spell.mana >= reserve) return as('heavy:bolt', { slot: bolt.slot, cast: true });
+    // The withhold, by its reason: holding for the payoff tier, keeping the next payoff's mana, or nothing legal.
+    return as(waiting ? 'heavy:waiting' : bolt ? 'heavy:reserve' : 'heavy:idle');
   }
   const bolt = of('bolt')[0];
-  return bolt ? { slot: bolt.slot, cast: true } : undefined;
+  return bolt ? as(`${build.archetype}:bolt`, { slot: bolt.slot, cast: true }) : as(`${build.archetype}:idle`);
 }
 /** Tempo: a light build holds its bolt down between decisions (a stream at the bolt's cooldown); close and heavy builds press it once
  * per decision (the brawler's damage is its cycle, the controller's its payoffs). Every other press and every other actor holds. */
