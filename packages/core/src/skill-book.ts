@@ -1,15 +1,17 @@
 // PC spell-rank progression (D1 4.3; owner ruling 2026-10-24): camp activities earn skill points, skill points buy the next
 // rank of any spell the player knows at a cost that rises by rank and by tier, and a school's elder teaches its signature
 // spell when the elder's camp trust in the player is high enough. Numbers in arena/data/skill-book.pc.json, checked at load.
-// The book is in-memory only: the season save carries no skill points yet (a schema change waits on an owner ask), so the
-// host keeps the book beside the session. Behind the file's `enabled` flag, off by default: while off nothing earns, nothing
-// is taught and boutSpellRanks gives nothing, so every bout plays exactly as before.
+// The book rides on the season (season.ts SeasonProgress.skills, an optional save key): a season started with the flag on
+// carries one, banks each settled day's activities into it (earnCampDay) and hands its ranks to the bout. Behind the file's
+// `enabled` flag, off by default: while off a season carries no book, nothing earns, nothing is taught and boutSpellRanks
+// gives nothing, so every bout and every save plays exactly as before.
 import data from './arena/data/skill-book.pc.json' with { type: 'json' };
 import season from '../../../docs/design/reconciled/data/season.json' with { type: 'json' };
 import schoolsData from '../../../docs/design/reconciled/data/schools.json' with { type: 'json' };
 import { airRows, fireRows } from './arena/data.generated.ts';
 import { maxSpellRank, spellRankKeys } from './arena/progression.ts';
 import type { SpellRanks } from './arena/types.ts';
+import { calendar } from './camp.ts';
 import { present, type CampSession } from './camp-session.ts';
 import type { Tables } from './types.ts';
 
@@ -97,6 +99,48 @@ export function activityPoints(activity: string, week: number, rules: SkillBookR
 export function earnSkillPoints(book: SkillBook, activity: string, week: number, on = skillBookOn, rules: SkillBookRules = skillBookRules): SkillBook {
   const gain = on ? activityPoints(activity, week, rules) : 0;
   return gain ? { ...structuredClone(book), points: book.points + gain, earned: book.earned + gain } : book;
+}
+/** The activities the player finished on `s`'s camp day, one id each (activity ids of season.json activityHours): their
+ * camp acts (dayActs), one PARLEY per parley that day and LISTEN for a finished listening act. Read before settleCamp clears them. */
+export function dayActivities(s: CampSession): string[] {
+  return [
+    ...s.dayActs.filter(d => d.character === s.camp.player).map(d => d.intent),
+    ...s.parleys.filter(p => p.day === s.camp.day).map(() => 'PARLEY'),
+    ...(s.listening?.done ? ['LISTEN'] : []),
+  ];
+}
+/** The book after the camp day of `s` settles: earnSkillPoints for each finished activity, in that day's campaign week.
+ * The host calls it with the session as it stood just before settleCamp. Unchanged while off. */
+export function earnCampDay(t: Tables, s: CampSession, book: SkillBook, on = skillBookOn): SkillBook {
+  const week = calendar(t, s.camp.day).week;
+  return dayActivities(s).reduce((b, activity) => earnSkillPoints(b, activity, week, on), book);
+}
+/** The most points a whole season can earn: every waking hour of every day spent on the best-paid one-hour activity at
+ * that week's scale. The save's bound on `points` and `earned` (director save-schema.ts). */
+export const maxSeasonPoints: number = (() => {
+  const best = Math.max(...Object.values(skillBookRules.award)), shortest = Math.min(...Object.values(season.activityHours));
+  return skillBookRules.weekScale.reduce((sum, scale) => sum + best * scale * season.daysPerWeek * Math.floor(season.wakingHours / shortest), 0);
+})();
+/** Every signature a teacher can teach (the save's bound on `taught`). */
+export const teachableSignatures: readonly string[] = [...new Set(Object.values(skillBookRules.teaching.signatures))];
+/** Points the bought ranks cost: the sum of every rank step bought. */
+export function spentPoints(book: SkillBook): number {
+  return Object.entries(book.ranks).reduce((sum, [key, rank]) => sum + skillBookRules.rankCost[rankTier(key)]!.slice(0, rank - 1).reduce((a, b) => a + b, 0), 0);
+}
+/** Why a saved book cannot be the player's (empty = consistent): taught signatures known and unique, ranks only in known
+ * spells and between 2 and the top rank, and the points spent equal to the ranks bought. The save schema checks the shape. */
+export function skillBookStateProblems(book: SkillBook, school: string): string[] {
+  const out: string[] = [];
+  if (new Set(book.taught).size !== book.taught.length || book.taught.some(k => !teachableSignatures.includes(k) || schoolRankKeys(school).includes(k)))
+    out.push('taught signatures are not lessons this player could take');
+  const known = knownSpells(book, school);
+  for (const [key, rank] of Object.entries(book.ranks)) {
+    if (!known.includes(key)) out.push(`rank in ${key}, a spell the player does not know`);
+    if (!Number.isInteger(rank) || rank < 2 || rank > maxSpellRank) out.push(`rank ${key}=${rank} is not a bought rank 2..${maxSpellRank}`);
+  }
+  if (!out.length && book.points > book.earned) out.push('more points unspent than earned');
+  if (!out.length && book.earned - book.points !== spentPoints(book)) out.push('points spent differ from the ranks bought');
+  return out;
 }
 /** Spells the player can rank: every row of their own school, then the signatures taught to them. */
 export const knownSpells = (book: SkillBook, school: string): string[] => [...schoolRankKeys(school), ...book.taught.filter(k => !schoolRankKeys(school).includes(k))];

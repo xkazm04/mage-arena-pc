@@ -4,7 +4,8 @@ import { calendar, seededUnit } from './camp.ts';
 import { spendHours, type CampSession } from './camp-session.ts';
 import type { Tables, Trace } from './types.ts';
 import { member } from './arena/doors.ts';
-import { advanceGames, attachMageAI, createGames, defaultDifficulty, gamesResult, maxEnemyLevel, stateHash, stepGames, presets, validDifficulty, validateComposition, type Difficulty, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame } from './arena/index.ts';
+import { advanceGames, attachMageAI, createGames, defaultDifficulty, gamesResult, maxEnemyLevel, stateHash, stepGames, presets, validDifficulty, validateComposition, type Difficulty, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame, type SpellRanks } from './arena/index.ts';
+import { boutSpellRanks, buyRank, createSkillBook, learnSignature, skillBookOn, type SkillBook } from './skill-book.ts';
 
 export const bridgeRules = data;
 export type TrialStance = keyof typeof data.trial.beats;
@@ -22,10 +23,30 @@ export interface SeasonBout {
   difficulty: Difficulty;
   /** Regular enemies' level = the campaign week (owner 2026-10-23, arena/progression.ts); omitted in week 1, so older bouts replay unchanged. */
   enemyLevel?: number;
+  /** The player's bought spell ranks (skill book, D1 4.3), fixed at prepare; omitted while the season carries no book, nothing
+   * is bought or the player only watches, so older bouts replay unchanged. */
+  spellRanks?: SpellRanks;
 }
 export interface Receipt { id: string; day: number; kind: 'trial' | 'games'; entrant: string; result?: GamesResult; hash: string; trace: Trace[] }
-export interface SeasonProgress { composition: Composition; trial: Trial | null; bout: SeasonBout | null; receipts: Receipt[] }
-export function createSeason(): SeasonProgress { return { composition: structuredClone(presets[0]!), trial: null, bout: null, receipts: [] }; }
+/** `skills`: the player's skill book (skill-book.ts), present only on a season started with the PC flag on; its presence is
+ * that season's flag, so a save keeps one rule from its first day to its last. */
+export interface SeasonProgress { composition: Composition; trial: Trial | null; bout: SeasonBout | null; receipts: Receipt[]; skills?: SkillBook }
+export function createSeason(skills = skillBookOn): SeasonProgress {
+  return { composition: structuredClone(presets[0]!), trial: null, bout: null, receipts: [], ...(skills ? { skills: createSkillBook() } : {}) };
+}
+function bookDoor(p: SeasonProgress): SkillBook {
+  if (!p.skills) throw Error('No one teaches spells yet.');
+  if (p.bout || p.trial?.phase === 'active') throw Error('Ranks are fixed while the Trial or a bout is open.');
+  return p.skills;
+}
+/** The player's door to a rank: the season with the next rank of `key` bought (skill-book.ts buyRank). */
+export function buySeasonRank(s: CampSession, p: SeasonProgress, key: string): SeasonProgress {
+  return { ...p, skills: buyRank(bookDoor(p), key, s.camp.characters[s.camp.player]!.school) };
+}
+/** The player's door to a lesson: the season with `teacher`'s signature taught (skill-book.ts learnSignature). */
+export function takeSeasonLesson(t: Tables, s: CampSession, p: SeasonProgress, teacher: string): SeasonProgress {
+  return { ...p, skills: learnSignature(t, s, bookDoor(p), teacher, true) };
+}
 export function seasonDue(t: Tables, s: CampSession, p: SeasonProgress): 'trial' | 'games' | null {
   if (s.camp.day > t.season.daysPerWeek * data.weeksPlayable) return null;
   const day = calendar(t, s.camp.day);
@@ -104,12 +125,13 @@ export function prepareBout(t: Tables, s: CampSession, p: SeasonProgress, compos
   if (!qualification) throw Error('The Tent Trial must settle before the Games.');
   const entrant = campPlayerSnapshot(t, s, qualification.entrant);
   const seed = Math.floor(seededUnit(s.camp.seed, s.camp.day, entrant.id, 'tiro-bout') * 0x100000000) >>> 0;
-  const enemyLevel = Math.min(maxEnemyLevel, Math.ceil(s.camp.day / t.season.daysPerWeek));
-  return { id: `games:${s.camp.seed}:${s.camp.day}`, day: s.camp.day, seed, phase: 'prepared', entrant, spectator: entrant.id !== s.camp.player, composition: structuredClone(composition), games: null, log: [], difficulty, ...(enemyLevel > 1 ? { enemyLevel } : {}) };
+  const enemyLevel = Math.min(maxEnemyLevel, Math.ceil(s.camp.day / t.season.daysPerWeek)), spectator = entrant.id !== s.camp.player;
+  const spellRanks = p.skills && !spectator ? boutSpellRanks(p.skills, true) : undefined;
+  return { id: `games:${s.camp.seed}:${s.camp.day}`, day: s.camp.day, seed, phase: 'prepared', entrant, spectator, composition: structuredClone(composition), games: null, log: [], difficulty, ...(enemyLevel > 1 ? { enemyLevel } : {}), ...(spellRanks ? { spellRanks } : {}) };
 }
 export function startBout(bout: SeasonBout): void {
   if (bout.phase !== 'prepared' || bout.games) throw Error('The bout has already started.');
-  bout.games = createGames(bout.seed, bout.composition, 0, false, bout.entrant, undefined, bout.difficulty, bout.enemyLevel === undefined ? {} : { enemyLevel: bout.enemyLevel });
+  bout.games = createGames(bout.seed, bout.composition, 0, false, bout.entrant, undefined, bout.difficulty, { ...(bout.enemyLevel === undefined ? {} : { enemyLevel: bout.enemyLevel }), ...(bout.spellRanks === undefined ? {} : { spellRanks: bout.spellRanks }) });
   if (bout.spectator) attachMageAI(bout.games.player, data.trial.spectatorCompetence);
   bout.phase = 'active';
 }
