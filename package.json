@@ -35,7 +35,8 @@
     "vr:tuning-return": "node packages/tools/vr/tuning-return.mjs",
     "vr:vectors": "node packages/tools/vr/vectors.mjs",
     "smoke": "tsx packages/tools/src/smoke/cli.ts",
-    "blind:score": "tsx packages/tools/src/blind-score.ts"
+    "blind:score": "tsx packages/tools/src/blind-score.ts",
+    "audio:cuesheet": "tsx packages/tools/src/audio-cuesheet.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
