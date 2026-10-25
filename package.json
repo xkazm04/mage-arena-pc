@@ -33,7 +33,8 @@
     "audit:u4": "tsx packages/tools/src/u4-audit.ts",
     "vr:drift": "node packages/tools/vr/drift.mjs",
     "vr:tuning-return": "node packages/tools/vr/tuning-return.mjs",
-    "vr:vectors": "node packages/tools/vr/vectors.mjs"
+    "vr:vectors": "node packages/tools/vr/vectors.mjs",
+    "smoke": "tsx packages/tools/src/smoke/cli.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
