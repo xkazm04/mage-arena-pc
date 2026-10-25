@@ -9,6 +9,7 @@ export class SeasonService extends CampService {
   paused = false;
   /** The last camp day whose finished activities are banked in the skill book; a day settles once, whichever path settles it. */
   private banked = 0;
+  private checkpointing = false;
   get locked() { return !!this.progress.bout || this.progress.trial?.phase === 'active'; }
   override tick() { if (!this.locked && !this.paused) super.tick(); }
   override view() {
@@ -35,10 +36,17 @@ export class SeasonService extends CampService {
     const before = this.session;
     await super.command(command, revision); this.bank(before); return this.view();
   }
-  /** A restored checkpoint taken mid-dawn settles that day here, so its activities are banked here too. */
+  /** A loaded checkpoint taken mid-dawn settles that day here, so its activities are banked here too. A live checkpoint
+   * (checkpointCamp) does not bank: the dawn it interrupts banks when it returns, and the save keeps the progress as it stood
+   * beside the unsettled checkpoint, so loading it banks the day once. */
   override restoreCamp(checkpoint: CampCheckpoint) {
+    if (this.checkpointing) return super.restoreCamp(checkpoint);
     this.banked = checkpoint.session.camp.day - 1;
     super.restoreCamp(checkpoint); this.bank(checkpoint.session);
+  }
+  override checkpointCamp(): CampCheckpoint {
+    this.checkpointing = true;
+    try { return super.checkpointCamp(); } finally { this.checkpointing = false; }
   }
   /** The skill book (D1 4.3): when the camp day of `before` has settled (settleCamp, at dawn), each activity the player
    * finished that day earns its points. Only a season that carries a book earns (createSeason, the PC flag). */
