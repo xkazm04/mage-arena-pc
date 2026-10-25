@@ -9,10 +9,7 @@ import { gameAudio } from "./audio.ts";
 import { audioData } from "./audio-policy.ts";
 import { BitmapText, Container, Graphics } from "pixi.js";
 import {
-  applyBoutInput,
-  boutCheckpoint,
   boutHash,
-  takeOverBout,
   type BoutCheckpoint,
   type BoutInput,
   type SeasonBout,
@@ -30,35 +27,40 @@ import {
   FixedStepper,
   runtime,
   ticks,
-  stepTraining,
-  timingBot,
-  newWaterState,
   presets,
   spellFor,
   createGames,
-  createLedger,
-  detachLedger,
   observeLedger,
-  resetLedger,
   stepGames,
-  advanceGames,
   addEnemy,
-  enemyRoster,
-  openingPosition,
-  enemyInputs,
   stepArena,
-  queueDeathEffects,
   attachMageAI,
   addMage,
   type TrainingKind,
   type BotKind,
   type Composition,
   type Games,
-  type ThreatLedger,
   type InputFrame,
-  type ArenaState,
   type FlowMark,
+  type Training,
 } from "@mage/core/arena";
+import {
+  advance,
+  canStep,
+  endPractice as leavePractice,
+  enterLab,
+  enterRoster,
+  enterTiro,
+  enterTraining,
+  PracticeSession,
+  SeasonSession,
+  shownFrame,
+  takeOver as practiceFrom,
+  TiroSession,
+  TrainingSession,
+  type ArenaSession,
+  type Entered,
+} from "./arena-session.ts";
 import { ArenaInput } from "./input.ts";
 import {
   cameraMetrics,
@@ -98,38 +100,29 @@ export class ArenaGame {
   readonly scene: ArenaScene;
   readonly input: ArenaInput;
   camera: Camera;
-  training = createTraining(undefined, undefined, difficulty());
-  games?: Games;
-  /** The player's threat answers for the current Tiro bout; observed beside the state, read by the results card. */
-  ledger?: ThreatLedger;
-  lab?: LabSession;
+  /** The mode's driver (arena-session.ts): what steps, which ledger grades the ward words, what a transition resets. */
+  private session: ArenaSession = new TrainingSession(
+    createTraining(undefined, undefined, difficulty()),
+    () => this.bot,
+  );
+  /** The season bout's own session; kept while a practice clone stands in for it. */
+  private seasonSession?: SeasonSession;
   labUI?: LabUI;
-  /** Season bout checkpoints at its opening and every wave start, kept beside the state so a reading skips earlier waves. */
-  readonly tape: BoutCheckpoint[] = [];
   /** The results card's reading of the wave just fought; shown instead of the live state while its screen is up. */
   reader?: BoutReader;
-  /** A practice clone taken over from the reading. Never sent, saved or paid; `live` is what it stands in for. */
-  practice?: {
-    live: { games: Games; ledger?: ThreatLedger; lastPhase: string };
-  };
   composition: Composition = structuredClone(presets[0]!);
-  mode: "training" | "roster" | "tiro" | "lab" = "training";
   paused = false;
   syncError = "";
   private clock = new FixedStepper();
-  private queued: BoutInput[] = [];
   private pending: Promise<void> | null = null;
   private bot?: BotKind;
   lastPerfect = -1e9;
   lastGain?: PerfectGain;
-  /** Training and roster ledger for the ward words (a drill); Tiro uses `ledger`, the Lab its own. */
-  private drill?: { state: ArenaState; ledger: ThreatLedger };
   private flowBefore = new FlowBeforeContact();
   flowTip = idleTip();
   flowSeen?: { player: object; mark: FlowMark };
   private impactClock = new ImpactClock();
   private lastEvents = 0;
-  private reference = false;
   private hudUpdate: () => void = () => {};
   private lastPhase = "";
   private hudEdges = "";
@@ -185,14 +178,9 @@ export class ArenaGame {
       () => this.training.player.pos,
     );
     if (season) {
-      if (!season.bout.games) throw Error("Bout not started");
-      this.games = season.bout.games;
+      this.seasonSession = new SeasonSession(season.bout, this.training);
+      this.session = this.seasonSession;
       this.composition = season.bout.composition;
-      this.mode = "tiro";
-      this.sync();
-      this.ledger = createLedger(this.games.state, this.games.player.id);
-      if (season.bout.phase !== "prepared")
-        this.tape.push(boutCheckpoint(season.bout));
     }
     this.lastEvents = this.training.state.events.length;
     gameAudio.pauseWorld(false);
@@ -343,7 +331,8 @@ export class ArenaGame {
               startGames: (seed = 4) => this.startGames(seed),
               startRoster: (id: string) => this.startRoster(id),
               setReferencePlayer: (enabled: boolean) => {
-                this.reference = enabled;
+                if (this.session instanceof TiroSession)
+                  this.session.reference = enabled;
                 if (this.games && enabled)
                   attachMageAI(
                     this.games.player,
@@ -359,7 +348,10 @@ export class ArenaGame {
                 )
                   stepGames(
                     this.games,
-                    this.reference ? undefined : this.input.frame(),
+                    this.session instanceof TiroSession &&
+                      this.session.reference
+                      ? undefined
+                      : this.input.frame(),
                   );
                 this.sync();
               },
@@ -470,7 +462,8 @@ export class ArenaGame {
                     tier: 1,
                     source: dummy.pos,
                   });
-                  if (this.drill) observeLedger(this.drill.ledger, state);
+                  const drill = this.session.wardLedger();
+                  if (drill) observeLedger(drill, state);
                 }
               },
               visualFixture: (kind: string, direction = 0) => {
@@ -519,11 +512,7 @@ export class ArenaGame {
             await this.flush();
             for (const input of frames) {
               if (season.bout.phase !== "active") break;
-              this.seasonStep({
-                type: "tick",
-                tick: this.training.state.tick,
-                input,
-              });
+              this.seasonSession!.step(input);
             }
             await this.flush();
             this.sync();
@@ -531,48 +520,62 @@ export class ArenaGame {
         },
       });
   }
+  // Facade over the session for the HUD, the Lab UI, the results card and the shell.
+  get training(): Training {
+    return this.session.training;
+  }
+  get mode() {
+    return this.session.mode;
+  }
+  get games(): Games | undefined {
+    return this.session.games;
+  }
+  /** The player's threat answers for the current Tiro bout; observed beside the state, read by the results card. */
+  get ledger() {
+    return this.session.ledger;
+  }
+  get lab(): LabSession | undefined {
+    return this.session.lab;
+  }
+  /** A practice clone taken over from the reading. Never sent, saved or paid. */
+  get practice(): PracticeSession | undefined {
+    return this.session instanceof PracticeSession ? this.session : undefined;
+  }
+  /** Season bout checkpoints at its opening and every wave start, so a reading skips earlier waves. */
+  get tape(): readonly BoutCheckpoint[] {
+    return this.seasonSession?.tape ?? [];
+  }
   private sync() {
-    if (this.games) {
-      this.training.state = this.games.state;
-      this.training.player = this.games.player;
-      this.training.dummy = this.games.state.actors[1]!;
-    }
+    const s = this.session;
+    if (s instanceof TiroSession || s instanceof SeasonSession) s.sync();
   }
-  /** The ledger whose grades put words on the player's hits: the Lab's, the Tiro bout's, or a practice one. */
-  private wardLedger(): ThreatLedger | undefined {
-    return this.lab?.ledger ?? this.ledger ?? this.drill?.ledger;
+  /** Enter a session and apply its presentation reset; the previous session's taps are detached unless it is kept. */
+  private apply(e: Entered, exitPrevious = true) {
+    if (exitPrevious && this.session !== e.session) this.session.exit();
+    this.session = e.session;
+    this.lastEvents = e.reset.eventsFrom;
+    this.lastPerfect = e.reset.lastPerfect;
+    if (e.reset.impactReset) this.impactClock.reset();
+    this.lastPhase = e.reset.lastPhase;
   }
-  /** Attach the read-only contact taps to the state now on screen (practice ledger only where no other ledger exists). */
+  /** Attach the read-only contact taps to the state now on screen (a drill ledger only where no other ledger exists). */
   private watchContacts() {
     const { state, player } = this.training;
     this.flowBefore.watch(state, player.id);
-    if (this.lab || this.ledger || this.drill?.state === state) return;
-    if (this.drill) detachLedger(this.drill.ledger);
-    this.drill = { state, ledger: createLedger(state, player.id) };
+    this.session.watch();
   }
   restart(kind: TrainingKind = "magic") {
-    this.mode = "training";
-    this.lab = undefined;
-    this.games = undefined;
-    if (this.ledger) detachLedger(this.ledger);
-    this.ledger = undefined;
-    if (this.drill) detachLedger(this.drill.ledger);
-    this.drill = undefined;
     this.flowTip = idleTip();
     this.flowSeen = undefined;
     this.lastGain = undefined;
-    this.reference = false;
-    this.training = createTraining(kind, undefined, difficulty());
-    this.training.player.water = newWaterState(this.composition);
+    this.apply(
+      enterTraining(kind, this.composition, difficulty(), () => this.bot),
+    );
     if (gameAudio.snapshot().scene.startsWith("arena:"))
       gameAudio.setScene("arena:1", true);
     this.clock = new FixedStepper();
     this.input.clear();
     this.paused = false;
-    this.lastEvents = 0;
-    this.lastPerfect = -1e9;
-    this.impactClock.reset();
-    this.lastPhase = "";
     this.camera = makeCamera(
       this.camera,
       arenaGeometry.centre,
@@ -733,8 +736,9 @@ export class ArenaGame {
     if (
       this.season &&
       !this.pending &&
-      this.queued.length &&
-      (this.queued.length >= combat.simStepHz || this.games?.phase !== "active")
+      this.seasonSession?.queued.length &&
+      (this.seasonSession!.queued.length >= combat.simStepHz ||
+        this.games?.phase !== "active")
     )
       void this.flush().catch(() =>
         this.ui.notice(
@@ -751,17 +755,16 @@ export class ArenaGame {
   resetLab(config: LabSetup) {
     const previous = this.lab;
     this.restart();
-    this.lab = createLabSetup(
+    const lab = createLabSetup(
       config,
       previous?.training.state.tuning,
       previous?.tuningName,
     );
     if (previous)
-      this.lab.training.state.lab!.damageEnabled =
+      lab.training.state.lab!.damageEnabled =
         previous.training.state.lab!.damageEnabled;
-    this.training = this.lab.training;
+    this.apply(enterLab(lab));
     this.composition = config.composition;
-    this.mode = "lab";
     this.prepare();
   }
   stepLabOnce() {
@@ -775,18 +778,7 @@ export class ArenaGame {
   }
   startGames(seed = 4) {
     this.restart();
-    this.mode = "tiro";
-    this.games = createGames(
-      seed,
-      this.composition,
-      0,
-      false,
-      undefined,
-      undefined,
-      difficulty(),
-    );
-    this.sync();
-    this.ledger = createLedger(this.games.state, this.games.player.id);
+    this.apply(enterTiro(this.training, seed, this.composition, difficulty()));
     this.camera = makeCamera(
       this.camera,
       arenaGeometry.centre,
@@ -797,13 +789,7 @@ export class ArenaGame {
   }
   startRoster(id: string) {
     this.restart();
-    this.mode = "roster";
-    this.training.state.actors = [this.training.player];
-    const spec = enemyRoster.find((s) => s.id === id)!;
-    const count = spec.packSize ?? runtime.games.rosterPracticeCount;
-    for (let i = 0; i < count; i++)
-      addEnemy(this.training.state, id, openingPosition(i, count));
-    this.training.dummy = this.training.state.actors[1]!;
+    this.apply(enterRoster(this.training, id));
     this.prepare();
     this.hud();
   }
@@ -812,13 +798,6 @@ export class ArenaGame {
     this.paused = value;
     this.input.clear();
     this.clock = new FixedStepper();
-  }
-  private seasonStep(entry: BoutInput) {
-    applyBoutInput(this.season!.bout, entry);
-    if (this.ledger && this.games) observeLedger(this.ledger, this.games.state);
-    if (entry.type === "advance")
-      this.tape.push(boutCheckpoint(this.season!.bout));
-    this.queued.push(entry);
   }
   /** Read the season wave just fought from the client's own log; rebuilt only when the log has grown. */
   openReader(): BoutReader {
@@ -837,34 +816,17 @@ export class ArenaGame {
   /** Practice from the reader's tick: a clone of the replayed Games, stepped locally and never queued or flushed. */
   takeOver() {
     if (!this.reader?.canTakeOver || !this.games || this.practice) return;
-    this.practice = {
-      live: {
-        games: this.games,
-        ledger: this.ledger,
-        lastPhase: this.lastPhase,
-      },
-    };
-    this.games = takeOverBout(this.reader.at);
-    this.ledger = undefined;
-    this.sync();
-    this.lastEvents = this.training.state.events.length;
-    this.lastPhase = "";
-    this.lastPerfect = -1e9;
-    this.impactClock.reset();
+    const practice = practiceFrom(this.session, this.reader.at, this.lastPhase);
+    if (!practice) return;
+    this.apply(practice, false);
     this.pause(false);
     this.prepare();
     this.hud();
   }
   endPractice(note = "Practice ended. The settled bout is unchanged.") {
-    const live = this.practice?.live;
-    if (!live) return;
-    this.practice = undefined;
-    this.games = live.games;
-    this.ledger = live.ledger;
-    this.sync();
-    this.lastEvents = this.training.state.events.length;
-    this.lastPhase = live.lastPhase;
-    this.impactClock.reset();
+    const practice = this.practice;
+    if (!practice) return;
+    this.apply(leavePractice(practice), false);
     this.pause(true);
     this.results();
     this.ui.notice(note);
@@ -872,9 +834,8 @@ export class ArenaGame {
   async flush() {
     if (this.pending) await this.pending;
     if (this.syncError) throw Error(this.syncError);
-    if (!this.season || !this.queued.length) return;
-    const entries = this.queued;
-    this.queued = [];
+    if (!this.season || !this.seasonSession?.queued.length) return;
+    const entries: BoutInput[] = this.seasonSession.drain();
     this.pending = this.season
       .send(entries, boutHash(this.season.bout))
       .then(() => {})
@@ -892,15 +853,9 @@ export class ArenaGame {
   async next() {
     await this.flush();
     if (!this.games) return;
-    if (this.season)
-      this.seasonStep({ type: "advance", tick: this.games.state.tick });
-    else advanceGames(this.games);
-    this.sync();
-    if (this.ledger) resetLedger(this.ledger);
-    this.lastEvents = this.training.state.events.length;
-    this.lastPerfect = -1e9;
-    this.impactClock.reset();
-    this.lastPhase = "";
+    const next = advance(this.session);
+    if (!next) return;
+    this.apply(next);
     this.camera = makeCamera(
       this.camera,
       arenaGeometry.centre,
@@ -958,46 +913,20 @@ export class ArenaGame {
     const hold = this.holdFirstFrame;
     this.holdFirstFrame = false;
     if (
-      !hold &&
-      !this.paused &&
-      !this.labUI?.replayState &&
-      (!this.reader || this.ui.screen !== "bout-reader") &&
-      !this.pending &&
-      !this.syncError &&
-      !this.training.player.tags.includes("DEFEATED") &&
-      !document.hidden
+      canStep({
+        holdFirstFrame: hold,
+        paused: this.paused,
+        labReplay: !!this.labUI?.replayState,
+        readerUp: !!this.reader && this.ui.screen === "bout-reader",
+        flushPending: !!this.pending,
+        syncError: this.syncError,
+        defeated: this.training.player.tags.includes("DEFEATED"),
+        hidden: document.hidden,
+      })
     )
-      alpha = this.clock.advance(simulationDt, () => {
-        if (this.lab) stepLab(this.lab, this.input.frame());
-        else if (this.games) {
-          if (this.practice) stepGames(this.games, this.input.frame());
-          else if (this.season && this.games.phase === "active")
-            this.seasonStep({
-              type: "tick",
-              tick: this.games.state.tick,
-              input: this.input.frame(),
-            });
-          else if (!this.season) {
-            stepGames(
-              this.games,
-              this.reference ? undefined : this.input.frame(),
-            );
-            if (this.ledger) observeLedger(this.ledger, this.games.state);
-          }
-        } else if (this.mode === "roster") {
-          stepArena(this.training.state, {
-            ...enemyInputs(this.training.state),
-            [this.training.player.id]: this.input.frame(),
-          });
-          queueDeathEffects(this.training.state);
-        } else
-          stepTraining(
-            this.training,
-            this.bot ? timingBot(this.training, this.bot) : this.input.frame(),
-          );
-        if (this.drill?.state === this.training.state)
-          observeLedger(this.drill.ledger, this.drill.state);
-      });
+      alpha = this.clock.advance(simulationDt, () =>
+        this.session.step(() => this.input.frame()),
+      );
     markPhase("step");
     this.autoFlush();
     this.consumeEvents(reduced);
@@ -1005,12 +934,11 @@ export class ArenaGame {
       this.reader && !this.practice && this.ui.screen === "bout-reader"
         ? this.reader.frame(dt)
         : undefined;
-    const replay = this.lab ? this.labUI?.frame(dt) : read?.state;
-    const shown = replay ?? this.training.state;
-    const shownPlayer =
-      read?.player ??
-      replay?.actors.find((a) => a.id === this.training.player.id) ??
-      this.training.player;
+    const { state: shown, player: shownPlayer } = shownFrame(
+      this.training,
+      read,
+      this.lab ? this.labUI?.frame(dt) : undefined,
+    );
     this.camera = clampPlateCamera(
       followCamera(
         this.camera,
@@ -1027,7 +955,7 @@ export class ArenaGame {
       reduced || this.paused ? 0 : shake.x,
       reduced || this.paused ? 0 : shake.y,
     );
-    this.scene.feedback.ledger = this.wardLedger();
+    this.scene.feedback.ledger = this.session.wardLedger();
     markPhase("events");
     this.scene.render(
       this.artFixture?.state ?? shown,
@@ -1068,9 +996,7 @@ export class ArenaGame {
     }
     this.hudUpdate();
     markPhase("hud");
-    const phase =
-      this.games?.phase ??
-      (this.training.player.tags.includes("DEFEATED") ? "failed" : "active");
+    const phase = this.session.phase();
     if (
       !this.lab &&
       phase !== "active" &&
@@ -1198,7 +1124,7 @@ export class ArenaGame {
     this.ui.world.visible = true;
     window.removeEventListener("keydown", this.artDebugKey);
     this.flowBefore.dispose();
-    if (this.drill) detachLedger(this.drill.ledger);
+    this.session.leave();
     this.ui.world.position.set(0, 0);
     this.labUI?.dispose();
     this.input.dispose();

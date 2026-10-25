@@ -1,10 +1,11 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { applyBoutInput, boutCheckpoint, boutHash, positionOfTick, replayBoutTo, startBout, takeOverBout, type BoutCheckpoint, type BoutInput, type SeasonBout } from "@mage/core";
-import { attachMageAI, createLedger, mageInput, observeLedger, presets, resetLedger, stateHash, stepGames, type Games, type InputFrame, type LedgerEntry, type MageBrain } from "@mage/core/arena";
+import { boutHash, positionOfTick, replayBoutTo, startBout, takeOverBout, type BoutInput, type SeasonBout } from "@mage/core";
+import { attachMageAI, createTraining, mageInput, presets, stateHash, stepGames, type Games, type InputFrame, type LedgerEntry, type MageBrain } from "@mage/core/arena";
+import { SeasonSession } from "./arena-session.ts";
 import { BoutReader } from "./bout-reader-ui.ts";
 import { answerMark } from "./answers.ts";
 
-/** ArenaGame's season loop without the canvas: step the client's bout, observe its ledger, reset on advance, tape wave starts. */
+/** ArenaGame's season loop is its SeasonSession: step the client's bout, observe its ledger, reset on advance, tape wave starts. */
 function fight(seed: number) {
   const bout: SeasonBout = { id: `games:${seed}`, day: 7, seed, phase: "prepared", spectator: false, composition: structuredClone(presets[2]!), games: null, log: [], difficulty: "normal",
     entrant: { id: "p", name: "Cassia", school: "water", ranks: { vigor: 3, focus: 3, nerve: 3 }, mastery: 2, hpPenalty: 0, staminaPenalty: 0 } };
@@ -17,23 +18,23 @@ function fight(seed: number) {
     const input = mageInput(observation, actor); brain = actor.mageAI; rng = observation.rng;
     return input;
   };
-  const ledger = createLedger(bout.games!.state, bout.games!.player.id), tape: BoutCheckpoint[] = [boutCheckpoint(bout)], flushed: BoutInput[] = [];
-  let live: LedgerEntry[] = [];
+  const session = new SeasonSession(bout, createTraining()), flushed: BoutInput[] = [];
+  let live: LedgerEntry[] = [], waves = 1;
   while (bout.phase !== "terminal") {
-    const g = bout.games!, entry: BoutInput = g.phase === "intermission" ? { type: "advance", tick: g.state.tick } : { type: "tick", tick: g.state.tick, input: frame(g) };
-    applyBoutInput(bout, entry); observeLedger(ledger, g.state); flushed.push(entry);
-    if (entry.type === "advance") { resetLedger(ledger); tape.push(boutCheckpoint(bout)); }
-    live = structuredClone(ledger.entries);
+    if (session.games.phase === "intermission") { session.advance(); waves++; } else session.step(() => frame(session.games));
+    flushed.push(...session.drain());
+    live = structuredClone(session.ledger!.entries);
   }
-  return { bout, tape, live, flushed };
+  return { bout, tape: session.tape, live, flushed, waves };
 }
-
 describe("Read the bout", () => {
   let f: ReturnType<typeof fight>;
   beforeAll(() => { f = fight(12); });
 
   it("reads from the client's own log, which is exactly what it flushed", () => {
     expect(f.bout.log).toEqual(f.flushed);
+    expect(f.tape.length).toBe(f.waves);
+    expect(f.tape.map((c) => c.position)).toEqual([0, ...f.bout.log.flatMap((e, i) => (e.type === "advance" ? [i + 1] : []))]);
   });
 
   it("shows each timeline entry with the grade the live ledger captured", () => {
