@@ -1,9 +1,11 @@
 // Named-duel census (W8 lane B): the Tiro semifinal and final with schoolRivals 'named' (Brennic Fire, Lio Air), the PC
 // balance overlay on, the reference player at runtime.games.referenceCompetence with runtime.games.referencePreset.
 // Pure: no I/O, so report-named.ts (the evidence writer) and named-census.test.ts (the pinned claim) share one runner.
-// The fight loop is runFight's (games.ts) with the createGames `schoolRivals: 'named'` option, which runFight does not pass.
-import { combat, createGames, createLedger, emptyAnswerCounts, answers as answerKinds, families, observeLedger, presets, runtime, seconds, stateHash, stepGames, ticks, tiro } from '../src/arena/index.ts';
+// The fight loop is runFight's (games.ts), run by the census kit (census-kit.ts) with the createGames `schoolRivals: 'named'`
+// option, which runFight does not pass; the dead-air, resource and answer readings are a read-only observer.
+import { combat, createLedger, emptyAnswerCounts, answers as answerKinds, families, observeLedger, runtime, seconds, stateHash, ticks, tiro } from '../src/arena/index.ts';
 import { rivalRuntime } from '../src/arena/rival-phases.ts';
+import { censusGames, outcomeOf, quantile, runCensus } from './census-kit.ts';
 
 /** The named waves, 0-based Tiro indices: 2 is the semifinal (Brennic), 3 the final (Lio). */
 export const namedWaves = [2, 3] as const;
@@ -11,18 +13,17 @@ export const namedWaves = [2, 3] as const;
 export const winRateTarget: readonly [number, number] = [0.4, 0.65];
 
 export function runNamedFight(seed: number, wave: number, maxSeconds = runtime.games.fightTimeoutS) {
-  const composition = presets.find(p => p.name === runtime.games.referencePreset)!;
-  const g = createGames(seed, composition, wave, true, undefined, undefined, undefined, { schoolRivals: 'named' }), ledger = createLedger(g.state, g.player.id);
+  const g = censusGames(seed, wave, { schoolRivals: 'named' }), ledger = createLedger(g.state, g.player.id);
   const rival = g.state.actors.find(a => a.schoolState !== undefined && a.team !== g.player.team)!;
   const deadAirBuckets: boolean[] = []; let bucketActive = false, resourceSum = 0, steps = 0;
-  while (g.phase === 'active' && g.state.tick < ticks(maxSeconds)) {
-    const eventsBefore = g.state.events.length; stepGames(g); observeLedger(ledger, g.state);
-    if (g.state.events.slice(eventsBefore).some(e => e.kind === 'cast' || e.kind === 'hit') || g.state.projectiles.length || g.state.telegraphs.length || g.state.actors.some(a => a.pending)) bucketActive = true;
+  runCensus(g, maxSeconds, [{ step(_, events) {
+    observeLedger(ledger, g.state);
+    if (events.some(e => e.kind === 'cast' || e.kind === 'hit') || g.state.projectiles.length || g.state.telegraphs.length || g.state.actors.some(a => a.pending)) bucketActive = true;
     if (g.state.tick % ticks(combat.pacingTargets.deadAirBucketS) === 0) { deadAirBuckets.push(!bucketActive); bucketActive = false; }
     resourceSum += rival.schoolState!.value; steps++;
-  }
+  } }]);
   const phases = rivalRuntime(g.state);
-  return { seed, wave: wave + 1, rival: rival.label, school: rival.schoolState!.school, outcome: g.phase === 'active' ? 'timeout' : g.phase === 'lost' ? 'loss' : 'win', durationS: seconds(g.state.tick),
+  return { seed, wave: wave + 1, rival: rival.label, school: rival.schoolState!.school, outcome: outcomeOf(g), durationS: seconds(g.state.tick),
     hp: g.player.hp, mana: g.player.mana, stamina: g.player.stamina, rivalHp: rival.hp, rivalMeanResource: resourceSum / Math.max(1, steps),
     phasesBroken: phases?.phasesBroken ?? 0, signatureCast: phases?.grantUsed ?? false,
     perfects: g.player.metrics.perfects, incomingHits: g.player.metrics.hits, damageDealt: g.player.metrics.damageDealt, damageTaken: g.player.metrics.damageTaken,
@@ -31,7 +32,6 @@ export function runNamedFight(seed: number, wave: number, maxSeconds = runtime.g
 }
 export type NamedFight = ReturnType<typeof runNamedFight>;
 
-const quantile = (values: number[], q: number): number => [...values].sort((a, b) => a - b)[Math.min(values.length - 1, Math.floor(values.length * q))] ?? 0;
 const summary = (values: number[]) => ({ min: Math.min(...values), p10: quantile(values, 0.1), p50: quantile(values, 0.5), p90: quantile(values, 0.9), max: Math.max(...values) });
 
 /** The report-w4 wave summary (fields vr:tuning-return reads), plus the win-rate check and the phase readings. */
@@ -39,7 +39,7 @@ export function summariseNamedWave(fights: NamedFight[], wave: number, replayFai
   const count = fights.length, completed = fights.filter(f => f.outcome !== 'timeout'), wins = fights.filter(f => f.outcome === 'win');
   const duration = summary(completed.map(f => f.durationS)), target = tiro.waves[wave]!.targetDurationS as [number, number], winRate = wins.length / Math.max(1, count);
   const failures = {
-    medianOutOfBand: !completed.length || duration.p50 < target[0] || duration.p50 > target[1],
+    medianOutOfBand: duration.p50 === null || duration.p50 < target[0] || duration.p50 > target[1],
     winRateOutOfRange: winRate < winRateTarget[0] || winRate > winRateTarget[1],
     timeoutRate: fights.filter(f => f.outcome === 'timeout').length / count > runtime.games.timeoutRateMax,
     earlyDowns: fights.filter(f => f.outcome === 'loss' && f.durationS < combat.reactionBands.playerDeathNotBeforeS).map(f => f.seed),

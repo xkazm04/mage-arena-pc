@@ -4,21 +4,16 @@
 // reference preset does not). Prints one line per cell and row: blows of the row's class met while slotted, while castable,
 // answered, and the coverage (answered / castable). With --tag it writes `<tag>.json` to --out-dir (default the change-request
 // evidence folder). Per-cell digests are the census fights' own (the reader never writes the state).
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
 import { performance } from 'node:perf_hooks';
 import { runtime, tiro } from '../src/arena/index.ts';
 import { rivalBuildIds, rivalBuilds } from '../src/arena/archetypes.ts';
-import { evidenceDir } from './builds-census.ts';
+import { censusCommand, evidenceEnvelope, fightDigest, median, parseCensusArgs, writeEvidence } from './census-kit.ts';
 import { addTally, coverage, coverageBuildFight, coverageDefaultFight, defensiveRows, emptyTally, type RowTally } from './counter-coverage.ts';
 
-const args = process.argv.slice(2), arg = (name: string): string | undefined => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
-const count = Number(arg('--count') ?? 200), tag = arg('--tag'), outDir = arg('--out-dir') ?? 'docs/change-requests/evidence';
-if (!Number.isInteger(count) || count < 1 || (tag !== undefined && !/^[a-z0-9-]+$/.test(tag)) || !evidenceDir.test(outDir)) throw Error('Invalid report arguments');
+const args = process.argv.slice(2), { count, tag, outDir } = parseCensusArgs(args, { outDir: 'docs/change-requests/evidence' });
 const supplement = 'Mirror tide', start = performance.now(), seeds = Array.from({ length: count }, (_, i) => runtime.games.censusSeedStart + i);
 const pct = (x: number | null): string => x === null ? '   -' : `${(x * 100).toFixed(1)}%`.padStart(6);
 type Fight = { seed: number; tallies: Record<string, RowTally>; hash: string; outcome: string; durationS: number };
-const median = (values: number[]): number => [...values].sort((a, b) => a - b)[Math.min(values.length - 1, Math.floor(values.length / 2))] ?? 0;
 function cell(name: string, census: string, fights: Fight[], band: readonly number[]) {
   const rows: Record<string, RowTally & { coverage: number | null }> = {};
   for (const f of fights) for (const [id, t] of Object.entries(f.tallies)) addTally(rows[id] ??= { ...emptyTally(), coverage: null }, t);
@@ -26,9 +21,9 @@ function cell(name: string, census: string, fights: Fight[], band: readonly numb
   for (const [id, r] of Object.entries(rows)) console.log(`${census.padEnd(22)} ${name.padEnd(11)} ${id.padEnd(12)} holders ${String(r.holderFights).padStart(3)} casts ${String(r.casts).padStart(5)}`
     + ` | slotted ${String(r.slotted).padStart(5)} castable ${String(r.reachable).padStart(5)} answered ${String(r.answered).padStart(5)} coverage ${pct(r.coverage)}`);
   const winRate = fights.filter(f => f.outcome === 'win').length / fights.length, medianS = median(fights.filter(f => f.outcome !== 'timeout').map(f => f.durationS));
-  console.log(`${census.padEnd(22)} ${name.padEnd(11)} reference wins ${pct(winRate)} median ${medianS.toFixed(1)} s [${band.join('-')}]`);
+  console.log(`${census.padEnd(22)} ${name.padEnd(11)} reference wins ${pct(winRate)} median ${medianS?.toFixed(1) ?? '-'} s [${band.join('-')}]`);
   return { cell: name, census, fights: fights.length, winRate, medianS, targetDurationS: band, rows,
-    digest: createHash('sha256').update(fights.map(f => `${f.seed}:${f.hash}`).join('\n')).digest('hex') };
+    digest: fightDigest(fights) };
 }
 const cells = [
   ...tiro.waves.map((w, wave) => cell(`wave ${wave + 1}`, 'default', seeds.map(seed => coverageDefaultFight(seed, wave)), w.targetDurationS)),
@@ -43,10 +38,7 @@ const rows = Object.fromEntries(defensiveRows.map(row => {
 }));
 for (const [id, r] of Object.entries(rows)) console.log(`all cells ${id.padEnd(12)} ${r.name.padEnd(16)} slotted ${r.slotted} castable ${r.reachable} answered ${r.answered} coverage ${pct(r.coverage)} casts ${r.casts}`);
 console.log(`counter coverage: ${count} fights/cell, ${cells.length} cells in ${((performance.now() - start) / 1000).toFixed(1)} s.`);
-if (tag) {
-  const destination = new URL(`../../../${outDir}/`, import.meta.url); mkdirSync(destination, { recursive: true });
-  writeFileSync(new URL(`${tag}.json`, destination), JSON.stringify({ label: 'simulated', date: new Date().toISOString().slice(0, 10),
-    command: `npm --prefix packages/core run census:counters -- ${args.join(' ')}`, countPerCell: count, seedRange: [seeds[0], seeds.at(-1)],
+if (tag) writeEvidence(outDir, `${tag}.json`, { ...evidenceEnvelope({ command: censusCommand('census:counters', args), count, reference: { supplement } }),
+    date: new Date().toISOString().slice(0, 10), countPerCell: count,
     method: 'Threat-answer ledger units (graded contacts plus avoided aimed threats) on every mage holding an answer row; a unit counts when its shape class is one the row answers and it is blockable. slotted: the row is in the loadout; reachable: castable by collar tier at that tick (coverage denominator); answered: the row effect was up at the blow, or the row was released between first sight of the blow and its contact. PC overlay on, exchange windows on.',
-    reference: { competence: runtime.games.referenceCompetence, preset: runtime.games.referencePreset, supplement }, rows, cells }, null, 2) + '\n');
-}
+    rows, cells });

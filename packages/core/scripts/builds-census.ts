@@ -1,18 +1,19 @@
 // Builds census (spark combat-system-depth WP2): each authored rival build (arena/data/rival-builds.json) against the reference
 // player on the build's wave, the PC overlay on, no named phases (every build on the same footing). Pure: no I/O, like
-// named-census.ts, so report-builds.ts and builds-census.test.ts share one runner.
+// named-census.ts, so report-builds.ts and builds-census.test.ts share one runner. The fight is the census kit's (census-kit.ts):
+// buildGames, runCensus and the builds reading as a read-only observer.
 // The curve signature (owner target, spark wave 5): the rival's win share among fights that end before the reference player's
 // tier III unlock, against its win share among fights that reach the reference player's tier IV.
-import { combat, createGames, presets, runtime, seconds, spells, stateHash, stepGames, threats, ticks, tiro, type SpellRanks } from '../src/arena/index.ts';
+import { combat, runtime, seconds, spells, stateHash, threats, tiro, type Actor, type Games } from '../src/arena/index.ts';
 import { answersShape, rivalBuilds, roleOf } from '../src/arena/archetypes.ts';
 import { schoolSpellById } from '../src/arena/schools.ts';
 import type { ShapeClass } from '../src/arena/mage-ai.ts';
-import { enablePlanTrace, planTrace, withheldBranches, type PlanBranch, type PlanCounts } from '../src/arena/plan-trace.ts';
+import { enablePlanTrace, planTrace, type PlanCounts } from '../src/arena/plan-trace.ts';
+import { buildGames, median, outcomeOf, planBranches, runCensus, share, type CensusObserver, type CensusOptions } from './census-kit.ts';
+export { evidenceDir, planBranches, whyLine } from './census-kit.ts';
 
 /** Director target (spark wave 5), not canon: the reference player's win rate against each build. */
 export const buildWinRateTarget: readonly [number, number] = [0.4, 0.65];
-/** Where a census writer may put evidence (repo-relative): the waves evidence folders or the change-request inbox. */
-export const evidenceDir = /^docs\/(?:waves|change-requests)\/[A-Za-z0-9-]+$/;
 /** Distance-over-time buckets (seconds from the bell). */
 export const distanceBucketS = 15;
 export type AnswerReading = 'answered' | 'other' | 'none';
@@ -20,23 +21,16 @@ export type AnswerReading = 'answered' | 'other' | 'none';
 const tideWard = spells.find(s => s.effect === 'ward')!;
 const answerReading = (aimed: (ShapeClass | undefined)[], shape: ShapeClass): AnswerReading => aimed.includes(shape) ? 'answered' : aimed.length ? 'other' : 'none';
 
-/** `compositionName` swaps the reference preset (a supplement: 'Mirror tide' slots Tide Ward, which Rotation does not);
- * `week` adds the week sweep's enemy level and reference spell ranks (week-census.ts); `trace` counts the rival's plan branches
- * (plan-trace.ts, outside the hashed state: the fight and its hash are the same with it off). */
-export function runBuildFight(seed: number, buildId: string, maxSeconds = runtime.games.fightTimeoutS, compositionName = runtime.games.referencePreset, week: { enemyLevel?: number; spellRanks?: SpellRanks } = {}, trace = true) {
-  const build = rivalBuilds[buildId]; if (!build) throw Error(`Unknown build ${buildId}`);
-  const composition = presets.find(p => p.name === compositionName)!;
-  const g = createGames(seed, composition, build.wave, true, undefined, undefined, undefined, { ...week, rivalBuild: buildId });
-  const rival = g.state.actors.find(a => a.schoolState !== undefined && a.team !== g.player.team)!;
-  if (trace) enablePlanTrace(g.state);
+/** The builds reading as a read-only observer on a build fight: the rival's casts, what each answer met, exchanges and their full
+ * hits, and the rival-to-player distance over time. */
+export function buildsObserver(g: Games, rival: Actor) {
   const casts: Record<string, number> = {}, answers: Record<string, Record<AnswerReading, number>> = {};
   const distanceSum: number[] = [], distanceSteps: number[] = []; let distanceTotal = 0, steps = 0;
   // Exchanges (D1 section 6): an exchange is one side's run of landed blows until the other side lands one; its full hits are the
   // blows that went through unguarded (no ward, no exchange window). Hits per exchange = full hits / exchanges.
   let cleanHits = 0, exchanges = 0, lastHitter = 0;
-  while (g.phase === 'active' && g.state.tick < ticks(maxSeconds)) {
-    const eventsBefore = g.state.events.length; stepGames(g);
-    for (const e of g.state.events.slice(eventsBefore)) {
+  const observer: CensusObserver = { step(_, events) {
+    for (const e of events) {
       if (e.kind === 'hit' && e.value > 0 && (e.actorId === rival.id || e.actorId === g.player.id) && e.targetId !== e.actorId) {
         if (e.targetId !== lastHitter) { exchanges++; lastHitter = e.targetId ?? 0; }
         if (!e.guarded) cleanHits++;
@@ -58,19 +52,30 @@ export function runBuildFight(seed: number, buildId: string, maxSeconds = runtim
     const d = Math.hypot(rival.pos.x - g.player.pos.x, rival.pos.y - g.player.pos.y), bucket = Math.floor(seconds(g.state.tick - g.waveStartTick) / distanceBucketS);
     distanceSum[bucket] = (distanceSum[bucket] ?? 0) + d; distanceSteps[bucket] = (distanceSteps[bucket] ?? 0) + 1;
     distanceTotal += d; steps++;
-  }
+  } };
+  const reading = () => ({ casts, answers, cleanHits, exchanges, meanDistanceM: distanceTotal / Math.max(1, steps), distanceByBucket: distanceSum.map((sum, i) => sum / Math.max(1, distanceSteps[i]!)) });
+  return { observer, reading };
+}
+
+/** `compositionName` swaps the reference preset (a supplement: 'Mirror tide' slots Tide Ward, which Rotation does not);
+ * `week` adds the week sweep's enemy level, reference spell ranks and mage-side arm (week-census.ts weekOptions); `trace` counts the
+ * rival's plan branches (plan-trace.ts, outside the hashed state: the fight and its hash are the same with it off). */
+export function runBuildFight(seed: number, buildId: string, maxSeconds = runtime.games.fightTimeoutS, compositionName = runtime.games.referencePreset, week: Pick<CensusOptions, 'enemyLevel' | 'spellRanks' | 'opponentMage'> = {}, trace = true) {
+  const { g, build, rival } = buildGames(seed, buildId, compositionName, week);
+  if (trace) enablePlanTrace(g.state);
+  const builds = buildsObserver(g, rival);
+  runCensus(g, maxSeconds, [builds.observer]);
+  const { casts, answers, cleanHits, exchanges, meanDistanceM, distanceByBucket } = builds.reading();
   // unlockTicks[0] is the tier I start; [2] is the tier III unlock, [3] tier IV.
   const playerTier = g.player.tier;
   return { seed, build: buildId, school: build.school, archetype: build.archetype, wave: build.wave + 1, rival: rival.label,
-    outcome: g.phase === 'active' ? 'timeout' : g.phase === 'lost' ? 'loss' : 'win', durationS: seconds(g.state.tick - g.waveStartTick),
+    outcome: outcomeOf(g), durationS: seconds(g.state.tick - g.waveStartTick),
     endedBeforeTier3: playerTier < 3, reachedTier4: playerTier >= 4, hp: g.player.hp, rivalHp: rival.hp, rivalMaxHp: rival.maxHp,
-    casts, answers, branches: { ...planTrace(g.state)?.get(rival.id) } as PlanCounts, cleanHits, exchanges, meanDistanceM: distanceTotal / Math.max(1, steps), distanceByBucket: distanceSum.map((sum, i) => sum / Math.max(1, distanceSteps[i]!)),
+    casts, answers, branches: { ...planTrace(g.state)?.get(rival.id) } as PlanCounts, cleanHits, exchanges, meanDistanceM, distanceByBucket,
     hash: stateHash(g.state) };
 }
 export type BuildFight = ReturnType<typeof runBuildFight>;
 
-const median = (values: number[]): number => [...values].sort((a, b) => a - b)[Math.min(values.length - 1, Math.floor(values.length / 2))] ?? 0;
-const share = (part: number, whole: number): number | null => whole ? part / whole : null;
 
 /** One build's reading: win rate, median, the curve signature, the cast histogram (share of releases), mean distance, answers. */
 export function summariseBuild(fights: BuildFight[]) {
@@ -92,25 +97,13 @@ export function summariseBuild(fights: BuildFight[]) {
   const target = tiro.waves[build.wave]!.targetDurationS as [number, number], winRate = wins.length / Math.max(1, count), p50 = median(completed.map(f => f.durationS));
   return { build: build.id, school: build.school, archetype: build.archetype, wave: build.wave + 1, rival: first.rival, fights: count,
     winRate, rivalWinShare: losses.length / Math.max(1, count), timeouts: count - completed.length, medianS: p50, targetDurationS: target,
-    medianInBand: p50 >= target[0] && p50 <= target[1], winRateInRange: winRate >= buildWinRateTarget[0] && winRate <= buildWinRateTarget[1],
+    medianInBand: p50 !== null && p50 >= target[0] && p50 <= target[1], winRateInRange: winRate >= buildWinRateTarget[0] && winRate <= buildWinRateTarget[1],
     curve: { shortFights: short.length, rivalShareShort: share(short.filter(f => f.outcome === 'loss').length, short.length),
       tier4Fights: long.length, rivalShareTier4: share(long.filter(f => f.outcome === 'loss').length, long.length) },
     hitsPerExchange: cleanHits / Math.max(1, exchanges), histogram, roles, meanDistanceM: fights.reduce((a, f) => a + f.meanDistanceM, 0) / Math.max(1, count), distanceOverTime, answers,
     ...planBranches(fights) };
 }
 export type BuildSummary = ReturnType<typeof summariseBuild>;
-/** The plan-branch ledger over a build's fights: each branch's share of the plan's decisions (sums to 1), and the share where the
- * plan withheld (null when no fight was traced). Why the build pressed what it pressed, beside the cast roles (what). */
-export function planBranches(fights: { branches: PlanCounts }[]): { branches: Partial<Record<PlanBranch, number>>; withheldShare: number | null } {
-  const counts: PlanCounts = {};
-  for (const f of fights) for (const [b, n] of Object.entries(f.branches) as [PlanBranch, number][]) counts[b] = (counts[b] ?? 0) + n;
-  const total = Object.values(counts).reduce((a, b) => a + b, 0);
-  const withheld = (Object.entries(counts) as [PlanBranch, number][]).filter(([b]) => withheldBranches.has(b)).reduce((a, [, n]) => a + n, 0);
-  return { branches: Object.fromEntries((Object.entries(counts) as [PlanBranch, number][]).sort((x, y) => y[1] - x[1] || (x[0] < y[0] ? -1 : 1)).map(([b, n]) => [b, n / total])), withheldShare: share(withheld, total) };
-}
-/** The report's why segment: the top three branches by share, in rounded percent. */
-export const whyLine = (branches: Record<string, number>): string =>
-  `why ${Object.entries(branches).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([b, v]) => `${b} ${Math.round(v * 100)}`).join(' ')}`;
 /** The shape class each answer row answers, for the report legend. */
 export const answerClasses = (): Record<string, ShapeClass> => Object.fromEntries(Object.values(rivalBuilds).flatMap(b => b.loadout.slots).map(id => [id, answersShape(schoolSpellById(id)!)]).filter((e): e is [string, ShapeClass] => e[1] !== undefined));
 /** Combat pacing constant re-exported for the writer's methodology line. */

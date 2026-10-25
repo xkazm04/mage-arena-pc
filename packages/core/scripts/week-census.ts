@@ -2,12 +2,12 @@
 // mages and rival builds are not levelled) with a progression profile from arena/data/progression-weeks.pc.json: the reference
 // player's average spell rank that week. An opt-in mage-side arm (D1 6.8, a reading only) levels the opponent mage too.
 // Pure: no I/O, so report-weeks.ts and the census tests share one runner.
-import { combat, createGames, presets, runtime, seconds, stateHash, stepGames, ticks, type Actor, type Composition, type Games, type SpellRanks } from '../src/arena/index.ts';
+import { combat, presets, runtime, seconds, stateHash, type Actor, type Composition, type Games, type SpellRanks } from '../src/arena/index.ts';
 import { maxEnemyLevel, maxSpellRank } from '../src/arena/progression.ts';
 import { applyOpponentMage, buildRows, compositionRows, ranksAtAverage, type OpponentMage } from '../src/arena/mage-build.ts';
-import { rivalBuilds } from '../src/arena/archetypes.ts';
 import profileData from '../src/arena/data/progression-weeks.pc.json' with { type: 'json' };
 import { runBuildFight } from './builds-census.ts';
+import { censusGames, outcomeOf, runCensus } from './census-kit.ts';
 
 export type WeekProfiles = Record<string, number[]>;
 function profilesProblems(profiles: unknown, at: string): string[] {
@@ -76,20 +76,14 @@ const weekOptions = (week: number, profile: string, arm?: MageArm) => {
   const ranks = profileSpellRanks(reference(), weekProfiles[profile]![week - 1]!), opponentMage = armOption(week, arm);
   return { ...(week > 1 ? { enemyLevel: week } : {}), ...(Object.keys(ranks).length ? { spellRanks: ranks } : {}), ...(opponentMage ? { opponentMage } : {}) };
 };
-const outcome = (g: Games): string => g.phase === 'active' ? 'timeout' : g.phase === 'lost' ? 'loss' : 'win';
 /** One default-census fight (report-w4's reference player and wave) in `week` under `profile`, the mage side levelled by `arm`. */
 export function runWeekFight(seed: number, wave: number, week: number, profile: string, maxSeconds = runtime.games.fightTimeoutS, arm?: MageArm) {
-  const g = createGames(seed, reference(), wave, true, undefined, undefined, undefined, weekOptions(week, profile, arm));
-  while (g.phase === 'active' && g.state.tick < ticks(maxSeconds)) stepGames(g);
-  return { seed, wave: wave + 1, week, profile, outcome: outcome(g), durationS: seconds(g.state.tick), hash: stateHash(g.state) };
+  const g = runCensus(censusGames(seed, wave, weekOptions(week, profile, arm)), maxSeconds);
+  return { seed, wave: wave + 1, week, profile, outcome: outcomeOf(g), durationS: seconds(g.state.tick), hash: stateHash(g.state) };
 }
-/** One builds-census fight (the build's own wave) in `week` under `profile`. With no arm it is runBuildFight itself; with one, the
- * same Games (createGames with the build) with the arm's opponentMage option, so the rival spawns levelled. */
+/** One builds-census fight (the build's own wave) in `week` under `profile`: runBuildFight itself with the week's options, the arm's
+ * opponentMage among them (the rival spawns levelled), so an armed fight carries the whole builds reading too. */
 export function runWeekBuildFight(seed: number, buildId: string, week: number, profile: string, arm?: MageArm) {
-  if (!arm) return runBuildFight(seed, buildId, runtime.games.fightTimeoutS, runtime.games.referencePreset, weekOptions(week, profile));
-  const build = rivalBuilds[buildId]; if (!build) throw Error(`Unknown build ${buildId}`);
-  const g = createGames(seed, reference(), build.wave, true, undefined, undefined, undefined, { ...weekOptions(week, profile, arm), rivalBuild: buildId });
-  while (g.phase === 'active' && g.state.tick < ticks(runtime.games.fightTimeoutS)) stepGames(g);
-  return { seed, build: buildId, outcome: outcome(g), durationS: seconds(g.state.tick - g.waveStartTick), hash: stateHash(g.state) };
+  return runBuildFight(seed, buildId, runtime.games.fightTimeoutS, runtime.games.referencePreset, weekOptions(week, profile, arm));
 }
 export const simStepHz = combat.simStepHz;

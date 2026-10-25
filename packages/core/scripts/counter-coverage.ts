@@ -10,10 +10,11 @@
 // - answered: the row's effect was up at the blow (Air Form's evade window, Tide Ward's drain cut), or the holder released
 //   the row between first seeing the blow and its contact (how Ring of Cinders, an instant blast, answers).
 // The reader taps contacts and reads threats beside the state; it never writes, so every fight hashes as its census fight.
-import { createGames, presets, runtime, seconds, spellFor, spells, stateHash, stepGames, threats, ticks, tapContacts, type Actor, type ArenaState, type ShapeClass, type WaterLine } from '../src/arena/index.ts';
+import { runtime, seconds, spellFor, spells, stateHash, threats, tapContacts, type Actor, type ArenaState, type Games, type ShapeClass, type WaterLine } from '../src/arena/index.ts';
 import { createLedger, detachLedger, observeLedger, type ThreatLedger } from '../src/arena/ledger.ts';
-import { answersShape, rivalBuilds } from '../src/arena/archetypes.ts';
+import { answersShape } from '../src/arena/archetypes.ts';
 import { canonicalSpells } from '../src/arena/schools.ts';
+import { buildGames, censusGames, outcomeOf, runCensus } from './census-kit.ts';
 
 export interface DefensiveRow { id: string; name: string; school: 'water' | 'fire' | 'air'; tier: number; line?: WaterLine }
 /** The shape-class answer rows, one per school: the Fire and Air rows whose plan role is `answer`, and Water's Tide Ward. */
@@ -69,7 +70,7 @@ function contactShape(state: ArenaState, w: Watch, ownerId: number, activationId
 }
 
 /** Step a Games bout to its end with coverage watchers on every mage that holds an answer row. */
-export function watchCoverage(g: ReturnType<typeof createGames>, maxSeconds: number): { tallies: Record<string, RowTally>; hash: string; outcome: string; durationS: number } {
+export function watchCoverage(g: Games, maxSeconds: number): { tallies: Record<string, RowTally>; hash: string; outcome: string; durationS: number } {
   const watches: Watch[] = [];
   for (const actor of g.state.actors) if (actor.mageAI) for (const row of defensiveRows) if (holds(actor, row))
     watches.push({ actor, row, ledger: createLedger(g.state, actor.id), facts: new Map(), seen: new Map(), releases: [] });
@@ -78,11 +79,10 @@ export function watchCoverage(g: ReturnType<typeof createGames>, maxSeconds: num
   });
   const tallies: Record<string, RowTally> = {};
   const counted = new Map<Watch, number>();
-  while (g.phase === 'active' && g.state.tick < ticks(maxSeconds)) {
-    const eventsBefore = g.state.events.length; stepGames(g);
+  runCensus(g, maxSeconds, [{ step(_, events) {
     for (const w of watches) {
       observeLedger(w.ledger, g.state);
-      for (const e of g.state.events.slice(eventsBefore)) if (e.kind === 'release' && e.actorId === w.actor.id && e.spellId === w.row.id) w.releases.push(e.tick);
+      for (const e of events) if (e.kind === 'release' && e.actorId === w.actor.id && e.spellId === w.row.id) w.releases.push(e.tick);
       for (const t of threats(g.state, w.actor)) if (!w.seen.has(t.id)) w.seen.set(t.id, { shape: t.shape, first: g.state.tick });
       const tally = tallies[w.row.id] ??= emptyTally(), classes = rowClasses(w.row, g.state);
       const from = counted.get(w) ?? 0;
@@ -107,21 +107,18 @@ export function watchCoverage(g: ReturnType<typeof createGames>, maxSeconds: num
       }
       counted.set(w, w.ledger.entries.length);
     }
-  }
+  } }]);
   untap();
   for (const w of watches) { detachLedger(w.ledger); const t = tallies[w.row.id] ??= emptyTally(); t.casts += w.releases.length; t.holderFights++; }
-  return { tallies, hash: stateHash(g.state), outcome: g.phase === 'active' ? 'timeout' : g.phase === 'lost' ? 'loss' : 'win', durationS: seconds(g.state.tick - g.waveStartTick) };
+  return { tallies, hash: stateHash(g.state), outcome: outcomeOf(g), durationS: seconds(g.state.tick - g.waveStartTick) };
 }
 
 /** A default-census fight (games.ts runFight: the reference preset, no build) with the coverage watchers. */
 export function coverageDefaultFight(seed: number, wave: number, maxSeconds = runtime.games.fightTimeoutS) {
-  const composition = presets.find(p => p.name === runtime.games.referencePreset)!;
-  return { seed, ...watchCoverage(createGames(seed, composition, wave, true), maxSeconds) };
+  return { seed, ...watchCoverage(censusGames(seed, wave), maxSeconds) };
 }
-/** A builds-census fight (builds-census.ts runBuildFight) with the coverage watchers; `compositionName` swaps the reference preset. */
+/** A builds-census fight (census-kit.ts buildGames, as builds-census.ts runBuildFight) with the coverage watchers; `compositionName` swaps the reference preset. */
 export function coverageBuildFight(seed: number, buildId: string, compositionName = runtime.games.referencePreset, maxSeconds = runtime.games.fightTimeoutS) {
-  const build = rivalBuilds[buildId]; if (!build) throw Error(`Unknown build ${buildId}`);
-  const composition = presets.find(p => p.name === compositionName)!;
-  return { seed, ...watchCoverage(createGames(seed, composition, build.wave, true, undefined, undefined, undefined, { rivalBuild: buildId }), maxSeconds) };
+  return { seed, ...watchCoverage(buildGames(seed, buildId, compositionName).g, maxSeconds) };
 }
 export const coverage = (t: RowTally): number | null => t.reachable ? t.answered / t.reachable : null;
