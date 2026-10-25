@@ -46,6 +46,8 @@ describe('smoke budgets', () => {
     for (const file of ['d3-widescreen-browser.ts', 'forecast-browser.ts']) {
       const src = readFileSync(join('packages/tools/src', file), 'utf8');
       expect(src.match(/fps\s*>=|\*\s*1048576\)/g) ?? [], file).toEqual([]);
+      expect(src, file).toMatch(/from "\.\/smoke\/preview\.ts"/);
+      expect(src, file).not.toMatch(/vite\/bin\/vite\.js|--strictPort|type Win\b/);
     }
     expect(BUDGET_FILE).toBe('packages/tools/src/smoke/budgets.ts');
   });

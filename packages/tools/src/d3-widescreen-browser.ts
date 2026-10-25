@@ -1,83 +1,24 @@
 import { chromium, type Page } from "playwright";
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import type { CanvasUI } from "../../game/src/ui/ui.ts";
+import { startPreview, type Preview } from "./smoke/preview.ts";
+import { artSettled, click, screen, ui, uiReady } from "./smoke/driver.ts";
+import { outsideViewport } from "./smoke/checks.ts";
 
 /**
  * D3 step 3 proof: the camp screen at 1080p, 1440p and 21:9 has no letterbox bars and no text outside the viewport,
  * and a changed setting is still there after a page reload.
  */
-type Win = Window & {
-  __ui: { snapshot(): ReturnType<CanvasUI["snapshot"]> };
-};
-const port = 4210;
-const base = `http://127.0.0.1:${port}`;
 const out = resolve("docs/waves/D3-evidence");
 mkdirSync(join(out, "screens"), { recursive: true });
-const server = spawn(
-  process.execPath,
-  [
-    "--import",
-    "tsx",
-    "node_modules/vite/bin/vite.js",
-    "preview",
-    "--config",
-    "packages/game/vite.config.ts",
-    "--host",
-    "127.0.0.1",
-    "--port",
-    String(port),
-    "--strictPort",
-  ],
-  {
-    windowsHide: true,
-    stdio: "pipe",
-    env: {
-      ...process.env,
-      CAMP_DIRECTOR: "offline",
-      MAGE_SAVE_DIRECTORY: mkdtempSync(join(tmpdir(), "mage-d3-")),
-    },
-  },
-);
-let serverLog = "";
-server.stdout.on("data", (b) => (serverLog += String(b)));
-server.stderr.on("data", (b) => (serverLog += String(b)));
 const browser = await chromium.launch({
   headless: true,
   args: ["--use-angle=d3d11"],
 });
 const errors: string[] = [],
   results: unknown[] = [];
-let current: Page | undefined;
-const ui = (p: Page) =>
-  p.evaluate(() => (window as unknown as Win).__ui.snapshot());
-async function screen(p: Page, id: string) {
-  await p.waitForFunction(
-    (id) => {
-      const s = (window as unknown as Win).__ui?.snapshot();
-      return s?.screen === id && !s.busy;
-    },
-    id,
-    { timeout: 20000 },
-  );
-}
-async function click(p: Page, id: string, next?: string) {
-  await p.waitForFunction(
-    (id) => {
-      const s = (window as unknown as Win).__ui?.snapshot();
-      return s && !s.busy && s.buttons.some((b) => b.id === id && !b.disabled);
-    },
-    id,
-    { timeout: 15000 },
-  );
-  const b = (await ui(p)).buttons.find((b) => b.id === id)!;
-  await p.mouse.click(b.x + b.w / 2, b.y + b.h / 2);
-  if (next) await screen(p, next);
-  else await p.waitForTimeout(250);
-}
+let current: Page | undefined, preview: Preview | undefined, base = "";
 /** The share of pixels in a thin strip of the screenshot that are not the flat clear colour a letterbox bar would be. */
 async function stripLive(p: Page, png: Buffer, side: "left" | "right") {
   return p.evaluate(
@@ -111,9 +52,7 @@ async function openCamp(p: Page) {
   await screen(p, "menu");
   await click(p, "pick-character", "character");
   await click(p, "choose-water", "camp");
-  await p.waitForFunction(
-    () => (window as unknown as Win).__ui.snapshot().art.pending === 0,
-  );
+  await artSettled(p);
   await p.mouse.move(8, 8);
   await p.waitForTimeout(400);
 }
@@ -123,47 +62,13 @@ async function openArena(p: Page) {
   await screen(p, "training");
   await click(p, "training-magic", "composition");
   await click(p, "composition-start", "arena");
-  await p.waitForFunction(
-    () => (window as unknown as Win).__ui.snapshot().art.pending === 0,
-  );
+  await artSettled(p);
   await p.mouse.move(8, 8);
   await p.waitForTimeout(1200);
 }
-/** Text and buttons of the current screen that fall outside the viewport. */
-function outsideViewport(
-  s: Awaited<ReturnType<typeof ui>>,
-  w: number,
-  h: number,
-) {
-  const out: string[] = [];
-  for (const t of s.texts) {
-    if (!t.text) continue;
-    const x = s.layout.x + t.x * s.layout.scale,
-      y = s.layout.y + t.y * s.layout.scale;
-    if (
-      x < 0 ||
-      y < 0 ||
-      x + t.w * s.layout.scale > w + 1 ||
-      y + t.h * s.layout.scale > h + 1
-    )
-      out.push(`text "${t.text}"`);
-  }
-  for (const b of s.buttons)
-    // Snapshot buttons are already in screen pixels.
-    if (b.x < 0 || b.y < 0 || b.x + b.w > w + 1 || b.y + b.h > h + 1)
-      out.push(`button ${b.id}`);
-  return out;
-}
 try {
-  for (let i = 0; i < 100; i++) {
-    if (server.exitCode !== null) throw Error(serverLog);
-    try {
-      if ((await fetch(`${base}/api/health`)).ok) break;
-    } catch {
-      /* starting */
-    }
-    await new Promise((r) => setTimeout(r, 100));
-  }
+  preview = await startPreview({ savePrefix: "mage-d3-" });
+  base = preview.base;
   for (const [name, width, height] of [
     ["1080p", 1920, 1080],
     ["1440p", 2560, 1440],
@@ -184,22 +89,11 @@ try {
       right = await stripLive(p, png, "right");
     assert(left > 0.9, `${name}: left edge is a letterbox bar (${left})`);
     assert(right > 0.9, `${name}: right edge is a letterbox bar (${right})`);
-    const outside = s.texts.filter((t) => {
-      const x = s.layout.x + t.x * s.layout.scale,
-        y = s.layout.y + t.y * s.layout.scale;
-      return (
-        x < 0 ||
-        y < 0 ||
-        x + t.w * s.layout.scale > width + 1 ||
-        y + t.h * s.layout.scale > height + 1
-      );
-    });
-    assert.deepEqual(outside, [], `${name}: text outside the viewport`);
-    for (const b of s.buttons)
-      assert(
-        b.x >= 0 && b.y >= 0 && b.x + b.w <= width && b.y + b.h <= height,
-        `${name}: ${b.id} outside the viewport`,
-      );
+    assert.deepEqual(
+      outsideViewport(s, width, height),
+      [],
+      `${name}: text or controls outside the viewport`,
+    );
     results.push({
       name,
       width,
@@ -309,14 +203,7 @@ try {
   assert.equal(stored.settings.reducedMotion, true);
   assert.equal(stored.motion, "reduced");
   await p.reload();
-  await p.waitForFunction(
-    () => {
-      const s = (window as unknown as Win).__ui?.snapshot();
-      return !!s && !s.busy && s.buttons.length > 0;
-    },
-    undefined,
-    { timeout: 20000 },
-  );
+  await uiReady(p);
   const after = await p.evaluate(() => ({
     settings: JSON.parse(localStorage.getItem("mage-settings") ?? "{}"),
     motion: localStorage.getItem("mage-motion"),
@@ -343,11 +230,15 @@ try {
   }
   writeFileSync(
     join(out, "d3-failure.json"),
-    JSON.stringify({ error: String(error), errors, serverLog }, null, 2),
+    JSON.stringify(
+      { error: String(error), errors, serverLog: preview?.log() ?? "" },
+      null,
+      2,
+    ),
   );
   console.error(error);
   process.exitCode = 1;
 } finally {
   await browser.close();
-  server.kill();
+  preview?.close();
 }
