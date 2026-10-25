@@ -6,7 +6,8 @@
  * Needs a built game: npm run build:game
  * Run: node --import tsx packages/tools/art/frame-probe-1440.mts [height=1440] [seconds=12] [fixture=stress] [query]
  * `fixture` is an art-fixture kind ("bar" is the D2 section 7 scene: eight bodies with the lit cassia, two beams,
- * trails, procedural sigils); `query` is appended to the page URL (e.g. "lighting=unlit"). With MAGE_PROBE_SHOT=<png>
+ * trails, procedural sigils; "slice" is the D2 section 5 mastery slice, reported under `slice`); `query` is appended
+ * to the page URL (e.g. "lighting=unlit", "sliceAt=2.2"). With MAGE_PROBE_SHOT=<png>
  * a screenshot of the last frame is saved there. Prints one JSON object. A run that could not start prints {"evaluated": false, "reason": ...} and exits 1.
  */
 import { chromium } from "playwright";
@@ -38,6 +39,7 @@ type Win = Window & {
   };
   __arena: {
     snapshot(): {
+      slice?: Record<string, unknown>;
       visibleProjectiles: number;
       effects: { allocated: number; active: number };
       sigils: { active: number; procedural: Record<string, number> };
@@ -199,6 +201,7 @@ try {
             lit: d.lit,
             litChoice: d.litChoice,
           })),
+          ...(scene.slice ? { slice: scene.slice } : {}),
         },
         frameMs: frame,
         fps: 1000 / frame.mean,

@@ -33,7 +33,8 @@ export interface ArenaHarnessBase {
 
 /** The fixtures `window.__arena` adds under `?harness=1` outside a season bout. */
 export interface ArenaFixtures {
-  artFixture(kind?: ArtFixture["kind"]): void;
+  /** `"slice"` is the D2 section 5 mastery slice (`slice/`), drawn in place of the arena scene. */
+  artFixture(kind?: ArtFixture["kind"] | "slice"): void;
   artPose(state: BodyState, direction: Direction): void;
   setPalette(palette: Palette): void;
   propFixture(front: boolean): void;

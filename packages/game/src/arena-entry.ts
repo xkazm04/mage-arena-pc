@@ -5,6 +5,10 @@ import { answerCues, cuesEnabled, emphasis } from "./answer-cue.ts";
 import { LabUI } from "./lab-ui.ts";
 import { createLabSetup, type LabSetup, type LabSession } from "./lab-setup.ts";
 import { ArtFixture } from "./art-fixture.ts";
+import { SliceFixture, sliceCamera } from "./slice/slice-fixture.ts";
+import { SliceScene } from "./slice/slice-scene.ts";
+import { pickSliceOptions, sliceRequested } from "./slice/slice-pick.ts";
+import { pickLightingTier } from "./lighting/tier.ts";
 import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
 import type { Cue } from "./audio-policy.ts";
@@ -138,6 +142,12 @@ export class ArenaGame {
   private disposed = false;
   private frames: number[] = [];
   private artFixture?: ArtFixture;
+  /** The D2 mastery slice (`?slice=d2s` or `artFixture("slice")`): drawn in place of the arena scene while set. */
+  private slice?: {
+    scene: SliceScene;
+    camera: Camera;
+    hidden: Container[];
+  };
   /** Closed while the bout's art loads: no stepping, no season input, no world frame. */
   private gate = new ReadyGate();
   private gateTimeoutMs = preloadPolicy.timeoutS * 1000;
@@ -220,10 +230,12 @@ export class ArenaGame {
         ...base,
         ...(params.has("harness") && !season
           ? ({
-              artFixture: (kind?: ArtFixture["kind"]) => {
-                this.artFixture = kind
-                  ? new ArtFixture(kind, this.camera.centre)
-                  : undefined;
+              artFixture: (kind?: ArtFixture["kind"] | "slice") => {
+                this.showSlice(kind === "slice");
+                this.artFixture =
+                  kind && kind !== "slice"
+                    ? new ArtFixture(kind, this.camera.centre)
+                    : undefined;
                 this.scene.clips.elementOverrides =
                   this.artFixture?.elements ?? new Map();
                 this.pause(!!kind);
@@ -527,6 +539,7 @@ export class ArenaGame {
           },
         } satisfies SeasonArenaHarness,
       });
+    if (!season && sliceRequested()) this.showSlice(true);
   }
   // Facade over the session for the HUD, the Lab UI, the results card and the shell.
   get training(): Training {
@@ -801,6 +814,28 @@ export class ArenaGame {
     this.prepare();
     this.hud();
   }
+  /**
+   * Shows the D2 mastery slice in place of the arena scene, or puts the arena back as it was. The slice has its own
+   * state, camera and layers; the arena's layers are hidden while it is up and the bout does not step.
+   */
+  private showSlice(on: boolean) {
+    if (this.slice) {
+      for (const c of this.slice.hidden) c.visible = true;
+      this.slice.scene.dispose();
+      this.camera = this.slice.camera;
+      this.slice = undefined;
+    }
+    if (!on) return;
+    const scene = new SliceScene(
+        new SliceFixture(arenaGeometry.centre, pickSliceOptions().freezeS),
+        pickSliceOptions(),
+        pickLightingTier(),
+      ),
+      hidden = this.ui.world.children.filter((c) => c.visible);
+    for (const c of hidden) c.visible = false;
+    this.ui.world.addChild(scene.root);
+    this.slice = { scene, camera: this.camera, hidden };
+  }
   pause(value: boolean) {
     gameAudio.pauseWorld(value);
     this.paused = value;
@@ -923,7 +958,7 @@ export class ArenaGame {
     if (
       canStep({
         holdFirstFrame: hold,
-        paused: this.paused,
+        paused: this.paused || !!this.slice,
         labReplay: !!this.labUI?.replayState,
         readerUp: !!this.reader && this.ui.screen === "bout-reader",
         flushPending: !!this.pending,
@@ -947,13 +982,19 @@ export class ArenaGame {
       read,
       this.lab ? this.labUI?.frame(dt) : undefined,
     );
-    this.camera = clampPlateCamera(
-      followCamera(
-        this.camera,
-        interpolate(shownPlayer.previousPos, shownPlayer.pos, alpha),
-        dt,
-      ),
-    );
+    this.camera = this.slice
+      ? sliceCamera(
+          this.ui.app.screen,
+          this.slice.scene.fixture.duel,
+          this.slice.scene.fixture.timeS,
+        )
+      : clampPlateCamera(
+          followCamera(
+            this.camera,
+            interpolate(shownPlayer.previousPos, shownPlayer.pos, alpha),
+            dt,
+          ),
+        );
     this.input.refreshAim();
     this.artFixture?.update(dt);
     const shake = this.impactClock.offset(
@@ -972,16 +1013,18 @@ export class ArenaGame {
     this.scene.feedback.cues = cues ?? [];
     this.scene.emphasis = cues && emphasis(cues);
     markPhase("events");
-    this.scene.render(
-      this.artFixture?.state ?? shown,
-      this.artFixture?.player ?? shownPlayer,
-      this.camera,
-      read ? 1 : alpha,
-      read ? read.player.lastInput.aim : this.input.aim,
-      read ? -1e9 : this.lastPerfect,
-      false,
-      dt,
-    );
+    if (this.slice) this.slice.scene.render(this.camera, dt);
+    else
+      this.scene.render(
+        this.artFixture?.state ?? shown,
+        this.artFixture?.player ?? shownPlayer,
+        this.camera,
+        read ? 1 : alpha,
+        read ? read.player.lastInput.aim : this.input.aim,
+        read ? -1e9 : this.lastPerfect,
+        false,
+        dt,
+      );
     markPhase("scene");
     if (
       this.frameLog &&
@@ -1060,7 +1103,8 @@ export class ArenaGame {
   }
   snapshot() {
     return structuredClone({
-      fixture: this.artFixture?.kind,
+      fixture: this.slice ? "slice" : this.artFixture?.kind,
+      slice: this.slice?.scene.snapshot(),
       state: this.artFixture?.state ?? this.training.state,
       player: this.training.player,
       slot: this.input.slot,
@@ -1111,6 +1155,7 @@ export class ArenaGame {
   }
   dispose() {
     this.disposed = true;
+    this.showSlice(false);
     this.gate.cancel();
     this.loadingCard?.root.destroy({ children: true });
     this.ui.world.visible = true;
