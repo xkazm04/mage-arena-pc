@@ -85,6 +85,11 @@ import { colours } from "./ui/kit.ts";
 import { preloadPolicy, ReadyGate } from "./arena-preload.ts";
 import { difficulty } from "./difficulty.ts";
 import type { CanvasUI } from "./ui/ui.ts";
+import type {
+  ArenaFixtures,
+  ArenaHarnessHooks,
+  SeasonArenaHarness,
+} from "./harness-contract.ts";
 import { phase as markPhase } from "./frame-probe.ts";
 import { pauseHint } from "./settings/bindings.ts";
 
@@ -214,7 +219,7 @@ export class ArenaGame {
       __arena: {
         ...base,
         ...(params.has("harness") && !season
-          ? {
+          ? ({
               artFixture: (kind?: ArtFixture["kind"]) => {
                 this.artFixture = kind
                   ? new ArtFixture(kind, this.camera.centre)
@@ -501,9 +506,9 @@ export class ArenaGame {
                 this.training.player.pos = { ...pos };
                 this.training.player.previousPos = { ...pos };
               },
-            }
+            } satisfies ArenaFixtures)
           : {}),
-      },
+      } satisfies ArenaHarnessHooks,
     });
     if (season && params.has("harness"))
       Object.assign(window, {
@@ -520,7 +525,7 @@ export class ArenaGame {
             await this.flush();
             this.sync();
           },
-        },
+        } satisfies SeasonArenaHarness,
       });
   }
   // Facade over the session for the HUD, the Lab UI, the results card and the shell.

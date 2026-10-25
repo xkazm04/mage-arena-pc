@@ -15,6 +15,7 @@ import { PadNavigation } from "./gamepad.ts";
 import { quality } from "../quality.ts";
 import { phase, phaseStart, phases, resetPhases } from "../frame-probe.ts";
 import { settings } from "../settings/settings.ts";
+import type { UiHarness } from "../harness-contract.ts";
 import {
   contains,
   metrics,
@@ -245,7 +246,7 @@ export class CanvasUI {
           this.cpuTimes = [];
           resetPhases();
         },
-      },
+      } satisfies UiHarness,
     });
   }
   private point(e: PointerEvent) {
