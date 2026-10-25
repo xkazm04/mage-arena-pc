@@ -84,7 +84,8 @@ export interface PreviewOptions {
   budgetMs?: number;
 }
 
-/** Starts the built game's preview on a free port and waits for /api/health. */
+/** Starts the built game's preview on a free port and waits for the page root. The camp API has no
+ *  /api/health route (it answers 409 without a camp cookie), so polling it never reads ok. */
 export async function startPreview(opts: PreviewOptions): Promise<Preview> {
   const port = await freePort();
   const child = spawn(process.execPath, previewArgs(port), {
@@ -103,7 +104,7 @@ export async function startPreview(opts: PreviewOptions): Promise<Preview> {
   const base = `http://${HOST}:${port}`;
   const preview: Preview = { port, base, log: () => log, close: () => void child.kill() };
   try {
-    await waitReady(`${base}/api/health`, { exited: () => child.exitCode, log: () => log, budgetMs: opts.budgetMs });
+    await waitReady(`${base}/`, { exited: () => child.exitCode, log: () => log, budgetMs: opts.budgetMs });
   } catch (error) {
     preview.close();
     throw error;
