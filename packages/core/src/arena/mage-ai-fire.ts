@@ -1,25 +1,24 @@
 // The Ember mage's choices (VR CR-002 "Fire mage"): T07 competence model, 18 m/s aim lead, the Sunfall bank rule.
 // W8 lane F owns this file. Ported from mage-arena-vr Kernel/MageAI.cpp ChooseFireSpell, FireOfferable, FireUseful and
 // the Fire branches of CollectThreats. The shared mage AI (mage-ai.ts) already applies the competence profile: reaction,
-// absorb and perfect rolls, aim error, cadence; this file answers the spell pick (level < 2 draws `mage <id> spell`,
-// level >= 2 sorts) and the threats a Fire actor presents.
+// absorb and perfect rolls, aim error, cadence; this file answers the spell pick (the Sunfall bank, then the shared
+// competencePick in school-kit.ts with the Fire order) and the threats a Fire actor presents. A build rival never reaches
+// `choose`: mage-ai-schools.ts plays its archetype plan.
 // Import order matters: schools.ts (through kernel.ts) must load before fire.ts (see fire.ts header).
-import { combat, random, ticks } from './kernel.ts';
-import { balancedSpell, canonicalSpells, slotSpell, type SchoolSpell } from './schools.ts';
+import { combat, ticks } from './kernel.ts';
+import { balancedSpell, canonicalSpells, type SchoolSpell } from './schools.ts';
 import { fireShape, heatDamageMult, sunfallLoosed, fireState, type FireKind } from './fire.ts';
 import { paceOf } from './tuning.ts';
 import { distance, inArc, segmentHit, sub, unit } from './math.ts';
 import { hasLineOfSight } from './water.ts';
-import { archetypeChoose, rivalBuildOf } from './archetypes.ts';
+import { competencePick, schoolSlots } from './school-kit.ts';
 import type { SchoolBrain } from './mage-ai-schools.ts';
 import type { ShapeClass, Threat } from './mage-ai.ts';
 import type { Actor } from './types.ts';
 
 const sunfallId = 'fire_sunfall';
-/** Slots this actor can press: a catalogue rival walks the ten rows (slot n = row n); a loadout walks bolt + four. */
-const slotCount = (a: Actor): number => a.schoolState?.catalogue ? canonicalSpells.fire.length : 5;
 /** VR FireOfferable: tier (slotSpell), cooldown one tick ahead (the press lands next step), mana, and reach; a dash and the self rows have none. */
-function offerable(a: Actor, spell: SchoolSpell, distanceM: number, readyTick: number): boolean {
+export function fireOfferable(a: Actor, spell: SchoolSpell, distanceM: number, readyTick: number): boolean {
   const kind = fireShape(spell.id)!.kind;
   if ((fireState(a)!.cooldowns[spell.id] ?? 0) > readyTick || spell.mana > a.mana) return false;
   return kind === 'dash' || kind === 'self' || !(spell.rangeM > 0) || distanceM <= spell.rangeM;
@@ -33,27 +32,19 @@ export function fireShapeClass(kind: FireKind | undefined): ShapeClass {
 
 export const fireBrain: SchoolBrain = {
   boltSpeedMps: () => fireShape('fire_bolt')!.speedMps,
-  choose(state, a, { target, distanceM, seen, profile, readyTick }) {
+  choose(state, a, { target, distanceM, profile, readyTick }) {
     if (!fireState(a)) return undefined;
-    const slots = Array.from({ length: slotCount(a) }, (_, slot) => ({ slot, spell: slotSpell(a, slot, state) })).filter((c): c is { slot: number; spell: SchoolSpell } => c.spell !== undefined);
-    // A build rival plays its archetype plan (archetypes.ts) in place of the competence pick; reactions, aim and wards stay the competence's.
-    if (rivalBuildOf(a)) {
-      const pick = archetypeChoose(state, a, target, distanceM, seen, slots.map(c => ({ ...c, can: offerable(a, c.spell, distanceM, readyTick) })));
-      if (pick?.aim && a.mageAI) a.mageAI.input.aim = pick.aim;
-      return pick && { slot: pick.slot, cast: true };
-    }
+    const slots = schoolSlots(state, a), offerable = (spell: SchoolSpell): boolean => fireOfferable(a, spell, distanceM, readyTick);
     // Session beat on top of the competence curve: from tier IV until the first Sunfall releases, a legal Sunfall is the
     // cast and does not draw the spell random; short of its mana, only a cast that keeps that mana banked may go.
     const sun = a.tier >= 4 && !sunfallLoosed(a) ? slots.find(c => c.spell.id === sunfallId) : undefined;
-    if (sun && offerable(a, sun.spell, distanceM, readyTick)) return { slot: sun.slot, cast: true };
+    if (sun && offerable(sun.spell)) return { slot: sun.slot, cast: true };
     const bank = sun ? balancedSpell(sun.spell, state).mana : undefined;
-    const available = slots.filter(c => offerable(a, c.spell, distanceM, readyTick) && (bank === undefined || a.mana >= bank || a.mana - c.spell.mana >= bank));
+    const available = slots.filter(c => offerable(c.spell) && (bank === undefined || a.mana >= bank || a.mana - c.spell.mana >= bank));
     if (!available.length) return undefined;
     const usefulChoices = available.filter(c => useful(c.spell)), choices = usefulChoices.length ? usefulChoices : available;
-    if (profile.level < 2) return { slot: choices[Math.floor(random(state, `mage ${a.id} spell`) * choices.length)]!.slot, cast: true };
     const counter = (s: SchoolSpell): boolean => profile.level >= 3 && target.absorb && s.family === 'unblockable';
-    const ordered = [...choices].sort((x, y) => Number(counter(y.spell)) - Number(counter(x.spell)) || y.spell.damage - x.spell.damage || x.slot - y.slot);
-    return { slot: ordered[0]!.slot, cast: true };
+    return competencePick(state, a, choices, profile, (x, y) => Number(counter(y.spell)) - Number(counter(x.spell)) || y.spell.damage - x.spell.damage || x.slot - y.slot);
   },
   threats(state, owner, a) {
     const result: Threat[] = [];

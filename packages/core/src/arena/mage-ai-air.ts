@@ -2,13 +2,14 @@
 // (level 1 a random draw, level 2+ a sort with Veering Bolt and Squall first, then damage x count) over the useful rows,
 // with three priorities on top that draw no spell random: Tempest Lance whenever legal and the target is not mid-roll (no
 // banking), Air Form against an aimed blockable threat when Momentum allows, Slipstream under Air Form's 40. W8 lane A.
-import { combat, random, runtime, ticks } from './kernel.ts';
+// The curve itself is the shared competencePick (school-kit.ts); a build rival never reaches `choose` (mage-ai-schools.ts).
+import { combat, runtime, ticks } from './kernel.ts';
 import { arenaContains } from './geometry.ts';
 import { distance, rotate, segmentHit, sub, unit, type Vec } from './math.ts';
 import { hasLineOfSight } from './water.ts';
 import { airCastLegal, airRow, airSheet, airSpellRangeMult, momentumOf, veerArc, veerSide, type AirKind, type AirRow, type AirSchoolState } from './air.ts';
-import { balancedSpell, schoolSpellById, slotSpell, type SchoolSpell } from './schools.ts';
-import { archetypeChoose, rivalBuildOf } from './archetypes.ts';
+import { balancedSpell, schoolSpellById, type SchoolSpell } from './schools.ts';
+import { competencePick, schoolSlots } from './school-kit.ts';
 import type { SchoolBrain } from './mage-ai-schools.ts';
 import type { ShapeClass, Threat } from './mage-ai.ts';
 import type { Actor, ArenaState } from './types.ts';
@@ -27,15 +28,6 @@ export function airOfferable(state: ArenaState, a: Actor, spell: SchoolSpell, ro
   if (!airCastLegal(state, a, spell, readyTick)) return false;
   return !reaches(row) || !(spell.rangeM > 0) || distanceM <= spell.rangeM * airSpellRangeMult(state, a);
 }
-/** Slots this actor can press: a catalogue rival has slot n = row n (CR-002 slots 0-9), a loadout has the bolt plus four. */
-function offered(state: ArenaState, a: Actor): { slot: number; spell: SchoolSpell; row: AirRow }[] {
-  const count = a.schoolState?.catalogue ? airSheet.length : 5, out: { slot: number; spell: SchoolSpell; row: AirRow }[] = [];
-  for (let slot = 0; slot < count; slot++) {
-    const spell = slotSpell(a, slot, state), row = spell && airRow(spell.id);
-    if (spell && row) out.push({ slot, spell, row });
-  }
-  return out;
-}
 /** Slipstream's dash end, along the current move (sideways to the target when standing), kept inside the arena. */
 export function slipstreamAim(a: Actor, target: Actor, move: Vec, dashM: number): Vec {
   const along = Math.hypot(move.x, move.y) > 0 ? unit(move) : rotate(unit(sub(target.pos, a.pos)), Math.PI / 2);
@@ -49,13 +41,8 @@ export const airBrain: SchoolBrain = {
   boltSpeedMps: () => boltRow.speedMps,
   choose(state, a, { target, distanceM, seen, profile, readyTick }) {
     const s = a.schoolState as AirSchoolState | undefined; if (!s) return undefined;
-    const slots = offered(state, a), can = (c: { spell: SchoolSpell; row: AirRow }): boolean => airOfferable(state, a, c.spell, c.row, distanceM, readyTick);
-    // A build rival plays its archetype plan (archetypes.ts) in place of the priorities and the competence pick.
-    if (rivalBuildOf(a)) {
-      const pick = archetypeChoose(state, a, target, distanceM, seen, slots.map(c => ({ slot: c.slot, spell: c.spell, can: can(c) })));
-      if (pick?.aim && a.mageAI) a.mageAI.input.aim = pick.aim;
-      return pick && { slot: pick.slot, cast: true };
-    }
+    const slots = schoolSlots(state, a).map(c => ({ ...c, row: airRow(c.spell.id)! }));
+    const can = (c: { spell: SchoolSpell; row: AirRow }): boolean => airOfferable(state, a, c.spell, c.row, distanceM, readyTick);
     // 1. Tempest Lance from tier IV whenever legal and the target is not blinking.
     const tempest = slots.find(c => c.row.kind === 'line' && c.spell.family === 'unblockable' && a.tier >= 4 && state.tick >= target.rollUntil && can(c));
     if (tempest) return { slot: tempest.slot, cast: true };
@@ -74,10 +61,8 @@ export const airBrain: SchoolBrain = {
     const available = slots.filter(c => c.row.kind !== 'dash' && c.row.kind !== 'form' && can(c));
     if (!available.length) return undefined;
     const usefulOnes = available.filter(c => useful(c.spell, c.row)), choices = usefulOnes.length ? usefulOnes : available;
-    if (profile.level < 2) return { slot: choices[Math.floor(random(state, `mage ${a.id} spell`) * choices.length)]!.slot, cast: true };
     const prefer = (row: AirRow): boolean => row.kind === 'veer' || row.kind === 'squall';
-    const ordered = [...choices].sort((x, y) => Number(prefer(y.row)) - Number(prefer(x.row)) || y.spell.damage * y.row.count - x.spell.damage * x.row.count || x.slot - y.slot);
-    return { slot: ordered[0]!.slot, cast: true };
+    return competencePick(state, a, choices, profile, (x, y) => Number(prefer(y.row)) - Number(prefer(x.row)) || y.spell.damage * y.row.count - x.spell.damage * x.row.count || x.slot - y.slot);
   },
   threats(state, owner, a) {
     const out: Threat[] = [];

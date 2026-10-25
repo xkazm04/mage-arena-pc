@@ -1,10 +1,9 @@
 // W8 school seam: the Fire/Air catalogues, the PC balance overlay, authored loadouts, and the kernel's dispatch into
 // fire.ts / air.ts. Every hook is a no-op for an actor without `schoolState`, so Water states step and hash as before.
-import { airRows, fireRows, schoolIdentity } from './data.generated.ts';
+import { schoolIdentity } from './data.generated.ts';
 import balance from './data/school-balance.pc.json' with { type: 'json' };
 import presetData from './data/school-presets.json' with { type: 'json' };
-import { fireRules } from './fire.ts';
-import { airRules } from './air.ts';
+import { schoolKit, schoolSheet } from './school-kit.ts';
 import { rankPower, spellRank } from './progression.ts';
 /** The Veering Bolt's curved flight step, used by the kernel's projectile update (Air owns the geometry). */
 export { curvedStep } from './air.ts';
@@ -17,22 +16,28 @@ export interface SchoolSpell {
   damage: number; family: Family | 'self'; telegraphS: number; rangeM: number; gain: string; notes: string;
 }
 const balanceColumns = ['castS', 'cooldownS', 'mana', 'damage', 'telegraphS', 'rangeM'] as const;
-function readRow(school: SlotSchool, row: Record<string, string>): SchoolSpell {
+function readRow(school: SlotSchool, row: Readonly<Record<string, string>>): SchoolSpell {
   // CR-002: UNBLOCKABLE -> unblockable, absorbable -> magic, n/a (self rows) kept apart; a damage cell starting with a digit is that number.
   const family = row.blockable === 'UNBLOCKABLE' ? 'unblockable' : row.blockable === 'absorbable' ? 'magic' : row.blockable === 'n/a' ? 'self' : undefined;
   if (!family) throw Error(`${row.id}: unknown blockable cell ${row.blockable}`);
   return { id: row.id!, school, name: row.name!, tier: +row.tier!, shape: row.shape!, castS: +row.cast_s!, cooldownS: +row.cooldown_s!, mana: +row.mana!,
     damage: /^\d/.test(row.damage!) ? parseFloat(row.damage!) : 0, family, telegraphS: +row.telegraph_s!, rangeM: +row.range_m!,
-    gain: (school === 'fire' ? row.heat_gain : row.momentum_gain)!, notes: row.notes! };
+    gain: row[gainColumn(school, row)]!, notes: row.notes! };
+}
+/** The school's resource gain column (heat_gain, momentum_gain): the one `*_gain` column of its sheet. */
+function gainColumn(school: SlotSchool, row: Readonly<Record<string, string>>): string {
+  const columns = Object.keys(row).filter(k => k.endsWith('_gain'));
+  if (columns.length !== 1) throw Error(`${row.id}: ${school} sheet needs one *_gain column, has ${columns.join(', ') || 'none'}`);
+  return columns[0]!;
 }
 /** VR's numbers, unmodified. */
-export const canonicalSpells: Record<SlotSchool, SchoolSpell[]> = {
-  fire: fireRows.map(row => readRow('fire', row)),
-  air: airRows.map(row => readRow('air', row)),
-};
-export const schoolSpellById = (id: string): SchoolSpell | undefined => canonicalSpells.fire.find(s => s.id === id) ?? canonicalSpells.air.find(s => s.id === id);
+export const canonicalSpells = Object.fromEntries(slotSchools.map(school => [school, schoolSheet(school).map(row => readRow(school, row))])) as Record<SlotSchool, SchoolSpell[]>;
+export function schoolSpellById(id: string): SchoolSpell | undefined {
+  for (const school of slotSchools) { const spell = canonicalSpells[school].find(s => s.id === id); if (spell) return spell; }
+  return undefined;
+}
 
-type Identity = typeof schoolIdentity.fire | typeof schoolIdentity.air;
+type Identity = (typeof schoolIdentity)[SlotSchool];
 /** Problems with an overlay: every key must name a real spell column or a numeric identity path, with a finite number. */
 export function overlayProblems(candidate: Record<string, unknown>): string[] {
   return Object.entries(candidate).flatMap(([key, value]) => {
@@ -128,8 +133,7 @@ export interface SchoolRules {
   /** Rooted by a school cast this tick (beside `schoolState.rootUntil`). */
   rooted?(state: ArenaState, a: Actor): boolean;
 }
-const rules: Record<SlotSchool, SchoolRules> = { fire: fireRules, air: airRules };
-const of = (a: Actor | undefined): SchoolRules | undefined => a?.schoolState ? rules[a.schoolState.school] : undefined;
+const of = (a: Actor | undefined): SchoolRules | undefined => a?.schoolState ? schoolKit(a.schoolState.school).rules : undefined;
 
 export const schoolTick = (state: ArenaState, a: Actor): void => of(a)?.tick(state, a);
 export const hasSchoolLoadout = (a: Actor): boolean => a.schoolState !== undefined;

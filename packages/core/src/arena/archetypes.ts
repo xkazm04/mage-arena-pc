@@ -12,8 +12,7 @@ import { runtime, ticks } from './kernel.ts';
 import { rankRange, schoolIdentity } from './data.generated.ts';
 import buildData from './data/rival-builds.json' with { type: 'json' };
 import { balancedSpell, identityNumber, schoolSpellById, validateLoadout, type SchoolSpell } from './schools.ts';
-import { fireShape, heatValue } from './fire.ts';
-import { airRow, momentumOf } from './air.ts';
+import { schoolKit } from './school-kit.ts';
 import { maxSpellRank, spellRanksProblems, ultimateFor } from './progression.ts';
 import { paced } from './tuning.ts';
 import { arenaContains } from './geometry.ts';
@@ -94,26 +93,18 @@ export function rivalBuildOf(a: Actor): RivalBuild | undefined {
 }
 
 // The plan layer.
+// Every per-school reading below is the row's school kit (school-kit.ts): role, answer class, weight, resource, form-up, dash-builds.
 /** What a row does in a plan, read from its shape (never from a number). */
 export type Role = 'bolt' | 'dash' | 'build' | 'answer' | 'hit' | 'payoff' | 'signature';
-export function roleOf(spell: SchoolSpell): Role {
-  if (spell.tier === 0) return 'bolt';
-  if (spell.school === 'fire') {
-    const kind = fireShape(spell.id)!.kind;
-    return kind === 'dash' ? 'dash' : kind === 'self' ? 'build' : kind === 'ring' ? 'answer' : kind === 'cone' ? 'hit' : kind === 'meteor' ? 'signature' : 'payoff';
-  }
-  const kind = airRow(spell.id)!.kind;
-  return kind === 'dash' ? 'dash' : kind === 'self' ? 'build' : kind === 'form' ? 'answer' : kind === 'twin' ? 'hit' : kind === 'line' && spell.family === 'unblockable' ? 'signature' : 'payoff';
-}
+export const roleOf = (spell: SchoolSpell): Role => schoolKit(spell.school).role(spell);
 /** The shape class an answer row answers (owner decision: shape-class answers on existing defensive rows). */
 export function answersShape(spell: SchoolSpell): ShapeClass | undefined {
-  if (roleOf(spell) !== 'answer') return undefined;
-  return spell.school === 'fire' ? 'close' : 'projectile';
+  return roleOf(spell) === 'answer' ? schoolKit(spell.school).answers : undefined;
 }
 /** Damage one press can deliver (Air rows: per projectile x count). */
-const weight = (spell: SchoolSpell): number => spell.damage * (spell.school === 'air' ? airRow(spell.id)!.count : 1);
+const weight = (spell: SchoolSpell): number => schoolKit(spell.school).weight(spell);
 /** The school's resource (Heat or Momentum) and its top threshold (Blazing 80; Momentum 80), read from the identity. */
-const resourceOf = (a: Actor): number => a.schoolState!.school === 'fire' ? heatValue(a) : momentumOf(a);
+const resourceOf = (a: Actor): number => schoolKit(a.schoolState!.school).resource(a);
 function resourcePeak(school: SlotSchool, state: ArenaState): number {
   const count = schoolIdentity[school].thresholds.length;
   return Math.max(...Array.from({ length: count }, (_, i) => identityNumber(school, `thresholds.${i}.at`, state)));
@@ -180,8 +171,7 @@ export function archetypeChoose(state: ArenaState, a: Actor, target: Actor, dist
     const shape = answersShape(c.spell)!, soon = state.tick + ticks(answerHorizonS);
     const incoming = seen.some(t => t.aimedAtUs && t.family !== 'unblockable' && t.shape === shape && t.impactTick <= soon);
     const pressed = shape === 'close' && distanceM <= c.spell.rangeM + target.radius;
-    const formUp = c.spell.school === 'air' && state.tick < (a.schoolState!.formUntil ?? 0);
-    if ((incoming || pressed) && !formUp) return { slot: c.slot, cast: true, ...(shape === 'close' ? { aim: { ...target.pos } } : {}) };
+    if ((incoming || pressed) && !schoolKit(c.spell.school).answerUp(state, a)) return { slot: c.slot, cast: true, ...(shape === 'close' ? { aim: { ...target.pos } } : {}) };
   }
   // 2. The signature (unblockable, tier IV) whenever legal and the target is not mid-roll.
   const signature = of('signature').find(() => state.tick >= target.rollUntil);
@@ -194,8 +184,8 @@ export function archetypeChoose(state: ArenaState, a: Actor, target: Actor, dist
     if (payoff && resource >= peak) return { slot: payoff.slot, cast: true };
     const hit = best(of('hit'));
     if (hit) return { slot: hit.slot, cast: true };
-    // Air builds Momentum by moving: a dash toward the target is both the gap closer and the builder.
-    if (dash && build.school === 'air' && resource < first) return { slot: dash.slot, cast: true, aim: dashAim(a, toward, dash.spell.rangeM) };
+    // A school that builds its resource by moving (Air Momentum): a dash toward the target is both the gap closer and the builder.
+    if (dash && schoolKit(build.school).movesForResource && resource < first) return { slot: dash.slot, cast: true, aim: dashAim(a, toward, dash.spell.rangeM) };
     const builder = of('build')[0];
     if (builder && resource < peak) return { slot: builder.slot, cast: true };
     if (payoff) return { slot: payoff.slot, cast: true };
@@ -203,7 +193,7 @@ export function archetypeChoose(state: ArenaState, a: Actor, target: Actor, dist
     // Skirmisher kite: hold the bolt's reach, dash out when pressed (Air: also to keep Momentum high), alternate the damaging rows
     // so a slow one (Veering Bolt) and a fast one (Shear) arrive together, spend freely (the light build peaks early).
     if (dash && distanceM < band[0] * 0.75) return { slot: dash.slot, cast: true, aim: dashAim(a, away, dash.spell.rangeM) };
-    if (dash && build.school === 'air' && resource < peak) return { slot: dash.slot, cast: true, aim: dashAim(a, rotate(toward, Math.PI / 2), dash.spell.rangeM) };
+    if (dash && schoolKit(build.school).movesForResource && resource < peak) return { slot: dash.slot, cast: true, aim: dashAim(a, rotate(toward, Math.PI / 2), dash.spell.rangeM) };
     const builder = of('build')[0];
     if (builder && resource < first) return { slot: builder.slot, cast: true };
     const damaging = [...of('hit'), ...of('payoff'), ...of('signature')];
