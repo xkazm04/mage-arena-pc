@@ -85,6 +85,7 @@ import { preloadPolicy, ReadyGate } from "./arena-preload.ts";
 import { difficulty } from "./difficulty.ts";
 import type { CanvasUI } from "./ui/ui.ts";
 import { phase as markPhase } from "./frame-probe.ts";
+import { pauseHint } from "./settings/bindings.ts";
 
 export interface SeasonArenaOptions {
   bout: SeasonBout;
@@ -700,7 +701,7 @@ export class ArenaGame {
       const bar = new Graphics();
       root.addChild(bar);
       u.text(
-        "ESC / START  Pause",
+        pauseHint,
         620,
         652,
         22,

@@ -26,6 +26,7 @@ function fakeHost(arena?: ScreenHost["arena"]) {
     pauseScreen: record("pauseScreen"),
     settings: record("settings"),
     audioSettings: record("audioSettings"),
+    controls: record("controls"),
     saves: record("saves"),
   };
   return { host, calls, nav: new ScreenRouter(screenSpecs, host) };
@@ -87,7 +88,7 @@ describe("screen router", () => {
       new Set(["camp", "visit", "calendar", "board", "journal", "trial", "listen"]),
     );
     expect(new Set(nav.overlayScreens())).toEqual(
-      new Set(["pause", "settings", "audio-settings", "saves"]),
+      new Set(["pause", "settings", "audio-settings", "saves", "controls"]),
     );
     expect(nav.isLive("cast")).toBe(false);
     expect(nav.isOverlay("results")).toBe(false);

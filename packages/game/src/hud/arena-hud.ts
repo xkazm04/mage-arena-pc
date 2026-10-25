@@ -28,6 +28,8 @@ import {
 import { collarClock } from "../rival-collar.ts";
 import feedbackData from "../../data/combat-feedback.json" with { type: "json" };
 import type { LabSession } from "../lab-setup.ts";
+import { hudHint } from "../settings/bindings.ts";
+import { settings } from "../settings/settings.ts";
 import {
   flowLine,
   heroName,
@@ -257,7 +259,7 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
     true,
   );
   const hint = u.text(
-    "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells",
+    hudHint(settings().bindings, u.modality, slotCount(school)),
     524,
     824,
     24,
@@ -435,9 +437,7 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
         : player.absorb
           ? "WARD RAISED"
           : "";
-    hint.text =
-      u.modality === "gamepad"
-        ? "Left stick move  /  Right stick aim  /  RT cast  /  LT absorb  /  A roll  /  LB RB spells"
-        : "WASD move  /  Shift sprint  /  Space roll      LMB cast  /  RMB absorb  /  1-4 spells";
+    // Derived from the live binding table, so a rebind under the pause shows on return.
+    hint.text = hudHint(settings().bindings, u.modality, slotCount(school));
   };
 }

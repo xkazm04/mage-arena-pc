@@ -9,6 +9,7 @@ import {
   settings as current,
   updateSettings,
 } from "../settings/settings.ts";
+import { menuHint, settingsLines } from "../settings/bindings.ts";
 import { friendly } from "./chrome.ts";
 import type { GameShell } from "../game-shell.ts";
 
@@ -63,19 +64,14 @@ export function settings(s: GameShell) {
   s.scene("settings", "Your hands. Your magic.", "PAUSED  /  SETTINGS");
   const u = s.ui;
   u.panel(96, 242, 1094, 638);
-  const lines = [
-    ["MOVE", "W A S D  /  Left stick"],
-    ["AIM & CAST", "Mouse + left button  /  Right stick + RT"],
-    ["ABSORB", "Right button held  /  LT held"],
-    ["ROLL & SPRINT", "Space + Shift  /  A + left stick press"],
-    ["SPELL SLOTS", "1–5 or wheel  /  LB and RB"],
-    ["MENUS", "Arrows + Enter  /  D-pad + A, B back"],
-  ];
-  lines.forEach(([label, value], i) => {
-    u.text(label!, 132, 273 + i * 94, 24, colours.gold);
-    u.text(value!, 132, 307 + i * 94, 32, colours.text, 1000);
-  });
   const now = current();
+  settingsLines(now.bindings).forEach(([label, value], i) => {
+    u.text(label, 132, 273 + i * 94, 24, colours.gold);
+    u.text(value, 132, 307 + i * 94, 32, colours.text, 1000);
+  });
+  u.button("controls", "Rebind keys", 836, 262, 320, 68, () =>
+    s.nav.go("controls"),
+  );
   const row = (i: number) => 242 + i * 90;
   u.button("sound", "Sound & music", 1240, row(0), 584, 80, () =>
     s.nav.go("audio-settings"),
@@ -162,11 +158,7 @@ export function settings(s: GameShell) {
     548,
   );
   s.back(() => void s.nav.back());
-  s.footer(
-    u.modality === "gamepad"
-      ? "D-PAD  Navigate     A  Choose     B  Back"
-      : "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
-  );
+  s.footer(menuHint(u.modality));
   u.end();
 }
 export function audioSettings(s: GameShell) {

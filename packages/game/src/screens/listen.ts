@@ -2,6 +2,8 @@ import { Graphics } from "pixi.js";
 import { request } from "../season-api.ts";
 import { colours } from "../ui/kit.ts";
 import { nightStatus } from "../night-status.ts";
+import { listenHint, listenKey, matches } from "../settings/bindings.ts";
+import { settings } from "../settings/settings.ts";
 import type { GameShell } from "../game-shell.ts";
 
 export function listen(s: GameShell) {
@@ -13,6 +15,8 @@ export function listen(s: GameShell) {
     "place-tent",
   );
   s.lane = s.view.listening?.lane ?? 0;
+  const table = settings().bindings,
+    hint = listenHint(table);
   u.text(
     "Move to the voices. Hold Listen to gather a fragment.\nRelease it when the patrol reaches your cover.",
     96,
@@ -37,7 +41,7 @@ export function listen(s: GameShell) {
         s.lane = i;
         void s.control();
       },
-      { subtitle: "A / D or 1–3 changes cover" },
+      { subtitle: hint.cover },
     );
   u.button("listen-hold", "Hold Listen", 1360, 946, 464, 68, () => {}, {
     hold: (value) => {
@@ -50,30 +54,15 @@ export function listen(s: GameShell) {
     void s.control();
     s.camp();
   }, "Camp map");
-  s.footer("SPACE held  Listen     A / D  Move     Release SPACE  Hide");
+  s.footer(hint.footer);
   u.onKey = (e) => {
-    if (e.repeat) return e.code === "Space";
-    if (e.code === "Space") {
-      s.held = true;
-      void s.control();
-      return true;
-    }
-    if (["KeyA", "KeyD", "Digit1", "Digit2", "Digit3"].includes(e.code)) {
-      s.lane = Math.max(
-        0,
-        Math.min(
-          2,
-          e.code === "KeyA"
-            ? s.lane - 1
-            : e.code === "KeyD"
-              ? s.lane + 1
-              : Number(e.code.at(-1)) - 1,
-        ),
-      );
-      void s.control();
-      return true;
-    }
-    return false;
+    if (e.repeat) return matches(table.listenHold, e.code);
+    const act = listenKey(table, e.code, s.lane);
+    if (!act) return false;
+    if ("hold" in act) s.held = true;
+    else s.lane = act.lane;
+    void s.control();
+    return true;
   };
   s.updateListening = () => {
     const n = s.view.listening;

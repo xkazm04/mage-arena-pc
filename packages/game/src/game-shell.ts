@@ -33,6 +33,9 @@ import { audioSettings, pauseScreen, settings } from "./screens/pause.ts";
 import { load, openSaves, saves } from "./screens/saves.ts";
 import { chapter } from "./screens/chapter.ts";
 import { ScreenRouter, screenSpecs } from "./screens/router.ts";
+import { controls, type ControlsState } from "./screens/controls.ts";
+import { matches } from "./settings/bindings.ts";
+import { settings as currentSettings } from "./settings/settings.ts";
 
 /**
  * The shell owns the season session, the arena and the state shared between screens. Each screen
@@ -92,6 +95,8 @@ export class GameShell {
   pauseScreen = () => pauseScreen(this);
   settings = () => settings(this);
   audioSettings = () => audioSettings(this);
+  controls = (state?: ControlsState, focus?: string) =>
+    controls(this, state, focus);
   saves = (message?: string) => saves(this, message);
   chapter = () => chapter(this);
   // Actions that talk to the season server.
@@ -145,7 +150,7 @@ export class GameShell {
     window.addEventListener(
       "keyup",
       (e) => {
-        if (e.code === "Space" && this.held) {
+        if (matches(currentSettings().bindings.listenHold, e.code) && this.held) {
           this.held = false;
           void this.control();
         }

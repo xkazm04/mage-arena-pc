@@ -29,6 +29,7 @@ export interface ScreenHost {
   pauseScreen(): void;
   settings(): void;
   audioSettings(): void;
+  controls(): void;
   saves(message?: string): void;
 }
 
@@ -107,6 +108,7 @@ export const screenSpecs: readonly ScreenSpec[] = [
   { id: "settings", overlay: true, restore: (h) => h.settings() },
   { id: "audio-settings", overlay: true, restore: (h) => h.audioSettings() },
   { id: "saves", overlay: true, restore: (h) => h.saves() },
+  { id: "controls", overlay: true, restore: (h) => h.controls() },
 ];
 
 export class ScreenRouter {

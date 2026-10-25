@@ -4,6 +4,7 @@ import { backdrop } from "../ui/backdrop.ts";
 import { sigil } from "../ui/artwork.ts";
 import { colours } from "../ui/kit.ts";
 import { nightStatus } from "../night-status.ts";
+import { menuHint } from "../settings/bindings.ts";
 import type { GameShell } from "../game-shell.ts";
 
 export const friendly = (text: string) =>
@@ -41,10 +42,7 @@ export function back(s: GameShell, action: () => void, label = "Back") {
   );
   s.ui.onBack = action;
 }
-export function footer(
-  s: GameShell,
-  text = "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
-) {
+export function footer(s: GameShell, text = menuHint("keyboard")) {
   s.ui.text(text, 370, 966, 24, colours.muted, 1140);
 }
 export function campHeader(s: GameShell, id: string, title: string) {
