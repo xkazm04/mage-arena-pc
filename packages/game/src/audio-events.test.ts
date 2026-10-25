@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { audioData } from "./audio-policy.ts";
+import { routeCues, uncuedKinds } from "./audio-routing.ts";
 
 /** The sim's event kinds, read from the `ArenaEvent` union in core's source so a new kind fails this test. */
 const types = readFileSync(
@@ -13,25 +14,34 @@ const union =
   )?.[1];
 const kinds = [...(union ?? "").matchAll(/'([\w-]+)'/g)].map((m) => m[1]!);
 
-/** Event kind to the cues `arena-entry.ts` consumeEvents plays for it. */
-const cued: Record<string, string[]> = {
-  perfect: ["perfect"],
-  unlock: ["collar", "voice.collar"],
-  release: ["impact", "cast.fire", "cast.water", "cast.earth", "cast.air"],
-  hit: ["hit", "impact"],
-  stagger: ["stagger"],
-  roll: ["roll"],
-};
+/** Event kind to the cues the arena plays for it, read from the `routes` table the router interprets. */
+const cued: Record<string, string[]> = Object.fromEntries(
+  Object.entries(audioData.routes).map(([kind, routes]) => [
+    kind,
+    [...new Set(routes.flatMap(routeCues))],
+  ]),
+);
 /**
- * Event kinds with no cue yet. D2 section 4.5 fills them (death, interrupt, phase and cast-start cues).
- * A kind that gains a cue must leave this list, and an entry here that is not a sim kind fails too.
+ * Event kinds with no cue yet, derived: D2 section 4.5 fills them (death, interrupt, phase and cast-start
+ * cues) by adding a route, which takes the kind off this list with no test edit.
  */
-const uncued = ["cast", "down", "interrupt", "phase"];
+const uncued = uncuedKinds(kinds);
 
 describe("every sim event kind against data/audio.json (D2 4.5)", () => {
   it("reads the kind list from core", () => {
     expect(kinds.length).toBeGreaterThanOrEqual(10);
     expect(kinds).toContain("stagger");
+  });
+  it("derives the uncued kinds from the routes table", () => {
+    expect(uncued.length).toBeGreaterThan(0);
+    for (const kind of uncued) expect(kinds).toContain(kind);
+    const withDown = {
+      ...audioData.routes,
+      down: [{ who: "any", cue: "impact" }],
+    };
+    expect(uncuedKinds(kinds, withDown)).toEqual(
+      uncued.filter((k) => k !== "down"),
+    );
   });
   it("gives each kind a resolving cue or lists it as uncued", () => {
     for (const kind of kinds)
@@ -76,7 +86,9 @@ describe("every sim event kind against data/audio.json (D2 4.5)", () => {
         /gameAudio\.play\(\s*"([\w.-]+)"/g,
       ))
         played.add(m[1]!);
-    expect(played.has("stagger")).toBe(true);
+    // Combat cues go through the routes table (checked above); the literals left are UI and voice.
+    expect(played.has("ui.slot")).toBe(true);
+    expect(played.has("stagger")).toBe(false);
     for (const cue of played) expect(audioData.cues).toHaveProperty(cue);
   });
 });

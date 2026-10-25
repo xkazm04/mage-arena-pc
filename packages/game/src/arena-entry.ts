@@ -7,7 +7,8 @@ import { createLabSetup, type LabSetup, type LabSession } from "./lab-setup.ts";
 import { ArtFixture } from "./art-fixture.ts";
 import type { BodyState, Direction, Element } from "./animation-contract.ts";
 import { gameAudio } from "./audio.ts";
-import { audioData } from "./audio-policy.ts";
+import type { Cue } from "./audio-policy.ts";
+import { routeEvent } from "./audio-routing.ts";
 import { BitmapText, Container, Graphics } from "pixi.js";
 import {
   boutHash,
@@ -1030,15 +1031,8 @@ export class ArenaGame {
         p = this.training.player,
         actor = this.training.state.actors.find((a) => a.id === e.actorId);
       if (!actor) continue;
-      const dx = actor.pos.x - p.pos.x,
-        dy = actor.pos.y - p.pos.y;
-      const spatial = {
-        pan: dx / audioData.spatial.rangeM,
-        gain: Math.max(
-          audioData.spatial.minGain,
-          1 - Math.hypot(dx, dy) / audioData.spatial.rangeM,
-        ),
-      };
+      for (const r of routeEvent(e, { listener: p, actor }))
+        void gameAudio.play(r.cue as Cue, r);
       if (e.kind === "perfect" && e.actorId === p.id) {
         this.lastPerfect = e.tick;
         const before = this.flowBefore.before(this.training.state, i);
@@ -1050,28 +1044,12 @@ export class ArenaGame {
           e.tick,
         );
         if (!reduced) this.impactClock.hit(0, true);
-        void gameAudio.play("perfect");
-      } else if (e.kind === "unlock" && e.actorId === p.id) {
-        void gameAudio.play("collar");
-        if (e.value === 2) {
-          void gameAudio.play("voice.collar");
-          this.ui.notice("The collar loosens. Stand ready.");
-        }
-      } else if (e.kind === "release")
-        void gameAudio.play(
-          actor.enemy ? "impact" : `cast.${actor.school ?? "water"}`,
-          spatial,
-        );
+      } else if (e.kind === "unlock" && e.actorId === p.id && e.value === 2)
+        this.ui.notice("The collar loosens. Stand ready.");
       else if (e.kind === "hit" && (e.contactDamage ?? e.value) > 0) {
-        const damage = e.contactDamage ?? e.value;
         if (!reduced && (e.actorId === p.id || e.targetId === p.id))
-          this.impactClock.hit(damage);
-        void gameAudio.play(e.actorId === p.id ? "hit" : "impact", {
-          ...spatial,
-          gain: spatial.gain * Math.min(1, 0.45 + damage / 25),
-        });
-      } else if (e.kind === "stagger") void gameAudio.play("stagger", spatial);
-      else if (e.kind === "roll") void gameAudio.play("roll", spatial);
+          this.impactClock.hit(e.contactDamage ?? e.value);
+      }
     }
     this.lastEvents = this.training.state.events.length;
   }
