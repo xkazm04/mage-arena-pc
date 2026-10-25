@@ -1,5 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { addEnemy, addMage, arenaGeometry, createArena, enemyInputs, enemyRoster, idleInput, queueDeathEffects, stateHash, stepArena, type Actor, type ArenaState } from './index.ts';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { describe, expect, it, vi } from 'vitest';
+import { addEnemy, addMage, arenaGeometry, compileBehaviour, createArena, defineEnemy, distance, enemyInputs, enemyRoster, idleInput, queueDeathEffects, stateHash, stepArena, type Actor, type ArenaState, type EnemySpec } from './index.ts';
 
 const c = arenaGeometry.centre;
 /** A mage that holds absorb and walks a fixed zig-zag, so nets, pulls, lanes and backoff all get exercised. */
@@ -43,5 +45,55 @@ describe('enemy behaviour characterization (case 1, guard)', () => {
   it('every roster enemy duels an absorbing mage with the pinned state series', () => {
     const got = Object.fromEntries([...enemyRoster.map(e => [e.id, duel(e.id)] as const), ['wave', wave()] as const]);
     expect(got).toEqual(pinned);
+  });
+});
+
+const source = (file: string) => readFileSync(join(import.meta.dirname, file), 'utf8');
+describe('enemy behaviour is a compiled table', () => {
+  it('case 3: no id branch in the stepper; each roster id is one key of the behaviour table', () => {
+    const enemies = source('enemies.ts'), behaviour = source('enemy-behaviour.ts');
+    for (const text of [enemies, behaviour]) expect(text.match(/spec\.id [!=]==|attack\.id ===/g) ?? []).toEqual([]);
+    for (const { id } of enemyRoster) {
+      expect(enemies.includes(`'${id}'`) || enemies.includes(`"${id}"`), id).toBe(false);
+      const uses = behaviour.split('\n').filter(line => new RegExp(`\\b${id}\\b`).test(line));
+      expect(uses.length, id).toBeLessThanOrEqual(1);
+      for (const line of uses) expect(line.startsWith(`  ${id}: {`), line).toBe(true);
+    }
+  });
+  it('case 4: a prose magnitude the table needs is checked at compile, by enemy id', () => {
+    const conscript = enemyRoster.find(e => e.id === 'conscript')!, thornback = enemyRoster.find(e => e.id === 'thornback')!;
+    expect(() => compileBehaviour({ ...conscript, behaviour: 'approach with stamina-costed sprint, lunge, back off' })).toThrow(/Enemy conscript: missing back off/);
+    expect(() => compileBehaviour({ ...thornback, attacks: [{ ...thornback.attacks[0]!, onWallHit: 'stops' }] })).toThrow(/Enemy thornback: missing wall stun/);
+    expect(() => compileBehaviour({ ...conscript, id: 'drill' }, { attacks: { volley: 'net' } })).toThrow(/Enemy drill: behaviour names unknown attack volley/);
+    expect(compileBehaviour(conscript).backoffS).toBe(1);
+  });
+  it('case 5: stepping a creature wave parses no prose', () => {
+    const s = createArena(5), mage = addMage(s, 0, { x: c.x + 4, y: c.y });
+    for (const [k, id] of ['cinder_hound', 'cinder_hound', 'cinder_hound', 'hush_moth', 'thornback', 'conscript'].entries()) addEnemy(s, id, { x: c.x - 5, y: c.y - 3 + k * 1.2 });
+    const match = vi.spyOn(String.prototype, 'match'), exec = vi.spyOn(RegExp.prototype, 'exec');
+    let calls = 0, attacks = 0;
+    try {
+      for (let i = 0; i < 600; i++) {
+        match.mockClear(); exec.mockClear();
+        const inputs = enemyInputs(s); calls += match.mock.calls.length + exec.mock.calls.length; attacks = s.telegraphs.length > attacks ? s.telegraphs.length : attacks;
+        stepArena(s, { ...inputs, [mage.id]: holder(s, mage) }); queueDeathEffects(s);
+      }
+    } finally { match.mockRestore(); exec.mockRestore(); }
+    expect(calls).toBe(0); expect(attacks).toBeGreaterThan(0);
+  });
+  it('case 6: a spec the stepper has never heard of holds its band and shoots from its compiled row', () => {
+    const kiter: EnemySpec = { id: 'test_kiter', name: 'Test kiter', poise: 1, hp: 30, speedMps: 3.5, keepDistanceM: [6, 8], behaviour: 'kite',
+      attacks: [{ id: 'test_dart', family: 'magic', tier: 1, damage: 4, windupS: 0.5, cooldownS: 2, projectileMps: 12 }] };
+    expect(defineEnemy(kiter)).toMatchObject({ approach: 'band', target: 'nearest', attacks: [{ kind: 'strike' }] });
+    expect(() => defineEnemy(kiter)).toThrow(/already defined/);
+    const s = createArena(3), mage = addMage(s, 0, { x: c.x + 1, y: c.y }), foe = addEnemy(s, 'test_kiter', { x: c.x - 1, y: c.y });
+    let shot = false;
+    for (let i = 0; i < 240; i++) {
+      stepArena(s, { ...enemyInputs(s), [mage.id]: idleInput({ ...foe.pos }) }); queueDeathEffects(s);
+      shot ||= s.telegraphs.some(t => t.ownerId === foe.id && t.kind === 'projectile');
+    }
+    const gap = distance(mage.pos, foe.pos);
+    expect(gap).toBeGreaterThanOrEqual(6 - 0.5); expect(gap).toBeLessThanOrEqual(8 + 0.5); expect(shot).toBe(true);
+    expect(source('enemies.ts').includes('test_kiter')).toBe(false);
   });
 });
