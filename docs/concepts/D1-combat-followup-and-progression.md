@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). A mage-side lever for the week curve is measured as a reading (6.8, 2026-10-24). A small rival HP level on top of the recommended lag arm is measured and ruled out as the duel-duration lever (6.9, 2026-10-25). The two levers 6.9 named are measured on top of lag as a reading (6.10, 2026-10-25): rank-scaled exchange reach is ruled out; rank defence lengthens every short duel but does not close the gap alone, and 4.1 E is the next candidate. It follows
+Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). A mage-side lever for the week curve is measured as a reading (6.8, 2026-10-24). A small rival HP level on top of the recommended lag arm is measured and ruled out as the duel-duration lever (6.9, 2026-10-25). The two levers 6.9 named are measured on top of lag as a reading (6.10, 2026-10-25): rank-scaled exchange reach is ruled out; rank defence lengthens every short duel but does not close the gap alone, and 4.1 E is the next candidate. 4.1 E, the reference player's range, is measured as an off-by-default reading and ruled out (6.11, 2026-10-25): no arm meets the section 6 targets, so duel duration is now an owner question. The section 6 scorecard (goal 2) follows 6.11. It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -1012,6 +1012,207 @@ defence does not close the duration gap by itself. **The next candidate is 4.1 E
 census reference chases every build to its own 5-8 m band, so fire_heavy, a far build, is measured in the reference's band instead
 of its own. 4.1 E changes every census baseline and is a re-pin with a reason. Nothing here is turned on. Before rank defence can
 play in a bout, `prepareBout` must pass the week's `rankDefence` beside its `opponentMage`, and the final's 74.5-75.5% (weeks 2-4) needs a look of its own.
+
+### 6.11 The reference player's range: the reading (4.1 E), 2026-10-25
+
+6.10 left fire_heavy short under every arm (37.0-45.4 s in weeks 2-6) and named 4.1 E as the next candidate. The census
+reference chases every build into its own authored 5-8 m (`runtime.json` `magePreferredDistanceM`), so a far build is
+measured in the reference's band instead of its own. This reading measures the reference holding each build's own band.
+**It turns nothing on, changes no default and re-pins nothing.** `prepareBout`, the season and the director are untouched.
+
+**The option.** The new `createGames` option `referenceRange: 'build'` (archetypes.ts `setReferenceRange` and
+`referenceBand`, read in mage-ai.ts) has the reference player hold the band of the build it faces instead of 5-8 m. The band
+is the build's own `archetypeBand`, the band its plan holds. It is read from its rows: the row's reach times the archetype's
+fractions, and for a heavy build the payoff rows its collar has opened. No per-build constant. The option is kept outside
+the hashed state like the arena hooks. A fight without a build plays exactly as before: waves 1-2, and the Water proxy in the
+semifinal and the final. Omitted, the Games is today's. Goldens, CR-002/CR-007 parity and the default census digest tests
+pass unchanged, and `games.test.ts` checks both on and off. Nothing in the game sets it.
+
+The bands the reference now holds (seed 40000, at spawn; a heavy band moves out to payoff reach as the collar opens):
+
+| Build | fire_close | fire_light | fire_heavy | air_light | air_close | air_heavy |
+|---|---|---|---|---|---|---|
+| Band, m | 2.0-3.4 | 8.4-12.0 | 9.0-11.4 | 9.8-14.0 | 3.0-5.1 | 10.5-13.3 |
+
+**The arms** (`week-census.ts mageArms`):
+- `lag-ref`: `lag` plus the range;
+- `lag-def1-ref`: `lag-def1` (rank defence at `hpPerRankStep` 0.05) plus the range.
+
+The range is how the census plays a build, not a week lever, so it applies from week 1. Week 1's build cells therefore
+differ from every other arm. All 48 wave cells of each range arm match their base arm, digest for digest.
+
+Same format as 6.8 to 6.10: 200 seeds per cell, seeds 40000-40199, weeks 1-6, both profiles, `npm --prefix packages/core run
+census:weeks -- --count 200 --arm <arm> --tag d1-611-weeks-arm-<arm> --out-dir docs/change-requests/evidence`. Evidence (filed
+with this section): `d1-611-weeks-arm-lag-ref.json`, `d1-611-weeks-arm-lag-def1-ref.json`, and the `lag-def1` control
+`d1-611-weeks-arm-lag-def1.json`. Both controls were re-run on this branch. `lag` matches all 120 cell digests of
+`d1-weeks-arm-lag.json`. `lag-def1` reproduces every 6.10 figure. Builds are listed in the order fire_close, fire_light,
+fire_heavy, air_light, air_close, air_heavy.
+
+**Arm 1, `lag-ref`** (lag plus the range)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 1 62 25 2 74 35 | 33% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 1 62 25 2 74 35 | 33% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 82% / 40.0 | 40% / 47.6 | 0 52 26 1 62 36 | 29% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 67% / 39.1 | 30% / 44.6 | 0 52 26 1 50 28 | 26% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 54% / 37.2 | 17% / 42.0 | 0 38 21 0 45 22 | 21% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 54% / 37.2 | 16% / 42.0 | 0 38 21 0 45 22 | 21% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 1 62 25 2 74 35 | 33% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 93% / 37.3 | 68% / 46.1 | 1 67 34 1 81 34 | 36% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 92% / 35.1 | 68% / 42.4 | 1 70 43 4 83 52 | 42% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 90% / 31.1 | 67% / 38.8 | 1 66 49 4 75 49 | 40% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 84% / 29.9 | 63% / 37.0 | 1 57 41 6 75 40 | 37% |
+| steady | 6 | 5 | 42.7 | 51.4 | 83% / 29.7 | 61% / 37.0 | 1 57 41 6 75 40 | 37% |
+
+**Arm 2, `lag-def1-ref`** (lag plus rank defence at 0.05, plus the range)
+
+| Profile | Week | Avg rank | W1 s | W2 s | W3 semifinal | W4 final | Builds | Builds mean |
+|---|---|---|---|---|---|---|---|---|
+| untrained | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 1 62 25 2 74 35 | 33% |
+| untrained | 2 | 1 | 41.2 | 47.6 | 89% / 40.1 | 54% / 49.2 | 1 62 25 2 74 35 | 33% |
+| untrained | 3 | 1 | 44.9 | 52.2 | 80% / 41.0 | 35% / 48.1 | 0 51 26 1 58 35 | 28% |
+| untrained | 4 | 1 | 49.7 | 56.2 | 55% / 41.4 | 20% / 45.3 | 0 41 25 0 39 26 | 22% |
+| untrained | 5 | 1 | 54.9 | 60.9 | 36% / 39.9 | 7% / 42.9 | 0 29 14 0 22 17 | 14% |
+| untrained | 6 | 1 | 59.3 | 65.3 | 32% / 40.6 | 7% / 42.3 | 0 29 13 0 20 16 | 13% |
+| steady | 1 | 1 | 35.3 | 42.6 | 89% / 40.1 | 54% / 49.2 | 1 62 25 2 74 35 | 33% |
+| steady | 2 | 1.5 | 36.8 | 44.0 | 95% / 37.4 | 75% / 46.3 | 2 68 34 2 84 36 | 38% |
+| steady | 3 | 2.5 | 36.4 | 44.6 | 95% / 35.8 | 75% / 44.0 | 1 71 42 4 86 59 | 44% |
+| steady | 4 | 3.5 | 36.9 | 43.3 | 94% / 34.1 | 76% / 42.4 | 2 71 49 3 82 52 | 43% |
+| steady | 5 | 4.5 | 39.0 | 46.4 | 84% / 34.6 | 65% / 42.5 | 1 61 49 2 79 43 | 39% |
+| steady | 6 | 5 | 42.7 | 51.4 | 80% / 35.1 | 61% / 43.1 | 1 60 46 3 77 41 | 38% |
+
+**Duel medians**, seconds, weeks 1-6 (steady; untrained below). Week 1 is the same for both profiles.
+
+| Build | `lag` (control) | `lag-def1` (control) | `lag-ref` | `lag-def1-ref` |
+|---|---|---|---|---|
+| fire_close | 67.0, 61.4, 56.2, 48.9, 46.7, 46.7 | 67.0, 62.5, 59.5, 52.0, 56.0, 57.0 | 44.7, 45.1, 40.1, 39.1, 38.1, 37.6 | 44.7, 47.1, 44.1, 41.6, 40.6, 40.1 |
+| fire_light | 54.0, 51.3, 46.7, 44.1, 40.3, 40.3 | 54.0, 51.5, 49.3, 48.8, 47.0, 47.5 | 75.5, 69.0, 64.0, 57.3, 54.5, 54.5 | 75.5, 69.0, 67.8, 63.5, 64.4, 65.2 |
+| fire_heavy | 46.5, 44.5, 41.5, 38.5, 37.0, 37.0 | 46.5, 44.5, 41.5, 39.5, 41.0, 42.1 | 46.9, 46.1, 44.5, 42.4, 39.5, 39.5 | 46.9, 46.3, 44.6, 43.6, 44.95, 45.4 |
+| air_light | 63.5, 59.9, 56.8, 49.4, 47.1, 47.2 | 63.5, 60.5, 58.6, 55.0, 54.1, 55.3 | 152.1, 155.3, 150.3, 148.1, 136.4, 130.7 | 152.1, 153.3, 160.5, 152.4, 148.4, 144.1 |
+| air_close | 50.7, 47.7, 42.5, 38.2, 35.2, 35.2 | 50.7, 49.2, 45.0, 43.1, 41.7, 42.1 | 75.5, 70.0, 62.6, 57.1, 57.0, 57.0 | 75.5, 70.2, 64.4, 63.2, 65.7, 66.6 |
+| air_heavy | 75.3, 72.2, 68.4, 59.6, 60.6, 60.6 | 75.3, 72.6, 69.4, 64.2, 67.8, 68.7 | 90.5, 87.4, 84.8, 77.7, 76.9, 76.9 | 90.5, 89.0, 86.3, 84.2, 83.0, 83.5 |
+
+Untrained, weeks 2-6 (`lag-ref` / `lag-def1-ref`):
+- fire_close: 44.7, 39.6, 37.1, 36.6, 36.6 under both arms.
+- fire_light: 75.5, 73.5, 70.9, 63.9, 63.9 / 75.5, 73.9, 72.9, 67.3, 68.4.
+- fire_heavy: 46.9, 47.0, 46.6, 42.8, 42.8 / 46.9, 47.2, 46.7, 43.4, 43.8.
+- air_light: 152.1, 145.7, 145.6, 135.5, 133.5 under both arms.
+- air_close: 75.5, 73.0, 72.5, 69.2, 69.2 / 75.5, 74.7, 76.6, 72.1, 72.2.
+- air_heavy: 90.5, 90.5, 88.6, 82.0, 82.0 / 90.5, 90.5, 89.0, 82.0, 82.3.
+
+**Short, long and timed-out cells**, weeks 2-6. A rival duel's floor is 45 s on both waves. The task's 75 s mark is the
+wave-3 ceiling; air_light and air_heavy fight on wave 4, whose ceiling is 80 s.
+- **Under 45 s, steady**:
+  - `lag-ref`, 8 cells: fire_close w3-6 (40.1, 39.1, 38.1, 37.6) and fire_heavy w3-6 (44.5, 42.4, 39.5, 39.5).
+  - `lag-def1-ref`, 7 cells: fire_close w3-6 (44.1, 41.6, 40.6, 40.1) and fire_heavy w3-5 (44.6, 43.6, 44.95).
+  - The controls: `lag` 12 cells, `lag-def1` 8 cells, as in 6.10.
+- **Under 45 s, untrained**: 7 cells in each range arm, fire_close w2-6 and fire_heavy w5-6. As in 6.10, the untrained short
+  cells are the rival beating a rank-1 player fast.
+- **Over 75 s, steady**: 10 cells in each range arm, air_light w2-6 (130.7-160.5 s) and air_heavy w2-6 (76.9-89.0 s).
+  - Past the wave's own ceiling: `lag-ref` 7 (air_light w2-6, air_heavy w2-3); `lag-def1-ref` 10.
+  - Untrained: 12 and 13 cells.
+  - The controls: none for steady.
+- **Timeouts**: air_light only, every week, in both profiles.
+  - Steady weeks 2-6: `lag-ref` 409 of 1000 fights (134, 109, 79, 44, 43); `lag-def1-ref` 584 (141, 131, 123, 95, 94).
+  - Week 1: 132 of 200 in both arms.
+  - No wave cell and no other build timed out. The controls have none.
+- **The final and the semifinal** are the Water proxy, which is no build, so each range arm reads exactly as its base arm.
+  - `lag-ref`, as `lag`: final 68.0, 67.5, 67.0, 62.5, 60.5% and semifinal 93.0, 91.5, 90.0, 83.5, 82.5% in weeks 2-6.
+  - `lag-def1-ref`, as `lag-def1`: final 74.5, 75.0, 75.5, 64.5, 61.0% and semifinal 95.0, 95.0, 93.5, 84.0, 80.0%.
+  - Untrained week 4 final: 29.5% (`lag-ref`) and 19.5% (`lag-def1-ref`).
+- **Single builds over 65%**, steady weeks 2-6:
+  - `lag-ref`: w2 fire_light 67.0, air_close 81.0; w3 fire_light 70.0, air_close 82.5; w4 fire_light 66.0, air_close 74.5;
+    w5 and w6 air_close 75.0.
+  - `lag-def1-ref`: w2 fire_light 68.0, air_close 84.0; w3 fire_light 71.0, air_close 85.5; w4 fire_light 70.5, air_close
+    82.0; w5 air_close 78.5; w6 air_close 77.0.
+  - At the other end, every week of both arms: fire_close 0.5-1.5% and air_light 1.0-6.0%. The controls have no single
+    build under 40% for steady.
+
+**Against the section 6 targets** (builds mean; the targets are read for weeks 2-6, because week 1 is the plain census in
+every arm before this one, 6.8):
+
+| Arm | Steady 50-65%, weeks 2-6 | Untrained under 40%, week 4 | Rival duels under 45 s (steady) | Over 75 s (steady) | Timeouts (steady) |
+|---|---|---|---|---|---|
+| `lag` (control) | 56.8, 57.6, 56.3, 52.3, 51.0: **hit** | 29.5%: **hit** | 12: **miss** | 0 | 0 |
+| `lag-def1` (control) | 59.0, 60.8, 60.6, 54.4, 52.0: **hit** | 24.1%: **hit** | 8: **miss** | 0 | 0 |
+| `lag-ref` | 36.3, 41.9, 40.4, 36.7, 36.7: **miss** (every week) | 26.1%: hit | 8: **miss** | 10 | 409 |
+| `lag-def1-ref` | 37.5, 43.6, 42.9, 38.9, 37.8: **miss** (every week) | 21.7%: hit | 7: **miss** | 10 | 584 |
+
+The untrained hit under the range arms is hollow: week 1 already reads 33.0%, so the untrained player does not fall below
+40% by week 4. They start there.
+
+**Why the range breaks the duels it does not lengthen.** A build's band is its best range by construction: it is cut from
+the build's own rows. The Water reference has no row built for it. Its rows reach 12 m (Rain Needle, Tide Orb; Tide Orb's
+tier-IV form 10 m), Lash 2.5-3 m, and Mirror's tier-IV wave 8 m.
+- **Too far.** Against air_light (9.8-14 m) and air_heavy (10.5-13.3 m) the reference holds where its own rows reach only
+  part of the time. air_light times out in 43-141 of 200 fights a cell, and air_heavy runs past its ceiling.
+- **Too close.** Against fire_close (2.0-3.4 m) the reference stands inside the build's Ring and Flick and wins 0-1.5%.
+  air_close (3.0-5.1 m) goes the other way, 74-86%, and runs 57-76 s. Both close duels leave the 40-65% range.
+- So the range hands each build its own range, except where the reference outreaches it, and the curve collapses. Steady
+  falls 14-22 points under its base arm in every week.
+
+**fire_heavy, the duel 6.10 named.** Its band (9.0-11.4 m before tier III) sits inside the reference's 12 m, so this is the
+fair reading the option was built for. The damage does move out. A read-only reach reading, steady week 4, 200 seeds
+(`npx tsx packages/core/scripts/report-reach.ts --count 200 --week 4 --arm <arm>`):
+
+| Arm (steady, week 4) | fire_heavy | Player's damage: <=5 m / 5-8 m / >8 m | Rival's damage: <=5 m / 5-8 m / >8 m |
+|---|---|---|---|
+| `lag` (6.10) | 65.5%, 38.5 s | 4 / 47 / 49% | 6 / 58 / 36% |
+| `lag-ref` | 48.5%, 42.4 s | 0 / 26 / 74% | 1 / 14 / 85% |
+| `lag-def1-ref` | 48.5%, 43.6 s | 1 / 26 / 73% | 1 / 14 / 85% |
+
+Even so, **fire_heavy does not reach 45 s.**
+- It does reach 45 s in week 2: 46.1 s (`lag-ref`) and 46.3 s (`lag-def1-ref`), against 44.5 s under both controls.
+- It also reaches it in week 6 under `lag-def1-ref` (45.4 s).
+- In weeks 3-5 it stays short under both arms: 39.5-44.5 s (`lag-ref`) and 43.6-44.95 s (`lag-def1-ref`).
+- Fought at its own range, it gains 1.6-3.9 s over `lag` in weeks 2-4, and its reference win share falls from 56.0-68.0% to
+  34.0-48.5%.
+- So the chase was part of fire_heavy's short duel, a few seconds, and not the gap. What is left is in the duel itself: a
+  ranked heavy build against a ranked reference, without the chase.
+
+**The reading, plainly: the reference range is ruled out as the duration lever.** Neither range arm meets a win target that
+its base arm met: steady falls to 36-44% in every week. Each arm still has 7-8 short cells, adds 10 long cells and 409-584
+timeouts, and puts fire_close and air_light out of reach (0.5-6.0%). Its one clean reading, fire_heavy, gains a few seconds
+and stays under 45 s in weeks 3-5. A narrower shape could be built: the range for far builds only, or the band clipped to
+the reference's own reach. That would be a fourth lever, and this brief proposes none.
+
+**Recommendation: no arm meets the section 6 targets, so D1 duel duration is now an owner question.** Nothing is turned on,
+no default moves, and no further lever is proposed. The best measured arm is still `lag-def1` (the 6.10 Director default,
+owner to confirm). It meets both win targets in weeks 2-6, with no long cell and no timeout. It leaves 8 short steady cells:
+fire_heavy in weeks 2-6 (39.5-44.5 s) and air_close in weeks 4-6 (41.7-43.1 s). The owner's choices, each with its census
+number:
+- **Accept `lag` + rank defence 0.05 and relax the rival-duel floor for the ranked weeks.** A 40 s floor would leave one
+  steady cell short, fire_heavy week 4 at 39.5 s (6.10, 6.11).
+- **Accept `lag` + rank defence 0.1 (`lag-def2`).** It has 4 short cells, all fire_heavy (41.0-44.8 s), but steady week 3
+  reads 65.4%, 0.4 over the ceiling (6.10).
+- **Keep the 45 s floor and ask for a further lever.** 6.9-6.11 have now measured four lever shapes: rival HP, exchange
+  reach, rank defence, reference range. None closes fire_heavy alone.
+
+The Director's lean is the first: it keeps both win targets and moves no band but the floor. It is the owner's call. 4.1 E
+is closed as measured. The option stays in the core off by default, as a census tool, with no re-pin.
+
+### D1 section 6 scorecard (goal 2), 2026-10-25
+
+Each section 6 bullet, read off the census. "Owner-pending" marks a result that holds only under a Director default the
+owner has not confirmed, or a target the owner has to set.
+
+| Section 6 bullet | Mark | Census number | Source |
+|---|---|---|---|
+| Close builds: median inside 45-75 s (default census) | **met** | fire_close 67.0 s, air_close 50.7 s | 6.1, 6.2 (`d1-ultimates-after.json`) |
+| Close builds: reference wins 40-65% (default census) | **met** | fire_close 49.5%, air_close 40.0% (on the floor) | 6.2, 6.4 margin note |
+| Close builds: hits per exchange falls | **met** | fire_close 2.29 -> 0.61, air_close 1.91 -> 1.30 | 6.1 (`d1-exchange-before/after.json`) |
+| Every rival duel's median in band through the ranked weeks (the duration reading of 6.9-6.11) | **missed**, owner-pending | best arm `lag-def1`: 8 steady cells under 45 s (fire_heavy w2-6, air_close w4-6), 0 over the ceiling; fire_heavy never reaches 45 s in weeks 3-5 under any 6.10 or 6.11 arm | 6.10, 6.11 |
+| Ultimates: every committed rank-5 build inside the band | **met** | fire_heavy (Brand Wrath 5) 46.5 s, 41.5%; the only committed rank-5 row | 6.2 |
+| Ultimates: each moves its curve signature the right way | **missed** | Brand Drag is neutral: the rival's tier-IV share goes 52.8% -> 53.5%, reference 42.0% -> 41.5% (Wrath about once a fight). Pinning Edge (Shear 5) leans the right way (-1.5 pp, short fights 16 -> 20) but takes air_close to 16.0%, out of the band, so it is not committed | 6.2 |
+| Counters: each defensive row reaches its coverage target | **owner-pending** (N = 50% is a Director default) | Air Form 67.9% (61.1% lowest cell): met. Ring of Cinders 1.6%: missed. Tide Ward: none castable, best declined arm 25.7%, and stopped outside the target (Director default, owner to confirm) | 6.4, 6.5, 6.6 |
+| Progression: a steadily training player wins 50-65% each week | **met weeks 2-6, owner-pending** | `lag`: 56.8, 57.6, 56.3, 52.3, 51.0%; `lag-def1`: 59.0, 60.8, 60.6, 54.4, 52.0%. Week 1 is the plain census at 47.3%, which no week lever reaches. Both arms are Director defaults, owner to confirm; nothing is on | 6.8, 6.10, 6.11 |
+| Progression: a player who does not train falls below 40% by week 4 | **met, owner-pending** | week 4: `lag` 29.5%, `lag-def1` 24.1% (week 1: 47.3%) | 6.8, 6.10, 6.11 |
+| Unchanged: goldens, default census digests, CR-002/CR-007 parity | **met** | Every lever in 6.7-6.11 is off by default. The default sweep re-runs `d1-weeks.json` (120 cells) and the `lag` control re-runs `d1-weeks-arm-lag.json` (120 cells), digest for digest. The only pins moved were moved with a reason in 6.1 (the named and builds census) | 6.1, 6.8, 6.10, 6.11 |
+
+**Goal 2 in one line:** of the ten scorecard rows, 5 are met outright and 2 more are met in the census but owner-pending
+(the progression rows wait on the owner to confirm `lag` and rank defence before anything plays in a bout). 2 are missed:
+rival-duel duration on the week curve, and Brand Drag's curve signature. The counter target is owner-pending.
 
 ## 7. Open questions for the spark
 
