@@ -5,7 +5,7 @@
  *
  * Needs a built game: npm run build:game
  * Run: node --import tsx packages/tools/art/frame-probe-1440.mts [height=1440] [seconds=12] [fixture=stress] [query]
- * `fixture` is an art-fixture kind ("bar" is the D2 section 7 scene: eight bodies with the lit cassia, two beams,
+ * `fixture` is an art-fixture kind ("-" sets none, e.g. to see what `?slice=d2s` alone opens) ("bar" is the D2 section 7 scene: eight bodies with the lit cassia, two beams,
  * trails, procedural sigils; "slice" is the D2 section 5 mastery slice, reported under `slice`); `query` is appended
  * to the page URL (e.g. "lighting=unlit", "sliceAt=2.2"). With MAGE_PROBE_SHOT=<png>
  * a screenshot of the last frame is saved there. Prints one JSON object. A run that could not start prints {"evaluated": false, "reason": ...} and exits 1.
@@ -156,10 +156,11 @@ try {
     { timeout: 60000 },
   );
   await p.waitForTimeout(600);
-  await p.evaluate(
-    (k) => (window as unknown as Win).__arena.artFixture(k),
-    fixture,
-  );
+  if (fixture !== "-")
+    await p.evaluate(
+      (k) => (window as unknown as Win).__arena.artFixture(k),
+      fixture,
+    );
   await p.waitForTimeout(2000);
   await p.evaluate(() => (window as unknown as Win).__ui.resetPerformance());
   await p.waitForTimeout(seconds * 1000);
