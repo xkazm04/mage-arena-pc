@@ -72,6 +72,8 @@ results:
   is at or above a threshold. No second relationship state.
 - Built 2026-10-24 behind an off-by-default PC flag, in memory only (no save schema change), with a per-week award scale
   so a steady trainer tracks the "N - 0.5" target. See 6.7.
+- 2026-10-25: the book now rides on the season save as an optional key, a flag-on season banks each settled camp day into
+  it, and `prepareBout` records the player's bought ranks on the bout (flag still off; 6.7, "On the season").
 - The rest of this table still stands.
 
 | Question | Options |
@@ -526,12 +528,45 @@ at load). The 4.3 design, as pure functions over an in-memory book of unspent po
 - **Into a bout.** `boutSpellRanks(book)` returns the bought ranks for `createGames`' existing `spellRanks` option.
 
 **The flag.** `enabled` in `skill-book.pc.json` is `false`. While it is off, nothing earns, no lesson passes and
-`boutSpellRanks` gives `undefined`. Nothing in `season.ts`, `camp*.ts` or the arena calls the book, so today's bouts,
-goldens, the default census digests and CR-002/CR-007 parity are unchanged. Run on this branch: the parity suites, golden
+`boutSpellRanks` gives `undefined`. While it is off, `createSeason` writes no book, so the season, the save and every bout are
+today's, and the goldens, the default census digests and CR-002/CR-007 parity are unchanged. Run on this branch: the parity suites, golden
 replays, the determinism wall and the week sweep test are green, and the full `npm run test` passes. Nothing was re-pinned.
 
-**Not persisted.** The season save does not carry the book. The schema change it needs (points, ranks and taught signatures
-on the save, and `prepareBout` passing the ranks into the entrant) is an open ask, not built.
+**On the season (built 2026-10-25, player side only).** The 6.7 open item is closed for the player. Mage and rival ranks
+are the held kernel lever (6.8). No file under `packages/core/src/arena/` changed.
+- **The save.** `SeasonProgress.skills` is an optional key holding the book: unspent points, points earned, ranks bought
+  and signatures taught. `createSeason` writes it only when the flag is on. Its presence is that season's flag, so a save
+  keeps one rule from its first day to its last. A season started with the flag off writes no key, and a save without it
+  loads as before (the enemyLevel precedent, `combat-system-depth.md`).
+  - Schema bounds (`director/src/save-schema.ts`): points and earned are integers from 0 to `maxSeasonPoints`. Ranks are
+    allowed only in Water rows or teachable signatures, each from 2 to the top rank. `taught` is a unique set of
+    teachable signatures. No other keys are allowed.
+  - `validatePayload` adds `skillBookStateProblems`: a rank only in a spell the player knows, unspent points never above
+    earned, and points spent equal to the ranks bought.
+- **Earning.** `SeasonService` banks a camp day when it settles at dawn. `earnCampDay` takes the session as it stood
+  before `settleCamp` and calls `earnSkillPoints` once for each activity the player finished: each camp act (`dayActs`),
+  each parley that day, and a finished listening act. A day banks once.
+  - A save taken mid-dawn keeps the progress as it stood beside the unsettled checkpoint, so loading it banks that day
+    once.
+- **Doors.** `buySeasonRank(session, progress, key)` and `takeSeasonLesson(t, session, progress, elder)` are pure core
+  functions over `buyRank` and `learnSignature`. No UI yet. They refuse while the Trial or a bout is open, so a prepared
+  bout always matches its progress, which `validatePayload` re-derives.
+- **Into the bout.** `prepareBout` records `spellRanks = boutSpellRanks(book)` on the bout, the same shape as
+  `enemyLevel`. The key is left out with no book, with nothing bought, or when the player only watches. `startBout` passes
+  it to `createGames` through the existing `spellRanks` option.
+- **Evidence.** Tests:
+  - `packages/tools/src/season.test.ts`: "records the bought spell ranks on the bout and replays them exactly", and "a
+    flag-on season banks camp days into the book and each Games morning bout gets boutSpellRanks of that morning" (days
+    1-14, both Games mornings).
+  - `packages/director/src/skill-book-save.test.ts`: a round trip of the book and of a ranked bout, a save taken
+    mid-dawn, and one rejection per bound.
+  - `packages/core/src/skill-book.test.ts`: `earnCampDay` over a real camp day, the saved-book check and the doors.
+  - Gate: build, lint, the full vitest suite (109 files, 875 tests), the node tests (44) and `check:design` are green.
+    `@mage/*` was resolved to the branch's own packages for this run: the builder worktree's `node_modules` links them to
+    the main checkout.
+  - CR-002 and CR-007 parity (27 + 27), the golden replays (4), the determinism wall (24), the week census (10) and the
+    skill census (3) pass unchanged. Nothing was re-pinned.
+  - Commits: fd5c0b0 (core), dfe29f9 (save schema and service), 4477f77 (the mid-dawn banking fix), c3e2815 (tests).
 
 **The week scale, and why.** The owner's rule makes each rank cost more. With the same award every week, the curve is
 concave: fast in week 1, slow by week 6. The flat arm below runs 0.69-0.88 ahead of the target in weeks 1-2 and falls short
