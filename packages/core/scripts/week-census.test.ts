@@ -6,7 +6,7 @@ import profileData from '../src/arena/data/progression-weeks.pc.json' with { typ
 import { createHash } from 'node:crypto';
 import weeksEvidence from '../../../docs/change-requests/evidence/d1-weeks.json' with { type: 'json' };
 import lagEvidence from '../../../docs/change-requests/evidence/d1-weeks-arm-lag.json' with { type: 'json' };
-import { armOption, levelMages, mageArms, opponentSpellRanks, profileSpellRanks, rivalProfiles, runWeekBuildFight, runWeekFight, weekProfileProblems, weekProfiles, weeks, type MageArm } from './week-census.ts';
+import { armOption, levelMages, mageArms, opponentSpellRanks, profileSpellRanks, rivalHpLevels, rivalProfiles, runWeekBuildFight, runWeekFight, weekProfileProblems, weekProfiles, weeks, type MageArm } from './week-census.ts';
 import { runBuildFight } from './builds-census.ts';
 
 // The week sweep (D1 4.4) is a reading: these checks pin that its inputs are what the data says and that week 1 of a profile
@@ -76,6 +76,22 @@ describe('week sweep mage-side arms (D1 6.8): opt-in, week 1 untouched', () => {
     for (const arm of Object.values(mageArms)) if ('ranks' in arm) expect(rivalProfiles[arm.ranks]![0]).toBe(1);
   });
 
+  it('rivalHpLevels (D1 6.9) validates as enemy levels; each lag-hp arm keeps lag ranks and adds its curve as the level', () => {
+    expect(weekProfileProblems({ profiles: {}, rivalHpLevels: { short: [1] } })).toEqual(['progression-weeks.pc.json short: needs 6 weeks']);
+    expect(weekProfileProblems({ profiles: {}, rivalHpLevels: { half: [1, 1.5, 2, 2, 2, 2] } })).toEqual(['progression-weeks.pc.json half week 2: HP level 1.5 is not an integer 1..6']);
+    expect(weekProfileProblems({ profiles: {}, rivalHpLevels: { falling: [1, 2, 1, 2, 2, 2] } })).toEqual(['progression-weeks.pc.json falling week 3: HP level falls']);
+    for (const [name, arm] of Object.entries(mageArms)) if ('hp' in arm) {
+      expect(arm.ranks).toBe('lag');
+      expect(arm.hpLevels).toEqual(rivalHpLevels[arm.hp]);
+      expect(arm.hpLevels[0]).toBe(1);
+      for (const week of weeks) {
+        const level = arm.hpLevels[week - 1]!;
+        expect(armOption(week, name as MageArm)).toEqual({ averageRank: rivalProfiles.lag![week - 1]!, ...(level > 1 ? { level } : {}) });
+      }
+    }
+    expect(armOption(5, 'lag-hp2')).toEqual({ averageRank: 3.5, level: 3 });
+  });
+
   it('every arm leaves week 1 alone, authored build ranks included', () => {
     for (const arm of arms) {
       expect(runWeekFight(seed, 3, 1, 'steady', runtime.games.fightTimeoutS, arm).hash).toBe(runFight(seed, 3).hash);
@@ -91,6 +107,8 @@ describe('week sweep mage-side arms (D1 6.8): opt-in, week 1 untouched', () => {
     expect(fresh(3, 'ranked').maxHp).toBe(plain.maxHp);
     expect(fresh(6, 'ranked').spellRanks).toEqual({ fire_bolt: 5, fire_ring: 5, fire_pyre: 5, fire_sunfall: 5, fire_wrath: 5 });
     expect(opponentSpellRanks(plain, 2.5).fire_wrath).toBe(5);
+    expect(fresh(5, 'lag-hp2').maxHp).toBeCloseTo(plain.maxHp * 1.2);
+    expect(fresh(5, 'lag-hp2').spellRanks).toEqual(fresh(5, 'lag').spellRanks);
     // Regular-enemy waves carry no mage: an armed week-3 wave 1 is the unarmed one.
     for (const arm of arms) expect(runWeekFight(seed, 0, 3, 'steady', runtime.games.fightTimeoutS, arm).hash).toBe(runWeekFight(seed, 0, 3, 'steady').hash);
   }, 120000);
