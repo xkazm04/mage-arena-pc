@@ -2,10 +2,10 @@
 // `npm --prefix packages/core run census:weeks -- [--count n] [--profile name,name] [--arm <arm>] [--tag t] [--out-dir docs/...]`.
 // For every campaign week (enemy level = week) and progression profile (arena/data/progression-weeks.pc.json) it runs the
 // default census's four Tiro waves and every authored rival build, and prints the reference player's win rate and median per
-// cell. --arm (D1 6.8 to 6.10, a reading only: level, ranked, lag, lag-hp1/2, lag-xw1/2, lag-def1/2) also levels the opponent
-// mage by week (week-census.ts mageArms); absent, nothing changes. It closes with the D1 targets read off the cells: the builds
-// mean per week and the rival duels whose median is under their band's floor in weeks 2-6. With --tag it writes `<tag>.json`
-// (summaries and per-cell digests, no per-fight rows).
+// cell. --arm (D1 6.8 to 6.11, a reading only: level, ranked, lag, lag-hp1/2, lag-xw1/2, lag-def1/2, lag-ref, lag-def1-ref) also
+// levels the opponent mage by week (week-census.ts mageArms); absent, nothing changes. It closes with the D1 targets read off the
+// cells: the builds mean per week and the rival duels whose median is under their band's floor in weeks 2-6. With --tag it writes
+// `<tag>.json` (summaries and per-cell digests, no per-fight rows).
 import { performance } from 'node:perf_hooks';
 import { runtime, tiro } from '../src/arena/index.ts';
 import { rivalBuildIds, rivalBuilds } from '../src/arena/archetypes.ts';

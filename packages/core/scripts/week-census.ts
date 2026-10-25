@@ -1,9 +1,10 @@
 // Week sweep (D1 4.4, slice step 3: a reading, no tuning). Each campaign week runs at enemyLevel = week (regular enemies only;
 // mages and rival builds are not levelled) with a progression profile from arena/data/progression-weeks.pc.json: the reference
-// player's average spell rank that week. An opt-in mage-side arm (D1 6.8 to 6.10, a reading only) levels the opponent mage too.
+// player's average spell rank that week. An opt-in mage-side arm (D1 6.8 to 6.11, a reading only) levels the opponent mage too.
 // Pure: no I/O, so report-weeks.ts and the census tests share one runner.
 import { combat, presets, runtime, seconds, stateHash, type Actor, type Composition, type Games, type SpellRanks } from '../src/arena/index.ts';
 import { maxEnemyLevel, maxSpellRank, validEnemyLevel } from '../src/arena/progression.ts';
+import type { ReferenceRange } from '../src/arena/archetypes.ts';
 import { applyOpponentMage, buildRows, compositionRows, ranksAtAverage, type OpponentMage } from '../src/arena/mage-build.ts';
 import profileData from '../src/arena/data/progression-weeks.pc.json' with { type: 'json' };
 import { runBuildFight } from './builds-census.ts';
@@ -74,13 +75,19 @@ export function opponentSpellRanks(actor: Actor, average: number): SpellRanks {
  * - `lag-xw1`/`lag-xw2`: the exchange window's reach grows with the defender's rank, `reachPerRankStepM` 0.5 / 1 m per rank step
  *   (exchange.ts exchangeReach);
  * - `lag-def1`/`lag-def2`: every mage's HP grows with its own rank, `hpPerRankStep` 0.05 / 0.1 per rank step (games.ts
- *   rankDefence; 0.1 mirrors rank power's +0.1 a rank). */
+ *   rankDefence; 0.1 mirrors rank power's +0.1 a rank).
+ * The D1 6.11 arms (4.1 E, a reading) add the reference player's range: `referenceRange` 'build' has the reference hold the band of
+ * the build it faces (archetypes.ts referenceBand) instead of its own 5-8 m, every week, week 1 included (createGames referenceRange):
+ * - `lag-ref`: `lag` plus the range;
+ * - `lag-def1-ref`: `lag-def1` (rank defence at 0.05) plus the range. */
 const lagHp = (hp: string) => ({ level: false, ranks: 'lag', hp, hpLevels: rivalHpLevels[hp] ?? [] }) as const;
 const lagXw = (reachPerRankStepM: number) => ({ level: false, ranks: 'lag', reachPerRankStepM }) as const;
 const lagDef = (hpPerRankStep: number) => ({ level: false, ranks: 'lag', hpPerRankStep }) as const;
+const referenceRange = 'build' as const;
 export const mageArms = { level: { level: true }, ranked: { level: false, ranks: 'ranked' }, lag: { level: false, ranks: 'lag' }, 'lag-hp1': lagHp('hp1'), 'lag-hp2': lagHp('hp2'),
-  'lag-xw1': lagXw(0.5), 'lag-xw2': lagXw(1), 'lag-def1': lagDef(0.05), 'lag-def2': lagDef(0.1) } as const satisfies Record<string, MageArmSpec>;
-type MageArmSpec = { level: boolean; ranks?: string; hp?: string; hpLevels?: readonly number[]; reachPerRankStepM?: number; hpPerRankStep?: number };
+  'lag-xw1': lagXw(0.5), 'lag-xw2': lagXw(1), 'lag-def1': lagDef(0.05), 'lag-def2': lagDef(0.1),
+  'lag-ref': { level: false, ranks: 'lag', referenceRange }, 'lag-def1-ref': { ...lagDef(0.05), referenceRange } } as const satisfies Record<string, MageArmSpec>;
+type MageArmSpec = { level: boolean; ranks?: string; hp?: string; hpLevels?: readonly number[]; reachPerRankStepM?: number; hpPerRankStep?: number; referenceRange?: ReferenceRange };
 export type MageArm = keyof typeof mageArms;
 for (const arm of Object.values(mageArms)) {
   if ('ranks' in arm && !rivalProfiles[arm.ranks]) throw Error(`progression-weeks.pc.json: no rivalProfiles.${arm.ranks}`);
@@ -93,13 +100,14 @@ export function armOption(week: number, arm: MageArm | undefined): OpponentMage 
   const spec: MageArmSpec = mageArms[arm], hpLevel = spec.hp ? rivalHpLevels[spec.hp]![week - 1]! : 1;
   return spec.ranks ? { averageRank: rivalProfiles[spec.ranks]![week - 1]!, ...(hpLevel > 1 ? { level: hpLevel } : {}) } : { level: week };
 }
-/** The createGames options a D1 6.10 arm adds beside its opponentMage: `exchangeReach` or `rankDefence`, the same every week. Both
- * read the rank steps a mage gained above its authored build (games.ts), none in week 1, so week 1 is still the plain census. No arm,
- * or an arm without one, adds nothing. */
-export function armExtras(arm: MageArm | undefined): Pick<CensusOptions, 'exchangeReach' | 'rankDefence'> {
+/** The createGames options a D1 6.10 or 6.11 arm adds beside its opponentMage, the same every week: `exchangeReach` or
+ * `rankDefence` (both read the rank steps a mage gained above its authored build, games.ts, none in week 1), and `referenceRange`
+ * (the reference holds the faced build's band, week 1 included). No arm, or an arm without one, adds nothing. */
+export function armExtras(arm: MageArm | undefined): Pick<CensusOptions, 'exchangeReach' | 'rankDefence' | 'referenceRange'> {
   const spec: MageArmSpec | undefined = arm && mageArms[arm];
   return { ...(spec?.reachPerRankStepM !== undefined ? { exchangeReach: { perRankStepM: spec.reachPerRankStepM } } : {}),
-    ...(spec?.hpPerRankStep !== undefined ? { rankDefence: { hpPerRankStep: spec.hpPerRankStep } } : {}) };
+    ...(spec?.hpPerRankStep !== undefined ? { rankDefence: { hpPerRankStep: spec.hpPerRankStep } } : {}),
+    ...(spec?.referenceRange !== undefined ? { referenceRange: spec.referenceRange } : {}) };
 }
 /** Level every opponent mage of a fresh Games for `week` under `arm` after spawn (the option's rule, applied by hand; kept for
  * reading an existing Games). No arm, or nothing to change (week 1), leaves the state alone. */

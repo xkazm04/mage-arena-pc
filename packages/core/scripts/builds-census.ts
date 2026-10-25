@@ -60,7 +60,7 @@ export function buildsObserver(g: Games, rival: Actor) {
 /** `compositionName` swaps the reference preset (a supplement: 'Mirror tide' slots Tide Ward, which Rotation does not);
  * `week` adds the week sweep's enemy level, reference spell ranks and mage-side arm (week-census.ts weekOptions); `trace` counts the
  * rival's plan branches (plan-trace.ts, outside the hashed state: the fight and its hash are the same with it off). */
-export function runBuildFight(seed: number, buildId: string, maxSeconds = runtime.games.fightTimeoutS, compositionName = runtime.games.referencePreset, week: Pick<CensusOptions, 'enemyLevel' | 'spellRanks' | 'opponentMage' | 'exchangeReach' | 'rankDefence'> = {}, trace = true) {
+export function runBuildFight(seed: number, buildId: string, maxSeconds = runtime.games.fightTimeoutS, compositionName = runtime.games.referencePreset, week: Pick<CensusOptions, 'enemyLevel' | 'spellRanks' | 'opponentMage' | 'exchangeReach' | 'rankDefence' | 'referenceRange'> = {}, trace = true) {
   const { g, build, rival } = buildGames(seed, buildId, compositionName, week);
   if (trace) enablePlanTrace(g.state);
   const builds = buildsObserver(g, rival);

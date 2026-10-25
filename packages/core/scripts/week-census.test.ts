@@ -92,10 +92,12 @@ describe('week sweep mage-side arms (D1 6.8): opt-in, week 1 untouched', () => {
     expect(armOption(5, 'lag-hp2')).toEqual({ averageRank: 3.5, level: 3 });
   });
 
-  it('every arm leaves week 1 alone, authored build ranks included', () => {
+  it('every arm leaves week 1 alone, authored build ranks included; a reference-range arm (D1 6.11) moves only the build fights', () => {
     for (const arm of arms) {
       expect(runWeekFight(seed, 3, 1, 'steady', runtime.games.fightTimeoutS, arm).hash).toBe(runFight(seed, 3).hash);
-      expect(runWeekBuildFight(seed, 'fire_heavy', 1, 'steady', arm).hash).toBe(runBuildFight(seed, 'fire_heavy').hash);
+      const build = runWeekBuildFight(seed, 'fire_heavy', 1, 'steady', arm).hash, plain = runBuildFight(seed, 'fire_heavy').hash;
+      // The range is how the census reference plays a build, not a week lever: it holds the build's band from week 1.
+      if ('referenceRange' in mageArms[arm]) expect(build).not.toBe(plain); else expect(build).toBe(plain);
     }
   }, 120000);
 
@@ -125,6 +127,15 @@ describe('week sweep mage-side arms (D1 6.8): opt-in, week 1 untouched', () => {
     for (const arm of ['lag-xw1', 'lag-xw2', 'lag-def1', 'lag-def2'] as const) for (const week of weeks) expect(armOption(week, arm)).toEqual(armOption(week, 'lag'));
     for (const arm of ['level', 'ranked', 'lag', 'lag-hp1', 'lag-hp2', undefined] as const) expect(armExtras(arm)).toEqual({});
   });
+
+  it('the D1 6.11 arms add the reference range to lag and to lag-def1, and keep lag ranks; no other arm adds it', () => {
+    expect(armExtras('lag-ref')).toEqual({ referenceRange: 'build' });
+    expect(armExtras('lag-def1-ref')).toEqual({ rankDefence: { hpPerRankStep: 0.05 }, referenceRange: 'build' });
+    for (const arm of ['lag-ref', 'lag-def1-ref'] as const) for (const week of weeks) expect(armOption(week, arm)).toEqual(armOption(week, 'lag'));
+    for (const arm of arms.filter(a => a !== 'lag-ref' && a !== 'lag-def1-ref')) expect(armExtras(arm)).not.toHaveProperty('referenceRange');
+    // A mage wave's Water proxy is no build, so the range leaves the semifinal and the final exactly as lag plays them.
+    for (const wave of [2, 3]) expect(runWeekFight(seed, wave, 4, 'steady', runtime.games.fightTimeoutS, 'lag-ref').hash).toBe(runWeekFight(seed, wave, 4, 'steady', runtime.games.fightTimeoutS, 'lag').hash);
+  }, 120000);
 
   it('a 6.10 arm moves the ranked weeks: steady week 4 fire_heavy is not the lag fight', () => {
     const lag = runWeekBuildFight(seed, 'fire_heavy', 4, 'steady', 'lag').hash;
