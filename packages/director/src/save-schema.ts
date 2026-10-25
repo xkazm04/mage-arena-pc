@@ -1,6 +1,6 @@
 import { Ajv, type ValidateFunction } from 'ajv';
-import { bridgeRules, campPlay, createCampSession, type Tables } from '@mage/core';
-import { difficulties, waterLines } from '@mage/core/arena';
+import { bridgeRules, campPlay, createCampSession, maxSeasonPoints, schoolRankKeys, teachableSignatures, type Tables } from '@mage/core';
+import { difficulties, maxSpellRank, waterLines } from '@mage/core/arena';
 import { itemSchema } from './schema.ts';
 type Schema = Record<string, unknown>;
 const text: Schema = { type: 'string', maxLength: 16384 };
@@ -22,8 +22,14 @@ const result = object({ kind: { enum: ['champion','missio'] }, wavesCleared: int
 const vector = object({ x: number, y: number });
 const input = object({ move: vector, aim: vector, slot: integer(0,3), cast: bool, absorb: bool, roll: bool, sprint: bool });
 const stance = { enum: bridgeRules.trial.stances };
+// The skill book (D1 4.3, core skill-book.ts): ranks only in spells a Water player can know (its rows and the teachable
+// signatures), each a bought rank 2..top; points and earned within one season's most; taught a set of known signatures.
+// validatePayload checks the rest (points spent equal the ranks bought).
+const rankable = [...schoolRankKeys(bridgeRules.playableSchool), ...teachableSignatures];
+const spellRanks: Schema = { type: 'object', propertyNames: { enum: rankable }, additionalProperties: integer(2, maxSpellRank), minProperties: 1, maxProperties: rankable.length };
+const skills = object({ points: integer(0, maxSeasonPoints), earned: integer(0, maxSeasonPoints), ranks: { ...spellRanks, minProperties: 0 }, taught: { ...array({ enum: [...teachableSignatures] }, teachableSignatures.length), uniqueItems: true } });
 const trial = object({ id: text, day: integer(1,42), rival: text, elder: text, stamina: array(number,2), score: array(integer(0,3),2), rounds: array(object({ stance, opponent: stance, rolls: array(number,2), totals: array(number,2), won: bool }),3), phase: { enum: ['active','complete'] }, entrant: text, weights: array(number,2) }, ['entrant','weights']);
-const bout = object({ id: text, day: integer(1,42), seed: integer(0,0xffffffff), phase: { enum: ['prepared','active','intermission','terminal'] }, entrant: object({ id: text, name: text, school: { const: 'water' }, ranks: object({ vigor: integer(1,5), focus: integer(1,5), nerve: integer(1,5), agility: integer(1,5) }, ['agility']), mastery: integer(1,4), hpPenalty: number, staminaPenalty: number }), spectator: bool, composition, difficulty: { enum: [...difficulties] }, enemyLevel: integer(2, 6), games: nullable({ type: 'object' }), log: array({ oneOf: [object({ type: { const: 'tick' }, tick: integer(), input }), object({ type: { const: 'advance' }, tick: integer() })] }, bridgeRules.limits.maxLogEntries) }, ['enemyLevel']);
+const bout = object({ id: text, day: integer(1,42), seed: integer(0,0xffffffff), phase: { enum: ['prepared','active','intermission','terminal'] }, entrant: object({ id: text, name: text, school: { const: 'water' }, ranks: object({ vigor: integer(1,5), focus: integer(1,5), nerve: integer(1,5), agility: integer(1,5) }, ['agility']), mastery: integer(1,4), hpPenalty: number, staminaPenalty: number }), spectator: bool, composition, difficulty: { enum: [...difficulties] }, enemyLevel: integer(2, 6), spellRanks, games: nullable({ type: 'object' }), log: array({ oneOf: [object({ type: { const: 'tick' }, tick: integer(), input }), object({ type: { const: 'advance' }, tick: integer() })] }, bridgeRules.limits.maxLogEntries) }, ['enemyLevel', 'spellRanks']);
 const validators = new WeakMap<Tables, ValidateFunction>();
 export function saveValidator(t: Tables) {
   const cached = validators.get(t); if (cached) return cached;
@@ -40,7 +46,7 @@ export function saveValidator(t: Tables) {
   const nightAudit = object({group:text,key:text,source:text,elapsedMs:number,rejected:integer(),error:nullable(text)});
   const night = object({ state:camp,caps:record(number),completed:array(object({group:text,items:array(itemSchema(t),16)}),5),audit:array(nightAudit,5),requests:array(object({group:text,key:text,request:{type:'object'}}),5) });
   const checkpoint = object({ session, input:object({lane:integer(0,campPlay.listening.lanes-1),listening:bool}),night:nullable(night),parleyAudit:array(audit,42),pendingParley:nullable(object({input:object({target:id,cardId:text,text},['text']),key:nullable(text)})),pendingDawn:bool });
-  const payload = object({ camp:checkpoint,progress:object({composition,trial:nullable(trial),bout:nullable(bout),receipts:array(object({id:text,day:integer(1,42),kind:{enum:['trial','games']},entrant:id,result,hash:text,trace},['result']),12)}) });
+  const payload = object({ camp:checkpoint,progress:object({composition,trial:nullable(trial),bout:nullable(bout),receipts:array(object({id:text,day:integer(1,42),kind:{enum:['trial','games']},entrant:id,result,hash:text,trace},['result']),12),skills},['skills']) });
   const compiled = new Ajv({ allErrors:true,strict:true }).compile(payload);
   validators.set(t, compiled); return compiled;
 }

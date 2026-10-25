@@ -1,12 +1,14 @@
-import { applyBoutInput, beginTrial, boutHash, bridgeRules, createSeason, exchangeTrial, prepareBout, receiveBout, receiveTrial, seasonDue, startBout, trialTell, type BoutInput, type SeasonProgress, type TrialStance } from '@mage/core';
+import { applyBoutInput, beginTrial, boutHash, bridgeRules, createSeason, earnCampDay, exchangeTrial, prepareBout, receiveBout, receiveTrial, seasonDue, startBout, trialTell, type BoutInput, type CampSession, type SeasonProgress, type TrialStance } from '@mage/core';
 import type { Composition, Difficulty } from '@mage/core/arena';
-import { CampService, type CampCommand } from './camp-service.ts';
+import { CampService, type CampCheckpoint, type CampCommand } from './camp-service.ts';
 import type { ParleyInput } from './parley.ts';
 
 export type SeasonCommand = { type: 'escort-trial' | 'trial' } | { type: 'exchange'; stance: TrialStance } | { type: 'receive-trial' } | { type: 'prepare'; composition: Composition; difficulty?: Difficulty } | { type: 'start' } | { type: 'receive' };
 export class SeasonService extends CampService {
   progress: SeasonProgress = createSeason();
   paused = false;
+  /** The last camp day whose finished activities are banked in the skill book; a day settles once, whichever path settles it. */
+  private banked = 0;
   get locked() { return !!this.progress.bout || this.progress.trial?.phase === 'active'; }
   override tick() { if (!this.locked && !this.paused) super.tick(); }
   override view() {
@@ -30,7 +32,20 @@ export class SeasonService extends CampService {
     const due = seasonDue(this.tables, this.session, this.progress);
     if (due && command.type !== 'travel') throw Error(due === 'trial' ? 'The Tent Trial is waiting at the Pit.' : 'The Games must settle before this day continues.');
     if (this.view().season.complete) throw Error('The first two weeks are complete.');
-    await super.command(command, revision); return this.view();
+    const before = this.session;
+    await super.command(command, revision); this.bank(before); return this.view();
+  }
+  /** A restored checkpoint taken mid-dawn settles that day here, so its activities are banked here too. */
+  override restoreCamp(checkpoint: CampCheckpoint) {
+    this.banked = checkpoint.session.camp.day - 1;
+    super.restoreCamp(checkpoint); this.bank(checkpoint.session);
+  }
+  /** The skill book (D1 4.3): when the camp day of `before` has settled (settleCamp, at dawn), each activity the player
+   * finished that day earns its points. Only a season that carries a book earns (createSeason, the PC flag). */
+  private bank(before: CampSession) {
+    if (this.session.camp.day === before.camp.day || before.camp.day <= this.banked) return;
+    this.banked = before.camp.day;
+    if (this.progress.skills) this.progress.skills = earnCampDay(this.tables, before, this.progress.skills, true);
   }
   override async parley(input: ParleyInput, revision: number) {
     if (this.locked || this.paused || seasonDue(this.tables, this.session, this.progress)) throw Error('This moment must wait until after the bout.');

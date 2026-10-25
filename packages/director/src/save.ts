@@ -1,7 +1,7 @@
 import { closeSync, copyFileSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { phaseAt, endHour, bridgeRules, boutHash, linkBout, prepareBout, replayBout, type SeasonBout, type SeasonProgress, type Tables } from '@mage/core';
+import { phaseAt, endHour, bridgeRules, boutHash, linkBout, prepareBout, replayBout, skillBookStateProblems, type SeasonBout, type SeasonProgress, type Tables } from '@mage/core';
 import { gamesResult, validateComposition, type Games } from '@mage/core/arena';
 import { hash } from './cache.ts';
 import { groups, request } from './input.ts';
@@ -43,6 +43,8 @@ export function validatePayload(t: Tables, value: unknown): SavePayload {
     for (const stat of t.rules.stats.names) if (c.stats[stat] !== t.rules.stats.rankThresholds.filter(n=>c.points[stat]>=n).length) throw Error('Save stat mapping is inconsistent.');
   }
   if (validateComposition(p.progress.composition).length) throw Error('Save composition is invalid.');
+  const bookProblems = p.progress.skills ? skillBookStateProblems(p.progress.skills, camp.characters[camp.player]!.school) : [];
+  if (bookProblems.length) throw Error(`Save skill book is inconsistent: ${bookProblems[0]}.`);
   const receipts = p.progress.receipts;
   if (new Set(receipts.map(r=>r.id)).size !== receipts.length || receipts.some(r=>r.day>camp.day)) throw Error('Save receipts are inconsistent.');
   if (p.progress.bout) {
@@ -143,8 +145,9 @@ export function restoreSave(service: SeasonService,payload: SavePayload) {
   // future semantic check that throws during restoration cannot partially load.
   const staged=new SeasonService(service.tables,service.options,validated.camp.session.camp.seed,service.parleyDirector.options);
   try {
-    staged.restoreCamp(validated.camp);
+    // The staged service holds the progress too: a checkpoint taken mid-dawn settles here and banks that day's skill points.
+    staged.progress=validated.progress; staged.restoreCamp(validated.camp);
     const settled=staged.checkpointCamp();
-    service.restoreCamp(settled); service.progress=validated.progress; service.paused=true;
+    service.restoreCamp(settled); service.progress=staged.progress; service.paused=true;
   } finally { staged.close(); }
 }
