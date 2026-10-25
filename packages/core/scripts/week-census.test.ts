@@ -6,7 +6,7 @@ import profileData from '../src/arena/data/progression-weeks.pc.json' with { typ
 import { createHash } from 'node:crypto';
 import weeksEvidence from '../../../docs/change-requests/evidence/d1-weeks.json' with { type: 'json' };
 import lagEvidence from '../../../docs/change-requests/evidence/d1-weeks-arm-lag.json' with { type: 'json' };
-import { armOption, levelMages, mageArms, opponentSpellRanks, profileSpellRanks, rivalHpLevels, rivalProfiles, runWeekBuildFight, runWeekFight, weekProfileProblems, weekProfiles, weeks, type MageArm } from './week-census.ts';
+import { armExtras, armOption, levelMages, mageArms, opponentSpellRanks, profileSpellRanks, rivalHpLevels, rivalProfiles, runWeekBuildFight, runWeekFight, weekProfileProblems, weekProfiles, weeks, type MageArm } from './week-census.ts';
 import { runBuildFight } from './builds-census.ts';
 
 // The week sweep (D1 4.4) is a reading: these checks pin that its inputs are what the data says and that week 1 of a profile
@@ -109,7 +109,25 @@ describe('week sweep mage-side arms (D1 6.8): opt-in, week 1 untouched', () => {
     expect(opponentSpellRanks(plain, 2.5).fire_wrath).toBe(5);
     expect(fresh(5, 'lag-hp2').maxHp).toBeCloseTo(plain.maxHp * 1.2);
     expect(fresh(5, 'lag-hp2').spellRanks).toEqual(fresh(5, 'lag').spellRanks);
-    // Regular-enemy waves carry no mage: an armed week-3 wave 1 is the unarmed one.
-    for (const arm of arms) expect(runWeekFight(seed, 0, 3, 'steady', runtime.games.fightTimeoutS, arm).hash).toBe(runWeekFight(seed, 0, 3, 'steady').hash);
+    // Regular-enemy waves carry no mage: an armed week-3 wave 1 is the unarmed one. The rank-defence arms (D1 6.10) also step the
+    // ranked player's HP, so their wave 1 moves; the exchange reach needs a Fire/Air contact, so it does not.
+    for (const arm of arms) {
+      const armed = runWeekFight(seed, 0, 3, 'steady', runtime.games.fightTimeoutS, arm).hash, plain = runWeekFight(seed, 0, 3, 'steady').hash;
+      if ('hpPerRankStep' in mageArms[arm]) expect(armed).not.toBe(plain); else expect(armed).toBe(plain);
+    }
   }, 120000);
+
+  it('the D1 6.10 arms keep lag ranks and add one createGames lever each, two strengths each; no other arm adds one', () => {
+    expect(armExtras('lag-xw1')).toEqual({ exchangeReach: { perRankStepM: 0.5 } });
+    expect(armExtras('lag-xw2')).toEqual({ exchangeReach: { perRankStepM: 1 } });
+    expect(armExtras('lag-def1')).toEqual({ rankDefence: { hpPerRankStep: 0.05 } });
+    expect(armExtras('lag-def2')).toEqual({ rankDefence: { hpPerRankStep: 0.1 } });
+    for (const arm of ['lag-xw1', 'lag-xw2', 'lag-def1', 'lag-def2'] as const) for (const week of weeks) expect(armOption(week, arm)).toEqual(armOption(week, 'lag'));
+    for (const arm of ['level', 'ranked', 'lag', 'lag-hp1', 'lag-hp2', undefined] as const) expect(armExtras(arm)).toEqual({});
+  });
+
+  it('a 6.10 arm moves the ranked weeks: steady week 4 fire_heavy is not the lag fight', () => {
+    const lag = runWeekBuildFight(seed, 'fire_heavy', 4, 'steady', 'lag').hash;
+    for (const arm of ['lag-xw1', 'lag-def1'] as const) expect(runWeekBuildFight(seed, 'fire_heavy', 4, 'steady', arm).hash).not.toBe(lag);
+  }, 60000);
 });

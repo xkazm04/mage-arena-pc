@@ -1,13 +1,13 @@
 // Week sweep (D1 4.4, slice step 3: a reading, no tuning). Each campaign week runs at enemyLevel = week (regular enemies only;
 // mages and rival builds are not levelled) with a progression profile from arena/data/progression-weeks.pc.json: the reference
-// player's average spell rank that week. An opt-in mage-side arm (D1 6.8 and 6.9, a reading only) levels the opponent mage too.
+// player's average spell rank that week. An opt-in mage-side arm (D1 6.8 to 6.10, a reading only) levels the opponent mage too.
 // Pure: no I/O, so report-weeks.ts and the census tests share one runner.
 import { combat, presets, runtime, seconds, stateHash, type Actor, type Composition, type Games, type SpellRanks } from '../src/arena/index.ts';
 import { maxEnemyLevel, maxSpellRank, validEnemyLevel } from '../src/arena/progression.ts';
 import { applyOpponentMage, buildRows, compositionRows, ranksAtAverage, type OpponentMage } from '../src/arena/mage-build.ts';
 import profileData from '../src/arena/data/progression-weeks.pc.json' with { type: 'json' };
 import { runBuildFight } from './builds-census.ts';
-import { censusGames, outcomeOf, runCensus } from './census-kit.ts';
+import { censusGames, outcomeOf, runCensus, type CensusOptions } from './census-kit.ts';
 
 export type WeekProfiles = Record<string, number[]>;
 function profilesProblems(profiles: unknown, at: string): string[] {
@@ -69,10 +69,18 @@ export function opponentSpellRanks(actor: Actor, average: number): SpellRanks {
  * enemyLevels); `ranks` names a rivalProfiles entry for its spell ranks (`ranked` follows the steady player's curve, `lag` runs one
  * rank behind it). The `lag-hp` arms (D1 6.9) keep `lag`'s ranks and add a small HP level: `hp` names a rivalHpLevels curve, one
  * enemy level per week, and `hpLevels` carries it into the evidence. Each arm is the createGames `opponentMage` option for its week
- * (armOption; mage-build.ts applies it at spawn), the kernel lever the game can use too. */
+ * (armOption; mage-build.ts applies it at spawn), the kernel lever the game can use too.
+ * The D1 6.10 arms keep `lag`'s ranks and add one duration lever, each a createGames option (armExtras), two strengths each:
+ * - `lag-xw1`/`lag-xw2`: the exchange window's reach grows with the defender's rank, `reachPerRankStepM` 0.5 / 1 m per rank step
+ *   (exchange.ts exchangeReach);
+ * - `lag-def1`/`lag-def2`: every mage's HP grows with its own rank, `hpPerRankStep` 0.05 / 0.1 per rank step (games.ts
+ *   rankDefence; 0.1 mirrors rank power's +0.1 a rank). */
 const lagHp = (hp: string) => ({ level: false, ranks: 'lag', hp, hpLevels: rivalHpLevels[hp] ?? [] }) as const;
-export const mageArms = { level: { level: true }, ranked: { level: false, ranks: 'ranked' }, lag: { level: false, ranks: 'lag' }, 'lag-hp1': lagHp('hp1'), 'lag-hp2': lagHp('hp2') } as const satisfies Record<string, MageArmSpec>;
-type MageArmSpec = { level: boolean; ranks?: string; hp?: string; hpLevels?: readonly number[] };
+const lagXw = (reachPerRankStepM: number) => ({ level: false, ranks: 'lag', reachPerRankStepM }) as const;
+const lagDef = (hpPerRankStep: number) => ({ level: false, ranks: 'lag', hpPerRankStep }) as const;
+export const mageArms = { level: { level: true }, ranked: { level: false, ranks: 'ranked' }, lag: { level: false, ranks: 'lag' }, 'lag-hp1': lagHp('hp1'), 'lag-hp2': lagHp('hp2'),
+  'lag-xw1': lagXw(0.5), 'lag-xw2': lagXw(1), 'lag-def1': lagDef(0.05), 'lag-def2': lagDef(0.1) } as const satisfies Record<string, MageArmSpec>;
+type MageArmSpec = { level: boolean; ranks?: string; hp?: string; hpLevels?: readonly number[]; reachPerRankStepM?: number; hpPerRankStep?: number };
 export type MageArm = keyof typeof mageArms;
 for (const arm of Object.values(mageArms)) {
   if ('ranks' in arm && !rivalProfiles[arm.ranks]) throw Error(`progression-weeks.pc.json: no rivalProfiles.${arm.ranks}`);
@@ -85,6 +93,14 @@ export function armOption(week: number, arm: MageArm | undefined): OpponentMage 
   const spec: MageArmSpec = mageArms[arm], hpLevel = spec.hp ? rivalHpLevels[spec.hp]![week - 1]! : 1;
   return spec.ranks ? { averageRank: rivalProfiles[spec.ranks]![week - 1]!, ...(hpLevel > 1 ? { level: hpLevel } : {}) } : { level: week };
 }
+/** The createGames options a D1 6.10 arm adds beside its opponentMage: `exchangeReach` or `rankDefence`, the same every week. Both
+ * read the rank steps a mage gained above its authored build (games.ts), none in week 1, so week 1 is still the plain census. No arm,
+ * or an arm without one, adds nothing. */
+export function armExtras(arm: MageArm | undefined): Pick<CensusOptions, 'exchangeReach' | 'rankDefence'> {
+  const spec: MageArmSpec | undefined = arm && mageArms[arm];
+  return { ...(spec?.reachPerRankStepM !== undefined ? { exchangeReach: { perRankStepM: spec.reachPerRankStepM } } : {}),
+    ...(spec?.hpPerRankStep !== undefined ? { rankDefence: { hpPerRankStep: spec.hpPerRankStep } } : {}) };
+}
 /** Level every opponent mage of a fresh Games for `week` under `arm` after spawn (the option's rule, applied by hand; kept for
  * reading an existing Games). No arm, or nothing to change (week 1), leaves the state alone. */
 export function levelMages(g: Games, week: number, arm: MageArm | undefined): void {
@@ -95,7 +111,7 @@ export function levelMages(g: Games, week: number, arm: MageArm | undefined): vo
 const reference = (): Composition => presets.find(p => p.name === runtime.games.referencePreset)!;
 const weekOptions = (week: number, profile: string, arm?: MageArm) => {
   const ranks = profileSpellRanks(reference(), weekProfiles[profile]![week - 1]!), opponentMage = armOption(week, arm);
-  return { ...(week > 1 ? { enemyLevel: week } : {}), ...(Object.keys(ranks).length ? { spellRanks: ranks } : {}), ...(opponentMage ? { opponentMage } : {}) };
+  return { ...(week > 1 ? { enemyLevel: week } : {}), ...(Object.keys(ranks).length ? { spellRanks: ranks } : {}), ...(opponentMage ? { opponentMage } : {}), ...armExtras(arm) };
 };
 /** One default-census fight (report-w4's reference player and wave) in `week` under `profile`, the mage side levelled by `arm`. */
 export function runWeekFight(seed: number, wave: number, week: number, profile: string, maxSeconds = runtime.games.fightTimeoutS, arm?: MageArm) {
