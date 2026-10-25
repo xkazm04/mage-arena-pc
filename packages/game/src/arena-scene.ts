@@ -44,6 +44,8 @@ import { colours } from "./ui/kit.ts";
 import { RivalCollarView } from "./rival-collar-view.ts";
 import { rivalRune } from "./rival-collar.ts";
 import type { Element } from "./animation-contract.ts";
+import type { ThreatExtent } from "./sigil-contract.ts";
+import feedbackPolicy from "../data/combat-feedback.json" with { type: "json" };
 import animation from "../data/animation.json" with { type: "json" };
 import { art } from "./art.ts";
 import { quality } from "./quality.ts";
@@ -78,6 +80,9 @@ export class ArenaScene {
   readonly bodies = new BodyPlayer();
   readonly feedback = new CombatFeedback();
   readonly collars = new RivalCollarView();
+  /** Answer cues on (answer-cue.ts): the activations that will reach the player keep full strength, other telegraphs dim. */
+  emphasis?: ReadonlySet<number>;
+  private threatAlpha = 1;
   debugEnabled = false;
   debugPage = 0;
   private debugLabel = new BitmapText({
@@ -369,6 +374,44 @@ export class ArenaScene {
         .stroke({ color: colour, width: cameraMetrics(this.c).outlinePx });
     }
   }
+  /** A threat sigil at the strength its answer cue gives it; a dimmed one drops its warning mark. */
+  private threatSigil(
+    element: Element,
+    at: Vec,
+    extent: ThreatExtent,
+    progress: number,
+    angle: number,
+    unblockable: boolean,
+  ): boolean {
+    if (this.threatAlpha >= 1)
+      return this.sigils.threat(
+        element,
+        at,
+        extent,
+        progress,
+        this.timeMs,
+        angle,
+        unblockable,
+      );
+    const centre =
+      extent.shape === "line"
+        ? {
+            x: at.x + (Math.cos(angle) * extent.range) / 2,
+            y: at.y + (Math.sin(angle) * extent.range) / 2,
+          }
+        : at;
+    return this.sigils.draw(
+      `threat.${element}.${extent.shape}`,
+      this.timeMs,
+      centre,
+      { extent, progress, angle, opacity: this.threatAlpha },
+    );
+  }
+  private dimFor(activationId: number): number {
+    return !this.emphasis || this.emphasis.has(activationId)
+      ? 1
+      : feedbackPolicy.answerCues.dimOpacity;
+  }
   private area(
     p: Vec,
     radius: number,
@@ -378,12 +421,11 @@ export class ArenaScene {
     unblockable = false,
   ): void {
     if (
-      this.sigils.threat(
+      this.threatSigil(
         element,
         p,
         { shape: "ring", range: radius },
         progress,
-        this.timeMs,
         0,
         unblockable,
       ) &&
@@ -416,12 +458,11 @@ export class ArenaScene {
       w = width / 2;
     const end = { x: origin.x + dx * range, y: origin.y + dy * range };
     if (
-      this.sigils.threat(
+      this.threatSigil(
         element,
         origin,
         { shape: "line", range, width },
         progress,
-        this.timeMs,
         angle,
         unblockable,
       ) &&
@@ -466,12 +507,11 @@ export class ArenaScene {
     unblockable = false,
   ): void {
     if (
-      this.sigils.threat(
+      this.threatSigil(
         element,
         origin,
         { shape: "cone", range: radius, degrees },
         progress,
-        this.timeMs,
         Math.atan2(target.y - origin.y, target.x - origin.x),
         unblockable,
       ) &&
@@ -558,6 +598,7 @@ export class ArenaScene {
     }
     this.sigils.schoolShapes(state, (a) => this.clips.element(a));
     for (const t of state.telegraphs) {
+      this.threatAlpha = this.dimFor(t.activationId);
       const element = this.clips.element(
           state.actors.find((a) => a.id === t.ownerId),
         ),
@@ -651,6 +692,7 @@ export class ArenaScene {
       }
       if (a.pending?.kind === "spell") {
         this.sigils.casting(a, this.clips.element(a));
+        this.threatAlpha = this.dimFor(a.pending.activationId);
         const element = this.clips.element(a);
         const pending = a.pending,
           s = pending.spell ?? spells.find((s) => s.id === pending.spellId)!;
@@ -722,6 +764,7 @@ export class ArenaScene {
           }
         }
       }
+      this.threatAlpha = 1;
       if (a.water.decoy) {
         if (
           !this.sigils.draw(

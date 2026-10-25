@@ -1,6 +1,7 @@
 import { arenaHud } from "./hud/arena-hud.ts";
 import { edgeKey } from "./hud/hud-anchors.ts";
 import { ImpactClock } from "./combat-feedback.ts";
+import { answerCues, cuesEnabled, emphasis } from "./answer-cue.ts";
 import { LabUI } from "./lab-ui.ts";
 import { createLabSetup, type LabSetup, type LabSession } from "./lab-setup.ts";
 import { ArtFixture } from "./art-fixture.ts";
@@ -956,6 +957,13 @@ export class ArenaGame {
       reduced || this.paused ? 0 : shake.y,
     );
     this.scene.feedback.ledger = this.session.wardLedger();
+    // Answer cues follow the session's kind (Training, Roster, the Lab by default) and read only the state on screen.
+    const cues =
+      !read && !this.artFixture && cuesEnabled(this.session.kind)
+        ? answerCues(shown, shownPlayer)
+        : undefined;
+    this.scene.feedback.cues = cues ?? [];
+    this.scene.emphasis = cues && emphasis(cues);
     markPhase("events");
     this.scene.render(
       this.artFixture?.state ?? shown,

@@ -14,6 +14,7 @@ import {
   type ThreatLedger,
 } from "@mage/core/arena";
 import { gradeFor, hitLabel, wardWord, wordAllowed } from "./combat-readout.ts";
+import { CueWords, type AnswerCue } from "./answer-cue.ts";
 import { groundToScreen, cameraMetrics, type Camera } from "./camera.ts";
 import policy from "../data/combat-feedback.json" with { type: "json" };
 export { policy as feedbackPolicy };
@@ -97,10 +98,20 @@ export class CombatFeedback {
   private lastWordS = -1e9;
   /** The watched actor's threat ledger; hits it graded as a ward mistake carry a word (STEEL, LEAVE, BEHIND, HELD +nf, CAST). */
   ledger?: ThreatLedger;
+  /** Answer cues for the player on screen (answer-cue.ts), set each frame; empty where the mode shows none. */
+  cues: AnswerCue[] = [];
+  private cueWords = new CueWords();
+  private cueText = new BitmapText({
+    text: "",
+    style: { fontFamily: "CovenantBody", fontSize: 26, fill: 0xffffff },
+  });
   reduced = false;
   constructor() {
     frameGraphics(this.cue);
     this.layer.addChild(this.cue);
+    this.cueText.anchor.set(0.5, 1);
+    this.cueText.visible = false;
+    this.layer.addChild(this.cueText);
     this.white.matrix = [
       0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,
     ];
@@ -122,6 +133,7 @@ export class CombatFeedback {
       }
       this.active = [];
       this.lastWordS = -1e9;
+      this.cueWords.reset();
     }
     for (const e of state.events.slice(this.eventIndex)) {
       const actor = state.actors.find((a) => a.id === e.actorId);
@@ -211,6 +223,21 @@ export class CombatFeedback {
         width: 18 * m.resolutionScale,
       });
     }
+    // The answer before the contact: one cue word over the player, held while its cue holds.
+    const word = this.cueWords.pick(this.cues, this.clock);
+    this.cueText.visible = !!word;
+    if (word) {
+      const p = groundToScreen(player.pos, c);
+      this.cueText.text = word.text;
+      this.cueText.style.fill = word.fill;
+      this.cueText.position.set(
+        p.x,
+        p.y -
+          m.figureHeightPx -
+          (24 + policy.numberRisePixels1080) * m.resolutionScale,
+      );
+      this.cueText.scale.set(m.resolutionScale);
+    }
     this.active = this.active.filter((n) => {
       const age = this.clock - n.bornS;
       if (age > n.lifeS) {
@@ -257,6 +284,14 @@ export class CombatFeedback {
       labels: this.active.map((n) => n.text.text),
       allocated: this.active.length + this.pool.length,
       flashes: this.flashes.size,
+      cues: this.cues.map((c) => ({
+        activationId: c.activationId,
+        answer: c.answer,
+        mistake: c.mistake,
+        phase: c.phase,
+        word: c.word?.text,
+      })),
+      cueWord: this.cueText.visible ? this.cueText.text : undefined,
       reactions: [...this.reactions].map(([id, r]) => ({
         id,
         age: this.clock - r.bornS,
