@@ -3,6 +3,7 @@
 // resolve, actionPreview and campActions dispatch through the row, so a formula is written once. Pure: no IO, clock or RNG.
 import { calendar } from "./camp.ts";
 import type { CampSession } from "./camp-session.ts";
+import { contestOdds, type Odds } from "./contest.ts";
 import type { CampState, Character, Decision, Fact, Intent, Roll, Tables } from "./types.ts";
 
 type Rules = Tables["rules"];
@@ -95,6 +96,8 @@ const scheme: ContestOf = (r, a, b, { kind }) => {
   if (b.warned) dc += r.effects.PROTECT.warningDc;
   return { action: `SCHEME:${kind}:${b.id}`, bonus: guile(r, a), dc };
 };
+/** A rumour fails on the lowest dice whatever its score; other contests have no floor. */
+const failsAtOrBelow = (r: Rules, kind?: string) => (kind === "rumour" ? (r.reviewPolicy?.rumourFailsAtOrBelow ?? 0) : 0);
 /** After a failed scheme the Vigil rolls against the schemer's guile. */
 const caught: ContestOf = (r, a, b, { kind }) => ({
   action: `CAUGHT:${kind}:${b.id}`,
@@ -114,7 +117,7 @@ function schemeEffect(x: EffectCtx) {
   const c = scheme(r, a, b, item.args),
     { score, record } = x.roll(c);
   const success = !carry.stopped.has(a.id) && score > c.dc &&
-    !(kind === "rumour" && record.value <= (r.reviewPolicy?.rumourFailsAtOrBelow ?? 0));
+    record.value > failsAtOrBelow(r, kind);
   record.score = score;
   record.dc = c.dc;
   record.success = success;
@@ -242,7 +245,7 @@ export const campRules: Record<Intent, IntentRule> = {
         kind === "rumour" ? Object.keys(t.rules.schemes.rumour.reactions).map((topic) => ({ target, kind, topic })) : [{ target, kind }],
       ),
     ),
-    preview: text("Guile contest · failure risks the stocks"),
+    preview: text("Guile contest · failure risks the stocks; a warned target is harder"),
     contests: { SCHEME: scheme, CAUGHT: caught },
     effect: schemeEffect,
   },
@@ -285,3 +288,24 @@ export const campRules: Record<Intent, IntentRule> = {
     effect: (x) => x.fact("offered", x.a.id, x.b.id, "secret", `${x.a.name} offered ${x.b.name} a favour.`),
   },
 };
+
+/**
+ * The contests a camp action would roll, built by its row's own builders on the player's view of the target: a PROTECT
+ * warning is hidden, so the preview reads the target unwarned and never leaks it. Null for an intent without a contest.
+ */
+export function previewContests(t: Tables, s: CampSession, d: Decision) {
+  const contests = campRules[d.intent].contests;
+  if (!contests) return null;
+  const r = t.rules,
+    a = player(s),
+    b = { ...s.camp.characters[d.args.target], warned: false };
+  return { contest: contests[d.intent](r, a, b, d.args), caught: contests.CAUGHT?.(r, a, b, d.args), failsAtOrBelow: failsAtOrBelow(r, d.args.kind) };
+}
+/** The chance a camp action's contest succeeds and, for a scheme, that its failure ends in the stocks. */
+export function campOdds(t: Tables, s: CampSession, d: Decision): Odds | null {
+  const p = previewContests(t, s, d);
+  if (!p) return null;
+  const sides = t.rules.contests.dieSides,
+    success = contestOdds({ ...p.contest, sides, failsAtOrBelow: p.failsAtOrBelow });
+  return { success, caught: p.caught ? (1 - success) * contestOdds({ ...p.caught, sides }) : null };
+}

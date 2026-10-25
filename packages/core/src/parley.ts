@@ -8,7 +8,9 @@ import {
   present,
   type CampSession,
 } from "./camp-session.ts";
-import type { Fact, Roll, Tables, Trace } from "./types.ts";
+import { contestOdds, type Odds } from "./contest.ts";
+import type { Contest } from "./camp-rules.ts";
+import type { Character, Fact, Roll, Tables, Trace } from "./types.ts";
 
 export const parleyRules = data;
 export function seedParleyFacts(before: CampSession): CampSession {
@@ -101,12 +103,30 @@ export function knowingsAbout(s: CampSession, target: string): Fact[] {
     )
     .sort((a, b) => a.id.localeCompare(b.id));
 }
-export function parleyCards(s: CampSession, target: string) {
+/** Small and refused effects need no roll; every other effect is contested. */
+const contested = (effect: ParleyEffect) => !["refuse", "shift_trust_small"].includes(effect);
+/** Parley's contest: intimidation reads nerve, every other stance guile, against parley/contestDc. */
+export function parleyContest(t: Tables, player: Character, target: string, stance: ParleyStance): Contest {
+  const stat = stance === "intimidate" ? "nerve" : "guile";
+  return { action: `parley:${target}:${stat}`, bonus: player.stats[stat] * t.rules.contests.guileMultiplier, dc: data.contestDc };
+}
+/** The chance a card's contest succeeds, from the same builder applyParley rolls; null when the effect is not contested. */
+export function parleyOdds(t: Tables, s: CampSession, target: string, stance: ParleyStance, effect: ParleyEffect): Odds | null {
+  if (!contested(effect)) return null;
+  const c = parleyContest(t, s.camp.characters[s.camp.player], target, stance);
+  return { success: contestOdds({ ...c, sides: t.rules.contests.dieSides }), caught: null };
+}
+export function parleyCards(s: CampSession, target: string, t: Tables) {
+  return dealt(s, target).map(({ stance, effect, ...card }) => ({ ...card, odds: parleyOdds(t, s, target, stance, effect) }));
+}
+function dealt(s: CampSession, target: string) {
   const known = knowingsAbout(s, target);
   if (!known.length) return [];
   return cards.map((card, i) => ({
     id: card.id,
     title: card.title,
+    stance: card.stance,
+    effect: card.effect,
     knowingId: known[i % known.length].id,
     knowing: known[i % known.length].text,
     text: card.text.replace("{knowing}", known[i % known.length].text),
@@ -118,7 +138,7 @@ export function authoredParley(
   cardId: string,
 ): ParleyProposal {
   const card = cards.find((c) => c.id === cardId),
-    visible = parleyCards(s, target).find((c) => c.id === cardId);
+    visible = dealt(s, target).find((c) => c.id === cardId);
   if (!card || !visible) throw new Error("That approach is not available.");
   return {
     stance: card.stance,
@@ -133,7 +153,7 @@ export function parleyMoments(t: Tables, s: CampSession) {
     .map((id) => ({
       target: id,
       name: s.camp.characters[id].name,
-      cards: parleyCards(s, id),
+      cards: parleyCards(s, id, t),
     }));
 }
 /** Defense in depth: unknown JSON can never mutate state before these checks. */
@@ -203,14 +223,13 @@ export function applyParley(
   const s = spendHours(before, campTime.activityHours.PARLEY),
     player = s.camp.characters[s.camp.player],
     npc = s.camp.characters[target];
-  const large = !["refuse", "shift_trust_small"].includes(p.effect);
+  const large = contested(p.effect);
   const hostile = p.stance === "intimidate" || p.stance === "deceive";
-  const stat = p.stance === "intimidate" ? "nerve" : "guile";
-  const action = `parley:${target}:${stat}`;
+  const { action, bonus, dc } = parleyContest(t, player, target, p.stance);
   const unit = seededUnit(s.camp.seed, s.camp.day, s.camp.player, action);
   const value = Math.floor(unit * t.rules.contests.dieSides) + 1;
-  const score = player.stats[stat] * t.rules.contests.guileMultiplier + value;
-  const success = score > data.contestDc;
+  const score = bonus + value;
+  const success = score > dc;
   const roll: Roll | null =
     p.effect === "refuse"
       ? null
@@ -222,7 +241,7 @@ export function applyParley(
           unit,
           value,
           score,
-          dc: data.contestDc,
+          dc,
           success,
           rule: "parley/contestDc + rules/contests",
         };

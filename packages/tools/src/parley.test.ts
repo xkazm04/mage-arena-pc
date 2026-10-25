@@ -8,6 +8,8 @@ import {
   decision,
   knowingsAbout,
   parleyCards,
+  parleyContest,
+  parleyOdds,
   parleyMoments,
   parleyProblem,
   parleyRules,
@@ -68,7 +70,7 @@ describe("Knowing-gated Parley", () => {
   });
   it("uses three authored approaches, the same roll for alternate wording, and one attempt per day", () => {
     const s = knowingFixture(t),
-      cards = parleyCards(s, "nysa");
+      cards = parleyCards(s, "nysa", t);
     expect(cards.map((c) => c.id)).toEqual(["reveal", "bargain", "ask"]);
     expect(
       cards.every((c) => c.text.includes(campPlay.discoveries[0].text)),
@@ -229,5 +231,32 @@ describe("injection and authored census", () => {
     expect(effects.get("reveal_fact")).toBeGreaterThan(0);
     expect(effects.get("refuse")).toBeGreaterThan(0);
     expect([...effects.values()].reduce((a, b) => a + b, 0)).toBe(300);
+  });
+  it("case 5: each large-effect card carries its stance's odds, from the roll applyParley makes", () => {
+    const player = (c: ReturnType<typeof knowingFixture>) => c.camp.characters[c.camp.player];
+    const s = knowingFixture(t),
+      cards = parleyCards(s, "nysa", t);
+    expect(cards.length).toBe(parleyRules.cards.length);
+    const intimidate = parleyContest(t, player(s), "nysa", "intimidate"),
+      appeal = parleyContest(t, player(s), "nysa", "appeal");
+    expect([intimidate.bonus, intimidate.dc]).toEqual([player(s).stats.nerve * t.rules.contests.guileMultiplier, parleyRules.contestDc]);
+    expect([appeal.bonus, appeal.dc]).toEqual([player(s).stats.guile * t.rules.contests.guileMultiplier, parleyRules.contestDc]);
+    expect(parleyOdds(t, s, "nysa", "intimidate", "shift_trust_small")).toBeNull();
+    expect(parleyOdds(t, s, "nysa", "appeal", "refuse")).toBeNull();
+    for (const card of cards) {
+      const authored = parleyRules.cards.find((c) => c.id === card.id)!;
+      expect(card.odds).toEqual(parleyOdds(t, s, "nysa", authored.stance as "appeal", authored.effect as "refuse"));
+      expect(card.odds).not.toBeNull();
+      const c = parleyContest(t, player(s), "nysa", authored.stance as "appeal");
+      let won = 0;
+      for (let seed = 1; seed <= 400; seed++) {
+        const at = knowingFixture(t, seed),
+          roll = applyParley(t, at, "nysa", authoredParley(at, "nysa", card.id)).parleys[0].roll!;
+        expect([roll.action, roll.score! - roll.value, roll.dc]).toEqual([c.action, c.bonus, c.dc]);
+        expect(parleyCards(at, "nysa", t).find((x) => x.id === card.id)!.odds).toEqual(card.odds);
+        if (roll.success) won++;
+      }
+      expect(Math.abs(won / 400 - card.odds!.success)).toBeLessThanOrEqual(0.06);
+    }
   });
 });

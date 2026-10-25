@@ -10,7 +10,7 @@ import {
   reconcile,
   resolve,
 } from "./camp.ts";
-import { boardLine, campRules, capFor } from "./camp-rules.ts";
+import { boardLine, campOdds, campRules, capFor } from "./camp-rules.ts";
 import type {
   CampState,
   DayCarry,
@@ -445,6 +445,7 @@ export function campView(t: Tables, s: CampSession) {
             label,
             intent: d.intent,
             gains: campRules[d.intent].preview(t, s, d),
+            odds: campOdds(t, s, d),
             hours: activityHours(d, t.season),
           })),
     parleyHours: t.season.activityHours.PARLEY,
