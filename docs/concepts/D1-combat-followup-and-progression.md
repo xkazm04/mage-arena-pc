@@ -1,6 +1,6 @@
 # D1. Combat follow-up: close duels, ultimates, and the campaign progression curve
 
-Status: **direction menu**, written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). A mage-side lever for the week curve is measured as a reading (6.8, 2026-10-24). A small rival HP level on top of the recommended lag arm is measured and ruled out as the duel-duration lever (6.9, 2026-10-25). The two levers 6.9 named are measured on top of lag as a reading (6.10, 2026-10-25): rank-scaled exchange reach is ruled out; rank defence lengthens every short duel but does not close the gap alone, and 4.1 E is the next candidate. 4.1 E, the reference player's range, is measured as an off-by-default reading and ruled out (6.11, 2026-10-25): no arm meets the section 6 targets, so duel duration is now an owner question. The section 6 scorecard (goal 2) follows 6.11. It follows
+Status: **direction menu**; duel duration is **owner-confirmed 2026-10-25: `lag` plus rank defence 0.05 (`lag-def1`), behind the skill-book flag, off by default** (wired in 6.12). Written 2026-10-23 for future sessions. The section 5 slice is built (2026-10-24): exchange windows (6.1), the Third Blade rework and the heavy payoff sequence (6.2), and the week sweep reading (6.3). The 4.3 skill book is built behind an off-by-default flag, with its week curve (6.7, 2026-10-24). A mage-side lever for the week curve is measured as a reading (6.8, 2026-10-24). A small rival HP level on top of the recommended lag arm is measured and ruled out as the duel-duration lever (6.9, 2026-10-25). The two levers 6.9 named are measured on top of lag as a reading (6.10, 2026-10-25): rank-scaled exchange reach is ruled out; rank defence lengthens every short duel but does not close the gap alone, and 4.1 E is the next candidate. 4.1 E, the reference player's range, is measured as an off-by-default reading and ruled out (6.11, 2026-10-25): no arm meets the section 6 targets, so duel duration is now an owner question. The section 6 scorecard (goal 2) follows 6.11. It follows
 `docs/concepts/combat-system-depth.md` (built and on main at `995fab3`). Start a session with
 `/spark resume future-directions-concepts`, or spark one section of this doc as its own idea.
 
@@ -1192,6 +1192,43 @@ number:
 The Director's lean is the first: it keeps both win targets and moves no band but the floor. It is the owner's call. 4.1 E
 is closed as measured. The option stays in the core off by default, as a census tool, with no re-pin.
 
+### 6.12 Duel duration as built: lag plus rank defence 0.05 behind the skill-book flag, 2026-10-26
+
+Owner ruling 2026-10-25 #3: adopt `lag-def1` (6.10) as the duel-duration answer. It is wired for a flag-on season only; the file's
+`enabled` stays `false`, so nothing plays by default.
+
+**As built.** `prepareBout` (season.ts) records two optional fields on a `SeasonBout` whose season carries `p.skills` (only
+created with the skill-book flag on) and is the player's own bout: `opponentMage { averageRank: rivalProfiles.lag[week - 1] }`
+(the bout's campaign week, the one that sets `enemyLevel`; week 1 included, as in the census) and `rankDefence { hpPerRankStep:
+0.05 }`. `startBout` passes both to `createGames`, so `replayBout` reproduces them. No opponent-mage HP level (6.9). Both keys are
+absent when unset, like `enemyLevel` and `spellRanks`, so flag-off bouts, their JSON and `boutHash` are unchanged.
+The reading moved from the census script into `src/arena/week-profiles.ts` (`weekProfiles`, `rivalProfiles`, `rivalHpLevels`,
+checked at load); `week-census.ts` re-exports it. The 0.05 is data: `progression-weeks.pc.json` `seasonRival { profile: "lag",
+hpPerRankStep: 0.05 }`, checked at load (`rankDefenceProblems`, profile names a `rivalProfiles` entry); the `lag-def1` arms read it.
+
+**Spectator bouts get no levers.** The rival curve lags the *player's* ranks and a spectator's bout plays an AI mage with no bought
+ranks, so there is nothing to lag behind; a watched bout stays as it was.
+
+**Proofs.**
+1. Flag off: no golden, census digest or CR-002/CR-007 check was touched; the full suite's goldens (replay-golden.test.ts and the rest) pass
+   unedited, and the `lag-def1` sweep below reproduces the 6.11 control digest for digest, so the census path the refactor moved is unchanged.
+2. Flag on: `season.test.ts` turns the flag on with `createSeason(true)` (never the JSON), prepares a bout in each of weeks 1-6 (it opens
+   `weeksPlayable` to 6 for the test; the chapter plays two), asserts the levers, that they equal the `lag-def1` arm's
+   `armOption`/`armExtras` for that week, and that `replayBout` matches the hash. The season path cannot reproduce the census digests
+   directly: the census fights the reference player with the profile's ranks on a census seed, while a season bout fights the camp
+   entrant with bought ranks on a camp seed. Equality is proven at the `createGames`-options level (`opponentMage`, `rankDefence`,
+   `enemyLevel`; `spellRanks` is the player's own). The census itself, re-run the 6.10 way (`census:weeks -- --count 200 --profile
+   steady --arm lag-def1`, seeds 40000-40199, `d1-612-weeks-arm-lag-def1.json`), gives builds means 47.3, 59.0, 60.8, 60.6, 54.4, 52.0%
+   (weeks 1-6), the 6.10 numbers, and all 60 steady-cell digests equal `d1-611-weeks-arm-lag-def1.json`'s.
+3. The save schema: see the open ask below.
+
+**Open ask (blocks the gate).** `packages/director/src/save-schema.ts` lists the bout's keys closed; the two new fields make a flag-on
+prepared bout fail `validatePayload` ("must NOT have additional properties"), so `skill-book-save.test.ts` (2 tests) goes red. The fix is
+additive (optional `opponentMage`, `rankDefence` on the bout schema; `save.ts` already re-prepares and hashes the bout), but it is a season
+save schema change, which needs an ask.
+
+Commits: `ad63b19` (week profiles to src, `seasonRival` data), `3590414` (season levers and test).
+
 ### D1 section 6 scorecard (goal 2), 2026-10-25
 
 Each section 6 bullet, read off the census. "Owner-pending" marks a result that holds only under a Director default the
@@ -1202,7 +1239,7 @@ owner has not confirmed, or a target the owner has to set.
 | Close builds: median inside 45-75 s (default census) | **met** | fire_close 67.0 s, air_close 50.7 s | 6.1, 6.2 (`d1-ultimates-after.json`) |
 | Close builds: reference wins 40-65% (default census) | **met** | fire_close 49.5%, air_close 40.0% (on the floor) | 6.2, 6.4 margin note |
 | Close builds: hits per exchange falls | **met** | fire_close 2.29 -> 0.61, air_close 1.91 -> 1.30 | 6.1 (`d1-exchange-before/after.json`) |
-| Every rival duel's median in band through the ranked weeks (the duration reading of 6.9-6.11) | **missed**, owner-pending | best arm `lag-def1`: 8 steady cells under 45 s (fire_heavy w2-6, air_close w4-6), 0 over the ceiling; fire_heavy never reaches 45 s in weeks 3-5 under any 6.10 or 6.11 arm | 6.10, 6.11 |
+| Every rival duel's median in band through the ranked weeks (the duration reading of 6.9-6.11) | **missed**; owner-confirmed 2026-10-25: `lag-def1` adopted behind the flag (6.12) | best arm `lag-def1`: 8 steady cells under 45 s (fire_heavy w2-6, air_close w4-6), 0 over the ceiling; fire_heavy never reaches 45 s in weeks 3-5 under any 6.10 or 6.11 arm | 6.10, 6.11, 6.12 |
 | Ultimates: every committed rank-5 build inside the band | **met** | fire_heavy (Brand Wrath 5) 46.5 s, 41.5%; the only committed rank-5 row | 6.2 |
 | Ultimates: each moves its curve signature the right way | **missed** | Brand Drag is neutral: the rival's tier-IV share goes 52.8% -> 53.5%, reference 42.0% -> 41.5% (Wrath about once a fight). Pinning Edge (Shear 5) leans the right way (-1.5 pp, short fights 16 -> 20) but takes air_close to 16.0%, out of the band, so it is not committed | 6.2 |
 | Counters: each defensive row reaches its coverage target | **owner-pending** (N = 50% is a Director default) | Air Form 67.9% (61.1% lowest cell): met. Ring of Cinders 1.6%: missed. Tide Ward: none castable, best declined arm 25.7%, and stopped outside the target (Director default, owner to confirm) | 6.4, 6.5, 6.6 |
