@@ -3,6 +3,7 @@ import {
   defaultBindings,
   hudHint,
   menuHint,
+  pauseHint,
   settingsLines,
 } from "./bindings.ts";
 import { padFamily } from "./pad-glyphs.ts";
@@ -64,6 +65,14 @@ describe("per-family pad copy", () => {
     expect(menuHint("keyboard", "playstation")).toBe(
       "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
     );
+  });
+  it("pauseHint names the pause button of the connected pad family", () => {
+    expect(pauseHint("keyboard")).toBe("ESC / START  Pause");
+    expect(pauseHint("keyboard", "playstation")).toBe("ESC / START  Pause");
+    expect(pauseHint("gamepad", "xbox")).toBe("START  Pause");
+    expect(pauseHint("gamepad", "playstation")).toBe("OPTIONS  Pause");
+    expect(pauseHint("gamepad", "generic")).toBe("START  Pause");
+    expect(pauseHint("gamepad")).toBe("START  Pause");
   });
   it("settingsLines names PlayStation buttons and keeps Xbox copy", () => {
     const ps = settingsLines(defaultBindings, "playstation");
