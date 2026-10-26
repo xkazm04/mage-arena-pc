@@ -64,7 +64,7 @@ settings.
 - Weeks 3-6 playable end to end (they run headless today).
 - Portraits in conversations, the board and results; mood follows relationships.
 - ~~The calendar as a living object: Games and Trial days, week level shown (enemy level = week)~~ landed in 8.8. Weather or season stays open: the view carries neither.
-- The camp map with time-of-day lighting, characters present at places, and transitions between places.
+- The camp map with time-of-day lighting and transitions between places. ~~Characters present at places~~ landed in 8.13.
 - Progression screens for D1: where spell ranks and Agility are earned and spent.
 
 ### 4.4 PC-native input and settings
@@ -486,3 +486,22 @@ Base `main` 43bdb86. Not touched: core, director, view, saves, CSVs, fonts, audi
   apart with confidence and the fresh-season trust is likely inside the neutral band, so the shot is not evidence of a
   non-neutral mood. The stub-view site tests carry that proof.
 - **Campaign row in section 2** corrected: only the journal cast, chapter, saves, trial and menu hero are still neutral.
+
+### 8.13 4.3 characters present at places (2026-10-26)
+
+Ask 57eeb169 (Athena, delegated): `presenceByPlace` as a read-only `campView` field. Landed.
+
+- **Commits**: `3656a903` red tests, `bfc1718e` core field and camp-map chips, `9d7581b1` re-pin of the flag-off season view
+  (`season-service.test.ts`, 7629 B -> 8663 B, sha256 `28c1ba8b...`: the view carries eight places of presence now),
+  `3aad40c5` re-pin of `d3-widescreen.json` (`texts` 31 -> 32 per viewport: the `+n` marker).
+- **Core**: `packages/core/src/camp-session.ts` `campView` adds `presenceByPlace: Record<placeId, {id, name, school, trust}[]>`,
+  built only by calling `present(s, place)` once per `t.locations` entry. `presence` is the same entries for `s.location`
+  (the same mapper), so its behaviour is unchanged. No save, schema, CSV or art change.
+- **Game**: `screens/camp.ts` draws up to 3 portrait chips (`portrait` + `moodForTrust`, 8.12) above each place button and a
+  `+n` text for the rest. No new copy, no new art. `camp-book.test.ts` is unchanged (its stub view has no field; the screen
+  reads it with `?.`).
+- **Tests**: `packages/tools/src/camp.test.ts` (own place equals `presence`; a character scheduled elsewhere appears under
+  that place; dead, stocked and the player never appear) and `screens/camp-presence.test.ts` (chip per character, cap 3 and `+n`).
+- **Gates**: `npm run smoke:d3` exit 0 (`"ok": true`); `game-shell.ts` 300 lines, untouched.
+- **Tour**: `u6-tour.ts` passed (2 runs, 106 screens); its evidence file moved only in measured memory/texture figures, not committed.
+- **Open**: the chip position (above the button, 40 x 48 px) is untested against painted art in a screenshot.
