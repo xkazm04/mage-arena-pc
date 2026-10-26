@@ -69,7 +69,7 @@ settings.
 
 ### 4.4 PC-native input and settings
 
-- A real cursor and hover states, wheel scrolling, list virtualization for long journals.
+- ~~A real cursor and hover states, wheel scrolling, list virtualization for long journals.~~ Done, section 8.7.
 - ~~Per-device glyphs (keyboard, Xbox, PlayStation) from the input modality already tracked.~~ Done, section 8.5.
 - Settings: resolution, window mode, UI scale, graphics quality tiers above today's single `desktop` profile, audio
   buses, reduced motion; persisted with the save, not only in localStorage.
@@ -218,5 +218,35 @@ settings.
      comes back as a line on the screen, never thrown. Reached by **K** from the camp, visit, calendar, board and journal
      screens, and only while the view carries a book; with the flag off the key does nothing. `game-shell.ts` grew from 297
      to 300 lines (import, member, init line).
-   - **Open:** there is no on-screen button to the book. A camp-screen entry needs `screens/camp.ts` (outside this card's
-     paths); until then K is the way in.
+   - **Closed in 8.7:** the on-screen button to the book landed (`3bf0881`); K stays as it was.
+
+### 8.7 PC-native input remainder and the camp entry to the skill book (2026-10-26)
+
+Two parts, each red then green. Base `main` a5083fd; `game-shell.ts` stays at 300 lines; `save-schema.ts`, `save.ts`,
+`skill-book.pc.json` and `season-service.ts` are untouched.
+
+- **A. Camp entry** (red `0a0e43b`, green `3bf0881`). A `skill-book` tab-style button at (1324, 205, 296x68) in the free
+  gap of the camp header row, between the tabs and Pause. It is drawn only while `hasBook(view)` (the check in
+  `screens/skills.ts`, reused) and does what K does: open the camp on the stack, reset and go to `skills`. The K binding
+  is unchanged.
+- **Flag-off proof.** `camp-book.test.ts` renders `camp()` on a recording canvas (every ui call and the link graphics
+  instructions, serialized) and pins the flag-off output at **3545 bytes, sha256
+  `b8ed3fd02b1e5f3fd716a89f4aa14368dc759a0a89eab6d2f99018a6f9132e95`**, measured on unmodified main a5083fd before the
+  button existed (the pinning commit was green for it and red only for the button test). A second test shows the button
+  exists and routes to `skills` when `season.skills` is present, and is absent when it is not.
+- **B. PC-native input** (red `0757fb3`, green `dde6b44`).
+  - *Wheel.* Outside the arena the wheel presses the screen's own Previous/Next (`wheelPager` in `ui/hover.ts`): journal
+    cards, the cast, skill spells, camp actions, training. Ids are allow-listed so `load-previous` ("Recover previous")
+    is never a pager; a disabled end does nothing; 120 ms throttle. Saves has no paged list. The arena's slot-cycling in
+    `input.ts` is untouched and `input.test.ts` is unedited and green.
+  - *Hover.* The skin choice moved out of the frame loop into `buttonLook`, which is unit-tested for every kind (button,
+    tab, slot, card). The one kind that bypassed hover was the card (the kit has no `card.hover` region): a hovered card
+    now gets a gold outline on top of its focus ring. No kit or atlas change.
+  - *Virtualization.* `cards()` builds one page (`perPage` = 4 rows) through `pageWindow`, which also clamps a stale page
+    into range. `journal-virtual.test.ts`: a 500-entry journal builds the same nodes as a 3-entry one plus at most
+    `perPage` rows (at most 4 `card-` buttons, under 60 display requests in all), and 124 presses of Next reach "Fact 499".
+- **Gate.** `npm run gate` green; `npm run smoke:d3` exits 0. The smoke rewrites `d3-widescreen.json` with arena `hud`
+  text count 35 where the committed file says 34. That is the arena HUD (rival phase gems, `427e315`), not a screen
+  touched here; the file was left as committed.
+- **Still open in 4.4.** Settings persisted *with the save*, not only in localStorage, is the owner's call (it changes the
+  save schema, which does not move without an ask). Resolution options and window mode beyond today's profile likewise.
