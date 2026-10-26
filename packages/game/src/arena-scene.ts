@@ -694,12 +694,13 @@ export class ArenaScene {
         this.threatAlpha = this.dimFor(a.pending.activationId);
         const element = this.clips.element(a);
         const pending = a.pending,
-          s = pending.spell ?? spells.find((s) => s.id === pending.spellId)!;
+          // A Fire or Air windup names a school row, not a Water spell: no Water threat preview to draw for it.
+          s = pending.spell ?? spells.find((s) => s.id === pending.spellId);
         const progress =
             (state.tick - pending.startTick) /
             Math.max(1, pending.releaseTick - pending.startTick),
-          colour = familyColour(s.family);
-        if (s.kind === "cone")
+          colour = familyColour(s?.family ?? "");
+        if (s?.kind === "cone")
           this.sector(
             a.pos,
             pending.aim,
@@ -710,7 +711,7 @@ export class ArenaScene {
             element,
             s.family === "unblockable",
           );
-        else if (s.kind === "ring")
+        else if (s?.kind === "ring")
           this.area(
             a.pos,
             s.rangeM,
@@ -719,7 +720,7 @@ export class ArenaScene {
             element,
             s.family === "unblockable",
           );
-        else if (s.kind === "zone")
+        else if (s?.kind === "zone")
           this.area(
             pending.aim,
             s.radiusM,
@@ -728,7 +729,7 @@ export class ArenaScene {
             element,
             s.family === "unblockable",
           );
-        else if (s.kind === "target") {
+        else if (s?.kind === "target") {
           const target = state.actors.find(
             (candidate) => candidate.id === pending.targetId,
           );
@@ -741,7 +742,7 @@ export class ArenaScene {
               element,
               s.family === "unblockable",
             );
-        } else if (s.kind === "projectile") {
+        } else if (s?.kind === "projectile") {
           for (let i = 0; i < s.count; i++) {
             const angle =
               Math.atan2(pending.aim.y - a.pos.y, pending.aim.x - a.pos.x) +
