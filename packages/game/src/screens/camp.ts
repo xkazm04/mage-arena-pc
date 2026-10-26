@@ -4,6 +4,7 @@ import { request, type SeasonView } from "../season-api.ts";
 import { picture, portrait } from "../ui/artwork.ts";
 import { art } from "../art.ts";
 import { colours } from "../ui/kit.ts";
+import { hasBook } from "./skills.ts";
 import type { GameShell } from "../game-shell.ts";
 
 type Odds = { success: number; caught: number | null } | null;
@@ -87,6 +88,13 @@ export function camp(s: GameShell) {
     { disabled: !allowed },
   );
   s.timeFooter();
+  // Only a season that carries a book has a way in; with none the screen is drawn exactly as before.
+  if (hasBook(v))
+    u.button("skill-book", "Skill book", 1324, 205, 296, 68, () => {
+      s.nav.open("camp");
+      s.nav.reset("skills");
+      s.nav.go("skills");
+    }, { kind: "tab" });
   u.end(`place-${s.selected}`);
 }
 export function visit(s: GameShell) {
