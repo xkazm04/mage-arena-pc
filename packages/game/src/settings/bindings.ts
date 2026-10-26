@@ -329,4 +329,10 @@ export const menuHint = (modality: HintModality, family: PadFamily = "xbox") =>
   modality === "gamepad"
     ? `D-PAD  Navigate     ${padNames(family).confirm.toUpperCase()}  Choose     ${padNames(family).back.toUpperCase()}  Back`
     : "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back";
-export const pauseHint = "ESC / START  Pause";
+export const pauseHint = (
+  modality: HintModality,
+  family: PadFamily = "xbox",
+) =>
+  modality === "gamepad"
+    ? `${padNames(family).menu.toUpperCase()}  Pause`
+    : "ESC / START  Pause";

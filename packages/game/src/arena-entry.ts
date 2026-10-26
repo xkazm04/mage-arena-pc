@@ -154,6 +154,7 @@ export class ArenaGame {
   private loadingCard?: {
     root: Container;
     kicker: BitmapText;
+    pause: BitmapText;
     bar: Graphics;
   };
   /** The next Tiro wave's art, loaded while the intermission card is up. */
@@ -719,8 +720,8 @@ export class ArenaGame {
       );
       const bar = new Graphics();
       root.addChild(bar);
-      u.text(
-        pauseHint,
+      const pause = u.text(
+        "",
         620,
         652,
         22,
@@ -729,11 +730,12 @@ export class ArenaGame {
         false,
         root,
       );
-      this.loadingCard = { root, kicker, bar };
+      this.loadingCard = { root, kicker, pause, bar };
     }
     const card = this.loadingCard,
       { fraction } = this.scene.progress();
     card.root.visible = true;
+    card.pause.text = pauseHint(u.modality, u.padFamily);
     card.kicker.text =
       this.mode === "tiro"
         ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
