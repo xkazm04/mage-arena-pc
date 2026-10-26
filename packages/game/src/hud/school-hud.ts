@@ -202,6 +202,12 @@ export interface MeterView {
   /** The highest mark the value has reached, if any. */
   reached?: MeterMark;
 }
+/** How far `value` sits along a meter's range, 0..1: the one mapping the HUD meter and the feet meter both draw with. */
+export const meterFraction = (
+  view: Pick<MeterView, "min" | "max">,
+  value: number,
+): number =>
+  Math.min(1, Math.max(0, (value - view.min) / Math.max(1, view.max - view.min)));
 /** A threshold's name: the authored one (Heat's Kindled, Blazing), else what it grants (Momentum's are unnamed). */
 function markName(t: Record<string, unknown>): string {
   if (typeof t.name === "string") return t.name;

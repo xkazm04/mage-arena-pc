@@ -5,7 +5,7 @@ import { colours } from "../ui/kit.ts";
 import { frameGraphics } from "../pixi-fixes.ts";
 import { sigil } from "../ui/artwork.ts";
 import type { CanvasUI } from "../ui/ui.ts";
-import type { MeterView } from "./school-hud.ts";
+import { meterFraction, type MeterView } from "./school-hud.ts";
 
 const sweep = { from: Math.PI + 0.3, to: Math.PI * 2 - 0.3 };
 
@@ -27,12 +27,7 @@ export function runeMeter(
   const label = u.text("", cx, y + 94, 22, colour),
     mark = u.text("", cx, y + 120, 20, colours.muted);
   const at = (value: number, view: MeterView) =>
-    sweep.from +
-    (sweep.to - sweep.from) *
-      Math.min(
-        1,
-        Math.max(0, (value - view.min) / Math.max(1, view.max - view.min)),
-      );
+    sweep.from + (sweep.to - sweep.from) * meterFraction(view, value);
   return (view) => {
     label.text = `${view.label}  ${Math.round(view.value)}`;
     mark.text = view.reached
