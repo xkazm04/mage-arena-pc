@@ -2,6 +2,7 @@ import type { ParleyInput } from "@mage/director";
 import { request, type SeasonView } from "../season-api.ts";
 import { portrait } from "../ui/artwork.ts";
 import { colours } from "../ui/kit.ts";
+import { moodForTrust } from "../ui/portrait-mood.ts";
 import type { GameShell } from "../game-shell.ts";
 import { oddsLine } from "./camp.ts";
 
@@ -16,7 +17,7 @@ export function parley(s: GameShell, moment: Moment) {
     `place-${s.view.location}`,
   );
   u.panel(96, 226, 790, 658);
-  portrait(u, moment.target, "neutral", 136, 252, 140, 175);
+  portrait(u, moment.target, moodForTrust(s.view.presence.find((p) => p.id === moment.target)?.trust), 136, 252, 140, 175);
   u.text("WHAT YOU KNOW", 308, 255, 26, colours.gold);
   u.text(moment.cards[0]!.knowing, 308, 300, 28, colours.text, 526);
   moment.cards.forEach((card, i) =>

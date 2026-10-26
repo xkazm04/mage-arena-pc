@@ -2,6 +2,7 @@ import { gameAudio } from "../audio.ts";
 import { backdrop } from "../ui/backdrop.ts";
 import { portrait, sigil } from "../ui/artwork.ts";
 import { colours } from "../ui/kit.ts";
+import { moodForTrust } from "../ui/portrait-mood.ts";
 import { drawKicker } from "../ui/heading.ts";
 import { columns, safeArea } from "../ui/anchors.ts";
 import type { GameShell } from "../game-shell.ts";
@@ -88,7 +89,7 @@ export function pick(s: GameShell) {
     const { x, w } = cards[i]!;
     s.ui.panel(x, 248, w, 626);
     s.ui.icon(ally.school, x + 204, 315, 40);
-    portrait(s.ui, ally.id, "neutral", x + 64, 366, 280, 280);
+    portrait(s.ui, ally.id, moodForTrust(ally.trust), x + 64, 366, 280, 280);
     s.ui.text(ally.name, x + 28, 652, 36, colours.text, 352, true);
     s.ui.text(ally.school.toUpperCase(), x + 28, 752, 26, colours.gold);
     s.ui.button(

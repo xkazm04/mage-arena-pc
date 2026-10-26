@@ -4,6 +4,7 @@ import { request, type SeasonView } from "../season-api.ts";
 import { picture, portrait } from "../ui/artwork.ts";
 import { art } from "../art.ts";
 import { colours } from "../ui/kit.ts";
+import { moodForTrust } from "../ui/portrait-mood.ts";
 import { hasBook } from "./skills.ts";
 import type { GameShell } from "../game-shell.ts";
 
@@ -113,7 +114,7 @@ export function visit(s: GameShell) {
     colours.gold,
   );
   v.presence.slice(0, 4).forEach((person, i) => {
-    portrait(u, person.id, "neutral", 134 + i * 112, 727, 88, 106);
+    portrait(u, person.id, moodForTrust(person.trust), 134 + i * 112, 727, 88, 106);
   });
   if (!v.presence.length)
     u.text("Only the wardstones listen.", 128, 731, 30, colours.muted, 490);
