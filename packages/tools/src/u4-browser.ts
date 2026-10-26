@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import type { CanvasUI } from "../../game/src/ui/ui.ts";
 import type { ArenaGame } from "../../game/src/arena-entry.ts";
+import { writePin, writeRecord } from "./evidence-record.ts";
 import type {
   BodyState,
   Direction,
@@ -388,21 +389,86 @@ try {
     current = undefined;
   }
   assert.deepEqual(errors, []);
-  writeFileSync(
-    join(out, "art-browser.json"),
-    JSON.stringify(
-      {
-        label:
-          "Measured presentation fixtures, not new elemental gameplay or owner feel",
-        runs,
-        faults,
-        errors,
-        screens,
+  // The pin keeps what a content change would mean; every run-varying measurement goes to the ignored perf.json (D3 8.10).
+  type Run = {
+    height: number;
+    clockStates: unknown[];
+    elements: { element: string; animation: Displayed; effects: Effects }[];
+    poseResults: {
+      state: string;
+      direction: string;
+      displayed: { source: string }[];
+    }[];
+    performance: {
+      fps: number;
+      cpuP95Ms: number;
+      effectCpuP95Ms: number;
+      textureBytes: number;
+      uiBytes: number;
+      fontBytes: number;
+      derivedBytes: number;
+      art: Art;
+      samples: { visibleProjectiles: number }[];
+    };
+    afterArena: Art;
+  };
+  type Art = {
+    failed: unknown[];
+    pending: number;
+    diagnostics: unknown[];
+    residentKeys: string[];
+  };
+  type Displayed = {
+    displayed: { source: string; rotation: number }[];
+    diagnostics: unknown[];
+  };
+  type Effects = { dropped: number; budgetMs: number; diagnostics: unknown[] };
+  const sortedKeys = (a: Art) => [...a.residentKeys].sort();
+  const pin = {
+    label:
+      "Measured presentation fixtures, not new elemental gameplay or owner feel",
+    runs: (runs as Run[]).map((r) => ({
+      height: r.height,
+      clockStates: r.clockStates,
+      elements: r.elements.map((e) => ({
+        element: e.element,
+        figures: e.animation.displayed.length,
+        allA10: e.animation.displayed.every((b) => b.source === "A10"),
+        upright: e.animation.displayed.every((b) => b.rotation === 0),
+        effectsDropped: e.effects.dropped,
+        effectsWithinBudget: r.performance.effectCpuP95Ms < e.effects.budgetMs,
+      })),
+      poses: r.poseResults.length,
+      posesAllA10: r.poseResults.every((p) =>
+        p.displayed.every((b) => b.source === "A10"),
+      ),
+      budget: {
+        fpsAtLeast58: r.performance.fps >= 58,
+        cpuP95Below8Ms: r.performance.cpuP95Ms < 8,
+        textureBelow400MiB: r.performance.textureBytes < 400 * 1048576,
       },
-      null,
-      2,
-    ) + "\n",
-  );
+      visibleProjectiles: [
+        ...new Set(r.performance.samples.map((s) => s.visibleProjectiles)),
+      ],
+      textureBytes: r.performance.textureBytes,
+      uiBytes: r.performance.uiBytes,
+      fontBytes: r.performance.fontBytes,
+      derivedBytes: r.performance.derivedBytes,
+      residentKeys: sortedKeys(r.performance.art),
+      afterArenaResidentKeys: sortedKeys(r.afterArena),
+    })),
+    faults: (
+      faults as { fault: string; art: Art; diagnostics: unknown[] }[]
+    ).map((f) => ({
+      fault: f.fault,
+      failed: [...f.art.failed].sort(),
+      diagnostics: f.diagnostics,
+    })),
+    errors,
+    screens,
+  };
+  writePin(join(out, "art-browser.json"), JSON.stringify(pin, null, 2) + "\n");
+  writeRecord(join(out, "perf.json"), { runs, faults });
   console.log(
     JSON.stringify({
       passed: true,
