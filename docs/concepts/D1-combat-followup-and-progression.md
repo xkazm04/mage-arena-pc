@@ -1227,6 +1227,8 @@ prepared bout fail `validatePayload` ("must NOT have additional properties"), so
 additive (optional `opponentMage`, `rankDefence` on the bout schema; `save.ts` already re-prepares and hashes the bout), but it is a season
 save schema change, which needs an ask.
 
+**Save schema (resolves the ask above).** The save schema carries both keys as optional and bounded (`bout.opponentMage { averageRank }` 1..maxSpellRank in halves, `bout.rankDefence { hpPerRankStep }` in (0, 1], extra keys and non-finite values refused); a save without them loads and encodes as before (`8ff325a`, `save-schema.ts`, `skill-book-save.test.ts`).
+
 Commits: `ad63b19` (week profiles to src, `seasonRival` data), `3590414` (season levers and test).
 
 ### D1 section 6 scorecard (goal 2), 2026-10-25
