@@ -96,7 +96,9 @@ const budget = { cpuP95BelowMs: 8, fpsAtLeast: 50 };
 const errors: string[] = [],
   runs: unknown[] = [],
   perfRuns: unknown[] = [],
-  screens: unknown[] = [];
+  screens: unknown[] = [],
+  liveTexts: unknown[] = [];
+const liveScreens = new Set(["arena", "listen"]);
 const browser = await chromium.launch({
   headless: true,
   args: ["--use-angle=d3d11"],
@@ -209,14 +211,18 @@ async function shot(p: Page, name: string, height: number) {
     return;
   const filename = `${height}-${name}.png`;
   await p.screenshot({ path: join(out, "screens", filename) });
+  // A live bout or listening night reads its clock, mana and tallies mid-run, so its texts vary by run (D3 8.9):
+  // the pin keeps their count, perf.json the texts. Only the U4 tour captures these screens.
+  const live = liveScreens.has(s.screen);
   screens.push({
     filename,
     screen: s.screen,
     focus: s.focus,
     kit: s.kit,
     controls: s.buttons.length,
-    texts: s.texts,
+    texts: live ? s.texts.length : s.texts,
   });
+  if (live) liveTexts.push({ filename, texts: s.texts });
 }
 async function pad(
   p: Page,
@@ -774,7 +780,7 @@ try {
         command:
           "npm run build:game && npx tsx packages/tools/src/u3-browser.ts",
         passed: true,
-        perf: "perf.json beside this file (git-ignored): fps, CPU and frame p95, heap, frame and projectile samples, Games end ticks and receipt hashes",
+        perf: "perf.json beside this file (git-ignored): fps, CPU and frame p95, heap, frame and projectile samples, Games end ticks and receipt hashes, texts of live arena and listening screens",
         runs,
         errors,
         screens,
@@ -785,7 +791,7 @@ try {
   );
   writeFileSync(
     join(out, "perf.json"),
-    JSON.stringify({ runs: perfRuns }, null, 2) + "\n",
+    JSON.stringify({ runs: perfRuns, liveTexts }, null, 2) + "\n",
   );
   console.log(
     JSON.stringify({
