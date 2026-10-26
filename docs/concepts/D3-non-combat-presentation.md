@@ -70,7 +70,7 @@ settings.
 ### 4.4 PC-native input and settings
 
 - A real cursor and hover states, wheel scrolling, list virtualization for long journals.
-- Per-device glyphs (keyboard, Xbox, PlayStation) from the input modality already tracked.
+- ~~Per-device glyphs (keyboard, Xbox, PlayStation) from the input modality already tracked.~~ Done, section 8.5.
 - Settings: resolution, window mode, UI scale, graphics quality tiers above today's single `desktop` profile, audio
   buses, reduced motion; persisted with the save, not only in localStorage.
 - Widescreen: layouts anchor to edges instead of a letterboxed 16:9 stage.
@@ -184,3 +184,19 @@ settings.
        `inscription.collar`) and `d7e776a` (`art-fixture.ts` emits `release`, and `smoke:u4` checks the cast effect
        again). The follow-on "Arena checkpoint mismatch" was fixed by `17cb830` (fdlibm, engine-independent trig).
        After `17cb830`, `smoke:u3` (26 screens) and `u4-tour` (88 screens) PASS on main.
+
+5. **Per-device pad glyphs (4.4, 2026-10-26)** (`680c043` tests, `7424c68` implementation).
+   - `settings/pad-glyphs.ts` holds `padFamily(id)`, which reads the `Gamepad.id` string: Microsoft (045e, Xbox, XInput)
+     gives `xbox`, Sony (054c, DualShock, DualSense, "Wireless Controller") gives `playstation`, anything else gives
+     `generic`, which uses the Xbox names because the standard mapping is Xbox-shaped. Xbox is checked first, since
+     "Xbox Wireless Controller" also contains the Sony-style name.
+   - `CanvasUI` keeps `padFamily` beside `modality`, set from the connected standard pad on every poll, so a pad swapped
+     mid-session changes the copy the next time a hint renders. `Pad` gained an optional `id`.
+   - `hudHint`, `settingsLines` and `menuHint` take the family (default `xbox`). PlayStation copy names Cross, Circle,
+     R2, L2, L1 and R1. The arena HUD, the pause menu's settings screen and footer, and the Controls screen pass
+     `u.padFamily`. Keyboard and mouse copy and the Xbox copy are byte-identical, so no existing test moved.
+   - Text only: no glyph art and no layout change. Tests: `settings/pad-glyphs.test.ts` (DualSense, DualShock 4, Xbox
+     Series, Xbox 360 XInput and an unknown id; a PlayStation, Xbox and keyboard case per hint function).
+   - Not changed: `pauseHint` ("ESC / START  Pause", read in `arena-entry.ts`) is a fixed string that still says Start;
+     `parley.ts` has no pad button copy. Also, the pause button name (`menu`) is defined but unused until `arena-entry.ts`
+     is in scope.
