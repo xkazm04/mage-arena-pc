@@ -130,7 +130,8 @@ settings.
    school. `@mage/core/arena` does not export `slotSpell`, `balancedSpell` or `identityNumber`, so the HUD mirrors
    them; a test pins the mirror to `arena/schools.ts`.
    - Not in this slice:
-     - the meter at the opponent's feet (arena scene);
+     - ~~the meter at the opponent's feet (arena scene)~~ landed in 8.9 (`2b8b847` red tests, `67d2b1b` meter, test
+       `packages/game/src/hud/feet-rune-meter.test.ts`);
      - the bolt + 4 composition screen for practice entry (W8 lane P);
      - the rival's phase gems.
    - Landed after the slice (`4635100`, test `packages/game/src/input.test.ts`): Digit5, the wheel and the bumpers reach
@@ -274,3 +275,75 @@ Base `main` 955337b. Settings with the save stays the owner's call and is untouc
 - **Still open.** Weather or season is not in the view. The calendar draws a fixed 6x7 grid; the Games and Trial schedule
   is constant-derived, not read from the tables, so a season that changes `daysPerWeek` would need the view to carry it.
   Settings persisted with the save (4.4) remains the owner's call.
+
+### 8.9 The opponent's rune meter at its feet and smoke evidence hygiene (2026-10-26)
+
+Base `main` e8d6e77. Out of scope and not touched: settings with the save, resolution and window mode, the Lab question,
+the font, `audio*`, the canonical CSVs, 4.5.
+
+- **Feet meter** (red `2b8b847`, green `67d2b1b`; test `packages/game/src/hud/feet-rune-meter.test.ts`).
+  - `189e439` (2026-10-24) already drew an arc under a Fire or Air opponent, with geometry of its own: 24.3 x 7.3 px at
+    1080p and a 13.5 px ink stroke. The target ring is 0.75 m = 16.9 x 13.8 px, so the arc crossed it twice, and the
+    ground layer draws over the ring sigils.
+  - `hud/feet-rune-meter.ts` replaces that drawing. `opponentMeter` is the player HUD's own `resourceMeter` view
+    (MeterView) for a living opposing Fire or Air actor. There is none for Water (Flow keeps its panel), none for the
+    player's side and none for the defeated. `feetMeterShape` lays it out as a ground-plane arc across the front of the
+    feet (160 to 20 ground degrees through `groundToScreen`). Its radius clears the target ring or the 1.5x body
+    circle, whichever is wider, by 0.08 m plus the larger of half the track and a mark: 1.05 m, 23.6 x 19.4 px at 1080p.
+  - The drawing follows the HUD meter: the edge track on an ink underlay, the school colour fill (a steady brighter
+    fill while locked, never a pulse) and the HUD's gold and panel diamonds at the identity's marks (Heat 50/80,
+    Momentum 40/80).
+  - `school-hud.ts` `meterFraction` is the one value-to-arc mapping. `rune-meter.ts` calls it in place of the same
+    inline expression, so the player HUD meter is unchanged and the two meters cannot drift.
+  - The scene draws the meter on its ground layer, under every figure, and clears it every frame. `targetRingM` is the
+    radius the scene passes to the `target` sigil. `feet-meter.ts` and its test are no longer used by the scene.
+  - Tests cover: Fire and Air marks equal to `identityValue`; none for Water or the player; the meter follows position
+    and value frame to frame; it clears the ring and the body at 1080p, 1440p and 21:9; a defeated opponent draws nothing.
+- **Fix found on the way** (`a20dd3f`). `ArenaScene.render` looked a pending Fire or Air cast up in the Water spell
+  table and threw "reading 'family'" on every frame of the windup, which aborted the rest of that frame. The lookup is
+  now optional: a school windup draws no Water threat preview. Whether Fire and Air windups get their own preview is
+  open.
+- **Screens** (`a27d804`). `smoke:d3` opens the Lab against a Fire, then an Air Mage AI (player on the same school),
+  asserts both schools, no HUD outside the viewport and no page errors, and saves `screens/1080p-arena-fire.png` and
+  `1080p-arena-air.png` (git-ignored). `d3-widescreen.json` gains a `schoolBouts` entry. The arena `hud` count stays
+  35 -> 35, because the meter is ground Graphics, not HUD text.
+- **Smoke hygiene** (`3469d09`, `b1c91ad`, `af72eb2`, `e4ada0f`, `9be0852`). Noise set: two runs of each smoke on e8d6e77, diffed key
+  by key.
+  - `smoke:u3`, per run: `fps`, `cpuP95`, `frameP95Ms`, `browserHeap.*`, the order of
+    `textures.art.residentKeys` (same set), the day-7 Games `checkpoints[].tick` (5430 vs 5404) and its receipt
+    `hash`. That bout runs live until the harness pauses it. `frames` and `visibleProjectileSamples` did not differ
+    but are measurements.
+  - U4 tour copy (`MAGE_EVIDENCE=U4`) adds the texts of the live arena and listening screens (mana, the rune timer,
+    "n moments exposed to the Vigil").
+  - `smoke:d3`: none. Its two runs and the pin were byte-identical. The pin still showed as modified because the smoke
+    wrote LF over a CRLF checkout (`core.autocrlf=true`), which git 2.43 reports as "needs update" though the blob
+    hash matches.
+- **Where the noise goes.** `perf.json` beside each pin: `docs/waves/U3-evidence/perf.json` and
+  `docs/waves/U4-evidence/tour/perf.json`. Each folder has a nested `.gitignore`; the root `.gitignore` is untouched.
+  The pin keeps:
+  - the budget as booleans (CPU p95 below 8 ms, fps at least 50);
+  - the asserted projectile count, the texture bytes and the sorted resident keys;
+  - checkpoint day and result, and every receipt (only games receipts drop their hash);
+  - the text count of live screens.
+
+  `evidence-record.ts` `writePin` rewrites a pin only when its content changes, line endings aside. Readers checked:
+  `u4-audit.ts` reads census, replay-save and audit, not the tour pin; `smoke/status.ts`, `u3-gallery.ts` and
+  `u4-gallery.ts` read the presence, timestamp or `filename` only.
+- **Two-run proof** (HEAD 9be0852, pins freshly checked out as CRLF, `git status --porcelain` after each command):
+
+  ```text
+  HEAD 9be0852
+  $ git status --porcelain   (before: empty)
+  pass 1: npm run smoke:u3 exit 0
+  $ git status --porcelain   (empty)
+  pass 1: npm run smoke:d3 exit 0
+  $ git status --porcelain   (empty)
+  pass 1: npx tsx packages/tools/src/u4-tour.ts exit 0
+  $ git status --porcelain   (empty)
+  pass 2: npm run smoke:u3 exit 0
+  $ git status --porcelain   (empty)
+  pass 2: npm run smoke:d3 exit 0
+  $ git status --porcelain   (empty)
+  pass 2: npx tsx packages/tools/src/u4-tour.ts exit 0
+  $ git status --porcelain   (empty)
+  ```
