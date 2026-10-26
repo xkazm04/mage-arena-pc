@@ -82,7 +82,7 @@ settings.
 - The camp map built on T4-A: a painted map with time-of-day lighting layers, sigil markers, plaque labels and lantern
   and smoke particles. These are the same Pixi lighting and particle techniques D2's slice proves.
 - The HUD built on T3-A: aged-silver slot frames, a curved rune meter, rank pips and the rival's phase gems.
-- Screen transitions, button motion and sound, a consistent kicker and heading system.
+- Screen transitions, button motion and sound, ~~a consistent kicker and heading system~~ (landed in 8.11; every adopted site is listed there).
 - One palette and type system: retire `interface-style-v1.json`, settle the body font.
 - Move "Combat Feel Lab" and "The proving ground" behind a developer menu.
 
@@ -389,4 +389,59 @@ bout, the canonical CSVs, the font.
   pass 2: npm run smoke:u4 exit 0
   $ git status --porcelain   (empty)
   ```
-- **4.5 kicker and heading system**: not started. It was optional and the session stopped after the two items above.
+- **4.5 kicker and heading system**: landed in 8.11.
+
+### 8.11 One kicker and heading module (2026-10-26)
+
+Base `main` d6969ec. Out of scope and not touched: the font (`ui/fonts.ts`), the Fire/Air windup preview, settings with the
+save, resolution, the Lab question, `audio*`, the canonical CSVs, the title-screen and camp-map painted art.
+
+- **Commits**: `bcfb94a1` red tests, `5e72c917` module and adoption, `efca55fb` `context-map.json`. No re-pin was needed.
+- **Module** `packages/game/src/ui/heading.ts`: `headingSpec` (separator `"  /  "`, kicker variants `screen` 24 gold at
+  (96,57), `tag` 16, `card` 24 gold, `note` 24 muted at (112,976); title 58 at (96,99) width 1550; rule at y 183, width 1728),
+  `kickerText(segments)` (the one casing rule: upper case; the one separator), `drawKicker(ui, segments, variant, {x,y,colour})`
+  and `drawHeading(ui, {title, kicker, variant})`. The font is whatever `ui.text` uses today.
+- **Grep before** (`grep -nE "[\"'`][A-Z][A-Z0-9 &:]*\s+/\s+"` over `screens/*.ts`, `game-shell.ts`, `arena-entry.ts`, tests
+  excluded): **15 lines**, and 8 lines naming `kicker` (`arena-entry.ts` 4, `game-shell.ts` 1, `chrome.ts` 3).
+  Joined literals: art-review (1), chrome campHeader, compose, controls, listen, menu (title note), parley (2), pause (2),
+  saves, skills, training, trial, arena-entry loading card. Calendar tags were the bare literals "GAMES" and "TRIAL".
+  The title menu in `game-shell.ts` has no kicker; its "WATER  /  THE FIRST TWO WEEKS" line is in `screens/menu.ts`.
+- **Grep after**: 0 lines (the source-scan test in `heading.test.ts` asserts it).
+- **Adopted sites**: `scene()` in `chrome.ts` (now `kicker: readonly string[]`, `GameShell.scene` likewise) and all its
+  callers: art-review (4), chapter, campHeader, compose, controls, journal (cast-detail), listen, menu `pick`, parley (3),
+  pause (pause, settings, audio-settings), saves, skills, training, trial. Plus: calendar `GAMES` / `TRIAL` through
+  `drawKicker(..., "tag", {colour})` (water / earth), the arena loading-card text (`kickerText`, in `arena-entry.ts`), and the
+  title-menu note (`drawKicker(..., "note")`). One visible text change: the art-review map fixture kicker had a single-space
+  separator and now uses the shared one (a dev fixture).
+- **Red first** (`bcfb94a1`, `npx vitest run packages/game/src/ui/heading.test.ts`):
+
+  ```text
+  FAIL  packages/game/src/ui/heading.test.ts
+  Error: Cannot find module '/packages/game/src/ui/heading.ts' imported from .../heading.test.ts
+  Test Files  1 failed (1)    Tests  no tests
+  ```
+
+  The source-scan assertion on the same tree found 15 hits (the "Grep before" figure). Green, same file: 7 tests: separator and
+  casing from segments; screen heading at today's pixels; tag at 16 in the given school colour; scene() kickers for
+  pause/settings, campHeader and parley equal to the spec strings; the source scan.
+- **Pins**: `calendar.test.ts` render pin (byte count and sha256 of every ui call) is unchanged and green, so the tags and the
+  whole screen draw identically. `npm run smoke:d3` exit 0 with no pin diff; the U3 and U4 tour pins did not change.
+- **Gates**: `npm run build` clean, `npm run lint` clean, `npm run test` 120 files / 959 tests passed, `npm run check:design`
+  ok. `game-shell.ts` is 300 lines before and after (`wc -l`); the largest screen file is `parley.ts` at 246.
+- **Screens**: 1080 and 1440 tour shots of pause, settings, camp map and season calendar (`docs/waves/U4-evidence/tour/screens/`,
+  ignored by git) show the kicker at (96,57) and the title and rule in the old places; checked settings at 1440 and the calendar
+  at 1080 by eye. The calendar tags sit where they did.
+- **Two-run proof** (HEAD `efca55fb`, tree clean before, `git status --porcelain` after each command, every line empty):
+
+  ```text
+  $ git status --porcelain   (empty)
+  pass 1: npx tsx packages/tools/src/u4-tour.ts exit 0
+  $ git status --porcelain   (empty)
+  pass 1: npm run smoke:u3 exit 0
+  $ git status --porcelain   (empty)
+  pass 2: npx tsx packages/tools/src/u4-tour.ts exit 0
+  $ git status --porcelain   (empty)
+  pass 2: npm run smoke:u3 exit 0
+  $ git status --porcelain   (empty)
+  ```
+- **Left for the owner** (rest of 4.5): title-screen and camp-map painted art, transitions, the body font.
