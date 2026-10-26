@@ -5,6 +5,7 @@ import { join, resolve } from "node:path";
 import { startPreview, type Preview } from "./smoke/preview.ts";
 import { artSettled, click, screen, ui, uiReady } from "./smoke/driver.ts";
 import { outsideViewport } from "./smoke/checks.ts";
+import { writePin } from "./evidence-record.ts";
 
 /**
  * D3 step 3 proof: the camp screen at 1080p, 1440p and 21:9 has no letterbox bars and no text outside the viewport,
@@ -217,10 +218,8 @@ try {
   results.push({ persisted: after, reloadedScale: reloaded.layout.scale });
   await context.close();
   assert.deepEqual(errors, [], "No page errors");
-  writeFileSync(
-    join(out, "d3-widescreen.json"),
-    JSON.stringify({ results }, null, 2),
-  );
+  // Two runs agree on every value (D3 8.9); writing only on a change keeps a CRLF checkout's pin untouched.
+  writePin(join(out, "d3-widescreen.json"), JSON.stringify({ results }, null, 2));
   console.log(JSON.stringify({ ok: true, results }, null, 2));
 } catch (error) {
   if (current) {

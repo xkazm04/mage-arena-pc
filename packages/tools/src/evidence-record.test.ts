@@ -1,8 +1,8 @@
 import { afterAll, describe, expect, it } from 'vitest';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { resolveWave, stampCommand } from './evidence-record.ts';
+import { resolveWave, stampCommand, writePin } from './evidence-record.ts';
 import { replaySaveRecord, runReplaySave } from './replay-save.ts';
 import { schoolCensus } from './school-census.ts';
 import { fixtureService, removeFixtureDirs } from './season-fixtures.ts';
@@ -18,6 +18,21 @@ describe('evidence-record kernel', () => {
   it('refuses a wave with no evidence directory, or a path-shaped id', () => {
     expect(() => resolveWave('X9')).toThrow(/Invalid evidence destination/);
     expect(() => resolveWave('../W8')).toThrow(/Invalid evidence destination/);
+  });
+  it('rewrites a pin only when a value moved, never for line endings alone', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'mage-pin-'));
+    made.push(dir);
+    const path = join(dir, 'pin.json'),
+      lf = (a: number) => JSON.stringify({ a }, null, 2) + '\n',
+      crlf = lf(1).replace(/\n/g, '\r\n');
+    expect(writePin(path, lf(1))).toBe(true);
+    writeFileSync(path, crlf);
+    const before = statSync(path).mtimeMs;
+    expect(writePin(path, lf(1))).toBe(false);
+    expect(readFileSync(path, 'utf8')).toBe(crlf);
+    expect(statSync(path).mtimeMs).toBe(before);
+    expect(writePin(path, lf(2))).toBe(true);
+    expect(readFileSync(path, 'utf8')).toBe(lf(2));
   });
   it('stamps the command that reproduces the record', async () => {
     expect(stampCommand('replay-save.ts', ['--wave', 'CF2'])).toBe('npx tsx packages/tools/src/replay-save.ts --wave CF2');

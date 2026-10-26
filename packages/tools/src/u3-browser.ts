@@ -14,6 +14,7 @@ import {
 import { idleInput, type InputFrame } from "@mage/core/arena";
 import { hash } from "@mage/director";
 import { SeasonPolicy } from "./season-policy.ts";
+import { writePin } from "./evidence-record.ts";
 import type { SeasonView } from "../../game/src/season-api.ts";
 import type { CanvasUI } from "../../game/src/ui/ui.ts";
 import type { ArenaGame } from "../../game/src/arena-entry.ts";
@@ -90,8 +91,11 @@ server.stdout.on("data", (b) => {
 server.stderr.on("data", (b) => {
   serverLog += String(b);
 });
+/** The frame budget the projectile field must hold; the pin keeps pass/fail, perf.json the measurement. */
+const budget = { cpuP95BelowMs: 8, fpsAtLeast: 50 };
 const errors: string[] = [],
   runs: unknown[] = [],
+  perfRuns: unknown[] = [],
   screens: unknown[] = [];
 const browser = await chromium.launch({
   headless: true,
@@ -565,8 +569,11 @@ try {
       fps =
         1000 / (perf.frames.reduce((a, b) => a + b, 0) / perf.frames.length);
     assert(counts.every((n) => n === 100));
-    assert(cpuP95 < 8, `HUD and 100 projectiles CPU p95 ${cpuP95}`);
-    assert(fps >= 50, `Frame rate ${fps}`);
+    assert(
+      cpuP95 < budget.cpuP95BelowMs,
+      `HUD and 100 projectiles CPU p95 ${cpuP95}`,
+    );
+    assert(fps >= budget.fpsAtLeast, `Frame rate ${fps}`);
     await shot(p, "arena-projectile-field", height);
     await p.keyboard.press("Escape");
     await screen(p, "pause");
@@ -617,7 +624,7 @@ try {
     await click(p, "parley-speak", "parley-result");
     await shot(p, "parley-result", height);
     await click(p, "back", "camp");
-    const checkpoints: unknown[] = [];
+    const checkpoints: { day: number; result: unknown; tick: number }[] = [];
     while ((await view(p)).day.day <= 14) {
       const v = await view(p),
         day = v.day.day;
@@ -703,20 +710,39 @@ try {
     await screen(p, "chapter");
     await shot(p, "chapter-results", height);
     await saveLoad(p);
+    const receipts = (await view(p)).season.receipts;
+    // Run-varying values (the noise set, D3 8.9) go to the untracked perf.json; the pin keeps what two runs agree on.
+    // The day-7 Games bout runs live until the harness pauses it, so its end tick and receipt hash vary by run.
+    perfRuns.push({
+      height,
+      fps,
+      cpuP95,
+      frames: perf.frames.length,
+      visibleProjectileSamples: counts,
+      frameP95Ms: perf.frames.toSorted((a, b) => a - b)[
+        Math.floor(perf.frames.length * 0.95)
+      ],
+      browserHeap: heap,
+      checkpointTicks: checkpoints.map(({ day, tick }) => ({ day, tick })),
+      gamesReceiptHashes: receipts
+        .filter((r) => r.kind === "games")
+        .map(({ id, hash }) => ({ id, hash })),
+    });
     runs.push({
       height,
       pointerHits,
       performance: {
-        fps,
-        cpuP95,
-        frames: perf.frames.length,
-        visibleProjectileSamples: counts,
-        frameP95Ms: perf.frames.toSorted((a, b) => a - b)[
-          Math.floor(perf.frames.length * 0.95)
-        ],
-        browserHeap: heap,
+        budget: {
+          ...budget,
+          cpuP95Passed: cpuP95 < budget.cpuP95BelowMs,
+          fpsPassed: fps >= budget.fpsAtLeast,
+        },
+        visibleProjectiles: { samples: counts.length, each: 100 },
         textures: {
-          art: textureSnapshot.art,
+          art: {
+            ...textureSnapshot.art,
+            residentKeys: textureSnapshot.art.residentKeys.toSorted(),
+          },
           uiBytes: textureSnapshot.uiTextureBytes,
           fontBytes: textureSnapshot.fontTextureBytes,
           arenaDerivedBytes: arenaTextureSnapshot.derivedTextureBytes,
@@ -729,15 +755,17 @@ try {
       },
       gamepad:
         "standard browser API emulation; not a physical controller measurement",
-      checkpoints,
-      receipts: (await view(p)).season.receipts,
+      checkpoints: checkpoints.map(({ day, result }) => ({ day, result })),
+      receipts: receipts.map(({ hash, ...r }) =>
+        r.kind === "games" ? r : { ...r, hash },
+      ),
       day: (await view(p)).day.day,
     });
     await context.close();
     current = undefined;
   }
   assert.deepEqual(errors, []);
-  writeFileSync(
+  writePin(
     join(out, "browser.json"),
     JSON.stringify(
       {
@@ -746,6 +774,7 @@ try {
         command:
           "npm run build:game && npx tsx packages/tools/src/u3-browser.ts",
         passed: true,
+        perf: "perf.json beside this file (git-ignored): fps, CPU and frame p95, heap, frame and projectile samples, Games end ticks and receipt hashes",
         runs,
         errors,
         screens,
@@ -753,6 +782,10 @@ try {
       null,
       2,
     ) + "\n",
+  );
+  writeFileSync(
+    join(out, "perf.json"),
+    JSON.stringify({ runs: perfRuns }, null, 2) + "\n",
   );
   console.log(
     JSON.stringify({
