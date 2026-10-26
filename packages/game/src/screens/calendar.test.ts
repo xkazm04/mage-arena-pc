@@ -50,5 +50,6 @@ describe("the living calendar (D3 4.3)", () => {
     expect(render().texts).toContain("Later weeks await the next chapter.");
   });
 });
-/** Taken on main 955337b, before the calendar was made living. Fixture: day 9 (week 2). */
-const BYTES = 4346, HASH = "c84cc0b57d87453e6f9b8fb5c7d0c4ae7472eb08da2d1c9d0d51a8e82fba527a";
+/** Fixture: day 9 (week 2). Moved from 4346 bytes, sha256 c84cc0b57d87453e6f9b8fb5c7d0c4ae7472eb08da2d1c9d0d51a8e82fba527a
+ * (main 955337b) by the living calendar. */
+const BYTES = 5175, HASH = "813da4fb5c29a0a21ca1d3172f7b1ef9e4cb91376224f26016860891b88c9486";

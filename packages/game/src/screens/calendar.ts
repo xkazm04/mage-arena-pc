@@ -1,5 +1,9 @@
+import { maxEnemyLevel } from "@mage/core/arena";
 import { colours } from "../ui/kit.ts";
 import type { GameShell } from "../game-shell.ts";
+
+/** The season's rhythm, as `tables.season` carries it: seven days a week, Games on the seventh, the Trial the eve before. */
+const GAMES_DAY = 7;
 
 export function calendar(s: GameShell) {
   s.campHeader("calendar", "One season. Six Games.");
@@ -9,7 +13,15 @@ export function calendar(s: GameShell) {
   u.text("THE ROAD THROUGH THE COLLAR", 132, 336, 26, colours.gold);
   for (let week = 0; week < 6; week++) {
     const y = 392 + week * 70;
-    u.text(`WEEK ${week + 1}`, 132, y + 16, 26, colours.muted);
+    const state = week + 1 < v.day.week ? "PAST" : week + 1 === v.day.week ? "NOW" : "AHEAD";
+    u.text(`WEEK ${week + 1}`, 132, y + 8, 26, state === "NOW" ? colours.gold : colours.muted);
+    u.text(
+      `LEVEL ${Math.min(maxEnemyLevel, week + 1)} · ${state}`,
+      132,
+      y + 38,
+      18,
+      state === "AHEAD" ? colours.text : colours.muted,
+    );
     for (let day = 0; day < 7; day++) {
       const date = week * 7 + day + 1,
         x = 315 + day * 132;
@@ -25,6 +37,9 @@ export function calendar(s: GameShell) {
             ? colours.muted
             : colours.text,
       );
+      if (date === v.day.day) u.text("TODAY", x + 56, y + 14, 16, colours.gold);
+      if (date % GAMES_DAY === 0) u.text("GAMES", x + 16, y + 42, 16, colours.water);
+      else if (date % GAMES_DAY === GAMES_DAY - 1) u.text("TRIAL", x + 16, y + 42, 16, colours.earth);
       if (date % 7 === 0) u.icon("water", x + 85, y + 29, 14);
       else if (date % 7 === 6) u.icon("earth", x + 85, y + 29, 14);
     }
