@@ -200,3 +200,23 @@ settings.
    - Not changed: `pauseHint` ("ESC / START  Pause", read in `arena-entry.ts`) is a fixed string that still says Start;
      `parley.ts` has no pad button copy. Also, the pause button name (`menu`) is defined but unused until `arena-entry.ts`
      is in scope.
+
+6. **Skill-book screen (4.3 progression screens, 2026-10-26)** (`4748200` red tests, `ab641b6` director, `811abe7` screen).
+   - **Director widening, Athena's ruling 2026-10-26 09:32Z** (the game sees the season only through `season-service.ts`):
+     `view().season.skills` (school, points, earned, taught, `trustNeeded`, a row per known spell with rank and next cost,
+     a row per elder with trust, their signature and the core's own refusal text) and two `SeasonCommand` cases,
+     `buy-rank {key}` and `take-lesson {teacher}`. They call `buySeasonRank` and `takeSeasonLesson`, are checked by the
+     same envelope check as the other commands (exact keys, string fields) and bump the revision. Reversible; the save
+     schema, `save.ts` and `skill-book.pc.json` are untouched.
+   - **Flag-off proof.** The `skills` key is present only while `progress.skills` is, so with the flag off it is absent, not
+     `null`: a `null` would add `"skills":null` to the JSON and break byte identity (a deviation from the ruling's
+     `?? null`, taken for the stricter hard limit). `season-service.test.ts` pins the flag-off view JSON of a fresh season
+     (7629 bytes, sha256 `936ceedc...6ca8b`, taken on main before the change) and shows both new commands refused with
+     `No one teaches spells yet.`, revision unmoved.
+   - **The screen** (`screens/skills.ts`, id `skills`, a plain router screen): six spells a page with rank, next cost and
+     "not enough yet", the elders with `Trust n of N` and a lesson button whose subtitle is the director's refusal. A refusal
+     comes back as a line on the screen, never thrown. Reached by **K** from the camp, visit, calendar, board and journal
+     screens, and only while the view carries a book; with the flag off the key does nothing. `game-shell.ts` grew from 297
+     to 300 lines (import, member, init line).
+   - **Open:** there is no on-screen button to the book. A camp-screen entry needs `screens/camp.ts` (outside this card's
+     paths); until then K is the way in.
