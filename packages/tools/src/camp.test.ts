@@ -308,7 +308,7 @@ describe("camp view presence by place (D3 4.3)", () => {
     const [a, b] = before.filter((id) => id !== s.camp.player);
     expect(a && b).toBeTruthy();
     s.camp.characters[a!].life = "Dead";
-    s.camp.characters[b!].stocks = 2;
+    s.camp.characters[b!].stocks = true;
     const after = all(campView(t, s));
     expect(after).not.toContain(a);
     expect(after).not.toContain(b);

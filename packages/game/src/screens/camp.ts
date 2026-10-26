@@ -8,6 +8,8 @@ import { moodForTrust } from "../ui/portrait-mood.ts";
 import { hasBook } from "./skills.ts";
 import type { GameShell } from "../game-shell.ts";
 
+/** Portrait chips drawn above a place button on the camp map; the rest are a +n marker. */
+const CHIPS = 3;
 type Odds = { success: number; caught: number | null } | null;
 const percent = (p: number) => `${Math.round(p * 100)}%`;
 /** A contest's chance, and for a scheme its stocks risk, as the subtitle shows it; empty for an uncontested act. */
@@ -67,6 +69,11 @@ export function camp(s: GameShell) {
         tooltip: p.description,
       },
     );
+    const here = v.presenceByPlace?.[p.id] ?? [];
+    here.slice(0, CHIPS).forEach((person, i) =>
+      portrait(u, person.id, moodForTrust(person.trust), x + 6 + i * 44, y - 54, 40, 48),
+    );
+    if (here.length > CHIPS) u.text(`+${here.length - CHIPS}`, x + 6 + CHIPS * 44, y - 40, 22, colours.gold);
   }
   const p = v.places.find((p) => p.id === s.selected) ?? v.places[0]!;
   u.panel(96, 806, 1728, 72, "button.normal");

@@ -402,6 +402,12 @@ export function campActions(t: Tables, s: CampSession) {
 export function campView(t: Tables, s: CampSession) {
   const player = s.camp.characters[s.camp.player],
     day = calendar(t, s.camp.day);
+  const presentEntry = (id: string) => ({
+    id,
+    name: s.camp.characters[id].name,
+    school: s.camp.characters[id].school,
+    trust: s.camp.trust[`${id}>${s.camp.player}`],
+  });
   return {
     revision: s.revision,
     day,
@@ -431,12 +437,12 @@ export function campView(t: Tables, s: CampSession) {
       cost: travelCost(s.location, p.id),
       isOpen: placeOpen(p, s.hour),
     })),
-    presence: present(s).map((id) => ({
-      id,
-      name: s.camp.characters[id].name,
-      school: s.camp.characters[id].school,
-      trust: s.camp.trust[`${id}>${s.camp.player}`],
-    })),
+    presence: present(s).map(presentEntry),
+    /** Read-only: who is at each place this slot, derived only through present(); `presence` is the entry for s.location. */
+    presenceByPlace: Object.fromEntries(t.locations.map((p) => [p.id, present(s, p.id).map(presentEntry)])) as Record<
+      string,
+      ReturnType<typeof presentEntry>[]
+    >,
     actions:
       s.listening || s.nightFinished || s.camp.ended
         ? []
