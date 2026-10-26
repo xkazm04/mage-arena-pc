@@ -15,8 +15,8 @@ import { SeasonService, type SeasonCommand } from './season-service.ts';
 // buy a rank and take a lesson. A season without a book is byte-for-byte what it was.
 const presence: Record<string, string[]> = campPlay.presence;
 const t = loadTables(), dirs: string[] = [];
-/** The flag-off view JSON as main produced it before the door: its length and sha256. */
-const flagOffView = { length: 7629, sha256: '936ceedcfd1be290ebe4f3f16a58717df8496508e57af5479570645179f6ca8b' };
+/** The flag-off view JSON: its length and sha256. Re-pinned 2026-10-26 (D3 4.3): campView gained presenceByPlace; the skills key is still absent. */
+const flagOffView = { length: 8663, sha256: '28c1ba8bd79175262f5d3c365a369a435b29ff7abd0b7c48e0962c8857e07808' };
 afterAll(() => { for (const d of dirs.splice(0)) rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 }); });
 function service(flag: boolean) {
   const dir = mkdtempSync(join(tmpdir(), 'mage-season-')); dirs.push(dir);
