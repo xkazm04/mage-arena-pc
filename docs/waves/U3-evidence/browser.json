@@ -2,82 +2,21 @@
   "label": "Measured headless browser, native pointer/keyboard and ordinary deterministic input policy; human feel unmeasured",
   "command": "npm run build:game && npx tsx packages/tools/src/u3-browser.ts",
   "passed": true,
+  "perf": "perf.json beside this file (git-ignored): fps, CPU and frame p95, heap, frame and projectile samples, Games end ticks and receipt hashes",
   "runs": [
     {
       "height": 1080,
       "pointerHits": 8,
       "performance": {
-        "fps": 60.003000150007495,
-        "cpuP95": 1.4000000357627869,
-        "frames": 360,
-        "visibleProjectileSamples": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
-        ],
-        "frameP95Ms": 16.799999999999272,
-        "browserHeap": {
-          "usedSize": 22931752,
-          "totalSize": 81989632,
-          "embedderHeapUsedSize": 98885928,
-          "backingStorageSize": 2117189
+        "budget": {
+          "cpuP95BelowMs": 8,
+          "fpsAtLeast": 50,
+          "cpuP95Passed": true,
+          "fpsPassed": true
+        },
+        "visibleProjectiles": {
+          "samples": 60,
+          "each": 100
         },
         "textures": {
           "art": {
@@ -88,80 +27,80 @@
             "pending": 0,
             "diagnostics": [],
             "residentKeys": [
-              "a13.glyph.water",
-              "a13.glyph.fire",
-              "a13.glyph.earth",
-              "a13.glyph.air",
-              "portrait.cassia.neutral",
-              "place.door",
-              "portrait-page.cassia",
-              "portrait-page.brennic",
-              "portrait-page.garran",
-              "portrait-page.iskar",
-              "camp.day.1920",
-              "portrait-page.ruadh",
-              "portrait-page.nysa",
-              "portrait-page.senna",
-              "place.commons",
-              "story.ward-seam",
-              "portrait-page.sadruba",
-              "portrait-page.ophel",
-              "portrait-page.kesh",
-              "portrait-page.quill",
-              "portrait-page.lio",
-              "portrait-page.fenna",
-              "portrait-page.septima",
-              "portrait-page.venno",
-              "portrait-page.corvo",
-              "portrait.nysa.neutral",
-              "place.yard",
-              "a13.page.inscription.collar",
-              "arena-moonlit-2560",
-              "a8.page.barrier",
-              "a8.page.water",
-              "a13.page.warning.unblockable",
-              "a13.page.selection",
-              "a13.page.warning.normal",
-              "a13.page.target",
-              "a13.page.ward.start",
-              "a13.mask.arc-rank.png",
-              "a13.page.absorb.window",
-              "a13.page.ward.release",
-              "a13.page.status.slowed",
-              "a13.page.status.rooted",
-              "a13.page.absorb.contact",
-              "a13.mask.angular-rank.png",
-              "a13.page.cast.water.start",
-              "a13.page.absorb.perfect",
-              "a13.page.status.shielded",
-              "a13.mask.fan-rank.png",
-              "a13.page.ward.hold",
-              "a13.mask.linear-rank.png",
-              "a13.page.cast.water.release",
-              "a13.page.threat.water.line",
               "a10.packed.a14-cassia-ne-reaction",
-              "a13.page.cast.water.hold",
-              "a13.page.threat.water.ring",
               "a10.packed.a14-cassia-se-reaction",
-              "a10.packed.cassia",
-              "a13.page.threat.water.cone",
-              "a10.packed.a14-netter-ne-reaction",
-              "a10.packed.a14-shieldman-ne-combat",
-              "a10.packed.a14-cinder_hound-se-collapse",
-              "a10.packed.a14-shieldman-se-reaction",
-              "a10.packed.a14-netter-se-reaction",
-              "a10.packed.a14-cinder_hound-ne-hits",
               "a10.packed.a14-cinder_hound-ne-collapse",
               "a10.packed.a14-cinder_hound-ne-defense",
-              "a10.packed.a14-cinder_hound-se-defense",
-              "a10.packed.netter",
-              "a10.packed.shieldman",
-              "a10.packed.a14-shieldman-ne-reaction",
+              "a10.packed.a14-cinder_hound-ne-hits",
               "a10.packed.a14-cinder_hound-ne-motion",
+              "a10.packed.a14-cinder_hound-se-collapse",
+              "a10.packed.a14-cinder_hound-se-defense",
               "a10.packed.a14-cinder_hound-se-hits",
               "a10.packed.a14-cinder_hound-se-motion",
+              "a10.packed.a14-netter-ne-reaction",
+              "a10.packed.a14-netter-se-reaction",
+              "a10.packed.a14-shieldman-ne-combat",
+              "a10.packed.a14-shieldman-ne-reaction",
+              "a10.packed.a14-shieldman-se-reaction",
+              "a10.packed.cassia",
+              "a10.packed.netter",
+              "a10.packed.shieldman",
+              "a12.occluder.verdigris.southeast-pylon",
               "a12.occluder.verdigris.southwest-pylon",
-              "a12.occluder.verdigris.southeast-pylon"
+              "a13.glyph.air",
+              "a13.glyph.earth",
+              "a13.glyph.fire",
+              "a13.glyph.water",
+              "a13.mask.angular-rank.png",
+              "a13.mask.arc-rank.png",
+              "a13.mask.fan-rank.png",
+              "a13.mask.linear-rank.png",
+              "a13.page.absorb.contact",
+              "a13.page.absorb.perfect",
+              "a13.page.absorb.window",
+              "a13.page.cast.water.hold",
+              "a13.page.cast.water.release",
+              "a13.page.cast.water.start",
+              "a13.page.inscription.collar",
+              "a13.page.selection",
+              "a13.page.status.rooted",
+              "a13.page.status.shielded",
+              "a13.page.status.slowed",
+              "a13.page.target",
+              "a13.page.threat.water.cone",
+              "a13.page.threat.water.line",
+              "a13.page.threat.water.ring",
+              "a13.page.ward.hold",
+              "a13.page.ward.release",
+              "a13.page.ward.start",
+              "a13.page.warning.normal",
+              "a13.page.warning.unblockable",
+              "a8.page.barrier",
+              "a8.page.water",
+              "arena-moonlit-2560",
+              "camp.day.1920",
+              "place.commons",
+              "place.door",
+              "place.yard",
+              "portrait-page.brennic",
+              "portrait-page.cassia",
+              "portrait-page.corvo",
+              "portrait-page.fenna",
+              "portrait-page.garran",
+              "portrait-page.iskar",
+              "portrait-page.kesh",
+              "portrait-page.lio",
+              "portrait-page.nysa",
+              "portrait-page.ophel",
+              "portrait-page.quill",
+              "portrait-page.ruadh",
+              "portrait-page.sadruba",
+              "portrait-page.senna",
+              "portrait-page.septima",
+              "portrait-page.venno",
+              "portrait.cassia.neutral",
+              "portrait.nysa.neutral",
+              "story.ward-seam"
             ]
           },
           "uiBytes": 67108864,
@@ -181,8 +120,7 @@
             "renown": 25,
             "finalReached": true,
             "finalWon": true
-          },
-          "tick": 5404
+          }
         },
         {
           "day": 14,
@@ -193,8 +131,7 @@
             "renown": 0,
             "finalReached": false,
             "finalWon": false
-          },
-          "tick": 326
+          }
         }
       ],
       "receipts": [
@@ -203,7 +140,6 @@
           "day": 6,
           "kind": "trial",
           "entrant": "cassia",
-          "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.157],\"entrant\":\"cassia\"}",
           "trace": [
             {
               "path": "trust/nysa>cassia",
@@ -211,7 +147,8 @@
               "after": -6,
               "rule": "season-bridge/trial/respectTrust"
             }
-          ]
+          ],
+          "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.157],\"entrant\":\"cassia\"}"
         },
         {
           "id": "games:73:7",
@@ -226,7 +163,6 @@
             "finalReached": true,
             "finalWon": true
           },
-          "hash": "complete:3:4:1fd036ef",
           "trace": [
             {
               "path": "characters/cassia/gold",
@@ -265,7 +201,6 @@
           "day": 13,
           "kind": "trial",
           "entrant": "cassia",
-          "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[84,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[32,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[46,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6200000000000001,0.28300000000000003],\"entrant\":\"cassia\"}",
           "trace": [
             {
               "path": "trust/nysa>cassia",
@@ -273,7 +208,8 @@
               "after": -10,
               "rule": "season-bridge/trial/respectTrust"
             }
-          ]
+          ],
+          "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[84,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[32,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[46,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6200000000000001,0.28300000000000003],\"entrant\":\"cassia\"}"
         },
         {
           "id": "games:73:14",
@@ -288,7 +224,6 @@
             "finalReached": false,
             "finalWon": false
           },
-          "hash": "lost:0:0:2a64be71",
           "trace": [
             {
               "path": "characters/cassia/gold",
@@ -329,77 +264,15 @@
       "height": 1440,
       "pointerHits": 8,
       "performance": {
-        "fps": 60.00200006666889,
-        "cpuP95": 1.5999999642372131,
-        "frames": 360,
-        "visibleProjectileSamples": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
-        ],
-        "frameP95Ms": 16.799999999999272,
-        "browserHeap": {
-          "usedSize": 44599576,
-          "totalSize": 80416768,
-          "embedderHeapUsedSize": 99289960,
-          "backingStorageSize": 67567093
+        "budget": {
+          "cpuP95BelowMs": 8,
+          "fpsAtLeast": 50,
+          "cpuP95Passed": true,
+          "fpsPassed": true
+        },
+        "visibleProjectiles": {
+          "samples": 60,
+          "each": 100
         },
         "textures": {
           "art": {
@@ -410,80 +283,80 @@
             "pending": 0,
             "diagnostics": [],
             "residentKeys": [
-              "a13.glyph.fire",
-              "a13.glyph.water",
-              "a13.glyph.earth",
-              "a13.glyph.air",
-              "portrait.cassia.neutral",
-              "place.door",
-              "portrait-page.cassia",
-              "portrait-page.garran",
-              "portrait-page.iskar",
-              "portrait-page.brennic",
-              "camp.day.2560",
-              "portrait-page.ruadh",
-              "portrait-page.senna",
-              "portrait-page.nysa",
-              "place.commons",
-              "story.ward-seam",
-              "portrait-page.sadruba",
-              "portrait-page.ophel",
-              "portrait-page.kesh",
-              "portrait-page.septima",
-              "portrait-page.quill",
-              "portrait-page.corvo",
-              "portrait-page.fenna",
-              "portrait-page.lio",
-              "portrait-page.venno",
-              "portrait.nysa.neutral",
-              "place.yard",
-              "a13.page.inscription.collar",
-              "arena-moonlit-2560",
-              "a8.page.barrier",
-              "a8.page.water",
-              "a13.page.selection",
-              "a13.page.target",
-              "a13.page.warning.normal",
-              "a13.page.ward.start",
-              "a13.page.warning.unblockable",
-              "a13.page.ward.hold",
-              "a13.mask.arc-rank.png",
-              "a13.page.ward.release",
-              "a13.mask.angular-rank.png",
-              "a13.page.absorb.window",
-              "a13.page.status.slowed",
-              "a13.page.status.shielded",
-              "a13.mask.fan-rank.png",
-              "a13.page.cast.water.start",
-              "a13.page.status.rooted",
-              "a13.page.absorb.perfect",
-              "a13.page.cast.water.release",
-              "a13.page.absorb.contact",
-              "a13.mask.linear-rank.png",
-              "a13.page.threat.water.line",
               "a10.packed.a14-cassia-ne-reaction",
-              "a13.page.cast.water.hold",
-              "a13.page.threat.water.ring",
               "a10.packed.a14-cassia-se-reaction",
-              "a10.packed.cassia",
-              "a13.page.threat.water.cone",
-              "a10.packed.a14-shieldman-ne-combat",
+              "a10.packed.a14-cinder_hound-ne-collapse",
+              "a10.packed.a14-cinder_hound-ne-defense",
+              "a10.packed.a14-cinder_hound-ne-hits",
+              "a10.packed.a14-cinder_hound-ne-motion",
+              "a10.packed.a14-cinder_hound-se-collapse",
+              "a10.packed.a14-cinder_hound-se-defense",
+              "a10.packed.a14-cinder_hound-se-hits",
+              "a10.packed.a14-cinder_hound-se-motion",
               "a10.packed.a14-netter-ne-reaction",
               "a10.packed.a14-netter-se-reaction",
-              "a10.packed.a14-shieldman-se-reaction",
-              "a10.packed.shieldman",
-              "a10.packed.a14-cinder_hound-ne-collapse",
-              "a10.packed.a14-cinder_hound-se-collapse",
-              "a10.packed.a14-cinder_hound-ne-hits",
-              "a10.packed.a14-cinder_hound-ne-defense",
-              "a10.packed.a14-cinder_hound-se-defense",
+              "a10.packed.a14-shieldman-ne-combat",
               "a10.packed.a14-shieldman-ne-reaction",
-              "a10.packed.a14-cinder_hound-se-hits",
-              "a10.packed.a14-cinder_hound-ne-motion",
-              "a10.packed.a14-cinder_hound-se-motion",
+              "a10.packed.a14-shieldman-se-reaction",
+              "a10.packed.cassia",
               "a10.packed.netter",
+              "a10.packed.shieldman",
+              "a12.occluder.verdigris.southeast-pylon",
               "a12.occluder.verdigris.southwest-pylon",
-              "a12.occluder.verdigris.southeast-pylon"
+              "a13.glyph.air",
+              "a13.glyph.earth",
+              "a13.glyph.fire",
+              "a13.glyph.water",
+              "a13.mask.angular-rank.png",
+              "a13.mask.arc-rank.png",
+              "a13.mask.fan-rank.png",
+              "a13.mask.linear-rank.png",
+              "a13.page.absorb.contact",
+              "a13.page.absorb.perfect",
+              "a13.page.absorb.window",
+              "a13.page.cast.water.hold",
+              "a13.page.cast.water.release",
+              "a13.page.cast.water.start",
+              "a13.page.inscription.collar",
+              "a13.page.selection",
+              "a13.page.status.rooted",
+              "a13.page.status.shielded",
+              "a13.page.status.slowed",
+              "a13.page.target",
+              "a13.page.threat.water.cone",
+              "a13.page.threat.water.line",
+              "a13.page.threat.water.ring",
+              "a13.page.ward.hold",
+              "a13.page.ward.release",
+              "a13.page.ward.start",
+              "a13.page.warning.normal",
+              "a13.page.warning.unblockable",
+              "a8.page.barrier",
+              "a8.page.water",
+              "arena-moonlit-2560",
+              "camp.day.2560",
+              "place.commons",
+              "place.door",
+              "place.yard",
+              "portrait-page.brennic",
+              "portrait-page.cassia",
+              "portrait-page.corvo",
+              "portrait-page.fenna",
+              "portrait-page.garran",
+              "portrait-page.iskar",
+              "portrait-page.kesh",
+              "portrait-page.lio",
+              "portrait-page.nysa",
+              "portrait-page.ophel",
+              "portrait-page.quill",
+              "portrait-page.ruadh",
+              "portrait-page.sadruba",
+              "portrait-page.senna",
+              "portrait-page.septima",
+              "portrait-page.venno",
+              "portrait.cassia.neutral",
+              "portrait.nysa.neutral",
+              "story.ward-seam"
             ]
           },
           "uiBytes": 67108864,
@@ -503,8 +376,7 @@
             "renown": 25,
             "finalReached": true,
             "finalWon": true
-          },
-          "tick": 5404
+          }
         },
         {
           "day": 14,
@@ -515,8 +387,7 @@
             "renown": 0,
             "finalReached": false,
             "finalWon": false
-          },
-          "tick": 326
+          }
         }
       ],
       "receipts": [
@@ -525,7 +396,6 @@
           "day": 6,
           "kind": "trial",
           "entrant": "cassia",
-          "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.157],\"entrant\":\"cassia\"}",
           "trace": [
             {
               "path": "trust/nysa>cassia",
@@ -533,7 +403,8 @@
               "after": -6,
               "rule": "season-bridge/trial/respectTrust"
             }
-          ]
+          ],
+          "hash": "{\"id\":\"trial:73:6\",\"day\":6,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[64,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[12,6],\"totals\":[36,10],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[1,10],\"totals\":[25,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.5700000000000001,0.157],\"entrant\":\"cassia\"}"
         },
         {
           "id": "games:73:7",
@@ -548,7 +419,6 @@
             "finalReached": true,
             "finalWon": true
           },
-          "hash": "complete:3:4:1fd036ef",
           "trace": [
             {
               "path": "characters/cassia/gold",
@@ -587,7 +457,6 @@
           "day": 13,
           "kind": "trial",
           "entrant": "cassia",
-          "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[84,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[32,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[46,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6200000000000001,0.28300000000000003],\"entrant\":\"cassia\"}",
           "trace": [
             {
               "path": "trust/nysa>cassia",
@@ -595,7 +464,8 @@
               "after": -10,
               "rule": "season-bridge/trial/respectTrust"
             }
-          ]
+          ],
+          "hash": "{\"id\":\"trial:73:13\",\"day\":13,\"rival\":\"nysa\",\"elder\":\"ophel\",\"stamina\":[84,40],\"score\":[2,0],\"rounds\":[{\"stance\":\"brace\",\"opponent\":\"press\",\"rolls\":[2,8],\"totals\":[32,12],\"won\":true},{\"stance\":\"press\",\"opponent\":\"feint\",\"rolls\":[16,10],\"totals\":[46,14],\"won\":true}],\"phase\":\"complete\",\"weights\":[0.6200000000000001,0.28300000000000003],\"entrant\":\"cassia\"}"
         },
         {
           "id": "games:73:14",
@@ -610,7 +480,6 @@
             "finalReached": false,
             "finalWon": false
           },
-          "hash": "lost:0:0:2a64be71",
           "trace": [
             {
               "path": "characters/cassia/gold",
@@ -1045,10 +914,18 @@
         {
           "text": "WEEK 1",
           "x": 132,
-          "y": 408,
+          "y": 400,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 1 · NOW",
+          "x": 132,
+          "y": 430,
+          "w": 107.59820508956909,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "01",
@@ -1057,6 +934,14 @@
           "w": 27.831998825073246,
           "h": 34.160000000000004,
           "size": 28
+        },
+        {
+          "text": "TODAY",
+          "x": 371,
+          "y": 406,
+          "w": 44.58624267578125,
+          "h": 19.52,
+          "size": 16
         },
         {
           "text": "02",
@@ -1099,6 +984,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 434,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "07",
           "x": 1123,
           "y": 402,
@@ -1107,12 +1000,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 434,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 2",
           "x": 132,
-          "y": 478,
+          "y": 470,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 2 · AHEAD",
+          "x": 132,
+          "y": 500,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "08",
@@ -1163,6 +1072,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 504,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "14",
           "x": 1123,
           "y": 472,
@@ -1171,12 +1088,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 504,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 3",
           "x": 132,
-          "y": 548,
+          "y": 540,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 3 · AHEAD",
+          "x": 132,
+          "y": 570,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "15",
@@ -1227,6 +1160,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 574,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "21",
           "x": 1123,
           "y": 542,
@@ -1235,12 +1176,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 574,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 4",
           "x": 132,
-          "y": 618,
+          "y": 610,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 4 · AHEAD",
+          "x": 132,
+          "y": 640,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "22",
@@ -1291,6 +1248,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 644,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "28",
           "x": 1123,
           "y": 612,
@@ -1299,12 +1264,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 644,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 5",
           "x": 132,
-          "y": 688,
+          "y": 680,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 5 · AHEAD",
+          "x": 132,
+          "y": 710,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "29",
@@ -1355,6 +1336,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 714,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "35",
           "x": 1123,
           "y": 682,
@@ -1363,12 +1352,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 714,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 6",
           "x": 132,
-          "y": 758,
+          "y": 750,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 6 · AHEAD",
+          "x": 132,
+          "y": 780,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "36",
@@ -1419,12 +1424,28 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 784,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "42",
           "x": 1123,
           "y": 752,
           "w": 27.831998825073246,
           "h": 34.160000000000004,
           "size": 28
+        },
+        {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 784,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
         },
         {
           "text": "THE NEXT SUMMONS",
@@ -4034,10 +4055,18 @@
         {
           "text": "WEEK 1",
           "x": 132,
-          "y": 408,
+          "y": 400,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 1 · NOW",
+          "x": 132,
+          "y": 430,
+          "w": 107.59820508956909,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "01",
@@ -4046,6 +4075,14 @@
           "w": 27.831998825073246,
           "h": 34.160000000000004,
           "size": 28
+        },
+        {
+          "text": "TODAY",
+          "x": 371,
+          "y": 406,
+          "w": 44.58624267578125,
+          "h": 19.52,
+          "size": 16
         },
         {
           "text": "02",
@@ -4088,6 +4125,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 434,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "07",
           "x": 1123,
           "y": 402,
@@ -4096,12 +4141,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 434,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 2",
           "x": 132,
-          "y": 478,
+          "y": 470,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 2 · AHEAD",
+          "x": 132,
+          "y": 500,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "08",
@@ -4152,6 +4213,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 504,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "14",
           "x": 1123,
           "y": 472,
@@ -4160,12 +4229,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 504,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 3",
           "x": 132,
-          "y": 548,
+          "y": 540,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 3 · AHEAD",
+          "x": 132,
+          "y": 570,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "15",
@@ -4216,6 +4301,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 574,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "21",
           "x": 1123,
           "y": 542,
@@ -4224,12 +4317,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 574,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 4",
           "x": 132,
-          "y": 618,
+          "y": 610,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 4 · AHEAD",
+          "x": 132,
+          "y": 640,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "22",
@@ -4280,6 +4389,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 644,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "28",
           "x": 1123,
           "y": 612,
@@ -4288,12 +4405,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 644,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 5",
           "x": 132,
-          "y": 688,
+          "y": 680,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 5 · AHEAD",
+          "x": 132,
+          "y": 710,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "29",
@@ -4344,6 +4477,14 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 714,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "35",
           "x": 1123,
           "y": 682,
@@ -4352,12 +4493,28 @@
           "size": 28
         },
         {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 714,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "WEEK 6",
           "x": 132,
-          "y": 758,
+          "y": 750,
           "w": 81.01599216461182,
           "h": 31.720000000000002,
           "size": 26
+        },
+        {
+          "text": "LEVEL 6 · AHEAD",
+          "x": 132,
+          "y": 780,
+          "w": 121.62597370147705,
+          "h": 21.96,
+          "size": 18
         },
         {
           "text": "36",
@@ -4408,12 +4565,28 @@
           "size": 28
         },
         {
+          "text": "TRIAL",
+          "x": 991,
+          "y": 784,
+          "w": 38.17536926269531,
+          "h": 19.52,
+          "size": 16
+        },
+        {
           "text": "42",
           "x": 1123,
           "y": 752,
           "w": 27.831998825073246,
           "h": 34.160000000000004,
           "size": 28
+        },
+        {
+          "text": "GAMES",
+          "x": 1123,
+          "y": 784,
+          "w": 47.1091194152832,
+          "h": 19.52,
+          "size": 16
         },
         {
           "text": "THE NEXT SUMMONS",
