@@ -63,7 +63,7 @@ settings.
 
 - Weeks 3-6 playable end to end (they run headless today).
 - Portraits in conversations, the board and results; mood follows relationships.
-- The calendar as a living object: Games and Trial days, week level shown (enemy level = week), weather or season.
+- ~~The calendar as a living object: Games and Trial days, week level shown (enemy level = week)~~ landed in 8.8. Weather or season stays open: the view carries neither.
 - The camp map with time-of-day lighting, characters present at places, and transitions between places.
 - Progression screens for D1: where spell ranks and Agility are earned and spent.
 
@@ -250,3 +250,28 @@ Two parts, each red then green. Base `main` a5083fd; `game-shell.ts` stays at 30
   touched here; the file was left as committed.
 - **Still open in 4.4.** Settings persisted *with the save*, not only in localStorage, is the owner's call (it changes the
   save schema, which does not move without an ask). Resolution options and window mode beyond today's profile likewise.
+
+### 8.8 The living calendar and the smoke:d3 re-pin (2026-10-26)
+
+Base `main` 955337b. Settings with the save stays the owner's call and is untouched; `season-service.ts`, the save files,
+`skill-book.pc.json`, `input.ts` and `game-shell.ts` (300 lines) are untouched.
+
+- **Pin** (`calendar.test.ts`, green on unmodified main): the calendar render on a recording canvas (every ui call,
+  serialized), fixture day 9 / week 2, **4346 bytes, sha256 `c84cc0b57d87453e6f9b8fb5c7d0c4ae7472eb08da2d1c9d0d51a8e82fba527a`**.
+- **Red** (`1855b47`): "marks today once, and moves the mark with the day", "marks every Games day (7, 14 ... 42) and every
+  Trial eve (6, 13 ... 41) with its own kicker", "shows each week's level on its WEEK row, past, current and future told
+  apart", plus "keeps the existing strings".
+- **Green** (`a7cb414`, `b9d3e4d`). On screen: a gold `TODAY` tag in the top right of today's cell; a water `GAMES` kicker
+  on days 7, 14 ... 42 and an earth `TRIAL` kicker on the eves (6, 13 ... 41), under the date and beside the existing
+  school icons; under each `WEEK n` a line `LEVEL n · PAST | NOW | AHEAD` (enemy level = week, capped by `maxEnemyLevel`
+  from `@mage/core/arena`), the current week's label in gold, past weeks muted. All colours come from `colours`; no new
+  palette value. Nothing new in the view: the week and today come from `view.day`, the seven-day rhythm is the same one
+  the screen already assumed (Games on the seventh, the Trial the eve before; `season.json` agrees). `b9d3e4d` repairs a
+  mojibake of the middle dot that `a7cb414` carried (it never built); the **final pin is 5169 bytes, sha256
+  `1c50ae1532c0362f7652da51255d0cfb3a610c964db7ac2f0261899464061d97`** (the 5175 of `a7cb414` is superseded).
+- **smoke:d3 re-pin** (`c0a1030`). `d3-widescreen.json` arena `hud` text count 34 -> 35 in the three arena viewport rows
+  and nothing else in the file moved. The extra text is the rival phase-gem label added by `427e315` (a muted 22 px label
+  on the right cluster for the named rival's next break). `npm run smoke:d3` exits 0 and leaves the file unchanged.
+- **Still open.** Weather or season is not in the view. The calendar draws a fixed 6x7 grid; the Games and Trial schedule
+  is constant-derived, not read from the tables, so a season that changes `daysPerWeek` would need the view to carry it.
+  Settings persisted with the save (4.4) remains the owner's call.
