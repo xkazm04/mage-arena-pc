@@ -197,9 +197,8 @@ settings.
      `u.padFamily`. Keyboard and mouse copy and the Xbox copy are byte-identical, so no existing test moved.
    - Text only: no glyph art and no layout change. Tests: `settings/pad-glyphs.test.ts` (DualSense, DualShock 4, Xbox
      Series, Xbox 360 XInput and an unknown id; a PlayStation, Xbox and keyboard case per hint function).
-   - Not changed: `pauseHint` ("ESC / START  Pause", read in `arena-entry.ts`) is a fixed string that still says Start;
-     `parley.ts` has no pad button copy. Also, the pause button name (`menu`) is defined but unused until `arena-entry.ts`
-     is in scope.
+   - Landed (`bb56684` red tests, `56b0a62` implementation): `pauseHint(modality, family = "xbox")` is built on `padNames`; the gamepad copy names the pause button ("START  Pause", "OPTIONS  Pause" on PlayStation), keyboard copy stays "ESC / START  Pause". The loading card in `arena-entry.ts` re-sets the text every render from `u.modality` and `u.padFamily`. Tests: `settings/pad-glyphs.test.ts`.
+   - Not changed: `parley.ts` has no pad button copy.
 
 6. **Skill-book screen (4.3 progression screens, 2026-10-26)** (`4748200` red tests, `ab641b6` director, `811abe7` screen).
    - **Director widening, Athena's ruling 2026-10-26 09:32Z** (the game sees the season only through `season-service.ts`):
