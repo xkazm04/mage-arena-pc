@@ -12,6 +12,7 @@ import { decodeSave, encodeSave, restoreSave, validatePayload } from './save.ts'
 import { SeasonService } from './season-service.ts';
 
 // The skill book on the season save (D1 4.3): an optional key, bounded tightly, that leaves a save without it as it was.
+const flagOffPayloadHash = '7e14d753ad00f69bfd8c4e652ed60c50d44d29104f4bb5df189e80f3c99dc635';
 const t = loadTables(), dirs: string[] = [];
 afterAll(() => { for (const d of dirs.splice(0)) rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 }); });
 function service() {
@@ -30,8 +31,8 @@ function booked() {
   return s;
 }
 /** The same season on its first Games morning, the bout prepared (the season.test.ts enemyLevel setup). */
-function preparedBout() {
-  const s = booked(); s.session.camp.day = 6; s.session.slot = 'dusk'; s.session.hour = t.season.trialHour; s.session.location = 'pit';
+function preparedBout(flagOff = false) {
+  const s = flagOff ? service() : booked(); s.session.camp.day = 6; s.session.slot = 'dusk'; s.session.hour = t.season.trialHour; s.session.location = 'pit';
   s.seasonCommand({ type: 'trial' }, s.session.revision);
   while (s.progress.trial!.phase === 'active') {
     const tell = trialTell(s.session, s.progress.trial!);
@@ -116,6 +117,58 @@ describe('skill book on the season save', () => {
     refuse(s, p => { p.skills.points += 1; }, `${book}: points spent differ from the ranks bought`);
     refuse(s, p => { p.skills.points = p.skills.earned + 1; }, `${book}: more points unspent than earned`);
     refuse(s, p => { p.skills.ranks.fire_sunfall = 2; }, `${book}: rank in fire_sunfall, a spell the player does not know`);
+    s.close();
+  });
+  // D1 6.12: a flag-on bout carries opponentMage { averageRank } and rankDefence { hpPerRankStep }, each optional and bounded.
+  const lever = (s: SeasonService) => s.progress.bout as unknown as { opponentMage: { averageRank: number }; rankDefence: { hpPerRankStep: number } };
+  it('round trips a bout carrying both levers exactly', () => {
+    const original = preparedBout(), loaded = service();
+    expect(lever(original).opponentMage).toEqual({ averageRank: 1 });
+    expect(lever(original).rankDefence).toEqual({ hpPerRankStep: 0.05 });
+    restoreSave(loaded, decodeSave(t, JSON.stringify(encodeSave(original))));
+    expect(lever(loaded).opponentMage).toEqual(lever(original).opponentMage);
+    expect(lever(loaded).rankDefence).toEqual(lever(original).rankDefence);
+    expect(hash(encodeSave(loaded).payload)).toBe(hash(encodeSave(original).payload));
+    original.close(); loaded.close();
+  });
+  it('a flag-off bout writes neither lever and saves byte for byte as before', () => {
+    const original = preparedBout(true), text = JSON.stringify(encodeSave(original).payload);
+    expect(text).not.toMatch(/opponentMage|rankDefence/);
+    // Pinned from the unchanged schema (the commit before the schema fix).
+    expect(hash(encodeSave(original).payload)).toBe(flagOffPayloadHash);
+    const loaded = service();
+    restoreSave(loaded, decodeSave(t, JSON.stringify(encodeSave(original))));
+    expect(JSON.stringify(encodeSave(loaded).payload)).toBe(text);
+    original.close(); loaded.close();
+  });
+  it('refuses each out-of-bounds lever, and levers that are not the season\'s', () => {
+    const s = preparedBout(), at = (key: string, message: string) => `Save schema rejected: /progress/bout/${key} ${message}`;
+    const set = (p: ReturnType<typeof logical>['progress'], key: 'opponentMage' | 'rankDefence', value: unknown) => { p.bout[key] = value; };
+    refuse(s, p => set(p, 'opponentMage', { averageRank: 0.5 }), at('opponentMage/averageRank', 'must be >= 1'));
+    refuse(s, p => set(p, 'opponentMage', { averageRank: maxSpellRank + 0.5 }), at('opponentMage/averageRank', `must be <= ${maxSpellRank}`));
+    refuse(s, p => set(p, 'opponentMage', { averageRank: 1.25 }), at('opponentMage/averageRank', 'must be multiple of 0.5'));
+    refuse(s, p => set(p, 'opponentMage', { averageRank: null }), at('opponentMage/averageRank', 'must be number'));
+    refuse(s, p => set(p, 'opponentMage', {}), at('opponentMage', 'must have required property'));
+    refuse(s, p => set(p, 'opponentMage', { averageRank: 1, level: 2 }), at('opponentMage', 'must NOT have additional properties'));
+    refuse(s, p => set(p, 'rankDefence', { hpPerRankStep: 0 }), at('rankDefence/hpPerRankStep', 'must be > 0'));
+    refuse(s, p => set(p, 'rankDefence', { hpPerRankStep: -0.05 }), at('rankDefence/hpPerRankStep', 'must be > 0'));
+    refuse(s, p => set(p, 'rankDefence', { hpPerRankStep: 1.01 }), at('rankDefence/hpPerRankStep', 'must be <= 1'));
+    refuse(s, p => set(p, 'rankDefence', { hpPerRankStep: '0.05' }), at('rankDefence/hpPerRankStep', 'must be number'));
+    refuse(s, p => set(p, 'rankDefence', { hpPerRankStep: 0.05, bonus: 1 }), at('rankDefence', 'must NOT have additional properties'));
+    // In bounds but not the levers the season makes: the prepared bout is the one the progress makes.
+    refuse(s, p => set(p, 'rankDefence', { hpPerRankStep: 0.1 }), 'Save entrant or seed differs from the camp snapshot.');
+    refuse(s, p => { delete p.bout.rankDefence; }, 'Save entrant or seed differs from the camp snapshot.');
+    s.close();
+  });
+  it('refuses a non-finite lever', () => {
+    const s = preparedBout();
+    // JSON has no NaN or Infinity: they reach the validator from a live object.
+    for (const bad of [NaN, Infinity, -Infinity]) {
+      const a = logical(s), b = logical(s);
+      a.progress.bout.opponentMage = { averageRank: bad }; b.progress.bout.rankDefence = { hpPerRankStep: bad };
+      expect(() => validatePayload(t, a)).toThrow('Save schema rejected: /progress/bout/opponentMage/averageRank');
+      expect(() => validatePayload(t, b)).toThrow('Save schema rejected: /progress/bout/rankDefence/hpPerRankStep');
+    }
     s.close();
   });
   it('refuses each out-of-bounds bout rank, and ranks that are not the book\'s', () => {
