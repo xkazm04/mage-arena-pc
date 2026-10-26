@@ -4,7 +4,9 @@ import { calendar, seededUnit } from './camp.ts';
 import { spendHours, type CampSession } from './camp-session.ts';
 import type { Tables, Trace } from './types.ts';
 import { member } from './arena/doors.ts';
-import { advanceGames, attachMageAI, createGames, defaultDifficulty, gamesResult, maxEnemyLevel, stateHash, stepGames, presets, validDifficulty, validateComposition, type Difficulty, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame, type SpellRanks } from './arena/index.ts';
+import { advanceGames, attachMageAI, createGames, defaultDifficulty, gamesResult, maxEnemyLevel, stateHash, stepGames, presets, validDifficulty, validateComposition, type Difficulty, type Games, type GamesPlayer, type GamesResult, type Composition, type InputFrame, type SpellRanks, type RankDefence } from './arena/index.ts';
+import { seasonRival, rivalProfiles } from './arena/week-profiles.ts';
+import type { OpponentMage } from './arena/mage-build.ts';
 import { boutSpellRanks, buyRank, createSkillBook, learnSignature, skillBookOn, type SkillBook } from './skill-book.ts';
 
 export const bridgeRules = data;
@@ -26,6 +28,11 @@ export interface SeasonBout {
   /** The player's bought spell ranks (skill book, D1 4.3), fixed at prepare; omitted while the season carries no book, nothing
    * is bought or the player only watches, so older bouts replay unchanged. */
   spellRanks?: SpellRanks;
+  /** The opponent mage's rank curve for the bout's week (D1 6.12, the 6.10 lag arm), fixed at prepare; present only on a flag-on
+   * season's own bout (the one with a skill book, not a spectator's), so every other bout replays unchanged. */
+  opponentMage?: OpponentMage;
+  /** Rank defence (D1 6.12, lag-def1: every mage's HP grows with the ranks it gained), set with opponentMage and only then. */
+  rankDefence?: RankDefence;
 }
 export interface Receipt { id: string; day: number; kind: 'trial' | 'games'; entrant: string; result?: GamesResult; hash: string; trace: Trace[] }
 /** `skills`: the player's skill book (skill-book.ts), present only on a season started with the PC flag on; its presence is
@@ -127,11 +134,15 @@ export function prepareBout(t: Tables, s: CampSession, p: SeasonProgress, compos
   const seed = Math.floor(seededUnit(s.camp.seed, s.camp.day, entrant.id, 'tiro-bout') * 0x100000000) >>> 0;
   const enemyLevel = Math.min(maxEnemyLevel, Math.ceil(s.camp.day / t.season.daysPerWeek)), spectator = entrant.id !== s.camp.player;
   const spellRanks = p.skills && !spectator ? boutSpellRanks(p.skills, true) : undefined;
-  return { id: `games:${s.camp.seed}:${s.camp.day}`, day: s.camp.day, seed, phase: 'prepared', entrant, spectator, composition: structuredClone(composition), games: null, log: [], difficulty, ...(enemyLevel > 1 ? { enemyLevel } : {}), ...(spellRanks ? { spellRanks } : {}) };
+  // Duel duration (D1 6.12, owner 2026-10-25): a season with a skill book also holds the opponent mage's rank curve behind the
+  // player's and gives every mage rank defence. They answer the player's own ranks, so a spectator's bout (a watched AI, no ranks) has none.
+  const levers = p.skills && !spectator ? { opponentMage: { averageRank: rivalProfiles[seasonRival.profile]![enemyLevel - 1]! }, rankDefence: { ...seasonRival.rankDefence } } : undefined;
+  return { id: `games:${s.camp.seed}:${s.camp.day}`, day: s.camp.day, seed, phase: 'prepared', entrant, spectator, composition: structuredClone(composition), games: null, log: [], difficulty, ...(enemyLevel > 1 ? { enemyLevel } : {}), ...(spellRanks ? { spellRanks } : {}), ...levers };
 }
 export function startBout(bout: SeasonBout): void {
   if (bout.phase !== 'prepared' || bout.games) throw Error('The bout has already started.');
-  bout.games = createGames(bout.seed, bout.composition, 0, false, bout.entrant, undefined, bout.difficulty, { ...(bout.enemyLevel === undefined ? {} : { enemyLevel: bout.enemyLevel }), ...(bout.spellRanks === undefined ? {} : { spellRanks: bout.spellRanks }) });
+  bout.games = createGames(bout.seed, bout.composition, 0, false, bout.entrant, undefined, bout.difficulty, { ...(bout.enemyLevel === undefined ? {} : { enemyLevel: bout.enemyLevel }), ...(bout.spellRanks === undefined ? {} : { spellRanks: bout.spellRanks }),
+    ...(bout.opponentMage === undefined ? {} : { opponentMage: bout.opponentMage }), ...(bout.rankDefence === undefined ? {} : { rankDefence: bout.rankDefence }) });
   if (bout.spectator) attachMageAI(bout.games.player, data.trial.spectatorCompetence);
   bout.phase = 'active';
 }
