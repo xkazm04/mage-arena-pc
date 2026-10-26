@@ -8,8 +8,9 @@ import { moodForTrust } from "../ui/portrait-mood.ts";
 import { hasBook } from "./skills.ts";
 import type { GameShell } from "../game-shell.ts";
 
-/** Portrait chips drawn above a place button on the camp map; the rest are a +n marker. */
-const CHIPS = 3;
+import { chipLayout } from "./camp-chip-layout.ts";
+import type { Rect } from "../ui/layout.ts";
+
 type Odds = { success: number; caught: number | null } | null;
 const percent = (p: number) => `${Math.round(p * 100)}%`;
 /** A contest's chance, and for a scheme its stocks risk, as the subtitle shows it; empty for an uncontested act. */
@@ -40,13 +41,22 @@ export function camp(s: GameShell) {
     tent: [0.195, 0.8],
     edge: [0.89, 0.8],
   };
-  for (const p of v.places) {
-    const anchor = art.manifest?.places.find((a) => a.id === p.id)?.anchor ??
-      fallbackAnchors[p.id] ?? [0.5, 0.5];
+  const spot = (id: string) => {
+    const anchor = art.manifest?.places.find((a) => a.id === id)?.anchor ?? fallbackAnchors[id] ?? [0.5, 0.5];
     const px = anchor[0]! * 1920,
       py = anchor[1]! * 1080;
-    const x = Math.max(96, Math.min(1552, px - 136)),
-      y = Math.max(306, Math.min(710, py));
+    return { px, py, x: Math.max(96, Math.min(1552, px - 136)), y: Math.max(306, Math.min(710, py)) };
+  };
+  // The nav row's bottom edge is read from the buttons campHeader drew, never assumed.
+  const navBottom = Math.max(
+    0,
+    ...(Array.isArray(u.buttons) ? u.buttons : []).filter((b) => b.id.startsWith("nav-")).map((b) => b.y + b.h),
+  );
+  const rects = new Map<string, Rect>(v.places.map((p) => [p.id, { x: spot(p.id).x, y: spot(p.id).y, w: 272, h: 80 }]));
+  // Everything a chip row must stay clear of; each placed row joins it for the places after.
+  const obstacles: Rect[] = [...rects.values(), { x: 96, y: 806, w: 1728, h: 72 }, { x: 96, y: 892, w: 1380, h: 134 }];
+  for (const p of v.places) {
+    const { px, py, x, y } = spot(p.id);
     const link = new Graphics()
       .moveTo(px, Math.max(286, py))
       .lineTo(x + 136, y + 38)
@@ -70,10 +80,17 @@ export function camp(s: GameShell) {
       },
     );
     const here = v.presenceByPlace?.[p.id] ?? [];
-    here.slice(0, CHIPS).forEach((person, i) =>
-      portrait(u, person.id, moodForTrust(person.trust), x + 6 + i * 44, y - 54, 40, 48),
+    if (!here.length) continue;
+    const layout = chipLayout(rects.get(p.id)!, here.length, navBottom, obstacles);
+    layout.chips.forEach((r, i) =>
+      portrait(u, here[i]!.id, moodForTrust(here[i]!.trust), r.x, r.y, r.w, r.h),
     );
-    if (here.length > CHIPS) u.text(`+${here.length - CHIPS}`, x + 6 + CHIPS * 44, y - 40, 22, colours.gold);
+    if (layout.marker) {
+      const m = layout.marker;
+      u.panel(m.plate.x, m.plate.y, m.plate.w, m.plate.h, "bar.track");
+      u.text(`+${here.length - layout.chips.length}`, m.x, m.y, m.size, colours.gold);
+    }
+    obstacles.push(layout.bounds);
   }
   const p = v.places.find((p) => p.id === s.selected) ?? v.places[0]!;
   u.panel(96, 806, 1728, 72, "button.normal");
