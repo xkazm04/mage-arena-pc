@@ -28,6 +28,7 @@ function fakeHost(arena?: ScreenHost["arena"]) {
     audioSettings: record("audioSettings"),
     controls: record("controls"),
     saves: record("saves"),
+    skills: record("skills"),
   };
   return { host, calls, nav: new ScreenRouter(screenSpecs, host) };
 }
@@ -92,6 +93,17 @@ describe("screen router", () => {
     );
     expect(nav.isLive("cast")).toBe(false);
     expect(nav.isOverlay("results")).toBe(false);
+  });
+
+  it("registers the skill book as a plain screen on its own page, neither live nor an overlay", () => {
+    const { nav, calls } = fakeHost();
+    expect(nav.has("skills")).toBe(true);
+    expect(nav.isLive("skills") || nav.isOverlay("skills")).toBe(false);
+    nav.state("skills").page = 1;
+    nav.open("camp");
+    nav.go("skills");
+    expect(calls).toEqual(["skills"]);
+    expect(nav.state("skills").page).toBe(1);
   });
 
   it("restores training on the page the player left", () => {

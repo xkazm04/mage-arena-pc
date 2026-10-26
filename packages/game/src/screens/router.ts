@@ -31,6 +31,7 @@ export interface ScreenHost {
   audioSettings(): void;
   controls(): void;
   saves(message?: string): void;
+  skills(message?: string): void;
 }
 
 /** Paging a screen keeps while the player steps away from it. */
@@ -47,6 +48,7 @@ export interface ScreenStates {
   cast: Paged;
   visit: Paged;
   training: Paged;
+  skills: Paged;
 }
 const initialState: { [K in keyof ScreenStates]: () => ScreenStates[K] } = {
   board: () => ({ page: 0, selected: 0 }),
@@ -54,6 +56,7 @@ const initialState: { [K in keyof ScreenStates]: () => ScreenStates[K] } = {
   cast: () => ({ page: 0 }),
   visit: () => ({ page: 0 }),
   training: () => ({ page: 0 }),
+  skills: () => ({ page: 0 }),
 };
 
 export interface ScreenSpec {
@@ -108,6 +111,7 @@ export const screenSpecs: readonly ScreenSpec[] = [
   { id: "settings", overlay: true, restore: (h) => h.settings() },
   { id: "audio-settings", overlay: true, restore: (h) => h.audioSettings() },
   { id: "saves", overlay: true, restore: (h) => h.saves() },
+  { id: "skills", restore: (h) => h.skills() },
   { id: "controls", overlay: true, restore: (h) => h.controls() },
 ];
 

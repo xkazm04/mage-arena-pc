@@ -32,6 +32,7 @@ import { readBout, results } from "./screens/results.ts";
 import { audioSettings, pauseScreen, settings } from "./screens/pause.ts";
 import { load, openSaves, saves } from "./screens/saves.ts";
 import { chapter } from "./screens/chapter.ts";
+import { installSkillsKey, skills } from "./screens/skills.ts";
 import { ScreenRouter, screenSpecs } from "./screens/router.ts";
 import { controls, type ControlsState } from "./screens/controls.ts";
 import { matches } from "./settings/bindings.ts";
@@ -99,6 +100,7 @@ export class GameShell {
     controls(this, state, focus);
   saves = (message?: string) => saves(this, message);
   chapter = () => chapter(this);
+  skills = (message?: string) => skills(this, message);
   // Actions that talk to the season server.
   control = () => control(this);
   speak = (input: Parameters<typeof speak>[1]) => speak(this, input);
@@ -147,6 +149,7 @@ export class GameShell {
       if (this.arena && !this.arena.paused) void this.pause();
     };
     const signal = this.lifetime.signal;
+    installSkillsKey(this, signal);
     window.addEventListener(
       "keyup",
       (e) => {
