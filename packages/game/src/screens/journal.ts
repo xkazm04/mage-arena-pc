@@ -5,6 +5,16 @@ import castData from "../../../../docs/design/reconciled/data/characters.json" w
 import { columns, safeArea } from "../ui/anchors.ts";
 import type { GameShell } from "../game-shell.ts";
 
+/** Journal cards a page; also the most rows the screen ever builds, whatever the journal's length. */
+export const perPage = 4;
+/** The rows of one page and the page itself, clamped into range so a journal that shrank never draws an empty page. */
+export function pageWindow<T>(items: T[], page: number, size: number) {
+  const pages = Math.max(1, Math.ceil(items.length / size)),
+    at = Math.max(0, Math.min(pages - 1, page)),
+    from = at * size;
+  return { page: at, from, rows: items.slice(from, from + size), pages };
+}
+
 export function cards(s: GameShell, kind: "board" | "journal") {
   s.campHeader(kind, kind === "board" ? "The Hollow Board" : "What you carry");
   const u = s.ui,
@@ -19,7 +29,8 @@ export function cards(s: GameShell, kind: "board" | "journal") {
           visibility: "public",
         }))
       : v.journal;
-  const page = cards.slice(st.page * 4, st.page * 4 + 4);
+  const win = pageWindow(cards, st.page, perPage);
+  st.page = win.page;
   u.text(
     kind === "board" ? "DEEDS, WHISPERS AND WITNESSES" : "PRIVATE KNOWINGS",
     96,
@@ -27,8 +38,8 @@ export function cards(s: GameShell, kind: "board" | "journal") {
     24,
     colours.gold,
   );
-  page.forEach((c, i) => {
-    const index = st.page * 4 + i;
+  win.rows.forEach((c, i) => {
+    const index = win.from + i;
     u.button(
       `card-${index}`,
       c.text.length > 88 ? c.text.slice(0, 85) + "…" : c.text,
@@ -112,10 +123,10 @@ export function cards(s: GameShell, kind: "board" | "journal") {
       st.page++;
       s.cards(kind);
     },
-    { disabled: (st.page + 1) * 4 >= cards.length },
+    { disabled: st.page + 1 >= win.pages },
   );
   u.text(
-    `${st.page + 1} / ${Math.max(1, Math.ceil(cards.length / 4))}`,
+    `${st.page + 1} / ${win.pages}`,
     630,
     887,
     26,

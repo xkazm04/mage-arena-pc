@@ -12,6 +12,7 @@ import { colours, UiKit } from "./kit.ts";
 import { installFonts, fontDiagnostics, fontTextureBytes } from "./fonts.ts";
 import { art } from "../art.ts";
 import { PadNavigation } from "./gamepad.ts";
+import { buttonLook, wheelPager } from "./hover.ts";
 import { quality } from "../quality.ts";
 import { phase, phaseStart, phases, resetPhases } from "../frame-probe.ts";
 import { settings } from "../settings/settings.ts";
@@ -181,6 +182,20 @@ export class CanvasUI {
         if (id) this.focus = id;
       },
       { signal },
+    );
+    let wheelAt = 0;
+    this.app.canvas.addEventListener(
+      "wheel",
+      (e) => {
+        if (this.screen === "arena" || this.busy) return;
+        const id = wheelPager(this.buttons, e.deltaY);
+        e.preventDefault();
+        if (!id || e.timeStamp - wheelAt < 120) return;
+        wheelAt = e.timeStamp;
+        this.modality = "mouse";
+        this.activate(id);
+      },
+      { passive: false, signal },
     );
     this.app.canvas.addEventListener(
       "pointerdown",
@@ -911,31 +926,9 @@ export class CanvasUI {
     phase("onFrame");
     for (const b of this.buttons) {
       b.ring.clear();
-      const base =
-        b.kind === "slot"
-          ? "slot"
-          : b.kind === "tab"
-            ? "tab"
-            : b.kind.startsWith("card.")
-              ? "card"
-              : "button";
-      const state = b.disabled
-        ? base === "slot"
-          ? "locked"
-          : "disabled"
-        : this.pressed?.id === b.id
-          ? "pressed"
-          : b.id === this.hover
-            ? "hover"
-            : "normal";
-      this.kit.skin(
-        b.background,
-        base === "card"
-          ? b.kind
-          : `${base}.${state === "pressed" && base !== "button" ? "hover" : state}`,
-        b.w,
-        b.h,
-      );
+      const look = buttonLook(b, this.pressed?.id, this.hover);
+      const base = look.region.split(".")[0];
+      this.kit.skin(b.background, look.region, b.w, b.h);
       b.selection.visible = b.selected && !b.disabled;
       b.treatment.visible = base === "slot" && !!b.state;
       if (b.treatment.visible)
@@ -949,6 +942,10 @@ export class CanvasUI {
           .moveTo(b.x + b.w - 14, b.y + 14)
           .lineTo(b.x + b.w - 25, b.y + 25)
           .stroke({ color: colours.muted, width: 2 });
+      if (look.outline)
+        b.ring
+          .roundRect(b.x - 2, b.y - 2, b.w + 4, b.h + 4, 5)
+          .stroke({ color: colours.gold, width: 2, alpha: 0.8 });
       if (b.id === this.focus && !b.disabled) {
         const a =
           localStorage.getItem("mage-motion") === "reduced"

@@ -19,7 +19,7 @@ function render(skills?: object) {
   };
   const ui = new Proxy({} as Record<string, unknown>, {
     get: (_t, name: string) => {
-      if (name === "content") return { addChild: (g: { context?: { instructions?: unknown } }) => void log.push(`content.addChild(${JSON.stringify((g.context?.instructions ?? []).map((i: { action: string; data?: { path?: { shapePath?: unknown } } }) => [i.action, JSON.stringify(i.data, (k, v) => (k === "style" || k === "texture" || typeof v === "function" ? undefined : v))]))})`) };
+      if (name === "content") return { addChild: (g: { context?: { instructions?: unknown } }) => void log.push(`content.addChild(${JSON.stringify(((g.context?.instructions ?? []) as { action: string; data?: unknown }[]).map((i) => [i.action, JSON.stringify(i.data, (k, v) => (k === "style" || k === "texture" || typeof v === "function" ? undefined : v))]))})`) };
       if (name === "button")
         return (id: string, ...args: unknown[]) => {
           record("button")(id, ...args);

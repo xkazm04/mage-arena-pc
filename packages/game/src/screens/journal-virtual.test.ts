@@ -35,12 +35,12 @@ function shell(entries: number) {
 }
 
 describe("journal virtualization (D3 4.4)", () => {
-  it("builds the visible rows only: a 500-entry journal costs what a 5-entry one does", () => {
-    const small = shell(5), big = shell(500);
+  it("builds the visible rows only: a 500-entry journal costs what a 3-entry one does", () => {
+    const small = shell(3), big = shell(500);
     small.draw(); big.draw();
     const rows = (m: typeof big.made) => m.buttons.filter((b) => b.id.startsWith("card-"));
     expect(rows(big.made).length).toBeLessThanOrEqual(perPage);
-    expect(rows(small.made).length).toBe(5);
+    expect(rows(small.made).length).toBe(3);
     expect(big.made.nodes).toBeLessThanOrEqual(small.made.nodes + perPage);
     expect(big.made.nodes).toBeLessThan(60);
   });
