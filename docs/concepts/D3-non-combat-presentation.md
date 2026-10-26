@@ -29,7 +29,7 @@ settings.
 | TV-era tech worth keeping | spatial focus navigation, gamepad repeat and dead zones, input modality switching (focus ring only for keyboard and pad), reduced motion | `ui/layout.ts:44+`, `ui/gamepad.ts`, `ui.ts:71` |
 | PC gaps | no mouse-wheel scrolling, OS cursor hidden for a painted one, static key hints ("ARROWS / TAB ... ENTER ... ESC"), no graphics, resolution or UI-scale options, settings only in localStorage | `style.css`, `game-shell.ts:291` |
 | HUD | Water-only: slot icon 0 hardcoded `"water"`, Water spell names and cooldowns for every school, heading hardcoded "Cassia of the Tide"; no Heat or Momentum meter; no build or rank readout | `arena-entry.ts:998`, `:1103`, `:1129`, `:1172` |
-| Campaign | 6x7 calendar grid; only **weeks 1-2 playable** ("WATER / THE FIRST TWO WEEKS"); camp map of eight places; day, dusk and night backdrops; portraits exist for 7 moods per character but only Cassia's is shown outside the journal; narrative from the director's phrase bank | `game-shell.ts:841-870`, `assets/accepted/camp`, `a2c/portraits`, `packages/director` |
+| Campaign | 6x7 calendar grid; only **weeks 1-2 playable** ("WATER / THE FIRST TWO WEEKS"); camp map of eight places; day, dusk and night backdrops; portraits exist for 7 moods per character; camp visit presence, menu allies and the parley approach now pick the mood from trust (8.12), the parley result from the exchange, and the journal cast, chapter, saves, trial and menu hero stay neutral (no trust in the view); narrative from the director's phrase bank | `game-shell.ts:841-870`, `assets/accepted/camp`, `a2c/portraits`, `packages/director` |
 | Debug look | "Combat Feel Lab" and "The proving ground" on the title menu; all-caps slash kickers; Lab banners "NOTHING IS SENT, SAVED OR PAID" | `game-shell.ts:296+` |
 | Inconsistencies | stale `art/interface-style-v1.json` palette ("Tessera & Lime", Segoe UI) conflicts with Covenant; body font shipped is Alegreya, the manifest names Source Sans 3; possible broken characters near `game-shell.ts:870` (to verify) | scout, 2026-10-23 |
 
@@ -390,6 +390,7 @@ bout, the canonical CSVs, the font.
   $ git status --porcelain   (empty)
   ```
 - **4.5 kicker and heading system**: landed in 8.11.
+- **4.3 portrait mood follows trust**: landed in 8.12.
 
 ### 8.11 One kicker and heading module (2026-10-26)
 
@@ -445,3 +446,43 @@ save, resolution, the Lab question, `audio*`, the canonical CSVs, the title-scre
   $ git status --porcelain   (empty)
   ```
 - **Left for the owner** (rest of 4.5): title-screen and camp-map painted art, transitions, the body font.
+
+### 8.12 Portrait mood follows trust (2026-10-26)
+
+Base `main` 43bdb86. Not touched: core, director, view, saves, CSVs, fonts, audio, settings, arena-scene, art files.
+
+- **Commits**: `8b14afa9` red tests, `67797a51` module and adoption, then the doc and `context-map.json` chore. No pin moved.
+- **Module** `packages/game/src/ui/portrait-mood.ts`: `moodForTrust(trust | undefined)`, constants `MOOD_NEUTRAL_EDGE` 15 and
+  `MOOD_STRONG_EDGE` 40, each commented with the trust range [-100, 100] and skill-book `teaching.trustAtLeast` 20.
+- **Bands** (Director default, **owner to confirm**; the proposal kept unchanged, 20 falls in calm so a willing teacher reads calm):
+
+  | trust | mood |
+  |---|---|
+  | undefined, -15 < t < 15 | neutral |
+  | 15 <= t < 40 | calm |
+  | t >= 40 (to 100) | proud |
+  | -40 < t <= -15 | scheming |
+  | t <= -40 (to -100) | angry |
+- **Red first** (`npx vitest run packages/game/src/ui/portrait-mood.test.ts`):
+
+  ```text
+  FAIL  packages/game/src/ui/portrait-mood.test.ts
+  Error: Cannot find module '/packages/game/src/ui/portrait-mood.ts' imported from .../portrait-mood.test.ts
+  ```
+  Green: band edges, undefined, the +-100 clamps, every returned mood exists as a png for every folder under
+  `a2c/portraits/`, plus site tests with stub views (visit: 60 proud, -60 angry, undefined neutral; menu allies: 25 calm,
+  -20 scheming; parley approach: found in presence proud, absent neutral).
+- **Adopted**: `camp.ts` visit presence (`person.trust`), `menu.ts` allies (`ally.trust`), `parley.ts` approach
+  (`s.view.presence` lookup by `moment.target`, else neutral). The parley result keeps its trustDelta rule (reacts to the
+  exchange, not the standing). The skills screen shows no portrait for teachers, so there was nothing to adopt there.
+- **Left neutral, no trust in the view**: journal cast grid, cast detail and large detail (castData), chapter, saves, trial,
+  menu hero (Cassia), art-review fixture.
+- **Pins**: `camp-book.test.ts` (empty presence) and `calendar.test.ts` unchanged and green; `d3-widescreen.json` and U3/U4
+  tour pins did not move (`npm run smoke:d3` exit 0, `git status --porcelain` empty).
+- **Gates**: `npm run build`, `npm run lint`, `npm run check:design` green; `npm run test` 121 files / 968 tests passed.
+  `game-shell.ts` 300 lines before and after.
+- **Two-run proof** (`npx tsx packages/tools/src/u4-tour.ts`, tree clean before and after both runs, exit 0 each).
+- **Screen**: `1080-camp-place.png` (The Yard, three people present) shows three faces; at 88 px I could not tell the moods
+  apart with confidence and the fresh-season trust is likely inside the neutral band, so the shot is not evidence of a
+  non-neutral mood. The stub-view site tests carry that proof.
+- **Campaign row in section 2** corrected: only the journal cast, chapter, saves, trial and menu hero are still neutral.
