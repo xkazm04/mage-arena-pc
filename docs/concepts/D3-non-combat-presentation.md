@@ -505,3 +505,19 @@ Ask 57eeb169 (Athena, delegated): `presenceByPlace` as a read-only `campView` fi
 - **Gates**: `npm run smoke:d3` exit 0 (`"ok": true`); `game-shell.ts` 300 lines, untouched.
 - **Tour**: `u6-tour.ts` passed (2 runs, 106 screens); its evidence file moved only in measured memory/texture figures, not committed.
 - **Open**: the chip position (above the button, 40 x 48 px) is untested against painted art in a screenshot.
+
+### 8.14 4.3 camp-map chip polish (2026-10-26)
+
+Athena's follow-up to 8.13: the chips touched the nav row, sat tight under buttons, and the `+n` was small. Landed.
+
+- **Commits**: `880409b3` red tests, `fc22489d` fix. No pin moved: `d3-widescreen.json` still reads `texts` 32 per viewport and
+  the flag-off season view is untouched (the change is game-only).
+- **Rule**: `screens/camp-chip-layout.ts` `chipLayout(place, count, navBottom, obstacles)`. Try above the button, then below,
+  then right, then left; the first row on the 1920 x 1080 stage, at least 8 px below the nav row, and clear of every place
+  button, the selected-place panel, the time footer and earlier places' chips wins. The nav bottom is read from the `nav-*`
+  buttons `campHeader` drew, not assumed. The `+n` is 28 px on a `bar.track` plate (40 px tall) beside the chips.
+- **Seen** (`smoke:d3` ok:true, screenshots `docs/waves/D3-evidence/screens/*-camp.png`, git-ignored): at 1080p and 21:9 the
+  Yard and Cistern chips fall below their buttons, well clear of the nav row; the Commons `+2` is legible on its plate beside
+  the three chips. 1440p lays out in the same design space as 1080p, so the geometry is identical; its screenshot was not
+  inspected by eye.
+- **Open**: the plate uses the existing `bar.track` art (the `tooltip` panel has a 112 px minimum and throws at this size).
