@@ -6,6 +6,7 @@ import { startPreview, type Preview } from "./smoke/preview.ts";
 import { artSettled, click, screen, ui, uiReady } from "./smoke/driver.ts";
 import { outsideViewport } from "./smoke/checks.ts";
 import { writePin } from "./evidence-record.ts";
+import type { HarnessWindow } from "../../game/src/harness-contract.ts";
 
 /**
  * D3 step 3 proof: the camp screen at 1080p, 1440p and 21:9 has no letterbox bars and no text outside the viewport,
@@ -179,6 +180,51 @@ try {
     await context.close();
   }
   results.push({ arena: arenaResults });
+  // A Fire and an Air bout at 1080p (D3 4.2 follow-up): the opponent wears its Heat or Momentum meter at its feet.
+  // Screenshots only (git-ignored); the pin keeps the schools and the viewport check, not the live HUD's text count.
+  const schoolBouts: unknown[] = [];
+  for (const school of ["fire", "air"] as const) {
+    const context = await browser.newContext({
+      viewport: { width: 1920, height: 1080 },
+      deviceScaleFactor: 1,
+    });
+    const p = (current = await context.newPage());
+    p.on("pageerror", (e) => errors.push(String(e)));
+    await p.goto(`${base}/?harness=1`);
+    await screen(p, "menu");
+    await click(p, "combat-feel-lab");
+    await click(p, "lab-config-opponent"); // Dummy -> Mage AI
+    // The opponent starts on Fire with no build; each press cycles Water, Fire, Air and loads the school's preset.
+    for (let i = 0; i < (school === "fire" ? 3 : 1); i++)
+      await click(p, "lab-config-school");
+    for (let i = 0; i < (school === "fire" ? 1 : 2); i++)
+      await click(p, "lab-config-player-school");
+    await click(p, "lab-config-start");
+    await p.waitForFunction(
+      () => !!(window as unknown as HarnessWindow).__arena?.snapshot().lab,
+    );
+    await artSettled(p);
+    await p.mouse.move(8, 8);
+    await p.waitForTimeout(1200);
+    const schools = await p.evaluate(() =>
+      (window as unknown as HarnessWindow).__arena
+        .snapshot()
+        .state.actors.map((a) => a.schoolState?.school ?? "water"),
+    );
+    assert.deepEqual(schools, [school, school], `${school} bout schools`);
+    const s = await ui(p);
+    assert.deepEqual(
+      outsideViewport(s, 1920, 1080),
+      [],
+      `${school} bout: HUD outside the viewport`,
+    );
+    await p.screenshot({
+      path: join(out, "screens", `1080p-arena-${school}.png`),
+    });
+    schoolBouts.push({ school, player: schools[0], opponent: schools[1] });
+    await context.close();
+  }
+  results.push({ schoolBouts });
   // A setting survives a restart (a full page reload).
   const context = await browser.newContext({
     viewport: { width: 1920, height: 1080 },
