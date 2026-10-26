@@ -5,6 +5,8 @@
  * and the pad layout stay fixed; their hint text lives here too. Pure: no DOM, no storage.
  */
 
+import { padNames, type PadFamily } from "./pad-glyphs.ts";
+
 export const actions = [
   "moveUp",
   "moveDown",
@@ -53,7 +55,13 @@ export const actionNames: Readonly<Record<Action, string>> = {
 };
 
 /** The spell-slot actions in slot order. */
-export const slotActions = ["slot1", "slot2", "slot3", "slot4", "slot5"] as const;
+export const slotActions = [
+  "slot1",
+  "slot2",
+  "slot3",
+  "slot4",
+  "slot5",
+] as const;
 
 /**
  * Where each action is read. Two actions may share a key only when no screen reads both: roll (arena) and
@@ -162,7 +170,8 @@ export function rebind(
   code: string,
 ): RebindResult {
   const reserved = reservedCodes[code];
-  if (reserved) return { ok: false, reason: `${reserved}, so it cannot be rebound.` };
+  if (reserved)
+    return { ok: false, reason: `${reserved}, so it cannot be rebound.` };
   if (!code) return { ok: false, reason: "No key was pressed." };
   const old = table[action];
   const swaps = actions.filter(
@@ -250,24 +259,34 @@ export function hudHint(
   table: Bindings,
   modality: HintModality,
   count: number,
+  family: PadFamily = "xbox",
 ): string {
-  if (modality === "gamepad")
-    return "Left stick move  /  Right stick aim  /  RT cast  /  LT absorb  /  A roll  /  LB RB spells";
+  if (modality === "gamepad") {
+    const n = padNames(family);
+    return `Left stick move  /  Right stick aim  /  ${n.rt} cast  /  ${n.lt} absorb  /  ${n.confirm} roll  /  ${n.lb} ${n.rb} spells`;
+  }
   return `${moveKeys(table, "")} move  /  ${label(table.sprint)} sprint  /  ${label(table.roll)} roll      LMB cast  /  RMB absorb  /  ${spellKeys(table, count)} spells`;
 }
 
 /** The settings screen's control list: label, then keyboard  /  pad. */
-export function settingsLines(table: Bindings): [string, string][] {
+export function settingsLines(
+  table: Bindings,
+  family: PadFamily = "xbox",
+): [string, string][] {
+  const n = padNames(family);
   return [
     ["MOVE", `${moveKeys(table, " ")}  /  Left stick`],
-    ["AIM & CAST", "Mouse + left button  /  Right stick + RT"],
-    ["ABSORB", "Right button held  /  LT held"],
+    ["AIM & CAST", `Mouse + left button  /  Right stick + ${n.rt}`],
+    ["ABSORB", `Right button held  /  ${n.lt} held`],
     [
       "ROLL & SPRINT",
-      `${label(table.roll)} + ${label(table.sprint)}  /  A + left stick press`,
+      `${label(table.roll)} + ${label(table.sprint)}  /  ${n.confirm} + left stick press`,
     ],
-    ["SPELL SLOTS", `${spellKeys(table, 5, "–")} or wheel  /  LB and RB`],
-    ["MENUS", "Arrows + Enter  /  D-pad + A, B back"],
+    [
+      "SPELL SLOTS",
+      `${spellKeys(table, 5, "–")} or wheel  /  ${n.lb} and ${n.rb}`,
+    ],
+    ["MENUS", `Arrows + Enter  /  D-pad + ${n.confirm}, ${n.back} back`],
   ];
 }
 
@@ -306,8 +325,8 @@ export function listenKey(
 }
 
 /** Menu and pause keys are fixed (reserved above); their copy lives beside the table. */
-export const menuHint = (modality: HintModality) =>
+export const menuHint = (modality: HintModality, family: PadFamily = "xbox") =>
   modality === "gamepad"
-    ? "D-PAD  Navigate     A  Choose     B  Back"
+    ? `D-PAD  Navigate     ${padNames(family).confirm.toUpperCase()}  Choose     ${padNames(family).back.toUpperCase()}  Back`
     : "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back";
 export const pauseHint = "ESC / START  Pause";

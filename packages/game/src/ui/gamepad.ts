@@ -4,6 +4,8 @@ export interface Pad {
   buttons: readonly { pressed: boolean; value: number }[];
   connected: boolean;
   index: number;
+  /** The browser's Gamepad.id, when it reports one. */
+  id?: string;
 }
 export const pressed = (pad: Pad, index: number) =>
   !!pad.buttons[index]?.pressed || (pad.buttons[index]?.value ?? 0) > 0.5;

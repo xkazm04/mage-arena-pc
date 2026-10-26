@@ -95,7 +95,7 @@ export function controls(
   s.footer(
     state.awaiting
       ? "Press the new key     ESC  Cancel"
-      : menuHint(u.modality),
+      : menuHint(u.modality, u.padFamily),
   );
   if (state.notice) u.notice(state.notice);
   u.end(focus);

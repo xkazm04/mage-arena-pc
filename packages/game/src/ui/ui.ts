@@ -15,6 +15,7 @@ import { PadNavigation } from "./gamepad.ts";
 import { quality } from "../quality.ts";
 import { phase, phaseStart, phases, resetPhases } from "../frame-probe.ts";
 import { settings } from "../settings/settings.ts";
+import { padFamily, type PadFamily } from "../settings/pad-glyphs.ts";
 import type { UiHarness } from "../harness-contract.ts";
 import {
   contains,
@@ -71,6 +72,8 @@ export class CanvasUI {
   screen = "boot";
   focus = "";
   modality = "keyboard";
+  /** The family of the last connected pad; read by control hints the next time they render. */
+  padFamily: PadFamily = "xbox";
   busy = false;
   onBack: () => void = () => {};
   onKey: ((event: KeyboardEvent) => boolean) | undefined;
@@ -853,6 +856,7 @@ export class CanvasUI {
       this.onGamepadLost?.();
     }
     this.hadPad = !!pad;
+    if (pad) this.padFamily = padFamily(pad.id);
     const e = this.padNavigation.poll(pad, now);
     if (e.active) {
       this.modality = "gamepad";

@@ -65,7 +65,7 @@ export function settings(s: GameShell) {
   const u = s.ui;
   u.panel(96, 242, 1094, 638);
   const now = current();
-  settingsLines(now.bindings).forEach(([label, value], i) => {
+  settingsLines(now.bindings, u.padFamily).forEach(([label, value], i) => {
     u.text(label, 132, 273 + i * 94, 24, colours.gold);
     u.text(value, 132, 307 + i * 94, 32, colours.text, 1000);
   });
@@ -158,7 +158,7 @@ export function settings(s: GameShell) {
     548,
   );
   s.back(() => void s.nav.back());
-  s.footer(menuHint(u.modality));
+  s.footer(menuHint(u.modality, u.padFamily));
   u.end();
 }
 export function audioSettings(s: GameShell) {

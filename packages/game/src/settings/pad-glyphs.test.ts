@@ -1,15 +1,38 @@
 import { describe, expect, it } from "vitest";
-import { defaultBindings, hudHint, menuHint, settingsLines } from "./bindings.ts";
+import {
+  defaultBindings,
+  hudHint,
+  menuHint,
+  settingsLines,
+} from "./bindings.ts";
 import { padFamily } from "./pad-glyphs.ts";
 
 describe("padFamily", () => {
   it("reads real Gamepad.id strings", () => {
-    expect(padFamily("DualSense Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 0ce6)")).toBe("playstation");
-    expect(padFamily("Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 09cc)")).toBe("playstation");
-    expect(padFamily("054c-09cc-DualShock 4 Wireless Controller")).toBe("playstation");
-    expect(padFamily("Xbox Wireless Controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)")).toBe("xbox");
-    expect(padFamily("Xbox 360 Controller (XInput STANDARD GAMEPAD)")).toBe("xbox");
-    expect(padFamily("Generic USB Gamepad (Vendor: 0079 Product: 0011)")).toBe("generic");
+    expect(
+      padFamily(
+        "DualSense Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 0ce6)",
+      ),
+    ).toBe("playstation");
+    expect(
+      padFamily(
+        "Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 09cc)",
+      ),
+    ).toBe("playstation");
+    expect(padFamily("054c-09cc-DualShock 4 Wireless Controller")).toBe(
+      "playstation",
+    );
+    expect(
+      padFamily(
+        "Xbox Wireless Controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)",
+      ),
+    ).toBe("xbox");
+    expect(padFamily("Xbox 360 Controller (XInput STANDARD GAMEPAD)")).toBe(
+      "xbox",
+    );
+    expect(padFamily("Generic USB Gamepad (Vendor: 0079 Product: 0011)")).toBe(
+      "generic",
+    );
     expect(padFamily("")).toBe("generic");
   });
 });
@@ -24,13 +47,23 @@ describe("per-family pad copy", () => {
     expect(hudHint(defaultBindings, "gamepad", 5, "xbox")).toBe(xboxPad);
     expect(hudHint(defaultBindings, "gamepad", 5, "generic")).toBe(xboxPad);
     expect(hudHint(defaultBindings, "gamepad", 5)).toBe(xboxPad);
-    expect(hudHint(defaultBindings, "keyboard", 5, "playstation")).toBe(hudHint(defaultBindings, "keyboard", 5));
+    expect(hudHint(defaultBindings, "keyboard", 5, "playstation")).toBe(
+      hudHint(defaultBindings, "keyboard", 5),
+    );
   });
   it("menuHint names PlayStation buttons and keeps Xbox and keyboard copy", () => {
-    expect(menuHint("gamepad", "playstation")).toBe("D-PAD  Navigate     CROSS  Choose     CIRCLE  Back");
-    expect(menuHint("gamepad", "xbox")).toBe("D-PAD  Navigate     A  Choose     B  Back");
-    expect(menuHint("gamepad")).toBe("D-PAD  Navigate     A  Choose     B  Back");
-    expect(menuHint("keyboard", "playstation")).toBe("ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back");
+    expect(menuHint("gamepad", "playstation")).toBe(
+      "D-PAD  Navigate     CROSS  Choose     CIRCLE  Back",
+    );
+    expect(menuHint("gamepad", "xbox")).toBe(
+      "D-PAD  Navigate     A  Choose     B  Back",
+    );
+    expect(menuHint("gamepad")).toBe(
+      "D-PAD  Navigate     A  Choose     B  Back",
+    );
+    expect(menuHint("keyboard", "playstation")).toBe(
+      "ARROWS / TAB  Navigate     ENTER  Choose     ESC  Back",
+    );
   });
   it("settingsLines names PlayStation buttons and keeps Xbox copy", () => {
     const ps = settingsLines(defaultBindings, "playstation");
@@ -42,6 +75,8 @@ describe("per-family pad copy", () => {
       ["SPELL SLOTS", "1–5 or wheel  /  L1 and R1"],
       ["MENUS", "Arrows + Enter  /  D-pad + Cross, Circle back"],
     ]);
-    expect(settingsLines(defaultBindings, "xbox")).toEqual(settingsLines(defaultBindings));
+    expect(settingsLines(defaultBindings, "xbox")).toEqual(
+      settingsLines(defaultBindings),
+    );
   });
 });

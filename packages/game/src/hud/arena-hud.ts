@@ -260,7 +260,7 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
     true,
   );
   const hint = u.text(
-    hudHint(settings().bindings, u.modality, slotCount(school)),
+    hudHint(settings().bindings, u.modality, slotCount(school), u.padFamily),
     524,
     824,
     24,
@@ -446,6 +446,11 @@ export function arenaHud(u: CanvasUI, game: HudHost): () => void {
           ? "WARD RAISED"
           : "";
     // Derived from the live binding table, so a rebind under the pause shows on return.
-    hint.text = hudHint(settings().bindings, u.modality, slotCount(school));
+    hint.text = hudHint(
+      settings().bindings,
+      u.modality,
+      slotCount(school),
+      u.padFamily,
+    );
   };
 }
