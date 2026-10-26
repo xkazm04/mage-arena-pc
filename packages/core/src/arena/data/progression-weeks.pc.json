@@ -1,6 +1,6 @@
 {
   "version": "progression-weeks-1",
-  "_about": "PC progression profiles for the week sweep (docs/concepts/D1-combat-followup-and-progression.md 4.4, slice step 3: a reading, no tuning). Per profile, one entry per campaign week (season.json weeks: 6): the average spell rank of the reference player's rows (bolt and every line row of its composition) in that week. A whole number ranks every row at it; a .5 ranks alternate rows at the two whole ranks around it. 'untrained' never earns a rank; 'steady' follows the D1 4.3 target 'by week N the average spell rank is about N - 0.5' (week 1 cannot go below rank 1, week 6 is capped at rank 5). Stats and agility stay at the reference's defaults: no camp earns agility yet. Enemy level is the week (season.ts prepareBout). Read only by packages/core/scripts/week-census.ts. 'rivalHpLevels' (D1 6.9, read only by the opt-in lag-hp arms): per curve, one opponent-mage HP level per week, an integer 1..6 that picks progression.pc.json enemyLevels.hpMult (the createGames opponentMage level), never falling; each lag-hp arm pairs rivalProfiles.lag with one curve.",
+  "_about": "PC progression profiles for the week sweep (docs/concepts/D1-combat-followup-and-progression.md 4.4, slice step 3: a reading, no tuning). Per profile, one entry per campaign week (season.json weeks: 6): the average spell rank of the reference player's rows (bolt and every line row of its composition) in that week. A whole number ranks every row at it; a .5 ranks alternate rows at the two whole ranks around it. 'untrained' never earns a rank; 'steady' follows the D1 4.3 target 'by week N the average spell rank is about N - 0.5' (week 1 cannot go below rank 1, week 6 is capped at rank 5). Stats and agility stay at the reference's defaults: no camp earns agility yet. Enemy level is the week (season.ts prepareBout). Read only by packages/core/scripts/week-census.ts. 'rivalHpLevels' (D1 6.9, read only by the opt-in lag-hp arms): per curve, one opponent-mage HP level per week, an integer 1..6 that picks progression.pc.json enemyLevels.hpMult (the createGames opponentMage level), never falling; each lag-hp arm pairs rivalProfiles.lag with one curve. 'seasonRival' (D1 6.12, read by season.ts prepareBout): the owner-confirmed duel-duration levers a bout of a skill-book-flag season carries, the rivalProfiles entry its opponent mage follows and its rank defence hpPerRankStep (the 6.10 lag-def1 arm); a flag-off season never reads it.",
   "profiles": {
     "untrained": [1, 1, 1, 1, 1, 1],
     "steady": [1, 1.5, 2.5, 3.5, 4.5, 5]
@@ -9,6 +9,7 @@
     "ranked": [1, 1.5, 2.5, 3.5, 4.5, 5],
     "lag": [1, 1, 1.5, 2.5, 3.5, 4]
   },
+  "seasonRival": { "profile": "lag", "hpPerRankStep": 0.05 },
   "rivalHpLevels": {
     "hp1": [1, 1, 2, 2, 2, 2],
     "hp2": [1, 1, 2, 2, 3, 3]

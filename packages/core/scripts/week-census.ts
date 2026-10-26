@@ -3,55 +3,14 @@
 // player's average spell rank that week. An opt-in mage-side arm (D1 6.8 to 6.11, a reading only) levels the opponent mage too.
 // Pure: no I/O, so report-weeks.ts and the census tests share one runner.
 import { combat, presets, runtime, seconds, stateHash, type Actor, type Composition, type Games, type SpellRanks } from '../src/arena/index.ts';
-import { maxEnemyLevel, maxSpellRank, validEnemyLevel } from '../src/arena/progression.ts';
+import { maxEnemyLevel } from '../src/arena/progression.ts';
 import type { ReferenceRange } from '../src/arena/archetypes.ts';
 import { applyOpponentMage, buildRows, compositionRows, ranksAtAverage, type OpponentMage } from '../src/arena/mage-build.ts';
-import profileData from '../src/arena/data/progression-weeks.pc.json' with { type: 'json' };
 import { runBuildFight } from './builds-census.ts';
 import { censusGames, outcomeOf, runCensus, type CensusOptions } from './census-kit.ts';
 
-export type WeekProfiles = Record<string, number[]>;
-function profilesProblems(profiles: unknown, at: string): string[] {
-  if (!profiles || typeof profiles !== 'object') return [`progression-weeks.pc.json: no ${at} object`];
-  const out: string[] = [];
-  for (const [name, weeks] of Object.entries(profiles as Record<string, unknown>)) {
-    if (!Array.isArray(weeks) || weeks.length !== maxEnemyLevel) { out.push(`progression-weeks.pc.json ${name}: needs ${maxEnemyLevel} weeks`); continue; }
-    weeks.forEach((r, i) => {
-      if (typeof r !== 'number' || r < 1 || r > maxSpellRank || !Number.isInteger(r * 2)) out.push(`progression-weeks.pc.json ${name} week ${i + 1}: rank ${String(r)} is not 1..${maxSpellRank} in halves`);
-      else if (i > 0 && r < (weeks[i - 1] as number)) out.push(`progression-weeks.pc.json ${name} week ${i + 1}: rank falls`);
-    });
-  }
-  return out;
-}
-function hpLevelsProblems(curves: unknown): string[] {
-  if (!curves || typeof curves !== 'object') return ['progression-weeks.pc.json: no rivalHpLevels object'];
-  const out: string[] = [];
-  for (const [name, levels] of Object.entries(curves as Record<string, unknown>)) {
-    if (!Array.isArray(levels) || levels.length !== maxEnemyLevel) { out.push(`progression-weeks.pc.json ${name}: needs ${maxEnemyLevel} weeks`); continue; }
-    levels.forEach((l, i) => {
-      if (!validEnemyLevel(l)) out.push(`progression-weeks.pc.json ${name} week ${i + 1}: HP level ${String(l)} is not an integer 1..${maxEnemyLevel}`);
-      else if (i > 0 && l < (levels[i - 1] as number)) out.push(`progression-weeks.pc.json ${name} week ${i + 1}: HP level falls`);
-    });
-  }
-  return out;
-}
-/** Problems with a profiles file: one entry per week, each a rank 1..maxSpellRank in halves, never falling. The same rule holds
- * for the optional `rivalProfiles` (the opponent mage's average rank per week, read only by a mage-side arm). The optional
- * `rivalHpLevels` (D1 6.9) holds the opponent mage's HP level per week: an integer enemy level, never falling. */
-export function weekProfileProblems(candidate: unknown): string[] {
-  const c = candidate as { profiles?: unknown; rivalProfiles?: unknown; rivalHpLevels?: unknown };
-  if (!c || typeof c !== 'object' || !c.profiles || typeof c.profiles !== 'object') return ['progression-weeks.pc.json: no profiles object'];
-  const out = Object.keys(c).filter(k => !['version', '_about', 'profiles', 'rivalProfiles', 'rivalHpLevels'].includes(k)).map(k => `progression-weeks.pc.json: unknown key ${k}`);
-  out.push(...profilesProblems(c.profiles, 'profiles'));
-  if (c.rivalProfiles !== undefined) out.push(...profilesProblems(c.rivalProfiles, 'rivalProfiles'));
-  if (c.rivalHpLevels !== undefined) out.push(...hpLevelsProblems(c.rivalHpLevels));
-  return out;
-}
-const loadProblems = weekProfileProblems(profileData);
-if (loadProblems.length) throw Error(loadProblems.join(' '));
-export const weekProfiles: WeekProfiles = profileData.profiles;
-export const rivalProfiles: WeekProfiles = profileData.rivalProfiles;
-export const rivalHpLevels: WeekProfiles = profileData.rivalHpLevels;
+import { rivalHpLevels, rivalProfiles, seasonRival, weekProfiles } from '../src/arena/week-profiles.ts';
+export { rivalHpLevels, rivalProfiles, seasonRival, weekProfileProblems, weekProfiles, type WeekProfiles } from '../src/arena/week-profiles.ts';
 export const weeks: readonly number[] = Array.from({ length: maxEnemyLevel }, (_, i) => i + 1);
 
 /** The composition's spell ranks for an average rank: every row (mage-build.ts compositionRows: the bolt, then each line's tiers
@@ -85,8 +44,8 @@ const lagXw = (reachPerRankStepM: number) => ({ level: false, ranks: 'lag', reac
 const lagDef = (hpPerRankStep: number) => ({ level: false, ranks: 'lag', hpPerRankStep }) as const;
 const referenceRange = 'build' as const;
 export const mageArms = { level: { level: true }, ranked: { level: false, ranks: 'ranked' }, lag: { level: false, ranks: 'lag' }, 'lag-hp1': lagHp('hp1'), 'lag-hp2': lagHp('hp2'),
-  'lag-xw1': lagXw(0.5), 'lag-xw2': lagXw(1), 'lag-def1': lagDef(0.05), 'lag-def2': lagDef(0.1),
-  'lag-ref': { level: false, ranks: 'lag', referenceRange }, 'lag-def1-ref': { ...lagDef(0.05), referenceRange } } as const satisfies Record<string, MageArmSpec>;
+  'lag-xw1': lagXw(0.5), 'lag-xw2': lagXw(1), 'lag-def1': lagDef(seasonRival.rankDefence.hpPerRankStep), 'lag-def2': lagDef(0.1),
+  'lag-ref': { level: false, ranks: 'lag', referenceRange }, 'lag-def1-ref': { ...lagDef(seasonRival.rankDefence.hpPerRankStep), referenceRange } } as const satisfies Record<string, MageArmSpec>;
 type MageArmSpec = { level: boolean; ranks?: string; hp?: string; hpLevels?: readonly number[]; reachPerRankStepM?: number; hpPerRankStep?: number; referenceRange?: ReferenceRange };
 export type MageArm = keyof typeof mageArms;
 for (const arm of Object.values(mageArms)) {
