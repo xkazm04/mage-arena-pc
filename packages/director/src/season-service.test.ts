@@ -3,15 +3,17 @@ import { createHash } from 'node:crypto';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { createSeason, skillBookRules, teacherOf } from '@mage/core';
+import { createSeason, present, skillBookRules, teacherOf } from '@mage/core';
 import { CostGuard } from './budget.ts';
 import { RequestCache } from './cache.ts';
 import { loadTables } from './data.ts';
 import { PlannerProvider } from './providers.ts';
+import campPlay from '../../../docs/design/reconciled/data/camp-play.json' with { type: 'json' };
 import { SeasonService, type SeasonCommand } from './season-service.ts';
 
 // The skill-book door on the season service (D3 4.3, Athena's ruling 2026-10-26): the view carries the book and two commands
 // buy a rank and take a lesson. A season without a book is byte-for-byte what it was.
+const presence: Record<string, string[]> = campPlay.presence;
 const t = loadTables(), dirs: string[] = [];
 /** The flag-off view JSON as main produced it before the door: its length and sha256. */
 const flagOffView = { length: 7629, sha256: '936ceedcfd1be290ebe4f3f16a58717df8496508e57af5479570645179f6ca8b' };
@@ -75,12 +77,13 @@ describe('season view with a book', () => {
     const s = service(true), camp = s.session.camp, revision = s.session.revision;
     expect(() => send(s, { type: 'take-lesson', teacher: 'nobody' })).toThrow('They have no signature to teach.');
     expect(s.session.revision).toBe(revision);
-    const row = s.view().season.skills!.teachers.find(r => r.school !== s.view().season.skills!.school)!;
+    const k = s.view().season.skills!, places = [...new Set(Object.values(presence).flat())];
+    const row = k.teachers.find(r => r.school !== k.school && places.some(place => present(s.session, place).includes(r.id)))!;
+    s.session.location = places.find(place => present(s.session, place).includes(row.id))!;
     camp.trust[`${row.id}>${camp.player}`] = skillBookRules.teaching.trustAtLeast;
-    s.session.location = camp.characters[row.id]!.home ?? s.session.location;
-    const outcome = (() => { try { return send(s, { type: 'take-lesson', teacher: row.id }); } catch (e) { return (e as Error).message; } })();
-    if (typeof outcome === 'string') expect(['They are not here.']).toContain(outcome);
-    else { expect(s.progress.skills!.taught).toEqual([row.signature]); expect(s.session.revision).toBe(revision + 1); }
+    const view = send(s, { type: 'take-lesson', teacher: row.id });
+    expect(s.progress.skills!.taught).toEqual([row.signature]); expect(s.session.revision).toBe(revision + 1);
+    expect(view.season.skills!.teachers.find(r => r.id === row.id)!.taught).toBe(true);
     s.close();
   });
   it('refuses a lesson while trust is short, with the core text', () => {

@@ -1,9 +1,9 @@
-import { applyBoutInput, beginTrial, boutHash, bridgeRules, createSeason, earnCampDay, exchangeTrial, prepareBout, receiveBout, receiveTrial, seasonDue, startBout, trialTell, type BoutInput, type CampSession, type SeasonProgress, type TrialStance } from '@mage/core';
+import { applyBoutInput, beginTrial, boutHash, bridgeRules, buySeasonRank, createSeason, earnCampDay, exchangeTrial, knownSpells, lessonProblem, nextRankCost, prepareBout, rankOf, rankTier, receiveBout, receiveTrial, schoolRankKeys, seasonDue, skillBookRules, startBout, takeSeasonLesson, teacherOf, trialTell, type BoutInput, type CampSession, type SeasonProgress, type TrialStance } from '@mage/core';
 import type { Composition, Difficulty } from '@mage/core/arena';
 import { CampService, type CampCheckpoint, type CampCommand } from './camp-service.ts';
 import type { ParleyInput } from './parley.ts';
 
-export type SeasonCommand = { type: 'escort-trial' | 'trial' } | { type: 'exchange'; stance: TrialStance } | { type: 'receive-trial' } | { type: 'prepare'; composition: Composition; difficulty?: Difficulty } | { type: 'start' } | { type: 'receive' };
+export type SeasonCommand = { type: 'escort-trial' | 'trial' } | { type: 'exchange'; stance: TrialStance } | { type: 'receive-trial' } | { type: 'prepare'; composition: Composition; difficulty?: Difficulty } | { type: 'start' } | { type: 'receive' } | { type: 'buy-rank'; key: string } | { type: 'take-lesson'; teacher: string };
 export class SeasonService extends CampService {
   progress: SeasonProgress = createSeason();
   paused = false;
@@ -21,8 +21,22 @@ export class SeasonService extends CampService {
       trial: p.trial ? { ...p.trial, tell: p.trial.phase === 'active' ? trialTell(this.session, p.trial) : null, rivalName: this.session.camp.characters[p.trial.rival].name, entrantName: p.trial.entrant ? this.session.camp.characters[p.trial.entrant].name : null } : null,
       bout: p.bout ? { id: p.bout.id, phase: p.bout.phase, spectator: p.bout.spectator } : null,
       receipts: p.receipts, renown: this.session.camp.characters[this.session.camp.player].renown,
+      ...(p.skills ? { skills: this.skillsView(p.skills) } : {}),
       allies: Object.values(this.session.camp.characters).filter(c => c.role === 'main').map(c => ({ id: c.id, name: c.name, school: c.school, trust: this.session.camp.trust[`${c.id}>${this.session.camp.player}`] ?? 0 })),
     } };
+  }
+  /** The skill book as the screen reads it: the player's spells with their next cost, and each elder's lesson with the core's
+   * own refusal text (null when the lesson can be taken now). Only a season that carries a book has one. */
+  private skillsView(book: NonNullable<SeasonProgress['skills']>) {
+    const camp = this.session.camp, school = camp.characters[camp.player]!.school;
+    return {
+      school, points: book.points, earned: book.earned, taught: [...book.taught], trustNeeded: skillBookRules.teaching.trustAtLeast,
+      spells: knownSpells(book, school).map(key => ({ key, tier: rankTier(key), rank: rankOf(book, key), cost: nextRankCost(book, key), known: true, own: schoolRankKeys(school).includes(key) })),
+      teachers: Object.values(camp.characters).flatMap(c => {
+        const offer = c.role === 'elder' ? teacherOf(this.tables, c.school) : undefined;
+        return offer ? [{ id: c.id, name: c.name, school: c.school, signature: offer.signature, trust: camp.trust[`${c.id}>${camp.player}`] ?? 0, taught: knownSpells(book, school).includes(offer.signature), problem: lessonProblem(this.tables, this.session, book, c.id, true) }] : [];
+      }),
+    };
   }
   private ready(revision: number) {
     if (revision !== this.session.revision || this.dawn || this.conversation || this.closed) throw Error('The season has moved on. Refresh this scene.');
@@ -61,7 +75,9 @@ export class SeasonService extends CampService {
   }
   seasonCommand(command: SeasonCommand, revision: number) {
     this.ready(revision);
-    if (!command || !(command.type === 'prepare' ? ['composition,type', 'composition,difficulty,type'] : [command.type === 'exchange' ? 'stance,type' : 'type']).includes(Object.keys(command).sort().join())) throw Error('Invalid season command envelope.');
+    const shapes: Record<string, string[]> = { prepare: ['composition,type', 'composition,difficulty,type'], exchange: ['stance,type'], 'buy-rank': ['key,type'], 'take-lesson': ['teacher,type'] };
+    if (!command || !(shapes[command.type] ?? ['type']).includes(Object.keys(command).sort().join())) throw Error('Invalid season command envelope.');
+    if ((command.type === 'buy-rank' && typeof command.key !== 'string') || (command.type === 'take-lesson' && typeof command.teacher !== 'string')) throw Error('Invalid season command envelope.');
     if (this.paused) throw Error('Resume the season first.');
     const p = this.progress;
     switch (command.type) {
@@ -75,6 +91,8 @@ export class SeasonService extends CampService {
       case 'prepare': p.bout = prepareBout(this.tables, this.session, p, command.composition, command.difficulty); p.composition = structuredClone(command.composition); break;
       case 'start': if (!p.bout) throw Error('No prepared bout'); startBout(p.bout); break;
       case 'receive': this.session = receiveBout(this.tables, this.session, p); return this.view();
+      case 'buy-rank': this.progress = buySeasonRank(this.session, p, command.key); break;
+      case 'take-lesson': this.progress = takeSeasonLesson(this.tables, this.session, p, command.teacher); break;
       default: throw Error('Unknown season action');
     }
     this.session.revision++; return this.view();
