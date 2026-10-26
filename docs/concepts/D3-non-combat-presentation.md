@@ -347,3 +347,46 @@ the font, `audio*`, the canonical CSVs, 4.5.
   pass 2: npx tsx packages/tools/src/u4-tour.ts exit 0
   $ git status --porcelain   (empty)
   ```
+
+### 8.10 Dead feet-meter retired and the U4 art-browser pin (2026-10-26)
+
+Base `main` 5d83fb3. Out of scope and not touched: the Fire/Air windup preview (parked for the owner), the day-7 Games
+bout, the canonical CSVs, the font.
+
+- **Retired** (`d7f46be`): `packages/game/src/feet-meter.ts` and `feet-meter.test.ts`, plus their two `context-map.json`
+  entries. The live meter is `hud/feet-rune-meter.ts` (`feetMeterShape`), kept. Grep over the tree (node_modules, .git
+  and dist excluded) for `feet-meter`, `feetMeter` and `feetArcPoint`:
+
+  ```text
+  packages/game/src/hud/feet-rune-meter.test.ts: feetMeterShape (import and 3 calls)
+  packages/game/src/hud/feet-rune-meter.ts:48,113: feetMeterShape
+  context-map.json:376-377: the two retired paths (removed)
+  docs/concepts/D3-non-combat-presentation.md: prose in 8.9
+  ```
+
+  No import of `./feet-meter` anywhere in `packages/`, `apps/` or the build and tool configs. (A git-ignored scan-sweep
+  cards file under `.claude/` also names it; it is not code.)
+- **art-browser.json noise** (`packages/tools/src/u4-browser.ts`). Noise set, two runs of `smoke:u4` on `d7f46be` diffed key
+  by key: `fps`, `frameP95Ms`, `cpuP95Ms`, `effectCpuP95Ms`, `heap.*`, every per-frame figure field in `samples`,
+  `poseResults` and `elements` (`frame`, `elapsedMs`, `groundX/Y/Depth`, `offset*`, `scale*`, `lit*`, ids), the effect
+  `cpuMs` and one-shot `counts`, and the order of every `residentKeys` list. Stable: `clockStates`, texture, UI, font and
+  derived bytes, `screens`, `errors`.
+  - `docs/waves/U4-evidence/perf.json` (ignored by a nested `.gitignore`) now holds the raw `runs` and `faults`.
+  - `art-browser.json` keeps per run: the clock states, per element the figure count, A10 source, upright and effect
+    budget booleans, the pose count and all-A10 boolean, the budget as booleans (fps at least 58, CPU p95 below 8 ms,
+    texture below 400 MiB), the visible projectile counts, the byte counts and the sorted resident keys (arena and
+    after); per fault the sorted `failed` keys and diagnostics. It is written through `writePin` (one re-pin to this
+    shape).
+  - Readers of `art-browser.json` in U4-evidence: `smoke/registry.ts` (presence as the pass file), `u4-gallery.ts` and
+    the generated `index.html` (a link). None reads a value. (`u2-audit.ts` reads the U2 file of the same name, which is
+    untouched.)
+- **Two-run proof** (HEAD with the u4-browser change committed, working tree clean before):
+
+  ```text
+  $ git status --porcelain   (empty)
+  pass 1: npm run smoke:u4 exit 0
+  $ git status --porcelain   (empty)
+  pass 2: npm run smoke:u4 exit 0
+  $ git status --porcelain   (empty)
+  ```
+- **4.5 kicker and heading system**: not started. It was optional and the session stopped after the two items above.
