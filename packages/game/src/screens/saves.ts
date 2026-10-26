@@ -5,7 +5,7 @@ import { colours } from "../ui/kit.ts";
 import type { GameShell } from "../game-shell.ts";
 
 export function saves(s: GameShell, message = "") {
-  s.scene("saves", "A thread held in time", "PAUSED  /  SAVE & LOAD");
+  s.scene("saves", "A thread held in time", ["Paused", "Save & load"]);
   const u = s.ui;
   u.panel(96, 252, 1728, 596);
   portrait(u, "cassia", "neutral", 150, 302, 174, 226);

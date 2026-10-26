@@ -1,5 +1,6 @@
 import { maxEnemyLevel } from "@mage/core/arena";
 import { colours } from "../ui/kit.ts";
+import { drawKicker } from "../ui/heading.ts";
 import type { GameShell } from "../game-shell.ts";
 
 /** The season's rhythm, as `tables.season` carries it: seven days a week, Games on the seventh, the Trial the eve before. */
@@ -38,8 +39,8 @@ export function calendar(s: GameShell) {
             : colours.text,
       );
       if (date === v.day.day) u.text("TODAY", x + 56, y + 14, 16, colours.gold);
-      if (date % GAMES_DAY === 0) u.text("GAMES", x + 16, y + 42, 16, colours.water);
-      else if (date % GAMES_DAY === GAMES_DAY - 1) u.text("TRIAL", x + 16, y + 42, 16, colours.earth);
+      if (date % GAMES_DAY === 0) drawKicker(u, ["Games"], "tag", { x: x + 16, y: y + 42, colour: colours.water });
+      else if (date % GAMES_DAY === GAMES_DAY - 1) drawKicker(u, ["Trial"], "tag", { x: x + 16, y: y + 42, colour: colours.earth });
       if (date % 7 === 0) u.icon("water", x + 85, y + 29, 14);
       else if (date % 7 === 6) u.icon("earth", x + 85, y + 29, 14);
     }

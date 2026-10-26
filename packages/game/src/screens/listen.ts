@@ -11,7 +11,7 @@ export function listen(s: GameShell) {
   s.scene(
     "listen",
     "Beyond the tent flap",
-    "NIGHT  /  FOLLOW THE VOICES",
+    ["Night", "Follow the voices"],
     "place-tent",
   );
   s.lane = s.view.listening?.lane ?? 0;

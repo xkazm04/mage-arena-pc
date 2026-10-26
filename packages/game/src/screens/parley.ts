@@ -12,7 +12,7 @@ export function parley(s: GameShell, moment: Moment) {
   s.scene(
     "parley",
     `Speak with ${moment.name}`,
-    `A KNOWING MOMENT  /  ${s.view.hour}:00  /  ${s.view.hoursRemaining} HOURS REMAIN`,
+    ["A knowing moment", `${s.view.hour}:00`, `${s.view.hoursRemaining} hours remain`],
     `place-${s.view.location}`,
   );
   u.panel(96, 226, 790, 658);
@@ -146,7 +146,7 @@ export function parley(s: GameShell, moment: Moment) {
 export function letterBoard(s: GameShell) {
   const u = s.ui;
   s.typing = false;
-  s.scene("keyboard", "Choose your words", "PARLEY  /  LETTER BOARD");
+  s.scene("keyboard", "Choose your words", ["Parley", "Letter board"]);
   u.panel(96, 221, 1728, 160);
   s.textDisplay = u.text(
     s.parleyText || "Your words begin here.",
@@ -203,7 +203,7 @@ export async function speak(s: GameShell, input: ParleyInput) {
     s.scene(
       "parley-result",
       `${r.name} answers`,
-      "A MOMENT BETWEEN YOU",
+      ["A moment between you"],
       `place-${s.view.location}`,
     );
     s.ui.panel(300, 276, 1320, 574, "panel.story");

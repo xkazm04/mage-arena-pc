@@ -54,7 +54,7 @@ export function controls(
   state = initialControls(current().bindings),
   focus?: string,
 ) {
-  s.scene("controls", "Keys to your hands", "PAUSED  /  SETTINGS  /  CONTROLS");
+  s.scene("controls", "Keys to your hands", ["Paused", "Settings", "Controls"]);
   const u = s.ui;
   u.panel(96, 242, 1728, 638);
   const apply = (event: ControlsEvent, focus: string) => {

@@ -3,6 +3,7 @@ import { DailyClock } from "../ui/daily-clock.ts";
 import { backdrop } from "../ui/backdrop.ts";
 import { sigil } from "../ui/artwork.ts";
 import { colours } from "../ui/kit.ts";
+import { drawHeading } from "../ui/heading.ts";
 import { nightStatus } from "../night-status.ts";
 import { menuHint } from "../settings/bindings.ts";
 import type { GameShell } from "../game-shell.ts";
@@ -13,15 +14,13 @@ export function scene(
   s: GameShell,
   id: string,
   title: string,
-  kicker: string,
+  kicker: readonly string[],
   kind = "gate",
 ) {
   s.dailyDial = undefined;
   s.ui.begin(id);
   backdrop(s.ui, kind);
-  s.ui.text(kicker, 96, 57, 24, colours.gold);
-  s.ui.text(title, 96, 99, 58, colours.text, 1550, true);
-  s.ui.line(96, 183, 1728);
+  drawHeading(s.ui, { title, kicker });
   if (!kind.startsWith("camp-") && !kind.startsWith("place-")) {
     // Anchored to the top-right corner of the screen, 202 design units in from the edge (1718 on a 16:9 stage).
     const collar = sigil(s.ui, "inscription.collar", 1718, 118, 150, 0.7);
@@ -51,7 +50,7 @@ export function campHeader(s: GameShell, id: string, title: string) {
   s.scene(
     id,
     title,
-    `CASTRA CLAUSA  /  WEEK ${s.view.day.week}  /  DAY ${s.view.day.day}`,
+    ["Castra Clausa", `Week ${s.view.day.week}`, `Day ${s.view.day.day}`],
     id === "visit" ? `place-${s.view.location}` : `camp-${s.view.slot}`,
   );
   const v = s.view;

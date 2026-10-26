@@ -195,7 +195,7 @@ export function castJournal(s: GameShell) {
 export function castDetails(s: GameShell, id: string) {
   const c = castData.characters.find((c) => c.id === id);
   if (!c) return;
-  s.scene("cast-detail", c.name, "YOUR JOURNAL");
+  s.scene("cast-detail", c.name, ["Your journal"]);
   portrait(s.ui, c.id, "neutral", 140, 268, 476, 596);
   s.ui.panel(720, 270, 1104, 594, "panel.story");
   s.ui.text(friendly(c.school), 774, 320, 40, colours.gold, 990, true);

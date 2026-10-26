@@ -69,7 +69,7 @@ export class GameShell {
   clockDay = 0;
 
   // Shared chrome.
-  scene = (id: string, title: string, kicker: string, kind?: string) =>
+  scene = (id: string, title: string, kicker: readonly string[], kind?: string) =>
     scene(this, id, title, kicker, kind);
   back = (action: () => void, label?: string) => back(this, action, label);
   footer = (text?: string) => footer(this, text);

@@ -13,7 +13,7 @@ export function trial(s: GameShell) {
   s.scene(
     "trial",
     "Who carries the Tide?",
-    "GAMES EVE  /  TENT TRIAL",
+    ["Games eve", "Tent trial"],
     `camp-${v.slot}`,
   );
   u.panel(96, 238, 720, 642);

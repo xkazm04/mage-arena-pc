@@ -2,6 +2,7 @@ import { gameAudio } from "../audio.ts";
 import { backdrop } from "../ui/backdrop.ts";
 import { portrait, sigil } from "../ui/artwork.ts";
 import { colours } from "../ui/kit.ts";
+import { drawKicker } from "../ui/heading.ts";
 import { columns, safeArea } from "../ui/anchors.ts";
 import type { GameShell } from "../game-shell.ts";
 
@@ -75,13 +76,13 @@ export function menu(s: GameShell) {
     68,
     () => void s.ui.fullscreen(),
   );
-  s.ui.text("WATER  /  THE FIRST TWO WEEKS", 112, 976, 24, colours.muted);
+  drawKicker(s.ui, ["Water", "The first two weeks"], "note");
   s.ui.onBack = () => {};
   s.ui.end("pick-character");
   history.replaceState(null, "", `/${location.search}`);
 }
 export function pick(s: GameShell) {
-  s.scene("character", "The four bound together", "CHOOSE YOUR MAGE");
+  s.scene("character", "The four bound together", ["Choose your mage"]);
   const cards = columns(safeArea(), 4, 32);
   s.view.season.allies.forEach((ally, i) => {
     const { x, w } = cards[i]!;

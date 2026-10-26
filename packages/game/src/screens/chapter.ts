@@ -3,7 +3,7 @@ import { colours } from "../ui/kit.ts";
 import type { GameShell } from "../game-shell.ts";
 
 export function chapter(s: GameShell) {
-  s.scene("chapter", "Two weeks survived", "THE FIRST CHAPTER");
+  s.scene("chapter", "Two weeks survived", ["The first chapter"]);
   portrait(s.ui, "cassia", "calm", 1150, 262, 540, 610);
   s.ui.text(
     "The Tide has a place in the camp.\nYour board and journal remember the path here.",

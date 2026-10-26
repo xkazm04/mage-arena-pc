@@ -8,7 +8,7 @@ export function training(s: GameShell, page = 0) {
   s.scene(
     "training",
     "The proving ground",
-    "PRACTICE  /  NO SEASON STAKES",
+    ["Practice", "No season stakes"],
     "arena",
   );
   const u = s.ui;

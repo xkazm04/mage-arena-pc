@@ -12,7 +12,7 @@ export function installArtReview(s: GameShell) {
       portrait: (id: string) => {
         if (!art.manifest?.characters.some((c) => c.id === id))
           throw Error("Unknown portrait");
-        s.scene("art-review", id, "PORTRAIT DELIVERY FIXTURE");
+        s.scene("art-review", id, ["Portrait delivery fixture"]);
         [
           "neutral",
           "calm",
@@ -34,7 +34,7 @@ export function installArtReview(s: GameShell) {
         s.scene(
           "art-review",
           friendly(id),
-          "PLACE BACKDROP FIXTURE",
+          ["Place backdrop fixture"],
           `place-${id}`,
         );
         s.back(() => s.menu());
@@ -46,7 +46,7 @@ export function installArtReview(s: GameShell) {
         s.scene(
           "art-review",
           "Castra Clausa",
-          `MAP DELIVERY FIXTURE / ${slot.toUpperCase()}`,
+          ["Map delivery fixture", slot],
           `camp-${slot}`,
         );
         s.back(() => s.menu());
@@ -56,7 +56,7 @@ export function installArtReview(s: GameShell) {
         s.scene(
           "art-review",
           "The Hollow Board",
-          "ILLUSTRATION FIXTURE — NO GENERATED EVENTS",
+          ["Illustration fixture — no generated events"],
         );
         [
           "shared-loaf",

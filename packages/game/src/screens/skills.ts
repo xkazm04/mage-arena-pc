@@ -54,7 +54,7 @@ export function skills(s: GameShell, message = "") {
   const k = s.view.season.skills;
   if (!k) return s.camp();
   const page = s.nav.state("skills").page, u = s.ui;
-  s.scene("skills", "What your hands have learned", "CASTRA CLAUSA  /  SKILL BOOK", `camp-${s.view.slot}`);
+  s.scene("skills", "What your hands have learned", ["Castra Clausa", "Skill book"], `camp-${s.view.slot}`);
   u.text(`${k.points} skill points to spend  /  ${k.earned} earned`, 96, 210, 32, colours.gold, 1000);
   k.spells.slice(page * perPage, (page + 1) * perPage).forEach((row, i) => {
     const r = spellRow(row, k.points);

@@ -23,7 +23,7 @@ function recorder() {
 function shell(view: Record<string, unknown> = {}) {
   const r = recorder();
   const s = { ui: r.ui, view, nav: {} } as unknown as GameShell;
-  s.scene = (id: string, title: string, kicker: string[], kind?: string) => scene(s, id, title, kicker, kind);
+  s.scene = (id: string, title: string, kicker: readonly string[], kind?: string) => scene(s, id, title, kicker, kind);
   return { s, ...r };
 }
 const kickerOf = (texts: Call[]) => texts[0]![1];

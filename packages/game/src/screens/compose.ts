@@ -29,10 +29,13 @@ export function compose(
       destination === "lab"
         ? "Compose your practice loadout"
         : "Compose your Water",
-      `BEFORE THE COLLAR OPENS  /  DIFFICULTY: ${difficultyName(
-        (destination === "lab" ? s.arena?.lab?.config.difficulty : undefined) ??
-          difficulty(),
-      ).toUpperCase()}`,
+      [
+        "Before the collar opens",
+        `Difficulty: ${difficultyName(
+          (destination === "lab" ? s.arena?.lab?.config.difficulty : undefined) ??
+            difficulty(),
+        )}`,
+      ],
       "arena",
     );
     u.text(

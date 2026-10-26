@@ -86,6 +86,7 @@ import {
 } from "./combat-readout.ts";
 import { paletteForGames, type Palette } from "./arena-art.ts";
 import { colours } from "./ui/kit.ts";
+import { kickerText } from "./ui/heading.ts";
 import { preloadPolicy, ReadyGate } from "./arena-preload.ts";
 import { difficulty } from "./difficulty.ts";
 import type { CanvasUI } from "./ui/ui.ts";
@@ -738,10 +739,10 @@ export class ArenaGame {
     card.pause.text = pauseHint(u.modality, u.padFamily);
     card.kicker.text =
       this.mode === "tiro"
-        ? `TIRO GAMES  /  BOUT ${(this.games?.wave ?? 0) + 1} OF 4`
+        ? kickerText(["Tiro Games", `Bout ${(this.games?.wave ?? 0) + 1} of 4`])
         : this.lab
-          ? "COMBAT FEEL LAB"
-          : "THE PROVING GROUND";
+          ? kickerText(["Combat Feel Lab"])
+          : kickerText(["The proving ground"]);
     const pulse =
       localStorage.getItem("mage-motion") === "reduced"
         ? 1

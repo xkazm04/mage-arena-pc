@@ -20,7 +20,7 @@ const uiScaleSteps = [0.75, 0.9, 1, 1.15, 1.3, 1.5].filter(
 const nextUiScale = (now: number) =>
   uiScaleSteps.find((v) => v > now + 0.001) ?? uiScaleSteps[0]!;
 export function pauseScreen(s: GameShell) {
-  s.scene("pause", "The world can wait", "PAUSED");
+  s.scene("pause", "The world can wait", ["Paused"]);
   const u = s.ui;
   u.panel(520, 245, 880, 624, "panel.modal");
   u.button(
@@ -61,7 +61,7 @@ export function pauseScreen(s: GameShell) {
   u.end("resume");
 }
 export function settings(s: GameShell) {
-  s.scene("settings", "Your hands. Your magic.", "PAUSED  /  SETTINGS");
+  s.scene("settings", "Your hands. Your magic.", ["Paused", "Settings"]);
   const u = s.ui;
   u.panel(96, 242, 1094, 638);
   const now = current();
@@ -165,7 +165,7 @@ export function audioSettings(s: GameShell) {
   s.scene(
     "audio-settings",
     "Sound beneath the wards",
-    "PAUSED  /  SOUND & MUSIC",
+    ["Paused", "Sound & music"],
   );
   const u = s.ui,
     settings = gameAudio.settings;
