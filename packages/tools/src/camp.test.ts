@@ -4,6 +4,7 @@ import {
   beginListening,
   campActions,
   campPlay,
+  present,
   campView,
   createCampSession,
   createState,
@@ -267,5 +268,50 @@ describe("deterministic listening act", () => {
     }
     expect(s.history).toHaveLength(42);
     expect(s.camp.ended).toBe(true);
+  });
+});
+
+describe("camp view presence by place (D3 4.3)", () => {
+  const slotIndex = (s: ReturnType<typeof start>) => ["day", "dusk", "night"].indexOf(s.slot);
+  const schedules = campPlay.presence as Record<string, string[]>;
+  it("the player's own place equals presence, and every place comes from present()", () => {
+    for (const s of [start(), passSlot(start()), night()]) {
+      const v = campView(t, s);
+      expect(Object.keys(v.presenceByPlace)).toEqual(t.locations.map((p) => p.id));
+      expect(v.presenceByPlace[s.location]).toEqual(v.presence);
+      for (const p of t.locations)
+        expect(v.presenceByPlace[p.id].map((c) => c.id)).toEqual(present(s, p.id));
+    }
+  });
+  it("a character scheduled elsewhere this slot appears under that place", () => {
+    const s = start();
+    const elsewhere = Object.entries(schedules).find(
+      ([id, plan]) => id !== s.camp.player && plan[slotIndex(s)] !== s.location && s.camp.characters[id]?.life === "Alive",
+    )!;
+    const [id, plan] = elsewhere;
+    const here = campView(t, s).presenceByPlace[plan[slotIndex(s)]!];
+    expect(here.map((c) => c.id)).toContain(id);
+    const entry = here.find((c) => c.id === id)!;
+    expect(entry).toEqual({
+      id,
+      name: s.camp.characters[id].name,
+      school: s.camp.characters[id].school,
+      trust: s.camp.trust[`${id}>${s.camp.player}`],
+    });
+    expect(campView(t, s).presence.map((c) => c.id)).not.toContain(id);
+  });
+  it("dead, stocked and player characters never appear", () => {
+    const s = start();
+    const all = (v: ReturnType<typeof campView>) => Object.values(v.presenceByPlace).flat().map((c) => c.id);
+    const before = all(campView(t, s));
+    expect(before).not.toContain(s.camp.player);
+    const [a, b] = before.filter((id) => id !== s.camp.player);
+    expect(a && b).toBeTruthy();
+    s.camp.characters[a!].life = "Dead";
+    s.camp.characters[b!].stocks = 2;
+    const after = all(campView(t, s));
+    expect(after).not.toContain(a);
+    expect(after).not.toContain(b);
+    expect(after).not.toContain(s.camp.player);
   });
 });
