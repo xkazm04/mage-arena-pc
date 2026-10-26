@@ -44,7 +44,7 @@ describe("the living calendar (D3 4.3)", () => {
   it("shows each week's level on its WEEK row, past, current and future told apart", () => {
     const { texts } = render(9);
     const rows = [1, 2, 3, 4, 5, 6].map((w) => texts.find((t) => t.startsWith(`LEVEL ${w} `)));
-    expect(rows).toEqual(["LEVEL 1 · PAST", "LEVEL 2 · NOW", "LEVEL 3 · AHEAD", "LEVEL 4 · AHEAD", "LEVEL 5 · AHEAD", "LEVEL 6 · AHEAD"]);
+    expect(rows).toEqual(["LEVEL 1 Â· PAST", "LEVEL 2 Â· NOW", "LEVEL 3 Â· AHEAD", "LEVEL 4 Â· AHEAD", "LEVEL 5 Â· AHEAD", "LEVEL 6 Â· AHEAD"]);
   });
   it("keeps the existing strings", () => {
     expect(render().texts).toContain("Later weeks await the next chapter.");
@@ -52,4 +52,4 @@ describe("the living calendar (D3 4.3)", () => {
 });
 /** Fixture: day 9 (week 2). Moved from 4346 bytes, sha256 c84cc0b57d87453e6f9b8fb5c7d0c4ae7472eb08da2d1c9d0d51a8e82fba527a
  * (main 955337b) by the living calendar. */
-const BYTES = 5175, HASH = "813da4fb5c29a0a21ca1d3172f7b1ef9e4cb91376224f26016860891b88c9486";
+const BYTES = 5169, HASH = "1c50ae1532c0362f7652da51255d0cfb3a610c964db7ac2f0261899464061d97";

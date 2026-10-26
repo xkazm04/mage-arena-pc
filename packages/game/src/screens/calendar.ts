@@ -16,7 +16,7 @@ export function calendar(s: GameShell) {
     const state = week + 1 < v.day.week ? "PAST" : week + 1 === v.day.week ? "NOW" : "AHEAD";
     u.text(`WEEK ${week + 1}`, 132, y + 8, 26, state === "NOW" ? colours.gold : colours.muted);
     u.text(
-      `LEVEL ${Math.min(maxEnemyLevel, week + 1)} · ${state}`,
+      `LEVEL ${Math.min(maxEnemyLevel, week + 1)} Â· ${state}`,
       132,
       y + 38,
       18,
