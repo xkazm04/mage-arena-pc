@@ -72,7 +72,24 @@ export class ImpactClock {
     };
   }
 }
+/** Pixels a stacked number climbs per slot at 1080p: a 24 px number is 24 * 1.22 high, so one step clears it. */
+export const numberStepPixels1080 = 30;
+/** Where the `slot`-th concurrent number above one target sits, relative to the first: up a step, and a little sideways. */
+export function numberSlotOffset(slot: number): { x: number; y: number } {
+  const side = [0, 1, -1][slot % 3]!;
+  return { x: side * 12, y: -slot * numberStepPixels1080 };
+}
+/** The lowest slot not held by a live number on the same target. */
+export function freeNumberSlot(taken: Iterable<number>): number {
+  const used = new Set(taken);
+  let slot = 0;
+  while (used.has(slot)) slot++;
+  return slot;
+}
 interface NumberView {
+  /** The actor the number floats over, and which stacking slot above it the number holds. */
+  target: number;
+  slot: number;
   text: BitmapText;
   bornS: number;
   at: { x: number; y: number };
@@ -182,6 +199,10 @@ export class CombatFeedback {
       text.anchor.set(0.5, 1);
       text.visible = true;
       this.active.push({
+        target: actor.id,
+        slot: freeNumberSlot(
+          this.active.filter((n) => n.target === actor.id).map((n) => n.slot),
+        ),
         text,
         bornS,
         at: e.at ?? { ...actor.pos },
@@ -246,9 +267,11 @@ export class CombatFeedback {
         return false;
       }
       const p = groundToScreen(n.at, c);
+      const stack = numberSlotOffset(n.slot);
       n.text.position.set(
-        p.x,
-        p.y -
+        p.x + stack.x * m.resolutionScale,
+        p.y +
+          stack.y * m.resolutionScale -
           m.figureHeightPx -
           14 * m.resolutionScale -
           (n.still ? 0 : Math.min(1, age / policy.numbersS)) *
