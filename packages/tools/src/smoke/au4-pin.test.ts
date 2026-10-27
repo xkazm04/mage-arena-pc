@@ -41,6 +41,7 @@ describe("au4 pin", () => {
         duckGains: { music: 0.448 },
         music: { id: "camp-night", offset: 9, duration: 20 },
         active: [],
+        musicVoices: 2,
         logs: [
           { time: 7, event: "locked" },
           { time: 9, event: "play", cue: "ui.click" },
@@ -48,7 +49,7 @@ describe("au4 pin", () => {
       }),
     );
     expect(a).toEqual(b);
-    expect(a.logKinds).toEqual(["locked", "play ui.click"]);
+    expect(measureAudio(shot()).logKinds).toEqual(["locked", "play ui.click"]);
   });
   it("still pins a changed cue set and measures the gains", () => {
     expect(pinAudio(shot({ decodedBuffers: { x: 1 } }))).not.toEqual(

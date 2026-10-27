@@ -1,4 +1,4 @@
-/** What the AU4 smoke pins of an audio snapshot: the cue set and its settings, never a measured gain or a log clock. */
+/** What the AU4 smoke pins of an audio snapshot: the cue set and its settings, never a measured gain, a crossfade voice count or a log clock or order. */
 type Dict<T> = Record<string, T>;
 export type AudioShot = {
   state: string;
@@ -31,19 +31,18 @@ export function pinAudio(a: AudioShot) {
     settings: a.settings,
     scene: a.scene,
     worldPaused: a.worldPaused,
-    music: a.music ? { id: a.music.id, duration: a.music.duration } : null,
-    musicVoices: a.musicVoices,
     decodedBuffers: sortedEntries(a.decodedBuffers),
     streamedTracks: sortedEntries(a.streamedTracks),
     decodedAudioBytes: a.decodedAudioBytes,
     processing: a.processing,
-    logKinds: logKinds(a.logs),
   };
 }
-/** Measured values go to the unpinned section: gains, music offset, active voices and the full log. */
+/** Measured values go to the unpinned section: gains, music state and voices, active voices, event kinds and the full log. */
 export function measureAudio(a: AudioShot) {
   return {
     music: a.music,
+    musicVoices: a.musicVoices,
+    logKinds: logKinds(a.logs),
     duckGains: a.duckGains,
     active: a.active,
     logs: a.logs,
