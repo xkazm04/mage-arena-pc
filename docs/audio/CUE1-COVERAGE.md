@@ -35,3 +35,7 @@ AU4 audio was held 2026-10-24 on the `audio.test.ts` pin of 22 assets. Re-cut on
 - 8cee7fc3 CUE1 ledger, requests and plan, 13 SFX calls, 387 credits (was 38bbc2d5); ledgers merged, no line dropped.
 - 7f519951 cues and variants (was d07f86df); `audio-events.test.ts` kept on main's routes-driven form plus the authored-cue check above.
 - 09fcfba2 pin fix: `audio.test.ts` now pins the exact sorted list of 32 asset keys and `toHaveLength(32)` (22 before). All other checks unchanged.
+
+## Update 2026-10-27 (M3)
+
+`down`, `interrupt` and `phase` now have routes in `audio.json` (`any` actor; `down` and `interrupt` spatial, `phase` centred) and leave `uncuedKinds`. `cast` (`cast.start`) remains unrouted, as do crowd, absorb raise/hold and telegraph cues.

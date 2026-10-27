@@ -118,6 +118,10 @@ Evidence: `packages/game/data/audio.json` `routes` holds `perfect unlock release
 kinds `down`, `interrupt`, `phase` have none (`audio-events.test.ts` lists them as uncued). D2 section 2 "Sound gaps".
 Lane: the AU4 re-cut in flight owns `audio.json` and `public/audio`; route `down` to an existing kept sample there, and
 any new cue goes through ElevenLabs within the 1,000-credit floor rule (authorized). Not touched here.
+Status 2026-10-27: routed with no new file, each to its kept AU4 sample (audio bible levels unchanged): `down` -> `down-a`
+(-2 dB cue gain, spatial, reads as final), `interrupt` -> `interrupt-a` (-2 dB, spatial, reads as a cut), `phase` -> `phase-a`
+(-1 dB, centred, one at a time with a 2 s cooldown, reads as rival escalation). Still silent (remaining): `cast` start
+(`cast.start` authored, no route), crowd, absorb raise/hold and telegraph cues.
 
 **M4. D1: Brand Drag (Brand Wrath rank 5) has no measurable curve signature.** owner-free.
 Evidence: D1 6.2 / scorecard: rival tier-IV share 52.8% -> 53.5%, reference 42.0% -> 41.5%; the heavy AI casts Wrath

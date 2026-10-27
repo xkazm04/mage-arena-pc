@@ -118,15 +118,15 @@ describe("audio cue sheet", () => {
 
   it("case 5: sim event kinds with no route are counted as silent", () => {
     const events = [
-      { kind: "down" },
-      { kind: "interrupt" },
+      { kind: "cast" },
+      { kind: "crowd" },
       { kind: "hit" },
-      { kind: "down" },
-      { kind: "interrupt" },
-      { kind: "interrupt" },
+      { kind: "cast" },
+      { kind: "crowd" },
+      { kind: "crowd" },
     ];
     const { summary } = cueSheet([], manifest, { events });
-    expect(summary.silentKinds).toEqual({ down: 2, interrupt: 3 });
+    expect(summary.silentKinds).toEqual({ cast: 2, crowd: 3 });
   });
 
   it("case 6: peakBus.effects is the most effects rows sounding at once, never past the bus limit", () => {

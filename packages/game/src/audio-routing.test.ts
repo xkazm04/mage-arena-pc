@@ -22,7 +22,7 @@ const ev = (
 ) => ({ kind, actorId, value, contactDamage });
 
 /**
- * The audio half of arena-entry.ts consumeEvents as it stood at 13c8fc3, verbatim except that
+ * The audio half of arena-entry.ts consumeEvents as it stood at 13c8fc3, plus the down, interrupt and phase branches added with their routes (M3), verbatim except that
  * `gameAudio.play` records its call. The router must reproduce every call it makes.
  */
 function legacy(
@@ -66,6 +66,9 @@ function legacy(
     });
   } else if (e.kind === "stagger") void gameAudio.play("stagger", spatial);
   else if (e.kind === "roll") void gameAudio.play("roll", spatial);
+  else if (e.kind === "down") void gameAudio.play("down", spatial);
+  else if (e.kind === "interrupt") void gameAudio.play("interrupt", spatial);
+  else if (e.kind === "phase") void gameAudio.play("phase");
   return calls;
 }
 
@@ -133,6 +136,23 @@ describe("event-to-cue router (audio.json routes)", () => {
       expect(c, cue).toBeDefined();
       for (const a of c!.assets) expect(manifest.assets).toHaveProperty(a);
     }
+  });
+  it("case 9: down and interrupt play their cut cues spatially for any actor", () => {
+    const actor = { id: 7, pos: { x: 28, y: 10 }, enemy: true };
+    for (const kind of ["down", "interrupt"] as const)
+      expect(routeEvent(ev(kind, 7), { listener, actor })).toEqual([
+        { cue: kind, pan: 0.5, gain: 0.5 },
+      ]);
+    const me = { id: 1, pos: listener.pos };
+    expect(routeEvent(ev("down", 1), { listener, actor: me })).toEqual([
+      { cue: "down", pan: 0, gain: 1 },
+    ]);
+  });
+  it("case 10: a rival phase shift plays the unpanned phase cue at default gain", () => {
+    const actor = { id: 7, pos: { x: 28, y: 10 }, enemy: true };
+    expect(routeEvent(ev("phase", 7, 2), { listener, actor })).toEqual([
+      { cue: "phase" },
+    ]);
   });
   it("keeps today's unclamped pan (audio.ts applies maxPan, not the router)", () => {
     expect(spatialMix(36, 0).pan).toBe(1);

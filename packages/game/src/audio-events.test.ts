@@ -22,8 +22,8 @@ const cued: Record<string, string[]> = Object.fromEntries(
   ]),
 );
 /**
- * Event kinds with no cue yet, derived: D2 section 4.5 fills them (death, interrupt, phase and cast-start
- * cues) by adding a route, which takes the kind off this list with no test edit.
+ * Event kinds with no cue yet, derived: D2 section 4.5 fills them (cast-start cue still owed; death, interrupt
+ * and phase are routed) by adding a route, which takes the kind off this list with no test edit.
  */
 const uncued = uncuedKinds(kinds);
 
@@ -91,22 +91,16 @@ describe("every sim event kind against data/audio.json (D2 4.5)", () => {
     expect(played.has("stagger")).toBe(false);
     for (const cue of played) expect(audioData.cues).toHaveProperty(cue);
   });
-  it("authors a resolving cue for each kind still without a route (CUE1)", () => {
-    const manifest = JSON.parse(
-      readFileSync(
-        new URL("../public/audio/manifest.json", import.meta.url),
-        "utf8",
-      ),
-    ) as { assets: Record<string, unknown> };
-    // Authored ahead of the routes and arena-entry wiring; a route added later takes the kind off `uncued`.
-    const authored = { cast: "cast.start", down: "down", interrupt: "interrupt", phase: "phase" };
-    for (const [kind, cue] of Object.entries(authored)) {
-      expect(uncued, `${kind} gained a route: drop it from authored`).toContain(kind);
-      const c = (
-        audioData.cues as Record<string, { assets: string[] } | undefined>
-      )[cue];
-      expect(c, `${kind} -> ${cue}`).toBeDefined();
-      for (const asset of c!.assets) expect(manifest.assets).toHaveProperty(asset);
+  it("routes down, interrupt and phase to their authored cues (D2 4.5, M3)", () => {
+    for (const [kind, cue] of Object.entries({
+      down: "down",
+      interrupt: "interrupt",
+      phase: "phase",
+    })) {
+      expect(uncued, `${kind} is still uncued`).not.toContain(kind);
+      expect(cued[kind], kind).toEqual([cue]);
     }
+    // Still silent: cast has no consumer (cast.start is authored, not routed).
+    expect(uncued).toContain("cast");
   });
 });

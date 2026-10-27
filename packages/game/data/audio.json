@@ -115,7 +115,10 @@
       }
     ],
     "stagger": [{ "who": "any", "cue": "stagger", "spatial": true }],
-    "roll": [{ "who": "any", "cue": "roll", "spatial": true }]
+    "roll": [{ "who": "any", "cue": "roll", "spatial": true }],
+    "down": [{ "who": "any", "cue": "down", "spatial": true }],
+    "interrupt": [{ "who": "any", "cue": "interrupt", "spatial": true }],
+    "phase": [{ "who": "any", "cue": "phase" }]
   },
   "cues": {
     "cast.fire": {
