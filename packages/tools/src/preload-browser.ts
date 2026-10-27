@@ -6,6 +6,7 @@ import { spawn } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { firstGlInvalid, isGlInvalid } from "./smoke/gl-errors.ts";
 import type { CanvasUI } from "../../game/src/ui/ui.ts";
 import type { ArenaGame } from "../../game/src/arena-entry.ts";
 
@@ -115,6 +116,7 @@ async function open(path: string, run: Run) {
     warnings: string[] = [],
     errors: string[] = [];
   page.on("console", (m) => {
+    if (isGlInvalid(m.text())) glInvalid.push(m.text());
     if (m.type() === "warning") warnings.push(m.text());
   });
   page.on("pageerror", (e) => errors.push(e.message));
@@ -128,6 +130,18 @@ async function open(path: string, run: Run) {
     },
   );
   return { context, page, warnings, errors };
+}
+// Every console line from a rejected GL call, across the running case.
+const glInvalid: string[] = [];
+async function clean<T>(run: () => Promise<T>): Promise<T> {
+  glInvalid.length = 0;
+  const r = await run();
+  assert.equal(
+    glInvalid.length,
+    0,
+    `${glInvalid.length} GL_INVALID console line(s); first: ${firstGlInvalid(glInvalid)}`,
+  );
+  return r;
 }
 const ui = (p: Page) =>
   p.evaluate(() => (window as unknown as Win).__ui.snapshot());
@@ -395,18 +409,24 @@ try {
     }
     await sleep(100);
   }
-  results.menu = [await menu(false), await menu(true)];
-  results.training = [await training(false), await training(true)];
-  results.lab = [await lab(false), await lab(true)];
+  results.menu = [
+    await clean(() => menu(false)),
+    await clean(() => menu(true)),
+  ];
+  results.training = [
+    await clean(() => training(false)),
+    await clean(() => training(true)),
+  ];
+  results.lab = [await clean(() => lab(false)), await clean(() => lab(true))];
   results.tiro = [
-    await tiro(false, true),
-    await tiro(true, true),
-    await tiro(true, false),
+    await clean(() => tiro(false, true)),
+    await clean(() => tiro(true, true)),
+    await clean(() => tiro(true, false)),
   ];
   results.failure = [
-    await failure("abort"),
-    await failure("hang", 3),
-    await failure("hang"),
+    await clean(() => failure("abort")),
+    await clean(() => failure("hang", 3)),
+    await clean(() => failure("hang")),
   ];
   writeFileSync(
     join(out, "preload-results.json"),
