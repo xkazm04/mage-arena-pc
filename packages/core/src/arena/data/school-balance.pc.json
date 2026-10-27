@@ -10,5 +10,13 @@
     "air_form.cooldownS": 3,
     "air_form.mana": 0
   },
+  "brandDrag": {
+    "_about": "D1 6.13, a reading only, OFF by default (no arm is selected unless a census passes --brand-drag <arm>): each arm re-times a rank-5 Brand Wrath so the heavy plan presses it more than once a fight. reserve: the heavy plan keeps Wrath's mana one tier earlier; early: Wrath opens at tier III; quick: Wrath cooldown 10 s.",
+    "arms": {
+      "reserve": { "reserveTiers": 1 },
+      "early": { "tier": 3 },
+      "quick": { "cooldownS": 10 }
+    }
+  },
   "exchange": { "closeRangeM": 5, "guardS": 8, "guardHits": 8, "guardReduction": 0.95 }
 }

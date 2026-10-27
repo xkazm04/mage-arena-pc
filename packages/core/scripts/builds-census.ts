@@ -100,7 +100,7 @@ export function summariseBuild(fights: BuildFight[]) {
     medianInBand: p50 !== null && p50 >= target[0] && p50 <= target[1], winRateInRange: winRate >= buildWinRateTarget[0] && winRate <= buildWinRateTarget[1],
     curve: { shortFights: short.length, rivalShareShort: share(short.filter(f => f.outcome === 'loss').length, short.length),
       tier4Fights: long.length, rivalShareTier4: share(long.filter(f => f.outcome === 'loss').length, long.length) },
-    hitsPerExchange: cleanHits / Math.max(1, exchanges), histogram, roles, meanDistanceM: fights.reduce((a, f) => a + f.meanDistanceM, 0) / Math.max(1, count), distanceOverTime, answers,
+    hitsPerExchange: cleanHits / Math.max(1, exchanges), histogram, castsPerFight: Object.fromEntries(Object.entries(casts).map(([id, n]) => [id, n / Math.max(1, count)])), roles, meanDistanceM: fights.reduce((a, f) => a + f.meanDistanceM, 0) / Math.max(1, count), distanceOverTime, answers,
     ...planBranches(fights) };
 }
 export type BuildSummary = ReturnType<typeof summariseBuild>;

@@ -9,17 +9,20 @@ import { runtime } from '../src/arena/index.ts';
 import { rivalBuildIds, rivalBuilds } from '../src/arena/archetypes.ts';
 import { ultimateFor } from '../src/arena/progression.ts';
 import { exchangeOff } from '../src/arena/exchange.ts';
+import { brandDragArms, withBrandDrag } from '../src/arena/brand-drag.ts';
 import { buildWinRateTarget, runBuildFight, summariseBuild, whyLine } from './builds-census.ts';
 import { censusCommand, evidenceEnvelope, fightDigest, parseCensusArgs, refuseArgs, writeEvidence } from './census-kit.ts';
 
-const args = process.argv.slice(2), { count, tag, outDir, arg } = parseCensusArgs(args), only = arg('--only')?.split(','), exchange = arg('--exchange') ?? 'on';
+const args = process.argv.slice(2), { count, tag, outDir, arg } = parseCensusArgs(args), only = arg('--only')?.split(','), exchange = arg('--exchange') ?? 'on', brandDrag = arg('--brand-drag');
 // `--ranks build:spell=rank,...` overrides a build's spell ranks for this run only (how an ultimate is judged: rank 4 vs rank 5 in its build).
 const rankOverrides = (arg('--ranks')?.split(',') ?? []).map(entry => /^([a-z_]+):([a-z_]+)=([1-5])$/.exec(entry));
 if (rankOverrides.some(m => !m || !rivalBuilds[m[1]!] || (Number(m[3]) === 5 && !ultimateFor(m[2]!, 5)))) throw Error('Invalid --ranks (build:spell=rank, rank 5 only on a row with an ultimate form)');
 for (const m of rankOverrides) rivalBuilds[m![1]!]!.spellRanks = { ...rivalBuilds[m![1]!]!.spellRanks, [m![2]!]: Number(m![3]) };
+// `--brand-drag reserve|early|quick` selects one off-by-default Brand Drag arm (D1 6.13, brand-drag.ts) for this run only.
+if (brandDrag !== undefined && !Object.hasOwn(brandDragArms, brandDrag)) refuseArgs();
 if (only?.some(id => !rivalBuildIds.includes(id)) || !['on', 'off'].includes(exchange)) refuseArgs();
 const start = performance.now(), pct = (x: number | null): string => x === null ? '  -' : `${Math.round(x * 100)}%`.padStart(4);
-const run = <T>(body: () => T): T => exchange === 'off' ? exchangeOff(body) : body();
+const run = <T>(body: () => T): T => withBrandDrag(brandDrag, () => exchange === 'off' ? exchangeOff(body) : body());
 const summaries = (only ?? rivalBuildIds).map(id => {
   const fights = run(() => Array.from({ length: count }, (_, i) => runBuildFight(runtime.games.censusSeedStart + i, id)));
   const s = { ...summariseBuild(fights), digest: fightDigest(fights) };
@@ -31,5 +34,5 @@ const summaries = (only ?? rivalBuildIds).map(id => {
 });
 console.log(`builds census: ${count} fights/build in ${((performance.now() - start) / 1000).toFixed(1)} s (reference win target ${buildWinRateTarget.join('-')}).`);
 if (tag) writeEvidence(outDir, `${tag}.json`, { ...evidenceEnvelope({ command: censusCommand('census:builds', args), count }),
-  mode: `createGames(..., { rivalBuild }), PC overlay on, exchange windows ${exchange}, no named phases${rankOverrides.length ? `, spell ranks overridden: ${arg('--ranks')}` : ''}`,
+  mode: `createGames(..., { rivalBuild }), PC overlay on, exchange windows ${exchange}, no named phases${rankOverrides.length ? `, spell ranks overridden: ${arg('--ranks')}` : ''}${brandDrag ? `, Brand Drag arm ${brandDrag}` : ''}`,
   countPerBuild: count, winRateTarget: buildWinRateTarget, summaries });

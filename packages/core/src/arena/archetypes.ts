@@ -14,7 +14,8 @@ import buildData from './data/rival-builds.json' with { type: 'json' };
 import { balancedSpell, identityNumber, schoolSpellById, validateLoadout, type SchoolSpell } from './schools.ts';
 import { schoolKit } from './school-kit.ts';
 import { notePlan, type PlanBranch } from './plan-trace.ts';
-import { maxSpellRank, spellRanksProblems, ultimateFor } from './progression.ts';
+import { maxSpellRank, spellRank, spellRanksProblems, ultimateFor } from './progression.ts';
+import { activeBrandDrag, brandDragSpell } from './brand-drag.ts';
 import { paced } from './tuning.ts';
 import { arenaContains } from './geometry.ts';
 import { rotate, sub, unit, type Vec } from './math.ts';
@@ -174,6 +175,8 @@ const lastPress = (a: Actor, spell: SchoolSpell): number => {
 };
 /** The tier a heavy build survives to before it plays (owner: "survive until later rounds", spark: tiers III-IV). */
 const heavyPayoffTier = 3;
+/** Extra tiers ahead the heavy plan keeps payoff mana for: 0 unless a Brand Drag arm (D1 6.13) asks and the build holds Wrath at rank 5. */
+const reserveAhead = (a: Actor, state: ArenaState): number => spellRank(a, brandDragSpell, state) >= maxSpellRank ? activeBrandDrag()?.reserveTiers ?? 0 : 0;
 /** How far ahead an answer is cast (the row's own windup plus a decision cadence would be later than the blow). */
 const answerHorizonS = 0.6;
 
@@ -232,7 +235,7 @@ export function archetypeChoose(state: ArenaState, a: Actor, target: Actor, dist
     if (payoff && !waiting) return as('heavy:payoff', { slot: payoff.slot, cast: true });
     const builder = of('build')[0];
     if (builder && resource < first) return as('heavy:build', { slot: builder.slot, cast: true });
-    const reserve = Math.max(0, ...ownRows(build, state).filter(s => (roleOf(s) === 'payoff' || roleOf(s) === 'signature') && s.tier <= a.tier + 1).map(s => s.mana));
+    const reserve = Math.max(0, ...ownRows(build, state).filter(s => (roleOf(s) === 'payoff' || roleOf(s) === 'signature') && s.tier <= a.tier + 1 + reserveAhead(a, state)).map(s => s.mana));
     const bolt = of('bolt')[0];
     if (bolt && !waiting && a.mana - bolt.spell.mana >= reserve) return as('heavy:bolt', { slot: bolt.slot, cast: true });
     // The withhold, by its reason: holding for the payoff tier, keeping the next payoff's mana, or nothing legal.

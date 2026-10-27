@@ -4,7 +4,8 @@ import { schoolIdentity } from './data.generated.ts';
 import balance from './data/school-balance.pc.json' with { type: 'json' };
 import presetData from './data/school-presets.json' with { type: 'json' };
 import { schoolKit, schoolSheet } from './school-kit.ts';
-import { rankPower, spellRank } from './progression.ts';
+import { maxSpellRank, rankPower, spellRank } from './progression.ts';
+import { activeBrandDrag, brandDragSpell } from './brand-drag.ts';
 /** The Veering Bolt's curved flight step, used by the kernel's projectile update (Air owns the geometry). */
 export { curvedStep } from './air.ts';
 import type { Vec } from './math.ts';
@@ -101,7 +102,12 @@ export function newSchoolState(loadout: SlotComposition): SchoolState {
 export function slotSpell(actor: Actor, slot: number, state?: ArenaState): SchoolSpell | undefined {
   const s = actor.schoolState; if (!s) return undefined;
   const spell = s.catalogue ? canonicalSpells[s.school][slot] : schoolSpellById((slot === 0 ? s.loadout.bolt : s.loadout.slots[slot - 1]) ?? '');
-  return spell && spell.tier <= (spell.tier === 0 ? 0 : actor.tier) ? balancedSpell(spell, state) : undefined;
+  if (!spell) return undefined;
+  const arm = spell.id === brandDragSpell && spellRank(actor, spell.id, state) >= maxSpellRank ? activeBrandDrag() : undefined;
+  const row = arm ? { ...spell, ...(arm.tier !== undefined ? { tier: arm.tier } : {}) } : spell;
+  if (row.tier > (row.tier === 0 ? 0 : actor.tier)) return undefined;
+  const out = balancedSpell(row, state);
+  return arm ? { ...out, ...(arm.cooldownS !== undefined ? { cooldownS: arm.cooldownS } : {}), ...(arm.mana !== undefined ? { mana: arm.mana } : {}) } : out;
 }
 
 /** What a school module answers for the kernel. Defaults are the Water behaviour (no change). */
