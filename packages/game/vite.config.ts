@@ -106,5 +106,16 @@ export default defineConfig({
     ],
   },
   server: { host: "127.0.0.1", port: 5173, strictPort: true },
-  build: { outDir: "../../dist/game", emptyOutDir: true },
+  build: {
+    outDir: "../../dist/game",
+    emptyOutDir: true,
+    rolldownOptions: {
+      output: {
+        // pixi.js is the bulk of the entry chunk; its own file keeps the app chunk small and cacheable.
+        codeSplitting: {
+          groups: [{ name: "pixi", test: /node_modules[\\/]pixi\.js/ }],
+        },
+      },
+    },
+  },
 });
