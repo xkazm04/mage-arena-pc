@@ -454,7 +454,7 @@ Base `main` 43bdb86. Not touched: core, director, view, saves, CSVs, fonts, audi
 - **Commits**: `8b14afa9` red tests, `67797a51` module and adoption, then the doc and `context-map.json` chore. No pin moved.
 - **Module** `packages/game/src/ui/portrait-mood.ts`: `moodForTrust(trust | undefined)`, constants `MOOD_NEUTRAL_EDGE` 15 and
   `MOOD_STRONG_EDGE` 40, each commented with the trust range [-100, 100] and skill-book `teaching.trustAtLeast` 20.
-- **Bands** (Director default, **owner to confirm**; the proposal kept unchanged, 20 falls in calm so a willing teacher reads calm):
+- **Bands** (**owner-confirmed 2026-10-27**, ruling 2: 15/40 kept as proposed; was a Director default, 20 falls in calm so a willing teacher reads calm):
 
   | trust | mood |
   |---|---|

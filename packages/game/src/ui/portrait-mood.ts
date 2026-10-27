@@ -1,4 +1,4 @@
-/** Camp trust 'other>player' runs over [-100, 100] (rules.json ranges.trust); the bands below are a Director default, owner to confirm. */
+/** Camp trust 'other>player' runs over [-100, 100] (rules.json ranges.trust); the bands below are owner-confirmed 2026-10-27 (ruling 2: 15/40). */
 
 /** Inside (-15, 15) a face shows nothing in particular. Skill-book teaching.trustAtLeast is 20, so a teacher who will teach is already past this edge and reads calm. */
 export const MOOD_NEUTRAL_EDGE = 15;
