@@ -10,7 +10,12 @@ import {
   safeEdges,
   uiScale,
 } from "./anchors.ts";
-import { requiredRegions, validateAtlas } from "./kit.ts";
+import {
+  focusGap,
+  healFocusGap,
+  requiredRegions,
+  validateAtlas,
+} from "./kit.ts";
 describe("canvas UI contracts", () => {
   it("preserves a five percent safe rectangle at 1080p and 1440p", () => {
     for (const h of [1080, 1440]) {
@@ -177,5 +182,17 @@ describe("notice plate", () => {
   });
   it("stays home when nothing is in the way", () => {
     expect(noticeRect([{ x: 0, y: 0, w: 400, h: 300 }])).toEqual(noticeHome);
+  });
+});
+
+describe("wide focus frame", () => {
+  it("closes the baked highlight gap from art just left of it, inside the stretched strip", () => {
+    const heal = healFocusGap(),
+      region = { width: 256, border: 34 };
+    // the copy ends where the gap begins and never touches a corner
+    expect(heal.sx + heal.width).toBe(heal.dx);
+    expect(heal.dx).toBe(focusGap.from);
+    expect(heal.sx).toBeGreaterThan(region.border);
+    expect(heal.dx + heal.width).toBeLessThan(region.width - region.border);
   });
 });

@@ -144,6 +144,20 @@ export function validateAtlas(value: unknown): UiAtlas {
 }
 
 /** Same named lookup for delivered art and original procedural placeholders. */
+/** The focus frame cut from its page with the highlight gap closed, or undefined where no canvas is available. */
+function healedFocus(page: Texture, rect: number[]): Texture | undefined {
+  const [x, y, w, h] = rect as [number, number, number, number],
+    canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const c = canvas.getContext("2d");
+  const image = page.source.resource as CanvasImageSource | undefined;
+  if (!c || !image) return undefined;
+  c.drawImage(image, x, y, w, h, 0, 0, w, h);
+  const { sx, dx, width } = healFocusGap();
+  c.drawImage(canvas, sx, 0, width, h, dx, 0, width, h);
+  return Texture.from(canvas);
+}
 export class UiKit {
   dailyClock?: DailyClockContract;
   private textures = new Map<
@@ -233,10 +247,17 @@ export class UiKit {
         const texture = pages.get(f.page);
         if (!texture) continue;
         staged.set(id, {
-          texture: new Texture({
-            source: texture.source,
-            frame: new Rectangle(...f.rect),
-          }),
+          texture:
+            id === focusGap.id
+              ? (healedFocus(texture, f.rect) ??
+                new Texture({
+                  source: texture.source,
+                  frame: new Rectangle(...f.rect),
+                }))
+              : new Texture({
+                  source: texture.source,
+                  frame: new Rectangle(...f.rect),
+                }),
           borders: f.nineSlice ?? [0, 0, 0, 0],
           minSize: f.minSize,
           anchor: f.anchor,
