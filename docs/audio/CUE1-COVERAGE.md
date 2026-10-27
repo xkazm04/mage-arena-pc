@@ -25,4 +25,13 @@ Hit variants: the cue's `assets` list already picks one at random, so no new sha
 
 ## Not yet audible in the game
 
-`audio-events.test.ts` now maps all four kinds to cues, but nothing plays them: `arena-entry.ts` needs `gameAudio.play("cast.start" | "down" | "interrupt" | "phase", spatial)` branches in `consumeEvents`, and `audio.test.ts` pins the manifest at 22 assets (now 32). Both are outside this task's paths. The `unwired` list in `audio-events.test.ts` records the four kinds and fails once a literal `gameAudio.play` for them appears, so it must be emptied in the same change.
+Main now routes events through the `routes` table in `audio.json` (`audio-routing.ts`), not literal `gameAudio.play` calls. The four kinds (`cast`, `down`, `interrupt`, `phase`) have authored cues (`cast.start`, `down`, `interrupt`, `phase`) but no route, so they stay in `uncuedKinds` and nothing plays them. `audio-events.test.ts` asserts each authored cue resolves to manifest assets and fails once a route is added, so the entry is dropped in the same change. Adding the routes is a playback change left to D2 4.5.
+
+## Re-cut (2026-10-27, run 19f534ed, repair of held run 935a3a33)
+
+AU4 audio was held 2026-10-24 on the `audio.test.ts` pin of 22 assets. Re-cut onto main ee241f70, no paid call, the old branch untouched:
+
+- 34f931bb CUE1 wave (was 49f35ab9); conflict in `elevenlabs.mjs` resolved onto main's `rounds.json` registry: a `CUE1` row (cap 1000, floor 1000, minReserve 1000, `outDir` public/audio, `cuePlan`), the plan check and the `cues` status kept.
+- 8cee7fc3 CUE1 ledger, requests and plan, 13 SFX calls, 387 credits (was 38bbc2d5); ledgers merged, no line dropped.
+- 7f519951 cues and variants (was d07f86df); `audio-events.test.ts` kept on main's routes-driven form plus the authored-cue check above.
+- 09fcfba2 pin fix: `audio.test.ts` now pins the exact sorted list of 32 asset keys and `toHaveLength(32)` (22 before). All other checks unchanged.
