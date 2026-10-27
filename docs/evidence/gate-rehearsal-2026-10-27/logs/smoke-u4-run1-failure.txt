@@ -1,0 +1,32 @@
+AssertionError [ERR_ASSERTION]: Expected "actual" not to be strictly deep-equal to:
+[
+  0,
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+]
+    at <anonymous> (C:\Users\kazda\.personas\headless-masters\worktrees\mage-arena-vr\96844aeb\packages\tools\src\u4-browser.ts:158:14) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    0, 1, 1, 0, 0,
+    0, 0, 0, 0, 0,
+    0, 0
+  ],
+  expected: [
+    0, 1, 1, 0, 0,
+    0, 0, 0, 0, 0,
+    0, 0
+  ],
+  operator: 'notDeepStrictEqual',
+  diff: 'simple'
+}
+Node.js v24.14.0

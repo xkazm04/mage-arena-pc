@@ -1,0 +1,60 @@
+diff --git a/docs/waves/AU4-evidence/browser.json b/docs/waves/AU4-evidence/browser.json
+index c920d309..2b464440 100644
+--- a/docs/waves/AU4-evidence/browser.json
++++ b/docs/waves/AU4-evidence/browser.json
+@@ -38,9 +38,9 @@
+         }
+       ],
+       "ducked": {
+-        "music": 0.4483596980571747,
+-        "effects": 0.39969804883003235,
+-        "ui": 0.7088305354118347,
++        "music": 0.4480558931827545,
++        "effects": 0.39927738904953003,
++        "ui": 0.7086701393127441,
+         "voice": 1
+       },
+       "pause": {
+@@ -58,79 +58,61 @@
+         "music": null,
+         "musicVoices": 0,
+         "decodedBuffers": {
+-          "roll-step": {
+-            "duration": 0.45,
+-            "channels": 2,
+-            "sampleRate": 48000,
+-            "bytes": 172800
+-          },
+           "ui-click": {
+             "duration": 0.48,
+             "channels": 2,
+             "sampleRate": 48000,
+             "bytes": 184320
+           },
+-          "ui-confirm": {
++          "ui-deny": {
+             "duration": 0.48,
+             "channels": 2,
+             "sampleRate": 48000,
+             "bytes": 184320
+           },
+-          "voice-collar": {
+-            "duration": 2.0897916666666667,
+-            "channels": 1,
+-            "sampleRate": 48000,
+-            "bytes": 401240
+-          },
+-          "collar-b": {
+-            "duration": 1,
+-            "channels": 2,
+-            "sampleRate": 48000,
+-            "bytes": 384000
+-          },
+-          "ui-deny": {
++          "ui-confirm": {
+             "duration": 0.48,
+             "channels": 2,
+             "sampleRate": 48000,
+             "bytes": 184320
+           },
+-          "impact-a": {
