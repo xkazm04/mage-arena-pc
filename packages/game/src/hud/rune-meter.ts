@@ -5,7 +5,7 @@ import { colours } from "../ui/kit.ts";
 import { frameGraphics } from "../pixi-fixes.ts";
 import { sigil } from "../ui/artwork.ts";
 import type { CanvasUI } from "../ui/ui.ts";
-import { meterFraction, type MeterView } from "./school-hud.ts";
+import { meterFraction, meterLayout, type MeterView } from "./school-hud.ts";
 
 const sweep = { from: Math.PI + 0.3, to: Math.PI * 2 - 0.3 };
 
@@ -24,8 +24,20 @@ export function runeMeter(
   u.icon(first.school, cx, cy - 34, 16, u.content, colour);
   const arc = frameGraphics();
   u.content.addChild(arc);
-  const label = u.text("", cx, y + 94, 22, colour),
-    mark = u.text("", cx, y + 120, 20, colours.muted);
+  const label = u.text(
+      "",
+      cx,
+      y + meterLayout.label.y,
+      meterLayout.label.size,
+      colour,
+    ),
+    mark = u.text(
+      "",
+      cx,
+      y + meterLayout.mark.y,
+      meterLayout.mark.size,
+      colours.muted,
+    );
   const at = (value: number, view: MeterView) =>
     sweep.from + (sweep.to - sweep.from) * meterFraction(view, value);
   return (view) => {

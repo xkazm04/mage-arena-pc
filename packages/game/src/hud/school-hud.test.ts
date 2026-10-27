@@ -14,6 +14,7 @@ import {
   heroName,
   hudSchool,
   identityValue,
+  meterLayout,
   schoolSlotSpell,
   resourceMeter,
   showsRanks,
@@ -156,4 +157,20 @@ describe("the HUD's mirror of the school seam", () => {
     for (const row of [...labSpellbook("fire"), ...labSpellbook("air")])
       expect(balancedRow(row)).toEqual(seam.balancedSpell(row));
   });
+});
+
+describe("school meter text sits inside its panel", () => {
+  for (const school of ["fire", "air"] as const)
+    it(`${school}: label and mark clear the panel frame`, () => {
+      const t = lab(school),
+        view = resourceMeter(t.player, t.state)!,
+        { panel, frame, lineHeight } = meterLayout;
+      expect(view.marks.length).toBeGreaterThan(0);
+      for (const line of [meterLayout.label, meterLayout.mark]) {
+        expect(line.y).toBeGreaterThanOrEqual(frame);
+        expect(line.y + line.size * lineHeight).toBeLessThanOrEqual(
+          panel.h - frame,
+        );
+      }
+    });
 });

@@ -207,7 +207,20 @@ export const meterFraction = (
   view: Pick<MeterView, "min" | "max">,
   value: number,
 ): number =>
-  Math.min(1, Math.max(0, (value - view.min) / Math.max(1, view.max - view.min)));
+  Math.min(
+    1,
+    Math.max(0, (value - view.min) / Math.max(1, view.max - view.min)),
+  );
+/** The meter panel's size and where its two text lines sit inside it, relative to the panel's top-left. */
+export const meterLayout = {
+  panel: { w: 240, h: 160 },
+  /** The panel art's frame eats about this much of each edge. */
+  frame: 24,
+  label: { y: 78, size: 22 },
+  mark: { y: 102, size: 20 },
+  /** BitmapText line height is `size * 1.22`. */
+  lineHeight: 1.22,
+};
 /** A threshold's name: the authored one (Heat's Kindled, Blazing), else what it grants (Momentum's are unnamed). */
 function markName(t: Record<string, unknown>): string {
   if (typeof t.name === "string") return t.name;
