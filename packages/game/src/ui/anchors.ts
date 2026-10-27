@@ -80,3 +80,39 @@ export function columns(
 export function uiScale(fit: number, setting = 1): number {
   return fit * clampUiScale(setting);
 }
+
+/** Where the notice plate sits by default, in design units. */
+export const noticeHome: Rect = { x: 450, y: 870, w: 1020, h: 120 };
+
+export function rectsIntersect(a: Rect, b: Rect): boolean {
+  return (
+    a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h
+  );
+}
+
+function overlapArea(a: Rect, b: Rect): number {
+  const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x),
+    h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+  return w > 0 && h > 0 ? w * h : 0;
+}
+
+/**
+ * The notice plate's rect: its home slot, else the strip below it, else the top strip of the safe area, taking the
+ * first that touches none of `avoid` (buttons and panel frames), or the one covering the least of them.
+ */
+export function noticeRect(avoid: readonly Rect[]): Rect {
+  const top = metrics.designHeight * metrics.safeFraction;
+  const slots = [
+    noticeHome,
+    { ...noticeHome, y: 930 },
+    { ...noticeHome, y: top },
+  ];
+  let best = slots[0]!,
+    bestArea = Infinity;
+  for (const slot of slots) {
+    const area = avoid.reduce((sum, r) => sum + overlapArea(slot, r), 0);
+    if (area === 0) return slot;
+    if (area < bestArea) [best, bestArea] = [slot, area];
+  }
+  return best;
+}

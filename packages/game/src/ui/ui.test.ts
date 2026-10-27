@@ -1,6 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { nextFocus, viewportLayout } from "./layout.ts";
-import { anchor, columns, safeArea, safeEdges, uiScale } from "./anchors.ts";
+import {
+  anchor,
+  columns,
+  noticeHome,
+  noticeRect,
+  rectsIntersect,
+  safeArea,
+  safeEdges,
+  uiScale,
+} from "./anchors.ts";
 import { requiredRegions, validateAtlas } from "./kit.ts";
 describe("canvas UI contracts", () => {
   it("preserves a five percent safe rectangle at 1080p and 1440p", () => {
@@ -148,5 +157,25 @@ describe("viewport layout", () => {
     expect(l.edges.left).toBeCloseTo(192);
     expect(l.edges.right).toBeCloseTo(1728);
     expect(viewportLayout(1920, 1080, 9).scale).toBe(1.5);
+  });
+});
+
+describe("notice plate", () => {
+  // the bout results screen (screens/results.ts): panels and buttons
+  const results = [
+    { x: 1080, y: 270, w: 750, h: 650 },
+    { x: 250, y: 270, w: 790, h: 350 },
+    { x: 250, y: 650, w: 790, h: 76 },
+    { x: 1130, y: 710, w: 650, h: 76 },
+    { x: 1130, y: 812, w: 650, h: 76 },
+  ];
+  it("home slot collides with the results screen, so the plate moves", () => {
+    expect(results.some((r) => rectsIntersect(noticeHome, r))).toBe(true);
+    const plate = noticeRect(results);
+    expect(results.some((r) => rectsIntersect(plate, r))).toBe(false);
+    expect(plate.y + plate.h).toBeLessThanOrEqual(1080);
+  });
+  it("stays home when nothing is in the way", () => {
+    expect(noticeRect([{ x: 0, y: 0, w: 400, h: 300 }])).toEqual(noticeHome);
   });
 });

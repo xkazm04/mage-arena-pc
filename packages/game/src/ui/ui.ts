@@ -13,6 +13,7 @@ import { installFonts, fontDiagnostics, fontTextureBytes } from "./fonts.ts";
 import { art } from "../art.ts";
 import { PadNavigation } from "./gamepad.ts";
 import { buttonLook, wheelPager } from "./hover.ts";
+import { noticeHome, noticeRect } from "./anchors.ts";
 import { quality } from "../quality.ts";
 import { phase, phaseStart, phases, resetPhases } from "../frame-probe.ts";
 import { settings } from "../settings/settings.ts";
@@ -70,6 +71,8 @@ export class CanvasUI {
   readonly kit = new UiKit();
   readonly lifetime = new AbortController();
   buttons: Button[] = [];
+  /** Panel and button rects of the current screen, which the notice plate steers around. */
+  private frames: Rect[] = [];
   screen = "boot";
   focus = "";
   modality = "keyboard";
@@ -377,6 +380,7 @@ export class CanvasUI {
     if (this.screen !== screen) this.revealStart = performance.now();
     this.screen = screen;
     this.buttons = [];
+    this.frames = [];
     this.onKey = undefined;
     for (const child of this.content.removeChildren())
       child.destroy({ children: true });
@@ -394,6 +398,11 @@ export class CanvasUI {
       this.buttons.find((b) => !b.disabled)?.id ??
       "";
     this.app.canvas.dataset.screen = this.screen;
+    this.placeToast();
+  }
+  /** A notice outlives the screen it was raised on, so it is re-seated whenever a screen is drawn. */
+  private placeToast() {
+    if (this.toast) this.toast.y = noticeRect(this.frames).y - noticeHome.y;
   }
   panel(
     x: number,
@@ -405,6 +414,7 @@ export class CanvasUI {
   ) {
     const p = this.kit.panel(kind, x, y, w, h);
     parent.addChild(p);
+    if (parent === this.content) this.frames.push({ x, y, w, h });
     return p;
   }
   text(
@@ -545,6 +555,7 @@ export class CanvasUI {
     };
     root.alpha = b.disabled ? 0.45 : 1;
     this.buttons.push(b);
+    this.frames.push({ x, y, w, h });
     return b;
   }
   /** Canvas-native numeric slider: pointer drag or focused Left/Right. */
@@ -826,9 +837,17 @@ export class CanvasUI {
     this.toast?.destroy({ children: true });
     const c = new Container();
     this.feedback.addChild(c);
-    this.panel(450, 870, 1020, 120, "tooltip", c);
+    this.panel(
+      noticeHome.x,
+      noticeHome.y,
+      noticeHome.w,
+      noticeHome.h,
+      "tooltip",
+      c,
+    );
     this.text(message, 480, 895, 30, colours.text, 960, false, c);
     this.toast = c;
+    this.placeToast();
     this.toastUntil = performance.now() + 6500;
   }
   async fullscreen() {
