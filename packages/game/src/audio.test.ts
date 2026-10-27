@@ -19,7 +19,42 @@ describe("AU4 owner-kept audio contract", () => {
   it("pins every imported file and requires trims, durations and all cue/playlist assets", () => {
     const manifest = validateAudioManifest(manifestData);
     expect(audioDataProblems(manifest)).toEqual([]);
-    expect(Object.keys(manifest.assets)).toHaveLength(22);
+    // Main's 22 plus the 10 CUE1 imports (cast-start-b/c, down-a, hit-b/c/d, impact-d/e, interrupt-a, phase-a).
+    expect(Object.keys(manifest.assets).sort()).toEqual([
+      "air-b",
+      "arena-a",
+      "arena-c",
+      "arena-d",
+      "camp-day",
+      "camp-dusk",
+      "camp-night",
+      "cast-start-b",
+      "cast-start-c",
+      "collar-b",
+      "down-a",
+      "earth-b",
+      "fire-a",
+      "fire-variation",
+      "hit-a",
+      "hit-b",
+      "hit-c",
+      "hit-d",
+      "impact-a",
+      "impact-d",
+      "impact-e",
+      "interrupt-a",
+      "phase-a",
+      "roll-step",
+      "ui-click",
+      "ui-confirm",
+      "ui-deny",
+      "ui-slot",
+      "ui-tab",
+      "voice-collar",
+      "water-b",
+      "water-variation",
+    ]);
+    expect(Object.keys(manifest.assets)).toHaveLength(32);
     for (const a of Object.values(manifest.assets)) {
       const bytes = readFileSync(
         new URL(`../public/audio/${a.file}`, import.meta.url),
