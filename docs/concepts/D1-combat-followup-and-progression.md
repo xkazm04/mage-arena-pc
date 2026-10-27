@@ -1231,6 +1231,37 @@ save schema change, which needs an ask.
 
 Commits: `ad63b19` (week profiles to src, `seasonRival` data), `3590414` (season levers and test).
 
+### 6.13 Brand Drag re-judged, 2026-10-27
+
+6.2 left Brand Drag (Brand Wrath rank 5) neutral and named two ways out: longer heavy fights or a cheaper tier-IV row. Three
+arms are built in the PC overlay (`school-balance.pc.json` `brandDrag.arms`, code in `packages/core/src/arena/brand-drag.ts`),
+all **off by default** (no arm is selected unless a census passes `--brand-drag <arm>`), each applying to a rank-5 Brand Wrath
+only: `reserve` (the heavy plan keeps Wrath's mana one tier earlier), `early` (Wrath opens at tier III instead of IV), `quick`
+(Wrath cooldown 20 s -> 10 s). Read the 6.2 way: `census:builds -- --only fire_heavy --ranks fire_heavy:fire_wrath=<4|5>
+[--brand-drag <arm>]`, 200 seeds (40000-40199), exchange windows on. Evidence: `docs/change-requests/evidence/d1-brand-drag-<arm>-r<4|5>.json`
+(the builds summary now carries `castsPerFight`). Every figure below is read from those files.
+
+| Arm | Rival tier-IV share, rank 4 -> 5 | Reference wins | fire_heavy median | Wrath casts / fight | Short fights (rank 5) |
+|---|---|---|---|---|---|
+| off (control) | 52.8% -> 53.5% | 42.0% -> 41.5% | 46.5 -> 46.5 s | 0.63 -> 0.63 | 0 |
+| reserve | 52.8% -> 53.5% | 42.0% -> 41.5% | 46.5 -> 46.5 s | 0.63 -> 0.63 | 0 |
+| early | 52.8% -> 54.5% | 42.0% -> 26.0% | 46.5 -> 39.0 s | 0.63 -> 1.28 | 10 |
+| quick | 52.8% -> 55.9% | 42.0% -> 40.0% | 46.5 -> 46.5 s | 0.63 -> 0.71 | 0 |
+
+- **reserve** changes nothing: its digest equals the control's at both ranks, so the heavy plan was not mana-starved at tier IV.
+- **early** presses Wrath twice as often (1.28 casts a fight) and the signature leans the right way (tier-IV share +1.7 pp), but
+  the build leaves the band: reference wins 26.0% (floor 40%), median 39.0 s (floor 45 s), 10 fights end before tier III. Out.
+- **quick** stays inside the band (40.0%, which is the floor itself, and 46.5 s) and leans the right way (+3.1 pp tier-IV share
+  against +0.7 pp for the control), but Wrath rises only 0.63 -> 0.71 casts a fight and the lean is small against the noise of
+  127 tier-IV fights (about 4 pp standard error). It also takes fire_heavy from 41.5% to the 40.0% floor.
+- **Default census**: the six-build default census re-runs `d1-ultimates-after.json` digest for digest (`census:compare`: all
+  `same`), and the named duels re-run `d1-named-after.json` the same way (`d1-brand-drag-named-default*.json`). Goldens and the
+  parity suites are untouched (the arms read nothing unless selected).
+
+Reading: no arm both moves the signature measurably and keeps fire_heavy in its band. `early` moves it by changing the fight, not
+the ultimate; `quick` is in band but inside the noise. `quick` stays a Director default behind the flag (owner to confirm);
+nothing is turned on.
+
 ### D1 section 6 scorecard (goal 2), 2026-10-25
 
 Each section 6 bullet, read off the census. "Owner-pending" marks a result that holds only under a Director default the
@@ -1243,7 +1274,7 @@ owner has not confirmed, or a target the owner has to set.
 | Close builds: hits per exchange falls | **met** | fire_close 2.29 -> 0.61, air_close 1.91 -> 1.30 | 6.1 (`d1-exchange-before/after.json`) |
 | Every rival duel's median in band through the ranked weeks (the duration reading of 6.9-6.11) | **missed**; owner-confirmed 2026-10-25: `lag-def1` adopted behind the flag (6.12) | best arm `lag-def1`: 8 steady cells under 45 s (fire_heavy w2-6, air_close w4-6), 0 over the ceiling; fire_heavy never reaches 45 s in weeks 3-5 under any 6.10 or 6.11 arm | 6.10, 6.11, 6.12 |
 | Ultimates: every committed rank-5 build inside the band | **met** | fire_heavy (Brand Wrath 5) 46.5 s, 41.5%; the only committed rank-5 row | 6.2 |
-| Ultimates: each moves its curve signature the right way | **missed** | Brand Drag is neutral: the rival's tier-IV share goes 52.8% -> 53.5%, reference 42.0% -> 41.5% (Wrath about once a fight). Pinning Edge (Shear 5) leans the right way (-1.5 pp, short fights 16 -> 20) but takes air_close to 16.0%, out of the band, so it is not committed | 6.2 |
+| Ultimates: each moves its curve signature the right way | **missed** (re-judged 6.13) | Brand Drag is neutral: the rival's tier-IV share goes 52.8% -> 53.5%, reference 42.0% -> 41.5% (Wrath about once a fight). Pinning Edge (Shear 5) leans the right way (-1.5 pp, short fights 16 -> 20) but takes air_close to 16.0%, out of the band, so it is not committed. 6.13 re-measured three Brand Drag arms: `early` leaves the band (26.0%, 39.0 s), `reserve` is identical to the control, `quick` stays in band (40.0%, 46.5 s) with tier-IV share 53.5% -> 55.9% but Wrath only 0.63 -> 0.71 casts a fight, inside the noise; stays missed | 6.2, 6.13 |
 | Counters: each defensive row reaches its coverage target | **owner-pending** (N = 50% is a Director default) | Air Form 67.9% (61.1% lowest cell): met. Ring of Cinders 1.6%: missed. Tide Ward: none castable, best declined arm 25.7%, and stopped outside the target (Director default, owner to confirm) | 6.4, 6.5, 6.6 |
 | Progression: a steadily training player wins 50-65% each week | **met weeks 2-6, owner-pending** | `lag`: 56.8, 57.6, 56.3, 52.3, 51.0%; `lag-def1`: 59.0, 60.8, 60.6, 54.4, 52.0%. Week 1 is the plain census at 47.3%, which no week lever reaches. Both arms are Director defaults, owner to confirm; nothing is on | 6.8, 6.10, 6.11 |
 | Progression: a player who does not train falls below 40% by week 4 | **met, owner-pending** | week 4: `lag` 29.5%, `lag-def1` 24.1% (week 1: 47.3%) | 6.8, 6.10, 6.11 |

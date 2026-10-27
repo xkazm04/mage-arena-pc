@@ -1,0 +1,91 @@
+{
+  "label": "simulated",
+  "command": "npm --prefix packages/core run census:builds -- --only fire_heavy --ranks fire_heavy:fire_wrath=5 --brand-drag early --tag d1-brand-drag-early-r5 --out-dir docs/change-requests/evidence",
+  "seedRange": [
+    40000,
+    40199
+  ],
+  "reference": {
+    "competence": 2,
+    "preset": "Rotation"
+  },
+  "mode": "createGames(..., { rivalBuild }), PC overlay on, exchange windows on, no named phases, spell ranks overridden: fire_heavy:fire_wrath=5, Brand Drag arm early",
+  "countPerBuild": 200,
+  "winRateTarget": [
+    0.4,
+    0.65
+  ],
+  "summaries": [
+    {
+      "build": "fire_heavy",
+      "school": "fire",
+      "archetype": "heavy",
+      "wave": 3,
+      "rival": "Ember mage · heavy",
+      "fights": 200,
+      "winRate": 0.26,
+      "rivalWinShare": 0.74,
+      "timeouts": 0,
+      "medianS": 39.05,
+      "targetDurationS": [
+        45,
+        75
+      ],
+      "medianInBand": false,
+      "winRateInRange": false,
+      "curve": {
+        "shortFights": 10,
+        "rivalShareShort": 1,
+        "tier4Fights": 66,
+        "rivalShareTier4": 0.5454545454545454
+      },
+      "hitsPerExchange": 3.103186097031137,
+      "histogram": {
+        "fire_bolt": 0.883119527591122,
+        "fire_pyre": 0.05803298717165547,
+        "fire_wrath": 0.05233150071268581,
+        "fire_sunfall": 0.003868865811443698,
+        "fire_ring": 0.0026471187130930563
+      },
+      "castsPerFight": {
+        "fire_bolt": 21.685,
+        "fire_pyre": 1.425,
+        "fire_wrath": 1.285,
+        "fire_sunfall": 0.095,
+        "fire_ring": 0.065
+      },
+      "roles": {
+        "bolt": 0.883119527591122,
+        "payoff": 0.11036448788434128,
+        "signature": 0.003868865811443698,
+        "answer": 0.0026471187130930563
+      },
+      "meanDistanceM": 8.25180546521815,
+      "distanceOverTime": [
+        8.56446754019723,
+        8.245341106447704,
+        7.661757333012412,
+        7.908556028482198,
+        7.81105470682528
+      ],
+      "answers": {
+        "fire_ring": {
+          "answered": 0,
+          "other": 8,
+          "none": 5
+        }
+      },
+      "branches": {
+        "heavy:waiting": 0.5397497239602502,
+        "heavy:bolt": 0.26604097656729236,
+        "heavy:reserve": 0.134400687032266,
+        "heavy:payoff": 0.04275549012391117,
+        "heavy:idle": 0.01417004048582996,
+        "signature": 0.001962949331370384,
+        "answer:pressed": 0.0009201324990798675
+      },
+      "withheldShare": 0.6883204514783462,
+      "digest": "5be856c80f1a44da88ee7bee97b195bc04abe918c9d7f1734880694a773c4ccd"
+    }
+  ]
+}
