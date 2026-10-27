@@ -144,6 +144,16 @@ export function validateAtlas(value: unknown): UiAtlas {
 }
 
 /** Same named lookup for delivered art and original procedural placeholders. */
+/**
+ * The focus frame's baked highlight line is broken for 14 source px at the middle of its top and bottom edges
+ * (button.focus, columns 122..135 of 256). A nine-slice stretches that gap with the middle strip, so on a wide button
+ * it reads as a dark notch. The gap is painted over with the 14 columns just left of it.
+ */
+export const focusGap = { id: "button.focus", from: 122, width: 14 };
+/** The canvas copy that closes the gap: `width` columns at `sx` drawn over the gap at `dx`. */
+export function healFocusGap(gap = focusGap) {
+  return { sx: gap.from - gap.width, dx: gap.from, width: gap.width };
+}
 /** The focus frame cut from its page with the highlight gap closed, or undefined where no canvas is available. */
 function healedFocus(page: Texture, rect: number[]): Texture | undefined {
   const [x, y, w, h] = rect as [number, number, number, number],
