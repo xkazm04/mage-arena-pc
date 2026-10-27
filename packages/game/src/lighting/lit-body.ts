@@ -13,14 +13,14 @@ void main() {
 /** The same lambert and squared falloff as `lightAmount` in lighting-math.ts; positions are in sprite pixels. */
 export const litBodyFragment = `
 in vec2 vUV; in vec2 vPos; out vec4 finalColor;
-uniform sampler2D uColor, uNormal;
+uniform sampler2D uPaint, uNormal;
 uniform vec4 uFrame; // frame rect on the page, in page UV
 uniform vec4 uLights[${maxLights}]; // x, y, z, radius
 uniform vec4 uLightColors[${maxLights}];
 uniform vec4 uAmbient; // ambient, tint strength, light count, unused
 void main() {
   vec2 st=uFrame.xy+vUV*uFrame.zw;
-  vec4 paint=texture(uColor,st);
+  vec4 paint=texture(uPaint,st);
   if(paint.a<=0.) discard;
   vec3 n=normalize(texture(uNormal,st).rgb*2.-1.);
   float lit=uAmbient.x; vec3 tint=vec3(0.);
@@ -48,7 +48,7 @@ export function litBodyMesh(
       fragment: litBodyFragment,
     }),
     resources: {
-      uColor: color.source,
+      uPaint: color.source,
       uNormal: normal.source,
       litUniforms: {
         uSize: { value: new Float32Array([1, 1]), type: "vec2<f32>" },
@@ -73,6 +73,17 @@ export function litBodyMesh(
           type: "vec4<f32>",
         },
       },
+    },
+  });
+  // Pixi's mesh pipe owns a vec4 `uColor` in its local uniforms, so a sampler of that name made
+  // every draw call glUniform4f on a sampler (GL_INVALID_OPERATION). The sampler is `uPaint`;
+  // `resources.uColor` stays as an alias so callers keep their texture-swap spelling.
+  const res = shader.resources;
+  Object.defineProperty(res, "uColor", {
+    configurable: true,
+    get: () => res.uPaint,
+    set: (v) => {
+      res.uPaint = v;
     },
   });
   const geometry = new MeshGeometry({
