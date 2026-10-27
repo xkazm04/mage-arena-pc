@@ -10,6 +10,8 @@ import type { GameAudio } from "../../game/src/audio.ts";
 import type { ArenaGame } from "../../game/src/arena-entry.ts";
 import type { SeasonView } from "../../game/src/season-api.ts";
 import type { Cue } from "../../game/src/audio-policy.ts";
+import { writePin, writeRecord } from "./evidence-record.ts";
+import { measureAudio, pinAudio, type AudioShot } from "./smoke/au4-pin.ts";
 type Win = Window & {
   __ui: { snapshot(): ReturnType<CanvasUI["snapshot"]> };
   __audio: {
@@ -347,7 +349,19 @@ try {
     current = undefined;
   }
   assert.deepEqual(errors, []);
-  writeFileSync(
+  // The pin keeps the cue set, settings and booleans; measured gains, offsets and log clocks go to the ignored perf.json (m5).
+  const shots = runs as {
+    height: number;
+    graph: unknown;
+    ducked: Record<string, number>;
+    pause: AudioShot;
+    settings: unknown;
+    unlockTicks: number;
+    perfects: number;
+    audio: AudioShot;
+  }[];
+  const faultShots = faults as { mode: string; audio: AudioShot }[];
+  writePin(
     join(out, "browser.json"),
     JSON.stringify(
       {
@@ -355,14 +369,39 @@ try {
           "measured headless WebAudio graph/events; audio cannot be listened to headlessly",
         command: "npm run smoke:audio",
         passed: true,
-        runs,
-        faults,
+        perf: "perf.json beside this file (git-ignored): ducked and duck gains, music offsets, active voices, full event logs",
+        runs: shots.map((r) => ({
+          height: r.height,
+          graph: r.graph,
+          duckedBelow0_6: r.ducked.music! < 0.6 && r.ducked.effects! < 0.6,
+          pause: pinAudio(r.pause),
+          settings: r.settings,
+          unlockTicks: r.unlockTicks,
+          perfects: r.perfects,
+          audio: pinAudio(r.audio),
+        })),
+        faults: faultShots.map((f) => ({
+          mode: f.mode,
+          audio: pinAudio(f.audio),
+        })),
         errors,
       },
       null,
       2,
     ) + "\n",
   );
+  writeRecord(join(out, "perf.json"), {
+    runs: shots.map((r) => ({
+      height: r.height,
+      ducked: r.ducked,
+      pause: measureAudio(r.pause),
+      audio: measureAudio(r.audio),
+    })),
+    faults: faultShots.map((f) => ({
+      mode: f.mode,
+      audio: measureAudio(f.audio),
+    })),
+  });
   console.log(
     JSON.stringify({ passed: true, runs: runs.length, faults: faults.length }),
   );

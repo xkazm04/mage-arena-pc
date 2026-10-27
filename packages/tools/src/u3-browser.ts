@@ -15,6 +15,7 @@ import { idleInput, type InputFrame } from "@mage/core/arena";
 import { hash } from "@mage/director";
 import { SeasonPolicy } from "./season-policy.ts";
 import { writePin } from "./evidence-record.ts";
+import { pinTexts } from "./smoke/pin-texts.ts";
 import type { SeasonView } from "../../game/src/season-api.ts";
 import type { CanvasUI } from "../../game/src/ui/ui.ts";
 import type { ArenaGame } from "../../game/src/arena-entry.ts";
@@ -220,7 +221,7 @@ async function shot(p: Page, name: string, height: number) {
     focus: s.focus,
     kit: s.kit,
     controls: s.buttons.length,
-    texts: live ? s.texts.length : s.texts,
+    texts: live ? s.texts.length : pinTexts(s.texts),
   });
   if (live) liveTexts.push({ filename, texts: s.texts });
 }

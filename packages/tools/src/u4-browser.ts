@@ -7,6 +7,7 @@ import { join, resolve } from "node:path";
 import type { CanvasUI } from "../../game/src/ui/ui.ts";
 import type { ArenaGame } from "../../game/src/arena-entry.ts";
 import { writePin, writeRecord } from "./evidence-record.ts";
+import { sampleAdvance, stallMessage } from "./smoke/frame-advance.ts";
 import type {
   BodyState,
   Direction,
@@ -153,12 +154,24 @@ try {
       assert((a.effects.counts["absorb.contact"] ?? 0) > 0);
       assert((a.effects.counts["absorb.perfect"] ?? 0) > 0);
       await shot(p, `arena-${element}-motion-a`, height);
-      await p.waitForTimeout(220);
-      const b = await arena(p);
-      assert.notDeepEqual(
-        a.animation.displayed.map((b) => b.frame),
-        b.animation.displayed.map((b) => b.frame),
+      // A long bounded window instead of one 220 ms look: the first water run at 1080p saw all 12 frames equal (m7).
+      // A window that ends equal is a real stall, and its failure message carries the timestamps and hashes.
+      const frames = (s: Awaited<ReturnType<typeof arena>>) =>
+        s.animation.displayed.map((d) => Number(d.frame));
+      const advance = await sampleAdvance(
+        frames(a),
+        async () => {
+          const state = await arena(p);
+          return { frames: frames(state), state };
+        },
+        (ms) => p.waitForTimeout(ms),
+        () => Date.now(),
       );
+      assert(
+        advance.advanced,
+        stallMessage(`${element} at ${height}p`, advance),
+      );
+      const b = advance.state!;
       await shot(p, `arena-${element}-motion-b`, height);
       elements.push({ element, animation: b.animation, effects: b.effects });
     }
